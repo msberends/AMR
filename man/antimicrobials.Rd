@@ -13,14 +13,14 @@
 \item \code{cid}\cr Compound ID as found in PubChem. \emph{\strong{This is a unique identifier.}}
 \item \code{name}\cr Official name as used by WHONET/EARS-Net or the WHO. \emph{\strong{This is a unique identifier.}}
 \item \code{group}\cr One or more short and concise group names, based on WHONET and WHOCC definitions
-\item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02} (last updated May 4th, 2025):
+\item \code{atc}\cr ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC, like \code{J01CR02} (last updated 4th of May, 2025):
 \item \code{atc_group1}\cr Official pharmacological subgroup (3rd level ATC code) as defined by the WHOCC, like \code{"Macrolides, lincosamides and streptogramins"}
 \item \code{atc_group2}\cr Official chemical subgroup (4th level ATC code) as defined by the WHOCC, like \code{"Macrolides"}
 \item \code{abbr}\cr List of abbreviations as used in many countries, also for antimicrobial susceptibility testing (AST)
 \item \code{synonyms}\cr Synonyms (often trade names) of a drug, as found in PubChem based on their compound ID
 }
 
-ATC properties (last updated May 4th, 2025):
+ATC properties (last updated 4th of May, 2025):
 \itemize{
 \item \code{oral_ddd}\cr Defined Daily Dose (DDD), oral treatment, currently available for 180 drugs
 \item \code{oral_units}\cr Units of \code{oral_ddd}
@@ -54,13 +54,6 @@ An object of class \code{deprecated_amr_dataset} (inherits from \code{tbl_df}, \
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 120 rows and 11 columns.
 }
-\source{
-\itemize{
-\item WHO Collaborating Centre for Drug Statistics Methodology, Guidelines for ATC classification and DDD assignment, Oslo Accessed from \url{https://atcddd.fhi.no/atc_ddd_index/} on May 4th, 2025.
-\item Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Accessed from \url{https://loinc.org} on October 19th, 2023.
-\item European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}
-}
-}
 \usage{
 antimicrobials
 
@@ -93,7 +86,7 @@ Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct
 
 \section{WHOCC}{
 
-This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://atcddd.fhi.no}) and the Pharmaceuticals Community Register of the European Commission (\url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}).
+This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://atcddd.fhi.no}) and the Pharmaceuticals Community Register of the European Commission (\url{https://ec.europa.eu/health/documents/community-register/html/index_en.htm}).
 
 These have become the gold standard for international drug utilisation monitoring and research.
 
@@ -105,6 +98,13 @@ The WHOCC is located in Oslo at the Norwegian Institute of Public Health and fun
 \examples{
 antimicrobials
 antivirals
+}
+\references{
+\itemize{
+\item WHO Collaborating Centre for Drug Statistics Methodology, Guidelines for ATC classification and DDD assignment, Oslo Accessed from \url{https://atcddd.fhi.no/atc_ddd_index/} on 4th of May, 2025.
+\item Logical Observation Identifiers Names and Codes (LOINC), Version 2.76 (18 September, 2023). Accessed from \url{https://loinc.org} on 19th of October, 2023.
+\item European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://ec.europa.eu/health/documents/community-register/html/index_en.htm}
+}
 }
 \seealso{
 \link{microorganisms}, \link{intrinsic_resistant}

@@ -61,7 +61,9 @@
 #' @param combine_SI A [logical] to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is `TRUE`).
 #' @param sep A separating character for antimicrobial columns in combination antibiograms.
 #' @param sort_columns A [logical] to indicate whether the antimicrobial columns must be sorted on name.
-#' @param wisca A [logical] to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is `FALSE`). This will use a Bayesian decision model to estimate regimen coverage probabilities using [Monte Carlo simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Set `simulations`, `conf_interval`, and `interval_side` to adjust.
+#' @param wisca A [logical] to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is `FALSE`). This will use a Bayesian decision model to estimate regimen coverage probabilities using [Monte Carlo simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Per \doi{10.1093/jac/dkv397}, susceptibility priors are \eqn{\beta(0.5, 0.5)} (Jeffreys) and intrinsically resistant pairs (based on [intrinsic_resistant]) use \eqn{\beta(1, 9999)}.
+#'
+#' Set `simulations`, `conf_interval`, and `interval_side` to adjust.
 #' @param simulations (for WISCA) a numerical value to set the number of Monte Carlo simulations.
 #' @param conf_interval A numerical value to set confidence interval (default is `0.95`).
 #' @param interval_side The side of the confidence interval, either `"two-tailed"` (default), `"left"` or `"right"`.
@@ -166,6 +168,10 @@
 #'
 #'    WISCA uses a sophisticated Bayesian decision model to combine both local and pooled antimicrobial resistance data. This approach not only evaluates local patterns but can also draw on multi-centre data sets to improve regimen accuracy, even in low-incidence infections like paediatric bloodstream infections (BSIs).
 #'
+#'    **Prior Distributions**
+#'
+#'    When `wisca = TRUE` or when using `wisca()`, pathogen incidence is modelled with a non-informative \eqn{Dirichlet(1, 1, \ldots, 1)} prior. Susceptibility proportions use the Jeffreys prior, \eqn{\beta(0.5, 0.5)}, except for bug-drug combinations with known intrinsic resistance, which use a strongly informative \eqn{\beta(1, 9999)} prior that forces near-zero susceptibility regardless of observed data (Bielicki *et al.*, 2016). Intrinsic resistance is determined using the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`.
+#'
 #' ### Grouped tibbles
 #'
 #' For any type of antibiogram, grouped [tibbles][tibble::tibble] can also be used to calculate susceptibilities over various groups.
@@ -266,7 +272,7 @@
 #' It weights susceptibility by pathogen prevalence within a clinical syndrome and provides credible intervals around the expected coverage.
 #'
 #' For more background, interpretation, and examples, see [the WISCA vignette](https://amr-for-r.org/articles/WISCA.html).
-#' @source
+#' @references
 #' * Bielicki JA *et al.* (2016). **Selecting appropriate empirical antibiotic regimens for paediatric bloodstream infections: application of a Bayesian decision model to local and pooled antimicrobial resistance surveillance data** *Journal of Antimicrobial Chemotherapy* 71(3); \doi{10.1093/jac/dkv397}
 #' * Bielicki JA *et al.* (2020). **Evaluation of the coverage of 3 antibiotic regimens for neonatal sepsis in the hospital setting across Asian countries** *JAMA Netw Open.* 3(2):e1921124; \doi{10.1001/jamanetworkopen.2019.21124}
 #' * Klinker KP *et al.* (2021). **Antimicrobial stewardship and antibiograms: importance of moving beyond traditional antibiograms**. *Therapeutic Advances in Infectious Disease*, May 5;8:20499361211011373; \doi{10.1177/20499361211011373}
@@ -446,11 +452,11 @@ antibiogram.default <- function(x,
   meet_criteria(x, allow_class = "data.frame")
   x <- ascertain_sir_classes(x, "x")
   meet_criteria(wisca, allow_class = "logical", has_length = 1)
-  if (isTRUE(wisca)) {
+  if (wisca) {
     if (!is.null(mo_transform) && !missing(mo_transform)) {
       warning_("WISCA must be based on the species level as WISCA parameters are based on this. For that reason, {.arg mo_transform} will be ignored.")
     }
-    mo_transform <- function(x) suppressMessages(suppressWarnings(paste(mo_genus(x, keep_synonyms = TRUE, language = NULL), mo_species(x, keep_synonyms = TRUE, language = NULL))))
+    mo_transform <- function(x) suppressMessages(suppressWarnings(as.mo(x, keep_synonyms = TRUE, language = NULL, info = FALSE)))
   }
   if ("antibiotics" %in% names(list(...))) {
     deprecation_warning("antibiotics", "antimicrobials", fn = "antibiogram", is_argument = TRUE)
@@ -484,11 +490,39 @@ antibiogram.default <- function(x,
   meet_criteria(parallel, allow_class = "logical", has_length = 1)
 
   # parallel gate - identical pattern to as.sir()
-  if (requireNamespace("future.apply", quietly = TRUE) && !inherits(future::plan(), "sequential")) {
-    if (isFALSE(parallel)) {
-      message_("Assuming {.code parallel = TRUE} since parallel computing has been set up using the {.pkg future} package before. Set {.help [{.fun plan}](future::plan)} to sequential to prevent this.")
+  if (requireNamespace("future.apply", quietly = TRUE)) {
+    if (!inherits(future::plan(), "sequential")) {
+      if (isFALSE(parallel)) {
+        message_("Assuming {.code parallel = TRUE} since parallel computing has been set up using the {.pkg future} package before. Set {.help [{.fun plan}](future::plan)} to sequential to prevent this.")
+      }
+      parallel <- TRUE
     }
-    parallel <- TRUE
+    if (wisca && interactive() && inherits(future::plan(), "sequential") && isFALSE(parallel) && simulations > 100) {
+      advised_multi <- ifelse(.Platform$OS.type == "windows" || in_rstudio(), "multisession", "multicore")
+      message_("Are you sure you want to run in non-parallel (=sequential) mode?", as_note = FALSE)
+      message_("WISCA can take a long time for the ", simulations * length(antimicrobials), " simulations you require, and you already have the {.pkg future} package installed.", as_note = FALSE)
+      q <- utils::menu(c(
+        "Yes, still run in sequential mode",
+        format_inline_("No, run in parallel mode and set {.help [future::plan(", advised_multi, ")](future::plan)}, and reset after WISCA finishes"),
+        format_inline_("No, run in parallel mode and set {.help [future::plan(", advised_multi, ")](future::plan)}, and do not reset afterwards"),
+        "Cancel WISCA calculation"
+      ), graphics = FALSE, title = "")
+      if (q %in% c(4, 0)) {
+        return(invisible(NULL))
+      } else if (q %in% c(2, 3)) {
+        parallel <- TRUE
+        obj <- get(advised_multi, envir = asNamespace("future"))
+        future::plan(obj)
+        if (q == 2) {
+          on.exit({
+            # clean-up parallel setting
+            message_("Resetting {.fn future::plan}...", as_note = FALSE)
+            future::plan(future::sequential)
+            message_("Parallel setting was reset to `future::plan(future::sequential)`.", as_check = TRUE)
+          })
+        }
+      }
+    }
   }
   if (isTRUE(parallel)) {
     stop_ifnot(
@@ -519,21 +553,26 @@ antibiogram.default <- function(x,
   # transform MOs
   x$`.mo` <- x[, col_mo, drop = TRUE]
   if (is.null(mo_transform)) {
-    # leave as is, no transformation
-  } else if (is.function(mo_transform)) {
-    x$`.mo` <- mo_transform(x$`.mo`)
-  } else if (is.na(mo_transform)) {
-    x$`.mo` <- NA_character_
-  } else if (mo_transform == "gramstain") {
-    x$`.mo` <- mo_gramstain(x$`.mo`, language = language)
-  } else if (mo_transform == "shortname") {
-    x$`.mo` <- mo_shortname(x$`.mo`, language = language)
-  } else if (mo_transform == "name") {
-    x$`.mo` <- mo_name(x$`.mo`, language = language)
+    # leave as is, no transformation, but do add backup
+    x$`.mo.bak` <- x$`.mo`
   } else {
-    x$`.mo` <- mo_property(x$`.mo`, property = mo_transform, language = language)
+    x$`.mo` <- as.mo(x$`.mo`, keep_synonyms = TRUE, info = FALSE)
+    x$`.mo.bak` <- x$`.mo`
+    if (is.function(mo_transform)) {
+      x$`.mo` <- mo_transform(x$`.mo`)
+    } else if (is.na(mo_transform)) {
+      x$`.mo` <- NA_character_
+    } else if (mo_transform == "gramstain") {
+      x$`.mo` <- mo_gramstain(x$`.mo`, language = language)
+    } else if (mo_transform == "shortname") {
+      x$`.mo` <- mo_shortname(x$`.mo`, language = language)
+    } else if (mo_transform == "name") {
+      x$`.mo` <- mo_name(x$`.mo`, language = language)
+    } else {
+      x$`.mo` <- mo_property(x$`.mo`, property = mo_transform, language = language)
+    }
   }
-  x$`.mo`[is.na(x$`.mo`)] <- "(??)"
+  x$`.mo`[x$`.mo` %in% c(NA, "UNKNOWN")] <- "(??)"
 
   # get syndromic groups
   if (!is.null(syndromic_group)) {
@@ -702,7 +741,7 @@ antibiogram.default <- function(x,
 
   wisca_parameters <- data.frame()
 
-  # WISCA START
+  # WISCA START ----
   if (wisca == TRUE) {
     if (isTRUE(has_syndromic_group)) {
       colnames(out)[1] <- "syndromic_group"
@@ -736,6 +775,8 @@ antibiogram.default <- function(x,
     }
 
     wisca_parameters <- out
+    wisca_draws <- list()
+    wisca_components <- list()
 
     # quantile probabilities are constant across all groups
     probs <- if (interval_side == "two-tailed") {
@@ -751,6 +792,7 @@ antibiogram.default <- function(x,
     use_parallel_wisca <- isTRUE(parallel) && n_workers > 1L && length(unique_groups) > 0L
 
     if (use_parallel_wisca) {
+      ## WISCA parallel ----
       if (isTRUE(info)) {
         message_("Running WISCA in parallel mode using ", n_workers, " workers...", as_note = FALSE, appendLF = FALSE)
       }
@@ -759,13 +801,17 @@ antibiogram.default <- function(x,
       chunks_per_group <- max(1L, ceiling(n_workers / length(unique_groups)))
       chunk_sizes <- diff(c(0L, round(seq_len(chunks_per_group) * simulations / chunks_per_group)))
 
+      params_g_lookup <- list()
+
       # precompute priors per group and build (group, chunk) job list
       jobs <- unlist(lapply(unique_groups, function(g) {
         params_g <- wisca_parameters[wisca_parameters$group == g, , drop = FALSE]
         if (sum(params_g$n_tested, na.rm = TRUE) == 0L) {
           return(NULL)
         }
-        priors_g <- create_wisca_priors(params_g)
+        # store for later reassembly
+        params_g_lookup[[g]] <<- params_g
+        priors_g <- create_wisca_priors(params_g, sep = sep)
         lapply(seq_along(chunk_sizes), function(ch) {
           list(group = g, priors = priors_g, n_sims = chunk_sizes[ch])
         })
@@ -773,24 +819,46 @@ antibiogram.default <- function(x,
       jobs <- Filter(Negate(is.null), jobs)
 
       flat <- future.apply::future_lapply(jobs, function(job) {
-        vapply(FUN.VALUE = double(1), seq_len(job$n_sims), function(i) {
-          simulate_coverage(job$priors)
-        })
+        n_p <- length(job$priors$gamma_posterior)
+        n_s <- job$n_sims
+        inc_mat <- matrix(NA_real_, nrow = n_s, ncol = n_p)
+        susc_mat <- matrix(NA_real_, nrow = n_s, ncol = n_p)
+        cov_vec <- numeric(n_s)
+        for (i in seq_len(n_s)) {
+          inc_raw <- stats::rgamma(n_p, shape = job$priors$gamma_posterior, scale = 1)
+          inc_norm <- inc_raw / sum(inc_raw)
+          susc <- stats::rbeta(n_p,
+            shape1 = job$priors$beta_posterior_1,
+            shape2 = job$priors$beta_posterior_2
+          )
+          inc_mat[i, ] <- inc_norm
+          susc_mat[i, ] <- susc
+          cov_vec[i] <- sum(inc_norm * susc)
+        }
+        list(coverage = cov_vec, incidence = inc_mat, susceptibility = susc_mat)
       }, future.seed = TRUE)
 
       # reassemble per group: concatenate chunks, then summarise
       for (g in unique_groups) {
         g_idx <- vapply(jobs, function(j) identical(j$group, g), logical(1))
         if (!any(g_idx)) next
-        sims <- unlist(flat[g_idx], use.names = FALSE)
+        chunks <- flat[g_idx]
+        sims <- unlist(lapply(chunks, `[[`, "coverage"), use.names = FALSE)
+        inc_combined <- do.call(rbind, lapply(chunks, `[[`, "incidence"))
+        susc_combined <- do.call(rbind, lapply(chunks, `[[`, "susceptibility"))
+        colnames(inc_combined) <- as.character(params_g_lookup[[g]]$mo)
+        colnames(susc_combined) <- as.character(params_g_lookup[[g]]$mo)
+        wisca_draws[[g]] <- sims
+        wisca_components[[g]] <- list(incidence = inc_combined, susceptibility = susc_combined)
         out_wisca$coverage[out_wisca$group == g] <- mean(sims)
         ci_vals <- unname(stats::quantile(sims, probs = probs))
         out_wisca$lower_ci[out_wisca$group == g] <- ci_vals[1]
         out_wisca$upper_ci[out_wisca$group == g] <- ci_vals[2]
       }
 
-      if (isTRUE(info)) message_(font_green_bg(" DONE "), as_note = FALSE)
+      if (isTRUE(info)) message_(font_green_bg("\u00a0DONE\u00a0"), as_note = FALSE)
     } else {
+      ## WISCA sequential ----
       progress <- progress_ticker(
         n = length(unique_groups) * simulations,
         n_min = 25,
@@ -802,16 +870,35 @@ antibiogram.default <- function(x,
       for (group in unique_groups) {
         params_current <- wisca_parameters[wisca_parameters$group == group, , drop = FALSE]
         if (sum(params_current$n_tested, na.rm = TRUE) == 0) next
-        priors_current <- create_wisca_priors(params_current)
-        coverage_simulations <- vapply(
-          FUN.VALUE = double(1),
-          seq_len(simulations), function(i) {
-            progress$tick()
-            simulate_coverage(priors_current)
-          }
+        priors_current <- create_wisca_priors(params_current, sep = sep)
+        # replace the vapply block in the sequential branch with:
+        n_pathogens_g <- length(priors_current$gamma_posterior)
+        sim_coverage <- numeric(simulations)
+        sim_incidence <- matrix(NA_real_, nrow = simulations, ncol = n_pathogens_g)
+        sim_susceptibility <- matrix(NA_real_, nrow = simulations, ncol = n_pathogens_g)
+        colnames(sim_incidence) <- as.character(params_current$mo)
+        colnames(sim_susceptibility) <- as.character(params_current$mo)
+
+        for (i in seq_len(simulations)) {
+          progress$tick()
+          inc_raw <- stats::rgamma(n_pathogens_g, shape = priors_current$gamma_posterior, scale = 1)
+          inc_norm <- inc_raw / sum(inc_raw)
+          susc <- stats::rbeta(n_pathogens_g,
+            shape1 = priors_current$beta_posterior_1,
+            shape2 = priors_current$beta_posterior_2
+          )
+          sim_incidence[i, ] <- inc_norm
+          sim_susceptibility[i, ] <- susc
+          sim_coverage[i] <- sum(inc_norm * susc)
+        }
+
+        wisca_draws[[group]] <- sim_coverage
+        wisca_components[[group]] <- list(
+          incidence = sim_incidence,
+          susceptibility = sim_susceptibility
         )
-        out_wisca$coverage[out_wisca$group == group] <- mean(coverage_simulations)
-        ci_vals <- unname(stats::quantile(coverage_simulations, probs = probs))
+        out_wisca$coverage[out_wisca$group == group] <- mean(sim_coverage)
+        ci_vals <- unname(stats::quantile(sim_coverage, probs = probs))
         out_wisca$lower_ci[out_wisca$group == group] <- ci_vals[1]
         out_wisca$upper_ci[out_wisca$group == group] <- ci_vals[2]
       }
@@ -1039,14 +1126,23 @@ antibiogram.default <- function(x,
     }
   }
 
+  if (wisca) {
+    names(wisca_draws) <- out$ab
+    names(wisca_components) <- out$ab
+  }
+
   out <- structure(as_original_data_class(new_df, class(x), extra_class = "antibiogram"),
     has_syndromic_group = has_syndromic_group,
     combine_SI = combine_SI,
     wisca = wisca,
     conf_interval = conf_interval,
+    simulations = if (isFALSE(wisca)) NULL else simulations,
     formatting_type = formatting_type,
-    wisca_parameters = as_original_data_class(wisca_parameters, class(x)),
-    long_numeric = as_original_data_class(long_numeric, class(x))
+    sep = sep,
+    wisca_parameters = if (isFALSE(wisca)) NULL else as_original_data_class(wisca_parameters, class(x)),
+    long_numeric = as_original_data_class(long_numeric, class(x)),
+    wisca_draws = if (isFALSE(wisca)) NULL else wisca_draws,
+    wisca_components = if (isFALSE(wisca)) NULL else wisca_components
   )
   rownames(out) <- NULL
   out
@@ -1079,6 +1175,7 @@ antibiogram.grouped_df <- function(x,
   stop_ifnot(is.null(mo_transform), "{.arg mo_transform} must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, which could include the pathogen information (though not necessary). Nonetheless, this makes {.arg mo_transform} redundant.", call = FALSE)
   stop_ifnot(is.null(syndromic_group), "{.arg syndromic_group} must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, making {.arg syndromic_group} redundant.", call = FALSE)
   meet_criteria(parallel, allow_class = "logical", has_length = 1)
+  meet_criteria(wisca, allow_class = "logical", has_length = 1)
 
   groups <- attributes(x)$groups
   n_groups <- NROW(groups)
@@ -1191,7 +1288,7 @@ antibiogram.grouped_df <- function(x,
       new_out[, col_name] <- col_value
       new_out <- new_out[, c(col_name, setdiff(names(new_out), col_name))] # set place to 1st col
 
-      if (isTRUE(wisca)) {
+      if (wisca) {
         new_wisca_parameters[, col_name] <- col_value
         new_wisca_parameters <- new_wisca_parameters[, c(col_name, setdiff(names(new_wisca_parameters), col_name))] # set place to 1st col
       }
@@ -1211,14 +1308,25 @@ antibiogram.grouped_df <- function(x,
     }
   }
 
+  wisca_draws_all <- NULL
+  wisca_components_all <- NULL
+  if (wisca) {
+    wisca_draws_all <- unlist(lapply(results_raw, function(r) attributes(r)$wisca_draws), recursive = FALSE)
+    wisca_components_all <- unlist(lapply(results_raw, function(r) attributes(r)$wisca_components), recursive = FALSE)
+  }
+
   out <- structure(as_original_data_class(out, class(x), extra_class = "antibiogram"),
     has_syndromic_group = FALSE,
     combine_SI = isTRUE(combine_SI),
-    wisca = isTRUE(wisca),
+    wisca = wisca,
     conf_interval = conf_interval,
+    simulations = if (isFALSE(wisca)) NULL else simulations,
     formatting_type = formatting_type,
-    wisca_parameters = as_original_data_class(wisca_parameters, class(x)),
-    long_numeric = as_original_data_class(long_numeric, class(x))
+    sep = sep,
+    wisca_parameters = if (isFALSE(wisca)) NULL else as_original_data_class(wisca_parameters, class(x)),
+    long_numeric = as_original_data_class(long_numeric, class(x)),
+    wisca_draws = if (isFALSE(wisca)) NULL else wisca_draws_all,
+    wisca_components = if (isFALSE(wisca)) NULL else wisca_components_all
   )
   rownames(out) <- NULL
   out
@@ -1269,7 +1377,7 @@ wisca <- function(x,
   )
 }
 
-create_wisca_priors <- function(data) {
+create_wisca_priors <- function(data, sep) {
   pathogens <- unique(data$mo)
   n_pathogens <- length(pathogens)
 
@@ -1278,9 +1386,28 @@ create_wisca_priors <- function(data) {
   multinomial_obs <- data$n_total
   gamma_posterior <- gamma_prior + multinomial_obs
 
-  # beta priors
-  beta_prior_alpha <- rep(1, times = n_pathogens)
-  beta_prior_beta <- rep(1, times = n_pathogens)
+  # Beta priors: Jeffreys prior Beta(0.5, 0.5) by default (Bielicki et al., 2016)
+  beta_prior_alpha <- rep(0.5, n_pathogens)
+  beta_prior_beta <- rep(0.5, n_pathogens)
+
+  # strongly informative Beta(1, 9999) for intrinsically resistant bug-drug pairs (Bielicki et al., 2016)
+  is_intrinsic <- vapply(
+    FUN.VALUE = logical(1),
+    seq_len(nrow(data)),
+    function(i) {
+      # split by " + ", or wherever `sep` is set to
+      ab_components <- as.ab(trimws(strsplit(as.character(data$ab[i]), trimws(sep), fixed = TRUE)[[1]]))
+      ab_components <- ab_components[!is.na(ab_components)]
+      length(ab_components) > 0 &&
+        all(vapply(
+          FUN.VALUE = logical(1),
+          ab_components,
+          function(ab) any(AMR::intrinsic_resistant$mo == data$mo[i] & AMR::intrinsic_resistant$ab == ab)
+        ))
+    }
+  )
+  beta_prior_alpha[is_intrinsic] <- 1
+  beta_prior_beta[is_intrinsic] <- 9999
 
   r <- data$n_susceptible
   n <- data$n_tested
@@ -1334,9 +1461,9 @@ retrieve_wisca_parameters <- function(wisca_model, ...) {
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(pillar::tbl_sum, antibiogram)
 tbl_sum.antibiogram <- function(x, ...) {
   dims <- paste(format(NROW(x), big.mark = ","), AMR_env$cross_icon, format(NCOL(x), big.mark = ","))
-  names(dims) <- "An antibiogram"
+  names(dims) <- "An Antibiogram"
   if (isTRUE(attributes(x)$wisca)) {
-    dims <- c(dims, Type = paste0("WISCA with ", attributes(x)$conf_interval * 100, "% CI"))
+    dims <- c(dims, Type = paste0("WISCA with ", attributes(x)$conf_interval * 100, "% CI, ", attributes(x)$simulations, " simulations"))
   } else if (isTRUE(attributes(x)$formatting_type >= 13)) {
     dims <- c(dims, Type = paste0("Non-WISCA with ", attributes(x)$conf_interval * 100, "% CI"))
   } else {
@@ -1352,9 +1479,14 @@ tbl_format_footer.antibiogram <- function(x, ...) {
   if (NROW(x) == 0) {
     return(footer)
   }
+  wisca_text <- ifelse(isTRUE(attributes(x)$wisca),
+    paste0("\n# ", font_bold("Be aware"), " that in a WISCA, overlapping CIs indicate ", font_bold("non-inferiority"), "."),
+    ""
+  )
   c(footer, font_subtle(paste0(
     "# Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,\n",
-    "# or use it directly in R Markdown or Quarto, see ", word_wrap("?antibiogram")
+    "# or use it directly in R Markdown or Quarto, see ", word_wrap("?antibiogram"), ".",
+    wisca_text
   )))
 }
 
@@ -1415,8 +1547,29 @@ barplot.antibiogram <- function(height, ...) {
 #' @rdname antibiogram
 # this prevents the requirement for putting the dependency in Imports:
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::autoplot, antibiogram)
-autoplot.antibiogram <- function(object, ...) {
+#' @param geom The plotting style for the point estimate. One of `"pointrange"` (default), `"point"`, `"col"`/`"bar"`, or `"errorbar"`. `"pointrange"` is recommended for coverage data: bars imply a meaningful baseline at zero, which coverage estimates rarely have.
+#' @param ci Logical, whether to draw the credible/confidence interval. Defaults to `TRUE`. Ignored (forced `TRUE`) when `geom = "pointrange"` or `"errorbar"`, since the interval is intrinsic to those geoms.
+#' @param sort Logical, whether to order regimens by coverage. Defaults to `TRUE`. When faceted (per pathogen) or grouped (syndromic), ordering is applied within each panel/group.
+#' @param flip Logical, whether to draw regimens on the y-axis (horizontal). Defaults to `NULL`, which flips automatically when any regimen label exceeds 20 characters (long combination names read poorly on the x-axis). Set `TRUE`/`FALSE` to override.
+#' @param caption Text to show as caption, will explain non-inferiority for WISCA models.
+autoplot.antibiogram <- function(object,
+                                 geom = c("pointrange", "point", "col", "bar", "errorbar"),
+                                 ci = TRUE,
+                                 sort = TRUE,
+                                 flip = NULL,
+                                 caption = NULL,
+                                 ...) {
+  geom <- match.arg(geom)
+  if (geom == "bar") geom <- "col"
+  meet_criteria(ci, allow_class = "logical", has_length = 1)
+  meet_criteria(sort, allow_class = "logical", has_length = 1)
+  meet_criteria(flip, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
+  meet_criteria(caption, allow_class = "logical", has_length = 1, allow_NULL = TRUE, allow_NA = TRUE)
+
   df <- attributes(object)$long_numeric
+  combine_SI <- isTRUE(attributes(object)$combine_SI)
+  is_wisca <- isTRUE(attributes(object)$wisca)
+
   if (!"mo" %in% colnames(df)) {
     df$mo <- ""
   }
@@ -1429,36 +1582,273 @@ autoplot.antibiogram <- function(object, ...) {
   } else if ("syndromic_group" %in% colnames(df)) {
     group_name <- colnames(object)[1]
   }
-  out <- ggplot2::ggplot(df,
+  has_syndromic <- "syndromic_group" %in% colnames(df)
+  has_facet <- !all(as.character(df$mo) == "", na.rm = TRUE)
+
+  # coverage on the percentage scale
+  df$.coverage <- df$coverage * 100
+  df$.lower <- df$lower_ci * 100
+  df$.upper <- df$upper_ci * 100
+
+  # decide orientation: auto-flip when labels are long
+  if (is.null(flip)) {
+    flip <- max(nchar(as.character(df$ab)), na.rm = TRUE) > 20
+  }
+
+  # ordering by coverage, applied within facet/group so each panel ranks correctly
+  if (isTRUE(sort)) {
+    split_keys <- interaction(
+      if (has_facet) as.character(df$mo) else rep("", nrow(df)),
+      if (has_syndromic) df$syndromic_group else rep("", nrow(df)),
+      drop = TRUE
+    )
+    # build a within-group rank, then a global ordered factor whose level order
+    # respects that rank; reorder_within-style without the tidytext dependency
+    ord <- order(split_keys, df$.coverage)
+    df <- df[ord, , drop = FALSE]
+    df$ab <- factor(df$ab, levels = unique(df$ab[order(split_keys[ord], df$.coverage[ord])]))
+    # note: with multiple facets the level order is a compromise (one global
+    # axis), acceptable because each facet shows its own subset in coverage order
+  }
+
+  fill_var <- if (has_syndromic) "syndromic_group" else NULL
+
+  out <- ggplot2::ggplot(
+    df,
     mapping = ggplot2::aes(
       x = ab,
-      y = coverage * 100,
-      fill = if ("syndromic_group" %in% colnames(df)) {
-        syndromic_group
-      } else {
-        NULL
-      }
+      y = .coverage,
+      fill = if (has_syndromic) syndromic_group else NULL,
+      colour = if (has_syndromic) syndromic_group else NULL
     )
-  ) +
-    ggplot2::geom_col(position = ggplot2::position_dodge2(preserve = "single")) +
-    ggplot2::geom_errorbar(
-      mapping = ggplot2::aes(ymin = lower_ci * 100, ymax = upper_ci * 100),
-      position = ggplot2::position_dodge2(preserve = "single", width = 1)
+  )
+
+  dodge <- ggplot2::position_dodge2(preserve = "single", width = 0.6)
+
+  if (geom == "col") {
+    out <- out + ggplot2::geom_col(position = ggplot2::position_dodge2(preserve = "single"))
+    if (isTRUE(ci)) {
+      out <- out + ggplot2::geom_errorbar(
+        mapping = ggplot2::aes(ymin = .lower, ymax = .upper),
+        position = ggplot2::position_dodge2(preserve = "single", width = 1),
+        width = 0.7
+      )
+    }
+  } else if (geom == "point") {
+    out <- out + ggplot2::geom_point(position = dodge, size = 2)
+    if (isTRUE(ci)) {
+      out <- out + ggplot2::geom_errorbar(
+        mapping = ggplot2::aes(ymin = .lower, ymax = .upper),
+        position = dodge, width = 0.4
+      )
+    }
+  } else if (geom == "errorbar") {
+    out <- out + ggplot2::geom_errorbar(
+      mapping = ggplot2::aes(ymin = .lower, ymax = .upper),
+      position = dodge, width = 0.4
+    )
+  } else {
+    # pointrange (default)
+    out <- out + ggplot2::geom_pointrange(
+      mapping = ggplot2::aes(ymin = .lower, ymax = .upper),
+      position = dodge, size = 0.5
+    )
+  }
+
+  if (is.null(caption)) {
+    if (is_wisca) {
+      out <- out + ggplot2::labs(caption = "Overlapping credible intervals:\nclinically non-inferior (Bielicki 2020)")
+    }
+  } else if (!caption %in% c(FALSE, NA)) {
+    out <- out + ggplot2::labs(caption = caption)
+  }
+
+  out <- out +
+    ggplot2::labs(
+      y = ifelse(combine_SI, "%SI", "%S"),
+      x = NULL,
+      fill = if (has_syndromic) group_name else NULL,
+      colour = if (has_syndromic) group_name else NULL
+    )
+
+  if (isTRUE(flip)) {
+    out <- out + ggplot2::coord_flip()
+  }
+
+  if (has_facet) {
+    out <- out + ggplot2::facet_wrap("mo")
+  }
+
+  out
+}
+
+#' @param wisca_plot_type Either `"susceptibility_incidence"` (default) or `"posterior_coverage"`.
+#' @param ... Currently unused.
+#' @rdname antibiogram
+#' @export
+wisca_plot <- function(wisca_model,
+                       wisca_plot_type = c("susceptibility_incidence", "posterior_coverage"),
+                       ...) {
+  stop_ifnot_installed("ggplot2")
+  stop_ifnot(
+    isTRUE(attributes(wisca_model)$wisca),
+    "This function only applies to WISCA models."
+  )
+  wisca_plot_type <- match.arg(wisca_plot_type)
+
+  sep <- attributes(wisca_model)$sep %||% " + "
+
+  if (wisca_plot_type == "posterior_coverage") {
+    plot_wisca_posterior_coverage(wisca_model, sep = sep)
+  } else {
+    plot_wisca_susceptibility_incidence(wisca_model, sep = sep)
+  }
+}
+
+# ---- posterior_coverage ----
+plot_wisca_posterior_coverage <- function(wisca_model, sep) {
+  draws <- attributes(wisca_model)$wisca_draws
+  stop_if(
+    is.null(draws),
+    "No simulation draws found. Re-run {.fun wisca} with the latest AMR version to retain draws."
+  )
+
+  if (!is.null(sep)) {
+    names(draws) <- gsub(sep, paste0(trimws(sep, which = "right"), "\n"), names(draws), fixed = TRUE)
+  }
+
+  df <- do.call(rbind, lapply(names(draws), function(nm) {
+    data.frame(regimen = nm, coverage = draws[[nm]] * 100, stringsAsFactors = FALSE)
+  }))
+
+  medians <- tapply(df$coverage, df$regimen, stats::median)
+  df$regimen <- factor(df$regimen, levels = names(sort(medians, decreasing = TRUE)))
+
+  ggplot2::ggplot(df, ggplot2::aes(x = coverage, fill = regimen, colour = regimen)) +
+    ggplot2::geom_density(alpha = 0.15, linewidth = 0.7) +
+    ggplot2::scale_y_continuous(n.breaks = 5, expand = ggplot2::expansion(c(0, 0.05))) +
+    ggplot2::scale_x_continuous(
+      labels = function(x) paste0(x, "%"),
+      n.breaks = 5,
+      limits = c(NA, 100)
     ) +
     ggplot2::labs(
-      y = ifelse(isTRUE(attributes(object)$combine_SI), "%SI", "%S"),
-      x = NULL,
-      fill = if ("syndromic_group" %in% colnames(df)) {
-        group_name
-      } else {
-        NULL
-      }
+      title = "WISCA",
+      subtitle = "Posteriors coverage",
+      x = "Coverage",
+      y = "Relative likelihood",
+      fill = translate_AMR("Regimen", language = get_AMR_locale()),
+      colour = translate_AMR("Regimen", language = get_AMR_locale())
+    ) +
+    ggplot2::theme(
+      legend.position = "right",
+      legend.key.spacing.y = ggplot2::unit(0.25, "lines"),
+      plot.title = ggplot2::element_text(size = 12, face = "bold")
     )
-  if (!all(as.character(df$mo) == "", na.rm = TRUE)) {
-    out <- out +
-      ggplot2::facet_wrap("mo")
+}
+
+# ---- susceptibility_incidence scatter, faceted by regimen ----
+plot_wisca_susceptibility_incidence <- function(wisca_model, sep) {
+  components <- attributes(wisca_model)$wisca_components
+  stop_if(
+    is.null(components),
+    "No simulation components found. Re-run {.fun wisca} with the latest AMR version to retain draws."
+  )
+
+  df_list <- lapply(names(components), function(g) {
+    comp <- components[[g]]
+    n_sims <- nrow(comp$incidence)
+    n_path <- ncol(comp$incidence)
+    mo_names <- colnames(comp$incidence)
+
+    reg_label <- g
+    if (!is.null(sep)) {
+      reg_label <- gsub(sep, paste0(trimws(sep, which = "right"), "\n"), g, fixed = TRUE)
+    }
+
+    data.frame(
+      regimen = rep(reg_label, n_sims * n_path),
+      pathogen = rep(mo_names, each = n_sims),
+      incidence = as.vector(comp$incidence) * 100,
+      susceptibility = as.vector(comp$susceptibility) * 100,
+      stringsAsFactors = FALSE
+    )
+  })
+  df <- do.call(rbind, df_list)
+  df$pathogen <- mo_shortname(df$pathogen, keep_synonyms = TRUE, info = FALSE)
+
+  # order pathogens by median incidence across all regimens
+  med_inc <- tapply(df$incidence, df$pathogen, stats::median)
+  df$pathogen <- factor(df$pathogen, levels = names(sort(med_inc, decreasing = TRUE)))
+
+  # order regimens by median coverage (from wisca_draws)
+  draws <- attributes(wisca_model)$wisca_draws
+  if (!is.null(draws)) {
+    med_cov <- vapply(names(draws), function(g) stats::median(draws[[g]]), double(1))
+    reg_labels <- unique(df$regimen)
+    # match order: draws names -> display labels
+    draw_order <- names(sort(med_cov, decreasing = TRUE))
+    label_order <- vapply(draw_order, function(g) {
+      if (!is.null(sep)) gsub(sep, paste0(trimws(sep, which = "right"), "\n"), g, fixed = TRUE) else g
+    }, character(1))
+    label_order <- label_order[label_order %in% reg_labels]
+    df$regimen <- factor(df$regimen, levels = label_order)
   }
-  out
+
+  # retrieve coverage + CI
+  coverage <- attributes(wisca_model)$long_numeric
+  if (!is.null(sep)) {
+    coverage$ab <- gsub(sep, paste0(trimws(sep, which = "right"), "\n"), coverage$ab, fixed = TRUE)
+  }
+  df$coverage <- coverage$coverage[match(df$regimen, coverage$ab)] * 100
+  df$lower_ci <- coverage$lower_ci[match(df$regimen, coverage$ab)] * 100
+  df$upper_ci <- coverage$upper_ci[match(df$regimen, coverage$ab)] * 100
+  ci_df <- df[!duplicated(df$regimen), c("regimen", "coverage", "lower_ci", "upper_ci"), drop = FALSE]
+
+  ggplot2::ggplot(df, ggplot2::aes(x = susceptibility, y = incidence, colour = pathogen)) +
+    ggplot2::geom_rect(
+      data = ci_df,
+      ggplot2::aes(xmin = lower_ci, xmax = upper_ci, ymin = -Inf, ymax = Inf),
+      fill = "grey50", alpha = 0.15, colour = NA,
+      inherit.aes = FALSE
+    ) +
+    ggplot2::geom_vline(
+      data = ci_df,
+      ggplot2::aes(xintercept = coverage),
+      linewidth = 0.5,
+      linetype = 2,
+      colour = "grey50",
+      inherit.aes = FALSE
+    ) +
+    ggplot2::geom_point(size = 0.5, alpha = 0.2, shape = 16) +
+    ggplot2::facet_wrap(~regimen) +
+    ggplot2::scale_y_continuous(
+      labels = function(x) paste0(x, "%"),
+      n.breaks = 5
+    ) +
+    ggplot2::scale_x_continuous(
+      labels = function(x) paste0(x, "%"),
+      limits = c(0, 100)
+    ) +
+    ggplot2::labs(
+      title = "WISCA",
+      subtitle = "Susceptibility vs. incidence weight",
+      x = translate_AMR("Susceptibility", language = get_AMR_locale()),
+      y = translate_AMR("Incidence weight (normalised)", language = get_AMR_locale()),
+      colour = translate_AMR("Pathogen", language = get_AMR_locale()),
+      caption = paste(attributes(wisca_model)$simulations, "Monte Carlo simulations")
+    ) +
+    ggplot2::guides(
+      colour = ggplot2::guide_legend(
+        override.aes = list(alpha = 1, size = 3)
+      )
+    ) +
+    ggplot2::theme(
+      legend.position = "right",
+      legend.key.spacing.y = ggplot2::unit(0.25, "lines"),
+      legend.text = ggplot2::element_text(face = "italic"),
+      plot.title = ggplot2::element_text(size = 12, face = "bold")
+    )
 }
 
 #' @method knit_print antibiogram

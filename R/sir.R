@@ -175,7 +175,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @aliases sir
 #' @export
 #' @seealso [as.mic()], [as.disk()], [as.mo()]
-#' @source
+#' @references
 #' For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 #'
 #' - **CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m39/>.
@@ -525,7 +525,7 @@ as.sir.default <- function(x,
   } else if (!all(is.na(x)) && !identical(levels(x), VALID_SIR_LEVELS) && !all(x %in% c(VALID_SIR_LEVELS, NA))) {
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE) && !all(x %in% c(1, 2, 3, 4, 5), na.rm = TRUE)) {
       # check if they are actually MICs or disks
-      if (all_valid_mics(x)) {
+      if (all_valid_mics(x) && !(all_valid_disks(x) && identical(x, floor(x)))) {
         warning_("in {.help [{.fun as.sir}](AMR::as.sir)}: input values were guessed to be MIC values - preferably transform them with {.help [{.fun as.mic}](AMR::as.mic)} before running {.help [{.fun as.sir}](AMR::as.sir)}.")
         return(as.sir(as.mic(x), ...))
       } else if (all_valid_disks(x)) {
@@ -1654,7 +1654,7 @@ as_sir_method <- function(method_short,
     mo_current_other <- structure("UNKNOWN", class = c("mo", "character"))
     # formatted for notes
     mo_formatted <- mo_current_name
-    if (!mo_current_rank %in% c("kingdom", "phylum", "class", "order")) {
+    if (!mo_current_rank %in% c("domain", "kingdom", "phylum", "class", "order")) {
       mo_formatted <- font_italic(mo_formatted, collapse = NULL)
     }
     ab_formatted <- paste0(

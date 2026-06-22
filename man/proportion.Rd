@@ -14,9 +14,6 @@
 \alias{proportion_df}
 \alias{sir_df}
 \title{Calculate Antimicrobial Resistance}
-\source{
-\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
-}
 \usage{
 resistance(..., minimum = 30, as_percent = FALSE,
   only_all_tested = FALSE, guideline = getOption("AMR_guideline",
@@ -274,6 +271,9 @@ if (require("dplyr")) {
     sir_df(translate = FALSE)
 }
 }
+}
+\references{
+\strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 }
 \seealso{
 \code{\link[=count]{count()}} to count resistant and susceptible isolates.

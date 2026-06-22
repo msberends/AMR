@@ -84,6 +84,16 @@ test_that("test-mo.R", {
 
   # expect_warning(as.mo("Acinetobacter calcoaceticus/baumannii complex"))
 
+  # Issue #287: "X complex" fallback to "X" when complex is not a distinct taxon
+  expect_identical(as.character(suppressWarnings(as.mo("Proteus vulgaris complex"))), as.character(suppressWarnings(as.mo("Proteus vulgaris"))))
+  expect_identical(as.character(suppressWarnings(as.mo("Enterobacter cloacae complex"))), as.character(as.mo("Enterobacter cloacae complex")))
+
+  # Issue #288: abbreviated genus with exact species epithet match should win
+  expect_identical(
+    as.character(suppressWarnings(as.mo("S. apiospermum"))),
+    as.character(suppressWarnings(as.mo("Scedosporium apiospermum")))
+  )
+
   # prevalent MO
   expect_identical(
     suppressWarnings(as.character(

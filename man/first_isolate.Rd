@@ -4,13 +4,6 @@
 \alias{first_isolate}
 \alias{filter_first_isolate}
 \title{Determine First Isolates}
-\source{
-Methodology of these functions is strictly based on:
-\itemize{
-\item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
-\item Hindler JF and Stelling J (2007). \strong{Analysis and Presentation of Cumulative Antibiograms: A New Consensus Guideline from the Clinical and Laboratory Standards Institute.} Clinical Infectious Diseases, 44(6), 867-873. \doi{10.1086/511864}
-}
-}
 \usage{
 first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
   col_mo = NULL, col_testcode = NULL, col_specimen = NULL,
@@ -176,6 +169,13 @@ if (require("dplyr")) {
     mutate(first = first_isolate(info = TRUE)) \%>\%
     select(ward, date, patient, mo, first)
 }
+}
+}
+\references{
+Methodology of these functions is strictly based on:
+\itemize{
+\item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
+\item Hindler JF and Stelling J (2007). \strong{Analysis and Presentation of Cumulative Antibiograms: A New Consensus Guideline from the Clinical and Laboratory Standards Institute.} Clinical Infectious Diseases, 44(6), 867-873. \doi{10.1086/511864}
 }
 }
 \seealso{

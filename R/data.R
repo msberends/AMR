@@ -77,13 +77,13 @@
 #'
 #' Synonyms (i.e. trade names) were derived from the PubChem Compound ID (column `cid`) and are consequently only available where a CID is available.
 #' @inheritSection AMR Download Our Reference Data
-#' @source
+#' @references
 #'
 #' * `r TAXONOMY_VERSION$ATC_DDD$citation` Accessed from <`r TAXONOMY_VERSION$ATC_DDD$url`> on `r documentation_date(TAXONOMY_VERSION$ATC_DDD$accessed_date)`.
 #'
 #' * `r TAXONOMY_VERSION$LOINC$citation` Accessed from <`r TAXONOMY_VERSION$LOINC$url`> on `r documentation_date(TAXONOMY_VERSION$LOINC$accessed_date)`.
 #'
-#' * European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
+#' * European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: <https://ec.europa.eu/health/documents/community-register/html/index_en.htm>
 #' @inheritSection WHOCC WHOCC
 #' @seealso [microorganisms], [intrinsic_resistant]
 #' @examples
@@ -107,10 +107,11 @@
 #' - `mo`\cr ID of microorganism as used by this package. ***This is a unique identifier.***
 #' - `fullname`\cr Full name, like `"Escherichia coli"`. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. ***This is a unique identifier.***
 #' - `status` \cr Status of the taxon, either `r vector_or(microorganisms$status, documentation = TRUE)`
-#' - `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism. Note that for fungi, *phylum* is equal to their taxonomic *division*. Also, for fungi, *subkingdom* and *subdivision* were left out since they do not occur in the bacterial taxonomy.
+#' - `domain`, `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `species`, `subspecies`\cr Taxonomic rank of the microorganism. Note that for fungi, *phylum* is used for their taxonomic *division*. Also, for fungi, *subkingdom* and *subdivision* were left out since they do not occur in the bacterial taxonomy. For all species outside the domains of Bacteria and Archaea, the `domain` and `kingdom` are identical.
 #' - `rank`\cr Text of the taxonomic rank of the microorganism, such as `"species"` or `"genus"`
-#' - `ref`\cr Author(s) and year of related scientific publication. This contains only the *first surname* and year of the *latest* authors, e.g. "Wallis *et al.* 2006 *emend.* Smith and Jones 2018" becomes "Smith *et al.*, 2018". This field is directly retrieved from the source specified in the column `source`. Moreover, accents were removed to comply with CRAN that only allows ASCII characters.
+#' - `ref`\cr Abbreviated authority citation for the nomenclatural act that established the current name combination, following ICNP conventions. For species described in their current genus (*sp. nov.*), this is the original description author(s) and year. For species transferred to a different genus (*comb. nov.*), this is the reclassification author(s) and year. Emendations are excluded. For synonyms, this is the authority under which the synonym was originally published. This field is directly retrieved from the source specified in the column `source`. Diacritics were removed to comply with CRAN, that only allows ASCII characters.
 #' - `oxygen_tolerance` \cr Oxygen tolerance, either `r vector_or(microorganisms$oxygen_tolerance, documentation = TRUE)`. These data were retrieved from BacDive (see *Source*). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently `r round(length(microorganisms$oxygen_tolerance[which(!is.na(microorganisms$oxygen_tolerance))]) / nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]) * 100, 1)`% of all `r format_included_data_number(nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]))` bacteria in the data set contain an oxygen tolerance.
+#' - `morphology` \cr Morphology (cell shape), either `r vector_or(microorganisms$morphology, documentation = TRUE)`. These data were retrieved from BacDive (see *Source*). Genera that are clinically established as coccobacilli (the HACEK group and beyond, such as *Haemophilus* and *Acinetobacter*) are classified as such regardless of BacDive majority vote. Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus. Currently `r round(length(microorganisms$morphology[which(!is.na(microorganisms$morphology))]) / nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]) * 100, 1)`% of all `r format_included_data_number(nrow(microorganisms[which(microorganisms$kingdom == "Bacteria"), ]))` bacteria in the data set contain a morphology.
 #' - `source`\cr Either `r vector_or(microorganisms$source, documentation = TRUE)` (see *Source*)
 #' - `lpsn`\cr Identifier ('Record number') of `r TAXONOMY_VERSION$LPSN$name`. This will be the first/highest LPSN identifier to keep one identifier per row. For example, *Acetobacter ascendens* has LPSN Record number 7864 and 11011. Only the first is available in the `microorganisms` data set. ***This is a unique identifier***, though available for only `r format_included_data_number(sum(!is.na(microorganisms$lpsn)))` records.
 #' - `lpsn_parent`\cr LPSN identifier of the parent taxon
@@ -150,7 +151,7 @@
 #'
 #' The syntax used to transform the original data to a cleansed \R format, can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_microorganisms.R).
 #' @inheritSection AMR Download Our Reference Data
-#' @source
+#' @references
 #' Taxonomic entries were imported in this order of importance:
 #' 1. `r TAXONOMY_VERSION$LPSN$name`:\cr\cr
 #'    `r TAXONOMY_VERSION$LPSN$citation` Accessed from <`r TAXONOMY_VERSION$LPSN$url`> on `r documentation_date(TAXONOMY_VERSION$LPSN$accessed_date)`.
@@ -339,6 +340,7 @@
 #' This data set is internally used by:
 #' * [not_intrinsic_resistant()] (an [antimicrobial selector][antimicrobial_selectors])
 #' * [mo_is_intrinsic_resistant()]
+#' * [wisca()] to model \eqn{\beta(1, 9999)} for resistant bug-drug combinations, per \doi{10.1093/jac/dkv397}
 #' @inheritSection AMR Download Our Reference Data
 #' @examples
 #' intrinsic_resistant

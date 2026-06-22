@@ -5,7 +5,27 @@
 \alias{AMR-package}
 \alias{AMR}
 \title{The \code{AMR} Package}
-\source{
+\description{
+Welcome to the \code{AMR} package.
+
+The \code{AMR} package is a peer-reviewed, \href{https://amr-for-r.org/#copyright}{free and open-source} R package with \href{https://en.wikipedia.org/wiki/Dependency_hell}{zero dependencies} to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. \strong{Our aim is to provide a standard} for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of \href{https://amr-for-r.org/authors.html}{many different researchers} from around the globe to make this a successful and durable project!
+
+This work was published in the Journal of Statistical Software (Volume 104(3); \doi{10.18637/jss.v104.i03}) and formed the basis of two PhD theses (\doi{10.33612/diss.177417131} and \doi{10.33612/diss.192486375}).
+
+After installing this package, R knows \href{https://amr-for-r.org/reference/microorganisms.html}{\strong{~97 000 distinct microbial species}} (updated June 2024) and all \href{https://amr-for-r.org/reference/antimicrobials.html}{\strong{~620 antimicrobial and antiviral drugs}} by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). \strong{It was designed to work in any setting, including those with very limited resources}. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the \href{https://www.rug.nl}{University of Groningen} and the \href{https://www.umcg.nl}{University Medical Center Groningen}.
+
+The \code{AMR} package is available in English, Arabic, Bengali, Chinese, Czech, Danish, Dutch, Finnish, French, German, Greek, Hindi, Indonesian, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swahili, Swedish, Turkish, Ukrainian, Urdu, and Vietnamese. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
+}
+\section{Download Our Reference Data}{
+
+All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
+
+Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw/datasets}{our GitHub repository}.
+}
+
+\references{
 To cite AMR in publications use:
 
 Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C (2022). "AMR: An R Package for Working with Antimicrobial Resistance Data." \emph{Journal of Statistical Software}, \emph{104}(3), 1-31. \doi{10.18637/jss.v104.i03}
@@ -25,26 +45,6 @@ A BibTeX entry for LaTeX users is:
 }
 }
 }
-\description{
-Welcome to the \code{AMR} package.
-
-The \code{AMR} package is a peer-reviewed, \href{https://amr-for-r.org/#copyright}{free and open-source} R package with \href{https://en.wikipedia.org/wiki/Dependency_hell}{zero dependencies} to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. \strong{Our aim is to provide a standard} for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of \href{https://amr-for-r.org/authors.html}{many different researchers} from around the globe to make this a successful and durable project!
-
-This work was published in the Journal of Statistical Software (Volume 104(3); \doi{10.18637/jss.v104.i03}) and formed the basis of two PhD theses (\doi{10.33612/diss.177417131} and \doi{10.33612/diss.192486375}).
-
-After installing this package, R knows \href{https://amr-for-r.org/reference/microorganisms.html}{\strong{~79 000 distinct microbial species}} (updated June 2024) and all \href{https://amr-for-r.org/reference/antimicrobials.html}{\strong{~620 antimicrobial and antiviral drugs}} by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). \strong{It was designed to work in any setting, including those with very limited resources}. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the \href{https://www.rug.nl}{University of Groningen} and the \href{https://www.umcg.nl}{University Medical Center Groningen}.
-
-The \code{AMR} package is available in English, Arabic, Bengali, Chinese, Czech, Danish, Dutch, Finnish, French, German, Greek, Hindi, Indonesian, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swahili, Swedish, Turkish, Ukrainian, Urdu, and Vietnamese. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
-}
-\section{Download Our Reference Data}{
-
-All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.
-
-For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
-
-Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct download links}, or explore the actual files in \href{https://github.com/msberends/AMR/tree/main/data-raw/datasets}{our GitHub repository}.
-}
-
 \seealso{
 Useful links:
 \itemize{

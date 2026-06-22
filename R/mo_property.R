@@ -42,21 +42,23 @@
 #' - `mo_ref("Enterobacter aerogenes")` will return `"Tindall et al., 2017"` (with a note about the renaming)
 #' - `mo_ref("Enterobacter aerogenes", keep_synonyms = TRUE)` will return `"Hormaeche et al., 1960"` (with a once-per-session warning that the name is outdated)
 #'
-#' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will be considered *Escherichia coli*. As a result, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
+#' [mo_ref()] returns the abbreviated authority of the nomenclatural act that created the queried name combination. When `keep_synonyms = FALSE` (default), this is the authority of the currently accepted name. When `keep_synonyms = TRUE`, this is the authority under which the queried (possibly outdated) name was published. Emendations (changes to the species description without a name change) are not reflected; only the combination or original description authority is returned.
 #'
-#' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
+#' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will always be considered *Escherichia coli*. As a result, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
+#'
+#' Following the formal introduction of the new kingdom rank into prokaryotic nomenclature by G"{o}ker and Oren (2024, \doi{10.1099/ijsem.0.006242}), [mo_kingdom()] and [mo_domain()] return different results for bacteria and archaea: [mo_kingdom()] returns the new formal kingdom (e.g. "Pseudomonadati", "Bacillati"), while [mo_domain()] returns the new domain (e.g. "Bacteria", "Archaea"). For non-prokaryotic organisms, both functions return identical results.
 #'
 #' Determination of human pathogenicity ([mo_pathogenicity()]) is strongly based on Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}). This function returns a [factor] with the levels *Pathogenic*, *Potentially pathogenic*, *Non-pathogenic*, and *Unknown*.
 #'
-#' Determination of the Gram stain ([mo_gramstain()]) will be based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were later renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' Determination of the Gram stain ([mo_gramstain()] is based on the taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only considered these phyla as Posibacteria: Actinobacteria, Chloroflexi, Firmicutes, and Tenericutes. These phyla were later renamed to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021, [PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in these phyla are considered Gram-positive in this `AMR` package, except for members of the class Negativicutes (within phylum Bacillota) which are Gram-negative. All other bacteria are considered Gram-negative. Species outside the kingdom of Bacteria will return a value `NA`. Functions [mo_is_gram_negative()] and [mo_is_gram_positive()] always return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code is `UNKNOWN`), thus always return `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
-#' Determination of yeasts ([mo_is_yeast()]) will be based on the taxonomic kingdom and class. *Budding yeasts* are yeasts that reproduce asexually through a process called budding, where a new cell develops from a small protrusion on the parent cell. Taxonomically, these are members of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes) or Pichiomycetes. *True yeasts* quite specifically refers to yeasts in the underlying order Saccharomycetales (such as *Saccharomyces cerevisiae*). Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes or Pichiomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
+#' Determination of yeasts ([mo_is_yeast()]) is based on the taxonomic kingdom and class. *Budding yeasts* are yeasts that reproduce asexually through a process called budding, where a new cell develops from a small protrusion on the parent cell. Taxonomically, these are members of the phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes) or Pichiomycetes. *True yeasts* quite specifically refers to yeasts in the underlying order Saccharomycetales (such as *Saccharomyces cerevisiae*). Thus, for all microorganisms that are member of the taxonomic class Saccharomycetes or Pichiomycetes, the function will return `TRUE`. It returns `FALSE` otherwise (or `NA` when the input is `NA` or the MO code is `UNKNOWN`).
 #'
-#' Determination of intrinsic resistance ([mo_is_intrinsic_resistant()]) will be based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antimicrobials).
+#' Determination of intrinsic resistance ([mo_is_intrinsic_resistant()]) is based on the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`. The [mo_is_intrinsic_resistant()] function can be vectorised over both argument `x` (input for microorganisms) and `ab` (input for antimicrobials).
 #'
-#' Determination of bacterial oxygen tolerance ([mo_oxygen_tolerance()]) will be based on BacDive, see *Source*. The function [mo_is_anaerobic()] only returns `TRUE` if the oxygen tolerance is `"anaerobe"`, indicting an obligate anaerobic species or genus. It always returns `FALSE` for species outside the taxonomic kingdom of Bacteria.
+#' Determination of both bacterial oxygen tolerance ([mo_oxygen_tolerance()]) and morphology ([mo_morphology()]) are  based on BacDive, see *Source*. The function [mo_is_anaerobic()] only returns `TRUE` if the oxygen tolerance is `"anaerobe"`, indicating an obligate anaerobic species or genus. It always returns `FALSE` for species outside the taxonomic kingdom of Bacteria.
 #'
-#' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species. [This MycoBank URL](`r TAXONOMY_VERSION$MycoBank$url`) will be used for fungi wherever available , [this LPSN URL](`r TAXONOMY_VERSION$MycoBank$url`) for bacteria wherever available, and [this GBIF link](`r TAXONOMY_VERSION$GBIF$url`) otherwise.
+#' The function [mo_url()] will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species. [This MycoBank URL](`r TAXONOMY_VERSION$MycoBank$url`) is used for fungi wherever available , [this LPSN URL](`r TAXONOMY_VERSION$MycoBank$url`) for bacteria wherever available, and [this GBIF link](`r TAXONOMY_VERSION$GBIF$url`) otherwise.
 #'
 #' SNOMED codes ([mo_snomed()]) was last updated on `r documentation_date(TAXONOMY_VERSION$SNOMED$accessed_date)`. See *Source* and the [microorganisms] data set for more info.
 #'
@@ -100,8 +102,10 @@
 #'
 #' # other properties ---------------------------------------------------------
 #'
-#' mo_pathogenicity("Klebsiella pneumoniae")
+#' mo_morphology("Klebsiella pneumoniae")
 #' mo_gramstain("Klebsiella pneumoniae")
+#' mo_gramstain("Klebsiella pneumoniae", add_morphology = TRUE)
+#' mo_pathogenicity("Klebsiella pneumoniae")
 #' mo_snomed("Klebsiella pneumoniae")
 #' mo_type("Klebsiella pneumoniae")
 #' mo_rank("Klebsiella pneumoniae")
@@ -249,8 +253,8 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   }
 
   # get first char of genus and complete species in English
-  genera <- mo_genus(x.mo, language = NULL, keep_synonyms = keep_synonyms)
-  shortnames <- paste0(substr(genera, 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL, keep_synonyms = keep_synonyms)))
+  genera <- mo_genus(x.mo, language = NULL, keep_synonyms = keep_synonyms, ...)
+  shortnames <- paste0(substr(genera, 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL, keep_synonyms = keep_synonyms, ...)))
 
   # exceptions for where no species is known
   shortnames[shortnames %like% ".[.] spp[.]"] <- genera[shortnames %like% ".[.] spp[.]"]
@@ -262,7 +266,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   # unknown species etc.
   shortnames[shortnames %like% "unknown"] <- paste0("(", trimws2(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
 
-  shortnames[mo_rank(x.mo) %in% c("kingdom", "phylum", "class", "order", "family")] <- mo_name(x.mo[mo_rank(x.mo) %in% c("kingdom", "phylum", "class", "order", "family")], language = NULL, keep_synonyms = keep_synonyms)
+  shortnames[mo_rank(x.mo, keep_synonyms = TRUE, ...) %in% c("domain", "kingdom", "phylum", "class", "order", "family")] <- mo_name(x.mo[mo_rank(x.mo, keep_synonyms = TRUE, ...) %in% c("domain", "kingdom", "phylum", "class", "order", "family")], language = NULL, keep_synonyms = keep_synonyms, ...)
 
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_uncertainties(metadata)
@@ -379,7 +383,18 @@ mo_kingdom <- function(x, language = get_AMR_locale(), keep_synonyms = getOption
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "kingdom", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+  for (new_kingdom in c("Archaea", "Bacteria")) {
+    if (any(mo_domain(x.mo) == new_kingdom, na.rm = TRUE) && message_not_thrown_before("mo_kingdom", new_kingdom, entire_session = TRUE)) {
+      message_(
+        "Since {.pkg AMR v3.1.0}, {.help [{.fun mo_kingdom}](AMR::mo_kingdom)} returns the taxonomic kingdom as defined by G\u00f6ker and Oren (2024), who formally introduced a new kingdom rank into prokaryotic nomenclature ({.href [DOI: 10.1099/ijsem.0.006242](https://doi.org/10.1099/ijsem.0.006242)}). ",
+        "{.strong The former kingdom of ", new_kingdom, "} was divided into four new kingdoms under the {.strong new domain of ", new_kingdom, "}. ",
+        "For the old behaviour, use {.help [{.fun mo_domain}](AMR::mo_domain)}. ",
+        "This note will be shown once per session."
+      )
+    }
+  }
+  translate_into_language(mo_validate(x = x.mo, property = "kingdom", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -389,7 +404,11 @@ mo_domain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption(
     # this tries to find the data and an 'mo' column
     x <- find_mo_col(fn = "mo_domain")
   }
-  mo_kingdom(x = x, language = language, keep_synonyms = keep_synonyms, ...)
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+
+  translate_into_language(mo_validate(x = x, property = "domain", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -404,7 +423,8 @@ mo_type <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  out <- mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  out <- mo_domain(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  out <- gsub(" \\{.*\\}", "", out) # strip curly brackets
   out[which(mo_is_yeast(x.mo, keep_synonyms = keep_synonyms))] <- "Yeasts"
   translate_into_language(out, language = language, only_unknown = FALSE)
 }
@@ -440,7 +460,7 @@ mo_pathogenicity <- function(x, language = get_AMR_locale(), keep_synonyms = get
   metadata <- get_mo_uncertainties()
 
   prev <- AMR_env$MO_lookup$prevalence[match(x.mo, AMR_env$MO_lookup$mo)]
-  kngd <- AMR_env$MO_lookup$kingdom[match(x.mo, AMR_env$MO_lookup$mo)]
+  kngd <- AMR_env$MO_lookup$domain[match(x.mo, AMR_env$MO_lookup$mo)]
   rank <- AMR_env$MO_lookup$rank[match(x.mo, AMR_env$MO_lookup$mo)]
 
   out <- factor(
@@ -460,8 +480,9 @@ mo_pathogenicity <- function(x, language = get_AMR_locale(), keep_synonyms = get
 }
 
 #' @rdname mo_property
+#' @param add_morphology a [logical] to indicate whether the morphology (from [mo_morphology()]) should be added to the Gram stain result, e.g. `"Gram-negative rods"` instead of `"Gram-negative"`. The default is `FALSE`.
 #' @export
-mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), add_morphology = FALSE, ...) {
   if (missing(x)) {
     # this tries to find the data and an 'mo' column
     x <- find_mo_col(fn = "mo_gramstain")
@@ -469,13 +490,14 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   meet_criteria(x, allow_NA = TRUE)
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+  meet_criteria(add_morphology, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
 
   x <- rep(NA_character_, length(x))
   # make all bacteria Gram negative
-  x[mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms) == "Bacteria"] <- "Gram-negative"
+  x[mo_domain(x.mo, language = NULL, keep_synonyms = keep_synonyms) == "Bacteria"] <- "Gram-negative"
   # overwrite these 4 phyla with Gram-positives
   # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097 (Cavalier-Smith, 2002)
   x[(mo_phylum(x.mo, language = NULL, keep_synonyms = keep_synonyms) %in% c(
@@ -493,6 +515,12 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
     mo_class(x.mo, language = NULL, keep_synonyms = keep_synonyms) != "Negativicutes")
   # and of course our own ID for Gram-positives
   | x.mo %in% c("B_GRAMP", "B_ANAER-POS")] <- "Gram-positive"
+
+  if (isTRUE(add_morphology)) {
+    morphs <- mo_morphology(x.mo, language = NULL)
+    morphs[is.na(x)] <- ""
+    x[!is.na(x)] <- paste(x[!is.na(x)], tolower(morphs[!is.na(x)]))
+  }
 
   load_mo_uncertainties(metadata)
   translate_into_language(x, language = language, only_unknown = FALSE)
@@ -552,12 +580,12 @@ mo_is_yeast <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
 
-  x.kingdom <- mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  x.domain <- mo_domain(x.mo, language = NULL, keep_synonyms = keep_synonyms)
   x.class <- mo_class(x.mo, language = NULL, keep_synonyms = keep_synonyms)
 
   load_mo_uncertainties(metadata)
 
-  out <- x.mo == "F_YEAST" | (x.kingdom == "Fungi" & x.class %in% c("Saccharomycetes", "Pichiomycetes"))
+  out <- x.mo == "F_YEAST" | (x.domain == "Fungi" & x.class %in% c("Saccharomycetes", "Pichiomycetes"))
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
 }
@@ -632,6 +660,21 @@ mo_is_anaerobic <- function(x, language = get_AMR_locale(), keep_synonyms = getO
   out <- oxygen == "anaerobe" & !is.na(oxygen)
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
+}
+
+#' @rdname mo_property
+#' @export
+mo_morphology <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("AMR_keep_synonyms", FALSE), ...) {
+  if (missing(x)) {
+    # this tries to find the data and an 'mo' column
+    x <- find_mo_col(fn = "mo_morphology")
+  }
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+
+  out <- mo_validate(x = x, property = "morphology", language = language, keep_synonyms = keep_synonyms, ...)
+  gsub("^(\\w)", "\\U\\1", out, perl = TRUE)
 }
 
 #' @rdname mo_property
@@ -768,6 +811,7 @@ mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   metadata <- get_mo_uncertainties()
 
   out <- list(
+    domain = mo_domain(x, language = language, keep_synonyms = keep_synonyms),
     kingdom = mo_kingdom(x, language = language, keep_synonyms = keep_synonyms),
     phylum = mo_phylum(x, language = language, keep_synonyms = keep_synonyms),
     class = mo_class(x, language = language, keep_synonyms = keep_synonyms),
@@ -885,6 +929,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
         status = mo_status(y, language = language, keep_synonyms = keep_synonyms),
         synonyms = mo_synonyms(y, keep_synonyms = keep_synonyms),
         gramstain = mo_gramstain(y, language = language, keep_synonyms = keep_synonyms),
+        morphology = mo_morphology(y, language = language, keep_synonyms = keep_synonyms),
         oxygen_tolerance = mo_oxygen_tolerance(y, language = language, keep_synonyms = keep_synonyms),
         url = unname(mo_url(y, open = FALSE, keep_synonyms = keep_synonyms)),
         ref = mo_ref(y, keep_synonyms = keep_synonyms),
@@ -978,11 +1023,11 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
 
   dots <- list(...)
   Becker <- dots$Becker
-  if (is.null(Becker) || property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
+  if (is.null(Becker) || property %in% c("domain", "kingdom", "phylum", "class", "order", "family", "genus")) {
     Becker <- FALSE
   }
   Lancefield <- dots$Lancefield
-  if (is.null(Lancefield) || property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
+  if (is.null(Lancefield) || property %in% c("domain", "kingdom", "phylum", "class", "order", "family", "genus")) {
     Lancefield <- FALSE
   }
   has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")

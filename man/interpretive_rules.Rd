@@ -7,19 +7,6 @@
 \alias{clsi_rules}
 \alias{eucast_dosage}
 \title{Apply Interpretive Rules}
-\source{
-\itemize{
-\item EUCAST Expert Rules. Version 2.0, 2012.\cr
-Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60; \doi{https://doi.org/10.1111/j.1469-0691.2011.03703.x}
-\item EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{(link)}
-\item EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{(link)}
-\item EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.3, 2021. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf}{(link)}
-\item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx}{(link)}
-\item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx}{(link)}
-\item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx}{(link)}
-\item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 12.0, 2022. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx}{(link)}
-}
-}
 \usage{
 interpretive_rules(x, col_mo = NULL, info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
@@ -86,7 +73,7 @@ To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive
 \strong{Note:} This function does not translate MIC or disk values to SIR values. Use \code{\link[=as.sir]{as.sir()}} for that. \cr
 \strong{Note:} When ampicillin (AMP, J01CA01) is not available but amoxicillin (AMX, J01CA04) is, the latter will be used for all rules where there is a dependency on ampicillin. These drugs are interchangeable when it comes to expression of antimicrobial resistance. \cr
 
-The file containing all interpretive rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/interpretive_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The \code{AMR} package contains the full microbial taxonomy updated until June 24th, 2024, see \link{microorganisms}.
+The file containing all interpretive rules is located here: \url{https://github.com/msberends/AMR/blob/main/data-raw/interpretive_rules.tsv}.  \strong{Note:} Old taxonomic names are replaced with the current taxonomy where applicable. For example, \emph{Ochrobactrum anthropi} was renamed to \emph{Brucella anthropi} in 2020; the original EUCAST rules v3.1 and v3.2 did not yet contain this new taxonomic name. The \code{AMR} package contains the full microbial taxonomy updated until 7th of May, 2026, see \link{microorganisms}.
 \subsection{Custom Rules}{
 
 Custom rules can be created using \code{\link[=custom_interpretive_rules]{custom_interpretive_rules()}}, e.g.:
@@ -160,4 +147,17 @@ head(c)
 eucast_dosage(c("tobra", "genta", "cipro"), "iv")
 
 eucast_dosage(c("tobra", "genta", "cipro"), "iv", version_breakpoints = 10)
+}
+\references{
+\itemize{
+\item EUCAST Expert Rules. Version 2.0, 2012.\cr
+Leclercq et al. \strong{EUCAST expert rules in antimicrobial susceptibility testing.} \emph{Clin Microbiol Infect.} 2013;19(2):141-60; \doi{https://doi.org/10.1111/j.1469-0691.2011.03703.x}
+\item EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf}{(link)}
+\item EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf}{(link)}
+\item EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.3, 2021. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf}{(link)}
+\item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 9.0, 2019. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx}{(link)}
+\item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 10.0, 2020. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx}{(link)}
+\item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 11.0, 2021. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx}{(link)}
+\item EUCAST Breakpoint tables for interpretation of MICs and zone diameters. Version 12.0, 2022. \href{https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx}{(link)}
+}
 }

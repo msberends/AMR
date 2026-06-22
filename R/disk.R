@@ -83,34 +83,31 @@ as.disk <- function(x, na.rm = FALSE) {
 
     na_before <- length(x[is.na(x)])
 
-    # heavily based on cleaner::clean_double():
-    clean_double2 <- function(x, remove = "[^0-9.,-]", fixed = FALSE) {
+    # extract a plausible numeric disk zone value from character input
+    extract_disk_value <- function(x) {
+      x <- as.character(x)
+      # normalise decimal separators
       x <- gsub(",", ".", x, fixed = TRUE)
-      # remove ending dot/comma
-      x <- gsub("[,.]$", "", x)
-      # only keep last dot/comma
-      reverse <- function(x) vapply(FUN.VALUE = character(1), lapply(strsplit(x, NULL), rev), paste, collapse = "")
-      x <- sub("{{dot}}", ".",
-        gsub(".", "",
-          reverse(sub(".", "}}tod{{",
-            reverse(x),
-            fixed = TRUE
-          )),
-          fixed = TRUE
-        ),
-        fixed = TRUE
-      )
-      x_clean <- gsub(remove, "", x, ignore.case = TRUE, fixed = fixed)
-      # remove everything that is not a number or dot
-      as.double(gsub("[^0-9.]+", "", x_clean))
+      # strip known context: leading/trailing whitespace, SIR interpretations,
+      # comparison operators, semicolons, and surrounding whitespace
+      x <- trimws(x)
+      # remove trailing SIR interpretation (e.g., "42; S", "28 R")
+      x <- gsub("[;[:space:]]+[SIRsir]$", "", x)
+      # remove leading comparison operators (e.g., ">=20", "<=6")
+      x <- gsub("^[<>=]+\\s*", "", x)
+      x <- trimws(x)
+      # now the remainder must be a plausible standalone number
+      out <- rep(NA_real_, length(x))
+      is_numeric <- grepl("^[0-9]+\\.?[0-9]*$", x)
+      out[is_numeric] <- as.double(x[is_numeric])
+      out
     }
 
-    # round up and make it an integer
-    x <- as.integer(ceiling(clean_double2(x)))
+    # round up and coerce to integer
+    x <- as.integer(ceiling(extract_disk_value(x)))
+    # valid disk diffusion zones: 0-50 mm
+    x[x < 0 | x > 50] <- NA_integer_
 
-    # disks can never be less than 0 mm or more than 50 mm
-    x[x < 0 | x > 99] <- NA_integer_
-    x[x > 50] <- 50L
     na_after <- length(x[is.na(x)])
 
     if (na_before != na_after) {

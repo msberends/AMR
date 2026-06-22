@@ -45,7 +45,7 @@
 #' For maximum compatibility, we also provide machine-readable, tab-separated plain text files suitable for use in any software, including laboratory information systems.
 #'
 #' Visit [our website for direct download links](https://amr-for-r.org/articles/datasets.html), or explore the actual files in [our GitHub repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
-#' @source
+#' @references
 #' To cite AMR in publications use:
 #'
 #' Berends MS, Luz CF, Friedrich AW, Sinha BNM, Albers CJ, Glasner C (2022). "AMR: An R Package for Working with Antimicrobial Resistance Data." _Journal of Statistical Software_, *104*(3), 1-31. \doi{10.18637/jss.v104.i03}

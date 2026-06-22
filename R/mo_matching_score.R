@@ -47,7 +47,7 @@
 #' * \eqn{l_n} is the length of \eqn{n};
 #' * \eqn{lev} is the [Levenshtein distance function](https://en.wikipedia.org/wiki/Levenshtein_distance) (counting any insertion as 1, and any deletion or substitution as 2) that is needed to change \eqn{x} into \eqn{n};
 #' * \eqn{p_n} is the human pathogenic prevalence group of \eqn{n}, as described below;
-#' * \eqn{k_n} is the taxonomic kingdom of \eqn{n}, set as Bacteria = 1, Fungi = 1.25, Protozoa = 1.5, Chromista = 1.75, Archaea = 2, others = 3.
+#' * \eqn{k_n} is the taxonomic domain ('kingdom' until taxonomic reclassification of 2024) of \eqn{n}, set as Bacteria = 1, Fungi = 1.25, Protozoa = 1.5, Chromista = 1.75, Archaea = 2, others = 3.
 #'
 #' The grouping into human pathogenic prevalence \eqn{p} is based on recent work from Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}) who extensively studied medical-scientific literature to categorise all bacterial species into these groups:
 #'
@@ -122,8 +122,8 @@ mo_matching_score <- function(x, n) {
 
   # human pathogenic prevalence (1 to 3), see ?as.mo
   p_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "prevalence", drop = TRUE]
-  # kingdom index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
-  k_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "kingdom_index", drop = TRUE]
+  # domain index (Bacteria = 1, Fungi = 2, Protozoa = 3, Archaea = 4, others = 5)
+  k_n <- AMR_env$MO_lookup[match(n, AMR_env$MO_lookup$fullname), "domain_index", drop = TRUE]
 
   # matching score:
   (l_n - 0.5 * l_n.lev) / (l_n * p_n * k_n)

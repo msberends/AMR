@@ -161,11 +161,11 @@ key_antimicrobials <- function(x = NULL,
   if (is.null(col_mo)) {
     warning_("in {.fun key_antimicrobials}: no column found for {.arg col_mo}, ignoring antibiotics set in {.arg gram_negative} and {.arg gram_positive}, and antimycotics set in {.arg antifungal}")
     gramstain <- NA_character_
-    kingdom <- NA_character_
+    domain <- NA_character_
   } else {
     x.mo <- as.mo(x[, col_mo, drop = TRUE])
     gramstain <- mo_gramstain(x.mo, language = NULL)
-    kingdom <- mo_kingdom(x.mo, language = NULL)
+    domain <- mo_domain(x.mo, language = NULL)
   }
 
   AMR_string <- function(x, values, name, filter, cols = cols) {
@@ -219,11 +219,11 @@ key_antimicrobials <- function(x = NULL,
     cols = cols
   )
 
-  key_ab[which(kingdom == "Fungi")] <- AMR_string(
+  key_ab[which(domain == "Fungi")] <- AMR_string(
     x = x,
     values = antifungal,
     name = "antifungal",
-    filter = kingdom == "Fungi",
+    filter = domain == "Fungi",
     cols = cols
   )
 
