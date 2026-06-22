@@ -89,12 +89,12 @@ But in real data, incidence and susceptibility are **estimated from samples**, s
 Let:
 
 - $K$ be the number of pathogens,
-- $\alpha = (1, 1, \ldots, 1)$ be a **Dirichlet** prior (uniform),
-- $n = (n_1, \ldots, n_K)$ be the observed counts per species.
+- $\boldsymbol{\alpha} = (1, 1, \ldots, 1)$ be a $\text{Dirichlet}$ prior (uniform),
+- $\boldsymbol{n} = (n_1, \ldots, n_K)$ be the observed counts per species.
 
 Then the posterior incidence is:
 
-$$p \sim \text{Dirichlet}(\alpha_1 + n_1, \ldots, \alpha_K + n_K)$$
+$$\boldsymbol{p} \sim \text{Dirichlet}(\alpha_1 + n_1, \ldots, \alpha_K + n_K)$$
 
 To simulate from this, we use:
 
@@ -102,12 +102,13 @@ $$x_i \sim \text{Gamma}(\alpha_i + n_i,\ 1), \quad p_i = \frac{x_i}{\sum_{j=1}^{
 
 ### Susceptibility
 
-Each pathogen–regimen pair has a prior and data:
+Each pathogen--regimen pair has a prior and data:
 
-- Prior: $\text{Beta}(\alpha_0, \beta_0)$, with default $\alpha_0 = \beta_0 = 1$
+- Default prior: $\text{Beta}(0.5, 0.5)$ (Jeffreys prior)
+- Intrinsically resistant pairs: $\text{Beta}(1, 9999)$, forcing near-zero susceptibility regardless of observed data (based on EUCAST Expected Resistant Phenotypes)
 - Data: $S$ susceptible out of $N$ tested
 
-The $S$ category could also include values SDD (susceptible, dose-dependent) and I (intermediate [CLSI], or susceptible, increased exposure [EUCAST]).
+The $S$ category could also include values SDD (susceptible, dose-dependent) and I (intermediate \[CLSI\], or susceptible, increased exposure \[EUCAST\]).
 
 Then the posterior is:
 
@@ -118,15 +119,15 @@ $$\theta \sim \text{Beta}(\alpha_0 + S,\ \beta_0 + N - S)$$
 Putting it together:
 
 1. Simulate pathogen incidence: $\boldsymbol{p} \sim \text{Dirichlet}$
-2. Simulate susceptibility: $\theta_i \sim \text{Beta}(1 + S_i,\ 1 + R_i)$
+2. Simulate susceptibility: $\theta_i \sim \text{Beta}(\alpha_0 + S_i,\ \beta_0 + N_i - S_i)$
 3. Combine:
 
 $$\text{Coverage} = \sum_{i=1}^{K} p_i \cdot \theta_i$$
 
-Repeat this simulation (e.g. 1000×) and summarise:
+Repeat this simulation (e.g., 1000 times) and summarise:
 
 - **Mean** = expected coverage
-- **Quantiles** = credible interval
+- **Quantiles** = credible interval (95% by default)
 
 ## Practical use in the `AMR` package
 

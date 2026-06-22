@@ -134,7 +134,7 @@
 #' @seealso [key_antimicrobials()]
 #' @export
 #' @return A [logical] vector
-#' @source Methodology of these functions is strictly based on:
+#' @references Methodology of these functions is strictly based on:
 #'
 #' - **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #'

@@ -293,7 +293,7 @@ breakpoints_new <- breakpoints |>
     host = ifelse(BREAKPOINT_TYPE == "ECOFF", "ECOFF", tolower(HOST)),
     method = TEST_METHOD,
     site = SITE_OF_INFECTION,
-    mo,
+    mo = as.mo(mo),
     rank_index = case_when(
       is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
       mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
@@ -453,6 +453,9 @@ breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpo
 breakpoints_new <- breakpoints_new |>
   filter(!(guideline %like% "EUCAST (2024|2025|2026)" & ref_tbl == "PK/PD"))
 
+# WHONET still contains generic anaerobic rules for EUCAST >= 2021, but this was ended from v12 (2022) on
+breakpoints_new <- breakpoints_new |>
+  filter(!(guideline %like% "EUCAST (2022|2023|2024|2025|2026)" & ref_tbl %like% "anaerob"))
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2023 guideline: S <= 8 and R > 8

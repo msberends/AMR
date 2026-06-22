@@ -58,12 +58,12 @@ You can add your own manual codes to be considered by \code{\link[=as.ab]{as.ab(
 
 World Health Organization (WHO) Collaborating Centre for Drug Statistics Methodology: \url{https://atcddd.fhi.no/atc_ddd_index/}
 
-European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://health.ec.europa.eu/documents/community-register/html/reg_hum_atc.htm}
+European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER: \url{https://health.ec.europa.eu/documents/community-register/html/index_en.htm}
 }
 
 \section{WHOCC}{
 
-This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://atcddd.fhi.no}) and the Pharmaceuticals Community Register of the European Commission (\url{https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm}).
+This package contains \strong{all ~550 antibiotic, antimycotic and antiviral drugs} and their Anatomical Therapeutic Chemical (ATC) codes, ATC groups and Defined Daily Dose (DDD) from the World Health Organization Collaborating Centre for Drug Statistics Methodology (WHOCC, \url{https://atcddd.fhi.no}) and the Pharmaceuticals Community Register of the European Commission (\url{https://ec.europa.eu/health/documents/community-register/html/index_en.htm}).
 
 These have become the gold standard for international drug utilisation monitoring and research.
 

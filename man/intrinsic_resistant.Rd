@@ -5,7 +5,7 @@
 \alias{intrinsic_resistant}
 \title{Data Set Denoting Bacterial Intrinsic Resistance}
 \format{
-A \link[tibble:tibble]{tibble} with 285 928 observations and 2 variables:
+A \link[tibble:tibble]{tibble} with 294 079 observations and 2 variables:
 \itemize{
 \item \code{mo}\cr Microorganism ID which occurs in \code{\link[=microorganisms]{microorganisms$mo}}. Names can be retrieved using \code{\link[=mo_name]{mo_name()}}.
 \item \code{ab}\cr Antimicrobial ID which occurs in \code{\link[=antimicrobials]{antimicrobials$ab}}. Names can be retrieved using \code{\link[=ab_name]{ab_name()}}.
@@ -24,6 +24,7 @@ This data set is internally used by:
 \itemize{
 \item \code{\link[=not_intrinsic_resistant]{not_intrinsic_resistant()}} (an \link[=antimicrobial_selectors]{antimicrobial selector})
 \item \code{\link[=mo_is_intrinsic_resistant]{mo_is_intrinsic_resistant()}}
+\item \code{\link[=wisca]{wisca()}} to model \eqn{\beta(1, 9999)} for resistant bug-drug combinations, per \doi{10.1093/jac/dkv397}
 }
 }
 \section{Download Our Reference Data}{

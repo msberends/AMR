@@ -100,7 +100,7 @@
 #' ```
 #'
 #' Using `only_all_tested` has no impact when only using one antibiotic as input.
-#' @source **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
+#' @references **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @seealso [AMR::count()] to count resistant and susceptible isolates.
 #' @return A [double] or, when `as_percent = TRUE`, a [character].
 #' @rdname proportion

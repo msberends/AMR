@@ -35,13 +35,13 @@ for (i in seq_len(nrow(antimicrobials))) {
   colnames(int_resis)[ncol(int_resis)] <- antimicrobials$ab[i]
 }
 
-int_resis <- eucast_rules(int_resis,
-  eucast_rules_df = subset(
-    AMR:::EUCAST_RULES_DF,
-    is.na(have_these_values) & reference.rule_group == "Expected phenotypes" & reference.version == 1.2
-  ),
-  overwrite = TRUE,
-  info = FALSE
+int_resis <- interpretive_rules(int_resis,
+                                interpretive_rules_df = subset(
+                                  AMR:::INTERPRETIVE_RULES_DF,
+                                  is.na(have_these_values) & reference.rule_group == "Expected phenotypes" & reference.version == 1.2
+                                ),
+                                overwrite = TRUE,
+                                info = FALSE
 )
 
 int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.sir(x) | x == "R")), drop = FALSE] %>%

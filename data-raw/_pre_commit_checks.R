@@ -109,11 +109,11 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
       which(MO_staph$species %in% c(
         "coagulase-negative", "argensis", "arlettae",
         "auricularis", "borealis", "caeli", "capitis", "caprae",
-        "carnosus", "casei", "caseolyticus", "chromogenes", "cohnii", "condimenti",
+        "carnosus", "casei", "caseorum", "caseolyticus", "chromogenes", "cohnii", "condimenti",
         "croceilyticus",
         "debuckii", "devriesei", "edaphicus", "epidermidis",
-        "equorum", "felis", "fleurettii", "gallinarum",
-        "haemolyticus", "hominis", "jettensis", "kloosii",
+        "equorum", "felis", "fleurettii", "gallinarum", "halotolerans",
+        "haemolyticus", "hominis", "hsinchuensis", "jettensis", "kloosii",
         "lentus", "lugdunensis", "massiliensis", "microti",
         "muscae", "nepalensis", "pasteuri", "petrasii",
         "pettenkoferi", "piscifermentans", "pragensis", "pseudoxylosus",
@@ -142,7 +142,8 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
         "pseudintermedius", "pseudointermedius",
         "schweitzeri", "simiae",
         "roterodami",
-        "singaporensis"
+        "singaporensis",
+        "ursi"
       ) |
         # old, now renamed to S. coagulans (but still as synonym in our data of course):
         (MO_staph$species == "schleiferi" & MO_staph$subspecies == "coagulans")),
@@ -280,6 +281,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Malbranchea",
   "Metagonimus",
   "Meyerozyma",
+  "Microascus",
   "Microsporidium",
   "Microsporum",
   "Millerozyma",
@@ -306,6 +308,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Piedraia",
   "Pithomyces",
   "Pityrosporum",
+  "Plasmodium",
   "Pneumocystis",
   "Pseudallescheria",
   "Pseudoscopulariopsis",
@@ -323,6 +326,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Sarcoptes",
   "Scedosporium",
   "Schistosoma",
+  "Schizophyllum",
   "Schizosaccharomyces",
   "Scolecobasidium",
   "Scopulariopsis",

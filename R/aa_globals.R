@@ -104,26 +104,27 @@ EUCAST_VERSION_EXPECTED_PHENOTYPES <- list(
 
 TAXONOMY_VERSION <- list(
   GBIF = list(
-    name = "Global Biodiversity Information Facility (GBIF)",
-    accessed_date = as.Date("2024-06-24"),
-    citation = "GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset \\doi{10.15468/39omei}.",
+    name = "Global Biodiversity Information Facility (GBIF), via Catalogue of Life (COL)",
+    accessed_date = as.Date("2026-05-07"),
+    # take the citation from https://www.gbif.org/dataset/7ddf754f-d193-4cc9-b351-99906754a03b#citation
+    citation = "Banki, O. *et al.* (2026). Catalogue of Life (2026-04-18 XR). Catalogue of Life Foundation, Amsterdam, Netherlands. \\doi{10.48580/dgxjw}.",
     url = "https://www.gbif.org"
   ),
   LPSN = list(
     name = "List of Prokaryotic names with Standing in Nomenclature (LPSN)",
-    accessed_date = as.Date("2024-06-24"),
-    citation = "Parte, AC *et al.* (2020). **List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.** International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \\doi{10.1099/ijsem.0.004332}.",
+    accessed_date = as.Date("2026-05-07"),
+    citation = "Freese, HM *et al.* (2026). **TYGS and LPSN in 2025: a Global Core Biodata Resource for genome-based classification and nomenclature of prokaryotes within DSMZ Digital Diversity.** Nucleic Acids Research, 54, D884–D891; \\doi{10.1093/nar/gkaf1110}.",
     url = "https://lpsn.dsmz.de"
   ),
   MycoBank = list(
     name = "MycoBank",
-    accessed_date = as.Date("2024-06-24"),
+    accessed_date = as.Date("2026-05-07"),
     citation = "Vincent, R *et al* (2013). **MycoBank gearing up for new horizons.** IMA Fungus, 4(2), 371-9; \\doi{10.5598/imafungus.2013.04.02.16}.",
     url = "https://www.mycobank.org"
   ),
   BacDive = list(
     name = "BacDive",
-    accessed_date = as.Date("2024-07-16"),
+    accessed_date = as.Date("2026-05-07"),
     citation = "Reimer, LC *et al.* (2022). ***BacDive* in 2022: the knowledge base for standardized bacterial and archaeal data.** Nucleic Acids Res., 50(D1):D741-D74; \\doi{10.1093/nar/gkab961}.",
     url = "https://bacdive.dsmz.de"
   ),

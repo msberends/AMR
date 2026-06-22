@@ -29,7 +29,7 @@
 
 #' Transform Arbitrary Input to Valid Microbial Taxonomy
 #'
-#' Use this function to get a valid microorganism code ([`mo`]) based on arbitrary user input. Determination is done using intelligent rules and the complete taxonomic tree of the kingdoms `r vector_and(unique(microorganisms$kingdom[which(!grepl("(unknown|Fungi)", microorganisms$kingdom))]), quotes = FALSE)`, and most microbial species from the kingdom Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
+#' Use this function to get a valid microorganism code ([`mo`]) based on arbitrary user input. Determination is done using intelligent rules and the complete taxonomic tree of the domains `r vector_and(unique(microorganisms$domain[which(!grepl("(unknown|Fungi)", microorganisms$domain))]), quotes = FALSE)`, and most microbial species from the domain Fungi (see *Source*). The input can be almost anything: a full name (like `"Staphylococcus aureus"`), an abbreviated name (such as `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`), or just a genus. See *Examples*.
 #' @param x A [character] vector or a [data.frame] with one or two columns.
 #' @param Becker A [logical] to indicate whether staphylococci should be categorised into coagulase-negative staphylococci ("CoNS") and coagulase-positive staphylococci ("CoPS") instead of their own species, according to Karsten Becker *et al.* (see *Source*). Please see *Details* for a full list of staphylococcal species that will be converted.
 #'
@@ -37,14 +37,14 @@
 #' @param Lancefield A [logical] to indicate whether a beta-haemolytic *Streptococcus* should be categorised into Lancefield groups instead of their own species, according to Rebecca C. Lancefield (see *Source*). These streptococci will be categorised in their first group, e.g. *Streptococcus dysgalactiae* will be group C, although officially it was also categorised into groups G and L. . Please see *Details* for a full list of streptococcal species that will be converted.
 #'
 #' This excludes enterococci at default (who are in group D), use `Lancefield = "all"` to also categorise all enterococci as group D.
-#' @param minimum_matching_score A numeric value to set as the lower limit for the [MO matching score][mo_matching_score()]. When left blank, this will be determined automatically based on the character length of `x`, its [taxonomic kingdom][microorganisms] and [human pathogenicity][mo_matching_score()].
+#' @param minimum_matching_score A numeric value to set as the lower limit for the [MO matching score][mo_matching_score()]. When left blank, this will be determined automatically based on the character length of `x`, its [taxonomic domain][microorganisms] and [human pathogenicity][mo_matching_score()].
 #' @param keep_synonyms A [logical] to indicate if outdated, previously valid taxonomic names must be preserved and not be corrected to currently accepted names. Do note that the term "synonym" is in this case jargon from the field of microbial taxonomy - it is not in place to denote that e.g. "Streptococcus Group A" is a synonym of *S. pyogenes*. Though this is practically the case, taxonomically it is not as "Streptococcus Group A" is not even a valid taxonomic name.
 #'
 #' The default is `FALSE`, which will return a note if outdated taxonomic names were processed. The default can be set with the package option [`AMR_keep_synonyms`][AMR-options], i.e. `options(AMR_keep_synonyms = TRUE)` or `options(AMR_keep_synonyms = FALSE)`.
 #' @param reference_df A [data.frame] to be used for extra reference when translating `x` to a valid [`mo`]. See [set_mo_source()] and [get_mo_source()] to automate the usage of your own codes (e.g. used in your analysis or organisation).
 #' @param ignore_pattern A Perl-compatible [regular expression][base::regex] (case-insensitive) of which all matches in `x` must return `NA`. This can be convenient to exclude known non-relevant input and can also be set with the package option [`AMR_ignore_pattern`][AMR-options], e.g. `options(AMR_ignore_pattern = "(not reported|contaminated flora)")`.
 #' @param cleaning_regex A Perl-compatible [regular expression][base::regex] (case-insensitive) to clean the input of `x`. Every matched part in `x` will be removed. At default, this is the outcome of [mo_cleaning_regex()], which removes texts between brackets and texts such as "species" and "serovar". The default can be set with the package option [`AMR_cleaning_regex`][AMR-options].
-#' @param only_fungi A [logical] to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the kingdom of Fungi. This can be set globally for [all microorganism functions][mo_property()] with the package option [`AMR_only_fungi`][AMR-options], i.e. `options(AMR_only_fungi = TRUE)`.
+#' @param only_fungi A [logical] to indicate if only fungi must be found, making sure that e.g. misspellings always return records from the domain of Fungi. This can be set globally for [all microorganism functions][mo_property()] with the package option [`AMR_only_fungi`][AMR-options], i.e. `options(AMR_only_fungi = TRUE)`.
 #' @param language Language to translate text like "no growth", which defaults to the system language (see [get_AMR_locale()]).
 #' @param info A [logical] to indicate that info must be printed, e.g. a progress bar when more than 25 items are to be coerced, or a list with outdated taxonomic names. The default is `TRUE` only in interactive mode.
 #' @param ... Other arguments passed on to functions.
@@ -64,7 +64,7 @@
 #'   |   |    |    \---> subspecies, a 3-5 letter acronym
 #'   |   |    \----> species, a 3-6 letter acronym
 #'   |   \----> genus, a 4-8 letter acronym
-#'   \----> kingdom: A (Archaea), AN (Animalia), B (Bacteria),
+#'   \----> domain: A (Archaea), AN (Animalia), B (Bacteria),
 #'                   C (Chromista), F (Fungi), PL (Plantae),
 #'                   P (Protozoa)
 #' ```
@@ -77,7 +77,7 @@
 #'
 #' ### Coping with Uncertain Results
 #'
-#' Results of non-exact taxonomic input are based on their [matching score][mo_matching_score()]. The lowest allowed score can be set with the `minimum_matching_score` argument. At default this will be determined based on the character length of the input, the [taxonomic kingdom][microorganisms], and the [human pathogenicity][mo_matching_score()] of the taxonomic outcome. If values are matched with uncertainty, a message will be shown to suggest the user to inspect the results with [mo_uncertainties()], which returns a [data.frame] with all specifications.
+#' Results of non-exact taxonomic input are based on their [matching score][mo_matching_score()]. The lowest allowed score can be set with the `minimum_matching_score` argument. At default this will be determined based on the character length of the input, the [taxonomic domain][microorganisms], and the [human pathogenicity][mo_matching_score()] of the taxonomic outcome. If values are matched with uncertainty, a message will be shown to suggest the user to inspect the results with [mo_uncertainties()], which returns a [data.frame] with all specifications.
 #'
 #' To increase the quality of matching, the `cleaning_regex` argument is used to clean the input. This must be a [regular expression][base::regex] that matches parts of the input that should be removed before the input is matched against the [available microbial taxonomy][microorganisms]. It will be matched Perl-compatible and case-insensitive. The default value of `cleaning_regex` is the outcome of the helper function [mo_cleaning_regex()].
 #'
@@ -241,7 +241,7 @@ as.mo <- function(x,
   out[is.na(out) & toupper(x) %in% AMR_env$MO_lookup$mo] <- toupper(x[is.na(out) & toupper(x) %in% AMR_env$MO_lookup$mo])
   # From full name ----
   out[is.na(out) & x_lower %in% AMR_env$MO_lookup$fullname_lower] <- AMR_env$MO_lookup$mo[match(x_lower[is.na(out) & x_lower %in% AMR_env$MO_lookup$fullname_lower], AMR_env$MO_lookup$fullname_lower)]
-  # one exception: "Fungi" matches the kingdom, but instead it should return the 'unknown' code for fungi
+  # one exception: "Fungi" matches the domain, but instead it should return the 'unknown' code for fungi
   out[out == "F_[KNG]_FUNGI"] <- "F_FUNGUS"
   # From known codes ----
   ind <- is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code
@@ -300,7 +300,7 @@ as.mo <- function(x,
 
     MO_lookup_current <- AMR_env$MO_lookup
     if (isTRUE(only_fungi)) {
-      MO_lookup_current <- MO_lookup_current[MO_lookup_current$kingdom == "Fungi", , drop = FALSE]
+      MO_lookup_current <- MO_lookup_current[MO_lookup_current$domain == "Fungi", , drop = FALSE]
     }
 
     # run it
@@ -406,8 +406,8 @@ as.mo <- function(x,
         minimum_matching_score_current <- min(0.6, min(10, nchar(x_search_cleaned)) * 0.08)
         # correct back for prevalence
         minimum_matching_score_current <- minimum_matching_score_current / MO_lookup_current$prevalence[match(mo_to_search, MO_lookup_current$fullname)]
-        # correct back for kingdom
-        minimum_matching_score_current <- minimum_matching_score_current / MO_lookup_current$kingdom_index[match(mo_to_search, MO_lookup_current$fullname)]
+        # correct back for domain
+        minimum_matching_score_current <- minimum_matching_score_current / MO_lookup_current$domain_index[match(mo_to_search, MO_lookup_current$fullname)]
         minimum_matching_score_current <- pmax(minimum_matching_score_current, m)
         if (length(x_parts) > 1 && all(m <= 0.55, na.rm = TRUE)) {
           # if the highest score is 0.5, we have nothing serious - 0.5 is the lowest for pathogenic group 1
@@ -668,7 +668,7 @@ NA_mo_ <- set_clean_class(NA_character_,
 pillar_shaft.mo <- function(x, ...) {
   add_MO_lookup_to_AMR_env()
   out <- trimws(format(x))
-  # grey out the kingdom (part until first "_")
+  # grey out the domain (part until first "_")
   out[!is.na(x)] <- gsub("^([A-Z]+_)(.*)", paste0(pillar::style_subtle("\\1"), "\\2"), out[!is.na(x)], perl = TRUE)
   # and grey out every _
   out[!is.na(x)] <- gsub("_", pillar::style_subtle("_"), out[!is.na(x)])
@@ -694,9 +694,7 @@ pillar_shaft.mo <- function(x, ...) {
     (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% all_mos))) {
     # markup old mo codes
     out[!x %in% all_mos] <- font_italic(
-      pillar::style_na(x[!x %in% all_mos],
-        collapse = NULL
-      ),
+      pillar::style_na(x[!x %in% all_mos]),
       collapse = NULL
     )
     # throw a warning with the affected column name(s)
@@ -706,7 +704,7 @@ pillar_shaft.mo <- function(x, ...) {
       col <- "The data"
     }
     warning_(
-      col, " contains old MO codes (from a previous AMR package version). ",
+      col, " contains old MO codes (from another AMR package version). ",
       "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)}.",
       call = FALSE
     )
@@ -1251,13 +1249,13 @@ replace_old_mo_codes <- function(x, property) {
     solved_unique <- unlist(lapply(
       strsplit(affected_unique, ""),
       function(m) {
-        kingdom <- paste0("^", m[1])
+        domain <- paste0("^", m[1])
         name <- m[3:length(m)]
         name[name == "_"] <- " "
         name <- tolower(paste0(name, ".*", collapse = ""))
         name <- gsub(" .*", " ", name, fixed = TRUE)
         name <- paste0("^", name)
-        results <- AMR_env$MO_lookup$mo[AMR_env$MO_lookup$kingdom %like_case% kingdom &
+        results <- AMR_env$MO_lookup$mo[AMR_env$MO_lookup$domain %like_case% domain &
           AMR_env$MO_lookup$fullname_lower %like_case% name]
         if (length(results) > 1) {
           all_direct_matches <<- FALSE
@@ -1281,14 +1279,14 @@ replace_old_mo_codes <- function(x, property) {
       warning_(
         "in {.help [{.fun mo_", property, "}](AMR::mo_", property, ")}: the input contained ", n_matched,
         " old MO code", ifelse(n_matched == 1, "", "s"),
-        " (", n_unique, "from a previous AMR package version). ",
+        " (", n_unique, "from another AMR package version). ",
         "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)} to increase speed."
       )
     } else {
       warning_(
         "in {.help [{.fun as.mo}](AMR::as.mo)}: the input contained ", n_matched,
         " old MO code", ifelse(n_matched == 1, "", "s"),
-        " (", n_unique, "from a previous AMR package version). ",
+        " (", n_unique, "from another AMR package version). ",
         n_solved, " old MO code", ifelse(n_solved == 1, "", "s"),
         ifelse(n_solved == 1, " was", " were"),
         ifelse(all_direct_matches, " updated ", font_bold(" guessed ")),

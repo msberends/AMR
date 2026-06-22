@@ -489,7 +489,11 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
     if (length(m) >= 2L) m[2L] else paste0("?", resolve(c))
   })
   msg <- apply_sub(msg, "\\{\\.url (\\{[^}]+\\}|[^}]+)\\}", function(c) resolve(c))
-  msg <- apply_sub(msg, "\\{\\.href ([^}]+)\\}", function(c) strsplit(resolve(c), " ", fixed = TRUE)[[1L]][1L])
+  msg <- apply_sub(msg, "\\{\\.href ([^}]+)\\}", function(c) {
+    # Handle [display text](url) markdown link format: extract just the URL
+    m <- regmatches(c, regexec("^\\[.*\\]\\(([^)]+)\\)$", c))[[1L]]
+    if (length(m) >= 2L) m[2L] else resolve(c)
+  })
 
   # bare {variable} or {expression} -> evaluate in caller's environment
   while (grepl("\\{[^{}]+\\}", msg)) {
@@ -551,7 +555,7 @@ word_wrap <- function(...,
     indentation <- 0L + extra_indent
   }
   if (indentation > 0L) {
-    wrapped <- gsub("\n", paste0("\n", strrep(" ", indentation)), wrapped, fixed = TRUE)
+    wrapped <- gsub("\n", paste0("\n", strrep("\u00a0", indentation)), wrapped, fixed = TRUE)
   }
   gsub("(\n| )+$", "", wrapped)
 }
@@ -583,13 +587,27 @@ simplify_help_markup <- function(msg) {
 
 message_ <- function(...,
                      appendLF = TRUE,
-                     as_note = TRUE) {
+                     as_note = TRUE,
+                     as_check = FALSE,
+                     extra_indent = 0,
+                     with_bullet = FALSE) {
+  msg <- paste0(c(...), collapse = "")
+  if (with_bullet == TRUE) {
+    as_note <- FALSE
+    msg <- paste0(AMR_env$bullet_icon, "\u00a0", msg)
+  }
+  if (extra_indent > 0) {
+    msg <- paste0(strrep("\u00a0", extra_indent), msg)
+  }
   if (has_cli_rlang()) {
-    msg <- paste0(c(...), collapse = "")
+    # prevent errors with single opening curly brackets, we don't evaluate cli's/glue's {} in AMR anyway
+    msg <- gsub("\\{(?!\\.)", "", msg, perl = TRUE)
     if (!cli::ansi_has_hyperlink_support()) {
       msg <- simplify_help_markup(msg)
     }
-    if (isTRUE(as_note)) {
+    if (isTRUE(as_check)) {
+      cli::cli_inform(c("v" = msg), .envir = parent.frame())
+    } else if (isTRUE(as_note)) {
       cli::cli_inform(c("i" = msg), .envir = parent.frame())
     } else if (isTRUE(appendLF)) {
       cli::cli_inform(msg, .envir = parent.frame())
@@ -598,22 +616,28 @@ message_ <- function(...,
       cat(format_inline_(msg), file = stderr())
     }
   } else {
-    plain_msg <- cli_to_plain(paste0(c(...), collapse = ""), envir = parent.frame())
+    plain_msg <- cli_to_plain(msg, envir = parent.frame())
     message(word_wrap(plain_msg, as_note = as_note), appendLF = appendLF)
   }
 }
 
 warning_ <- function(...,
                      immediate = FALSE,
-                     call = FALSE) {
+                     call = FALSE,
+                     extra_indent = 0) {
+  msg <- paste0(c(...), collapse = "")
+  if (extra_indent > 0) {
+    msg <- paste0(strrep("\u00a0", extra_indent), msg)
+  }
   if (has_cli_rlang()) {
-    msg <- paste0(c(...), collapse = "")
+    # prevent errors with single opening curly brackets, we don't evaluate cli's/glue's {} in AMR anyway
+    msg <- gsub("\\{(?!\\.)", "", msg, perl = TRUE)
     if (!cli::ansi_has_hyperlink_support()) {
       msg <- simplify_help_markup(msg)
     }
     cli::cli_warn(msg, .envir = parent.frame())
   } else {
-    plain_msg <- cli_to_plain(paste0(c(...), collapse = ""), envir = parent.frame())
+    plain_msg <- cli_to_plain(msg, envir = parent.frame())
     warning(trimws2(word_wrap(plain_msg, as_note = FALSE)), immediate. = immediate, call. = call)
   }
 }
@@ -621,8 +645,15 @@ warning_ <- function(...,
 # this alternative to the stop() function:
 # - adds the function name where the error was thrown (plain-text fallback)
 # - wraps text to never break lines within words (plain-text fallback)
-stop_ <- function(..., call = TRUE) {
+stop_ <- function(...,
+                  call = TRUE,
+                  extra_indent = 0) {
   msg <- paste0(c(...), collapse = "")
+  if (extra_indent > 0) {
+    msg <- paste0(strrep("\u00a0", extra_indent), msg)
+  }
+  # prevent errors with single opening curly brackets, we don't evaluate cli's/glue's {} in AMR anyway
+  msg <- gsub("\\{(?!\\.)", "", msg, perl = TRUE)
   if (!cli::ansi_has_hyperlink_support()) {
     msg <- simplify_help_markup(msg)
   }
@@ -727,7 +758,7 @@ documentation_date <- function(d) {
   suffix[day %in% c(1, 21, 31)] <- "st"
   suffix[day %in% c(2, 22)] <- "nd"
   suffix[day %in% c(3, 23)] <- "rd"
-  paste0(month.name[as.integer(format(d, "%m"))], " ", day, suffix, ", ", format(d, "%Y"))
+  paste0(day, suffix, " of ", month.name[as.integer(format(d, "%m"))], ", ", format(d, "%Y"))
 }
 
 format_included_data_number <- function(data) {
@@ -1635,14 +1666,14 @@ add_MO_lookup_to_AMR_env <- function() {
   if (is.null(AMR_env$MO_lookup)) {
     MO_lookup <- AMR::microorganisms
 
-    MO_lookup$kingdom_index <- NA_real_
-    MO_lookup[which(MO_lookup$kingdom == "Bacteria" | as.character(MO_lookup$mo) == "UNKNOWN"), "kingdom_index"] <- 1
-    MO_lookup[which(MO_lookup$kingdom == "Fungi"), "kingdom_index"] <- 1.25
-    MO_lookup[which(MO_lookup$kingdom == "Protozoa"), "kingdom_index"] <- 1.5
-    MO_lookup[which(MO_lookup$kingdom == "Chromista"), "kingdom_index"] <- 1.75
-    MO_lookup[which(MO_lookup$kingdom == "Archaea"), "kingdom_index"] <- 2
+    MO_lookup$domain_index <- NA_real_
+    MO_lookup[which(MO_lookup$domain == "Bacteria" | as.character(MO_lookup$mo) == "UNKNOWN"), "domain_index"] <- 1
+    MO_lookup[which(MO_lookup$domain == "Fungi"), "domain_index"] <- 1.25
+    MO_lookup[which(MO_lookup$domain == "Protozoa"), "domain_index"] <- 1.5
+    MO_lookup[which(MO_lookup$domain == "Chromista"), "domain_index"] <- 1.75
+    MO_lookup[which(MO_lookup$domain == "Archaea"), "domain_index"] <- 2
     # all the rest
-    MO_lookup[which(is.na(MO_lookup$kingdom_index)), "kingdom_index"] <- 3
+    MO_lookup[which(is.na(MO_lookup$domain_index)), "domain_index"] <- 3
 
     # the fullname lowercase, important for the internal algorithms in as.mo()
     MO_lookup$fullname_lower <- tolower(trimws2(paste(

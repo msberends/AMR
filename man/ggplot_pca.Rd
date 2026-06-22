@@ -42,9 +42,8 @@ ggplot_pca(x, choices = 1:2, scale = 1, pc.biplot = TRUE,
   }
 
 \item{pc.biplot}{
-    If true, use what {\if{html}{\cite{}\out{<a href="#reference+biplot.princomp.Rd+R+3AGabriel+3A1971" class="citation">}}Gabriel (1971)\if{html}{\out{</a>}}} refers to as a
-    \dQuote{principal component biplot},
-    with \code{lambda = 1} and observations scaled up by sqrt(n) and
+    If true, use what Gabriel (1971) refers to as a "principal component
+    biplot", with \code{lambda = 1} and observations scaled up by sqrt(n) and
     variables scaled down by sqrt(n).  Then inner products between
     variables approximate covariances and distances between observations
     approximate Mahalanobis distance.

@@ -27,12 +27,17 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
+
+# TODO Giardia zat in protozoa en animalia, dus sorteren op prioriteit kingdom en dan distinct op fullname
+
+
+
 # ! THIS SCRIPT REQUIRES AT LEAST 16 GB RAM !
 # (at least 12 GB will be used by the R session for the size of the files)
 
 # GBIF:
-# 1. Go to https://doi.org/10.15468/39omei and find the download link for the
-#    latest GBIF backbone taxonony under "Endpoints" and unpack "Taxon.tsv" from it (~1.0 GB)
+# 1. Go to https://doi.org/10.48580/dgxjw and find the download link
+#    under "Endpoints" and unpack "Taxon.tsv" from it (~2.5 GB)
 #    ALSO BE SURE to get the date of release and update R/aa_globals.R later!
 # LPSN:
 # 2. Go to https://lpsn.dsmz.de/downloads (register first) and download the latest
@@ -40,7 +45,7 @@
 #    ALSO BE SURE to get the date of release and update R/aa_globals.R later!
 # MycoBank:
 # 3. Go to https://www.mycobank.org/ and find the download link of all entries
-#    (last time https://www.mycobank.org/images/MBList.zip) and unpack
+#    (last time https://www.mycobank.org/Images/MBList.zip) and unpack
 #    "MBList.xlsx" from it (~120 MB)
 #    ALSO BE SURE to get the date of release and update R/aa_globals.R later!
 # Bartlett:
@@ -49,13 +54,19 @@
 #    can be found here: https://github.com/padpadpadpad/bartlett_et_al_2022_human_pathogens.
 #    Download their latest xlsx file in the `data` folder and save it to our
 #    `data-raw` folder.
-# 5. Set these locations to the paths where the files are:
+# 5. Go to BacDive data base for the oxygen tolerance and cell shape.
+#    Go to https://bacdive.dsmz.de/advsearch, filter 'Oxygen tolerance' or
+#    'Cell shape' on "*" and click Submit and click on the 'Download tabel as CSV' button
+# 6. Set these locations to the paths where the files are:
 folder_location <- "~/Downloads/"
-file_gbif <- paste0(folder_location, "/backbone/Taxon.tsv")
+file_gbif <- paste0(folder_location, "/xr_latest_dwca/Taxon.tsv")
 file_lpsn <- paste0(folder_location, "taxonomy.csv")
-file_mycobank <- paste0(folder_location, "MBList.xlsx")
+file_mycobank <- paste0(folder_location, "MBList-2.xlsx")
 
 file_bartlett <- "data-raw/bartlett_et_al_2022_human_pathogens.xlsx"
+
+file_oxygen_tolerance <- paste0(folder_location, "oxygen.csv")
+file_cell_shape <- paste0(folder_location, "shape.csv")
 
 # 4. Run the rest of this script line by line and check everything :)
 
@@ -70,6 +81,12 @@ if (!file.exists(file_mycobank)) {
 }
 if (!file.exists(file_bartlett)) {
   stop("Bartlett et al. Excel file not found")
+}
+if (!file.exists(file_oxygen_tolerance)) {
+  stop("BacDive oxygen tolerance CSV file not found")
+}
+if (!file.exists(file_cell_shape)) {
+  stop("BacDive cell shape CSV file not found")
 }
 
 library(dplyr)
@@ -86,9 +103,18 @@ devtools::load_all(".") # to load the AMR package
 get_author_year <- function(ref) {
   # Only keep first author, e.g. transform 'Smith, Jones, 2011' to 'Smith et al., 2011'
 
-  authors2 <- iconv(ref, from = "UTF-8", to = "ASCII//TRANSLIT")
-  authors2 <- gsub(" ?\\(Approved Lists [0-9]+\\) ?", " () ", authors2)
-  authors2 <- gsub(" [)(]+ $", "", authors2)
+  # normalise Unicode to NFC (precomposed) so iconv can transliterate
+  authors2 <- stringi::stri_trans_nfc(ref)
+  # fix known encoding errors in source data
+  authors2 <- gsub("\u0092", "'", authors2)              # Windows-1252 right quote
+  authors2 <- gsub("\u0091", "'", authors2)              # Windows-1252 left quote
+  authors2 <- gsub("\u04AB", "\u00E7", authors2)         # Cyrillic cedilla to Latin cedilla
+  authors2 <- gsub("[\u0400-\u04FF]", "", authors2)      # remove remaining Cyrillic characters
+  authors2 <- iconv(authors2, from = "UTF-8", to = "ASCII//TRANSLIT")
+  
+  authors2 <- gsub(" ?\\(Approved Lists [0-9]+\\) ?", " ", authors2)
+  authors2 <- gsub(" +", " ", authors2)
+  authors2 <- trimws(authors2)
   # remove leading and trailing brackets
   authors2 <- trimws(gsub("^[(](.*)[)]$", "\\1", authors2))
   # only take part after brackets if there's a name
@@ -98,11 +124,17 @@ get_author_year <- function(ref) {
     authors2
   )
   # replace parentheses with emend. to get the latest authors
-  authors2 <- gsub("(", " emend. ", authors2, fixed = TRUE)
-  authors2 <- gsub(")", "", authors2, fixed = TRUE)
+  # authors2 <- gsub("(", " emend. ", authors2, fixed = TRUE)
+  # authors2 <- gsub(")", "", authors2, fixed = TRUE)
+  
+  # remove any remaining parentheses
+  authors2 <- gsub("[()]", "", authors2)
   authors2 <- gsub(" +", " ", authors2)
   authors2 <- trimws(authors2)
-
+  
+  # strip emend. and everything after it to retain the combination authority
+  authors2 <- gsub(" ?emend[.]?.*", "", authors2)
+  
   # get year from last 4 digits
   lastyear <- as.integer(gsub(".*([0-9]{4})$", "\\1", authors2))
   # can never be later than now
@@ -143,7 +175,7 @@ get_author_year <- function(ref) {
   # remove dots
   authors <- gsub(".", "", authors, fixed = TRUE)
   authors <- gsub("et al", "et al.", authors, fixed = TRUE)
-  authors[nchar(authors) <= 3] <- ""
+  authors[nchar(authors) <= 1] <- ""
   # combine author and year if year is available
   ref <- if_else(!is.na(lastyear), paste0(authors, ", ", lastyear), authors)
   # fix beginning and ending
@@ -163,26 +195,29 @@ get_author_year <- function(ref) {
   # specific one for the French that are named dOrbigny
   ref[grepl("^d[A-Z]", ref)] <- gsub("^d", "d'", ref[grepl("^d[A-Z]", ref)])
   ref <- gsub(" +", " ", ref)
-  ref[ref == ""] <- NA_character_
+  ref <- trimws(ref)
+  ref <- gsub("^NA, ?", "", ref)
+  ref[ref %in% c("", "NA")] <- NA_character_
   ref
 }
-
-df_remove_nonASCII <- function(df) {
-  # Remove non-ASCII characters (these are not allowed by CRAN)
-  df %>%
-    mutate_if(is.character, iconv, from = "UTF-8", to = "ASCII//TRANSLIT") %>%
-    # also remove invalid characters
-    mutate_if(is.character, ~ gsub("[\"'`]+", "", .)) %>%
-    AMR:::dataset_UTF8_to_ASCII()
-}
-
 
 # to retrieve LPSN and authors from LPSN website
 # e.g., get_lpsn_and_author("genus", "Klebsiella")
 get_lpsn_and_author <- function(rank, name) {
   name <- gsub("^Candidatus ", "", name)
-  url <- paste0("https://lpsn.dsmz.de/", tolower(rank), "/", tolower(name))
-  page_txt <- tryCatch(read_html(url), error = function(e) NULL)
+  url <- paste0(
+    "https://lpsn.dsmz.de/",
+    tolower(rank), "/",
+    gsub(" ", "-", tolower(name))
+  )
+  page_txt <- tryCatch({
+    resp <- curl::curl_fetch_memory(url)
+    if (resp$status_code == 200) {
+      read_html(rawToChar(resp$content))
+    } else {
+      NULL
+    }
+  }, error = function(e) NULL)
   if (is.null(page_txt)) {
     warning("No LPSN found for ", tolower(rank), " '", name, "'")
     lpsn <- NA_character_
@@ -345,7 +380,6 @@ for (page in LETTERS) {
     hrefs <- hrefs[ranks != "species"]
     names <- names[ranks != "species"]
     ranks <- ranks[ranks != "species"]
-    ranks[ranks == "domain"] <- "kingdom"
 
     suppressMessages(
       df <- names %>%
@@ -372,19 +406,23 @@ taxonomy_lpsn_missing <- taxonomy_lpsn_missing %>% distinct()
 saveRDS(taxonomy_lpsn_missing, "data-raw/taxonomy_lpsn_missing.rds")
 # taxonomy_lpsn_missing <- readRDS("data-raw/taxonomy_lpsn_missing.rds")
 
-# had to pick the right genus/family combination here:
+# duplicate genera:
+taxonomy_lpsn_missing %>% filter(genus %in% taxonomy_lpsn_missing$genus[duplicated(taxonomy_lpsn_missing$genus)])
+# look them up on LPSN, then find out which to keep (the ones validly published under ICNP)
+# to remove:
 taxonomy_lpsn_missing <- taxonomy_lpsn_missing %>%
-  filter(!(genus == "Pusillimonas" & family == "Oscillospiraceae"))
-taxonomy_lpsn.bak2 <- taxonomy_lpsn.bak
+  filter(!(genus == "Halalkalibacterium" & family == "Balneolaceae"),
+         !(genus == "Pusillimonas" & family == "Oscillospiraceae"),
+         !(genus == "Rhodococcus" & family == "Chroococcaceae"))
 
 taxonomy_lpsn <- taxonomy_lpsn %>%
   left_join(taxonomy_lpsn_missing, by = "genus") %>%
-  select(kingdom:family, everything()) %>%
+  select(domain:family, everything()) %>%
   # remove entries like "[Bacteria, no family]" and "[Bacteria, no class]"
   mutate_all(function(x) if_else(x %like_case% " no ", NA_character_, x))
 
 taxonomy_lpsn.bak2 <- taxonomy_lpsn
-# download family directly from LPSN website using scraping, by using get_lpsn_and_author()
+# download family taxonomic data (e.g. authors of Enterobacteriaceae) directly from LPSN website using scraping, by using get_lpsn_and_author()
 # try it first:
 # get_lpsn_and_author("genus", "Escherichia")
 # get_lpsn_and_author("family", "Enterobacteriaceae")
@@ -400,6 +438,7 @@ for (f in unique(taxonomy_lpsn$family)) {
   tax_info <- get_lpsn_and_author("Family", f)
   taxonomy_lpsn <- taxonomy_lpsn %>%
     bind_rows(tibble(
+      domain = taxonomy_lpsn$domain[which(taxonomy_lpsn$family == f)[1]],
       kingdom = taxonomy_lpsn$kingdom[which(taxonomy_lpsn$family == f)[1]],
       phylum = taxonomy_lpsn$phylum[which(taxonomy_lpsn$family == f)[1]],
       class = taxonomy_lpsn$class[which(taxonomy_lpsn$family == f)[1]],
@@ -427,6 +466,7 @@ for (o in unique(taxonomy_lpsn$order)) {
   tax_info <- get_lpsn_and_author("Order", o)
   taxonomy_lpsn <- taxonomy_lpsn %>%
     bind_rows(tibble(
+      domain = taxonomy_lpsn$domain[which(taxonomy_lpsn$order == o)[1]],
       kingdom = taxonomy_lpsn$kingdom[which(taxonomy_lpsn$order == o)[1]],
       phylum = taxonomy_lpsn$phylum[which(taxonomy_lpsn$order == o)[1]],
       class = taxonomy_lpsn$class[which(taxonomy_lpsn$order == o)[1]],
@@ -453,6 +493,7 @@ for (cc in unique(taxonomy_lpsn$class)) {
   tax_info <- get_lpsn_and_author("Class", cc)
   taxonomy_lpsn <- taxonomy_lpsn %>%
     bind_rows(tibble(
+      domain = taxonomy_lpsn$domain[which(taxonomy_lpsn$class == cc)[1]],
       kingdom = taxonomy_lpsn$kingdom[which(taxonomy_lpsn$class == cc)[1]],
       phylum = taxonomy_lpsn$phylum[which(taxonomy_lpsn$class == cc)[1]],
       class = cc,
@@ -478,6 +519,7 @@ for (p in unique(taxonomy_lpsn$phylum)) {
   tax_info <- get_lpsn_and_author("Phylum", p)
   taxonomy_lpsn <- taxonomy_lpsn %>%
     bind_rows(tibble(
+      domain = taxonomy_lpsn$domain[which(taxonomy_lpsn$phylum == p)[1]],
       kingdom = taxonomy_lpsn$kingdom[which(taxonomy_lpsn$phylum == p)[1]],
       phylum = p,
       rank = "phylum",
@@ -489,7 +531,7 @@ for (p in unique(taxonomy_lpsn$phylum)) {
 }
 # download kingdom directly from LPSN website using scraping
 # try it first:
-# get_lpsn_and_author("kingdom", "Bacteria")
+# get_lpsn_and_author("kingdom", "Pseudomonadati")
 pb <- progress_bar$new(
   total = length(unique(taxonomy_lpsn$kingdom)),
   format = "[:bar] :current/:total :eta"
@@ -499,11 +541,35 @@ for (k in unique(taxonomy_lpsn$kingdom)) {
   if (is.na(k)) {
     next
   }
-  tax_info <- get_lpsn_and_author("Domain", k)
+  tax_info <- get_lpsn_and_author("Kingdom", k)
   taxonomy_lpsn <- taxonomy_lpsn %>%
     bind_rows(tibble(
+      domain = taxonomy_lpsn$domain[which(taxonomy_lpsn$kingdom == k)[1]],
       kingdom = k,
       rank = "kingdom",
+      status = unname(tax_info["status"]),
+      source = "LPSN",
+      lpsn = unname(tax_info["lpsn"]),
+      ref = unname(tax_info["ref"])
+    ))
+}
+# download domain directly from LPSN website using scraping
+# try it first:
+# get_lpsn_and_author("domain", "Bacteria")
+pb <- progress_bar$new(
+  total = length(unique(taxonomy_lpsn$domain)),
+  format = "[:bar] :current/:total :eta"
+)
+for (d in unique(taxonomy_lpsn$domain)) {
+  pb$tick()
+  if (is.na(d)) {
+    next
+  }
+  tax_info <- get_lpsn_and_author("Domain", d)
+  taxonomy_lpsn <- taxonomy_lpsn %>%
+    bind_rows(tibble(
+      domain = d,
+      rank = "domain",
       status = unname(tax_info["status"]),
       source = "LPSN",
       lpsn = unname(tax_info["lpsn"]),
@@ -514,10 +580,35 @@ for (k in unique(taxonomy_lpsn$kingdom)) {
 taxonomy_lpsn <- taxonomy_lpsn %>%
   filter(status != "not validly published")
 
+taxonomy_lpsn <- taxonomy_lpsn %>%
+  mutate(ref = get_author_year(ref))
+
+# select final set
+taxonomy_lpsn <- taxonomy_lpsn %>%
+  select(
+    domain,
+    kingdom,
+    phylum,
+    class,
+    order,
+    family,
+    genus,
+    species,
+    subspecies,
+    rank,
+    status,
+    ref,
+    lpsn,
+    lpsn_parent,
+    lpsn_renamed_to,
+    source
+  )
+
 # integrity tests
 sort(table(taxonomy_lpsn$rank))
 # should only be 'accepted' and 'synonym':
 sort(table(taxonomy_lpsn$status))
+saveRDS(taxonomy_lpsn, "data-raw/taxonomy_lpsn.rds", version = 2)
 
 
 # Read MycoBank data ------------------------------------------------------------------------------
@@ -537,7 +628,7 @@ taxonomy_mycobank <- taxonomy_mycobank.bak %>%
     fullname = gsub(" +", " ", `Taxon name`),
     current = clean_name,
     ref = paste0(Authors, ", ", `Year of effective publication`),
-    rank = `Rank.Rank name`,
+    rank = `Rank`,
     status = `Name status`,
     mycobank_renamed_to = taxonomy_mycobank.bak$`MycoBank #`[match(
       clean_name,
@@ -611,9 +702,9 @@ table(taxonomy_mycobank$status)
 
 taxonomy_mycobank2 <- taxonomy_mycobank
 
-taxonomy_mycobank <- taxonomy_mycobank %>%
+taxonomy_mycobank <- taxonomy_mycobank2 %>%
   mutate(
-    rank = case_match(
+    rank = recode_values(
       rank,
       "subsp." ~ "subspecies",
       "sp." ~ "species",
@@ -623,9 +714,10 @@ taxonomy_mycobank <- taxonomy_mycobank %>%
       "cl." ~ "class",
       "div." ~ "phylum",
       "regn." ~ "kingdom",
-      .default = paste0("#", rank)
+      default = paste0("#", rank)
     )
   )
+taxonomy_mycobank %>% count(rank, sort = TRUE)
 # some subspecies have wild denotions for the last term, such as 'b.', 'bb.', 'mut.', 'tax.vag.', etc (tens of them)
 # we only keep these
 taxonomy_mycobank <- taxonomy_mycobank %>%
@@ -653,8 +745,12 @@ taxonomy_mycobank %>%
   filter(rank %like% "#") %>%
   count(rank)
 
+taxonomy_mycobank <- taxonomy_mycobank %>%
+  filter(rank %unlike% "#")
+
 taxonomy_mycobank3 <- taxonomy_mycobank
 
+taxonomy_mycobank <- taxonomy_mycobank3
 # MycoBank just pasted their taxonomy together into 1 field, and now some classes are in the division (tax_b) column, it's horrible
 # so we decide based on the fullname and rank column per record
 # use this to determine how far to go:
@@ -766,11 +862,11 @@ taxonomy_mycobank <- taxonomy_mycobank %>%
     )
   )
 
-# FOR 2025: use this to get all the genera with updated names from MO_RELEVANT_GENERA:
+# use this to get all the genera with updated names from MO_RELEVANT_GENERA:
 genera_overview <- AMR::microorganisms %>%
   filter(genus %in% AMR:::MO_RELEVANT_GENERA) %>%
   pull(fullname) %>%
-  mo_current() %>%
+  mo_current() %>% # renamed to's will be included below
   mo_genus() %>%
   unique() %>%
   sort()
@@ -792,6 +888,7 @@ taxonomy_mycobank <- include %>%
 # clean up authors and add last columns
 taxonomy_mycobank <- taxonomy_mycobank %>%
   mutate(
+    domain = kingdom,
     source = "MycoBank",
     mycobank_parent = NA_character_,
     ref = get_author_year(ref)
@@ -801,6 +898,7 @@ taxonomy_mycobank <- taxonomy_mycobank %>%
 taxonomy_mycobank <- taxonomy_mycobank %>%
   select(
     fullname,
+    domain,
     kingdom,
     phylum,
     class,
@@ -828,57 +926,13 @@ taxonomy_mycobank$mycobank_renamed_to[
 ] <- NA
 
 taxonomy_mycobank %>% count(status)
+saveRDS(taxonomy_mycobank, "data-raw/taxonomy_mycobank.rds", version = 2)
 
-
-# START/ just 3.0.1 part, remove later
-insert <- taxonomy_mycobank |>
-  filter(fullname %in% microorganisms$fullname) |>
-  select(fullname, status, ref, matches("mycobank"))
-insert_mo <- microorganisms |>
-  filter(fullname %in% taxonomy_mycobank$fullname) |>
-  select(-any_of(colnames(insert)), fullname) |>
-  left_join(insert, by = "fullname")
-
-microorganisms2 <- microorganisms |>
-  filter(!fullname %in% insert_mo$fullname) |>
-  bind_rows(insert_mo) |>
-  select(any_of(colnames(AMR::microorganisms))) |>
-  arrange(fullname)
-
-microorganisms2 <- microorganisms2 %>%
-  mutate(
-    mycobank_parent = case_when(
-      rank == "phylum" ~ mycobank[match(kingdom, fullname)],
-      # class
-      rank == "class" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "class" ~ mycobank[match(kingdom, fullname)],
-      # order
-      rank == "order" & class != "" ~ mycobank[match(class, fullname)],
-      rank == "order" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "order" ~ mycobank[match(kingdom, fullname)],
-      # family
-      rank == "family" & order != "" ~ mycobank[match(order, fullname)],
-      rank == "family" & class != "" ~ mycobank[match(class, fullname)],
-      rank == "family" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "family" ~ mycobank[match(kingdom, fullname)],
-      # genus
-      rank == "genus" & family != "" ~ mycobank[match(family, fullname)],
-      rank == "genus" & order != "" ~ mycobank[match(order, fullname)],
-      rank == "genus" & class != "" ~ mycobank[match(class, fullname)],
-      rank == "genus" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "genus" ~ mycobank[match(kingdom, fullname)],
-      # species
-      rank == "species" ~ mycobank[match(genus, fullname)],
-      # subspecies
-      rank == "subspecies" ~ mycobank[match(paste(genus, species), fullname)],
-      TRUE ~ NA_character_
-    )
-  )
-# END/ just 3.0.1 part, remove later
 
 # Read GBIF data ----------------------------------------------------------------------------------
 
-taxonomy_gbif.bak <- vroom(file_gbif, guess_max = 1e5)
+taxonomy_gbif.bak <- vroom(file_gbif, guess_max = 5e5)
+colnames(taxonomy_gbif.bak) <- gsub(".*:(.*)", "\\1", colnames(taxonomy_gbif.bak))
 
 # include all fungal orders from the mycobank db
 include_fungal_orders <- unique(taxonomy_mycobank$order[
@@ -888,23 +942,61 @@ include_fungal_orders <- unique(taxonomy_mycobank$order[
 # check some columns to validate below filters
 taxonomy_gbif.bak %>% count(taxonomicStatus, sort = TRUE)
 taxonomy_gbif.bak %>% count(taxonRank, sort = TRUE)
+taxonomy_gbif.bak %>% count(kingdom, sort = TRUE)
 
 taxonomy_gbif <- taxonomy_gbif.bak %>%
+  mutate(
+    # strip the authors from the scientific name
+    fullname = case_when(
+      is.na(scientificNameAuthorship) | scientificNameAuthorship == "" ~ scientificName,
+      endsWith(scientificName, scientificNameAuthorship) ~
+        trimws(substr(scientificName, 1L, nchar(scientificName) - nchar(scientificNameAuthorship))),
+      TRUE ~ scientificName
+    )
+  ) %>%
+  mutate(
+    genus = if_else(taxonRank == "genus", fullname, genus),
+    family = if_else(taxonRank == "family", fullname, family),
+    order = if_else(taxonRank == "order", fullname, order),
+    class = if_else(taxonRank == "class", fullname, class),
+    phylum = if_else(taxonRank == "phylum", fullname, phylum),
+    kingdom = if_else(taxonRank == "kingdom", fullname, kingdom)
+  )
+taxonomy_gbif0 <- taxonomy_gbif
+
+taxonomy_gbif <- taxonomy_gbif0 %>%
   # immediately filter rows we really never want
   filter(
     # never doubtful status, only accepted and all synonyms, and only ranked items
-    taxonomicStatus != "doubtful",
+    !taxonomicStatus %in% c("doubtful", "misapplied", "ambiguous synonym"),
     taxonRank != "unranked",
     #  include these kingdoms (no Chromista)
     kingdom %in%
-      c("Archaea", "Bacteria", "Protozoa") |
+      c("Archaea", "Bacteria", "Protozoa", na.omit(unique(taxonomy_lpsn$kingdom))) |
       # include all of these fungal orders
       order %in% include_fungal_orders |
       # and all of these important genera (see "data-raw/_pre_commit_checks.R")
       # (they also contain bacteria and protozoa, but these will get higher prevalence scores later on)
       genus %in% AMR:::MO_RELEVANT_GENERA
   ) %>%
+  mutate(
+    # set the right domain for the prokaryotes based on LPSN
+    domain = case_when(
+      kingdom %in% na.omit(taxonomy_lpsn$kingdom[taxonomy_lpsn$domain == "Bacteria"]) ~ "Bacteria",
+      kingdom %in% na.omit(taxonomy_lpsn$kingdom[taxonomy_lpsn$domain == "Archaea"]) ~ "Archaea",
+      TRUE ~ kingdom
+    )
+  )
+taxonomy_gbif <- taxonomy_gbif %>%
+  bind_rows(taxonomy_gbif0 %>%
+              filter(acceptedNameUsageID %in% taxonomy_gbif$taxonID,
+                     !taxonomicStatus %in% c("doubtful", "misapplied", "ambiguous synonym")) %>%
+              mutate(status = "synonym"))
+
+taxonomy_gbif <- taxonomy_gbif %>%
   select(
+    fullname,
+    domain,
     kingdom,
     phylum,
     class,
@@ -919,18 +1011,20 @@ taxonomy_gbif <- taxonomy_gbif.bak %>%
     gbif = taxonID,
     gbif_parent = parentNameUsageID,
     gbif_renamed_to = acceptedNameUsageID
-  ) %>%
+  )
+taxonomy_gbif1 <- taxonomy_gbif
+
+taxonomy_gbif <- taxonomy_gbif1 %>%
   mutate(
-    # do this mutate after the original selection/filtering, as it decreases computing time tremendously
-    status = if_else(status == "accepted", "accepted", "synonym"),
-    # checked taxonRank - the "form" and "variety" always have a subspecies, so:
+    status = if_else(status %like% "accepted", "accepted", "synonym"),
+    # checked taxonRank - the "form" and "variety" always have a subspecies
+    # see: taxonomy_gbif.bak %>% filter(taxonRank %in% c("form", "variety")) %>% count(taxonRank, is.na(infraspecificEpithet), sort = TRUE)
     rank = if_else(rank %in% c("form", "variety"), "subspecies", rank),
     source = "GBIF"
   ) %>%
   filter(
     # their data is messy - keep only these:
-    rank == "kingdom" &
-      !is.na(kingdom) |
+    rank == "kingdom" & !is.na(kingdom) |
       rank == "phylum" & !is.na(phylum) |
       rank == "class" & !is.na(class) |
       rank == "order" & !is.na(order) |
@@ -944,17 +1038,13 @@ taxonomy_gbif <- taxonomy_gbif.bak %>%
   # now we have duplicates, remove these, but prioritise "accepted" status and highest taxon ID
   arrange(status, gbif) %>%
   distinct(
+    domain,
     kingdom,
-    phylum,
-    class,
-    order,
-    family,
-    genus,
-    species,
-    subspecies,
+    fullname,
     .keep_all = TRUE
   ) %>%
   filter(
+    domain %unlike% "[0-9]",
     kingdom %unlike% "[0-9]",
     phylum %unlike% "[0-9]",
     class %unlike% "[0-9]",
@@ -963,32 +1053,91 @@ taxonomy_gbif <- taxonomy_gbif.bak %>%
     genus %unlike% "[0-9]"
   )
 
+# fix the missing synonym taxonomy:
+
+rank_levels <- c("kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies")
+
+accepted <- taxonomy_gbif %>%
+  filter(!is.na(gbif)) %>%
+  select(
+    gbif,
+    acc_domain = domain,
+    acc_kingdom = kingdom,
+    acc_phylum = phylum,
+    acc_class = class,
+    acc_order = order,
+    acc_family = family
+  ) %>%
+  distinct(gbif, .keep_all = TRUE)
+
+taxonomy_gbif <- taxonomy_gbif %>%
+  left_join(accepted, by = c("gbif_renamed_to" = "gbif")) %>%
+  mutate(
+    name_parts = strsplit(fullname, " "),
+    rank_num = match(rank, rank_levels, nomatch = NA_integer_),
+    
+    # Step 1: parse the synonym's own name components from fullname
+    kingdom = if_else(is.na(kingdom) & rank == "kingdom",
+                      sapply(name_parts, `[`, 1L), kingdom),
+    phylum = if_else(is.na(phylum) & rank == "phylum",
+                     sapply(name_parts, `[`, 1L), phylum),
+    class = if_else(is.na(class) & rank == "class",
+                    sapply(name_parts, `[`, 1L), class),
+    order = if_else(is.na(order) & rank == "order",
+                    sapply(name_parts, `[`, 1L), order),
+    family = if_else(is.na(family) & rank == "family",
+                     sapply(name_parts, `[`, 1L), family),
+    genus = if_else(is.na(genus) & rank %in% c("genus", "species", "subspecies"),
+                    sapply(name_parts, `[`, 1L), genus),
+    species = if_else(is.na(species) & rank %in% c("species", "subspecies"),
+                      sapply(name_parts, `[`, 2L), species),
+    subspecies = if_else(is.na(subspecies) & rank == "subspecies",
+                         sapply(name_parts, `[`, 3L), subspecies),
+    
+    # Step 2: fill higher taxonomy from accepted name, only for ranks ABOVE the synonym's rank
+    domain  = if_else(is.na(domain) & !is.na(acc_domain), acc_domain, domain),
+    kingdom = if_else(is.na(kingdom) & !is.na(acc_kingdom) & rank_num > 1L, acc_kingdom, kingdom),
+    phylum  = if_else(is.na(phylum) & !is.na(acc_phylum) & rank_num > 2L, acc_phylum, phylum),
+    class   = if_else(is.na(class) & !is.na(acc_class) & rank_num > 3L, acc_class, class),
+    order   = if_else(is.na(order) & !is.na(acc_order) & rank_num > 4L, acc_order, order),
+    family  = if_else(is.na(family) & !is.na(acc_family) & rank_num > 5L, acc_family, family)
+  ) %>%
+  select(-starts_with("acc_"), -name_parts, -rank_num)
+
+
+taxonomy_gbif <- taxonomy_gbif %>%
+  mutate(ref = get_author_year(ref)) %>%
+  filter(ref != "AmSOD")
+
 # integrity tests
 sort(table(taxonomy_gbif$rank))
 sort(table(taxonomy_gbif$status))
 
-taxonomy_gbif
-
-
-# Save intermediate results -----------------------------------------------------------------------
-
-saveRDS(taxonomy_lpsn, "data-raw/taxonomy_lpsn.rds", version = 2)
-saveRDS(taxonomy_mycobank, "data-raw/taxonomy_mycobank.rds", version = 2)
 saveRDS(taxonomy_gbif, "data-raw/taxonomy_gbif.rds", version = 2)
-# this allows to always get back to this point by simply loading the files from data-raw/.
+
+
+# *** Saved intermediate results (all taxonomies) *** ---------------------------------------------
+
+# *** SaveRDS from above, this does not need to be run:
+taxonomy_lpsn <- readRDS("data-raw/taxonomy_lpsn.rds")
+taxonomy_mycobank <- readRDS("data-raw/taxonomy_mycobank.rds")
+taxonomy_gbif <- readRDS("data-raw/taxonomy_gbif.rds")
+# this just allows to always get back to this point by simply loading the files from data-raw/.
+
 
 # Add full names ----------------------------------------------------------------------------------
 
 taxonomy_gbif <- taxonomy_gbif %>%
   # clean NAs and add fullname
   mutate(
-    across(kingdom:subspecies, function(x) if_else(is.na(x), "", x)),
+    across(domain:subspecies, function(x) if_else(is.na(x), "", x)),
     fullname = trimws(case_when(
       rank == "family" ~ family,
       rank == "order" ~ order,
       rank == "class" ~ class,
       rank == "phylum" ~ phylum,
       rank == "kingdom" ~ kingdom,
+      rank == "domain" ~ domain,
       TRUE ~ paste(genus, species, subspecies) # already trimmed 6 lines up
     )),
     .before = 1
@@ -1000,13 +1149,14 @@ taxonomy_gbif <- taxonomy_gbif %>%
 taxonomy_lpsn <- taxonomy_lpsn %>%
   # clean NAs and add fullname
   mutate(
-    across(kingdom:subspecies, function(x) if_else(is.na(x), "", x)),
+    across(domain:subspecies, function(x) if_else(is.na(x), "", x)),
     fullname = trimws(case_when(
       rank == "family" ~ family,
       rank == "order" ~ order,
       rank == "class" ~ class,
       rank == "phylum" ~ phylum,
       rank == "kingdom" ~ kingdom,
+      rank == "domain" ~ domain,
       TRUE ~ paste(genus, species, subspecies) # already trimmed 6 lines up
     )),
     .before = 1
@@ -1018,14 +1168,15 @@ taxonomy_lpsn <- taxonomy_lpsn %>%
 taxonomy_mycobank <- taxonomy_mycobank %>%
   # clean NAs and add fullname
   mutate(
-    across(kingdom:subspecies, function(x) if_else(is.na(x), "", x)),
+    across(domain:subspecies, function(x) if_else(is.na(x), "", x)),
     fullname = trimws(case_when(
       rank == "family" ~ family,
       rank == "order" ~ order,
       rank == "class" ~ class,
       rank == "phylum" ~ phylum,
       rank == "kingdom" ~ kingdom,
-      TRUE ~ paste(genus, species, subspecies) # already trimmed 6 lines up
+      rank == "domain" ~ domain,
+      TRUE ~ paste(genus, species, subspecies) # already trimmed 7 lines up
     )),
     .before = 1
   ) %>%
@@ -1037,29 +1188,34 @@ taxonomy_mycobank <- taxonomy_mycobank %>%
 # Combine the datasets ----------------------------------------------------------------------------
 
 taxonomy <- taxonomy_lpsn %>%
+  filter(!domain %in% c("", NA)) %>%
   # add fungi
-  bind_rows(taxonomy_mycobank) %>%
+  bind_rows(taxonomy_mycobank %>% filter(!domain %in% c("", NA))) %>%
   # add GBIF to the bottom
-  bind_rows(taxonomy_gbif) %>%
+  bind_rows(taxonomy_gbif %>% filter(!domain %in% c("", NA))) %>%
   # group on unique species
-  group_by(kingdom, fullname) %>%
+  group_by(domain, fullname) %>%
   # fill the NAs in LPSN/GBIF fields and ref with the other source (so LPSN: 123 and GBIF: NA will become LPSN: 123 and GBIF: 123)
   mutate(across(matches("^(lpsn|mycobank|gbif|ref)"), function(x) {
     rep(x[!is.na(x)][1], length(x))
   })) %>%
   # ungroup again
   ungroup() %>%
-  # only keep unique species per kingdom
-  distinct(kingdom, fullname, .keep_all = TRUE) %>%
-  arrange(fullname)
+  # only keep unique species per domain
+  distinct(domain, fullname, .keep_all = TRUE) %>%
+  arrange(fullname) %>% 
+  select(fullname, everything())
 
 # get missing entries from existing microorganisms data set
 taxonomy.old <- AMR::microorganisms %>%
   select(any_of(colnames(taxonomy))) %>%
+  # TODO ONLY IN 2026!
+  mutate(domain = kingdom) %>% 
+  # END OF TODO
   filter(
-    !paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname),
+    !paste(domain, fullname) %in% paste(taxonomy$domain, taxonomy$fullname),
     # these will be added later:
-    source != "manually added"
+    tolower(source) != "manually added"
   )
 taxonomy <- taxonomy %>%
   bind_rows(taxonomy.old) %>%
@@ -1079,20 +1235,64 @@ taxonomy <- taxonomy %>%
       class != "" ~ "class",
       phylum != "" ~ "phylum",
       kingdom != "" ~ "kingdom",
+      domain != "" ~ "domain",
       TRUE ~ NA_character_
     )
   )
 taxonomy %>% count(rank, sort = TRUE)
 
-taxonomy0 <- taxonomy
+# Resolve genera that appear in multiple domains (e.g. Giardia in Protozoa
+# and Animalia). Prefer Bacteria > Fungi > Protozoa > Archaea > Chromista >
+# Animalia, then overwrite domain-to-family for the entire genus.
+taxonomy %>% count(domain, sort = TRUE)
+domain_priority <- c(
+  "Bacteria" = 1L,
+  "Fungi" = 2L,
+  "Protozoa" = 3L,
+  "Archaea" = 4L,
+  "Chromista" = 5L,
+  "Animalia" = 6L,
+  "Plantae" = 7L
+)
 
-# at this point, it happens that some genera within kingdoms have multiple families / orders, etc., see here:
+# find the best domain per genus from genus-rank records
+best_domain <- taxonomy %>%
+  filter(rank == "genus", genus != "", domain %in% names(domain_priority)) %>%
+  mutate(
+    dprio = domain_priority[domain],
+    sprio = recode_values(source,
+                          "LPSN" ~ 1L,
+                          "MycoBank" ~ 2L,
+                          "GBIF" ~ 3L,
+                          default = 4L)) %>%
+  arrange(genus, dprio, sprio) %>%
+  distinct(genus, .keep_all = TRUE) %>%
+  select(genus, best_domain = domain, best_kingdom = kingdom,
+         best_phylum = phylum, best_class = class,
+         best_order = order, best_family = family)
+
+taxonomy <- taxonomy %>%
+  left_join(best_domain, by = "genus") %>%
+  mutate(
+    domain  = if_else(genus != "" & !is.na(best_domain), best_domain, domain),
+    kingdom = if_else(genus != "" & !is.na(best_kingdom), best_kingdom, kingdom),
+    phylum  = if_else(genus != "" & !is.na(best_phylum) & rank %in%
+                        c("genus", "species", "subspecies"), best_phylum, phylum),
+    class   = if_else(genus != "" & !is.na(best_class) & rank %in%
+                        c("genus", "species", "subspecies"), best_class, class),
+    order   = if_else(genus != "" & !is.na(best_order) & rank %in%
+                        c("genus", "species", "subspecies"), best_order, order),
+    family  = if_else(genus != "" & !is.na(best_family) & rank %in%
+                        c("genus", "species", "subspecies"), best_family, family)) %>%
+  select(-starts_with("best_"))
+
+# check if some genera within kingdoms have multiple families / orders, etc:
 taxonomy %>%
   filter(genus != "") %>%
   group_by(kingdom, genus) %>%
   filter(n_distinct(family) > 1) %>%
   View()
-# so make this universal
+# then fix (we're still arranged by domain, source here):
 taxonomy <- taxonomy %>%
   group_by(kingdom, genus) %>%
   mutate(family = get_top_lvl(family, rank, source, "genus", genus)) %>%
@@ -1103,167 +1303,126 @@ taxonomy <- taxonomy %>%
   group_by(kingdom, class) %>%
   mutate(phylum = get_top_lvl(phylum, rank, source, "class", class)) %>%
   ungroup()
-# and remove the taxonomy where it must remain empty
+
+# remove the taxonomy where it must remain empty
 taxonomy <- taxonomy %>%
   mutate(
-    phylum = if_else(rank %in% c("kingdom"), "", phylum),
-    class = if_else(rank %in% c("kingdom", "phylum"), "", class),
-    order = if_else(rank %in% c("kingdom", "phylum", "class"), "", order),
+    kingdom = if_else(rank %in% c("domain"), "", kingdom),
+    phylum = if_else(rank %in% c("domain", "kingdom"), "", phylum),
+    class = if_else(rank %in% c("domain", "kingdom", "phylum"), "", class),
+    order = if_else(rank %in% c("domain", "kingdom", "phylum", "class"), "", order),
     family = if_else(
-      rank %in% c("kingdom", "phylum", "class", "order"),
+      rank %in% c("domain", "kingdom", "phylum", "class", "order"),
       "",
       family
     ),
     genus = if_else(
-      rank %in% c("kingdom", "phylum", "class", "order", "family"),
+      rank %in% c("domain", "kingdom", "phylum", "class", "order", "family"),
       "",
       genus
     ),
     species = if_else(
-      rank %in% c("kingdom", "phylum", "class", "order", "family", "genus"),
+      rank %in% c("domain", "kingdom", "phylum", "class", "order", "family", "genus"),
       "",
       species
     ),
     subspecies = if_else(
       rank %in%
-        c("kingdom", "phylum", "class", "order", "family", "genus", "species"),
+        c("domain", "kingdom", "phylum", "class", "order", "family", "genus", "species"),
       "",
       subspecies
     )
   )
 
+# recreate fullnames and keep unique - we're still arranged by domain, source here
+taxonomy <- taxonomy %>%
+  mutate(
+    fullname = trimws(case_when(
+      rank == "family" ~ family,
+      rank == "order" ~ order,
+      rank == "class" ~ class,
+      rank == "phylum" ~ phylum,
+      rank == "kingdom" ~ kingdom,
+      rank == "domain" ~ domain,
+      TRUE ~ paste(genus, species, subspecies) # already trimmed 7 lines up
+    ))) %>% 
+  arrange(fullname) %>% 
+  distinct(fullname, .keep_all = TRUE)
 
-# Save intermediate results (0) -------------------------------------------------------------------
+
+# *** Save intermediate results (0) *** -----------------------------------------------------------
 
 saveRDS(taxonomy, "data-raw/taxonomy0.rds")
 # taxonomy <- readRDS("data-raw/taxonomy0.rds")
 
-# Add missing and fix old taxonomic entries -------------------------------------------------------
 
-# this part will make sure that the whole taxonomy of every included species exists, so no missing genera, classes, etc.
+# Add missing taxonomic entries and deduplicate ---------------------------------------------------
+# Ensure every referenced rank has its own row (domain through species).
+# Where possible, enrich with GBIF identifiers.
 
 current_gbif <- taxonomy_gbif.bak %>%
   filter(is.na(acceptedNameUsageID)) %>%
   mutate(
     taxonID = as.character(taxonID),
-    parentNameUsageID = as.character(parentNameUsageID)
+    parentNameUsageID = as.character(parentNameUsageID),
+    domain = case_when(
+      kingdom %in% na.omit(taxonomy_lpsn$kingdom[taxonomy_lpsn$domain == "Bacteria"]) ~ "Bacteria",
+      kingdom %in% na.omit(taxonomy_lpsn$kingdom[taxonomy_lpsn$domain == "Archaea"]) ~ "Archaea",
+      TRUE ~ kingdom
+    )
   )
 
-# add missing kingdoms
-taxonomy_all_missing <- taxonomy %>%
-  filter(kingdom != "") %>%
-  distinct(kingdom) %>%
-  mutate(
-    fullname = kingdom,
-    rank = "kingdom"
-  ) %>%
-  filter(!paste(kingdom, rank) %in% paste(taxonomy$kingdom, taxonomy$rank)) %>%
-  left_join(
-    current_gbif %>%
-      select(
-        kingdom,
-        rank = taxonRank,
-        ref = scientificNameAuthorship,
-        gbif = taxonID,
-        gbif_parent = parentNameUsageID
-      ),
-    by = c("kingdom", "rank")
-  ) %>%
-  mutate(
-    source = if_else(!is.na(gbif), "GBIF", "manually added"),
-    status = if_else(!is.na(gbif), "accepted", "unknown")
-  )
+rank_levels <- c("domain", "kingdom", "phylum", "class", "order", "family", "genus")
 
-# 2 = phylum ... 6 = genus
-for (i in 2:6) {
-  i_name <- colnames(taxonomy)[i + 1]
-  message("Adding missing: ", i_name, "... ", appendLF = FALSE)
-  to_add <- taxonomy %>%
-    filter(.[[i + 1]] != "") %>%
-    distinct(kingdom, .[[i + 1]], .keep_all = TRUE) %>%
-    select(kingdom:(i + 1)) %>%
-    mutate(
-      fullname = .[[ncol(.)]],
-      rank = i_name
-    ) %>%
-    filter(
-      !paste(kingdom, .[[ncol(.) - 2]], rank) %in%
-        paste(taxonomy$kingdom, taxonomy[[i + 1]], taxonomy$rank)
-    ) %>%
-    # get GBIF identifier where available
-    left_join(
-      current_gbif %>%
-        select(
-          kingdom,
-          all_of(i_name),
-          rank = taxonRank,
-          ref = scientificNameAuthorship,
-          gbif = taxonID,
-          gbif_parent = parentNameUsageID
-        ),
-      by = c("kingdom", "rank", i_name)
-    ) %>%
+taxonomy_all_missing <- map_dfr(rank_levels, function(rank_name) {
+  candidates <- taxonomy %>%
+    filter(.data[[rank_name]] != "") %>%
+    distinct(across(all_of(unique(c("domain", rank_levels[seq_len(which(rank_levels == rank_name))]))))) %>%
+    mutate(fullname = .data[[rank_name]], rank = rank_name) %>%
+    anti_join(
+      taxonomy %>% filter(rank == rank_name),
+      by = unique(c("domain", setNames(rank_name, rank_name), "rank"))
+    )
+  
+  if (nrow(candidates) == 0) return(tibble())
+  
+  message("Adding missing: ", rank_name, "... n = ", nrow(candidates))
+  
+  # enrich from GBIF
+  gbif_lookup <- current_gbif %>%
+    filter(taxonRank == rank_name) %>%
+    select(all_of(unique(c("domain", rank_name))),
+           ref = scientificNameAuthorship,
+           gbif = taxonID,
+           gbif_parent = parentNameUsageID) %>%
+    distinct()
+  
+  candidates %>%
+    left_join(gbif_lookup, by = unique(c("domain", rank_name))) %>%
     mutate(
       source = if_else(!is.na(gbif), "GBIF", "manually added"),
       status = if_else(!is.na(gbif), "accepted", "unknown")
     )
-  message("n = ", nrow(to_add))
-  taxonomy_all_missing <- taxonomy_all_missing %>%
-    bind_rows(to_add)
-  rm(to_add)
-}
-taxonomy_all_missing %>% View()
+})
 
-taxonomy <- taxonomy %>%
-  bind_rows(taxonomy_all_missing)
-
-# fix for duplicate fullnames within a kingdom (such as Nitrospira which is the name of the genus AND its class)
-taxonomy <- taxonomy %>%
-  mutate(
-    rank_index = case_when(
-      rank == "subspecies" ~ 1,
-      rank == "species" ~ 2,
-      rank == "genus" ~ 3,
-      rank == "family" ~ 4,
-      rank == "order" ~ 5,
-      rank == "class" ~ 6,
-      TRUE ~ 7
-    ),
-    fullname_rank = paste0(fullname, " {", rank, "}")
-  ) %>%
-  arrange(kingdom, fullname, rank_index) %>%
-  group_by(kingdom, fullname) %>%
-  mutate(fullname = if_else(row_number() > 1, fullname_rank, fullname)) %>%
-  ungroup() %>%
-  select(-fullname_rank, -rank_index) %>%
-  arrange(fullname)
-
-# now also add missing species that have subspecies (requires combination with genus)
+# species implied by subspecies but missing as a species-rank row
 missing_species <- taxonomy %>%
   filter(species != "") %>%
-  distinct(kingdom, genus, species, .keep_all = TRUE) %>%
-  select(kingdom:species) %>%
-  mutate(
-    fullname = paste(genus, species),
-    rank = "species"
+  distinct(domain, genus, species, .keep_all = TRUE) %>%
+  select(domain:species) %>%
+  mutate(fullname = paste(genus, species), rank = "species") %>%
+  anti_join(
+    taxonomy %>% filter(rank == "species"),
+    by = c("domain", "genus", "species", "rank")
   ) %>%
-  filter(
-    !paste(kingdom, genus, species, rank) %in%
-      paste(taxonomy$kingdom, taxonomy$genus, taxonomy$species, taxonomy$rank)
-  ) %>%
-  # get GBIF identifier where available
   left_join(
     current_gbif %>%
-      select(
-        kingdom,
-        genus,
-        species = specificEpithet,
-        rank = taxonRank,
-        ref = scientificNameAuthorship,
-        gbif = taxonID,
-        gbif_parent = parentNameUsageID
-      ),
-    by = c("kingdom", "rank", "genus", "species")
+      filter(taxonRank == "species") %>%
+      select(domain, genus, species = specificEpithet,
+             ref = scientificNameAuthorship,
+             gbif = taxonID, gbif_parent = parentNameUsageID) %>%
+      distinct(),
+    by = c("domain", "genus", "species")
   ) %>%
   mutate(
     source = if_else(!is.na(gbif), "GBIF", "manually added"),
@@ -1271,110 +1430,115 @@ missing_species <- taxonomy %>%
   )
 
 taxonomy <- taxonomy %>%
-  bind_rows(missing_species)
+  bind_rows(taxonomy_all_missing, missing_species) %>%
+  mutate(
+    domain = if_else(is.na(domain) | domain == "", kingdom, domain),
+    across(kingdom:subspecies, \(x) if_else(is.na(x), "", x))
+  )
 
-# remove NAs from taxonomy again, and keep unique full names
+# TODO perhaps only for 2026: remove old kingdoms
+taxonomy <- taxonomy %>% 
+  filter(!(rank == "kingdom" & fullname %in% c("Bacteria", "Archaea")))
+
+# Deduplicate: where the same fullname appears at multiple ranks within a
+# domain (e.g. Nitrospira as genus and class), keep the lowest rank as-is
+# and disambiguate higher ranks by appending {rank}.
+rank_priority <- c("subspecies" = 1L, "species" = 2L, "genus" = 3L,
+                   "family" = 4L, "order" = 5L, "class" = 6L,
+                   "phylum" = 7L, "kingdom" = 8L, "domain" = 9L)
+source_priority <- c("LPSN" = 1L, "MycoBank" = 2L, "GBIF" = 3L, "manually added" = 4L)
+
 taxonomy <- taxonomy %>%
-  mutate(across(kingdom:subspecies, function(x) if_else(is.na(x), "", x))) %>%
-  arrange(kingdom, fullname, ref) %>%
-  distinct(kingdom, fullname, .keep_all = TRUE) %>%
-  filter(kingdom != "")
+  mutate(rank_index = rank_priority[rank],
+         source_index = source_priority[source]) %>%
+  arrange(domain, fullname, rank_index, source_index) %>%
+  distinct(domain, fullname, rank_index, .keep_all = TRUE) %>% 
+  group_by(domain, fullname) %>%
+  mutate(fullname = if_else(
+    row_number() > 1,
+    paste0(fullname, " {", rank, "}"),
+    fullname
+  )) %>%
+  ungroup() %>%
+  select(-rank_index, -source_index) %>%
+  arrange(domain, fullname, ref) %>%
+  distinct(domain, fullname, .keep_all = TRUE) %>%
+  filter(domain != "")
 
 
-# Save intermediate results (1) -------------------------------------------------------------------
+# *** Save intermediate results (1) *** -----------------------------------------------------------
 
 saveRDS(taxonomy, "data-raw/taxonomy1.rds")
 # taxonomy <- readRDS("data-raw/taxonomy1.rds")
+
 
 # Get previously manually added entries -----------------------------------------------------------
 
 manually_added <- AMR::microorganisms %>%
   filter(
-    source == "manually added",
+    tolower(source) == "manually added",
     !paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname),
-    !rank %in% c("kingdom", "phylum", "class", "order", "family")
+    !rank %in% c("domain", "kingdom", "phylum", "class", "order", "family")
   ) %>%
   select(fullname:subspecies, ref, source, rank)
 
-# get latest taxonomy for those entries
-`%if_na%` <- function(x, y) if (is.na(x)) y else x
-for (g in unique(manually_added$genus[
-  manually_added$genus != "" & manually_added$genus %in% taxonomy$genus
-])) {
-  manually_added$family[which(manually_added$genus == g)] <-
-    taxonomy$family[which(taxonomy$genus == g & !is.na(taxonomy$lpsn))][
-      1
-    ] %if_na%
-    taxonomy$family[which(taxonomy$genus == g & !is.na(taxonomy$mycobank))][
-      1
-    ] %if_na%
-    taxonomy$family[which(taxonomy$genus == g)][1]
+# Build a lookup for each child->parent rank pair, preferring LPSN > MycoBank > any
+source_priority <- c("LPSN" = 1L, "MycoBank" = 2L, "GBIF" = 3L, "manually added" = 4L)
+
+fill_from_parent <- function(data, taxonomy, child_rank, parent_rank) {
+  lookup <- taxonomy %>%
+    filter(.data[[child_rank]] != "", .data[[parent_rank]] != "") %>%
+    mutate(sprio = source_priority[source]) %>%
+    arrange(.data[[child_rank]], sprio) %>%
+    distinct(.data[[child_rank]], .keep_all = TRUE) %>%
+    select(all_of(c(child_rank, parent_rank)))
+  
+  data %>%
+    rows_update(lookup, by = child_rank, unmatched = "ignore")
 }
-for (f in unique(manually_added$family[
-  manually_added$family != "" & manually_added$family %in% taxonomy$family
-])) {
-  manually_added$order[which(manually_added$family == f)] <-
-    taxonomy$order[which(taxonomy$family == f & !is.na(taxonomy$lpsn))][
-      1
-    ] %if_na%
-    taxonomy$order[which(taxonomy$family == f & !is.na(taxonomy$mycobank))][
-      1
-    ] %if_na%
-    taxonomy$order[which(taxonomy$family == f)][1]
-}
-for (o in unique(manually_added$order[
-  manually_added$order != "" & manually_added$order %in% taxonomy$order
-])) {
-  manually_added$class[which(manually_added$order == o)] <-
-    taxonomy$class[which(taxonomy$order == o & !is.na(taxonomy$lpsn))][
-      1
-    ] %if_na%
-    taxonomy$class[which(taxonomy$order == o & !is.na(taxonomy$mycobank))][
-      1
-    ] %if_na%
-    taxonomy$class[which(taxonomy$order == o)][1]
-}
-for (cc in unique(manually_added$class[
-  manually_added$class != "" & manually_added$class %in% taxonomy$class
-])) {
-  manually_added$phylum[which(manually_added$class == cc)] <-
-    taxonomy$phylum[which(taxonomy$class == cc & !is.na(taxonomy$lpsn))][
-      1
-    ] %if_na%
-    taxonomy$phylum[which(taxonomy$class == cc & !is.na(taxonomy$mycobank))][
-      1
-    ] %if_na%
-    taxonomy$phylum[which(taxonomy$class == cc)][1]
-}
-for (p in unique(manually_added$phylum[
-  manually_added$phylum != "" & manually_added$phylum %in% taxonomy$phylum
-])) {
-  manually_added$kingdom[which(manually_added$phylum == p)] <-
-    taxonomy$kingdom[which(taxonomy$phylum == p & !is.na(taxonomy$lpsn))][
-      1
-    ] %if_na%
-    taxonomy$kingdom[which(taxonomy$phylum == p & !is.na(taxonomy$mycobank))][
-      1
-    ] %if_na%
-    taxonomy$kingdom[which(taxonomy$phylum == p)][1]
+
+# Walk up the hierarchy: genus->family->order->class->phylum->kingdom
+rank_pairs <- tibble(
+  child  = c("genus", "family", "order", "class", "phylum"),
+  parent = c("family", "order", "class", "phylum", "kingdom")
+)
+
+for (i in seq_len(nrow(rank_pairs))) {
+  manually_added <- fill_from_parent(
+    manually_added, taxonomy,
+    rank_pairs$child[i], rank_pairs$parent[i]
+  )
 }
 
 manually_added <- manually_added %>%
   mutate(
     status = "unknown",
     rank = if_else(fullname %like% "unknown", "(unknown rank)", rank)
-  )
-manually_added %>% View()
-
-# these are now included in the new taxonomy, check them
-manually_added %>% filter(fullname %in% taxonomy$fullname)
+  ) %>%
+  filter(!fullname %in% taxonomy$fullname)
 
 taxonomy <- taxonomy %>%
-  # here also the 'unknowns' are added, such as "(unknown fungus)"
   bind_rows(manually_added) %>%
   arrange(fullname)
 
 table(taxonomy$rank, useNA = "always")
+
+
+# Remove childless higher-rank entries (family through kingdom) -----------------------------------
+
+# Work bottom-up: family first, then order, class, phylum, kingdom.
+# After each step, the next rank up may have lost its last child.
+for (rank_name in c("family", "order", "class", "phylum", "kingdom")) {
+  has_children <- taxonomy %>%
+    filter(rank != rank_name, .data[[rank_name]] != "") %>%
+    distinct(.data[[rank_name]]) %>%
+    pull()
+  
+  n_before <- nrow(taxonomy)
+  taxonomy <- taxonomy %>%
+    filter(!(rank == rank_name & !fullname %in% has_children))
+  message("Removed ", n_before - nrow(taxonomy), " childless ", rank_name, " entries")
+}
 
 
 # Get LPSN data for records missing from `taxonomy_lpsn` ------------------------------------------
@@ -1383,11 +1547,16 @@ table(taxonomy$rank, useNA = "always")
 # such as family Thiotrichaceae and its order Thiotrichales, or the genus Coleospermum. When running
 # get_lpsn_and_author("family", "Thiotrichaceae") you do get a result, vs. taxonomy_lpsn %>% filter(family == "Thiotrichaceae").
 # So check every non-LPSN records from the kingdom of Bacteria and add it
+lpsn_genera <- taxonomy %>%
+  filter(source == "LPSN", rank == "genus") %>%
+  pull(genus)
 gbif_bacteria <- which(
-  taxonomy$kingdom == "Bacteria" &
+  taxonomy$domain == "Bacteria" &
     taxonomy$source %in% c("GBIF", "manually added") &
-    taxonomy$rank %in% c("phylum", "class", "order", "family", "genus")
+    (taxonomy$rank %in% c("phylum", "class", "order", "family", "genus") |
+       (taxonomy$rank == "species" & taxonomy$genus %in% lpsn_genera))
 )
+message(length(gbif_bacteria))
 added <- 0
 pb <- progress_bar$new(
   total = length(gbif_bacteria),
@@ -1395,6 +1564,7 @@ pb <- progress_bar$new(
 )
 for (record in gbif_bacteria) {
   pb$tick()
+  Sys.sleep(0.1)
   lpsn <- get_lpsn_and_author(
     rank = taxonomy$rank[record],
     name = taxonomy$fullname[record]
@@ -1414,8 +1584,12 @@ message(added, " GBIF records altered to latest LPSN")
 
 # parent LPSNs will be added later
 
+
+# *** Save intermediate results (1b) *** ----------------------------------------------------------
+
 saveRDS(taxonomy, "data-raw/taxonomy1b.rds")
 # taxonomy <- readRDS("data-raw/taxonomy1b.rds")
+
 
 # Clean scientific reference ----------------------------------------------------------------------
 
@@ -1423,189 +1597,179 @@ taxonomy <- taxonomy %>%
   mutate(ref = get_author_year(ref))
 
 
-# Get the latest upper taxonomy from LPSN/MycoBank for GBIF data ---------------------------------------
+# Get the latest upper taxonomy from LPSN/MycoBank for GBIF data ----------------------------------
 
-# we did this for the manually added ones (from the current AMR pkg version), but not for the new GBIF records
-# (e.g., phylum above class "Bacilli" was still "Firmicutes" in 2023, should be "Bacillota")
-for (k in unique(taxonomy$kingdom[taxonomy$kingdom != ""])) {
-  if (k == "Fungi") {
-    src <- "MycoBank"
-  } else {
-    src <- "LPSN"
-  }
-  message(
-    "Fixing GBIF taxonomy for kingdom ",
-    k,
-    " based on ",
-    src,
-    ".",
-    appendLF = FALSE
-  )
-  i <- 0
-  for (g in unique(taxonomy$genus[
-    taxonomy$genus != "" & taxonomy$kingdom == k & taxonomy$source == src
-  ])) {
-    i <- i + 1
-    if (i %% 50 == 0) {
-      message(".", appendLF = FALSE)
-    }
-    taxonomy$family[which(
-      taxonomy$genus == g & taxonomy$kingdom == k
-    )] <- taxonomy$family[which(
-      taxonomy$genus == g & taxonomy$kingdom == k & taxonomy$source == src
-    )][1]
-  }
-  for (f in unique(taxonomy$family[
-    taxonomy$family != "" & taxonomy$kingdom == k & taxonomy$source == src
-  ])) {
-    i <- i + 1
-    if (i %% 50 == 0) {
-      message(".", appendLF = FALSE)
-    }
-    taxonomy$order[which(
-      taxonomy$family == f & taxonomy$kingdom == k
-    )] <- taxonomy$order[which(
-      taxonomy$family == f & taxonomy$kingdom == k & taxonomy$source == src
-    )][1]
-  }
-  for (o in unique(taxonomy$order[
-    taxonomy$order != "" & taxonomy$kingdom == k & taxonomy$source == src
-  ])) {
-    i <- i + 1
-    if (i %% 50 == 0) {
-      message(".", appendLF = FALSE)
-    }
-    taxonomy$class[which(
-      taxonomy$order == o & taxonomy$kingdom == k
-    )] <- taxonomy$class[which(
-      taxonomy$order == o & taxonomy$kingdom == k & taxonomy$source == src
-    )][1]
-  }
-  for (cc in unique(taxonomy$class[
-    taxonomy$class != "" & taxonomy$kingdom == k & taxonomy$source == src
-  ])) {
-    i <- i + 1
-    if (i %% 50 == 0) {
-      message(".", appendLF = FALSE)
-    }
-    taxonomy$phylum[which(
-      taxonomy$class == cc & taxonomy$kingdom == k
-    )] <- taxonomy$phylum[which(
-      taxonomy$class == cc & taxonomy$kingdom == k & taxonomy$source == src
-    )][1]
-  }
-  message("OK.")
-}
-
-
-# fix rank
+# this fix is required after the LPSN import of get_lpsn_and_author()
 taxonomy <- taxonomy %>%
   mutate(
-    rank = case_when(
-      subspecies != "" ~ "subspecies",
-      species != "" ~ "species",
-      genus != "" ~ "genus",
-      family != "" ~ "family",
-      order != "" ~ "order",
-      class != "" ~ "class",
-      phylum != "" ~ "phylum",
-      kingdom != "" ~ "kingdom",
-      TRUE ~ NA_character_
+    # set the right domain for the prokaryotes based on LPSN
+    domain = case_when(
+      kingdom %in% na.omit(taxonomy_lpsn$kingdom[taxonomy_lpsn$domain == "Bacteria"]) ~ "Bacteria",
+      kingdom %in% na.omit(taxonomy_lpsn$kingdom[taxonomy_lpsn$domain == "Archaea"]) ~ "Archaea",
+      TRUE ~ kingdom
     )
   )
+taxonomy$domain[taxonomy$domain == "(unknown kingdom)"] <- "(unknown domain)"
+
+# Fix GBIF taxonomy using authoritative source per domain -----------------------------------------
+
+# e.g., phylum above class "Bacilli" was still "Firmicutes" in 2023, should be "Bacillota" per LPSN
+rank_pairs <- tibble(
+  child  = c("genus", "family", "order", "class", "phylum"),
+  parent = c("family", "order",  "class", "phylum", "kingdom")
+)
+
+for (d in unique(taxonomy$domain[taxonomy$domain != "(unknown domain)"])) {
+  src <- if (d == "Fungi") "MycoBank" else "LPSN"
+  message("Fixing GBIF taxonomy for domain ", d, " based on ", src, "...",
+          appendLF = FALSE)
+  
+  for (i in seq_len(nrow(rank_pairs))) {
+    child_col  <- rank_pairs$child[i]
+    parent_col <- rank_pairs$parent[i]
+    
+    # build lookup: for each child value in this domain, get the parent from the authoritative source
+    lookup <- taxonomy %>%
+      filter(
+        domain == d,
+        source == src,
+        .data[[child_col]] != ""
+      )
+    
+    # special case: kingdom lookup excludes "Bacteria"/"Archaea" as kingdom values
+    if (parent_col == "kingdom") {
+      lookup <- lookup %>%
+        filter(!kingdom %in% c("Bacteria", "Archaea"))
+    }
+    
+    lookup <- lookup %>%
+      distinct(.data[[child_col]], .keep_all = TRUE) %>%
+      select(all_of(c(child_col, parent_col)))
+    
+    # join and overwrite
+    taxonomy <- taxonomy %>%
+      rows_update(
+        taxonomy %>%
+          filter(domain == d, .data[[child_col]] != "") %>%
+          select(-all_of(parent_col)) %>%
+          left_join(lookup, by = child_col) %>%
+          filter(!is.na(.data[[parent_col]])) %>%
+          select(fullname, all_of(parent_col)),
+        by = "fullname",
+        unmatched = "ignore"
+      )
+  }
+  message(" OK.")
+}
+
+# Fix unknown kingdoms and rank
+taxonomy <- taxonomy %>%
+  mutate(
+    kingdom = case_when(
+      domain %in% c("Bacteria", "Archaea") & phylum %like% "unknown" ~ "(unknown kingdom)",
+      .default = kingdom
+    ),
+    rank = case_when(
+      rank %in% c("(unknown rank)", "species group") ~ rank,
+      subspecies != "" ~ "subspecies",
+      species != ""    ~ "species",
+      genus != ""      ~ "genus",
+      family != ""     ~ "family",
+      order != ""      ~ "order",
+      class != ""      ~ "class",
+      phylum != ""     ~ "phylum",
+      kingdom != ""    ~ "kingdom",
+      .default = NA_character_
+    )
+  )
+
+
+# *** Save intermediate results (1c) *** ----------------------------------------------------------
 
 saveRDS(taxonomy, "data-raw/taxonomy1c.rds")
 # taxonomy <- readRDS("data-raw/taxonomy1c.rds")
 
-# Add parent identifiers --------------------------------------------------------------------------
 
-# requires full name and full taxonomy
+# Add parent identifiers --------------------------------------------------------------------------
+taxonomy$source[taxonomy$source == "Manually added"] <- "manually added"
+taxonomy <- taxonomy %>%
+  filter(status %in% c("accepted", "synonym") | source == "manually added")
+
+# Add domain rows
+taxonomy <- taxonomy %>%
+  bind_rows(
+    taxonomy %>%
+      filter(
+        kingdom == domain,
+        rank == "kingdom",
+        !domain %in% c("Bacteria", "Archaea"),
+        fullname %unlike% "\\{kingdom\\}"
+      ) %>%
+      mutate(
+        kingdom = "", rank = "domain", status = "accepted",
+        source = "manually added", ref = NA_character_,
+        across(matches("^(lpsn|mycobank|gbif)"), \(x) NA_character_)
+      )
+  )
+taxonomy$rank[taxonomy$kingdom == taxonomy$domain &
+                taxonomy$rank == "kingdom" &
+                taxonomy$domain %in% c("Bacteria", "Archaea")] <- "domain"
+taxonomy$kingdom[taxonomy$kingdom == taxonomy$domain &
+                   taxonomy$rank == "domain"] <- ""
+
+taxonomy <- taxonomy %>%
+  arrange(fullname, lpsn, mycobank, desc(gbif)) %>%
+  distinct(fullname, .keep_all = TRUE) %>%
+  arrange(fullname)
+
+# Resolve parent fullname for each record
 taxonomy <- taxonomy %>%
   mutate(
-    lpsn_parent = case_when(
-      rank == "phylum" ~ lpsn[match(kingdom, fullname)],
-      # in class, take parent from phylum if available, otherwise kingdom
-      rank == "class" & phylum != "" ~ lpsn[match(phylum, fullname)],
-      rank == "class" ~ lpsn[match(kingdom, fullname)],
-      # in order, take parent from class if available, otherwise phylum, otherwise kingdom
-      rank == "order" & class != "" ~ lpsn[match(class, fullname)],
-      rank == "order" & phylum != "" ~ lpsn[match(phylum, fullname)],
-      rank == "order" ~ lpsn[match(kingdom, fullname)],
-      # family
-      rank == "family" & order != "" ~ lpsn[match(order, fullname)],
-      rank == "family" & class != "" ~ lpsn[match(class, fullname)],
-      rank == "family" & phylum != "" ~ lpsn[match(phylum, fullname)],
-      rank == "family" ~ lpsn[match(kingdom, fullname)],
-      # genus
-      rank == "genus" & family != "" ~ lpsn[match(family, fullname)],
-      rank == "genus" & order != "" ~ lpsn[match(order, fullname)],
-      rank == "genus" & class != "" ~ lpsn[match(class, fullname)],
-      rank == "genus" & phylum != "" ~ lpsn[match(phylum, fullname)],
-      rank == "genus" ~ lpsn[match(kingdom, fullname)],
-      # species, always has a genus
-      rank == "species" ~ lpsn[match(genus, fullname)],
-      # subspecies, always has a genus + species
-      rank == "subspecies" ~ lpsn[match(paste(genus, species), fullname)],
-      TRUE ~ NA_character_
-    ),
-    mycobank_parent = case_when(
-      rank == "phylum" ~ mycobank[match(kingdom, fullname)],
-      # class
-      rank == "class" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "class" ~ mycobank[match(kingdom, fullname)],
-      # order
-      rank == "order" & class != "" ~ mycobank[match(class, fullname)],
-      rank == "order" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "order" ~ mycobank[match(kingdom, fullname)],
-      # family
-      rank == "family" & order != "" ~ mycobank[match(order, fullname)],
-      rank == "family" & class != "" ~ mycobank[match(class, fullname)],
-      rank == "family" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "family" ~ mycobank[match(kingdom, fullname)],
-      # genus
-      rank == "genus" & family != "" ~ mycobank[match(family, fullname)],
-      rank == "genus" & order != "" ~ mycobank[match(order, fullname)],
-      rank == "genus" & class != "" ~ mycobank[match(class, fullname)],
-      rank == "genus" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "genus" ~ mycobank[match(kingdom, fullname)],
-      # species
-      rank == "species" ~ mycobank[match(genus, fullname)],
-      # subspecies
-      rank == "subspecies" ~ mycobank[match(paste(genus, species), fullname)],
-      TRUE ~ NA_character_
-    ),
-    gbif_parent = case_when(
-      rank == "phylum" ~ gbif[match(kingdom, fullname)],
-      # class
-      rank == "class" & phylum != "" ~ gbif[match(phylum, fullname)],
-      rank == "class" ~ gbif[match(kingdom, fullname)],
-      # order
-      rank == "order" & class != "" ~ gbif[match(class, fullname)],
-      rank == "order" & phylum != "" ~ gbif[match(phylum, fullname)],
-      rank == "order" ~ gbif[match(kingdom, fullname)],
-      # family
-      rank == "family" & order != "" ~ gbif[match(order, fullname)],
-      rank == "family" & class != "" ~ gbif[match(class, fullname)],
-      rank == "family" & phylum != "" ~ gbif[match(phylum, fullname)],
-      rank == "family" ~ gbif[match(kingdom, fullname)],
-      # genus
-      rank == "genus" & family != "" ~ gbif[match(family, fullname)],
-      rank == "genus" & order != "" ~ gbif[match(order, fullname)],
-      rank == "genus" & class != "" ~ gbif[match(class, fullname)],
-      rank == "genus" & phylum != "" ~ gbif[match(phylum, fullname)],
-      rank == "genus" ~ gbif[match(kingdom, fullname)],
-      # species
-      rank == "species" ~ gbif[match(genus, fullname)],
-      # subspecies
-      rank == "subspecies" ~ gbif[match(paste(genus, species), fullname)],
-      TRUE ~ NA_character_
+    .parent_fullname = case_when(
+      rank == "subspecies"              ~ paste(genus, species),
+      rank == "species"                 ~ genus,
+      rank == "genus"   & family != ""  ~ family,
+      rank == "genus"   & order != ""   ~ order,
+      rank == "genus"   & class != ""   ~ class,
+      rank == "genus"   & phylum != ""  ~ phylum,
+      rank == "genus"                   ~ domain,
+      rank == "family"  & order != ""   ~ order,
+      rank == "family"  & class != ""   ~ class,
+      rank == "family"  & phylum != ""  ~ phylum,
+      rank == "family"                  ~ domain,
+      rank == "order"   & class != ""   ~ class,
+      rank == "order"   & phylum != ""  ~ phylum,
+      rank == "order"                   ~ domain,
+      rank == "class"   & phylum != ""  ~ phylum,
+      rank == "class"                   ~ domain,
+      rank == "phylum"  & kingdom != "" ~ kingdom,
+      rank == "phylum"                  ~ domain,
+      rank == "kingdom"                 ~ domain,
+      .default = NA_character_
     )
   )
 
-# these still have no record in our data set:
+# Build lookup vectors: fullname -> id
+lpsn_lookup     <- setNames(taxonomy$lpsn, taxonomy$fullname)
+mycobank_lookup <- setNames(taxonomy$mycobank, taxonomy$fullname)
+gbif_lookup     <- setNames(taxonomy$gbif, taxonomy$fullname)
+
+taxonomy <- taxonomy %>%
+  mutate(
+    lpsn_parent     = unname(lpsn_lookup[.parent_fullname]),
+    mycobank_parent = unname(mycobank_lookup[.parent_fullname]),
+    gbif_parent     = unname(gbif_lookup[.parent_fullname])
+  ) %>%
+  select(-.parent_fullname)
+
+# Check: these still have no record in our data set
 which(!taxonomy$lpsn_parent %in% taxonomy$lpsn)
 which(!taxonomy$mycobank_parent %in% taxonomy$mycobank)
 which(!taxonomy$gbif_parent %in% taxonomy$gbif)
+
+# the domains now have rank = NA
+taxonomy$fullname[is.na(taxonomy$rank)]
+taxonomy$rank[is.na(taxonomy$rank)] <- "domain"
 
 
 # Add prevalence ----------------------------------------------------------------------------------
@@ -1690,27 +1854,20 @@ taxonomy <- taxonomy %>%
         putative &
         rank %in% c("species", "subspecies") ~
         1.25,
+      
       # other genera in the 'putative' group
       genus %in% putative_genera & rank == "genus" ~ 1.25,
-
-      # we keep track of prevalent genera too of non-bacterial species
-      genus %in%
-        AMR:::MO_RELEVANT_GENERA &
-        kingdom != "Bacteria" &
-        rank %in% c("genus", "species", "subspecies") ~
-        1.25,
-
       # species and subspecies in 'established' and 'putative' groups
       genus %in%
         c(established_genera, putative_genera) &
         rank %in% c("species", "subspecies") ~
         1.5,
-      # other species from a genus in either group
-      genus %in%
-        nonbacterial_genera &
+      
+      # non-bacterial genera/species/subspecies of clinical relevance
+      genus %in% nonbacterial_genera &
+        domain != "Bacteria" &
         rank %in% c("genus", "species", "subspecies") ~
-        1.5,
-
+        1.25,
       # all others
       TRUE ~ 2.0
     )
@@ -1719,10 +1876,12 @@ taxonomy <- taxonomy %>%
 table(taxonomy$prevalence, useNA = "always")
 # (a lot will be removed further below)
 
-# Save intermediate results (2) -------------------------------------------------------------------
+
+# *** Save intermediate results (2) *** -----------------------------------------------------------
 
 saveRDS(taxonomy, "data-raw/taxonomy2.rds")
 # taxonomy <- readRDS("data-raw/taxonomy2.rds")
+
 
 # Remove unwanted taxonomic entries ---------------------------------------------------------------
 
@@ -1731,13 +1890,13 @@ part1 <- taxonomy %>%
     # keep all we added ourselves:
     source == "manually added" |
       # keep all bacteria anyway, main focus of our package:
-      kingdom == "Bacteria" |
+      domain == "Bacteria" |
       # and these kingdoms are very small, and also mainly microorganisms:
-      kingdom == "Protozoa" |
-      kingdom == "Archaea" |
-      kingdom == "Chromista" |
+      domain == "Protozoa" |
+      domain == "Archaea" |
+      domain == "Chromista" |
       # keep everything from family up, 'ghost' entries will be removed later on
-      rank %in% c("kingdom", "phylum", "class", "order", "family") |
+      rank %in% c("domain", "kingdom", "phylum", "class", "order", "family") |
       # other relevant genera to keep:
       genus %in% AMR:::MO_RELEVANT_GENERA |
       # relevant for biotechnology:
@@ -1765,21 +1924,21 @@ part1 <- taxonomy %>%
           "Tritrichomonas"
         ) |
       genus %like_case% "Methano" |
-      # kingdom of Protozoa:
+      # domain of Protozoa:
       (phylum %in% c("Choanozoa", "Mycetozoa") & prevalence < 2) |
       # Fungi:
-      (kingdom == "Fungi" &
+      (domain == "Fungi" &
         (!rank %in% c("genus", "species", "subspecies") |
           prevalence < 2 |
           class == "Pichiomycetes")) |
       # Animalia:
       genus %in% c("Lucilia", "Lumbricus") |
       (class == "Insecta" & !rank %in% c("species", "subspecies")) | # keep only genus of insects, not all of their (sub)species
-      (genus == "Amoeba" & kingdom != "Animalia") # keep only in the protozoa, not the animalia
+      (genus == "Amoeba" & domain != "Animalia") # keep only in the protozoa, not the animalia
   ) %>%
-  # this kingdom only contained Curvularia and Hymenolepis, which have coincidental twin names with Fungi
+  # this domain only contained Curvularia and Hymenolepis, which have coincidental twin names with Fungi
   filter(
-    kingdom != "Plantae",
+    domain != "Plantae",
     !(genus %in% c("Aedes", "Anopheles") & rank %in% c("species", "subspecies"))
   )
 
@@ -1844,7 +2003,16 @@ part4 <- taxonomy %>%
   )
 parts <- bind_rows(part1, part2, part3, part4)
 
-taxonomy <- bind_rows(part1, part2, part3, part4) %>%
+
+# Keep accepted names that any kept synonym points to
+accepted_targets <- taxonomy %>%
+  filter(
+    gbif %in% na.omit(parts$gbif_renamed_to) |
+      lpsn %in% na.omit(parts$lpsn_renamed_to) |
+      mycobank %in% na.omit(parts$mycobank_renamed_to)
+  )
+
+taxonomy <- bind_rows(parts, accepted_targets) %>%
   mutate(
     # here we must prefer in this order: LPSN > MycoBank > GBIF
     source_index = case_when(
@@ -1855,76 +2023,84 @@ taxonomy <- bind_rows(part1, part2, part3, part4) %>%
       TRUE ~ 4
     ),
     # also arrange on rank, otherwise e.g. Cyptococcus comes from Animalia, not Fungi
-    rank_index = case_when(
-      kingdom == "Bacteria" ~ 1,
-      kingdom == "Fungi" ~ 2,
-      kingdom == "Protozoa" ~ 3,
-      kingdom == "Archaea" ~ 4,
-      kingdom == "Chromista" ~ 5,
-      kingdom == "Animalia" ~ 6,
+    domain_index = case_when(
+      domain == "Bacteria" ~ 1,
+      domain == "Fungi" ~ 2,
+      domain == "Protozoa" ~ 3,
+      domain == "Archaea" ~ 4,
+      domain == "Chromista" ~ 5,
+      domain == "Animalia" ~ 6,
       TRUE ~ 7
     )
   ) %>%
-  arrange(source_index, rank_index, fullname) %>%
+  arrange(source_index, domain_index, fullname) %>%
   distinct(fullname, .keep_all = TRUE) %>%
-  select(-c(source_index, rank_index))
+  select(-c(source_index, domain_index))
 
-# some manual updates, remove later
-taxonomy$family[taxonomy$genus == "Blastocystis"] <- "Blastocystidae"
-taxonomy$ref[which(
-  taxonomy$fullname == "Salmonella Typhimurium"
-)] <- "Castellani et al., 1919"
-taxonomy$ref[which(
-  taxonomy$fullname == "Salmonella Paratyphi"
-)] <- "Ezaki et al., 2000"
-taxonomy$ref[which(
-  taxonomy$fullname == "Salmonella Typhi"
-)] <- "Warren et al., 1930"
-
-# first make sure that species of a genus cannot be across multiple kingdoms, since otherwise IDs cannot be given correctly
-# (e.g., Amoeba has some species in Protozoa and some in Animalia)
-# we acknowledge that this may be taxonomically right, but we need the same KINGDOM_GENUS identifier for each record
 taxonomy <- taxonomy %>%
-  group_by(genus) %>%
   mutate(
-    kingdom = if_else(
-      rank != "genus" & genus != "" & fullname %unlike% "unknown",
-      first(kingdom[rank == "genus"]),
-      kingdom
+    lpsn_renamed_to = if_else(
+      !is.na(lpsn_renamed_to) & !lpsn_renamed_to %in% lpsn,
+      NA_character_, lpsn_renamed_to
     ),
-    phylum = if_else(
-      rank != "genus" & genus != "" & fullname %unlike% "unknown",
-      first(phylum[rank == "genus"]),
-      phylum
+    mycobank_renamed_to = if_else(
+      !is.na(mycobank_renamed_to) & !mycobank_renamed_to %in% mycobank,
+      NA_character_, mycobank_renamed_to
     ),
-    class = if_else(
-      rank != "genus" & genus != "" & fullname %unlike% "unknown",
-      first(class[rank == "genus"]),
-      class
-    ),
-    order = if_else(
-      rank != "genus" & genus != "" & fullname %unlike% "unknown",
-      first(order[rank == "genus"]),
-      order
-    ),
-    family = if_else(
-      rank != "genus" & genus != "" & fullname %unlike% "unknown",
-      first(family[rank == "genus"]),
-      family
-    ),
-    prevalence = if_else(
-      rank != "genus" & genus != "" & fullname %unlike% "unknown",
-      first(prevalence[rank == "genus"]),
-      prevalence
+    gbif_renamed_to = if_else(
+      !is.na(gbif_renamed_to) & !gbif_renamed_to %in% gbif,
+      NA_character_, gbif_renamed_to
     )
+  )
+
+# Verify no unchased references remain
+unchased <- taxonomy %>%
+  filter(
+    (!is.na(gbif_renamed_to) & !gbif_renamed_to %in% c(taxonomy$gbif, NA)) |
+      (!is.na(lpsn_renamed_to) & !lpsn_renamed_to %in% c(taxonomy$lpsn, NA)) |
+      (!is.na(mycobank_renamed_to) & !mycobank_renamed_to %in% c(taxonomy$mycobank, NA))
+  )
+if (nrow(unchased) > 0) {
+  warning(nrow(unchased), " records have renamed_to references not present in taxonomy")
+  table(unchased$prevalence)
+}
+
+# first make sure that species of a genus cannot be across multiple kingdoms or domains, since otherwise IDs cannot be given correctly
+# (e.g., Amoeba has some species in Protozoa and some in Animalia)
+# we acknowledge that this may be taxonomically right, but we need the same DOMAIN_GENUS identifier for each record
+genus_ref <- taxonomy %>%
+  filter(genus != "") %>%
+  group_by(genus) %>%
+  summarise(
+    .ref_domain     = coalesce(first(domain[rank == "genus"]), first(domain)),
+    .ref_kingdom    = coalesce(first(kingdom[rank == "genus"]), first(kingdom)),
+    .ref_phylum     = coalesce(first(phylum[rank == "genus"]), first(phylum)),
+    .ref_class      = coalesce(first(class[rank == "genus"]), first(class)),
+    .ref_order      = coalesce(first(order[rank == "genus"]), first(order)),
+    .ref_family     = coalesce(first(family[rank == "genus"]), first(family)),
+    .ref_prevalence = coalesce(first(prevalence[rank == "genus"]), first(prevalence)),
+    .groups = "drop"
+  )
+
+taxonomy <- taxonomy %>%
+  left_join(genus_ref, by = "genus") %>%
+  mutate(
+    across_flag = rank != "genus" & genus != "" & fullname %unlike% "unknown",
+    domain     = if_else(across_flag, .ref_domain, domain),
+    kingdom    = if_else(across_flag, .ref_kingdom, kingdom),
+    phylum     = if_else(across_flag, .ref_phylum, phylum),
+    class      = if_else(across_flag, .ref_class, class),
+    order      = if_else(across_flag, .ref_order, order),
+    family     = if_else(across_flag, .ref_family, family),
+    prevalence = if_else(across_flag, .ref_prevalence, prevalence)
   ) %>%
-  ungroup() %>%
+  select(-starts_with(".ref_"), -across_flag) %>%
   arrange(fullname)
 
 # update the taxonomic names based on new genus classification
 taxonomy <- taxonomy %>%
   # first, fix kingdom based on family level (only when family is not empty)
-  group_by(family) %>%
+  group_by(domain, family) %>%
   mutate(
     kingdom = if_else(
       family != "",
@@ -1948,95 +2124,135 @@ taxonomy <- taxonomy %>%
     )
   ) %>%
   # next, update all taxonomic layers
-  group_by(kingdom, genus) %>%
+  group_by(domain, genus) %>%
   mutate(family = get_top_lvl(family, rank, source, "genus", genus)) %>%
-  group_by(kingdom, family) %>%
+  group_by(domain, family) %>%
   mutate(order = get_top_lvl(order, rank, source, "family", family)) %>%
-  group_by(kingdom, order) %>%
+  group_by(domain, order) %>%
   mutate(class = get_top_lvl(class, rank, source, "order", order)) %>%
-  group_by(kingdom, class) %>%
+  group_by(domain, class) %>%
   mutate(phylum = get_top_lvl(phylum, rank, source, "class", class)) %>%
   ungroup() %>%
   arrange(fullname) %>%
-  mutate(across(phylum:family, ~ if_else(is.na(.x), "", .x)))
+  mutate(across(kingdom:family, ~ if_else(is.na(.x), "", .x)))
 
 # no ghost families, orders, classes, phyla
 # (but keep the ghost families of bacteria)
 taxonomy <- taxonomy %>%
-  group_by(kingdom, family) %>%
+  group_by(domain, family) %>%
   filter(
     n() > 1 |
       fullname %like% "unknown" |
-      rank %in% c("kingdom", "genus", "species", "subspecies") |
-      kingdom == "Bacteria"
+      rank %in% c("domain", "genus", "species", "subspecies") |
+      domain == "Bacteria"
   ) %>%
-  group_by(kingdom, order) %>%
+  group_by(domain, order) %>%
   filter(
     n() > 1 |
       fullname %like% "unknown" |
-      rank %in% c("kingdom", "genus", "species", "subspecies") |
+      rank %in% c("domain", "genus", "species", "subspecies") |
       family != ""
   ) %>%
-  group_by(kingdom, class) %>%
+  group_by(domain, class) %>%
   filter(
     n() > 1 |
       fullname %like% "unknown" |
-      rank %in% c("kingdom", "genus", "species", "subspecies") |
+      rank %in% c("domain", "genus", "species", "subspecies") |
       family != "" |
       order != ""
   ) %>%
-  group_by(kingdom, phylum) %>%
+  group_by(domain, phylum) %>%
   filter(
     n() > 1 |
       fullname %like% "unknown" |
-      rank %in% c("kingdom", "genus", "species", "subspecies") |
+      rank %in% c("domain", "genus", "species", "subspecies") |
       family != "" |
       order != "" |
       class != ""
   ) %>%
   ungroup()
 
+# fix text in `domain` column where rank is "domain"
+taxonomy$domain[taxonomy$rank == "domain"] <- gsub(" \\{domain\\}", "", taxonomy$fullname[taxonomy$rank == "domain"])
+
+
+# *** Save intermediate results (2b) *** ----------------------------------------------------------
+
 saveRDS(taxonomy, "data-raw/taxonomy2b.rds")
 # taxonomy <- readRDS("data-raw/taxonomy2b.rds")
 
+
+# Add Plasmodium species --------------------------------------------------
+
+# MB 2026-05-09/ Plasmodium is not in the GBIF/COL dataset with its species, so we add it here manually.
+plasmodia <- data.frame(
+  domain = "Protozoa",
+  kingdom = "Protozoa",
+  phylum = "Apicomplexa",
+  class = "Aconoidasida",
+  order = "Haemospororida",
+  family = "Plasmodiidae",
+  genus = "Plasmodium",
+  species = c("", "accipiteris", "achiotense", "achromaticum", "acuminatum", "adleri", "aegyptensis", "aeuminatum", "agamae", "alaudae", "alloelongatum", "anasum", "anomaluri", "arachniformis", "ashfordi", "atheruri", "attenuatum", "audaciosum", "auffenbergi", "aurulentum", "australis", "azurophilum", "balli", "bambusicolai", "basilisci", "beaucournui", "beebei", "beltrani", "berghei", "bertii", "bigueti", "billbrayi", "billcollinsi", "bioccai", "biziurae", "blacklocki", "booliati", "bouillize", "brasilianum", "brodeni", "brumpti", "brygooi", "bubalis", "bucki", "buteonis", "caloti", "capistrani", "caprae", "carmelinoi", "carteri", "cathemerium", "caucasica", "cephalophi", "cercopitheci", "chabaudi", "chiricahuae", "circularis", "circumflexum", "clelandi", "cnemaspi", "cnemidophori", "coatneyi", "coggeshalli", "colombiense", "columbae", "coluzzii", "cordyli", "coturnixi", "coulangesi", "cuculus", "cyclopsi", "cynomolgi", "cynomolgi", "cynomolgi", "cynomolgi", "delichoni", "dherteae", "diminutivum", "diploglossi", "dissanaikei", "dominicana", "dorsti", "draconis", "durae", "egerniae", "elongatum", "eylesi", "fairchildi", "falciparum", "fallax", "fieldi", "fischeri", "floridense", "foleyi", "formosanum", "forresteri", "fragile", "gabaldoni", "gaboni", "gallinaceum", "garnhami", "gemini", "georgesi", "ghadiriani", "giganteum", "ginsburgi", "giovannolai", "girardi", "globularis", "gloriai", "gologoense", "golvani", "gonatodi", "gonderi", "gracilis", "griffithsi", "guangdong", "gundersi", "guyannense", "hegneri", "heischi", "hermani", "heroni", "heteronucleare", "hexamerium", "hispaniolae", "hoionucleophilum", "holaspi", "holti", "homocircumflexum", "homopolare", "huffi", "hydrochaeri", "hylobati", "icipeensis", "iguanae", "incertae", "inopinatum", "intabazwe", "inui", "japonicum", "jeanriouxi", "jefferyi", "jiangi", "josephinae", "joyeuxi", "juxtanucleare", "kachelibaensis", "kadogoi", "kaninii", "kempi", "kentropyxi", "knowlesi", "knowlesi", "knowlesi", "koreafense", "kyaii", "lacertiliae", "lagopi", "lainsoni", "landauae", "lemuris", "lenoblei", "lepidoptiformis", "leucocytica", "lionatum", "lomamiensis", "lophurae", "loveridgei", "lucens", "lutzi", "lygosomae", "mabuiae", "mackerrasae", "mackiei", "maculilabre", "maior", "majus", "malagasi", "malariae", "marginatum", "matutinum", "megaglobularis", "megalotrypa", "melanipherum", "melanoleuca", "merulae", "mexicanum", "michikoa", "minasense", "minuoviride", "modestum", "mohammedi", "morulum", "multiformis", "multivacuolaris", "narayani", "necatrix", "neusticuri", "nucleophilium", "octamerium", "odhiamboi", "odocoilei", "ovale", "ovale", "ovale", "pachysomum", "paddae", "papernai", "parahexamerium", "paranucleophilum", "parvulum", "pedioecetii", "pelaezi", "percygarnhami", "pessoai", "petersi", "pifanoi", "pinotti", "pitheci", "pitmani", "polare", "polymorphum", "praefalciparum", "pulmophilium", "pythonias", "quelea", "reichenowi", "relictum", "reniai", "rhacodactyli", "rhadinurum", "rhodaini", "robinsoni", "rousetti", "rousseloti", "rouxi", "sandoshami", "sapaaensis", "sasai", "saurocaudatum", "scelopori", "schwetzi", "scorzai", "semiovale", "semnopitheci", "sergentorum", "silvaticum", "simium", "simplex", "smirnovi", "snounoui", "stellatum", "stuthionis", "tanzaniae", "tejerai", "telfordi", "tenue", "tomodoni", "torrealbai", "toucani", "traguli", "tranieri", "tribolonti", "tropiduri", "tumbayaensis", "tyrio", "uilenbergi", "uluguruense", "unalis", "uncinatum", "uzungwiense", "vacuolatum", "valkiunasi", "vastator", "vaughani", "vautieri", "venkataramiahii", "vinckei", "vivax", "volans", "voltaicum", "watteni", "wenyoni", "yoelii", "youngi", "zonuriae"),
+  subspecies = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "bastianelli", "ceylonensis", "cynomolgi", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "edesoni", "knowlesi", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "curtisi", "wallikeri", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
+  source = "manually added",
+  status = "accepted",
+  prevalence = 1.25
+) %>%
+  mutate(rank = ifelse(species == "", "genus",
+                       ifelse(subspecies != "", "subspecies",
+                              "species")),
+         fullname = trimws(paste(genus, species, subspecies)))
+
+taxonomy <- taxonomy %>%
+  filter(genus != "Plasmodium") %>%
+  bind_rows(plasmodia) %>%
+  arrange(fullname)
+
+
 # Add microbial IDs -------------------------------------------------------------------------------
 
-# (MO codes in the AMR package have the form: KINGDOM_GENUS_SPECIES_SUBSPECIES where all are abbreviated)
+# (MO codes in the AMR package have the form: DOMAIN_GENUS_SPECIES_SUBSPECIES where all are abbreviated)
 
-# Kingdom is abbreviated with 1 character, with exceptions for Animalia and Plantae
-mo_kingdom <- taxonomy %>%
-  filter(rank == "kingdom") %>%
-  select(kingdom) %>%
+# Domain is abbreviated with 1 character, with exceptions for Animalia and Plantae
+mo_domain <- taxonomy %>%
+  filter(rank == "domain") %>%
+  select(domain) %>%
   mutate(
-    mo_kingdom = case_when(
-      kingdom == "Animalia" ~ "AN",
-      kingdom == "Archaea" ~ "A",
-      kingdom == "Bacteria" ~ "B",
-      kingdom == "Chromista" ~ "C",
-      kingdom == "Fungi" ~ "F",
-      kingdom == "Plantae" ~ "PL", # this is actually not part of the scope, having 0 results (2024)
-      kingdom == "Protozoa" ~ "P",
+    mo_domain = case_when(
+      domain == "Animalia" ~ "AN",
+      domain == "Archaea" ~ "A",
+      domain == "Bacteria" ~ "B",
+      domain == "Chromista" ~ "C",
+      domain == "Fungi" ~ "F",
+      domain == "Plantae" ~ "PL", # this is actually not part of the scope, having 0 results (2024)
+      domain == "Protozoa" ~ "P",
       TRUE ~ ""
     )
   )
+mo_domain
+
+# in 2026 we added `domain`, remove this line later and just keep it `AMR::microorganisms`
+existing_mo_tbl <- AMR::microorganisms %>% rename(domain = kingdom)
+
 
 # phylum until family are abbreviated with 8 characters and prefixed with their rank
 
 # Phylum - keep old and fill up for new ones
 mo_phylum <- taxonomy %>%
   filter(rank == "phylum") %>%
-  distinct(kingdom, phylum) %>%
+  distinct(domain, phylum) %>%
   left_join(
-    AMR::microorganisms %>%
+    existing_mo_tbl %>%
       filter(rank == "phylum") %>%
       transmute(
-        kingdom,
+        domain,
         phylum = fullname,
         mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
       ),
-    by = c("kingdom", "phylum")
+    by = c("domain", "phylum")
   ) %>%
-  group_by(kingdom) %>%
+  group_by(domain) %>%
   mutate(
     mo_phylum8 = AMR:::abbreviate_mo(phylum, minlength = 8, prefix = "[PHL]_"),
     mo_phylum9 = AMR:::abbreviate_mo(phylum, minlength = 9, prefix = "[PHL]_"),
@@ -2050,23 +2266,23 @@ if (any(mo_phylum$mo_duplicated, na.rm = TRUE)) {
   stop("Duplicate MO codes for phylum!")
 }
 mo_phylum <- mo_phylum %>%
-  select(kingdom, phylum, mo_phylum)
+  select(domain, phylum, mo_phylum)
 
 # Class - keep old and fill up for new ones
 mo_class <- taxonomy %>%
   filter(rank == "class") %>%
-  distinct(kingdom, class) %>%
+  distinct(domain, class) %>%
   left_join(
-    AMR::microorganisms %>%
+    existing_mo_tbl %>%
       filter(rank == "class") %>%
       transmute(
-        kingdom,
+        domain,
         class = fullname,
         mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
       ),
-    by = c("kingdom", "class")
+    by = c("domain", "class")
   ) %>%
-  group_by(kingdom) %>%
+  group_by(domain) %>%
   mutate(
     mo_class8 = AMR:::abbreviate_mo(class, minlength = 8, prefix = "[CLS]_"),
     mo_class9 = AMR:::abbreviate_mo(class, minlength = 9, prefix = "[CLS]_"),
@@ -2080,23 +2296,23 @@ if (any(mo_class$mo_duplicated, na.rm = TRUE)) {
   stop("Duplicate MO codes for class!")
 }
 mo_class <- mo_class %>%
-  select(kingdom, class, mo_class)
+  select(domain, class, mo_class)
 
 # Order - keep old and fill up for new ones
 mo_order <- taxonomy %>%
   filter(rank == "order") %>%
-  distinct(kingdom, order) %>%
+  distinct(domain, order) %>%
   left_join(
-    AMR::microorganisms %>%
+    existing_mo_tbl %>%
       filter(rank == "order") %>%
       transmute(
-        kingdom,
+        domain,
         order = fullname,
         mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
       ),
-    by = c("kingdom", "order")
+    by = c("domain", "order")
   ) %>%
-  group_by(kingdom) %>%
+  group_by(domain) %>%
   mutate(
     mo_order8 = AMR:::abbreviate_mo(order, minlength = 8, prefix = "[ORD]_"),
     mo_order9 = AMR:::abbreviate_mo(order, minlength = 9, prefix = "[ORD]_"),
@@ -2110,23 +2326,23 @@ if (any(mo_order$mo_duplicated, na.rm = TRUE)) {
   stop("Duplicate MO codes for order!")
 }
 mo_order <- mo_order %>%
-  select(kingdom, order, mo_order)
+  select(domain, order, mo_order)
 
 # Family - keep old and fill up for new ones
 mo_family <- taxonomy %>%
   filter(rank == "family") %>%
-  distinct(kingdom, family) %>%
+  distinct(domain, family) %>%
   left_join(
-    AMR::microorganisms %>%
+    existing_mo_tbl %>%
       filter(rank == "family") %>%
       transmute(
-        kingdom,
+        domain,
         family = fullname,
         mo_old = gsub("[A-Z]{1,2}_", "", as.character(mo))
       ),
-    by = c("kingdom", "family")
+    by = c("domain", "family")
   ) %>%
-  group_by(kingdom) %>%
+  group_by(domain) %>%
   mutate(
     mo_family8 = AMR:::abbreviate_mo(family, minlength = 8, prefix = "[FAM]_"),
     mo_family9 = AMR:::abbreviate_mo(family, minlength = 9, prefix = "[FAM]_"),
@@ -2140,27 +2356,27 @@ if (any(mo_family$mo_duplicated, na.rm = TRUE)) {
   stop("Duplicate MO codes for family!")
 }
 mo_family <- mo_family %>%
-  select(kingdom, family, mo_family)
+  select(domain, family, mo_family)
 
 # construct code part for genus - keep old code where available and generate new ones where needed
 mo_genus <- taxonomy %>%
   filter(rank == "genus") %>%
-  distinct(kingdom, genus) %>%
+  distinct(domain, genus) %>%
   # get available old MO codes
   left_join(
-    AMR::microorganisms %>%
+    existing_mo_tbl %>%
       filter(rank == "genus") %>%
       transmute(
         mo_genus_old = gsub("^[A-Z]+_", "", as.character(mo)),
-        kingdom,
+        domain,
         genus
       ) %>%
-      distinct(kingdom, genus, .keep_all = TRUE),
-    by = c("kingdom", "genus")
+      distinct(domain, genus, .keep_all = TRUE),
+    by = c("domain", "genus")
   ) %>%
-  distinct(kingdom, genus, .keep_all = TRUE) %>%
-  # since kingdom is part of the code, genus abbreviations may be duplicated between kingdoms
-  group_by(kingdom) %>%
+  distinct(domain, genus, .keep_all = TRUE) %>%
+  # since domain is part of the code, genus abbreviations may be duplicated between kingdoms
+  group_by(domain) %>%
   # generate new MO codes for genus and set the right one
   mutate(
     mo_genus_new5 = AMR:::abbreviate_mo(genus, 5),
@@ -2206,27 +2422,27 @@ if (any(mo_genus$mo_duplicated, na.rm = TRUE) | anyNA(mo_genus$mo_genus_new)) {
 # mo_genus %>% filter(mo_duplicated)
 # no duplicates *within kingdoms*, so keep the right columns for left joining later
 mo_genus <- mo_genus %>%
-  select(kingdom, genus, mo_genus = mo_genus_new)
+  select(domain, genus, mo_genus = mo_genus_new)
 
-# same for species - keep old where available and create new per kingdom-genus where needed:
+# same for species - keep old where available and create new per domain-genus where needed:
 mo_species <- taxonomy %>%
   filter(rank == "species") %>%
-  distinct(kingdom, genus, species) %>%
+  distinct(domain, genus, species) %>%
   left_join(
-    AMR::microorganisms %>%
+    existing_mo_tbl %>%
       filter(rank == "species") %>%
       transmute(
         mo_species_old = gsub("^[A-Z]+_[A-Z]+_", "", as.character(mo)),
-        kingdom,
+        domain,
         genus,
         species
       ) %>%
       filter(mo_species_old %unlike% "-") %>%
-      distinct(kingdom, genus, species, .keep_all = TRUE),
-    by = c("kingdom", "genus", "species")
+      distinct(domain, genus, species, .keep_all = TRUE),
+    by = c("domain", "genus", "species")
   ) %>%
-  distinct(kingdom, genus, species, .keep_all = TRUE) %>%
-  group_by(kingdom, genus) %>%
+  distinct(domain, genus, species, .keep_all = TRUE) %>%
+  group_by(domain, genus) %>%
   mutate(
     mo_species_new4 = AMR:::abbreviate_mo(species, 4, hyphen_as_space = TRUE),
     mo_species_new5 = AMR:::abbreviate_mo(species, 5, hyphen_as_space = TRUE),
@@ -2267,14 +2483,14 @@ if (
 }
 # no duplicates *within kingdoms*, so keep the right columns for left joining later
 mo_species <- mo_species %>%
-  select(kingdom, genus, species, mo_species = mo_species_new)
+  select(domain, genus, species, mo_species = mo_species_new)
 
-# same for subspecies - keep old where available and create new per kingdom-genus-species where needed:
+# same for subspecies - keep old where available and create new per domain-genus-species where needed:
 mo_subspecies <- taxonomy %>%
   filter(rank == "subspecies") %>%
-  distinct(kingdom, genus, species, subspecies) %>%
+  distinct(domain, genus, species, subspecies) %>%
   left_join(
-    AMR::microorganisms %>%
+    existing_mo_tbl %>%
       filter(rank %in% c("subspecies", "subsp.", "infraspecies")) %>%
       transmute(
         mo_subspecies_old = gsub(
@@ -2282,17 +2498,17 @@ mo_subspecies <- taxonomy %>%
           "",
           as.character(mo)
         ),
-        kingdom,
+        domain,
         genus,
         species,
         subspecies
       ) %>%
       filter(mo_subspecies_old %unlike% "-") %>%
-      distinct(kingdom, genus, species, subspecies, .keep_all = TRUE),
-    by = c("kingdom", "genus", "species", "subspecies")
+      distinct(domain, genus, species, subspecies, .keep_all = TRUE),
+    by = c("domain", "genus", "species", "subspecies")
   ) %>%
-  distinct(kingdom, genus, species, subspecies, .keep_all = TRUE) %>%
-  group_by(kingdom, genus, species) %>%
+  distinct(domain, genus, species, subspecies, .keep_all = TRUE) %>%
+  group_by(domain, genus, species) %>%
   mutate(
     mo_subspecies_new4 = AMR:::abbreviate_mo(
       subspecies,
@@ -2359,25 +2575,26 @@ if (
 }
 # no duplicates *within kingdoms*, so keep the right columns for left joining later
 mo_subspecies <- mo_subspecies %>%
-  select(kingdom, genus, species, subspecies, mo_subspecies = mo_subspecies_new)
+  select(domain, genus, species, subspecies, mo_subspecies = mo_subspecies_new)
 
 # unknowns - manually added
-mo_unknown <- AMR::microorganisms %>%
+mo_unknown <- existing_mo_tbl %>%
   filter(fullname %like% "unknown") %>%
   transmute(fullname, mo_unknown = as.character(mo))
 
 # apply the new codes!
+taxonomy1 <- taxonomy
 taxonomy <- taxonomy %>%
-  left_join(mo_kingdom, by = "kingdom") %>%
-  left_join(mo_phylum, by = c("kingdom", "phylum")) %>%
-  left_join(mo_class, by = c("kingdom", "class")) %>%
-  left_join(mo_order, by = c("kingdom", "order")) %>%
-  left_join(mo_family, by = c("kingdom", "family")) %>%
-  left_join(mo_genus, by = c("kingdom", "genus")) %>%
-  left_join(mo_species, by = c("kingdom", "genus", "species")) %>%
+  left_join(mo_domain, by = "domain") %>%
+  left_join(mo_phylum, by = c("domain", "phylum")) %>%
+  left_join(mo_class, by = c("domain", "class")) %>%
+  left_join(mo_order, by = c("domain", "order")) %>%
+  left_join(mo_family, by = c("domain", "family")) %>%
+  left_join(mo_genus, by = c("domain", "genus")) %>%
+  left_join(mo_species, by = c("domain", "genus", "species")) %>%
   left_join(
     mo_subspecies,
-    by = c("kingdom", "genus", "species", "subspecies")
+    by = c("domain", "genus", "species", "subspecies")
   ) %>%
   left_join(mo_unknown, by = "fullname") %>%
   mutate(across(starts_with("mo_"), function(x) if_else(is.na(x), "", x))) %>%
@@ -2385,13 +2602,15 @@ taxonomy <- taxonomy %>%
     mo = case_when(
       fullname %like% "unknown" ~ mo_unknown,
       # add special cases for taxons higher than genus
+      rank == "domain" ~
+        paste(mo_domain, "[DMN]", toupper(domain), sep = "_"),
       rank == "kingdom" ~
-        paste(mo_kingdom, "[KNG]", toupper(kingdom), sep = "_"),
-      rank == "phylum" ~ paste(mo_kingdom, mo_phylum, sep = "_"),
-      rank == "class" ~ paste(mo_kingdom, mo_class, sep = "_"),
-      rank == "order" ~ paste(mo_kingdom, mo_order, sep = "_"),
-      rank == "family" ~ paste(mo_kingdom, mo_family, sep = "_"),
-      TRUE ~ paste(mo_kingdom, mo_genus, mo_species, mo_subspecies, sep = "_")
+        paste(mo_domain, "[KNG]", toupper(kingdom), sep = "_"),
+      rank == "phylum" ~ paste(mo_domain, mo_phylum, sep = "_"),
+      rank == "class" ~ paste(mo_domain, mo_class, sep = "_"),
+      rank == "order" ~ paste(mo_domain, mo_order, sep = "_"),
+      rank == "family" ~ paste(mo_domain, mo_family, sep = "_"),
+      TRUE ~ paste(mo_domain, mo_genus, mo_species, mo_subspecies, sep = "_")
     ),
     mo = trimws(gsub("_+$", "", mo)),
     .before = 1
@@ -2405,22 +2624,23 @@ taxonomy <- taxonomy %>%
 taxonomy %>%
   filter(fullname %in% .[duplicated(fullname), "fullname", drop = TRUE]) %>%
   View()
+
 # OTHERWISE uncomment this section:
-# # we will prefer kingdoms as Bacteria > Fungi > Protozoa > Archaea > Animalia, so check the ones within 1 kingdom
+# # we will prefer domains as Bacteria > Fungi > Protozoa > Archaea > Animalia, so check the ones within 1 domain
 # taxonomy %>%
 #   filter(fullname %in% .[duplicated(fullname), "fullname", drop = TRUE]) %>%
 #   group_by(fullname) %>%
-#   filter(n_distinct(kingdom) == 1)
+#   filter(n_distinct(domain) == 1)
 #
 # # fullnames must be unique, we'll keep the most relevant ones only
 # taxonomy <- taxonomy %>%
 #   mutate(rank_index = case_when(
-#     kingdom == "Bacteria" ~ 1,
-#     kingdom == "Fungi" ~ 2,
-#     kingdom == "Protozoa" ~ 3,
-#     kingdom == "Archaea" ~ 4,
-#     kingdom == "Chromista" ~ 5,
-#     kingdom == "Animalia" ~ 6,
+#     domain == "Bacteria" ~ 1,
+#     domain == "Fungi" ~ 2,
+#     domain == "Protozoa" ~ 3,
+#     domain == "Archaea" ~ 4,
+#     domain == "Chromista" ~ 5,
+#     domain == "Animalia" ~ 6,
 #     TRUE ~ 7
 #   )) %>%
 #   arrange(fullname, rank_index) %>%
@@ -2428,98 +2648,35 @@ taxonomy %>%
 #   select(-rank_index) %>%
 #   filter(mo != "")
 
-# These were overwritten to Bacteria, fix them
-taxonomy$kingdom[taxonomy$mo == "UNKNOWN"] <- "(unknown kingdom)"
-taxonomy$kingdom[taxonomy$mo == "F_FUNGUS"] <- "Fungi"
-taxonomy$kingdom[taxonomy$mo == "F_YEAST"] <- "Fungi"
-taxonomy$kingdom[taxonomy$mo == "P_PROTOZOAN"] <- "Protozoa"
-
-
 # keep the codes from manually added ones
-manual_mos <- as.character(AMR::microorganisms$mo)[match(
+manual_mos <- as.character(existing_mo_tbl$mo)[match(
   taxonomy$fullname[taxonomy$source == "manually added"],
-  AMR::microorganisms$fullname
+  existing_mo_tbl$fullname
 )]
-taxonomy$mo[taxonomy$source == "manually added"][
-  !is.na(manual_mos)
-] <- manual_mos[!is.na(manual_mos)]
-# fix the kingdoms for manual codes (sometimes species go from Fungi to Chromista or so)
-substr(
-  taxonomy$mo[
-    !substr(taxonomy$mo, 1, 1) %in% c("B", "U") &
-      taxonomy$kingdom == "Bacteria" &
-      !is.na(taxonomy$kingdom)
-  ],
-  1,
-  1
-) <- "B"
-substr(
-  taxonomy$mo[
-    !substr(taxonomy$mo, 1, 1) %in% c("F", "U") &
-      taxonomy$kingdom == "Fungi" &
-      !is.na(taxonomy$kingdom)
-  ],
-  1,
-  1
-) <- "F"
-substr(
-  taxonomy$mo[
-    !substr(taxonomy$mo, 1, 1) %in% c("C", "U") &
-      taxonomy$kingdom == "Chromista" &
-      !is.na(taxonomy$kingdom)
-  ],
-  1,
-  1
-) <- "C"
-substr(
-  taxonomy$mo[
-    !substr(taxonomy$mo, 1, 1) %in% c("A", "U") &
-      taxonomy$kingdom == "Archaea" &
-      !is.na(taxonomy$kingdom)
-  ],
-  1,
-  1
-) <- "A"
-substr(
-  taxonomy$mo[
-    !substr(taxonomy$mo, 1, 1) %in% c("P", "U") &
-      taxonomy$kingdom == "Protozoa" &
-      !is.na(taxonomy$kingdom)
-  ],
-  1,
-  1
-) <- "P"
-substr(
-  taxonomy$mo[
-    !substr(taxonomy$mo, 1, 2) %in% c("AN", "UN") &
-      taxonomy$kingdom == "Animalia" &
-      !is.na(taxonomy$kingdom)
-  ],
-  1,
-  2
-) <- "AN"
-substr(
-  taxonomy$mo[
-    !substr(taxonomy$mo, 1, 2) %in% c("PL", "UN") &
-      taxonomy$kingdom == "Plantae" &
-      !is.na(taxonomy$kingdom)
-  ],
-  1,
-  2
-) <- "PL"
+taxonomy$mo[taxonomy$source == "manually added"][!is.na(manual_mos)] <- manual_mos[!is.na(manual_mos)]
 
 # remove the manually added ones that are now ghosts
-taxonomy %>%
-  filter((mo %like% "__" & source == "manually added")) %>%
-  View()
-taxonomy <- taxonomy %>%
-  filter(!(mo %like% "__" & source == "manually added"))
+# MB 2026-05-09/ not needed anymore; 0 rows
+# taxonomy %>%
+#   filter((mo %like% "__" & source == "manually added")) %>%
+#   View()
+# taxonomy <- taxonomy %>%
+#   filter(!(mo %like% "__" & source == "manually added"))
 
 # this must not exist (2024: GBIF mess with missing genera - remove them):
 taxonomy %>%
   filter(mo %like% "__") %>%
   View()
 taxonomy <- taxonomy %>% filter(mo %unlike% "__")
+
+# keep unique taxonomy
+taxonomy <- bind_rows(
+  taxonomy %>% 
+    filter(fullname %like% "unknown"),
+  taxonomy %>%
+    distinct(across(domain:subspecies), .keep_all = TRUE) %>%
+    filter(fullname %unlike% "unknown")
+)
 
 saveRDS(taxonomy, "data-raw/taxonomy2c.rds")
 # taxonomy <- readRDS("data-raw/taxonomy2c.rds")
@@ -2529,28 +2686,22 @@ saveRDS(taxonomy, "data-raw/taxonomy2c.rds")
 # are mo codes unique?
 taxonomy %>%
   filter(mo %in% .[duplicated(mo), "mo", drop = TRUE]) %>%
-  arrange(mo) %>%
+  mutate(removed_if_distinct_is_applied = duplicated(mo), .before = 1) %>%
   View()
-# Nope: (2024)
-# - There is one weird entry from MycoBank, this is recorded as class while it's a phylum
-fix <- which(taxonomy$fullname == "Chytridiopsidomycota")
-taxonomy$class[fix] <- ""
-taxonomy$rank[fix] <- "phylum"
-taxonomy$mo[fix] <- paste0(
-  "F_",
-  AMR:::abbreviate_mo("Chytridiopsidomycota", minlength = 8, prefix = "[PHL]_")
-)
+# checked 2026, can all be removed, they are actual duplicates
+taxonomy <- taxonomy %>%
+  distinct(mo, .keep_all = TRUE)
 # Also:
 # - There are multiple cases where the suffix " {species}" was added - these are just duplicates.
 #   Some are Salmonella errors at LPSN's side - typhimurium is NOT a species of it, species is enterica, serovar is Typhimurium (that we use as subspecies)
-taxonomy %>%
-  filter(mo %in% .[duplicated(mo), "mo", drop = TRUE]) %>%
-  arrange(mo) %>%
-  View()
+# taxonomy %>%
+#   filter(mo %in% .[duplicated(mo), "mo", drop = TRUE]) %>%
+#   arrange(mo) %>%
+#   View()
 # keep the firsts
-taxonomy <- taxonomy %>%
-  arrange(mo) %>%
-  distinct(mo, .keep_all = TRUE)
+# taxonomy <- taxonomy %>%
+#   arrange(mo) %>%
+#   distinct(mo, .keep_all = TRUE)
 
 # are fullnames unique?
 taxonomy %>%
@@ -2584,25 +2735,27 @@ taxonomy %>%
 taxonomy <- taxonomy %>%
   mutate(
     lpsn_parent = case_when(
-      rank == "phylum" ~ lpsn[match(kingdom, fullname)],
-      # in class, take parent from phylum if available, otherwise kingdom
+      rank == "kingdom" ~ lpsn[match(domain, fullname)],
+      # in phylum, take parent from kingdom if available, otherwise domain
+      rank == "phylum" & kingdom != "" ~ lpsn[match(kingdom, fullname)],
+      # in class, take parent from phylum if available, otherwise domain
       rank == "class" & phylum != "" ~ lpsn[match(phylum, fullname)],
-      rank == "class" ~ lpsn[match(kingdom, fullname)],
-      # in order, take parent from class if available, otherwise phylum, otherwise kingdom
+      rank == "class" ~ lpsn[match(domain, fullname)],
+      # in order, take parent from class if available, otherwise phylum, otherwise domain
       rank == "order" & class != "" ~ lpsn[match(class, fullname)],
       rank == "order" & phylum != "" ~ lpsn[match(phylum, fullname)],
-      rank == "order" ~ lpsn[match(kingdom, fullname)],
+      rank == "order" ~ lpsn[match(domain, fullname)],
       # family
       rank == "family" & order != "" ~ lpsn[match(order, fullname)],
       rank == "family" & class != "" ~ lpsn[match(class, fullname)],
       rank == "family" & phylum != "" ~ lpsn[match(phylum, fullname)],
-      rank == "family" ~ lpsn[match(kingdom, fullname)],
+      rank == "family" ~ lpsn[match(domain, fullname)],
       # genus
       rank == "genus" & family != "" ~ lpsn[match(family, fullname)],
       rank == "genus" & order != "" ~ lpsn[match(order, fullname)],
       rank == "genus" & class != "" ~ lpsn[match(class, fullname)],
       rank == "genus" & phylum != "" ~ lpsn[match(phylum, fullname)],
-      rank == "genus" ~ lpsn[match(kingdom, fullname)],
+      rank == "genus" ~ lpsn[match(domain, fullname)],
       # species, always has a genus
       rank == "species" ~ lpsn[match(genus, fullname)],
       # subspecies, always has a genus + species
@@ -2610,25 +2763,27 @@ taxonomy <- taxonomy %>%
       TRUE ~ NA_character_
     ),
     mycobank_parent = case_when(
-      rank == "phylum" ~ mycobank[match(kingdom, fullname)],
+      rank == "kingdom" ~ mycobank[match(domain, fullname)],
+      # in phylum, take parent from kingdom if available, otherwise domain
+      rank == "phylum" & kingdom != "" ~ mycobank[match(kingdom, fullname)],
       # class
       rank == "class" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "class" ~ mycobank[match(kingdom, fullname)],
+      rank == "class" ~ mycobank[match(domain, fullname)],
       # order
       rank == "order" & class != "" ~ mycobank[match(class, fullname)],
       rank == "order" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "order" ~ mycobank[match(kingdom, fullname)],
+      rank == "order" ~ mycobank[match(domain, fullname)],
       # family
       rank == "family" & order != "" ~ mycobank[match(order, fullname)],
       rank == "family" & class != "" ~ mycobank[match(class, fullname)],
       rank == "family" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "family" ~ mycobank[match(kingdom, fullname)],
+      rank == "family" ~ mycobank[match(domain, fullname)],
       # genus
       rank == "genus" & family != "" ~ mycobank[match(family, fullname)],
       rank == "genus" & order != "" ~ mycobank[match(order, fullname)],
       rank == "genus" & class != "" ~ mycobank[match(class, fullname)],
       rank == "genus" & phylum != "" ~ mycobank[match(phylum, fullname)],
-      rank == "genus" ~ mycobank[match(kingdom, fullname)],
+      rank == "genus" ~ mycobank[match(domain, fullname)],
       # species
       rank == "species" ~ mycobank[match(genus, fullname)],
       # subspecies
@@ -2636,25 +2791,27 @@ taxonomy <- taxonomy %>%
       TRUE ~ NA_character_
     ),
     gbif_parent = case_when(
-      rank == "phylum" ~ gbif[match(kingdom, fullname)],
+      rank == "kingdom" ~ gbif[match(domain, fullname)],
+      # in phylum, take parent from kingdom if available, otherwise domain
+      rank == "phylum" & kingdom != "" ~ gbif[match(kingdom, fullname)],
       # class
       rank == "class" & phylum != "" ~ gbif[match(phylum, fullname)],
-      rank == "class" ~ gbif[match(kingdom, fullname)],
+      rank == "class" ~ gbif[match(domain, fullname)],
       # order
       rank == "order" & class != "" ~ gbif[match(class, fullname)],
       rank == "order" & phylum != "" ~ gbif[match(phylum, fullname)],
-      rank == "order" ~ gbif[match(kingdom, fullname)],
+      rank == "order" ~ gbif[match(domain, fullname)],
       # family
       rank == "family" & order != "" ~ gbif[match(order, fullname)],
       rank == "family" & class != "" ~ gbif[match(class, fullname)],
       rank == "family" & phylum != "" ~ gbif[match(phylum, fullname)],
-      rank == "family" ~ gbif[match(kingdom, fullname)],
+      rank == "family" ~ gbif[match(domain, fullname)],
       # genus
       rank == "genus" & family != "" ~ gbif[match(family, fullname)],
       rank == "genus" & order != "" ~ gbif[match(order, fullname)],
       rank == "genus" & class != "" ~ gbif[match(class, fullname)],
       rank == "genus" & phylum != "" ~ gbif[match(phylum, fullname)],
-      rank == "genus" ~ gbif[match(kingdom, fullname)],
+      rank == "genus" ~ gbif[match(domain, fullname)],
       # species
       rank == "species" ~ gbif[match(genus, fullname)],
       # subspecies
@@ -2681,7 +2838,7 @@ taxonomy %>%
   )
 
 
-# Save intermediate results (3) -------------------------------------------------------------------
+# *** Save intermediate results (3) *** -----------------------------------------------------------
 
 saveRDS(taxonomy, "data-raw/taxonomy3.rds")
 # taxonomy <- readRDS("data-raw/taxonomy3.rds")
@@ -2706,7 +2863,10 @@ taxonomy %>%
 AMR::microorganisms %>%
   filter(!fullname %in% taxonomy$fullname) %>%
   View()
-
+# be extra critical to these:
+AMR::microorganisms %>%
+  filter(!fullname %in% taxonomy$fullname, source == "LPSN", status == "accepted") %>%
+  count(rank)
 
 # Add SNOMED CT -----------------------------------------------------------------------------------
 
@@ -2715,21 +2875,22 @@ AMR::microorganisms %>%
 # - go to https://phinvads.cdc.gov/vads/ViewValueSet.action?oid=2.16.840.1.114222.4.11.1009
 # - check that current online version is higher than TAXONOMY_VERSION$SNOMED
 # - if so, click on 'Download Value Set', choose 'TXT'
-snomed <- vroom("data-raw/SNOMED_PHVS_Microorganism_CDC_V12.txt", skip = 3) %>%
+snomed <- vroom("data-raw/SNOMED_PHVS_Microorganism_CDC_V12.txt", skip = 3, guess_max = 1e5) %>%
   select(1:2) %>%
   setNames(c("snomed", "mo")) %>%
   mutate(snomed = as.character(snomed))
 
 # try to get name of MO
 snomed <- snomed %>%
-  mutate(mo = gsub("ss. ", "", mo, fixed = TRUE)) %>%
+  mutate(mo = gsub("(ss[.]|subspecies) ", "", mo)) %>%
   mutate(
     fullname = case_when(
       mo %like_case% "[A-Z][a-z]+ [a-z]+ [a-z]{4,} " ~
         gsub("(^|.*)([A-Z][a-z]+ [a-z]+ [a-z]{4,}) .*", "\\2", mo),
       mo %like_case% "[A-Z][a-z]+ [a-z]{4,} " ~
         gsub("(^|.*)([A-Z][a-z]+ [a-z]{4,}) .*", "\\2", mo),
-      mo %like_case% "[A-Z][a-z]+" ~ gsub("(^|.*)([A-Z][a-z]+) .*", "\\2", mo),
+      mo %like_case% "[A-Z][a-z]+" ~
+        gsub("(^|.*)([A-Z][a-z]+)( .*|$)", "\\2", mo),
       TRUE ~ NA_character_
     )
   )
@@ -2753,11 +2914,7 @@ taxonomy <- taxonomy %>%
 
 # Add oxygen tolerance (aerobe/anaerobe) ----------------------------------------------------------
 
-# We will use the BacDive data base for this:
-# - go to https://bacdive.dsmz.de/advsearch a
-# - filter 'Oxygen tolerance' on "*" and click Submit
-# - click on the 'Download tabel as CSV' button
-bacdive <- vroom::vroom("data-raw/bacdive.csv", skip = 2) %>%
+bacdive <- vroom::vroom(file_oxygen_tolerance, skip = 2) %>%
   select(species, oxygen = `Oxygen tolerance`)
 bacdive <- bacdive %>%
   # fill in missing species from previous rows
@@ -2830,7 +2987,7 @@ bacdive <- bacdive %>%
 
 bacdive_other <- taxonomy %>%
   filter(
-    kingdom == "Bacteria",
+    domain == "Bacteria",
     rank == "species",
     !fullname %in% bacdive$fullname,
     genus %in% bacdive$fullname
@@ -2857,14 +3014,12 @@ taxonomy <- taxonomy %>%
   left_join(bacdive, by = "fullname") %>%
   relocate(oxygen_tolerance, .after = ref)
 
+taxonomy %>% count(oxygen_tolerance)
+
 
 # Add morphology ---------------------------------------------------------------------
 
-# We will use the BacDive data base for this:
-# - go to https://bacdive.dsmz.de/advsearch
-# - filter 'Cell shape' on "*" and click Submit
-# - click on the 'Download table as CSV' button
-bacdive_shape <- vroom::vroom("data-raw/bacdive_shape.csv", skip = 2) %>%
+bacdive_shape <- vroom::vroom(file_cell_shape, skip = 2, guess_max = 1e5) %>%
   select(species, shape = `Cell shape`)
 bacdive_shape <- bacdive_shape %>%
   # fill in missing species from previous rows
@@ -2930,7 +3085,7 @@ bacdive_shape <- bacdive_shape %>%
 
 bacdive_shape_other <- taxonomy %>%
   filter(
-    kingdom == "Bacteria",
+    domain == "Bacteria",
     rank == "species",
     !fullname %in% bacdive_shape$fullname,
     genus %in% bacdive_shape$fullname
@@ -2938,7 +3093,10 @@ bacdive_shape_other <- taxonomy %>%
   select(fullname, genus) %>%
   left_join(bacdive_shape, by = c("genus" = "fullname")) %>%
   mutate(
-    morphology = paste("likely", morphology)
+    morphology = case_when(
+      fullname %like% "coccus" ~ "cocci",
+      fullname %in% taxonomy$fullname[taxonomy$order %in% c("Enterobacterales", "Caryophanales", "Lactobacillales")] ~ morphology,
+      TRUE ~ paste("likely", morphology))
   ) %>%
   select(fullname, morphology) %>%
   distinct(fullname, .keep_all = TRUE)
@@ -2984,7 +3142,7 @@ taxonomy <- taxonomy %>%
     )
   )
 
-
+taxonomy %>% count(morphology)
 
 
 # Restore 'synonym' microorganisms to 'accepted' --------------------------------------------------
@@ -2995,6 +3153,8 @@ taxonomy <- taxonomy %>%
 # according to LPSN: Stenotrophomonas maltophilia is the correct name if this species is regarded as a separate species (i.e., if its nomenclatural type is not assigned to another species whose name is validly published, legitimate and not rejected and has priority) within a separate genus Stenotrophomonas.
 # https://lpsn.dsmz.de/species/stenotrophomonas-maltophilia
 
+"Moraxella catarrhalis" %in% taxonomy$fullname
+"Stenotrophomonas maltophilia" %in% taxonomy$fullname
 # # all MO's to keep as 'accepted', not as 'synonym':
 # to_restore <- c(
 #   "Stenotrophomonas maltophilia",
@@ -3008,76 +3168,13 @@ taxonomy <- taxonomy %>%
 #   taxonomy$status[which(taxonomy$fullname == nm)] <- "accepted"
 # }
 
+
 # Add species groups ------------------------------------------------------------------------------
 
 # just before the end, make sure we get the species group from the previous data set
-old_groups <- microorganisms %>%
+old_groups <- AMR::microorganisms %>%
   filter(rank == "species group") %>%
   mutate(mo = as.character(mo))
-# fix, remove later
-substr(
-  old_groups$mo[
-    !substr(old_groups$mo, 1, 1) %in% c("B", "U") &
-      old_groups$kingdom == "Bacteria" &
-      !is.na(old_groups$kingdom)
-  ],
-  1,
-  1
-) <- "B"
-substr(
-  old_groups$mo[
-    !substr(old_groups$mo, 1, 1) %in% c("F", "U") &
-      old_groups$kingdom == "Fungi" &
-      !is.na(old_groups$kingdom)
-  ],
-  1,
-  1
-) <- "F"
-substr(
-  old_groups$mo[
-    !substr(old_groups$mo, 1, 1) %in% c("C", "U") &
-      old_groups$kingdom == "Chromista" &
-      !is.na(old_groups$kingdom)
-  ],
-  1,
-  1
-) <- "C"
-substr(
-  old_groups$mo[
-    !substr(old_groups$mo, 1, 1) %in% c("A", "U") &
-      old_groups$kingdom == "Archaea" &
-      !is.na(old_groups$kingdom)
-  ],
-  1,
-  1
-) <- "A"
-substr(
-  old_groups$mo[
-    !substr(old_groups$mo, 1, 1) %in% c("P", "U") &
-      old_groups$kingdom == "Protozoa" &
-      !is.na(old_groups$kingdom)
-  ],
-  1,
-  1
-) <- "P"
-substr(
-  old_groups$mo[
-    !substr(old_groups$mo, 1, 2) %in% c("AN", "UN") &
-      old_groups$kingdom == "Animalia" &
-      !is.na(old_groups$kingdom)
-  ],
-  1,
-  2
-) <- "AN"
-substr(
-  old_groups$mo[
-    !substr(old_groups$mo, 1, 2) %in% c("PL", "UN") &
-      old_groups$kingdom == "Plantae" &
-      !is.na(old_groups$kingdom)
-  ],
-  1,
-  2
-) <- "PL"
 
 # use current taxonomy
 groups <- taxonomy[match(old_groups$genus, taxonomy$genus), ]
@@ -3123,58 +3220,62 @@ taxonomy$fullname[duplicated(taxonomy$fullname)]
 
 # Set unknown ranks -------------------------------------------------------------------------------
 
+# MB 2026-05-18/ not needed anymore, can be removed next year
 taxonomy$rank[which(taxonomy$fullname %like% "unknown")] <- "(unknown rank)"
 
 
-# Some final checks -------------------------------------------------------------------------------
+# Fix repetitive elements in MO code --------------------------------------------------------------
 
-# this happened in early 2025, check that MO codes do not have repeated elements
+# this happened in early 2025 (and May 2026), check that MO codes do not have repeated elements
 # fixed it then like this: microorganisms$mo <- gsub("B_SCLLM_CNNM_LNSM_LNSM_LNSM_LNSM", "B_SCLLM_CNNM", microorganisms$mo)
-taxonomy |>
-  filter(mo %like% "_.*_.*_.*_") |>
+taxonomy %>%
+  filter(mo %like% "_.*_.*_.*_") %>%
+  View()
+# Pattern: capture the prefix, then remove its repetition before the final epithet
+taxonomy$mo[taxonomy$mo %like% "_.*_.*_.*_"] <- gsub("^(B_[A-Z0-9]+(?:_[A-Z0-9]+)?)_\\1_([A-Z]+)$",
+                                                     "\\1_\\2",
+                                                     taxonomy$mo[taxonomy$mo %like% "_.*_.*_.*_"],
+                                                     perl = TRUE)
+taxonomy %>%
+  filter(mo %like% "_.*_.*_.*_") %>%
   View()
 
 
-fix_old_mos <- function(dataset) {
-  df <- dataset %>% mutate(mo = as.character(mo))
-  df$mo[which(!df$mo %in% taxonomy$mo)] <- df %>%
-    filter(!mo %in% taxonomy$mo) %>%
-    mutate(
-      name = mo_name(mo, keep_synonyms = TRUE),
-      new_mo = taxonomy$mo[match(name, taxonomy$fullname)]
-    ) %>%
-    pull(new_mo)
-  class(df$mo) <- c("mo", "character")
-  df
+# Remove childless non-bacterial genera -----------------------------------------------------------
+
+# this removes all genera that have no species, except for the domain of Bacteria.
+taxonomy <- taxonomy %>%
+  filter(
+    rank != "genus" |
+      domain == "Bacteria" |
+      genus %in% taxonomy$genus[taxonomy$rank == "species"]
+  )
+
+# then remove all childless upper taxonomy caused by this
+for (rank_name in c("family", "order", "class", "phylum", "kingdom")) {
+  has_children <- taxonomy %>%
+    filter(rank != rank_name, .data[[rank_name]] != "") %>%
+    distinct(.data[[rank_name]]) %>%
+    pull()
+  
+  n_before <- nrow(taxonomy)
+  taxonomy <- taxonomy %>%
+    filter(!(rank == rank_name & !fullname %in% has_children))
+  message("Removed ", n_before - nrow(taxonomy), " childless ", rank_name, " entries")
 }
 
-# and check: these codes should not be missing (will otherwise throw a unit test error):
-AMR::microorganisms.codes %>% filter(!mo %in% taxonomy$mo)
-# fix:
-microorganisms.codes <- fix_old_mos(AMR::microorganisms.codes)
-usethis::use_data(
-  microorganisms.codes,
-  overwrite = TRUE,
-  version = 2,
-  compress = "xz"
-)
-rm(microorganisms.codes)
+# Clean-up of nonsense names ----------------------------------------------------------------------
 
-AMR::clinical_breakpoints %>% filter(!mo %in% taxonomy$mo)
+table(unlist(strsplit(microorganisms$fullname, "")))
+microorganisms <- microorganisms %>% 
+  filter(fullname %unlike% " [0-9]") %>% 
+  filter(fullname %unlike% " (i|ii|iii|iv|v|vi|vii|viii|ix|x)$" | genus == "Streptococcus") %>% 
+  filter(fullname %unlike% "[.]") %>% 
+  mutate(across(c(fullname, domain:subspecies), function(x) gsub("[\"'`]", "", x)))
 
-AMR::example_isolates %>% filter(!mo %in% taxonomy$mo)
 
-AMR::intrinsic_resistant %>% filter(!mo %in% taxonomy$mo)
-# fix:
-intrinsic_resistant <- fix_old_mos(AMR::intrinsic_resistant)
-usethis::use_data(
-  intrinsic_resistant,
-  overwrite = TRUE,
-  version = 2,
-  compress = "xz"
-)
-rm(intrinsic_resistant)
 
+# Some final checks -------------------------------------------------------------------------------
 
 # all our previously manually added names should be in it
 all(
@@ -3191,7 +3292,49 @@ any(duplicated(taxonomy$mo))
 any(duplicated(taxonomy$fullname))
 
 
-# Save to package ---------------------------------------------------------------------------------
+# Update other data sets --------------------------------------------------------------------------
+
+fix_old_mos <- function(dataset, new_ref, drop = FALSE, col = "mo") {
+  before <- dataset
+  
+  mo_names <- AMR::microorganisms$fullname[match(before[[col]], AMR::microorganisms$mo)]
+  matches <- new_ref$mo[match(mo_names, new_ref$fullname)]
+  after <- before
+  after[[col]] <- matches
+  class(after[[col]]) <- c("mo", "character")
+  if (drop == TRUE) {
+    after <- after[!is.na(matches), ]
+    message("Dropping ", nrow(before) - nrow(after), " rows")
+  }
+  message("Updated ", sum(!after[[col]] %in% before[[col]]), " MO codes")
+  after
+}
+save_df <- function(...) {
+  usethis::use_data(
+    ...,
+    overwrite = TRUE,
+    version = 2,
+    compress = "xz"
+  )
+}
+microorganisms.codes <- fix_old_mos(AMR::microorganisms.codes, taxonomy, drop = TRUE)
+if (!identical(microorganisms.codes, AMR::microorganisms.codes)) save_df(microorganisms.codes); rm(microorganisms.codes)
+
+clinical_breakpoints <- fix_old_mos(AMR::clinical_breakpoints, taxonomy)
+if (!identical(clinical_breakpoints, AMR::clinical_breakpoints)) save_df(clinical_breakpoints); rm(clinical_breakpoints)
+
+example_isolates <- fix_old_mos(AMR::example_isolates, taxonomy)
+if (!identical(example_isolates, AMR::example_isolates)) save_df(example_isolates); rm(example_isolates)
+
+intrinsic_resistant <- fix_old_mos(AMR::intrinsic_resistant, taxonomy)
+if (!identical(intrinsic_resistant, AMR::intrinsic_resistant)) save_df(intrinsic_resistant); rm(intrinsic_resistant)
+
+microorganisms.groups <- fix_old_mos(AMR::microorganisms.groups, taxonomy, col = "mo")
+microorganisms.groups <- fix_old_mos(microorganisms.groups, taxonomy, col = "mo_group")
+if (!identical(microorganisms.groups, AMR::microorganisms.groups)) save_df(microorganisms.groups); rm(microorganisms.groups)
+
+
+# *** Save to package *** -------------------------------------------------------------------------
 
 # format to tibble and remove non-ASCII characters
 
@@ -3203,10 +3346,11 @@ taxonomy <- taxonomy %>%
     mo,
     fullname,
     status,
-    kingdom:subspecies,
+    domain:subspecies,
     rank,
     ref,
     oxygen_tolerance,
+    morphology,
     source,
     starts_with("lpsn"),
     starts_with("mycobank"),
@@ -3214,15 +3358,12 @@ taxonomy <- taxonomy %>%
     prevalence,
     snomed
   ) %>%
-  df_remove_nonASCII()
+  AMR:::dataset_UTF8_to_ASCII()
 
 microorganisms <- taxonomy
 
 # set class <mo>
 class(microorganisms$mo) <- c("mo", "character")
-microorganisms <- microorganisms %>%
-  arrange(fullname) %>%
-  df_remove_nonASCII()
 usethis::use_data(
   microorganisms,
   overwrite = TRUE,
@@ -3235,111 +3376,6 @@ rm(microorganisms)
 
 # load new data set
 devtools::load_all(".")
-
-
-# Reset previously changed mo codes ---------------------------------------------------------------
-
-if (
-  !identical(
-    clinical_breakpoints$mo,
-    as.mo(clinical_breakpoints$mo, language = NULL, keep_synonyms = FALSE)
-  )
-) {
-  clinical_breakpoints$mo <- as.mo(
-    clinical_breakpoints$mo,
-    language = NULL,
-    keep_synonyms = FALSE
-  )
-  usethis::use_data(
-    clinical_breakpoints,
-    overwrite = TRUE,
-    version = 2,
-    compress = "xz"
-  )
-  rm(clinical_breakpoints)
-}
-
-if (
-  !identical(
-    microorganisms.codes$mo,
-    as.mo(microorganisms.codes$mo, language = NULL, keep_synonyms = FALSE)
-  )
-) {
-  microorganisms.codes <- microorganisms.codes %>%
-    filter(mo %in% microorganisms$mo)
-  microorganisms.codes$mo <- as.mo(
-    microorganisms.codes$mo,
-    language = NULL,
-    keep_synonyms = FALSE
-  )
-  usethis::use_data(
-    microorganisms.codes,
-    overwrite = TRUE,
-    version = 2,
-    compress = "xz"
-  )
-  rm(microorganisms.codes)
-}
-
-if (
-  !identical(
-    microorganisms.groups$mo_group,
-    as.mo(
-      microorganisms.groups$mo_group,
-      language = NULL,
-      keep_synonyms = FALSE
-    )
-  ) ||
-    !identical(
-      microorganisms.groups$mo,
-      as.mo(microorganisms.groups$mo, language = NULL, keep_synonyms = FALSE)
-    )
-) {
-  microorganisms.groups$mo_group <- as.mo(
-    microorganisms.groups$mo_group_name,
-    language = NULL,
-    keep_synonyms = FALSE
-  )
-  microorganisms.groups$mo <- as.mo(
-    microorganisms.groups$mo_name,
-    language = NULL,
-    keep_synonyms = FALSE
-  )
-  usethis::use_data(microorganisms.groups, overwrite = TRUE, version = 2)
-  rm(microorganisms.groups)
-}
-
-if (
-  !identical(
-    example_isolates$mo,
-    as.mo(example_isolates$mo, language = NULL, keep_synonyms = FALSE)
-  )
-) {
-  example_isolates$mo <- as.mo(
-    example_isolates$mo,
-    language = NULL,
-    keep_synonyms = FALSE
-  )
-  usethis::use_data(example_isolates, overwrite = TRUE, version = 2)
-  rm(example_isolates)
-}
-
-if (
-  !identical(
-    intrinsic_resistant$mo,
-    as.mo(intrinsic_resistant$mo, language = NULL)
-  )
-) {
-  intrinsic_resistant$mo <- as.mo(
-    intrinsic_resistant$mo,
-    language = NULL,
-    keep_synonyms = FALSE
-  )
-  intrinsic_resistant <- distinct(intrinsic_resistant)
-  usethis::use_data(intrinsic_resistant, overwrite = TRUE, version = 2)
-  rm(intrinsic_resistant)
-}
-
 
 anyNA(microorganisms$mo)
 anyNA(microorganisms.codes$mo)

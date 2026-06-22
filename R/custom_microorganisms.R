@@ -195,11 +195,13 @@ add_custom_microorganisms <- function(x) {
   if (!"fullname" %in% colnames(x)) {
     x$fullname <- trimws2(paste(x$genus, x$species, x$subspecies))
   }
+  if (!"domain" %in% colnames(x)) x$domain <- ""
   if (!"kingdom" %in% colnames(x)) x$kingdom <- ""
   if (!"phylum" %in% colnames(x)) x$phylum <- ""
   if (!"class" %in% colnames(x)) x$class <- ""
   if (!"order" %in% colnames(x)) x$order <- ""
   if (!"family" %in% colnames(x)) x$family <- ""
+  x$domain[is.na(x$domain)] <- ""
   x$kingdom[is.na(x$kingdom)] <- ""
   x$phylum[is.na(x$phylum)] <- ""
   x$class[is.na(x$class)] <- ""
@@ -217,6 +219,7 @@ add_custom_microorganisms <- function(x) {
 
   # fill in taxonomy based on genus
   genus_to_check <- gsub("^(.*)[^a-zA-Z].*", "\\1", x$genus, perl = TRUE)
+  x$domain[which(x$domain == "" & genus_to_check != "")] <- AMR_env$MO_lookup$domain[match(genus_to_check[which(x$domain == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
   x$kingdom[which(x$kingdom == "" & genus_to_check != "")] <- AMR_env$MO_lookup$kingdom[match(genus_to_check[which(x$kingdom == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
   x$phylum[which(x$phylum == "" & genus_to_check != "")] <- AMR_env$MO_lookup$phylum[match(genus_to_check[which(x$phylum == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
   x$class[which(x$class == "" & genus_to_check != "")] <- AMR_env$MO_lookup$class[match(genus_to_check[which(x$class == "" & genus_to_check != "")], AMR_env$MO_lookup$genus)]
@@ -229,9 +232,9 @@ add_custom_microorganisms <- function(x) {
   x$prevalence[is.na(x$prevalence)] <- 1.25
   x$status <- "accepted"
   x$ref <- paste("Self-added,", format(Sys.Date(), "%Y"))
-  x$kingdom_index <- AMR_env$MO_lookup$kingdom_index[match(genus_to_check, AMR_env$MO_lookup$genus)]
-  # complete missing kingdom index, so mo_matching_score() will not return NA
-  x$kingdom_index[is.na(x$kingdom_index)] <- 1
+  x$domain_index <- AMR_env$MO_lookup$domain_index[match(genus_to_check, AMR_env$MO_lookup$genus)]
+  # complete missing domain index, so mo_matching_score() will not return NA
+  x$domain_index[is.na(x$domain_index)] <- 1
   x$fullname_lower <- tolower(x$fullname)
   x$full_first <- substr(x$fullname_lower, 1, 1)
   x$species_first <- tolower(substr(x$species, 1, 1))

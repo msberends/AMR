@@ -46,7 +46,7 @@
 #'
 #' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will always be considered *Escherichia coli*. As a result, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
 #'
-#' Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions [mo_kingdom()] and [mo_domain()] return the exact same results.
+#' Following the formal introduction of the new kingdom rank into prokaryotic nomenclature by G\u00f6ker and Oren (2024, \doi{10.1099/ijsem.0.006242}), [mo_kingdom()] and [mo_domain()] return different results for bacteria and archaea: [mo_kingdom()] returns the new formal kingdom (e.g. "Pseudomonadati", "Bacillati"), while [mo_domain()] returns the new domain (e.g. "Bacteria", "Archaea"). For non-prokaryotic organisms, both functions return identical results.
 #'
 #' Determination of human pathogenicity ([mo_pathogenicity()]) is strongly based on Bartlett *et al.* (2022, \doi{10.1099/mic.0.001269}). This function returns a [factor] with the levels *Pathogenic*, *Potentially pathogenic*, *Non-pathogenic*, and *Unknown*.
 #'
@@ -253,8 +253,8 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   }
 
   # get first char of genus and complete species in English
-  genera <- mo_genus(x.mo, language = NULL, keep_synonyms = keep_synonyms)
-  shortnames <- paste0(substr(genera, 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL, keep_synonyms = keep_synonyms)))
+  genera <- mo_genus(x.mo, language = NULL, keep_synonyms = keep_synonyms, ...)
+  shortnames <- paste0(substr(genera, 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL, keep_synonyms = keep_synonyms, ...)))
 
   # exceptions for where no species is known
   shortnames[shortnames %like% ".[.] spp[.]"] <- genera[shortnames %like% ".[.] spp[.]"]
@@ -266,7 +266,7 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   # unknown species etc.
   shortnames[shortnames %like% "unknown"] <- paste0("(", trimws2(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
 
-  shortnames[mo_rank(x.mo) %in% c("kingdom", "phylum", "class", "order", "family")] <- mo_name(x.mo[mo_rank(x.mo) %in% c("kingdom", "phylum", "class", "order", "family")], language = NULL, keep_synonyms = keep_synonyms)
+  shortnames[mo_rank(x.mo, keep_synonyms = TRUE, ...) %in% c("domain", "kingdom", "phylum", "class", "order", "family")] <- mo_name(x.mo[mo_rank(x.mo, keep_synonyms = TRUE, ...) %in% c("domain", "kingdom", "phylum", "class", "order", "family")], language = NULL, keep_synonyms = keep_synonyms, ...)
 
   shortnames[is.na(x.mo)] <- NA_character_
   load_mo_uncertainties(metadata)
@@ -383,7 +383,18 @@ mo_kingdom <- function(x, language = get_AMR_locale(), keep_synonyms = getOption
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  translate_into_language(mo_validate(x = x, property = "kingdom", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+  for (new_kingdom in c("Archaea", "Bacteria")) {
+    if (any(mo_domain(x.mo) == new_kingdom, na.rm = TRUE) && message_not_thrown_before("mo_kingdom", new_kingdom, entire_session = TRUE)) {
+      message_(
+        "Since {.pkg AMR v3.1.0}, {.help [{.fun mo_kingdom}](AMR::mo_kingdom)} returns the taxonomic kingdom as defined by G\u00f6ker and Oren (2024), who formally introduced a new kingdom rank into prokaryotic nomenclature ({.href [DOI: 10.1099/ijsem.0.006242](https://doi.org/10.1099/ijsem.0.006242)}). ",
+        "{.strong The former kingdom of ", new_kingdom, "} was divided into four new kingdoms under the {.strong new domain of ", new_kingdom, "}. ",
+        "For the old behaviour, use {.help [{.fun mo_domain}](AMR::mo_domain)}. ",
+        "This note will be shown once per session."
+      )
+    }
+  }
+  translate_into_language(mo_validate(x = x.mo, property = "kingdom", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -393,7 +404,11 @@ mo_domain <- function(x, language = get_AMR_locale(), keep_synonyms = getOption(
     # this tries to find the data and an 'mo' column
     x <- find_mo_col(fn = "mo_domain")
   }
-  mo_kingdom(x = x, language = language, keep_synonyms = keep_synonyms, ...)
+  meet_criteria(x, allow_NA = TRUE)
+  language <- validate_language(language)
+  meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
+
+  translate_into_language(mo_validate(x = x, property = "domain", language = language, keep_synonyms = keep_synonyms, ...), language = language, only_unknown = TRUE)
 }
 
 #' @rdname mo_property
@@ -408,7 +423,8 @@ mo_type <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
-  out <- mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  out <- mo_domain(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  out <- gsub(" \\{.*\\}", "", out) # strip curly brackets
   out[which(mo_is_yeast(x.mo, keep_synonyms = keep_synonyms))] <- "Yeasts"
   translate_into_language(out, language = language, only_unknown = FALSE)
 }
@@ -444,7 +460,7 @@ mo_pathogenicity <- function(x, language = get_AMR_locale(), keep_synonyms = get
   metadata <- get_mo_uncertainties()
 
   prev <- AMR_env$MO_lookup$prevalence[match(x.mo, AMR_env$MO_lookup$mo)]
-  kngd <- AMR_env$MO_lookup$kingdom[match(x.mo, AMR_env$MO_lookup$mo)]
+  kngd <- AMR_env$MO_lookup$domain[match(x.mo, AMR_env$MO_lookup$mo)]
   rank <- AMR_env$MO_lookup$rank[match(x.mo, AMR_env$MO_lookup$mo)]
 
   out <- factor(
@@ -481,7 +497,7 @@ mo_gramstain <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
 
   x <- rep(NA_character_, length(x))
   # make all bacteria Gram negative
-  x[mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms) == "Bacteria"] <- "Gram-negative"
+  x[mo_domain(x.mo, language = NULL, keep_synonyms = keep_synonyms) == "Bacteria"] <- "Gram-negative"
   # overwrite these 4 phyla with Gram-positives
   # Source: https://itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=956097 (Cavalier-Smith, 2002)
   x[(mo_phylum(x.mo, language = NULL, keep_synonyms = keep_synonyms) %in% c(
@@ -564,12 +580,12 @@ mo_is_yeast <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
 
-  x.kingdom <- mo_kingdom(x.mo, language = NULL, keep_synonyms = keep_synonyms)
+  x.domain <- mo_domain(x.mo, language = NULL, keep_synonyms = keep_synonyms)
   x.class <- mo_class(x.mo, language = NULL, keep_synonyms = keep_synonyms)
 
   load_mo_uncertainties(metadata)
 
-  out <- x.mo == "F_YEAST" | (x.kingdom == "Fungi" & x.class %in% c("Saccharomycetes", "Pichiomycetes"))
+  out <- x.mo == "F_YEAST" | (x.domain == "Fungi" & x.class %in% c("Saccharomycetes", "Pichiomycetes"))
   out[x.mo %in% c(NA_character_, "UNKNOWN")] <- NA
   out
 }
@@ -657,7 +673,8 @@ mo_morphology <- function(x, language = get_AMR_locale(), keep_synonyms = getOpt
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  mo_validate(x = x, property = "morphology", language = language, keep_synonyms = keep_synonyms, ...)
+  out <- mo_validate(x = x, property = "morphology", language = language, keep_synonyms = keep_synonyms, ...)
+  gsub("^(\\w)", "\\U\\1", out, perl = TRUE)
 }
 
 #' @rdname mo_property
@@ -794,6 +811,7 @@ mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   metadata <- get_mo_uncertainties()
 
   out <- list(
+    domain = mo_domain(x, language = language, keep_synonyms = keep_synonyms),
     kingdom = mo_kingdom(x, language = language, keep_synonyms = keep_synonyms),
     phylum = mo_phylum(x, language = language, keep_synonyms = keep_synonyms),
     class = mo_class(x, language = language, keep_synonyms = keep_synonyms),
@@ -911,6 +929,7 @@ mo_info <- function(x, language = get_AMR_locale(), keep_synonyms = getOption("A
         status = mo_status(y, language = language, keep_synonyms = keep_synonyms),
         synonyms = mo_synonyms(y, keep_synonyms = keep_synonyms),
         gramstain = mo_gramstain(y, language = language, keep_synonyms = keep_synonyms),
+        morphology = mo_morphology(y, language = language, keep_synonyms = keep_synonyms),
         oxygen_tolerance = mo_oxygen_tolerance(y, language = language, keep_synonyms = keep_synonyms),
         url = unname(mo_url(y, open = FALSE, keep_synonyms = keep_synonyms)),
         ref = mo_ref(y, keep_synonyms = keep_synonyms),
@@ -1004,11 +1023,11 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
 
   dots <- list(...)
   Becker <- dots$Becker
-  if (is.null(Becker) || property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
+  if (is.null(Becker) || property %in% c("domain", "kingdom", "phylum", "class", "order", "family", "genus")) {
     Becker <- FALSE
   }
   Lancefield <- dots$Lancefield
-  if (is.null(Lancefield) || property %in% c("kingdom", "phylum", "class", "order", "family", "genus")) {
+  if (is.null(Lancefield) || property %in% c("domain", "kingdom", "phylum", "class", "order", "family", "genus")) {
     Lancefield <- FALSE
   }
   has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")

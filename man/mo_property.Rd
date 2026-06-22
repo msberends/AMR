@@ -172,7 +172,7 @@ The default is \code{FALSE}, which will return a note if outdated taxonomic name
 
 \item{open}{Browse the URL using \code{\link[utils:browseURL]{browseURL()}}.}
 
-\item{property}{One of the column names of the \link{microorganisms} data set: \code{"mo"}, \code{"fullname"}, \code{"status"}, \code{"kingdom"}, \code{"phylum"}, \code{"class"}, \code{"order"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"subspecies"}, \code{"rank"}, \code{"ref"}, \code{"oxygen_tolerance"}, \code{"source"}, \code{"lpsn"}, \code{"lpsn_parent"}, \code{"lpsn_renamed_to"}, \code{"mycobank"}, \code{"mycobank_parent"}, \code{"mycobank_renamed_to"}, \code{"gbif"}, \code{"gbif_parent"}, \code{"gbif_renamed_to"}, \code{"prevalence"}, or \code{"snomed"}, or must be \code{"shortname"}.}
+\item{property}{One of the column names of the \link{microorganisms} data set: \code{"mo"}, \code{"fullname"}, \code{"status"}, \code{"domain"}, \code{"kingdom"}, \code{"phylum"}, \code{"class"}, \code{"order"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"subspecies"}, \code{"rank"}, \code{"ref"}, \code{"oxygen_tolerance"}, \code{"morphology"}, \code{"source"}, \code{"lpsn"}, \code{"lpsn_parent"}, \code{"lpsn_renamed_to"}, \code{"mycobank"}, \code{"mycobank_parent"}, \code{"mycobank_renamed_to"}, \code{"gbif"}, \code{"gbif_parent"}, \code{"gbif_renamed_to"}, \code{"prevalence"}, or \code{"snomed"}, or must be \code{"shortname"}.}
 }
 \value{
 \itemize{
@@ -200,7 +200,7 @@ All functions will, at default, \strong{not} keep old taxonomic properties, as s
 
 The short name (\code{\link[=mo_shortname]{mo_shortname()}}) returns the first character of the genus and the full species, such as \code{"E. coli"}, for species and subspecies. Exceptions are abbreviations of staphylococci (such as \emph{"CoNS"}, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as \emph{"GBS"}, Group B Streptococci). Please bear in mind that e.g. \emph{E. coli} could mean \emph{Escherichia coli} (kingdom of Bacteria) as well as \emph{Entamoeba coli} (kingdom of Protozoa). Returning to the full name will be done using \code{\link[=as.mo]{as.mo()}} internally, giving priority to bacteria and human pathogens, i.e. \code{"E. coli"} will always be considered \emph{Escherichia coli}. As a result, \code{mo_fullname(mo_shortname("Entamoeba coli"))} returns \code{"Escherichia coli"}.
 
-Since the top-level of the taxonomy is sometimes referred to as 'kingdom' and sometimes as 'domain', the functions \code{\link[=mo_kingdom]{mo_kingdom()}} and \code{\link[=mo_domain]{mo_domain()}} return the exact same results.
+Following the formal introduction of the new kingdom rank into prokaryotic nomenclature by G\u00f6ker and Oren (2024, \doi{10.1099/ijsem.0.006242}), \code{\link[=mo_kingdom]{mo_kingdom()}} and \code{\link[=mo_domain]{mo_domain()}} return different results for bacteria and archaea: \code{\link[=mo_kingdom]{mo_kingdom()}} returns the new formal kingdom (e.g. "Pseudomonadati", "Bacillati"), while \code{\link[=mo_domain]{mo_domain()}} returns the new domain (e.g. "Bacteria", "Archaea"). For non-prokaryotic organisms, both functions return identical results.
 
 Determination of human pathogenicity (\code{\link[=mo_pathogenicity]{mo_pathogenicity()}}) is strongly based on Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}). This function returns a \link{factor} with the levels \emph{Pathogenic}, \emph{Potentially pathogenic}, \emph{Non-pathogenic}, and \emph{Unknown}.
 
@@ -214,7 +214,7 @@ Determination of both bacterial oxygen tolerance (\code{\link[=mo_oxygen_toleran
 
 The function \code{\link[=mo_url]{mo_url()}} will return the direct URL to the online database entry, which also shows the scientific reference of the concerned species. \href{https://www.mycobank.org}{This MycoBank URL} is used for fungi wherever available , \href{https://www.mycobank.org}{this LPSN URL} for bacteria wherever available, and \href{https://www.gbif.org}{this GBIF link} otherwise.
 
-SNOMED codes (\code{\link[=mo_snomed]{mo_snomed()}}) was last updated on July 16th, 2024. See \emph{Source} and the \link{microorganisms} data set for more info.
+SNOMED codes (\code{\link[=mo_snomed]{mo_snomed()}}) was last updated on 16th of July, 2024. See \emph{Source} and the \link{microorganisms} data set for more info.
 
 Old taxonomic names (so-called 'synonyms') can be retrieved with \code{\link[=mo_synonyms]{mo_synonyms()}} (which will have the scientific reference as \link[base:names]{name}), the current taxonomic name can be retrieved with \code{\link[=mo_current]{mo_current()}}. Both functions return full names.
 
@@ -229,10 +229,10 @@ This function uses \code{\link[=as.mo]{as.mo()}} internally, which uses an advan
 
 \itemize{
 \item Berends MS \emph{et al.} (2022). \strong{AMR: An R Package for Working with Antimicrobial Resistance Data}. \emph{Journal of Statistical Software}, 104(3), 1-31; \doi{10.18637/jss.v104.i03}
-\item Parte, AC \emph{et al.} (2020). \strong{List of Prokaryotic names with Standing in Nomenclature (LPSN) moves to the DSMZ.} International Journal of Systematic and Evolutionary Microbiology, 70, 5607-5612; \doi{10.1099/ijsem.0.004332}. Accessed from \url{https://lpsn.dsmz.de} on June 24th, 2024.
-\item Vincent, R \emph{et al} (2013). \strong{MycoBank gearing up for new horizons.} IMA Fungus, 4(2), 371-9; \doi{10.5598/imafungus.2013.04.02.16}. Accessed from \url{https://www.mycobank.org} on June 24th, 2024.
-\item GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset \doi{10.15468/39omei}. Accessed from \url{https://www.gbif.org} on June 24th, 2024.
-\item Reimer, LC \emph{et al.} (2022). \strong{\emph{BacDive} in 2022: the knowledge base for standardized bacterial and archaeal data.} Nucleic Acids Res., 50(D1):D741-D74; \doi{10.1093/nar/gkab961}. Accessed from \url{https://bacdive.dsmz.de} on July 16th, 2024.
+\item Freese, HM \emph{et al.} (2026). \strong{TYGS and LPSN in 2025: a Global Core Biodata Resource for genome-based classification and nomenclature of prokaryotes within DSMZ Digital Diversity.} Nucleic Acids Research, 54, D884–D891; \doi{10.1093/nar/gkaf1110}. Accessed from \url{https://lpsn.dsmz.de} on 7th of May, 2026.
+\item Vincent, R \emph{et al} (2013). \strong{MycoBank gearing up for new horizons.} IMA Fungus, 4(2), 371-9; \doi{10.5598/imafungus.2013.04.02.16}. Accessed from \url{https://www.mycobank.org} on 7th of May, 2026.
+\item Banki, O. \emph{et al.} (2026). Catalogue of Life (2026-04-18 XR). Catalogue of Life Foundation, Amsterdam, Netherlands. \doi{10.48580/dgxjw}. Accessed from \url{https://www.gbif.org} on 7th of May, 2026.
+\item Reimer, LC \emph{et al.} (2022). \strong{\emph{BacDive} in 2022: the knowledge base for standardized bacterial and archaeal data.} Nucleic Acids Res., 50(D1):D741-D74; \doi{10.1093/nar/gkab961}. Accessed from \url{https://bacdive.dsmz.de} on 7th of May, 2026.
 \item Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020. Value Set Name 'Microorganism', OID 2.16.840.1.114222.4.11.1009 (v12). URL: \url{https://www.cdc.gov/phin/php/phinvads/}
 \item Bartlett A \emph{et al.} (2022). \strong{A comprehensive list of bacterial pathogens infecting humans} \emph{Microbiology} 168:001269; \doi{10.1099/mic.0.001269}
 }

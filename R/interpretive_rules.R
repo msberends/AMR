@@ -107,7 +107,7 @@ format_eucast_version_nr <- function(version, markdown = TRUE) {
 #' @rdname interpretive_rules
 #' @export
 #' @return The input of `x`, possibly with edited values of antimicrobials. Or, if `verbose = TRUE`, a [data.frame] with all original and new values of the affected bug-drug combinations.
-#' @source
+#' @references
 #' - EUCAST Expert Rules. Version 2.0, 2012.\cr
 #'   Leclercq et al. **EUCAST expert rules in antimicrobial susceptibility testing.** *Clin Microbiol Infect.* 2013;19(2):141-60; \doi{https://doi.org/10.1111/j.1469-0691.2011.03703.x}
 #' - EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes Tables. Version 3.1, 2016. [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf)
@@ -485,14 +485,13 @@ interpretive_rules <- function(x,
   if (any(c("all", "other") %in% rules)) {
     if (isTRUE(info)) {
       cat(paste0("\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
-      cat(word_wrap(
-        paste0(
-          "Rules by the ",
-          font_bold(paste0("AMR package v", utils::packageDescription("AMR")$Version)),
-          " (", format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"),
-          "), see {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}\n"
-        )
-      ))
+      message_(
+        "Rules by the ",
+        font_bold(paste0("AMR package v", utils::packageDescription("AMR")$Version)),
+        " (", format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"),
+        "), see {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}",
+        as_note = FALSE
+      )
       cat("\n\n")
     }
     ab_enzyme <- subset(AMR::antimicrobials, name %like% "/")[, c("ab", "name"), drop = FALSE]
@@ -523,10 +522,11 @@ interpretive_rules <- function(x,
           tolower(ab_enzyme$enzyme_name[i]), " ({.field ", font_bold(col_enzyme), "}) = R"
         )
         if (isTRUE(info)) {
-          cat(word_wrap(rule_current,
-            width = getOption("width") - 30,
+          message_(rule_current,
+            as_note = FALSE,
+            appendLF = FALSE,
             extra_indent = 6
-          ))
+          )
         }
         run_changes <- edit_sir(
           x = x,
@@ -625,6 +625,7 @@ interpretive_rules <- function(x,
   } else if (!is.null(list(...)$eucast_rules_df)) {
     # deprecated parameter name kept for backward compatibility
     interpretive_rules_df_total <- list(...)$eucast_rules_df
+    warning("Used interpretive_rules(x, eucast_rules_df = ...) - Do use newer argument interpretive_rules_df now.")
   } else {
     # internal data file, created in data-raw/_pre_commit_checks.R
     interpretive_rules_df_total <- INTERPRETIVE_RULES_DF

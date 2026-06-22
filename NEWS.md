@@ -1,39 +1,55 @@
 # AMR 3.0.1.9059
 
-Planned as v3.1.0, May 2026.
+Planned as v3.1.0, end of June 2026.
+
+### Breaking Changes
+* The former *kingdoms* Bacteria and Archaea are now each divided into four kingdoms with new top-level *domains* 'Bacteria' and 'Archaea' (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new `domain` column in the `microorganisms` data set was added, and more importantly, `mo_kingdom()` now returns the formal kingdom (e.g. `"Pseudomonadati"` instead of `"Bacteria"`). Use `mo_domain()` for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), `kingdom` and `domain` are identical.
+* Faster parallel computing via the `future` package for `as.sir()` and `wisca()`: a non-sequential plan (e.g. `future::plan(future::multisession)`) must be active before using `parallel = TRUE`.
 
 ### New
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
 * Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting `breakpoint_type = "ECOFF"` in `as.sir()`; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (#254)
-* Faster parallel computing via the `future` package; **breaking change**: a non-sequential plan (e.g. `future::plan(future::multisession)`) must be active before using `parallel = TRUE`; `antibiogram()` and `wisca()` now also support `parallel = TRUE` (#281)
 * *tidymodels* integration for using SIR, MIC and disk data in modelling pipelines: `step_mic_log2()`, `step_sir_numeric()`, and new column selectors `all_sir()`, `all_mic()`, `all_disk()`
 * New `esbl_isolates` data set for practising AMR modelling
 * New antimicrobial selectors: `ionophores()`, `peptides()`, `phosphonics()`, `spiropyrimidinetriones()`
+* New antimicrobials: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 * New `interpretive_rules()`, a unified function for EUCAST and CLSI interpretive rules; `eucast_rules()` is now a wrapper around it (#235, #259)
+* New `morphology` column in the `microorganisms` data set and corresponding `mo_morphology()` function, returning the cell shape of bacteria. Data sourced from BacDive; values prefixed with "likely" are extrapolated from genus-level consensus. New `add_morphology` argument was added to `mo_gramstain()` to return combined results such as `"Gram-negative rods"`.
 * New `amr_course()` to download and unpack course or webinar materials from GitHub in one call
 * Typed missing value constants `NA_ab_` and `NA_mo_`, for use in pipelines that need missing values of a specific class
+* New function `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
 
-### Fixes
-* `as.sir()` on data frames: already-converted SIR columns no longer dropped on re-run (#278); metadata columns (e.g. `patient`, `ward`) no longer misidentified as antibiotic columns; `info = FALSE` now suppresses all messages, including for columns without breakpoints
+### Fixed
+* `as.sir()`
+  * On data frames: already-converted SIR columns no longer dropped on re-run (#278)
+  * Metadata columns (e.g. `patient`, `ward`) no longer misidentified as antibiotic columns
+  * `info = FALSE` now suppresses all messages, including for columns without breakpoints
+  * Assumption of disk zones are now preferred over MIC values when input is only whole numbers (#291)
 * `as.mic()`: values in scientific notation (e.g. `1e-3`) now handled correctly
 * `as.ab()`: codes containing "PH" or "TH" (e.g. `ETH`, `PHE`) no longer return `NA` when mixed with unrecognised input (#245)
 * Combined MIC/SIR input values (e.g. `"<= 0.002; S"` or `"S; 0.002"`) now parsed correctly (#252)
-* `as.mo()`: input of the form `"X complex"` now falls back to `"X"` when the complex is not a distinct taxon in the database, preventing `NA` results for valid clinical descriptions such as `"Proteus vulgaris complex"` (#287)
-* `mo_matching_score()`: abbreviated-genus input (e.g. `"S. apiospermum"`) now correctly ranks candidates whose species epithet exactly matches the input above more-prevalent organisms whose species does not match; fixes `"S. apiospermum"` resolving to *Staphylococcus* instead of *Scedosporium apiospermum* (#288)
+* `as.mo()`: 
+  * Input of the form `"X complex"` now falls back to `"X"` when the complex is not a distinct taxon in the database, preventing `NA` results for valid clinical descriptions such as `"Proteus vulgaris complex"` (#287)
+  * Abbreviated-genus input (e.g. `"S. apiospermum"`) now correctly ranks candidates whose species epithet exactly matches the input above more-prevalent organisms whose species does not match; fixes `"S. apiospermum"` resolving to *Staphylococcus* instead of *Scedosporium apiospermum* (#288)
 * `get_author_year()` in the microorganism reproduction script now strips `emend.` and everything after it, so `ref` reflects the combination authority rather than the emendation author (e.g. *Rhodococcus equi* now returns "Goodfellow et al., 1977" instead of "Nouioui et al., 2018")
 * BRMO classification now includes bacterial complexes (#275)
 * Translation fixes for Italian CoNS/CoPS names (#256), Dutch antimicrobials, and `sir_df()` foreign-language output (#272)
+* Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 
-### Updates
+### Updated
+* Taxonomic update for all microorganisms, now updated to June 2026
+* `mo_kingdom()` now returns the formal taxonomic kingdom; a one-time note per session explains the change when querying bacterial or archaeal records.
+* `mo_taxonomy()` and `mo_info()` gained `domain` for the list output
+* `antibiogram()` and `wisca()` now also support parallel computing via the argument `parallel = TRUE` (#281)
 * `custom_eucast_rules()` renamed to `custom_interpretive_rules()`; old name deprecated but still works (#268)
 * `mdro()` can now infer resistance from a drug+inhibitor combination when the base drug column is absent (e.g. piperacillin inferred from piperacillin/tazobactam); controlled via new `infer_from_combinations` argument (default `TRUE`) (#209)
+* `wisca()` now more strictly follows Bielicki et al. (2016) by using $\text{Beta}(1, 9999)$ for intrinsically resistant pairs, forcing near-zero susceptibility regardless of observed data (based on EUCAST Expected Resistant Phenotypes)
 * `susceptibility()` / `resistance()`: new `guideline` argument (default EUCAST) to ensure the 'I' category is interpreted correctly per guideline
 * Capped MIC handling in `as.sir()` reworked into four clearly defined options: `"none"`, `"conservative"` (new default), `"standard"`, `"lenient"` (#243)
 * `as.mic()` / `rescale_mic()`: new `round_to_next_log2` argument to round values up to the nearest log2 dilution level (#255)
-* `antimicrobials$group` now a `list`, so drugs belonging to multiple groups are fully represented; use `ab_group(all_groups = TRUE)` to retrieve all groups for a drug (#246)
-* New antimicrobials added: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
-* Improved console messages with clickable links throughout, powered by `cli` (#191, #265)
-
+* `antimicrobials$group` is now a `list`, so that drugs belonging to multiple groups are fully represented; use `ab_group(all_groups = TRUE)` to retrieve all groups for a drug (#246)
+* Improved console messages with clickable links throughout, powered by `cli` if it is installed (#191, #265)
+* `as.disk()`: input validation is now more strict, rejecting values that are not recognisable as a numeric disk zone diameter
 
 # AMR 3.0.1
 
