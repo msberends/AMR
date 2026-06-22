@@ -898,7 +898,7 @@ antibiogram.default <- function(x,
           susceptibility = sim_susceptibility
         )
         out_wisca$coverage[out_wisca$group == group] <- mean(sim_coverage)
-        ci_vals <- unname(stats::quantile(coverage_simulations, probs = probs))
+        ci_vals <- unname(stats::quantile(sim_coverage, probs = probs))
         out_wisca$lower_ci[out_wisca$group == group] <- ci_vals[1]
         out_wisca$upper_ci[out_wisca$group == group] <- ci_vals[2]
       }
@@ -1657,10 +1657,10 @@ autoplot.antibiogram <- function(object,
 
   if (is.null(caption)) {
     if (is_wisca) {
-      out <- out + labs(caption = "Overlapping credible intervals:\nclinically non-inferior (Bielicki 2020)")
+      out <- out + ggplot2::labs(caption = "Overlapping credible intervals:\nclinically non-inferior (Bielicki 2020)")
     }
   } else if (!caption %in% c(FALSE, NA)) {
-    out <- out + labs(caption = caption)
+    out <- out + ggplot2::labs(caption = caption)
   }
 
   out <- out +

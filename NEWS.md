@@ -51,6 +51,7 @@ Planned as v3.1.0, end of June 2026.
 * Improved console messages with clickable links throughout, powered by `cli` if it is installed (#191, #265)
 * `as.disk()`: input validation is now more strict, rejecting values that are not recognisable as a numeric disk zone diameter
 
+
 # AMR 3.0.1
 
 This is a bugfix release following the release of v3.0.0 in June 2025.

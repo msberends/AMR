@@ -113,7 +113,7 @@ TAXONOMY_VERSION <- list(
   LPSN = list(
     name = "List of Prokaryotic names with Standing in Nomenclature (LPSN)",
     accessed_date = as.Date("2026-05-07"),
-    citation = "Freese, HM *et al.* (2026). **TYGS and LPSN in 2025: a Global Core Biodata Resource for genome-based classification and nomenclature of prokaryotes within DSMZ Digital Diversity.** Nucleic Acids Research, 54, D884–D891; \\doi{10.1093/nar/gkaf1110}.",
+    citation = "Freese, HM *et al.* (2026). **TYGS and LPSN in 2025: a Global Core Biodata Resource for genome-based classification and nomenclature of prokaryotes within DSMZ Digital Diversity.** Nucleic Acids Research, 54, D884\u2013D891; \\doi{10.1093/nar/gkaf1110}.",
     url = "https://lpsn.dsmz.de"
   ),
   MycoBank = list(
@@ -149,10 +149,13 @@ TAXONOMY_VERSION <- list(
 )
 
 globalVariables(c(
+  ".coverage",
   ".GenericCallEnv",
+  ".lower",
   ".mo",
   ".rowid",
   ".syndromic_group",
+  ".upper",
   "ab",
   "ab_txt",
   "affect_ab_name",
@@ -188,6 +191,7 @@ globalVariables(c(
   "hjust",
   "host_index",
   "host_match",
+  "incidence",
   "input",
   "input_given",
   "intrinsic_resistant",
@@ -215,6 +219,7 @@ globalVariables(c(
   "old",
   "old_name",
   "p_susceptible",
+  "pathogen",
   "pattern",
   "R",
   "rank_index",
