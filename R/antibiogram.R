@@ -209,10 +209,12 @@
 #' )
 #'
 #' # stratified by syndrome or clinical group
-#' wisca(example_isolates,
+#' out <- wisca(example_isolates,
 #'   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
 #'   syndromic_group = "ward"
 #' )
+#' out
+#' wisca_plot(out)
 #'
 #' # stratified using grouped tibbles (e.g. by age and gender)
 #' if (requireNamespace("dplyr")) {
@@ -1538,8 +1540,8 @@ wisca_plot <- function(wisca_model,
     isTRUE(attributes(wisca_model)$wisca),
     "This function only applies to WISCA models."
   )
-  meet_criteria(wisca_plot_type, allow_class = "character", has_length = 1, is_in = c("susceptibility_incidence", "posterior_coverage"))
   wisca_plot_type <- match.arg(wisca_plot_type)
+  meet_criteria(wisca_plot_type, allow_class = "character", has_length = 1, is_in = c("susceptibility_incidence", "posterior_coverage"))
 
   sep <- attributes(wisca_model)$sep %||% " + "
 

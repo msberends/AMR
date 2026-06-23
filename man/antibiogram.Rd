@@ -308,10 +308,12 @@ antibiogram(example_isolates,
 )
 
 # stratified by syndrome or clinical group
-wisca(example_isolates,
+out <- wisca(example_isolates,
   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   syndromic_group = "ward"
 )
+out
+wisca_plot(out)
 
 # stratified using grouped tibbles (e.g. by age and gender)
 if (requireNamespace("dplyr")) {
