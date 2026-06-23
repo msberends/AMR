@@ -17,7 +17,7 @@ Planned as v3.1.0, end of June 2026.
 * New `morphology` column in the `microorganisms` data set and corresponding `mo_morphology()` function, returning the cell shape of bacteria. Data sourced from BacDive; values prefixed with "likely" are extrapolated from genus-level consensus. New `add_morphology` argument was added to `mo_gramstain()` to return combined results such as `"Gram-negative rods"`.
 * New `amr_course()` to download and unpack course or webinar materials from GitHub in one call
 * Typed missing value constants `NA_ab_` and `NA_mo_`, for use in pipelines that need missing values of a specific class
-* New function `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
+* New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
 
 ### Fixed
 * `as.sir()`

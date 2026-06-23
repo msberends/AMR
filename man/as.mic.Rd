@@ -12,15 +12,19 @@
 \alias{droplevels.mic}
 \title{Transform Input to Minimum Inhibitory Concentrations (MIC)}
 \usage{
-as.mic(x, na.rm = FALSE, keep_operators = "all",
-  round_to_next_log2 = FALSE)
+as.mic(x, na.rm = FALSE, keep_operators = "all", round_to_next_log2 = FALSE)
 
 is.mic(x)
 
 NA_mic_
 
-rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE,
-  round_to_next_log2 = FALSE)
+rescale_mic(
+  x,
+  mic_range,
+  keep_operators = "edges",
+  as.mic = TRUE,
+  round_to_next_log2 = FALSE
+)
 
 mic_p50(x, na.rm = FALSE, ...)
 

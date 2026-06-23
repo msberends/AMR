@@ -247,24 +247,69 @@ our_data_1st[all(betalactams() == "R"), ]
 
 ## Generate antibiograms
 
-Since AMR v2.0 (March 2023), it is very easy to create different types of antibiograms, with support for 20 different languages.
+The `AMR` package supports `r length(AMR:::LANGUAGES_SUPPORTED)` different languages for antibiograms and provides four types, as proposed by Klinker *et al.* (2021, [DOI 10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)):
 
-There are four antibiogram types, as proposed by Klinker *et al.* (2021, [DOI 10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)), and they are all supported by the new `antibiogram()` function:
+1. **Traditional Antibiogram (TA)** -- susceptibility of a species to individual antibiotics
+2. **Combination Antibiogram (CA)** -- susceptibility of a species to combination regimens
+3. **Syndromic Antibiogram (SA)** -- susceptibility of a species, stratified by clinical syndrome or setting
+4. **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)** -- estimated empirical coverage of a *regimen* for a *syndrome*, weighted by pathogen incidence and with quantified uncertainty
 
-1. **Traditional Antibiogram (TA)** e.g, for the susceptibility of *Pseudomonas aeruginosa* to piperacillin/tazobactam (TZP)
-2. **Combination Antibiogram (CA)** e.g, for the sdditional susceptibility of *Pseudomonas aeruginosa* to TZP + tobramycin versus TZP alone
-3. **Syndromic Antibiogram (SA)** e.g, for the susceptibility of *Pseudomonas aeruginosa* to TZP among respiratory specimens (obtained among ICU patients only)
-4. **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)** e.g, for the susceptibility of *Pseudomonas aeruginosa* to TZP among respiratory specimens (obtained among ICU patients only) for male patients age >=65 years with heart failure
+**If your goal is to guide empirical therapy, WISCA should be your default.** The reason is simple: when you start empirical treatment, you do not know which pathogen is causing the infection. Your next patient will not present with a species label attached to them. What matters is the probability that the *regimen* you choose will cover *whatever pathogen turns out to be the cause*, given the local epidemiology of the syndrome. Traditional antibiograms do not answer that question. They fragment information by species, ignore how frequently each species causes the syndrome, do not evaluate combination regimens, and provide no measure of uncertainty. WISCA addresses all of these limitations using a Bayesian framework (Hebert *et al.*, 2012; Bielicki *et al.*, 2016). See the [WISCA vignette](https://amr-for-r.org/articles/WISCA.html) for the full explanation.
 
-In this section, we show how to use the `antibiogram()` function to create any of the above antibiogram types. For starters, this is what the included `example_isolates` data set looks like:
+Traditional, combination, and syndromic antibiograms remain useful for **surveillance** purposes, i.e., tracking resistance trends per species over time. But if you care about clinical impact, about choosing the right empirical regimen for your patient, use WISCA.
+
+For starters, this is what the included `example_isolates` data set looks like:
 
 ```{r}
 example_isolates
 ```
 
+### WISCA (recommended for empirical therapy guidance)
+
+Use the `wisca()` function, or equivalently `antibiogram(..., wisca = TRUE)`. WISCA produces a single coverage estimate per regimen for the entire syndrome, weighted by pathogen incidence, with a 95% credible interval from Bayesian Monte Carlo simulation:
+
+```{r wisca}
+wisca_result <- example_isolates %>%
+  wisca(
+    antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+    minimum = 10
+  ) # Recommended threshold: ≥30
+wisca_result
+```
+
+The output tells you: *"given the species distribution in your data, there is an estimated X% probability that this regimen covers the infection, with 95% credible interval [lower, upper]"*. That is the clinically relevant question.
+
+For **syndrome-specific** or **patient-specific WISCA**, use the `syndromic_group` argument or group your data first. You can stratify by anything: ward, age group, risk profile, acquisition type. The `syndromic_group` argument accepts any column or expression:
+
+```{r wisca_grouped}
+wisca_out <- example_isolates %>%
+  top_n_microorganisms(n = 10) %>%
+  group_by(
+    age_group = age_groups(age, c(25, 50, 75)),
+    gender
+  ) %>%
+  wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
+
+wisca_out
+```
+
+Keep in mind that more granular stratification produces more relevant estimates for each subgroup, but with wider credible intervals due to smaller sample sizes. There is always a trade-off between granularity and precision. If local numbers are small, consider pooling data from multiple sites (Bielicki *et al.*, 2016).
+
+For reliable WISCA results, ensure your data includes **only first isolates** (use `first_isolate()`) and consider filtering for **the top *n* species** (use `top_n_microorganisms()`), since rare contaminants can distort coverage estimates.
+
+After creating the WISCA model, assessments can be done on the distributions of the Monte Carlo simulations that WISCA carried out:
+
+```{r wisca_plots}
+wisca_plot(wisca_out)
+wisca_plot(wisca_out, wisca_plot_type = "posterior_coverage")
+
+# a ggplot2 extension for WISCAs and other antibiograms:
+ggplot2::autoplot(wisca_out)
+```
+
 ### Traditional Antibiogram
 
-To create a traditional antibiogram, simply state which antibiotics should be used. The `antibiotics` argument in the `antibiogram()` function supports any (combination) of the previously mentioned antibiotic class selectors:
+If you need per-species susceptibility rates, e.g., for AMR surveillance reports, the traditional antibiogram remains the right tool. It reports the proportion of susceptible isolates per species per antibiotic:
 
 ```{r trad}
 antibiogram(example_isolates,
@@ -285,9 +330,9 @@ antibiogram(example_isolates,
 )
 ```
 
-### Combined Antibiogram
+### Combination Antibiogram
 
-To create a combined antibiogram, use antibiotic codes or names with a plus `+` character like this:
+A combination antibiogram shows how much additional susceptibility a second agent adds for a given species. This is useful for surveillance of combination regimens, but note that it is still species-stratified and does not account for pathogen incidence in the syndrome:
 
 ```{r comb}
 combined_ab <- antibiogram(example_isolates,
@@ -299,7 +344,7 @@ combined_ab
 
 ### Syndromic Antibiogram
 
-To create a syndromic antibiogram, the `syndromic_group` argument must be used. This can be any column in the data, or e.g. an `ifelse()` with calculations based on certain columns:
+A syndromic antibiogram stratifies per-species susceptibility by clinical context (ward, specimen type, etc.). It adds clinical context to the traditional antibiogram but is still species-level, without incidence weighting or uncertainty quantification. For surveillance by setting this is fine; for empirical therapy guidance, WISCA is preferred:
 
 ```{r synd}
 antibiogram(example_isolates,
@@ -308,40 +353,12 @@ antibiogram(example_isolates,
 )
 ```
 
-### Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
-
-To create a **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)**, simply set `wisca = TRUE` in the `antibiogram()` function, or use the dedicated `wisca()` function. Unlike traditional antibiograms, WISCA provides syndrome-based susceptibility estimates, weighted by pathogen incidence and antimicrobial susceptibility patterns.
-
-```{r wisca}
-example_isolates %>%
-  wisca(
-    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-    minimum = 10
-  ) # Recommended threshold: ≥30
-```
-
-WISCA uses a **Bayesian decision model** to integrate data from multiple pathogens, improving empirical therapy guidance, especially for low-incidence infections. It is **pathogen-agnostic**, meaning results are syndrome-based rather than stratified by microorganism.
-
-For reliable results, ensure your data includes **only first isolates** (use `first_isolate()`) and consider filtering for **the top *n* species** (use `top_n_microorganisms()`), as WISCA outcomes are most meaningful when based on robust incidence estimates.
-
-For **patient- or syndrome-specific WISCA**, run the function on a grouped `tibble`, i.e., using `group_by()` first:
-
-```{r wisca_grouped}
-example_isolates %>%
-  top_n_microorganisms(n = 10) %>%
-  group_by(
-    age_group = age_groups(age, c(25, 50, 75)),
-    gender
-  ) %>%
-  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
-```
-
 ### Plotting antibiograms
 
-Antibiograms can be plotted using `autoplot()` from the `ggplot2` packages, since this `AMR` package provides an extension to that function:
+All antibiogram types, including WISCA, can be plotted using `autoplot()` from the `ggplot2` package, since this `AMR` package provides an extension to that function:
 
 ```{r}
-autoplot(combined_ab)
+autoplot(wisca_result)
 ```
 
 To calculate antimicrobial resistance in a more sensible way, also by correcting for too few results, we use the `resistance()` and `susceptibility()` functions.
@@ -417,4 +434,4 @@ autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 202
 
 ----
 
-*Author: Dr. Matthijs Berends, 23rd Feb 2025*
+*Author: Dr. Matthijs Berends, 23rd June 2026*

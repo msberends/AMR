@@ -7,11 +7,23 @@
 \alias{random_sir}
 \title{Random MIC Values/Disk Zones/SIR Generation}
 \usage{
-random_mic(size = NULL, mo = NULL, ab = NULL, skew = "right",
-  severity = 1, ...)
+random_mic(
+  size = NULL,
+  mo = NULL,
+  ab = NULL,
+  skew = "right",
+  severity = 1,
+  ...
+)
 
-random_disk(size = NULL, mo = NULL, ab = NULL, skew = "left",
-  severity = 1, ...)
+random_disk(
+  size = NULL,
+  mo = NULL,
+  ab = NULL,
+  skew = "left",
+  severity = 1,
+  ...
+)
 
 random_sir(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...)
 }

@@ -8,21 +8,42 @@
 \alias{eucast_dosage}
 \title{Apply Interpretive Rules}
 \usage{
-interpretive_rules(x, col_mo = NULL, info = interactive(),
+interpretive_rules(
+  x,
+  col_mo = NULL,
+  info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
-  "expected_phenotypes")), guideline = getOption("AMR_guideline", "EUCAST"),
-  verbose = FALSE, version_breakpoints = 16,
-  version_expected_phenotypes = 1.2, version_expertrules = 3.3,
-  ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
-  custom_rules = NULL, overwrite = FALSE, add_if_missing = TRUE, ...)
+    "expected_phenotypes")),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  verbose = FALSE,
+  version_breakpoints = 16,
+  version_expected_phenotypes = 1.2,
+  version_expertrules = 3.3,
+  ampc_cephalosporin_resistance = NA,
+  only_sir_columns = any(is.sir(x)),
+  custom_rules = NULL,
+  overwrite = FALSE,
+  add_if_missing = TRUE,
+  ...
+)
 
-eucast_rules(x, col_mo = NULL, info = interactive(),
+eucast_rules(
+  x,
+  col_mo = NULL,
+  info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
-  "expected_phenotypes")), ...)
+    "expected_phenotypes")),
+  ...
+)
 
-clsi_rules(x, col_mo = NULL, info = interactive(),
+clsi_rules(
+  x,
+  col_mo = NULL,
+  info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
-  "expected_phenotypes")), ...)
+    "expected_phenotypes")),
+  ...
+)
 
 eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 }

@@ -15,40 +15,62 @@
 \alias{sir_df}
 \title{Calculate Antimicrobial Resistance}
 \usage{
-resistance(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE, guideline = getOption("AMR_guideline",
-  "EUCAST"))
+resistance(
+  ...,
+  minimum = 30,
+  as_percent = FALSE,
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
 
-susceptibility(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE, guideline = getOption("AMR_guideline",
-  "EUCAST"))
+susceptibility(
+  ...,
+  minimum = 30,
+  as_percent = FALSE,
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
 
-sir_confidence_interval(..., ab_result = "R", minimum = 30,
-  as_percent = FALSE, only_all_tested = FALSE, confidence_level = 0.95,
-  side = "both", collapse = FALSE)
+sir_confidence_interval(
+  ...,
+  ab_result = "R",
+  minimum = 30,
+  as_percent = FALSE,
+  only_all_tested = FALSE,
+  confidence_level = 0.95,
+  side = "both",
+  collapse = FALSE
+)
 
-proportion_R(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_R(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_IR(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_IR(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_I(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_I(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_SI(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_SI(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_S(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_S(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_df(data, translate_ab = "name", language = get_AMR_locale(),
-  minimum = 30, as_percent = FALSE, combine_SI = TRUE,
-  confidence_level = 0.95)
+proportion_df(
+  data,
+  translate_ab = "name",
+  language = get_AMR_locale(),
+  minimum = 30,
+  as_percent = FALSE,
+  combine_SI = TRUE,
+  confidence_level = 0.95
+)
 
-sir_df(data, translate_ab = "name", language = get_AMR_locale(),
-  minimum = 30, as_percent = FALSE, combine_SI = TRUE,
-  confidence_level = 0.95)
+sir_df(
+  data,
+  translate_ab = "name",
+  language = get_AMR_locale(),
+  minimum = 30,
+  as_percent = FALSE,
+  combine_SI = TRUE,
+  confidence_level = 0.95
+)
 }
 \arguments{
 \item{...}{One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link[=as.sir]{as.sir()}} if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See \emph{Examples}.}

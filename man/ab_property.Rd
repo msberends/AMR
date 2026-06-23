@@ -47,8 +47,13 @@ ab_url(x, open = FALSE, ...)
 
 ab_property(x, property = "name", language = get_AMR_locale(), ...)
 
-set_ab_names(data, ..., property = "name", language = get_AMR_locale(),
-  snake_case = NULL)
+set_ab_names(
+  data,
+  ...,
+  property = "name",
+  language = get_AMR_locale(),
+  snake_case = NULL
+)
 }
 \arguments{
 \item{x}{Any (vector of) text that can be coerced to a valid antibiotic drug code with \code{\link[=as.ab]{as.ab()}}.}

@@ -10,37 +10,78 @@
 \alias{knit_print.antibiogram}
 \title{Generate Traditional, Combination, Syndromic, or WISCA Antibiograms}
 \usage{
-antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
-  ab_transform = "name", syndromic_group = NULL, add_total_n = FALSE,
-  only_all_tested = FALSE, digits = ifelse(wisca, 1, 0),
-  formatting_type = getOption("AMR_antibiogram_formatting_type",
-  ifelse(wisca, 14, 18)), col_mo = NULL, language = get_AMR_locale(),
-  minimum = 30, combine_SI = TRUE, sep = " + ", sort_columns = TRUE,
-  wisca = FALSE, simulations = 1000, conf_interval = 0.95,
-  interval_side = "two-tailed", info = interactive(), parallel = FALSE,
-  ...)
-
-wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
-  syndromic_group = NULL, only_all_tested = FALSE, digits = 1,
+wisca(
+  x,
+  antimicrobials = where(is.sir),
+  ab_transform = "name",
+  syndromic_group = NULL,
+  only_all_tested = FALSE,
+  digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
-  col_mo = NULL, language = get_AMR_locale(), combine_SI = TRUE,
-  sep = " + ", sort_columns = TRUE, simulations = 1000,
-  conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive(), parallel = FALSE, ...)
+  col_mo = NULL,
+  language = get_AMR_locale(),
+  combine_SI = TRUE,
+  sep = " + ",
+  sort_columns = TRUE,
+  simulations = 1000,
+  conf_interval = 0.95,
+  interval_side = "two-tailed",
+  info = interactive(),
+  parallel = FALSE,
+  ...
+)
+
+antibiogram(
+  x,
+  antimicrobials = where(is.sir),
+  mo_transform = "shortname",
+  ab_transform = "name",
+  syndromic_group = NULL,
+  add_total_n = FALSE,
+  only_all_tested = FALSE,
+  digits = ifelse(wisca, 1, 0),
+  formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 14, 18)),
+  col_mo = NULL,
+  language = get_AMR_locale(),
+  minimum = 30,
+  combine_SI = TRUE,
+  sep = " + ",
+  sort_columns = TRUE,
+  wisca = FALSE,
+  simulations = 1000,
+  conf_interval = 0.95,
+  interval_side = "two-tailed",
+  info = interactive(),
+  parallel = FALSE,
+  ...
+)
 
 retrieve_wisca_parameters(wisca_model, ...)
 
 \method{plot}{antibiogram}(x, ...)
 
-\method{autoplot}{antibiogram}(object, geom = c("pointrange", "point", "col",
-  "bar", "errorbar"), ci = TRUE, sort = TRUE, flip = NULL,
-  caption = NULL, ...)
+\method{autoplot}{antibiogram}(
+  object,
+  geom = c("pointrange", "point", "col", "bar", "errorbar"),
+  ci = TRUE,
+  sort = TRUE,
+  flip = NULL,
+  caption = NULL,
+  ...
+)
 
-wisca_plot(wisca_model, wisca_plot_type = c("susceptibility_incidence",
-  "posterior_coverage"), ...)
+wisca_plot(
+  wisca_model,
+  wisca_plot_type = c("susceptibility_incidence", "posterior_coverage"),
+  ...
+)
 
-\method{knit_print}{antibiogram}(x, italicise = TRUE,
-  na = getOption("knitr.kable.NA", default = ""), ...)
+\method{knit_print}{antibiogram}(
+  x,
+  italicise = TRUE,
+  na = getOption("knitr.kable.NA", default = ""),
+  ...
+)
 }
 \arguments{
 \item{x}{A \link{data.frame} containing at least a column with microorganisms and columns with antimicrobial results (class 'sir', see \code{\link[=as.sir]{as.sir()}}).}
@@ -66,13 +107,9 @@ wisca_plot(wisca_model, wisca_plot_type = c("susceptibility_incidence",
 }
 }}
 
-\item{mo_transform}{A character to transform microorganism input - must be \code{"name"}, \code{"shortname"} (default), \code{"gramstain"}, or one of the column names of the \link{microorganisms} data set: \code{"mo"}, \code{"fullname"}, \code{"status"}, \code{"domain"}, \code{"kingdom"}, \code{"phylum"}, \code{"class"}, \code{"order"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"subspecies"}, \code{"rank"}, \code{"ref"}, \code{"oxygen_tolerance"}, \code{"morphology"}, \code{"source"}, \code{"lpsn"}, \code{"lpsn_parent"}, \code{"lpsn_renamed_to"}, \code{"mycobank"}, \code{"mycobank_parent"}, \code{"mycobank_renamed_to"}, \code{"gbif"}, \code{"gbif_parent"}, \code{"gbif_renamed_to"}, \code{"prevalence"}, or \code{"snomed"}. Can also be \code{NULL} to not transform the input or \code{NA} to consider all microorganisms 'unknown'.}
-
 \item{ab_transform}{A character to transform antimicrobial input - must be one of the column names of the \link{antimicrobials} data set (defaults to \code{"name"}): \code{"ab"}, \code{"cid"}, \code{"name"}, \code{"group"}, \code{"atc"}, \code{"atc_group1"}, \code{"atc_group2"}, \code{"abbreviations"}, \code{"synonyms"}, \code{"oral_ddd"}, \code{"oral_units"}, \code{"iv_ddd"}, \code{"iv_units"}, or \code{"loinc"}. Can also be \code{NULL} to not transform the input.}
 
 \item{syndromic_group}{A column name of \code{x}, or values calculated to split rows of \code{x}, e.g. by using \code{\link[=ifelse]{ifelse()}} or \code{\link[dplyr:case-and-replace-when]{case_when()}}. See \emph{Examples}.}
-
-\item{add_total_n}{\emph{(deprecated in favour of \code{formatting_type})} A \link{logical} to indicate whether \code{n_tested} available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when \code{wisca = TRUE}; in that case, use \code{\link[=retrieve_wisca_parameters]{retrieve_wisca_parameters()}} to get the parameters used for WISCA.}
 
 \item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see \emph{Details}.}
 
@@ -84,17 +121,11 @@ wisca_plot(wisca_model, wisca_plot_type = c("susceptibility_incidence",
 
 \item{language}{Language to translate text, which defaults to the system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}).}
 
-\item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
-
 \item{combine_SI}{A \link{logical} to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is \code{TRUE}).}
 
 \item{sep}{A separating character for antimicrobial columns in combination antibiograms.}
 
 \item{sort_columns}{A \link{logical} to indicate whether the antimicrobial columns must be sorted on name.}
-
-\item{wisca}{A \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Per \doi{10.1093/jac/dkv397}, susceptibility priors are \eqn{\beta(0.5, 0.5)} (Jeffreys) and intrinsically resistant pairs (based on \link{intrinsic_resistant}) use \eqn{\beta(1, 9999)}.
-
-Set \code{simulations}, \code{conf_interval}, and \code{interval_side} to adjust.}
 
 \item{simulations}{(for WISCA) a numerical value to set the number of Monte Carlo simulations.}
 
@@ -107,6 +138,16 @@ Set \code{simulations}, \code{conf_interval}, and \code{interval_side} to adjust
 \item{parallel}{A \link{logical} to indicate if parallel computing must be used, defaults to \code{FALSE}. Requires the \code{\link[future.apply:future_lapply]{future.apply}} package. For WISCA, Monte Carlo simulations are distributed across workers; for grouped antibiograms, each group is processed by a separate worker. \strong{A non-sequential \code{\link[future:plan]{future::plan()}} must already be active before setting \code{parallel = TRUE}} -- for example, \code{future::plan(future::multisession)}. An error is thrown if \code{parallel = TRUE} is used without a plan set by the user.}
 
 \item{...}{Currently unused.}
+
+\item{mo_transform}{A character to transform microorganism input - must be \code{"name"}, \code{"shortname"} (default), \code{"gramstain"}, or one of the column names of the \link{microorganisms} data set: \code{"mo"}, \code{"fullname"}, \code{"status"}, \code{"domain"}, \code{"kingdom"}, \code{"phylum"}, \code{"class"}, \code{"order"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"subspecies"}, \code{"rank"}, \code{"ref"}, \code{"oxygen_tolerance"}, \code{"morphology"}, \code{"source"}, \code{"lpsn"}, \code{"lpsn_parent"}, \code{"lpsn_renamed_to"}, \code{"mycobank"}, \code{"mycobank_parent"}, \code{"mycobank_renamed_to"}, \code{"gbif"}, \code{"gbif_parent"}, \code{"gbif_renamed_to"}, \code{"prevalence"}, or \code{"snomed"}. Can also be \code{NULL} to not transform the input or \code{NA} to consider all microorganisms 'unknown'.}
+
+\item{add_total_n}{\emph{(deprecated in favour of \code{formatting_type})} A \link{logical} to indicate whether \code{n_tested} available numbers per pathogen should be added to the table (default is \code{TRUE}). This will add the lowest and highest number of available isolates per antimicrobial (e.g, if for \emph{E. coli} 200 isolates are available for ciprofloxacin and 150 for amoxicillin, the returned number will be "150-200"). This option is unavailable when \code{wisca = TRUE}; in that case, use \code{\link[=retrieve_wisca_parameters]{retrieve_wisca_parameters()}} to get the parameters used for WISCA.}
+
+\item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
+
+\item{wisca}{A \link{logical} to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is \code{FALSE}). This will use a Bayesian decision model to estimate regimen coverage probabilities using \href{https://en.wikipedia.org/wiki/Monte_Carlo_method}{Monte Carlo simulations}. Per \doi{10.1093/jac/dkv397}, susceptibility priors are \eqn{\beta(0.5, 0.5)} (Jeffreys) and intrinsically resistant pairs (based on \link{intrinsic_resistant}) use \eqn{\beta(1, 9999)}.
+
+Set \code{simulations}, \code{conf_interval}, and \code{interval_side} to adjust.}
 
 \item{wisca_model}{The outcome of \code{\link[=wisca]{wisca()}} or \code{\link[=antibiogram]{antibiogram(..., wisca = TRUE)}}.}
 

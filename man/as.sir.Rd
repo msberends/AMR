@@ -22,48 +22,86 @@ is.sir(x)
 
 is_sir_eligible(x, threshold = 0.05)
 
-\method{as.sir}{default}(x, S = "^(S|U|1)+$", I = "^(I|2)+$",
-  R = "^(R|3)+$", NI = "^(N|NI|V|4)+$", SDD = "^(SDD|D|H|5)+$",
-  WT = "^(WT|6)+$", NWT = "^(NWT|7)+$", NS = "^(NS|8)+$",
-  info = interactive(), ...)
+\method{as.sir}{default}(
+  x,
+  S = "^(S|U|1)+$",
+  I = "^(I|2)+$",
+  R = "^(R|3)+$",
+  NI = "^(N|NI|V|4)+$",
+  SDD = "^(SDD|D|H|5)+$",
+  WT = "^(WT|6)+$",
+  NWT = "^(NWT|7)+$",
+  NS = "^(NS|8)+$",
+  info = interactive(),
+  ...
+)
 
-\method{as.sir}{mic}(x, mo = NULL, ab = deparse(substitute(x)),
-  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+\method{as.sir}{mic}(
+  x,
+  mo = NULL,
+  ab = deparse(substitute(x)),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
   capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
   as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
-  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  conserve_capped_values = NULL, ...)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  conserve_capped_values = NULL,
+  ...
+)
 
-\method{as.sir}{disk}(x, mo = NULL, ab = deparse(substitute(x)),
-  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+\method{as.sir}{disk}(
+  x,
+  mo = NULL,
+  ab = deparse(substitute(x)),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
   as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
-  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  ...)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  ...
+)
 
-\method{as.sir}{data.frame}(x, ..., col_mo = NULL,
-  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+\method{as.sir}{data.frame}(
+  x,
+  ...,
+  col_mo = NULL,
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
   capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
   as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
-  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  parallel = FALSE, conserve_capped_values = NULL)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  parallel = FALSE,
+  conserve_capped_values = NULL
+)
 
 sir_interpretation_history(clean = FALSE)
 }

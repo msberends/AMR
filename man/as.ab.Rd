@@ -9,8 +9,13 @@
 \alias{NA_ab_}
 \title{Transform Input to an Antibiotic ID}
 \usage{
-as.ab(x, flag_multiple_results = TRUE, language = get_AMR_locale(),
-  info = interactive(), ...)
+as.ab(
+  x,
+  flag_multiple_results = TRUE,
+  language = get_AMR_locale(),
+  info = interactive(),
+  ...
+)
 
 is.ab(x)
 

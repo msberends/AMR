@@ -24,11 +24,25 @@ all_disk()
 
 all_disk_predictors()
 
-step_mic_log2(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE, id = recipes::rand_id("mic_log2"))
+step_mic_log2(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = recipes::rand_id("mic_log2")
+)
 
-step_sir_numeric(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-  skip = FALSE, id = recipes::rand_id("sir_numeric"))
+step_sir_numeric(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = recipes::rand_id("sir_numeric")
+)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the sequence of

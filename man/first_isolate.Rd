@@ -5,18 +5,38 @@
 \alias{filter_first_isolate}
 \title{Determine First Isolates}
 \usage{
-first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
-  col_mo = NULL, col_testcode = NULL, col_specimen = NULL,
-  col_icu = NULL, col_keyantimicrobials = NULL, episode_days = 365,
-  testcodes_exclude = NULL, icu_exclude = FALSE, specimen_group = NULL,
-  type = "points", method = c("phenotype-based", "episode-based",
-  "patient-based", "isolate-based"), ignore_I = TRUE, points_threshold = 2,
-  info = interactive(), include_unknown = FALSE,
-  include_untested_sir = TRUE, ...)
+first_isolate(
+  x = NULL,
+  col_date = NULL,
+  col_patient_id = NULL,
+  col_mo = NULL,
+  col_testcode = NULL,
+  col_specimen = NULL,
+  col_icu = NULL,
+  col_keyantimicrobials = NULL,
+  episode_days = 365,
+  testcodes_exclude = NULL,
+  icu_exclude = FALSE,
+  specimen_group = NULL,
+  type = "points",
+  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
+  ignore_I = TRUE,
+  points_threshold = 2,
+  info = interactive(),
+  include_unknown = FALSE,
+  include_untested_sir = TRUE,
+  ...
+)
 
-filter_first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
-  col_mo = NULL, episode_days = 365, method = c("phenotype-based",
-  "episode-based", "patient-based", "isolate-based"), ...)
+filter_first_isolate(
+  x = NULL,
+  col_date = NULL,
+  col_patient_id = NULL,
+  col_mo = NULL,
+  episode_days = 365,
+  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
+  ...
+)
 }
 \arguments{
 \item{x}{A \link{data.frame} containing isolates. Can be left blank for automatic determination, see \emph{Examples}.}

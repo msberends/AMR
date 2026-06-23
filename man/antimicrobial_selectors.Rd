@@ -45,8 +45,12 @@
 \alias{not_intrinsic_resistant}
 \title{Antimicrobial Selectors}
 \usage{
-aminoglycosides(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+aminoglycosides(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
 aminopenicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
@@ -54,41 +58,68 @@ antifungals(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 antimycobacterials(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-betalactams(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+betalactams(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
-betalactams_with_inhibitor(only_sir_columns = FALSE, return_all = TRUE,
-  ...)
+betalactams_with_inhibitor(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-carbapenems(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+carbapenems(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
-cephalosporins(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+cephalosporins(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
 cephalosporins_1st(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 cephalosporins_2nd(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-cephalosporins_3rd(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+cephalosporins_3rd(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
 cephalosporins_4th(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 cephalosporins_5th(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-fluoroquinolones(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+fluoroquinolones(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
 glycopeptides(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 ionophores(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-isoxazolylpenicillins(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+isoxazolylpenicillins(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
-lincosamides(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+lincosamides(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
 lipoglycopeptides(only_sir_columns = FALSE, return_all = TRUE, ...)
 
@@ -108,11 +139,19 @@ phenicols(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 phosphonics(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-polymyxins(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+polymyxins(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
-quinolones(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+quinolones(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
 rifamycins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
@@ -122,25 +161,43 @@ streptogramins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 sulfonamides(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-tetracyclines(only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+tetracyclines(
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
 trimethoprims(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 ureidopenicillins(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-amr_class(amr_class, only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+amr_class(
+  amr_class,
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
-amr_selector(filter, only_sir_columns = FALSE, only_treatable = TRUE,
-  return_all = TRUE, ...)
+amr_selector(
+  filter,
+  only_sir_columns = FALSE,
+  only_treatable = TRUE,
+  return_all = TRUE,
+  ...
+)
 
 administrable_per_os(only_sir_columns = FALSE, return_all = TRUE, ...)
 
 administrable_iv(only_sir_columns = FALSE, return_all = TRUE, ...)
 
-not_intrinsic_resistant(only_sir_columns = FALSE, col_mo = NULL,
-  version_expected_phenotypes = 1.2, ...)
+not_intrinsic_resistant(
+  only_sir_columns = FALSE,
+  col_mo = NULL,
+  version_expected_phenotypes = 1.2,
+  ...
+)
 }
 \arguments{
 \item{only_sir_columns}{A \link{logical} to indicate whether only antimicrobial columns must be included that were transformed to class \link[=as.sir]{sir} on beforehand. Defaults to \code{FALSE}.}

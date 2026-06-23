@@ -400,6 +400,51 @@
 #' plot(ab1)
 #' plot(ab2)
 #' }
+wisca <- function(x,
+                  antimicrobials = where(is.sir),
+                  ab_transform = "name",
+                  syndromic_group = NULL,
+                  only_all_tested = FALSE,
+                  digits = 1,
+                  formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
+                  col_mo = NULL,
+                  language = get_AMR_locale(),
+                  combine_SI = TRUE,
+                  sep = " + ",
+                  sort_columns = TRUE,
+                  simulations = 1000,
+                  conf_interval = 0.95,
+                  interval_side = "two-tailed",
+                  info = interactive(),
+                  parallel = FALSE,
+                  ...) {
+  stop_ifnot(is.null(mo_transform), "{.arg mo_transform} must not be set if creating a WISCA; the incidence of the different species are already modelled into WISCA and cannot be taken separately.", call = FALSE)
+  antibiogram(
+    x = x,
+    antimicrobials = antimicrobials,
+    ab_transform = ab_transform,
+    syndromic_group = syndromic_group,
+    add_total_n = FALSE,
+    only_all_tested = only_all_tested,
+    digits = digits,
+    formatting_type = formatting_type,
+    col_mo = col_mo,
+    language = language,
+    combine_SI = combine_SI,
+    sep = sep,
+    sort_columns = sort_columns,
+    wisca = TRUE,
+    simulations = simulations,
+    conf_interval = conf_interval,
+    interval_side = interval_side,
+    info = info,
+    parallel = parallel,
+    ...
+  )
+}
+
+#' @export
+#' @rdname antibiogram
 antibiogram <- function(x,
                         antimicrobials = where(is.sir),
                         mo_transform = "shortname",
@@ -489,6 +534,24 @@ antibiogram.default <- function(x,
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(parallel, allow_class = "logical", has_length = 1)
 
+  # get syndromic groups
+  if (!is.null(syndromic_group)) {
+    if (length(syndromic_group) == 1 && syndromic_group %in% colnames(x)) {
+      x$`.syndromic_group` <- x[, syndromic_group, drop = TRUE]
+    } else if (length(syndromic_group) > 1 && all(syndromic_group %in% colnames(x))) {
+      x$`.syndromic_group` <- do.call(paste, c(x[syndromic_group], list(sep = "||")))
+      attr(x, "antibiogram_groups") <- syndromic_group
+    } else if (!is.null(syndromic_group) && length(syndromic_group) == 1) {
+      x$`.syndromic_group` <- syndromic_group
+    } else {
+      stop_("{.arg syndromic_group} should be a 1-dimensional computed value, or 1 or more column names of {.arg x}.")
+    }
+    x$`.syndromic_group`[is.na(x$`.syndromic_group`) | x$`.syndromic_group` == ""] <- paste0("(", translate_AMR("unknown", language = language), ")")
+    has_syndromic_group <- TRUE
+  } else {
+    has_syndromic_group <- FALSE
+  }
+
   # parallel gate - identical pattern to as.sir()
   if (requireNamespace("future.apply", quietly = TRUE)) {
     if (!inherits(future::plan(), "sequential")) {
@@ -497,10 +560,14 @@ antibiogram.default <- function(x,
       }
       parallel <- TRUE
     }
-    if (wisca && interactive() && inherits(future::plan(), "sequential") && isFALSE(parallel) && simulations > 100) {
+    if (wisca && interactive() && message_not_thrown_before("antibiogram", "wisca_parallel") && inherits(future::plan(), "sequential") && isFALSE(parallel) && simulations > 100) {
       advised_multi <- ifelse(.Platform$OS.type == "windows" || in_rstudio(), "multisession", "multicore")
+      sims <- simulations * length(antimicrobials)
+      if (has_syndromic_group) {
+        sims <- sims * length(unique(x$`.syndromic_group`))
+      }
       message_("Are you sure you want to run in non-parallel (=sequential) mode?", as_note = FALSE)
-      message_("WISCA can take a long time for the ", simulations * length(antimicrobials), " simulations you require, and you already have the {.pkg future} package installed.", as_note = FALSE)
+      message_("WISCA can take a ", ifelse(sims > 10000, font_bold("very "), ""), "long time for the ", format(sims, decimal.mark = ".", big.mark = " "), " simulations you require, and you already have the {.pkg future} package installed.", as_note = FALSE)
       q <- utils::menu(c(
         "Yes, still run in sequential mode",
         format_inline_("No, run in parallel mode and set {.help [future::plan(", advised_multi, ")](future::plan)}, and reset after WISCA finishes"),
@@ -511,17 +578,30 @@ antibiogram.default <- function(x,
         return(invisible(NULL))
       } else if (q %in% c(2, 3)) {
         parallel <- TRUE
+        AMR_env$wisca_parallel_choice <- "parallel"
         obj <- get(advised_multi, envir = asNamespace("future"))
         future::plan(obj)
         if (q == 2) {
-          on.exit({
-            # clean-up parallel setting
-            message_("Resetting {.fn future::plan}...", as_note = FALSE)
-            future::plan(future::sequential)
-            message_("Parallel setting was reset to `future::plan(future::sequential)`.", as_check = TRUE)
-          })
+          AMR_env$wisca_parallel_choice <- "parallel_reset"
         }
+      } else {
+        AMR_env$wisca_parallel_choice <- "sequential"
       }
+    } else if (wisca && !is.null(AMR_env$wisca_parallel_choice)) {
+      if (AMR_env$wisca_parallel_choice %in% c("parallel", "parallel_reset")) {
+        parallel <- TRUE
+      }
+    }
+    if (identical(AMR_env$wisca_parallel_choice, "parallel_reset") && inherits(future::plan(), "uniprocess", which = FALSE) == FALSE) {
+      on.exit(
+        {
+          message_("Resetting {.fn future::plan}...", as_note = FALSE)
+          future::plan(future::sequential)
+          AMR_env$wisca_parallel_choice <- NULL
+          message_("Parallel setting was reset to `future::plan(future::sequential)`.", as_check = TRUE)
+        },
+        add = TRUE
+      )
     }
   }
   if (isTRUE(parallel)) {
@@ -573,19 +653,6 @@ antibiogram.default <- function(x,
     }
   }
   x$`.mo`[x$`.mo` %in% c(NA, "UNKNOWN")] <- "(??)"
-
-  # get syndromic groups
-  if (!is.null(syndromic_group)) {
-    if (length(syndromic_group) == 1 && syndromic_group %in% colnames(x)) {
-      x$`.syndromic_group` <- x[, syndromic_group, drop = TRUE]
-    } else if (!is.null(syndromic_group)) {
-      x$`.syndromic_group` <- syndromic_group
-    }
-    x$`.syndromic_group`[is.na(x$`.syndromic_group`) | x$`.syndromic_group` == ""] <- paste0("(", translate_AMR("unknown", language = language), ")")
-    has_syndromic_group <- TRUE
-  } else {
-    has_syndromic_group <- FALSE
-  }
 
   # get antimicrobials
   ab_trycatch <- tryCatch(colnames(suppressWarnings(x[, antimicrobials, drop = FALSE])), error = function(e) NULL)
@@ -1127,12 +1194,21 @@ antibiogram.default <- function(x,
   }
 
   if (wisca) {
-    names(wisca_draws) <- out$ab
-    names(wisca_components) <- out$ab
+    names(wisca_draws) <- out$ab[!is.na(out$out_value)]
+    names(wisca_components) <- out$ab[!is.na(out$out_value)]
+  }
+  if (!is.null(attr(x, "antibiogram_groups", exact = TRUE))) {
+    new_df <- as.data.frame(new_df)
+    grps <- attr(x, "antibiogram_groups", exact = TRUE)
+    parts <- strsplit(new_df[[1]], "||", fixed = TRUE)
+    new_cols <- do.call(rbind, parts)
+    colnames(new_cols) <- grps
+    new_df <- cbind(as.data.frame(new_cols), new_df[-1])
   }
 
   out <- structure(as_original_data_class(new_df, class(x), extra_class = "antibiogram"),
     has_syndromic_group = has_syndromic_group,
+    antibiogram_groups = attr(x, "antibiogram_groups", exact = TRUE),
     combine_SI = combine_SI,
     wisca = wisca,
     conf_interval = conf_interval,
@@ -1174,200 +1250,29 @@ antibiogram.grouped_df <- function(x,
                                    ...) {
   stop_ifnot(is.null(mo_transform), "{.arg mo_transform} must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, which could include the pathogen information (though not necessary). Nonetheless, this makes {.arg mo_transform} redundant.", call = FALSE)
   stop_ifnot(is.null(syndromic_group), "{.arg syndromic_group} must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, making {.arg syndromic_group} redundant.", call = FALSE)
-  meet_criteria(parallel, allow_class = "logical", has_length = 1)
-  meet_criteria(wisca, allow_class = "logical", has_length = 1)
 
   groups <- attributes(x)$groups
-  n_groups <- NROW(groups)
+  group_cols <- intersect(colnames(groups), colnames(x))
+  # paste group together, will be split later in antibiogram.default()
+  x$.group <- do.call(paste, c(x[group_cols], list(sep = "||")))
+  attr(x, "antibiogram_groups") <- group_cols
 
-  # parallel gate - identical pattern to as.sir()
-  if (requireNamespace("future.apply", quietly = TRUE) && !inherits(future::plan(), "sequential")) {
-    if (isFALSE(parallel)) {
-      message_("Assuming {.code parallel = TRUE} since parallel computing has been set up using the {.pkg future} package before. Set {.help [{.fun plan}](future::plan)} to sequential to prevent this.")
-    }
-    parallel <- TRUE
-  }
-  if (isTRUE(parallel)) {
-    stop_ifnot(
-      requireNamespace("future.apply", quietly = TRUE),
-      "Setting {.code parallel = TRUE} requires the {.pkg future.apply} package.\n",
-      "Install it with {.code install.packages(\"future.apply\")}."
-    )
-    stop_if(inherits(future::plan(), "sequential"),
-      "Setting {.code parallel = TRUE} requires a non-sequential {.help [{.fun future::plan}](future::plan)} to be active.\n",
-      "For your system, you could first run: {.code library(future); ",
-      ifelse(.Platform$OS.type == "windows" || in_rstudio(),
-        "plan(multisession)",
-        "plan(multicore)"
-      ),
-      "}",
-      call = FALSE
-    )
-    n_workers <- future::nbrOfWorkers()
-  } else {
-    n_workers <- 1L
-  }
-
-  use_parallel <- isTRUE(parallel) && n_workers > 1L && n_groups > 1L
-
-  x_df <- as.data.frame(x)
-  run_group <- function(i) {
-    rows <- unlist(groups[i, ]$.rows)
-    if (length(rows) == 0L) {
-      return(NULL)
-    }
-    antibiogram(x_df[rows, , drop = FALSE],
-      antimicrobials = antimicrobials,
-      mo_transform = NULL,
-      ab_transform = ab_transform,
-      syndromic_group = NULL,
-      add_total_n = add_total_n,
-      only_all_tested = only_all_tested,
-      digits = digits,
-      formatting_type = formatting_type,
-      col_mo = col_mo,
-      language = language,
-      minimum = minimum,
-      combine_SI = combine_SI,
-      sep = sep,
-      sort_columns = sort_columns,
-      wisca = wisca,
-      simulations = simulations,
-      conf_interval = conf_interval,
-      interval_side = interval_side,
-      info = FALSE,
-      parallel = FALSE # never nest parallelism in workers
-    )
-  }
-
-  if (use_parallel) {
-    if (isTRUE(info)) {
-      message_("Running antibiogram for ", n_groups, " groups in parallel using ", n_workers, " workers...", as_note = FALSE, appendLF = FALSE)
-    }
-    results_raw <- future.apply::future_lapply(seq_len(n_groups), run_group, future.seed = TRUE)
-    if (isTRUE(info)) message_(font_green_bg(" DONE "), as_note = FALSE)
-  } else {
-    progress <- progress_ticker(
-      n = n_groups,
-      n_min = 5,
-      print = info,
-      title = paste("Calculating AMR for", n_groups, "groups")
-    )
-    on.exit(close(progress), add = TRUE)
-    results_raw <- vector("list", n_groups)
-    for (i in seq_len(n_groups)) {
-      progress$tick()
-      results_raw[[i]] <- run_group(i)
-    }
-    close(progress)
-  }
-
-  out <- NULL
-  wisca_parameters <- NULL
-  long_numeric <- NULL
-
-  for (i in seq_len(n_groups)) {
-    new_out <- results_raw[[i]]
-    new_wisca_parameters <- attributes(new_out)$wisca_parameters
-    new_long_numeric <- attributes(new_out)$long_numeric
-
-    if (is.null(new_out) || NROW(new_out) == 0) {
-      next
-    }
-
-    # remove first column 'Pathogen' (in whatever language), except WISCA since that never has Pathogen column
-    if (isFALSE(wisca)) {
-      new_out <- new_out[, -1, drop = FALSE]
-      new_long_numeric <- new_long_numeric[, -1, drop = FALSE]
-    }
-
-    # add group names to data set
-    for (col in rev(seq_len(NCOL(groups) - 1))) {
-      col_name <- colnames(groups)[col]
-      col_value <- groups[i, col, drop = TRUE]
-      new_out[, col_name] <- col_value
-      new_out <- new_out[, c(col_name, setdiff(names(new_out), col_name))] # set place to 1st col
-
-      if (wisca) {
-        new_wisca_parameters[, col_name] <- col_value
-        new_wisca_parameters <- new_wisca_parameters[, c(col_name, setdiff(names(new_wisca_parameters), col_name))] # set place to 1st col
-      }
-
-      new_long_numeric[, col_name] <- col_value
-      new_long_numeric <- new_long_numeric[, c(col_name, setdiff(names(new_long_numeric), col_name))] # set place to 1st col
-    }
-
-    if (is.null(out)) {
-      out <- new_out
-      wisca_parameters <- new_wisca_parameters
-      long_numeric <- new_long_numeric
-    } else {
-      out <- rbind_AMR(out, new_out)
-      wisca_parameters <- rbind_AMR(wisca_parameters, new_wisca_parameters)
-      long_numeric <- rbind_AMR(long_numeric, new_long_numeric)
-    }
-  }
-
-  wisca_draws_all <- NULL
-  wisca_components_all <- NULL
-  if (wisca) {
-    wisca_draws_all <- unlist(lapply(results_raw, function(r) attributes(r)$wisca_draws), recursive = FALSE)
-    wisca_components_all <- unlist(lapply(results_raw, function(r) attributes(r)$wisca_components), recursive = FALSE)
-  }
-
-  out <- structure(as_original_data_class(out, class(x), extra_class = "antibiogram"),
-    has_syndromic_group = FALSE,
-    combine_SI = isTRUE(combine_SI),
-    wisca = wisca,
-    conf_interval = conf_interval,
-    simulations = if (isFALSE(wisca)) NULL else simulations,
-    formatting_type = formatting_type,
-    sep = sep,
-    wisca_parameters = if (isFALSE(wisca)) NULL else as_original_data_class(wisca_parameters, class(x)),
-    long_numeric = as_original_data_class(long_numeric, class(x)),
-    wisca_draws = if (isFALSE(wisca)) NULL else wisca_draws_all,
-    wisca_components = if (isFALSE(wisca)) NULL else wisca_components_all
-  )
-  rownames(out) <- NULL
-  out
-}
-
-#' @export
-#' @rdname antibiogram
-wisca <- function(x,
-                  antimicrobials = where(is.sir),
-                  ab_transform = "name",
-                  syndromic_group = NULL,
-                  only_all_tested = FALSE,
-                  digits = 1,
-                  formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
-                  col_mo = NULL,
-                  language = get_AMR_locale(),
-                  combine_SI = TRUE,
-                  sep = " + ",
-                  sort_columns = TRUE,
-                  simulations = 1000,
-                  conf_interval = 0.95,
-                  interval_side = "two-tailed",
-                  info = interactive(),
-                  parallel = FALSE,
-                  ...) {
-  antibiogram(
-    x = x,
+  antibiogram.default(x,
     antimicrobials = antimicrobials,
+    mo_transform = mo_transform,
     ab_transform = ab_transform,
-    mo_transform = NULL,
-    syndromic_group = syndromic_group,
-    add_total_n = FALSE,
+    syndromic_group = ".group",
+    add_total_n = add_total_n,
     only_all_tested = only_all_tested,
     digits = digits,
     formatting_type = formatting_type,
     col_mo = col_mo,
     language = language,
+    minimum = minimum,
     combine_SI = combine_SI,
     sep = sep,
     sort_columns = sort_columns,
-    wisca = TRUE,
+    wisca = wisca,
     simulations = simulations,
     conf_interval = conf_interval,
     interval_side = interval_side,
@@ -1480,7 +1385,7 @@ tbl_format_footer.antibiogram <- function(x, ...) {
     return(footer)
   }
   wisca_text <- ifelse(isTRUE(attributes(x)$wisca),
-    paste0("\n# ", font_bold("Be aware"), " that in a WISCA, overlapping CIs indicate ", font_bold("non-inferiority"), "."),
+    paste0("\n# ", font_bold("Be aware"), " that in a WISCA, overlapping CIs indicate non-inferiority."),
     ""
   )
   c(footer, font_subtle(paste0(
@@ -1577,10 +1482,17 @@ autoplot.antibiogram <- function(object,
   group_name <- paste(groups, collapse = "/")
   if (length(groups) > 1) {
     df$syndromic_group <- apply(df[groups], 1, function(x) {
-      paste(stats::na.omit(x), collapse = "/")
+      paste(stats::na.omit(x), collapse = " / ")
     })
   } else if ("syndromic_group" %in% colnames(df)) {
-    group_name <- colnames(object)[1]
+    if (is.null(attributes(object)$antibiogram_groups)) {
+      # translated value of "Syndromic group"
+      group_name <- colnames(object)[1]
+    } else {
+      # multiple groups, created with a grouped tibble or when syndromic_group was length >1
+      group_name <- paste0(attributes(object)$antibiogram_groups, collapse = " / ")
+      df$syndromic_group <- gsub("||", " / ", df$syndromic_group, fixed = TRUE)
+    }
   }
   has_syndromic <- "syndromic_group" %in% colnames(df)
   has_facet <- !all(as.character(df$mo) == "", na.rm = TRUE)
@@ -1694,6 +1606,7 @@ wisca_plot <- function(wisca_model,
     isTRUE(attributes(wisca_model)$wisca),
     "This function only applies to WISCA models."
   )
+  meet_criteria(wisca_plot_type, allow_class = "character", has_length = 1, is_in = c("susceptibility_incidence", "posterior_coverage"))
   wisca_plot_type <- match.arg(wisca_plot_type)
 
   sep <- attributes(wisca_model)$sep %||% " + "
@@ -1791,7 +1704,7 @@ plot_wisca_susceptibility_incidence <- function(wisca_model, sep) {
     label_order <- vapply(draw_order, function(g) {
       if (!is.null(sep)) gsub(sep, paste0(trimws(sep, which = "right"), "\n"), g, fixed = TRUE) else g
     }, character(1))
-    label_order <- label_order[label_order %in% reg_labels]
+    label_order <- unique(label_order[label_order %in% reg_labels])
     df$regimen <- factor(df$regimen, levels = label_order)
   }
 

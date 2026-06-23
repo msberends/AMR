@@ -4,8 +4,14 @@
 \alias{top_n_microorganisms}
 \title{Filter Top \emph{n} Microorganisms}
 \usage{
-top_n_microorganisms(x, n, property = "species", n_for_each = NULL,
-  col_mo = NULL, ...)
+top_n_microorganisms(
+  x,
+  n,
+  property = "species",
+  n_for_each = NULL,
+  col_mo = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A data frame containing microbial data.}

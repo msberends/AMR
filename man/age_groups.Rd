@@ -4,8 +4,7 @@
 \alias{age_groups}
 \title{Split Ages into Age Groups}
 \usage{
-age_groups(x, split_at = c(0, 12, 25, 55, 75), names = NULL,
-  na.rm = FALSE)
+age_groups(x, split_at = c(0, 12, 25, 55, 75), names = NULL, na.rm = FALSE)
 }
 \arguments{
 \item{x}{Age, e.g. calculated with \code{\link[=age]{age()}}.}

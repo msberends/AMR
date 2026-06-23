@@ -15,11 +15,24 @@
 \alias{eucast_exceptional_phenotypes}
 \title{Determine Multidrug-Resistant Organisms (MDRO)}
 \usage{
-mdro(x = NULL, guideline = "CMI 2012", col_mo = NULL, esbl = NA,
-  carbapenemase = NA, mecA = NA, mecC = NA, vanA = NA, vanB = NA,
-  info = interactive(), pct_required_classes = 0.5, combine_SI = TRUE,
-  verbose = FALSE, only_sir_columns = any(is.sir(x)),
-  infer_from_combinations = TRUE, ...)
+mdro(
+  x = NULL,
+  guideline = "CMI 2012",
+  col_mo = NULL,
+  esbl = NA,
+  carbapenemase = NA,
+  mecA = NA,
+  mecC = NA,
+  vanA = NA,
+  vanB = NA,
+  info = interactive(),
+  pct_required_classes = 0.5,
+  combine_SI = TRUE,
+  verbose = FALSE,
+  only_sir_columns = any(is.sir(x)),
+  infer_from_combinations = TRUE,
+  ...
+)
 
 brmo(x = NULL, only_sir_columns = any(is.sir(x)), ...)
 
@@ -27,11 +40,14 @@ mrgn(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE, ...)
 
 mdr_tb(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE, ...)
 
-mdr_cmi2012(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE,
-  ...)
+mdr_cmi2012(x = NULL, only_sir_columns = any(is.sir(x)), verbose = FALSE, ...)
 
-eucast_exceptional_phenotypes(x = NULL, only_sir_columns = any(is.sir(x)),
-  verbose = FALSE, ...)
+eucast_exceptional_phenotypes(
+  x = NULL,
+  only_sir_columns = any(is.sir(x)),
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{A \link{data.frame} with antimicrobials columns, like \code{AMX} or \code{amox}. Can be left blank for automatic determination.}

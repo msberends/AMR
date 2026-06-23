@@ -33,80 +33,135 @@ scale_colour_mic(keep_operators = "edges", mic_range = NULL, ...)
 
 scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
 
-scale_x_sir(colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R
-  = "#ED553B"), language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST", ...)
+scale_x_sir(
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
+  language = get_AMR_locale(),
+  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+  ...
+)
 
-scale_colour_sir(colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I =
-  "#F6D55C", R = "#ED553B"), language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST", ...)
+scale_colour_sir(
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
+  language = get_AMR_locale(),
+  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+  ...
+)
 
-scale_fill_sir(colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C",
-  R = "#ED553B"), language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST", ...)
+scale_fill_sir(
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
+  language = get_AMR_locale(),
+  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+  ...
+)
 
-\method{plot}{mic}(x, mo = NULL, ab = NULL,
+\method{plot}{mic}(
+  x,
+  mo = NULL,
+  ab = NULL,
   guideline = getOption("AMR_guideline", "EUCAST"),
-  main = deparse(substitute(x)), ylab = translate_AMR("Frequency", language
-  = language),
-  xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language =
-  language), colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R
-  = "#ED553B"), language = get_AMR_locale(), expand = TRUE,
+  main = deparse(substitute(x)),
+  ylab = translate_AMR("Frequency", language = language),
+  xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
+  language = get_AMR_locale(),
+  expand = TRUE,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), ...)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  ...
+)
 
-\method{autoplot}{mic}(object, mo = NULL, ab = NULL,
+\method{autoplot}{mic}(
+  object,
+  mo = NULL,
+  ab = NULL,
   guideline = getOption("AMR_guideline", "EUCAST"),
-  title = deparse(substitute(object)), ylab = translate_AMR("Frequency",
-  language = language),
-  xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language =
-  language), colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R
-  = "#ED553B"), language = get_AMR_locale(), expand = TRUE,
+  title = deparse(substitute(object)),
+  ylab = translate_AMR("Frequency", language = language),
+  xlab = translate_AMR("Minimum Inhibitory Concentration (mg/L)", language = language),
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
+  language = get_AMR_locale(),
+  expand = TRUE,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), ...)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  ...
+)
 
-\method{plot}{disk}(x, main = deparse(substitute(x)),
+\method{plot}{disk}(
+  x,
+  main = deparse(substitute(x)),
   ylab = translate_AMR("Frequency", language = language),
   xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
-  mo = NULL, ab = NULL, guideline = getOption("AMR_guideline", "EUCAST"),
-  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R =
-  "#ED553B"), language = get_AMR_locale(), expand = TRUE,
+  mo = NULL,
+  ab = NULL,
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
+  language = get_AMR_locale(),
+  expand = TRUE,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), ...)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  ...
+)
 
-\method{autoplot}{disk}(object, mo = NULL, ab = NULL,
-  title = deparse(substitute(object)), ylab = translate_AMR("Frequency",
-  language = language), xlab = translate_AMR("Disk diffusion diameter (mm)",
-  language = language), guideline = getOption("AMR_guideline", "EUCAST"),
-  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R =
-  "#ED553B"), language = get_AMR_locale(), expand = TRUE,
+\method{autoplot}{disk}(
+  object,
+  mo = NULL,
+  ab = NULL,
+  title = deparse(substitute(object)),
+  ylab = translate_AMR("Frequency", language = language),
+  xlab = translate_AMR("Disk diffusion diameter (mm)", language = language),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
+  language = get_AMR_locale(),
+  expand = TRUE,
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), ...)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  ...
+)
 
-\method{plot}{sir}(x, ylab = translate_AMR("Percentage", language =
-  language), xlab = translate_AMR("Antimicrobial Interpretation", language =
-  language), main = deparse(substitute(x)), language = get_AMR_locale(),
-  ...)
-
-\method{autoplot}{sir}(object, title = deparse(substitute(object)),
+\method{plot}{sir}(
+  x,
+  ylab = translate_AMR("Percentage", language = language),
   xlab = translate_AMR("Antimicrobial Interpretation", language = language),
-  ylab = translate_AMR("Frequency", language = language), colours_SIR = c(S
-  = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
-  language = get_AMR_locale(), ...)
+  main = deparse(substitute(x)),
+  language = get_AMR_locale(),
+  ...
+)
+
+\method{autoplot}{sir}(
+  object,
+  title = deparse(substitute(object)),
+  xlab = translate_AMR("Antimicrobial Interpretation", language = language),
+  ylab = translate_AMR("Frequency", language = language),
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
+  language = get_AMR_locale(),
+  ...
+)
 
 facet_sir(facet = c("interpretation", "antibiotic"), nrow = NULL)
 
-scale_y_percent(breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1),
-  limits = c(0, NA))
+scale_y_percent(
+  breaks = function(x) seq(0, max(x, na.rm = TRUE), 0.1),
+  limits = c(0, NA)
+)
 
-scale_sir_colours(..., aesthetics, colours_SIR = c(S = "#3CAEA3", SDD =
-  "#8FD6C4", I = "#F6D55C", R = "#ED553B"))
+scale_sir_colours(
+  ...,
+  aesthetics,
+  colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B")
+)
 
 theme_sir()
 
-labels_sir_count(position = NULL, x = "antibiotic",
-  translate_ab = "name", minimum = 30, language = get_AMR_locale(),
-  combine_SI = TRUE, datalabels.size = 3, datalabels.colour = "grey15")
+labels_sir_count(
+  position = NULL,
+  x = "antibiotic",
+  translate_ab = "name",
+  minimum = 30,
+  language = get_AMR_locale(),
+  combine_SI = TRUE,
+  datalabels.size = 3,
+  datalabels.colour = "grey15"
+)
 }
 \arguments{
 \item{keep_operators}{A \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}

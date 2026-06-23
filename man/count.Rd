@@ -14,11 +14,17 @@
 \alias{count_df}
 \title{Count Available Isolates}
 \usage{
-count_resistant(..., only_all_tested = FALSE,
-  guideline = getOption("AMR_guideline", "EUCAST"))
+count_resistant(
+  ...,
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
 
-count_susceptible(..., only_all_tested = FALSE,
-  guideline = getOption("AMR_guideline", "EUCAST"))
+count_susceptible(
+  ...,
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
 
 count_S(..., only_all_tested = FALSE)
 
@@ -34,8 +40,12 @@ count_all(..., only_all_tested = FALSE)
 
 n_sir(..., only_all_tested = FALSE)
 
-count_df(data, translate_ab = "name", language = get_AMR_locale(),
-  combine_SI = TRUE)
+count_df(
+  data,
+  translate_ab = "name",
+  language = get_AMR_locale(),
+  combine_SI = TRUE
+)
 }
 \arguments{
 \item{...}{One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with \code{\link[=as.sir]{as.sir()}} if needed.}
