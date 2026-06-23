@@ -227,6 +227,7 @@ globalVariables(c(
   "reference.rule",
   "reference.rule_group",
   "reference.version",
+  "regimen",
   "rule.provider",
   "rowid",
   "rule_group",
