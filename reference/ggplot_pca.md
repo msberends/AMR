@@ -8,13 +8,30 @@ base R [`biplot()`](https://rdrr.io/r/stats/biplot.html) function.
 ## Usage
 
 ``` r
-ggplot_pca(x, choices = 1:2, scale = 1, pc.biplot = TRUE,
-  labels = NULL, labels_textsize = 3, labels_text_placement = 1.5,
-  groups = NULL, ellipse = TRUE, ellipse_prob = 0.68,
-  ellipse_size = 0.5, ellipse_alpha = 0.5, points_size = 2,
-  points_alpha = 0.25, arrows = TRUE, arrows_colour = "darkblue",
-  arrows_size = 0.5, arrows_textsize = 3, arrows_textangled = TRUE,
-  arrows_alpha = 0.75, base_textsize = 10, ...)
+ggplot_pca(
+  x,
+  choices = 1:2,
+  scale = 1,
+  pc.biplot = TRUE,
+  labels = NULL,
+  labels_textsize = 3,
+  labels_text_placement = 1.5,
+  groups = NULL,
+  ellipse = TRUE,
+  ellipse_prob = 0.68,
+  ellipse_size = 0.5,
+  ellipse_alpha = 0.5,
+  points_size = 2,
+  points_alpha = 0.25,
+  arrows = TRUE,
+  arrows_colour = "darkblue",
+  arrows_size = 0.5,
+  arrows_textsize = 3,
+  arrows_textangled = TRUE,
+  arrows_alpha = 0.75,
+  base_textsize = 10,
+  ...
+)
 ```
 
 ## Source
@@ -68,12 +85,11 @@ the changes made based on the source code were:
 
 - pc.biplot:
 
-  If true, use what [Gabriel
-  (1971)](#reference+biplot.princomp.Rd+R+3AGabriel+3A1971) refers to as
-  a “principal component biplot”, with `lambda = 1` and observations
-  scaled up by sqrt(n) and variables scaled down by sqrt(n). Then inner
-  products between variables approximate covariances and distances
-  between observations approximate Mahalanobis distance.
+  If true, use what Gabriel (1971) refers to as a "principal component
+  biplot", with `lambda = 1` and observations scaled up by sqrt(n) and
+  variables scaled down by sqrt(n). Then inner products between
+  variables approximate covariances and distances between observations
+  approximate Mahalanobis distance.
 
 - labels:
 

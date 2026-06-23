@@ -9,8 +9,13 @@ names).
 ## Usage
 
 ``` r
-as.ab(x, flag_multiple_results = TRUE, language = get_AMR_locale(),
-  info = interactive(), ...)
+as.ab(
+  x,
+  flag_multiple_results = TRUE,
+  language = get_AMR_locale(),
+  info = interactive(),
+  ...
+)
 
 is.ab(x)
 
@@ -102,7 +107,7 @@ World Health Organization (WHO) Collaborating Centre for Drug Statistics
 Methodology: <https://atcddd.fhi.no/atc_ddd_index/>
 
 European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER:
-<https://health.ec.europa.eu/documents/community-register/html/reg_hum_atc.htm>
+<https://health.ec.europa.eu/documents/community-register/html/index_en.htm>
 
 ## WHOCC
 
@@ -112,7 +117,7 @@ groups and Defined Daily Dose (DDD) from the World Health Organization
 Collaborating Centre for Drug Statistics Methodology (WHOCC,
 <https://atcddd.fhi.no>) and the Pharmaceuticals Community Register of
 the European Commission
-(<https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>).
+(<https://ec.europa.eu/health/documents/community-register/html/index_en.htm>).
 
 These have become the gold standard for international drug utilisation
 monitoring and research.

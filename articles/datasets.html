@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Lato-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Lato-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Fira_Code-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9057</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9061</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Download data sets for download / own use</h1>
             
-            <h4 data-toc-skip class="date">02 May 2026</h4>
+            <h4 data-toc-skip class="date">23 June 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/vignettes/datasets.Rmd" class="external-link"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="d-none name"><code>datasets.Rmd</code></div>
@@ -104,42 +104,43 @@ available in Python.</p>
 <h2 id="microorganisms-full-microbial-taxonomy">
 <code>microorganisms</code>: Full Microbial Taxonomy<a class="anchor" aria-label="anchor" href="#microorganisms-full-microbial-taxonomy"></a>
 </h2>
-<p>A data set with 78 679 rows and 26 columns, containing the following
-column names:<br><em>mo</em>, <em>fullname</em>, <em>status</em>, <em>kingdom</em>,
-<em>phylum</em>, <em>class</em>, <em>order</em>, <em>family</em>,
-<em>genus</em>, <em>species</em>, <em>subspecies</em>, <em>rank</em>,
-<em>ref</em>, <em>oxygen_tolerance</em>, <em>source</em>, <em>lpsn</em>,
+<p>A data set with 96 982 rows and 28 columns, containing the following
+column names:<br><em>mo</em>, <em>fullname</em>, <em>status</em>, <em>domain</em>,
+<em>kingdom</em>, <em>phylum</em>, <em>class</em>, <em>order</em>,
+<em>family</em>, <em>genus</em>, <em>species</em>, <em>subspecies</em>,
+<em>rank</em>, <em>ref</em>, <em>oxygen_tolerance</em>,
+<em>morphology</em>, <em>source</em>, <em>lpsn</em>,
 <em>lpsn_parent</em>, <em>lpsn_renamed_to</em>, <em>mycobank</em>,
 <em>mycobank_parent</em>, <em>mycobank_renamed_to</em>, <em>gbif</em>,
 <em>gbif_parent</em>, <em>gbif_renamed_to</em>, <em>prevalence</em>, and
 <em>snomed</em>.</p>
 <p>This data set is in R available as <code>microorganisms</code>, after
 you load the <code>AMR</code> package.</p>
-<p>It was last updated on 18 September 2025 12:58:34 UTC. Find more info
+<p>It was last updated on 22 June 2026 23:38:13 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/microorganisms.html">data set
 here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.rds" class="external-link">original
-R Data Structure (RDS) file</a> (1.8 MB)<br>
+R Data Structure (RDS) file</a> (2.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.txt" class="external-link">tab-separated
-text file</a> (17.7 MB)<br>
+text file</a> (23.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.xlsx" class="external-link">Microsoft
-Excel workbook</a> (8.8 MB)<br>
+Excel workbook</a> (11.4 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.feather" class="external-link">Apache
-Feather file</a> (8.4 MB)<br>
+Feather file</a> (11 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.parquet" class="external-link">Apache
-Parquet file</a> (3.8 MB)<br>
+Parquet file</a> (4.6 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.sav" class="external-link">IBM
-SPSS Statistics data file</a> (28.4 MB)<br>
+SPSS Statistics data file</a> (35.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.dta" class="external-link">Stata
-DTA file</a> (89.5 MB)</li>
+DTA file</a> (96.6 MB)</li>
 </ul>
 <p><strong>NOTE: The exported files for SPSS and Stata contain only the
 first 50 SNOMED codes per record, as their file size would otherwise
@@ -157,41 +158,42 @@ all SNOMED codes as comma separated values.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">(unknown kingdom)</td>
-<td align="center">1</td>
+<td align="center"></td>
+<td align="center">20</td>
 </tr>
 <tr class="even">
-<td align="center">Animalia</td>
-<td align="center">1 628</td>
+<td align="center">(unknown kingdom)</td>
+<td align="center">8</td>
 </tr>
 <tr class="odd">
+<td align="center">Animalia</td>
+<td align="center">2 015</td>
+</tr>
+<tr class="even">
 <td align="center">Archaea</td>
-<td align="center">1 419</td>
+<td align="center">150</td>
+</tr>
+<tr class="odd">
+<td align="center">Bacillati</td>
+<td align="center">24 200</td>
 </tr>
 <tr class="even">
 <td align="center">Bacteria</td>
-<td align="center">39 249</td>
-</tr>
-<tr class="odd">
-<td align="center">Chromista</td>
-<td align="center">178</td>
-</tr>
-<tr class="even">
-<td align="center">Fungi</td>
-<td align="center">28 137</td>
+<td align="center">2</td>
 </tr>
 </tbody>
 </table>
 <p>First 6 rows when filtering on genus <em>Escherichia</em>:</p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
 <col width="4%">
-<col width="6%">
+<col width="5%">
 <col width="2%">
 <col width="2%">
 <col width="3%">
+<col width="3%">
 <col width="4%">
-<col width="4%">
+<col width="3%">
 <col width="4%">
 <col width="2%">
 <col width="3%">
@@ -199,6 +201,7 @@ all SNOMED codes as comma separated values.</p>
 <col width="2%">
 <col width="5%">
 <col width="6%">
+<col width="2%">
 <col width="1%">
 <col width="1%">
 <col width="2%">
@@ -210,12 +213,13 @@ all SNOMED codes as comma separated values.</p>
 <col width="2%">
 <col width="3%">
 <col width="2%">
-<col width="10%">
+<col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">mo</th>
 <th align="center">fullname</th>
 <th align="center">status</th>
+<th align="center">domain</th>
 <th align="center">kingdom</th>
 <th align="center">phylum</th>
 <th align="center">class</th>
@@ -227,6 +231,7 @@ all SNOMED codes as comma separated values.</p>
 <th align="center">rank</th>
 <th align="center">ref</th>
 <th align="center">oxygen_tolerance</th>
+<th align="center">morphology</th>
 <th align="center">source</th>
 <th align="center">lpsn</th>
 <th align="center">lpsn_parent</th>
@@ -246,6 +251,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">Escherichia</td>
 <td align="center">accepted</td>
 <td align="center">Bacteria</td>
+<td align="center">Pseudomonadati</td>
 <td align="center">Pseudomonadota</td>
 <td align="center">Gammaproteobacteria</td>
 <td align="center">Enterobacterales</td>
@@ -256,6 +262,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">genus</td>
 <td align="center">Castellani et al., 1919</td>
 <td align="center">facultative anaerobe</td>
+<td align="center">rods</td>
 <td align="center">LPSN</td>
 <td align="center">515602</td>
 <td align="center">482</td>
@@ -263,8 +270,8 @@ all SNOMED codes as comma separated values.</p>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center"></td>
-<td align="center">11158430</td>
+<td align="center">CS33H</td>
+<td align="center">CRYWR</td>
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">407310004, 407251000, 407281008, …</td>
@@ -274,6 +281,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">Escherichia adecarboxylata</td>
 <td align="center">synonym</td>
 <td align="center">Bacteria</td>
+<td align="center">Pseudomonadati</td>
 <td align="center">Pseudomonadota</td>
 <td align="center">Gammaproteobacteria</td>
 <td align="center">Enterobacterales</td>
@@ -284,6 +292,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">species</td>
 <td align="center">Leclerc, 1962</td>
 <td align="center">likely facultative anaerobe</td>
+<td align="center">rods</td>
 <td align="center">LPSN</td>
 <td align="center">776052</td>
 <td align="center">515602</td>
@@ -291,9 +300,9 @@ all SNOMED codes as comma separated values.</p>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
+<td align="center">CS33J</td>
+<td align="center">CS33H</td>
+<td align="center">3SVX6</td>
 <td align="center">1</td>
 <td align="center"></td>
 </tr>
@@ -302,6 +311,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">Escherichia albertii</td>
 <td align="center">accepted</td>
 <td align="center">Bacteria</td>
+<td align="center">Pseudomonadati</td>
 <td align="center">Pseudomonadota</td>
 <td align="center">Gammaproteobacteria</td>
 <td align="center">Enterobacterales</td>
@@ -312,6 +322,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">species</td>
 <td align="center">Huys et al., 2003</td>
 <td align="center">facultative anaerobe</td>
+<td align="center">rods</td>
 <td align="center">LPSN</td>
 <td align="center">776053</td>
 <td align="center">515602</td>
@@ -319,8 +330,8 @@ all SNOMED codes as comma separated values.</p>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center">5427575</td>
-<td align="center"></td>
+<td align="center">3BGTB</td>
+<td align="center">CS33H</td>
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">419388003</td>
@@ -330,6 +341,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">Escherichia blattae</td>
 <td align="center">synonym</td>
 <td align="center">Bacteria</td>
+<td align="center">Pseudomonadati</td>
 <td align="center">Pseudomonadota</td>
 <td align="center">Gammaproteobacteria</td>
 <td align="center">Enterobacterales</td>
@@ -340,6 +352,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">species</td>
 <td align="center">Burgess et al., 1973</td>
 <td align="center">likely facultative anaerobe</td>
+<td align="center">rods</td>
 <td align="center">LPSN</td>
 <td align="center">776056</td>
 <td align="center">515602</td>
@@ -347,9 +360,9 @@ all SNOMED codes as comma separated values.</p>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
+<td align="center">CS33K</td>
+<td align="center">CS33H</td>
+<td align="center">4X4P7</td>
 <td align="center">1</td>
 <td align="center"></td>
 </tr>
@@ -358,6 +371,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">Escherichia coli</td>
 <td align="center">accepted</td>
 <td align="center">Bacteria</td>
+<td align="center">Pseudomonadati</td>
 <td align="center">Pseudomonadota</td>
 <td align="center">Gammaproteobacteria</td>
 <td align="center">Enterobacterales</td>
@@ -368,6 +382,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">species</td>
 <td align="center">Castellani et al., 1919</td>
 <td align="center">facultative anaerobe</td>
+<td align="center">rods</td>
 <td align="center">LPSN</td>
 <td align="center">776057</td>
 <td align="center">515602</td>
@@ -375,8 +390,8 @@ all SNOMED codes as comma separated values.</p>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center">11286021</td>
-<td align="center"></td>
+<td align="center">NT3L7</td>
+<td align="center">CS33H</td>
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center">1095001000112106, 715307006, 737528008, …</td>
@@ -386,6 +401,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">Escherichia coli coli</td>
 <td align="center">accepted</td>
 <td align="center">Bacteria</td>
+<td align="center">Pseudomonadati</td>
 <td align="center">Pseudomonadota</td>
 <td align="center">Gammaproteobacteria</td>
 <td align="center">Enterobacterales</td>
@@ -396,6 +412,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center">subspecies</td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 <td align="center">GBIF</td>
 <td align="center"></td>
 <td align="center">776057</td>
@@ -404,7 +421,7 @@ all SNOMED codes as comma separated values.</p>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center">12233256</td>
-<td align="center">11286021</td>
+<td align="center">NT3L7</td>
 <td align="center"></td>
 <td align="center">1</td>
 <td align="center"></td>
@@ -424,8 +441,8 @@ column names:<br><em>ab</em>, <em>cid</em>, <em>name</em>, <em>group</em>, <em>a
 <em>iv_ddd</em>, <em>iv_units</em>, and <em>loinc</em>.</p>
 <p>This data set is in R available as <code>antimicrobials</code>, after
 you load the <code>AMR</code> package.</p>
-<p>It was last updated on 2 May 2026 12:56:26 UTC. Find more info about
-the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/antimicrobials.html">data set
+<p>It was last updated on 23 June 2026 12:38:59 UTC. Find more info
+about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/antimicrobials.html">data set
 here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
@@ -595,14 +612,14 @@ inhibitors</td>
 <code>clinical_breakpoints</code>: Interpretation from MIC values
 &amp; disk diameters to SIR<a class="anchor" aria-label="anchor" href="#clinical_breakpoints-interpretation-from-mic-values-disk-diameters-to-sir"></a>
 </h2>
-<p>A data set with 45 730 rows and 14 columns, containing the following
+<p>A data set with 45 555 rows and 14 columns, containing the following
 column names:<br><em>guideline</em>, <em>type</em>, <em>host</em>, <em>method</em>,
 <em>site</em>, <em>mo</em>, <em>rank_index</em>, <em>ab</em>,
 <em>ref_tbl</em>, <em>disk_dose</em>, <em>breakpoint_S</em>,
 <em>breakpoint_R</em>, <em>uti</em>, and <em>is_SDD</em>.</p>
 <p>This data set is in R available as <code>clinical_breakpoints</code>,
 after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 2 April 2026 09:42:19 UTC. Find more info
+<p>It was last updated on 22 June 2026 23:38:13 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/clinical_breakpoints.html">data
 set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
@@ -620,7 +637,7 @@ Excel workbook</a> (2.7 MB)<br>
 Feather file</a> (2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.parquet" class="external-link">Apache
-Parquet file</a> (0.2 MB)<br>
+Parquet file</a> (0.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav" class="external-link">IBM
 SPSS Statistics data file</a> (7.5 MB)<br>
@@ -784,13 +801,13 @@ DTA file</a> (12.6 MB)</li>
 <code>microorganisms.groups</code>: Species Groups and
 Microbiological Complexes<a class="anchor" aria-label="anchor" href="#microorganisms-groups-species-groups-and-microbiological-complexes"></a>
 </h2>
-<p>A data set with 534 rows and 4 columns, containing the following
+<p>A data set with 530 rows and 4 columns, containing the following
 column names:<br><em>mo_group</em>, <em>mo</em>, <em>mo_group_name</em>, and
 <em>mo_name</em>.</p>
 <p>This data set is in R available as
 <code>microorganisms.groups</code>, after you load the <code>AMR</code>
 package.</p>
-<p>It was last updated on 26 March 2025 16:19:17 UTC. Find more info
+<p>It was last updated on 22 June 2026 23:38:13 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/microorganisms.groups.html">data
 set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
@@ -802,7 +819,7 @@ R Data Structure (RDS) file</a> (6 kB)<br>
 text file</a> (50 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.xlsx" class="external-link">Microsoft
-Excel workbook</a> (20 kB)<br>
+Excel workbook</a> (19 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.feather" class="external-link">Apache
 Feather file</a> (19 kB)<br>
@@ -811,10 +828,10 @@ Feather file</a> (19 kB)<br>
 Parquet file</a> (13 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.sav" class="external-link">IBM
-SPSS Statistics data file</a> (65 kB)<br>
+SPSS Statistics data file</a> (64 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.dta" class="external-link">Stata
-DTA file</a> (83 kB)</li>
+DTA file</a> (82 kB)</li>
 </ul>
 <p><strong>Example content</strong></p>
 <table class="table">
@@ -876,11 +893,11 @@ DTA file</a> (83 kB)</li>
 <code>intrinsic_resistant</code>: Intrinsic Bacterial
 Resistance<a class="anchor" aria-label="anchor" href="#intrinsic_resistant-intrinsic-bacterial-resistance"></a>
 </h2>
-<p>A data set with 285 928 rows and 2 columns, containing the following
+<p>A data set with 294 079 rows and 2 columns, containing the following
 column names:<br><em>mo</em> and <em>ab</em>.</p>
 <p>This data set is in R available as <code>intrinsic_resistant</code>,
 after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 22 April 2026 06:16:44 UTC. Find more info
+<p>It was last updated on 22 June 2026 23:38:13 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/intrinsic_resistant.html">data set
 here</a>.</p>
 <p><strong>Direct download links:</strong></p>
@@ -889,10 +906,10 @@ here</a>.</p>
 R Data Structure (RDS) file</a> (0.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.txt" class="external-link">tab-separated
-text file</a> (10.6 MB)<br>
+text file</a> (10.9 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.xlsx" class="external-link">Microsoft
-Excel workbook</a> (3.3 MB)<br>
+Excel workbook</a> (3.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.feather" class="external-link">Apache
 Feather file</a> (2.5 MB)<br>
@@ -901,10 +918,10 @@ Feather file</a> (2.5 MB)<br>
 Parquet file</a> (0.3 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.sav" class="external-link">IBM
-SPSS Statistics data file</a> (15.5 MB)<br>
+SPSS Statistics data file</a> (16 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.dta" class="external-link">Stata
-DTA file</a> (27.5 MB)</li>
+DTA file</a> (28.6 MB)</li>
 </ul>
 <p><strong>Example content</strong></p>
 <p>Example rows when filtering on <em>Enterobacter cloacae</em>:</p>
@@ -1810,17 +1827,17 @@ set here</a>.</p>
 <h2 id="microorganisms-codes-common-laboratory-codes">
 <code>microorganisms.codes</code>: Common Laboratory Codes<a class="anchor" aria-label="anchor" href="#microorganisms-codes-common-laboratory-codes"></a>
 </h2>
-<p>A data set with 6 050 rows and 2 columns, containing the following
+<p>A data set with 6 029 rows and 2 columns, containing the following
 column names:<br><em>code</em> and <em>mo</em>.</p>
 <p>This data set is in R available as <code>microorganisms.codes</code>,
 after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 30 March 2026 08:01:49 UTC. Find more info
+<p>It was last updated on 22 June 2026 23:38:13 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/microorganisms.codes.html">data
 set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.rds" class="external-link">original
-R Data Structure (RDS) file</a> (28 kB)<br>
+R Data Structure (RDS) file</a> (27 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.txt" class="external-link">tab-separated
 text file</a> (0.1 MB)<br>
@@ -1832,7 +1849,7 @@ Excel workbook</a> (98 kB)<br>
 Feather file</a> (0.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.parquet" class="external-link">Apache
-Parquet file</a> (69 kB)<br>
+Parquet file</a> (68 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.sav" class="external-link">IBM
 SPSS Statistics data file</a> (0.2 MB)<br>

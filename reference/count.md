@@ -12,11 +12,17 @@ from the `dplyr` package and also support grouped variables, see
 ## Usage
 
 ``` r
-count_resistant(..., only_all_tested = FALSE,
-  guideline = getOption("AMR_guideline", "EUCAST"))
+count_resistant(
+  ...,
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
 
-count_susceptible(..., only_all_tested = FALSE,
-  guideline = getOption("AMR_guideline", "EUCAST"))
+count_susceptible(
+  ...,
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
 
 count_S(..., only_all_tested = FALSE)
 
@@ -32,8 +38,12 @@ count_all(..., only_all_tested = FALSE)
 
 n_sir(..., only_all_tested = FALSE)
 
-count_df(data, translate_ab = "name", language = get_AMR_locale(),
-  combine_SI = TRUE)
+count_df(
+  data,
+  translate_ab = "name",
+  language = get_AMR_locale(),
+  combine_SI = TRUE
+)
 ```
 
 ## Arguments

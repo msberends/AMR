@@ -7,8 +7,12 @@ data set. Also supports WHONET abbreviations.
 ## Usage
 
 ``` r
-guess_ab_col(x = NULL, search_string = NULL, verbose = FALSE,
-  only_sir_columns = FALSE)
+guess_ab_col(
+  x = NULL,
+  search_string = NULL,
+  verbose = FALSE,
+  only_sir_columns = FALSE
+)
 ```
 
 ## Arguments

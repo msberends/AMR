@@ -7,15 +7,19 @@ allowing valid MIC values known to the field of (medical) microbiology.
 ## Usage
 
 ``` r
-as.mic(x, na.rm = FALSE, keep_operators = "all",
-  round_to_next_log2 = FALSE)
+as.mic(x, na.rm = FALSE, keep_operators = "all", round_to_next_log2 = FALSE)
 
 is.mic(x)
 
 NA_mic_
 
-rescale_mic(x, mic_range, keep_operators = "edges", as.mic = TRUE,
-  round_to_next_log2 = FALSE)
+rescale_mic(
+  x,
+  mic_range,
+  keep_operators = "edges",
+  as.mic = TRUE,
+  round_to_next_log2 = FALSE
+)
 
 mic_p50(x, na.rm = FALSE, ...)
 
@@ -62,10 +66,12 @@ droplevels(x, as.mic = FALSE, ...)
 
 - as.mic:
 
-  A \[logical\] to indicate whether the \`mic\` class should be kept -
-  the default is \`TRUE\` for \[rescale_mic()\] and \`FALSE\` for
-  \[droplevels()\]. When setting this to \`FALSE\` in \[rescale_mic()\],
-  the output will have factor levels that acknowledge \`mic_range\`.
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
+  the `mic` class should be kept - the default is `TRUE` for
+  `rescale_mic()` and `FALSE` for
+  [`droplevels()`](https://rdrr.io/pkg/data.table/man/fdroplevels.html).
+  When setting this to `FALSE` in `rescale_mic()`, the output will have
+  factor levels that acknowledge `mic_range`.
 
 - ...:
 
@@ -73,71 +79,101 @@ droplevels(x, as.mic = FALSE, ...)
 
 ## Value
 
-Ordered \[factor\] with additional class \[\`mic\`\], that in
-mathematical operations acts as a \[numeric\] vector. Bear in mind that
+Ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with
+additional class `mic`, that in mathematical operations acts as a
+[numeric](https://rdrr.io/r/base/numeric.html) vector. Bear in mind that
 the outcome of any mathematical operation on MICs will return a
-\[numeric\] value.
+[numeric](https://rdrr.io/r/base/numeric.html) value.
 
 ## Details
 
-To interpret MIC values as SIR values, use \[as.sir()\] on MIC values.
-It supports guidelines from EUCAST (\`r min(as.integer(gsub("\[^0-9\]",
-"", subset(clinical_breakpoints, guideline
+To interpret MIC values as SIR values, use
+[`as.sir()`](https://amr-for-r.org/reference/as.sir.md) on MIC values.
+It supports guidelines from EUCAST (2011-2026) and CLSI (2011-2026).
 
 This class for MIC values is a quite a special data type: formally it is
-an ordered \[factor\] with valid MIC values as \[factor\] levels (to
-make sure only valid MIC values are retained), but for any mathematical
+an ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with
+valid MIC values as
+[factor](https://rdrr.io/pkg/data.table/man/fctr.html) levels (to make
+sure only valid MIC values are retained), but for any mathematical
 operation it acts as decimal numbers:
 
-“\` x \<- random_mic(10) x \#\> Class \<mic\> \#\> \[1\] 16 1 8 8 64
-\>=128 0.0625 32 32 16
+    x <- random_mic(10)
+    x
+    #> Class <mic>
+    #>  [1] 16     1      8      8      64     >=128  0.0625 32     32     16
 
-is.factor(x) \#\> \[1\] TRUE
+    is.factor(x)
+    #> [1] TRUE
 
-x\[1\] \* 2 \#\> \[1\] 32
+    x[1] * 2
+    #> [1] 32
 
-median(x) \#\> \[1\] 26 “\`
+    median(x)
+    #> [1] 26
 
 This makes it possible to maintain operators that often come with MIC
-values, such "\>=" and "\<=", even when filtering using \[numeric\]
-values in data analysis, e.g.:
+values, such "\>=" and "\<=", even when filtering using
+[numeric](https://rdrr.io/r/base/numeric.html) values in data analysis,
+e.g.:
 
-“\` x\[x \> 4\] \#\> Class \<mic\> \#\> \[1\] 16 8 8 64 \>=128 32 32 16
+    x[x > 4]
+    #> Class <mic>
+    #> [1] 16    8     8     64    >=128 32    32    16
 
-df \<- data.frame(x, hospital = "A") subset(df, x \> 4) \# or with
-dplyr: df \#\> x hospital \#\> 1 16 A \#\> 5 64 A \#\> 6 \>=128 A \#\> 8
-32 A \#\> 9 32 A \#\> 10 16 A “\`
+    df <- data.frame(x, hospital = "A")
+    subset(df, x > 4) # or with dplyr: df %>% filter(x > 4)
+    #>        x hospital
+    #> 1     16        A
+    #> 5     64        A
+    #> 6  >=128        A
+    #> 8     32        A
+    #> 9     32        A
+    #> 10    16        A
 
-All so-called \[group generic functions\]\[groupGeneric()\] are
-implemented for the MIC class (such as \`!\`, \`!=\`, \`\<\`, \`\>=\`,
-\[exp()\], \[log2()\]). Some mathematical functions are also implemented
-(such as \[quantile()\], \[median()\], \[fivenum()\]). Since \[sd()\]
-and \[var()\] are non-generic functions, these could not be extended.
-Use \[mad()\] as an alternative, or use e.g. \`sd(as.numeric(x))\` where
-\`x\` is your vector of MIC values.
+All so-called [group generic
+functions](https://rdrr.io/r/base/groupGeneric.html) are implemented for
+the MIC class (such as `!`, `!=`, `<`, `>=`,
+[`exp()`](https://rdrr.io/r/base/Log.html),
+[`log2()`](https://rdrr.io/r/base/Log.html)). Some mathematical
+functions are also implemented (such as
+[`quantile()`](https://rdrr.io/r/stats/quantile.html),
+[`median()`](https://rdrr.io/r/stats/median.html),
+[`fivenum()`](https://rdrr.io/r/stats/fivenum.html)). Since
+[`sd()`](https://rdrr.io/r/stats/sd.html) and
+[`var()`](https://rdrr.io/r/stats/cor.html) are non-generic functions,
+these could not be extended. Use
+[`mad()`](https://rdrr.io/r/stats/mad.html) as an alternative, or use
+e.g. `sd(as.numeric(x))` where `x` is your vector of MIC values.
 
-Using \[as.double()\] or \[as.numeric()\] on MIC values will remove the
-operators and return a numeric vector. Do \*\*not\*\* use
-\[as.integer()\] on MIC values as by the R convention on \[factor\]s, it
-will return the index of the factor levels (which is often useless for
-regular users).
+Using [`as.double()`](https://rdrr.io/r/base/double.html) or
+[`as.numeric()`](https://rdrr.io/r/base/numeric.html) on MIC values will
+remove the operators and return a numeric vector. Do **not** use
+[`as.integer()`](https://rdrr.io/r/base/integer.html) on MIC values as
+by the R convention on
+[factor](https://rdrr.io/pkg/data.table/man/fctr.html)s, it will return
+the index of the factor levels (which is often useless for regular
+users).
 
-The function \[is.mic()\] detects if the input contains class \`mic\`.
-If the input is a \[data.frame\] or \[list\], it iterates over all
-columns/items and returns a \[logical\] vector.
+The function `is.mic()` detects if the input contains class `mic`. If
+the input is a [data.frame](https://rdrr.io/r/base/data.frame.html) or
+[list](https://rdrr.io/r/base/list.html), it iterates over all
+columns/items and returns a
+[logical](https://rdrr.io/r/base/logical.html) vector.
 
-Use \[droplevels()\] to drop unused levels. At default, it will return a
-plain factor. Use \`droplevels(..., as.mic = TRUE)\` to maintain the
-\`mic\` class.
+Use
+[`droplevels()`](https://rdrr.io/pkg/data.table/man/fdroplevels.html) to
+drop unused levels. At default, it will return a plain factor. Use
+`droplevels(..., as.mic = TRUE)` to maintain the `mic` class.
 
-With \[rescale_mic()\], existing MIC ranges can be limited to a defined
+With `rescale_mic()`, existing MIC ranges can be limited to a defined
 range of MIC values. This can be useful to better compare MIC
 distributions.
 
-For \`ggplot2\`, use one of the
-\[\`scale\_\*\_mic()\`\]\[scale_x_mic()\] functions to plot MIC values.
-They allows custom MIC ranges and to plot intermediate log2 levels for
-missing MIC values.
+For `ggplot2`, use one of the
+[`scale_*_mic()`](https://amr-for-r.org/reference/plot.md) functions to
+plot MIC values. They allows custom MIC ranges and to plot intermediate
+log2 levels for missing MIC values.
 
 `NA_mic_` is a missing value of the new `mic` class, analogous to e.g.
 base R's [`NA_character_`](https://rdrr.io/r/base/NA.html).

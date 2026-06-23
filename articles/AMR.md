@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 02 May 2026.
+methodology remains unchanged. This page was generated on 23 June 2026.
 
 ## Introduction
 
@@ -51,9 +51,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-05-02 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-05-02 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-05-02 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-06-23 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-06-23 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-06-23 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -112,7 +112,7 @@ SIR values as well.
 With [`as.mo()`](https://amr-for-r.org/reference/as.mo.md), users can
 transform arbitrary microorganism names or codes to current taxonomy.
 The `AMR` package contains up-to-date taxonomic data. To be specific,
-currently included data were retrieved on 24 Jun 2024.
+currently included data were retrieved on 07 May 2026.
 
 The codes of the AMR packages that come from
 [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) are short, but
@@ -199,24 +199,23 @@ mo_uncertainties()
 #> Also matched: Klebsiella pneumoniae complex (0.707), Klebsiella pneumoniae
 #> ozaenae (0.707), Klebsiella pneumoniae pneumoniae (0.688), Klebsiella
 #> pneumoniae rhinoscleromatis (0.658), Klebsiella pasteurii (0.500), Klebsiella
-#> planticola (0.500), Kingella potus (0.400), Kluyveromyces pseudotropicale
-#> (0.386), Kluyveromyces pseudotropicalis (0.363), and Kosakonia pseudosacchari
-#> (0.361)
+#> planticola (0.500), Kosakonia pseudosacchari (0.471), Kaistella palustris
+#> (0.435), Kingella potus (0.435), and Kocuria palustris (0.435)
 #> -------------------------------------------------------------------------------
 #> "S. aureus" -> Staphylococcus aureus (B_STPHY_AURS, 0.690)
 #> Also matched: Staphylococcus aureus aureus (0.643), Staphylococcus argenteus
-#> (0.625), Staphylococcus aureus anaerobius (0.625), Staphylococcus auricularis
-#> (0.615), Salmonella Aurelianis (0.595), Salmonella Aarhus (0.588), Salmonella
-#> Amounderness (0.587), Staphylococcus argensis (0.587), Streptococcus australis
-#> (0.587), and Salmonella choleraesuis arizonae (0.562)
+#> (0.625), Staphylococcus aureus anaerobius (0.625), Streptomyces aureus (0.618),
+#> Staphylococcus auricularis (0.615), Streptomyces azureus (0.609), Salmonella
+#> Aurelianis (0.595), Salmonella Aarhus (0.588), Salmonella Amounderness (0.587),
+#> and Staphylococcus argensis (0.587)
 #> -------------------------------------------------------------------------------
 #> "S. pneumoniae" -> Streptococcus pneumoniae (B_STRPT_PNMN, 0.750)
-#> Also matched: Streptococcus pseudopneumoniae (0.700), Streptococcus phocae
-#> salmonis (0.552), Serratia proteamaculans quinovora (0.545), Streptococcus
-#> pseudoporcinus (0.536), Staphylococcus piscifermentans (0.533), Staphylococcus
-#> pseudintermedius (0.532), Serratia proteamaculans proteamaculans (0.526),
-#> Streptococcus gallolyticus pasteurianus (0.526), Salmonella Portanigra (0.524),
-#> and Streptococcus periodonticum (0.519)
+#> Also matched: Streptococcus parapneumoniae (0.714), Streptococcus
+#> pseudopneumoniae (0.700), Serratia proteamaculans quinivorans (0.557),
+#> Streptococcus phocae salmonis (0.552), Serratia proteamaculans quinovora
+#> (0.545), Sphingomonas piscinae (0.538), Streptococcus pseudoporcinus (0.536),
+#> Staphylococcus piscifermentans (0.533), Staphylococcus pseudintermedius
+#> (0.532), and Serratia proteamaculans proteamaculans (0.526)
 #> ℹ Only the first 10 other matches of each record are shown. Run ``
 #>   `print(mo_uncertainties(), n = ...)` `` to view more entries, or save
 #>   `mo_uncertainties()` to an object.
@@ -575,33 +574,42 @@ our_data_1st[all(betalactams() == "R"), ]
 
 ### Generate antibiograms
 
-Since AMR v2.0 (March 2023), it is very easy to create different types
-of antibiograms, with support for 20 different languages.
+The `AMR` package supports 28 different languages for antibiograms and
+provides four types, as proposed by Klinker *et al.* (2021, [DOI
+10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)):
 
-There are four antibiogram types, as proposed by Klinker *et al.* (2021,
-[DOI
-10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)),
-and they are all supported by the new
-[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
-function:
+1.  **Traditional Antibiogram (TA)** – susceptibility of a species to
+    individual antibiotics
+2.  **Combination Antibiogram (CA)** – susceptibility of a species to
+    combination regimens
+3.  **Syndromic Antibiogram (SA)** – susceptibility of a species,
+    stratified by clinical syndrome or setting
+4.  **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)** –
+    estimated empirical coverage of a *regimen* for a *syndrome*,
+    weighted by pathogen incidence and with quantified uncertainty
 
-1.  **Traditional Antibiogram (TA)** e.g, for the susceptibility of
-    *Pseudomonas aeruginosa* to piperacillin/tazobactam (TZP)
-2.  **Combination Antibiogram (CA)** e.g, for the sdditional
-    susceptibility of *Pseudomonas aeruginosa* to TZP + tobramycin
-    versus TZP alone
-3.  **Syndromic Antibiogram (SA)** e.g, for the susceptibility of
-    *Pseudomonas aeruginosa* to TZP among respiratory specimens
-    (obtained among ICU patients only)
-4.  **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)**
-    e.g, for the susceptibility of *Pseudomonas aeruginosa* to TZP among
-    respiratory specimens (obtained among ICU patients only) for male
-    patients age \>=65 years with heart failure
+**If your goal is to guide empirical therapy, WISCA should be your
+default.** The reason is simple: when you start empirical treatment, you
+do not know which pathogen is causing the infection. Your next patient
+will not present with a species label attached to them. What matters is
+the probability that the *regimen* you choose will cover *whatever
+pathogen turns out to be the cause*, given the local epidemiology of the
+syndrome. Traditional antibiograms do not answer that question. They
+fragment information by species, ignore how frequently each species
+causes the syndrome, do not evaluate combination regimens, and provide
+no measure of uncertainty. WISCA addresses all of these limitations
+using a Bayesian framework (Hebert *et al.*, 2012; Bielicki *et al.*,
+2016). See the [WISCA
+vignette](https://amr-for-r.org/articles/WISCA.html) for the full
+explanation.
 
-In this section, we show how to use the
-[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
-function to create any of the above antibiogram types. For starters,
-this is what the included `example_isolates` data set looks like:
+Traditional, combination, and syndromic antibiograms remain useful for
+**surveillance** purposes, i.e., tracking resistance trends per species
+over time. But if you care about clinical impact, about choosing the
+right empirical regimen for your patient, use WISCA.
+
+For starters, this is what the included `example_isolates` data set
+looks like:
 
 ``` r
 
@@ -628,13 +636,106 @@ example_isolates
 #> #   IPM <sir>, MEM <sir>, MTR <sir>, CHL <sir>, COL <sir>, MUP <sir>, …
 ```
 
+#### WISCA (recommended for empirical therapy guidance)
+
+Use the [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
+function, or equivalently `antibiogram(..., wisca = TRUE)`. WISCA
+produces a single coverage estimate per regimen for the entire syndrome,
+weighted by pathogen incidence, with a 95% credible interval from
+Bayesian Monte Carlo simulation:
+
+``` r
+
+wisca_result <- example_isolates %>%
+  wisca(
+    antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+    minimum = 10
+  ) # Recommended threshold: ≥30
+wisca_result
+```
+
+| Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
+|:---|:---|:---|
+| 70.2% (64.8-75.2%) | 93.6% (92.2-95%) | 89.9% (87-92.3%) |
+
+The output tells you: *“given the species distribution in your data,
+there is an estimated X% probability that this regimen covers the
+infection, with 95% credible interval \[lower, upper\]”*. That is the
+clinically relevant question.
+
+For **syndrome-specific** or **patient-specific WISCA**, use the
+`syndromic_group` argument or group your data first. You can stratify by
+anything: ward, age group, risk profile, acquisition type. The
+`syndromic_group` argument accepts any column or expression:
+
+``` r
+
+wisca_out <- example_isolates %>%
+  top_n_microorganisms(n = 10) %>%
+  group_by(
+    age_group = age_groups(age, c(25, 50, 75)),
+    gender
+  ) %>%
+  wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
+
+wisca_out
+```
+
+| age_group | gender | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
+|:---|:---|:---|:---|:---|
+| 0-24 | F | 56.8% (29.9-81.3%) | 70.7% (45.2-89%) | 65.9% (42.3-86.6%) |
+| 0-24 | M | 59.5% (31.2-85.5%) | 76.1% (56.5-92%) | 59.6% (31.7-85.1%) |
+| 25-49 | F | 67.7% (43.9-89.7%) | 93.8% (87.4-98.1%) | 87% (70.1-97%) |
+| 25-49 | M | 56.9% (26.6-86.2%) | 91% (82-97.2%) | 76.6% (51.4-93.5%) |
+| 50-74 | F | 68% (54.1-81.8%) | 96.9% (94.6-98.5%) | 90.2% (82-96.2%) |
+| 50-74 | M | 67% (56-78.5%) | 96.7% (94.1-98.5%) | 86.7% (77.3-94.4%) |
+| 75+ | F | 73.1% (61.8-84.1%) | 97.7% (95.9-99%) | 92.8% (85.7-97.2%) |
+| 75+ | M | 74% (63.6-82.6%) | 97.9% (96-99%) | 94.7% (89.3-97.9%) |
+
+Keep in mind that more granular stratification produces more relevant
+estimates for each subgroup, but with wider credible intervals due to
+smaller sample sizes. There is always a trade-off between granularity
+and precision. If local numbers are small, consider pooling data from
+multiple sites (Bielicki *et al.*, 2016).
+
+For reliable WISCA results, ensure your data includes **only first
+isolates** (use
+[`first_isolate()`](https://amr-for-r.org/reference/first_isolate.md))
+and consider filtering for **the top *n* species** (use
+[`top_n_microorganisms()`](https://amr-for-r.org/reference/top_n_microorganisms.md)),
+since rare contaminants can distort coverage estimates.
+
+After creating the WISCA model, assessments can be done on the
+distributions of the Monte Carlo simulations that WISCA carried out:
+
+``` r
+
+wisca_plot(wisca_out)
+```
+
+![](AMR_files/figure-html/wisca_plots-1.png)
+
+``` r
+
+wisca_plot(wisca_out, wisca_plot_type = "posterior_coverage")
+```
+
+![](AMR_files/figure-html/wisca_plots-2.png)
+
+``` r
+
+
+# a ggplot2 extension for WISCAs and other antibiograms:
+ggplot2::autoplot(wisca_out)
+```
+
+![](AMR_files/figure-html/wisca_plots-3.png)
+
 #### Traditional Antibiogram
 
-To create a traditional antibiogram, simply state which antibiotics
-should be used. The `antibiotics` argument in the
-[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
-function supports any (combination) of the previously mentioned
-antibiotic class selectors:
+If you need per-species susceptibility rates, e.g., for AMR surveillance
+reports, the traditional antibiogram remains the right tool. It reports
+the proportion of susceptible isolates per species per antibiotic:
 
 ``` r
 
@@ -691,10 +792,12 @@ antibiogram(example_isolates,
 | Gram negativo | 98% (96-99%,N=256) | 96% (95-98%,N=684) | 0% (0-10%,N=35) | 96% (94-97%,N=686) |
 | Gram positivo | 0% (0-1%,N=436) | 63% (60-66%,N=1170) | 0% (0-1%,N=436) | 34% (31-38%,N=665) |
 
-#### Combined Antibiogram
+#### Combination Antibiogram
 
-To create a combined antibiogram, use antibiotic codes or names with a
-plus `+` character like this:
+A combination antibiogram shows how much additional susceptibility a
+second agent adds for a given species. This is useful for surveillance
+of combination regimens, but note that it is still species-stratified
+and does not account for pathogen incidence in the syndrome:
 
 ``` r
 
@@ -719,10 +822,12 @@ combined_ab
 
 #### Syndromic Antibiogram
 
-To create a syndromic antibiogram, the `syndromic_group` argument must
-be used. This can be any column in the data, or e.g. an
-[`ifelse()`](https://rdrr.io/r/base/ifelse.html) with calculations based
-on certain columns:
+A syndromic antibiogram stratifies per-species susceptibility by
+clinical context (ward, specimen type, etc.). It adds clinical context
+to the traditional antibiogram but is still species-level, without
+incidence weighting or uncertainty quantification. For surveillance by
+setting this is fine; for empirical therapy guidance, WISCA is
+preferred:
 
 ``` r
 
@@ -752,80 +857,16 @@ antibiogram(example_isolates,
 | Clinical | *S. pneumoniae* | 0% (0-5%,N=78) | 0% (0-5%,N=78) | NA | 0% (0-5%,N=78) | NA | 0% (0-5%,N=78) |
 | ICU | *S. pneumoniae* | 0% (0-12%,N=30) | 0% (0-12%,N=30) | NA | 0% (0-12%,N=30) | NA | 0% (0-12%,N=30) |
 
-#### Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
-
-To create a **Weighted-Incidence Syndromic Combination Antibiogram
-(WISCA)**, simply set `wisca = TRUE` in the
-[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
-function, or use the dedicated
-[`wisca()`](https://amr-for-r.org/reference/antibiogram.md) function.
-Unlike traditional antibiograms, WISCA provides syndrome-based
-susceptibility estimates, weighted by pathogen incidence and
-antimicrobial susceptibility patterns.
-
-``` r
-
-example_isolates %>%
-  wisca(
-    antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"),
-    minimum = 10
-  ) # Recommended threshold: ≥30
-```
-
-| Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
-|:---|:---|:---|
-| 69.4% (64.3-74.3%) | 92.6% (91.1-93.9%) | 88.7% (85.8-91.2%) |
-
-WISCA uses a **Bayesian decision model** to integrate data from multiple
-pathogens, improving empirical therapy guidance, especially for
-low-incidence infections. It is **pathogen-agnostic**, meaning results
-are syndrome-based rather than stratified by microorganism.
-
-For reliable results, ensure your data includes **only first isolates**
-(use
-[`first_isolate()`](https://amr-for-r.org/reference/first_isolate.md))
-and consider filtering for **the top *n* species** (use
-[`top_n_microorganisms()`](https://amr-for-r.org/reference/top_n_microorganisms.md)),
-as WISCA outcomes are most meaningful when based on robust incidence
-estimates.
-
-For **patient- or syndrome-specific WISCA**, run the function on a
-grouped `tibble`, i.e., using
-[`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html)
-first:
-
-``` r
-
-example_isolates %>%
-  top_n_microorganisms(n = 10) %>%
-  group_by(
-    age_group = age_groups(age, c(25, 50, 75)),
-    gender
-  ) %>%
-  wisca(antibiotics = c("TZP", "TZP+TOB", "TZP+GEN"))
-```
-
-| age_group | gender | Amikacin | Amoxicillin | Amoxicillin/clavulanic acid | Ampicillin | Azithromycin | Benzylpenicillin | Cefazolin | Cefepime | Cefotaxime | Cefoxitin | Ceftazidime | Ceftriaxone | Cefuroxime | Chloramphenicol | Ciprofloxacin | Clindamycin | Colistin | Doxycycline | Erythromycin | Flucloxacillin | Fosfomycin | Gentamicin | Imipenem | Kanamycin | Linezolid | Meropenem | Metronidazole | Moxifloxacin | Mupirocin | Nitrofurantoin | Oxacillin | Piperacillin/tazobactam | Rifampicin | Teicoplanin | Tetracycline | Tigecycline | Tobramycin | Trimethoprim | Trimethoprim/sulfamethoxazole | Vancomycin |
-|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| 0-24 | F | 45.4% (15.4-79%) | 50.1% (20.5-77.6%) | 69% (44.5-88.5%) | 50.4% (20.6-77.3%) | 41.9% (18.1-65.6%) | 36.1% (12.3-64.3%) | NA | NA | 63.9% (34.6-87.6%) | 56.7% (25.9-85.8%) | 51.5% (25.6-74.4%) | 63.4% (32-88.1%) | 70.4% (45.4-89.1%) | 54% (22.3-85.3%) | 69.8% (45.9-88.9%) | 39.3% (17.7-64.6%) | 45.3% (18.1-75.9%) | 50.1% (21.5-80.5%) | 41.7% (19.1-67.6%) | 55.8% (23.7-83.3%) | 63.5% (32.6-89.4%) | 69.3% (44.6-88.3%) | 63.6% (36.1-88.2%) | 45.5% (15.7-77.7%) | 43.3% (17.8-71.2%) | 55.9% (24.3-82.2%) | NA | NA | 56.5% (24.3-85%) | 56.8% (30.9-82.3%) | 50.5% (19.4-80.8%) | 56.9% (26.7-85%) | 42.3% (18.3-68.8%) | 40.2% (17.6-67.7%) | 49.8% (20-79.3%) | 56.1% (22-85.4%) | 64.5% (39.6-85.5%) | 69.7% (42.3-90.4%) | 75.4% (52.1-91.7%) | 48.5% (24.3-72.6%) |
-| 0-24 | M | 41.9% (15.2-72.5%) | 49.4% (23.3-75.5%) | 73.8% (51.8-90.1%) | 49.3% (22.7-76%) | 63.4% (40.7-83.5%) | 41.8% (20.4-64.8%) | 56.8% (25.2-83.5%) | 58.2% (29.1-85.8%) | 59.7% (29.1-87.4%) | 59.3% (29.1-86.6%) | 24.9% (8.9-47.3%) | 58.5% (28-86.5%) | 72.1% (47.9-90.5%) | NA | 77.2% (53-93.2%) | 61.6% (36.2-83.6%) | 25.5% (8.7-46.1%) | 69.4% (44.6-89.4%) | 63.4% (41.8-82.7%) | 64% (37.6-85.6%) | NA | 63.5% (40.9-83.1%) | 58.7% (27.6-86.5%) | 41.8% (13.6-71.2%) | 48.3% (17.9-78%) | 59.2% (27.4-86.4%) | NA | NA | NA | 53% (21.3-83.7%) | 57.2% (24.6-84.6%) | 59.9% (29.7-85.6%) | 48.2% (16.1-80.4%) | 48.4% (17.4-79.8%) | 68% (43.5-87.3%) | 65.7% (36-89.2%) | 44.3% (17.2-73.4%) | 69.4% (46.9-87.8%) | 74% (50.8-90.9%) | 75.3% (52.4-92.2%) |
-| 25-49 | F | 46.8% (26.7-65.6%) | 39% (26.3-52.9%) | 73.8% (63.5-82.6%) | 39.3% (27.2-54.4%) | 54.8% (44.9-64.8%) | 36.5% (26.3-47.1%) | 66.4% (46.1-85%) | 69.2% (49.1-86.2%) | 70.2% (50.5-86.2%) | 68.1% (48.6-85.4%) | 27.9% (19.2-37.9%) | 70.1% (50.5-87.1%) | 71.4% (61.7-80.4%) | 58.2% (35.3-79.9%) | 85.5% (74.1-94.2%) | 67.1% (55.8-77.4%) | 25.8% (17-36%) | 75.5% (61.2-88.2%) | 54.9% (44.8-65.6%) | 55.2% (37.8-72.5%) | 60.9% (38.3-81.8%) | 75.2% (65.7-83.5%) | 69.9% (50.1-86.6%) | 37.5% (17.7-57.9%) | 50.7% (30.8-68.7%) | 69.4% (48.6-86.7%) | NA | 56.9% (36.2-77.7%) | 53.3% (30.9-75.6%) | 60.1% (38.1-81.8%) | 64.3% (43.2-83.6%) | 66% (45.7-85.2%) | 50.1% (30-69.6%) | 38.8% (19.6-58.9%) | 75.8% (61.6-88.1%) | 73.3% (56.6-89.5%) | 62.7% (47.6-77.1%) | 70.4% (58.7-80.2%) | 90% (82.9-95.4%) | 71.6% (61.7-80.4%) |
-| 25-49 | M | 49.8% (24.2-75.8%) | 16.5% (8.1-27.4%) | 72.4% (60.5-83.5%) | 16.6% (7.7-28.2%) | 55.9% (43.6-67.9%) | 24.9% (14.7-37.6%) | 60.3% (33.2-82.4%) | 55.3% (27.6-81.8%) | 55.9% (29.7-81.1%) | 56.2% (27.7-82.1%) | 22.2% (12.7-33.9%) | 55.6% (29.1-81.8%) | 73.7% (62.6-83.8%) | 52.9% (25.2-79.6%) | 67.1% (53-79.8%) | 57.8% (43.5-71.8%) | 22.3% (12.6-33.6%) | 73% (57.8-85.5%) | 55.8% (43-68.2%) | 66.5% (51.6-79.4%) | 63.1% (40.3-84.5%) | 83.9% (74.5-91.7%) | 56.4% (28.4-84%) | 45.4% (18.9-73.8%) | 59.4% (37.6-77.9%) | 56.3% (28.8-81.1%) | NA | 52.8% (24.7-78.7%) | 64.2% (40.2-84.5%) | 62.9% (37.7-85.1%) | 60.5% (37.1-80.7%) | 55.8% (29.4-82.9%) | 65.4% (48.7-80.8%) | 54.5% (31.7-73.7%) | 72.8% (58.7-84.8%) | 84.8% (72.4-93.6%) | 66.7% (44.5-84.1%) | 71.4% (58.9-82.6%) | 86.6% (77.9-93.7%) | 77.1% (65.5-87.1%) |
-| 50-74 | F | 44.8% (35.8-54.1%) | 30.1% (24.9-35.3%) | 74.1% (69.2-78.7%) | 30% (24.6-35.4%) | 41.9% (36.5-47.3%) | 23.5% (18.6-29%) | 73.1% (62-82.9%) | 76.6% (66.1-86%) | 74.8% (64.9-84.5%) | 74.6% (64.2-83.3%) | 37.5% (32.3-43.4%) | 74.8% (64.4-83.8%) | 74.5% (69.7-78.9%) | 61.2% (40.3-82.4%) | 79.4% (73-85%) | 44.9% (38.7-51%) | 37.8% (32.7-43.3%) | 63.8% (47.6-80.1%) | 41.7% (36.6-46.9%) | 58.1% (40-75.1%) | 65.2% (53.5-76.6%) | 78.7% (73.8-83.2%) | 80.6% (70.3-90%) | 28.1% (10.1-46.6%) | 53.2% (42.9-62.4%) | 79.3% (68.7-88.6%) | NA | 49.5% (37.5-61.8%) | 67.8% (48.5-86%) | 75.1% (63.3-86.3%) | 56.6% (37.8-74.2%) | 67.7% (56.4-79.6%) | 50.6% (40.9-59.1%) | 41.3% (31.5-50.4%) | 59% (48.3-74.5%) | 87.7% (80.4-94.1%) | 62.2% (55.4-68.4%) | 55.5% (49.8-61.1%) | 68% (62.7-73.3%) | 60.9% (55.8-66.1%) |
-| 50-74 | M | 38.8% (30.6-48.6%) | 34.6% (29.1-40.3%) | 75% (70-79.5%) | 34.7% (29.2-40.5%) | 43.4% (37.8-48.5%) | 21% (16.5-26.4%) | 64.3% (54.1-74.1%) | 65.9% (56.5-75.4%) | 67.3% (58.3-77%) | 65.9% (56.1-75.9%) | 32.9% (27.6-38%) | 67.3% (57.4-76.8%) | 74.1% (69.2-78.8%) | 63.5% (42.4-83%) | 76.9% (71.6-81.9%) | 47.3% (40.9-53.8%) | 30.8% (26.1-36.1%) | 68.5% (53.5-81.9%) | 43.4% (37.7-48.8%) | 58.1% (42.4-73.2%) | 68.1% (53.5-82.2%) | 79.1% (74.4-83.1%) | 69% (59.7-78.3%) | 24.8% (9.5-40.5%) | 49.7% (35-63.2%) | 68.1% (58.1-77.6%) | 53.8% (32-75%) | 51.7% (36.1-67.3%) | 68.8% (51.1-85.7%) | 70.2% (54.7-85.3%) | 53.2% (37.5-68.7%) | 66.5% (55-76.8%) | 56.2% (45.8-65.4%) | 44% (30.3-57.5%) | 71.9% (58.2-82.2%) | 86.8% (77.3-93.6%) | 54.1% (46.9-61.4%) | 67.1% (61.5-72.5%) | 81% (76.4-85.2%) | 66.3% (61-71.2%) |
-| 75+ | F | 51.4% (41.7-62%) | 30.9% (26.2-36.5%) | 74.4% (70.3-78.6%) | 30.9% (25.7-36.1%) | 36.6% (32-41.6%) | 20.7% (16.2-25.4%) | 73.6% (63.6-82.5%) | 79.1% (70.6-86.8%) | 78.6% (69.9-86.3%) | 76% (67.5-83.7%) | 43.1% (38.6-48%) | 78.9% (70.5-86.4%) | 77% (72.6-81.3%) | 63.2% (43.2-84.1%) | 77.7% (72.1-83.2%) | 41.2% (36-46.4%) | 39.1% (34.2-44.4%) | 63.7% (46.3-80.6%) | 36.5% (31.9-41.2%) | 57.1% (39.8-76%) | 65.8% (57.2-73.5%) | 84.6% (80.6-88%) | 81.9% (73.7-89.5%) | 33.3% (13.7-53%) | 49.6% (42.3-56.1%) | 81.3% (73.2-88.9%) | 55.9% (33.5-76.5%) | 41% (31.4-51.8%) | 63.7% (43.8-82.3%) | 77.8% (66-87.4%) | 56.3% (37.3-75.1%) | 71.8% (62-82.2%) | 48.3% (41.5-54.9%) | 43.3% (36.2-50.7%) | 63% (45.3-80.3%) | 85.9% (79.9-90.9%) | 70.4% (64.1-76.8%) | 60.4% (55.1-65.8%) | 77.6% (73.4-82.1%) | 55.3% (50.4-60.1%) |
-| 75+ | M | 52.6% (43.3-62.6%) | 33% (28.1-38%) | 77.4% (73.3-81.5%) | 33% (28.2-38.2%) | 36.8% (32.3-41.8%) | 17.9% (12.6-23.2%) | 64.4% (55.4-73.3%) | 71.2% (63.1-79.1%) | 67.9% (59.5-75.8%) | 65.3% (56.3-73.6%) | 42.6% (37.8-47.4%) | 68.2% (59.7-76.4%) | 75.1% (70.9-79.2%) | 64.1% (45.8-81.8%) | 77.6% (72-82.6%) | 41% (36-46.4%) | 39.9% (35.1-44.5%) | 62.1% (46-78.8%) | 36.9% (32.4-41.4%) | 59.7% (43.4-76.6%) | 64.7% (56.6-73.6%) | 83% (79.4-86.7%) | 75.7% (66.6-83%) | 31.6% (12.1-51.7%) | 51.8% (44.9-58%) | 74.2% (65.8-82.7%) | NA | 52.2% (41.5-60.8%) | 69.3% (50.5-86.4%) | 72.2% (58.7-83.4%) | 59.3% (41.6-76.7%) | 73.1% (64.3-81.4%) | 49.9% (42.4-56.9%) | 46.3% (38.2-53.1%) | 59.7% (44.2-75.7%) | 86.8% (81.4-91.3%) | 72% (66.3-77.6%) | 55.8% (50.3-61.1%) | 73.3% (68.9-77.6%) | 57% (52.2-61.6%) |
-
 #### Plotting antibiograms
 
-Antibiograms can be plotted using
+All antibiogram types, including WISCA, can be plotted using
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
-from the `ggplot2` packages, since this `AMR` package provides an
+from the `ggplot2` package, since this `AMR` package provides an
 extension to that function:
 
 ``` r
 
-autoplot(combined_ab)
+autoplot(wisca_result)
 ```
 
 ![](AMR_files/figure-html/unnamed-chunk-10-1.png)
@@ -989,4 +1030,4 @@ autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 202
 
 ------------------------------------------------------------------------
 
-*Author: Dr. Matthijs Berends, 23rd Feb 2025*
+*Author: Dr. Matthijs Berends, 23rd June 2026*

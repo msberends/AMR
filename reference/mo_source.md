@@ -14,8 +14,10 @@ have to bother about it again after setting it up once.
 ## Usage
 
 ``` r
-set_mo_source(path, destination = getOption("AMR_mo_source",
-  "~/mo_source.rds"))
+set_mo_source(
+  path,
+  destination = getOption("AMR_mo_source", "~/mo_source.rds")
+)
 
 get_mo_source(destination = getOption("AMR_mo_source", "~/mo_source.rds"))
 ```

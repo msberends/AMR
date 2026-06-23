@@ -23,7 +23,7 @@ and
 [doi:10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)
 ).
 
-After installing this package, R knows [**~79 000 distinct microbial
+After installing this package, R knows [**~97 000 distinct microbial
 species**](https://amr-for-r.org/reference/microorganisms.html) (updated
 June 2024) and all [**~620 antimicrobial and antiviral
 drugs**](https://amr-for-r.org/reference/antimicrobials.html) by name
@@ -46,7 +46,23 @@ Russian, Spanish, Swahili, Swedish, Turkish, Ukrainian, Urdu, and
 Vietnamese. Antimicrobial drug (group) names and colloquial
 microorganism names are provided in these languages.
 
-## Source
+## Download Our Reference Data
+
+All reference data sets in the AMR package - including information on
+microorganisms, antimicrobials, and clinical breakpoints - are freely
+available for download in multiple formats: R, MS Excel, Apache Feather,
+Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable,
+tab-separated plain text files suitable for use in any software,
+including laboratory information systems.
+
+Visit [our website for direct download
+links](https://amr-for-r.org/articles/datasets.html), or explore the
+actual files in [our GitHub
+repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
+
+## References
 
 To cite AMR in publications use:
 
@@ -68,22 +84,6 @@ A BibTeX entry for LaTeX users is:
       pages = {1--31},
       doi = {10.18637/jss.v104.i03},
     }
-
-## Download Our Reference Data
-
-All reference data sets in the AMR package - including information on
-microorganisms, antimicrobials, and clinical breakpoints - are freely
-available for download in multiple formats: R, MS Excel, Apache Feather,
-Apache Parquet, SPSS, and Stata.
-
-For maximum compatibility, we also provide machine-readable,
-tab-separated plain text files suitable for use in any software,
-including laboratory information systems.
-
-Visit [our website for direct download
-links](https://amr-for-r.org/articles/datasets.html), or explore the
-actual files in [our GitHub
-repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ## See also
 

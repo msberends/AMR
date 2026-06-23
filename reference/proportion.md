@@ -13,48 +13,63 @@ from the `dplyr` package and also support grouped variables, see
 ## Usage
 
 ``` r
-resistance(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE, guideline = getOption("AMR_guideline",
-  "EUCAST"))
+resistance(
+  ...,
+  minimum = 30,
+  as_percent = FALSE,
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
 
-susceptibility(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE, guideline = getOption("AMR_guideline",
-  "EUCAST"))
+susceptibility(
+  ...,
+  minimum = 30,
+  as_percent = FALSE,
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
 
-sir_confidence_interval(..., ab_result = "R", minimum = 30,
-  as_percent = FALSE, only_all_tested = FALSE, confidence_level = 0.95,
-  side = "both", collapse = FALSE)
+sir_confidence_interval(
+  ...,
+  ab_result = "R",
+  minimum = 30,
+  as_percent = FALSE,
+  only_all_tested = FALSE,
+  confidence_level = 0.95,
+  side = "both",
+  collapse = FALSE
+)
 
-proportion_R(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_R(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_IR(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_IR(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_I(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_I(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_SI(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_SI(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_S(..., minimum = 30, as_percent = FALSE,
-  only_all_tested = FALSE)
+proportion_S(..., minimum = 30, as_percent = FALSE, only_all_tested = FALSE)
 
-proportion_df(data, translate_ab = "name", language = get_AMR_locale(),
-  minimum = 30, as_percent = FALSE, combine_SI = TRUE,
-  confidence_level = 0.95)
+proportion_df(
+  data,
+  translate_ab = "name",
+  language = get_AMR_locale(),
+  minimum = 30,
+  as_percent = FALSE,
+  combine_SI = TRUE,
+  confidence_level = 0.95
+)
 
-sir_df(data, translate_ab = "name", language = get_AMR_locale(),
-  minimum = 30, as_percent = FALSE, combine_SI = TRUE,
-  confidence_level = 0.95)
+sir_df(
+  data,
+  translate_ab = "name",
+  language = get_AMR_locale(),
+  minimum = 30,
+  as_percent = FALSE,
+  combine_SI = TRUE,
+  confidence_level = 0.95
+)
 ```
-
-## Source
-
-**M39 Analysis and Presentation of Cumulative Antimicrobial
-Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory
-Standards Institute (CLSI)*.
-<https://clsi.org/standards/products/microbiology/documents/m39/>.
 
 ## Arguments
 
@@ -261,6 +276,13 @@ This AMR package follows insight; use `susceptibility()` (equal to
 [`count_susceptible()`](https://amr-for-r.org/reference/count.md) (equal
 to [`count_SI()`](https://amr-for-r.org/reference/count.md)) to count
 susceptible isolates.
+
+## References
+
+**M39 Analysis and Presentation of Cumulative Antimicrobial
+Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory
+Standards Institute (CLSI)*.
+<https://clsi.org/standards/products/microbiology/documents/m39/>.
 
 ## See also
 

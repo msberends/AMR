@@ -1,4 +1,4 @@
-# Data Set with 534 Microorganisms In Species Groups
+# Data Set with 530 Microorganisms In Species Groups
 
 A data set containing species groups and microbiological complexes,
 which are used in [the clinical breakpoints
@@ -12,7 +12,7 @@ microorganisms.groups
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 534
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 530
 observations and 4 variables:
 
 - `mo_group`  
@@ -56,7 +56,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 microorganisms.groups
-#> # A tibble: 534 × 4
+#> # A tibble: 530 × 4
 #>    mo_group       mo           mo_group_name                   mo_name          
 #>    <mo>           <mo>         <chr>                           <chr>            
 #>  1 B_ACNTB_BMNN-C B_ACNTB_BMNN Acinetobacter baumannii complex Acinetobacter ba…
@@ -69,7 +69,7 @@ microorganisms.groups
 #>  8 B_BCTRD_FRGL-C B_BCTRD_OVTS Bacteroides fragilis complex    Bacteroides ovat…
 #>  9 B_BCTRD_FRGL-C B_BCTRD_THTT Bacteroides fragilis complex    Bacteroides thet…
 #> 10 B_BCTRD_FRGL-C B_PHCCL_VLGT Bacteroides fragilis complex    Bacteroides vulg…
-#> # ℹ 524 more rows
+#> # ℹ 520 more rows
 
 # these are all species in the Bacteroides fragilis group, as per WHONET:
 microorganisms.groups[microorganisms.groups$mo_group == "B_BCTRD_FRGL-C", ]

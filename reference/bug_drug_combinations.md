@@ -8,15 +8,27 @@ result to prettify it to a publishable/printable format, see *Examples*.
 ## Usage
 
 ``` r
-bug_drug_combinations(x, col_mo = NULL, FUN = mo_shortname,
-  include_n_rows = FALSE, ...)
+bug_drug_combinations(
+  x,
+  col_mo = NULL,
+  FUN = mo_shortname,
+  include_n_rows = FALSE,
+  ...
+)
 
 # S3 method for class 'bug_drug_combinations'
-format(x, translate_ab = "name (ab, atc)",
-  language = get_AMR_locale(), minimum = 30, combine_SI = TRUE,
-  add_ab_group = TRUE, remove_intrinsic_resistant = FALSE,
-  decimal.mark = getOption("OutDec"), big.mark = ifelse(decimal.mark ==
-  ",", ".", ","), ...)
+format(
+  x,
+  translate_ab = "name (ab, atc)",
+  language = get_AMR_locale(),
+  minimum = 30,
+  combine_SI = TRUE,
+  add_ab_group = TRUE,
+  remove_intrinsic_resistant = FALSE,
+  decimal.mark = getOption("OutDec"),
+  big.mark = ifelse(decimal.mark == ",", ".", ","),
+  ...
+)
 ```
 
 ## Arguments

@@ -63,8 +63,9 @@ where:
 - \\p_n\\ is the human pathogenic prevalence group of \\n\\, as
   described below;
 
-- \\k_n\\ is the taxonomic kingdom of \\n\\, set as Bacteria = 1, Fungi
-  = 1.25, Protozoa = 1.5, Chromista = 1.75, Archaea = 2, others = 3.
+- \\k_n\\ is the taxonomic domain ('kingdom' until taxonomic
+  reclassification of 2024) of \\n\\, set as Bacteria = 1, Fungi = 1.25,
+  Protozoa = 1.5, Chromista = 1.75, Archaea = 2, others = 3.
 
 The grouping into human pathogenic prevalence \\p\\ is based on recent
 work from Bartlett *et al.* (2022,
@@ -127,17 +128,18 @@ Furthermore,
   *Hymenolepis*, *Hypomyces*, *Hysterothylacium*, *Kloeckera*,
   *Kluyveromyces*, *Kodamaea*, *Lacazia*, *Leishmania*, *Lichtheimia*,
   *Lodderomyces*, *Lomentospora*, *Madurella*, *Malassezia*,
-  *Malbranchea*, *Metagonimus*, *Meyerozyma*, *Microsporidium*,
-  *Microsporum*, *Millerozyma*, *Mortierella*, *Mucor*,
-  *Mycocentrospora*, *Nannizzia*, *Necator*, *Nectria*, *Ochroconis*,
-  *Oesophagostomum*, *Oidiodendron*, *Opisthorchis*, *Paecilomyces*,
-  *Paracoccidioides*, *Pediculus*, *Penicillium*, *Phaeoacremonium*,
-  *Phaeomoniella*, *Phialophora*, *Phlebotomus*, *Phoma*, *Pichia*,
-  *Piedraia*, *Pithomyces*, *Pityrosporum*, *Pneumocystis*,
-  *Pseudallescheria*, *Pseudoscopulariopsis*, *Pseudoterranova*,
-  *Pulex*, *Purpureocillium*, *Quambalaria*, *Rhinocladiella*,
-  *Rhizomucor*, *Rhizopus*, *Rhodotorula*, *Saccharomyces*, *Saksenaea*,
-  *Saprochaete*, *Sarcoptes*, *Scedosporium*, *Schistosoma*,
+  *Malbranchea*, *Metagonimus*, *Meyerozyma*, *Microascus*,
+  *Microsporidium*, *Microsporum*, *Millerozyma*, *Mortierella*,
+  *Mucor*, *Mycocentrospora*, *Nannizzia*, *Necator*, *Nectria*,
+  *Ochroconis*, *Oesophagostomum*, *Oidiodendron*, *Opisthorchis*,
+  *Paecilomyces*, *Paracoccidioides*, *Pediculus*, *Penicillium*,
+  *Phaeoacremonium*, *Phaeomoniella*, *Phialophora*, *Phlebotomus*,
+  *Phoma*, *Pichia*, *Piedraia*, *Pithomyces*, *Pityrosporum*,
+  *Plasmodium*, *Pneumocystis*, *Pseudallescheria*,
+  *Pseudoscopulariopsis*, *Pseudoterranova*, *Pulex*, *Purpureocillium*,
+  *Quambalaria*, *Rhinocladiella*, *Rhizomucor*, *Rhizopus*,
+  *Rhodotorula*, *Saccharomyces*, *Saksenaea*, *Saprochaete*,
+  *Sarcoptes*, *Scedosporium*, *Schistosoma*, *Schizophyllum*,
   *Schizosaccharomyces*, *Scolecobasidium*, *Scopulariopsis*,
   *Scytalidium*, *Spirometra*, *Sporobolomyces*, *Sporopachydermia*,
   *Sporothrix*, *Sporotrichum*, *Stachybotrys*, *Strongyloides*,

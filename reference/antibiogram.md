@@ -1,34 +1,76 @@
-# Generate Traditional, Combination, Syndromic, or WISCA Antibiograms
+# Generate Antibiograms (WISCA, Traditional, Combination, or Syndromic)
 
-Create detailed antibiograms with options for traditional, combination,
-syndromic, and Bayesian WISCA methods.
+Generate antibiograms from antimicrobial susceptibility data, with
+support for traditional, combination, syndromic, and WISCA
+(Weighted-Incidence Syndromic Combination Antibiogram) methods.
 
-Adhering to previously described approaches (see *Source*) and
-especially the Bayesian WISCA model (Weighted-Incidence Syndromic
-Combination Antibiogram) by Bielicki *et al.*, these functions provide
-flexible output formats including plots and tables, ideal for
-integration with R Markdown and Quarto reports.
+**For empirical therapy guidance, WISCA is the recommended approach.**
+When initiating empirical treatment, the causative pathogen is unknown,
+and the clinically relevant question is: *"what is the probability that
+this regimen will cover whatever pathogen turns out to cause the
+infection?"* WISCA answers that question directly by weighting
+susceptibility by pathogen incidence within a syndrome and providing
+credible intervals via Bayesian Monte Carlo simulation. Traditional
+antibiograms remain appropriate for tracking resistance per species for
+surveillance purposes. See the section *Explaining WISCA* on this page
+and the [WISCA vignette](https://amr-for-r.org/articles/WISCA.html) for
+details.
+
+All antibiogram types adhere to previously described approaches (see
+*Source*), and the WISCA method implements the Bayesian decision model
+by Bielicki *et al.* (2016,
+[doi:10.1093/jac/dkv397](https://doi.org/10.1093/jac/dkv397) ). Output
+formats include plots and tables, ideal for integration with R Markdown
+and Quarto reports.
 
 ## Usage
 
 ``` r
-antibiogram(x, antimicrobials = where(is.sir), mo_transform = "shortname",
-  ab_transform = "name", syndromic_group = NULL, add_total_n = FALSE,
-  only_all_tested = FALSE, digits = ifelse(wisca, 1, 0),
-  formatting_type = getOption("AMR_antibiogram_formatting_type",
-  ifelse(wisca, 14, 18)), col_mo = NULL, language = get_AMR_locale(),
-  minimum = 30, combine_SI = TRUE, sep = " + ", sort_columns = TRUE,
-  wisca = FALSE, simulations = 1000, conf_interval = 0.95,
-  interval_side = "two-tailed", info = interactive(), parallel = FALSE,
-  ...)
-
-wisca(x, antimicrobials = where(is.sir), ab_transform = "name",
-  syndromic_group = NULL, only_all_tested = FALSE, digits = 1,
+wisca(
+  x,
+  antimicrobials = where(is.sir),
+  ab_transform = "name",
+  syndromic_group = NULL,
+  only_all_tested = FALSE,
+  digits = 1,
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
-  col_mo = NULL, language = get_AMR_locale(), combine_SI = TRUE,
-  sep = " + ", sort_columns = TRUE, simulations = 1000,
-  conf_interval = 0.95, interval_side = "two-tailed",
-  info = interactive(), parallel = FALSE, ...)
+  col_mo = NULL,
+  language = get_AMR_locale(),
+  combine_SI = TRUE,
+  sep = " + ",
+  sort_columns = TRUE,
+  simulations = 1000,
+  conf_interval = 0.95,
+  interval_side = "two-tailed",
+  info = interactive(),
+  parallel = FALSE,
+  ...
+)
+
+antibiogram(
+  x,
+  antimicrobials = where(is.sir),
+  mo_transform = "shortname",
+  ab_transform = "name",
+  syndromic_group = NULL,
+  add_total_n = FALSE,
+  only_all_tested = FALSE,
+  digits = ifelse(wisca, 1, 0),
+  formatting_type = getOption("AMR_antibiogram_formatting_type", ifelse(wisca, 14, 18)),
+  col_mo = NULL,
+  language = get_AMR_locale(),
+  minimum = 30,
+  combine_SI = TRUE,
+  sep = " + ",
+  sort_columns = TRUE,
+  wisca = FALSE,
+  simulations = 1000,
+  conf_interval = 0.95,
+  interval_side = "two-tailed",
+  info = interactive(),
+  parallel = FALSE,
+  ...
+)
 
 retrieve_wisca_parameters(wisca_model, ...)
 
@@ -36,43 +78,30 @@ retrieve_wisca_parameters(wisca_model, ...)
 plot(x, ...)
 
 # S3 method for class 'antibiogram'
-autoplot(object, ...)
+autoplot(
+  object,
+  geom = c("pointrange", "point", "col", "bar", "errorbar"),
+  ci = TRUE,
+  sort = TRUE,
+  flip = NULL,
+  caption = NULL,
+  ...
+)
+
+wisca_plot(
+  wisca_model,
+  wisca_plot_type = c("susceptibility_incidence", "posterior_coverage"),
+  ...
+)
 
 # S3 method for class 'antibiogram'
-knit_print(x, italicise = TRUE,
-  na = getOption("knitr.kable.NA", default = ""), ...)
+knit_print(
+  x,
+  italicise = TRUE,
+  na = getOption("knitr.kable.NA", default = ""),
+  ...
+)
 ```
-
-## Source
-
-- Bielicki JA *et al.* (2016). **Selecting appropriate empirical
-  antibiotic regimens for paediatric bloodstream infections: application
-  of a Bayesian decision model to local and pooled antimicrobial
-  resistance surveillance data** *Journal of Antimicrobial Chemotherapy*
-  71(3); [doi:10.1093/jac/dkv397](https://doi.org/10.1093/jac/dkv397)
-
-- Bielicki JA *et al.* (2020). **Evaluation of the coverage of 3
-  antibiotic regimens for neonatal sepsis in the hospital setting across
-  Asian countries** *JAMA Netw Open.* 3(2):e1921124;
-  [doi:10.1001/jamanetworkopen.2019.21124](https://doi.org/10.1001/jamanetworkopen.2019.21124)
-
-- Klinker KP *et al.* (2021). **Antimicrobial stewardship and
-  antibiograms: importance of moving beyond traditional antibiograms**.
-  *Therapeutic Advances in Infectious Disease*, May
-  5;8:20499361211011373;
-  [doi:10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)
-
-- Barbieri E *et al.* (2021). **Development of a Weighted-Incidence
-  Syndromic Combination Antibiogram (WISCA) to guide the choice of the
-  empiric antibiotic treatment for urinary tract infection in paediatric
-  patients: a Bayesian approach** *Antimicrobial Resistance & Infection
-  Control* May 1;10(1):74;
-  [doi:10.1186/s13756-021-00939-2](https://doi.org/10.1186/s13756-021-00939-2)
-
-- **M39 Analysis and Presentation of Cumulative Antimicrobial
-  Susceptibility Test Data, 5th Edition**, 2022, *Clinical and
-  Laboratory Standards Institute (CLSI)*.
-  <https://clsi.org/standards/products/microbiology/documents/m39/>.
 
 ## Arguments
 
@@ -127,21 +156,6 @@ knit_print(x, italicise = TRUE,
 
     - `carbapenems() + c("", aminoglycosides())`
 
-- mo_transform:
-
-  A character to transform microorganism input - must be `"name"`,
-  `"shortname"` (default), `"gramstain"`, or one of the column names of
-  the
-  [microorganisms](https://amr-for-r.org/reference/microorganisms.md)
-  data set: `"mo"`, `"fullname"`, `"status"`, `"kingdom"`, `"phylum"`,
-  `"class"`, `"order"`, `"family"`, `"genus"`, `"species"`,
-  `"subspecies"`, `"rank"`, `"ref"`, `"oxygen_tolerance"`, `"source"`,
-  `"lpsn"`, `"lpsn_parent"`, `"lpsn_renamed_to"`, `"mycobank"`,
-  `"mycobank_parent"`, `"mycobank_renamed_to"`, `"gbif"`,
-  `"gbif_parent"`, `"gbif_renamed_to"`, `"prevalence"`, or `"snomed"`.
-  Can also be `NULL` to not transform the input or `NA` to consider all
-  microorganisms 'unknown'.
-
 - ab_transform:
 
   A character to transform antimicrobial input - must be one of the
@@ -154,21 +168,10 @@ knit_print(x, italicise = TRUE,
 
 - syndromic_group:
 
-  A column name of \`x\`, or values calculated to split rows of \`x\`,
-  e.g. by using \[ifelse()\] or
-  \[\`case_when()\`\]\[dplyr::case_when()\]. See \*Examples\*.
-
-- add_total_n:
-
-  *(deprecated in favour of `formatting_type`)* A
-  [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  `n_tested` available numbers per pathogen should be added to the table
-  (default is `TRUE`). This will add the lowest and highest number of
-  available isolates per antimicrobial (e.g, if for *E. coli* 200
-  isolates are available for ciprofloxacin and 150 for amoxicillin, the
-  returned number will be "150-200"). This option is unavailable when
-  `wisca = TRUE`; in that case, use `retrieve_wisca_parameters()` to get
-  the parameters used for WISCA.
+  A column name of `x`, or values calculated to split rows of `x`, e.g.
+  by using [`ifelse()`](https://rdrr.io/r/base/ifelse.html) or
+  [`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html).
+  See *Examples*.
 
 - only_all_tested:
 
@@ -200,13 +203,6 @@ knit_print(x, italicise = TRUE,
   Language to translate text, which defaults to the system language (see
   [`get_AMR_locale()`](https://amr-for-r.org/reference/translate.md)).
 
-- minimum:
-
-  The minimum allowed number of available (tested) isolates. Any isolate
-  count lower than `minimum` will return `NA` with a warning. The
-  default number of `30` isolates is advised by the Clinical and
-  Laboratory Standards Institute (CLSI) as best practice, see *Source*.
-
 - combine_SI:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
@@ -222,15 +218,6 @@ knit_print(x, italicise = TRUE,
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
   the antimicrobial columns must be sorted on name.
-
-- wisca:
-
-  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether a
-  Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be
-  generated (default is `FALSE`). This will use a Bayesian decision
-  model to estimate regimen coverage probabilities using [Monte Carlo
-  simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Set
-  `simulations`, `conf_interval`, and `interval_side` to adjust.
 
 - simulations:
 
@@ -266,10 +253,57 @@ knit_print(x, italicise = TRUE,
 
 - ...:
 
-  When used in [R Markdown or
-  Quarto](https://rdrr.io/pkg/knitr/man/kable.html): arguments passed on
-  to [`knitr::kable()`](https://rdrr.io/pkg/knitr/man/kable.html)
-  (otherwise, has no use).
+  Currently unused.
+
+- mo_transform:
+
+  A character to transform microorganism input - must be `"name"`,
+  `"shortname"` (default), `"gramstain"`, or one of the column names of
+  the
+  [microorganisms](https://amr-for-r.org/reference/microorganisms.md)
+  data set: `"mo"`, `"fullname"`, `"status"`, `"domain"`, `"kingdom"`,
+  `"phylum"`, `"class"`, `"order"`, `"family"`, `"genus"`, `"species"`,
+  `"subspecies"`, `"rank"`, `"ref"`, `"oxygen_tolerance"`,
+  `"morphology"`, `"source"`, `"lpsn"`, `"lpsn_parent"`,
+  `"lpsn_renamed_to"`, `"mycobank"`, `"mycobank_parent"`,
+  `"mycobank_renamed_to"`, `"gbif"`, `"gbif_parent"`,
+  `"gbif_renamed_to"`, `"prevalence"`, or `"snomed"`. Can also be `NULL`
+  to not transform the input or `NA` to consider all microorganisms
+  'unknown'.
+
+- add_total_n:
+
+  *(deprecated in favour of `formatting_type`)* A
+  [logical](https://rdrr.io/r/base/logical.html) to indicate whether
+  `n_tested` available numbers per pathogen should be added to the table
+  (default is `TRUE`). This will add the lowest and highest number of
+  available isolates per antimicrobial (e.g., if for *E. coli* 200
+  isolates are available for ciprofloxacin and 150 for amoxicillin, the
+  returned number will be "150-200"). This option is unavailable when
+  `wisca = TRUE`; in that case, use `retrieve_wisca_parameters()` to get
+  the parameters used for WISCA.
+
+- minimum:
+
+  The minimum allowed number of available (tested) isolates. Any isolate
+  count lower than `minimum` will return `NA` with a warning. The
+  default number of `30` isolates is advised by the Clinical and
+  Laboratory Standards Institute (CLSI) as best practice, see *Source*.
+
+- wisca:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether a
+  Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be
+  generated (default is `FALSE`). This will use a Bayesian decision
+  model to estimate regimen coverage probabilities using [Monte Carlo
+  simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Per
+  [doi:10.1093/jac/dkv397](https://doi.org/10.1093/jac/dkv397) ,
+  susceptibility priors are \\\beta(0.5, 0.5)\\ (Jeffreys) and
+  intrinsically resistant pairs (based on
+  [intrinsic_resistant](https://amr-for-r.org/reference/intrinsic_resistant.md))
+  use \\\beta(1, 9999)\\.
+
+  Set `simulations`, `conf_interval`, and `interval_side` to adjust.
 
 - wisca_model:
 
@@ -278,6 +312,42 @@ knit_print(x, italicise = TRUE,
 - object:
 
   An `antibiogram()` object.
+
+- geom:
+
+  The plotting style for the point estimate. One of `"pointrange"`
+  (default), `"point"`, `"col"`/`"bar"`, or `"errorbar"`. `"pointrange"`
+  is recommended for coverage data: bars imply a meaningful baseline at
+  zero, which coverage estimates rarely have.
+
+- ci:
+
+  Logical, whether to draw the credible/confidence interval. Defaults to
+  `TRUE`. Ignored (forced `TRUE`) when `geom = "pointrange"` or
+  `"errorbar"`, since the interval is intrinsic to those geoms.
+
+- sort:
+
+  Logical, whether to order regimens by coverage. Defaults to `TRUE`.
+  When faceted (per pathogen) or grouped (syndromic), ordering is
+  applied within each panel/group.
+
+- flip:
+
+  Logical, whether to draw regimens on the y-axis (horizontal). Defaults
+  to `NULL`, which flips automatically when any regimen label exceeds 20
+  characters (long combination names read poorly on the x-axis). Set
+  `TRUE`/`FALSE` to override.
+
+- caption:
+
+  Text to show as caption, will explain non-inferiority for WISCA
+  models.
+
+- wisca_plot_type:
+
+  Either `"susceptibility_incidence"` (default) or
+  `"posterior_coverage"`.
 
 - italicise:
 
@@ -377,73 +447,37 @@ apparent from the susceptibility and its confidence level.
 Set `digits` (defaults to `0`) to alter the rounding of the
 susceptibility percentages.
 
-### Antibiogram Types
+### When to Use WISCA vs. Traditional Antibiograms
 
 There are various antibiogram types, as summarised by Klinker *et al.*
 (2021,
 [doi:10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)
-), and they are all supported by `antibiogram()`.
+), and they are all supported by `antibiogram()`: traditional,
+combination, syndromic, and WISCA.
 
-For clinical coverage estimations, **use WISCA whenever possible**,
-since it provides more precise coverage estimates by accounting for
-pathogen incidence and antimicrobial susceptibility, as has been shown
-by Bielicki *et al.* (2020,
-[doi:10.1001/jamanetworkopen.2019.21124](https://doi.org/10.1001/jamanetworkopen.2019.21124)
-). See the section *Explaining WISCA* on this page. Do note that WISCA
-is pathogen-agnostic, meaning that the outcome is not stratied by
-pathogen, but rather by syndrome.
+**If your goal is to guide empirical therapy, use WISCA.** Traditional
+antibiograms fragment susceptibility information by species, but at the
+point of prescribing, the clinician does not know which species is
+causing the infection. WISCA shifts the unit of analysis from the
+isolate to the patient: it estimates the probability that a regimen will
+cover the infection, given the local distribution of causative
+pathogens. It evaluates combination regimens, weights by pathogen
+incidence, and provides credible intervals that honestly communicate
+uncertainty. Hebert *et al.* (2012) demonstrated this concretely for the
+first time: ciprofloxacin showed 84% susceptibility against *E. coli* in
+the traditional antibiogram, but WISCA coverage was only 62% for UTI and
+37% for abdominal infections, because other species (including
+intrinsically resistant enterococci) contribute substantially to these
+syndromes. Note that WISCA is pathogen-agnostic: the outcome is not
+stratified by species, but by syndrome.
 
-1.  **Traditional Antibiogram**
+**Traditional, combination, and syndromic antibiograms remain
+appropriate for AMR surveillance**, i.e., tracking resistance trends per
+species over time. They are the right tool when the question is *"how
+resistant is species X to drug Y in our setting?"* rather than *"what
+regimen best covers this syndrome?"*.
 
-    Case example: Susceptibility of *Pseudomonas aeruginosa* to
-    piperacillin/tazobactam (TZP)
-
-    Code example:
-
-        antibiogram(your_data,
-                    antimicrobials = "TZP")
-
-2.  **Combination Antibiogram**
-
-    Case example: Additional susceptibility of *Pseudomonas aeruginosa*
-    to TZP + tobramycin versus TZP alone
-
-    Code example:
-
-        antibiogram(your_data,
-                    antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
-
-3.  **Syndromic Antibiogram**
-
-    Case example: Susceptibility of *Pseudomonas aeruginosa* to TZP
-    among respiratory specimens (obtained among ICU patients only)
-
-    Code example:
-
-        antibiogram(your_data,
-                    antimicrobials = penicillins(),
-                    syndromic_group = "ward")
-
-4.  **Weighted-Incidence Syndromic Combination Antibiogram (WISCA)**
-
-    WISCA can be applied to any antibiogram, see the section *Explaining
-    WISCA* on this page for more information.
-
-    Code example:
-
-        antibiogram(your_data,
-                    antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-                    wisca = TRUE)
-
-        # this is equal to:
-        wisca(your_data,
-              antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
-
-    WISCA uses a sophisticated Bayesian decision model to combine both
-    local and pooled antimicrobial resistance data. This approach not
-    only evaluates local patterns but can also draw on multi-centre data
-    sets to improve regimen accuracy, even in low-incidence infections
-    like paediatric bloodstream infections (BSIs).
+All four types are demonstrated in the *Examples* section below.
 
 ### Grouped tibbles
 
@@ -457,65 +491,6 @@ Code example:
     your_data %>%
       group_by(has_sepsis, is_neonate, sex) %>%
       wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
-
-### Stepped Approach for Clinical Insight
-
-In clinical practice, antimicrobial coverage decisions evolve as more
-microbiological data becomes available. This theoretical stepped
-approach ensures empirical coverage can continuously assessed to improve
-patient outcomes:
-
-1.  **Initial Empirical Therapy (Admission / Pre-Culture Data)**
-
-    At admission, no pathogen information is available.
-
-    - Action: broad-spectrum coverage is based on local resistance
-      patterns and syndromic antibiograms. Using the pathogen-agnostic
-      yet incidence-weighted WISCA is preferred.
-
-    - Code example:
-
-          antibiogram(your_data,
-                      antimicrobials = selected_regimens,
-                      mo_transform = NA) # all pathogens set to `NA`
-
-          # preferred: use WISCA
-          wisca(your_data,
-                antimicrobials = selected_regimens)
-
-2.  **Refinement with Gram Stain Results**
-
-    When a blood culture becomes positive, the Gram stain provides an
-    initial and crucial first stratification (Gram-positive vs.
-    Gram-negative).
-
-    - Action: narrow coverage based on Gram stain-specific resistance
-      patterns.
-
-    - Code example:
-
-          antibiogram(your_data,
-                      antimicrobials = selected_regimens,
-                      mo_transform = "gramstain") # all pathogens set to Gram-pos/Gram-neg
-
-3.  **Definitive Therapy Based on Species Identification**
-
-    After cultivation of the pathogen, full pathogen identification
-    allows precise targeting of therapy.
-
-    - Action: adjust treatment to pathogen-specific antibiograms,
-      minimizing resistance risks.
-
-    - Code example:
-
-          antibiogram(your_data,
-                      antimicrobials = selected_regimens,
-                      mo_transform = "shortname") # all pathogens set to 'G. species', e.g., E. coli
-
-By structuring antibiograms around this stepped approach, clinicians can
-make data-driven adjustments at each stage, ensuring optimal empirical
-and targeted therapy while reducing unnecessary broad-spectrum
-antimicrobial use.
 
 ### Inclusion in Combination Antibiograms
 
@@ -567,13 +542,77 @@ transform the output of `antibiogram()` to your needs, e.g. with
 ## Explaining WISCA
 
 WISCA (Weighted-Incidence Syndromic Combination Antibiogram) estimates
-the probability of empirical coverage for combination regimens.
+the probability that an empirical antimicrobial regimen will provide
+adequate coverage for a given infection syndrome, before the causative
+pathogen has been identified.
 
-It weights susceptibility by pathogen prevalence within a clinical
-syndrome and provides credible intervals around the expected coverage.
+It does so by combining two quantities: the relative incidence of each
+pathogen within the syndrome (modelled as a Dirichlet distribution) and
+the susceptibility of each pathogen to the regimen (modelled as Beta
+distributions). These are combined via Monte Carlo simulation to produce
+a coverage estimate with a credible interval.
 
-For more background, interpretation, and examples, see [the WISCA
+**Prior distributions:** Pathogen incidence uses a non-informative
+\\Dirichlet(1, 1, \ldots, 1)\\ prior. Susceptibility proportions use the
+Jeffreys prior, \\\beta(0.5, 0.5)\\, except for pathogen-drug
+combinations with known intrinsic resistance, which use a strongly
+informative \\\beta(1, 9999)\\ prior that forces near-zero
+susceptibility regardless of observed data. Intrinsic resistance is
+determined using the
+[intrinsic_resistant](https://amr-for-r.org/reference/intrinsic_resistant.md)
+data set, which is based on ['EUCAST Expected Resistant Phenotypes'
+v1.2](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
+(2023).
+
+**Interpreting the output:** Overlapping credible intervals between
+regimens indicate no significant difference in coverage; if a
+narrower-spectrum regimen overlaps with a broader one, the
+narrower-spectrum option may be preferred on stewardship grounds.
+Non-overlapping intervals indicate a clinically meaningful difference.
+For small sample sizes, consider pooling data from multiple sites to
+improve precision, provided pathogen distributions are sufficiently
+similar (Bielicki *et al.*, 2016).
+
+For the full mathematical derivation and worked examples, see the [WISCA
 vignette](https://amr-for-r.org/articles/WISCA.html).
+
+## References
+
+- Hebert C *et al.* (2012). **Demonstration of the weighted-incidence
+  syndromic combination antibiogram: an empiric prescribing decision
+  aid.** *Infection Control & Hospital Epidemiology* 33(4):381-388;
+  [doi:10.1086/664768](https://doi.org/10.1086/664768)
+
+- Bielicki JA *et al.* (2016). **Selecting appropriate empirical
+  antibiotic regimens for paediatric bloodstream infections: application
+  of a Bayesian decision model to local and pooled antimicrobial
+  resistance surveillance data.** *Journal of Antimicrobial
+  Chemotherapy* 71(3):794-802;
+  [doi:10.1093/jac/dkv397](https://doi.org/10.1093/jac/dkv397)
+
+- Cook A *et al.* (2022). **Improving empiric antibiotic prescribing in
+  pediatric bloodstream infections: a potential application of
+  weighted-incidence syndromic combination antibiograms (WISCA).**
+  *Expert Review of Anti-infective Therapy* 20(3):445-456;
+  [doi:10.1080/14787210.2021.1967145](https://doi.org/10.1080/14787210.2021.1967145)
+
+- Klinker KP *et al.* (2021). **Antimicrobial stewardship and
+  antibiograms: importance of moving beyond traditional antibiograms.**
+  *Therapeutic Advances in Infectious Disease*, May
+  5;8:20499361211011373;
+  [doi:10.1177/20499361211011373](https://doi.org/10.1177/20499361211011373)
+
+- Barbieri E *et al.* (2021). **Development of a Weighted-Incidence
+  Syndromic Combination Antibiogram (WISCA) to guide the choice of the
+  empiric antibiotic treatment for urinary tract infection in paediatric
+  patients: a Bayesian approach.** *Antimicrobial Resistance & Infection
+  Control* May 1;10(1):74;
+  [doi:10.1186/s13756-021-00939-2](https://doi.org/10.1186/s13756-021-00939-2)
+
+- **M39 Analysis and Presentation of Cumulative Antimicrobial
+  Susceptibility Test Data, 5th Edition**, 2022, *Clinical and
+  Laboratory Standards Institute (CLSI)*.
+  <https://clsi.org/standards/products/microbiology/documents/m39/>.
 
 ## Author
 
@@ -607,7 +646,105 @@ example_isolates
 #> #   IPM <sir>, MEM <sir>, MTR <sir>, CHL <sir>, COL <sir>, MUP <sir>, …
 
 # \donttest{
-# Traditional antibiogram ----------------------------------------------
+# WISCA antibiogram (recommended for empirical therapy) -----------------
+
+# basic WISCA: empirical coverage per regimen, weighted by pathogen
+# incidence, with 95% credible intervals
+wisca(example_isolates,
+  antimicrobials = c("AMC", "AMC+CIP", "AMC+GEN")
+)
+#> Warning: invalid microorganism code, NA generated
+#> # A tibble:       1 × 3
+#> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
+#> # Cred. interval: 95%
+#> # Simulations:    1000 per stratum
+#>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²
+#>   <chr>                         <chr>                     <chr>                 
+#> 1 74.2% (72.1-76.1%)            88.8% (87.2-90.3%)        90.8% (89.3-92.1%)    
+#> # ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,
+#> #   ²​`Amoxicillin/clavulanic acid + Gentamicin`
+#> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
+#> # and use `wisca_plot()` to assess the simulation outcomes.
+#> # Or, use it directly in R Markdown or Quarto, see `antibiogram()`.
+
+# equivalent using antibiogram():
+antibiogram(example_isolates,
+  antimicrobials = c("AMC", "AMC+CIP", "AMC+GEN"),
+  wisca = TRUE
+)
+#> Warning: invalid microorganism code, NA generated
+#> # A tibble:       1 × 3
+#> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
+#> # Cred. interval: 95%
+#> # Simulations:    1000 per stratum
+#>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²
+#>   <chr>                         <chr>                     <chr>                 
+#> 1 74.2% (72.2-76.1%)            88.8% (87.1-90.4%)        90.8% (89.4-92.2%)    
+#> # ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,
+#> #   ²​`Amoxicillin/clavulanic acid + Gentamicin`
+#> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
+#> # and use `wisca_plot()` to assess the simulation outcomes.
+#> # Or, use it directly in R Markdown or Quarto, see `antibiogram()`.
+
+# stratified by syndrome or clinical group
+out <- wisca(example_isolates,
+  antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+  syndromic_group = "ward"
+)
+#> Warning: invalid microorganism code, NA generated
+out
+#> # A tibble:       3 × 4
+#> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
+#> # Cred. interval: 95%
+#> # Simulations:    1000 per stratum
+#>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
+#>   <chr>             <chr>                     <chr>                             
+#> 1 Clinical          74.5% (68.8-79.8%)        93.6% (91.9-95.1%)                
+#> 2 ICU               57.1% (48.2-65.9%)        86.7% (83.3-89.9%)                
+#> 3 Outpatient        57.5% (46-68.7%)          76.5% (70.6-82.2%)                
+#> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
+#> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
+#> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
+#> # and use `wisca_plot()` to assess the simulation outcomes.
+#> # Or, use it directly in R Markdown or Quarto, see `antibiogram()`.
+wisca_plot(out)
+
+
+# stratified using grouped tibbles (e.g. by age and gender)
+if (requireNamespace("dplyr")) {
+  library(dplyr)
+  example_isolates %>%
+    top_n_microorganisms(n = 10) %>%
+    group_by(
+      age_group = age_groups(age, c(25, 50, 75)),
+      gender) %>%
+    wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
+}
+#> ℹ Using column mo as input for `col_mo`.
+#> Warning: Number of tested isolates should exceed 30 for each regimen (and group). WISCA
+#> coverage estimates might be inaccurate.
+#> # A tibble:       8 × 5
+#> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
+#> # Cred. interval: 95%
+#> # Simulations:    1000 per stratum
+#>   age_group gender `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentami…¹
+#>   <chr>     <chr>  <chr>                     <chr>                              
+#> 1 0-24      F      57.7% (29.5-82.6%)        70.5% (45.9-89.1%)                 
+#> 2 0-24      M      59.1% (33-84.2%)          76.1% (55.7-90.6%)                 
+#> 3 25-49     F      67.4% (43.3-90.5%)        93.8% (87.8-97.9%)                 
+#> 4 25-49     M      56.8% (27.5-86.5%)        90.9% (82.4-96.8%)                 
+#> 5 50-74     F      68% (53.3-82.3%)          96.9% (94.7-98.5%)                 
+#> 6 50-74     M      67.1% (56.5-77.5%)        96.8% (94.2-98.8%)                 
+#> 7 75+       F      73.3% (62.9-83.6%)        97.7% (96-98.9%)                   
+#> 8 75+       M      74% (64.2-83.1%)          97.9% (96.1-99.1%)                 
+#> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
+#> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
+#> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
+#> # and use `wisca_plot()` to assess the simulation outcomes.
+#> # Or, use it directly in R Markdown or Quarto, see `antibiogram()`.
+
+
+# Traditional antibiogram (for AMR surveillance) ------------------------
 
 antibiogram(example_isolates,
   antimicrobials = c(aminoglycosides(), carbapenems())
@@ -615,8 +752,9 @@ antibiogram(example_isolates,
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
-#> # An antibiogram: 10 × 7
-#> # Type:           Non-WISCA with 95% CI
+#> # A tibble:       10 × 7
+#> # Type:           Traditional Antibiogram
+#> # Conf. interval: 95%
 #>    Pathogen       Amikacin    Gentamicin Imipenem Kanamycin Meropenem Tobramycin
 #>    <chr>          <chr>       <chr>      <chr>    <chr>     <chr>     <chr>     
 #>  1 CoNS           0% (0-8%,N… 86% (82-9… 52% (37… 0% (0-8%… 52% (37-… 22% (12-3…
@@ -630,7 +768,7 @@ antibiogram(example_isolates,
 #>  9 S. hominis     NA          92% (84-9… NA       NA        NA        85% (74-9…
 #> 10 S. pneumoniae  0% (0-3%,N… 0% (0-3%,… NA       0% (0-3%… NA        0% (0-3%,…
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see `antibiogram()`.
 
 antibiogram(example_isolates,
   antimicrobials = aminoglycosides(),
@@ -639,43 +777,26 @@ antibiogram(example_isolates,
 )
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
-#> # An antibiogram: 2 × 5
-#> # Type:           Non-WISCA with 95% CI
+#> # A tibble:       2 × 5
+#> # Type:           Traditional Antibiogram
+#> # Conf. interval: 95%
 #>   Pathogen      J01GB01            J01GB03             J01GB04         J01GB06  
 #>   <chr>         <chr>              <chr>               <chr>           <chr>    
 #> 1 Gram-negative 96% (94-97%,N=686) 96% (95-98%,N=684)  0% (0-10%,N=35) 98% (96-…
 #> 2 Gram-positive 34% (31-38%,N=665) 63% (60-66%,N=1170) 0% (0-1%,N=436) 0% (0-1%…
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
-
-antibiogram(example_isolates,
-  antimicrobials = carbapenems(),
-  ab_transform = "name",
-  mo_transform = "name"
-)
-#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
-#> # An antibiogram: 5 × 3
-#> # Type:           Non-WISCA with 95% CI
-#>   Pathogen                                 Imipenem             Meropenem       
-#>   <chr>                                    <chr>                <chr>           
-#> 1 Coagulase-negative Staphylococcus (CoNS) 52% (37-67%,N=48)    52% (37-67%,N=4…
-#> 2 Enterococcus faecalis                    100% (91-100%,N=38)  NA              
-#> 3 Escherichia coli                         100% (99-100%,N=422) 100% (99-100%,N…
-#> 4 Klebsiella pneumoniae                    100% (93-100%,N=51)  100% (93-100%,N…
-#> 5 Proteus mirabilis                        94% (79-99%,N=32)    NA              
-#> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see `antibiogram()`.
 
 
-# Combined antibiogram -------------------------------------------------
+# Combination antibiogram (for AMR surveillance) ------------------------
 
-# combined antimicrobials yield higher empiric coverage
 antibiogram(example_isolates,
   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   mo_transform = "gramstain"
 )
-#> # An antibiogram: 2 × 4
-#> # Type:           Non-WISCA with 95% CI
+#> # A tibble:       2 × 4
+#> # Type:           Combination Antibiogram
+#> # Conf. interval: 95%
 #>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³
 #>   <chr>     <chr>                  <chr>                  <chr>                 
 #> 1 Gram-neg… 88% (85-91%,N=641)     99% (97-99%,N=691)     98% (97-99%,N=693)    
@@ -684,7 +805,7 @@ antibiogram(example_isolates,
 #> #   ²​`Piperacillin/tazobactam + Gentamicin`,
 #> #   ³​`Piperacillin/tazobactam + Tobramycin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see `antibiogram()`.
 
 # you can use any antimicrobial selector with `+` too:
 antibiogram(example_isolates,
@@ -692,8 +813,9 @@ antibiogram(example_isolates,
   mo_transform = "gramstain"
 )
 #> ℹ For `ureidopenicillins()` using column TZP (piperacillin/tazobactam)
-#> # An antibiogram: 2 × 4
-#> # Type:           Non-WISCA with 95% CI
+#> # A tibble:       2 × 4
+#> # Type:           Combination Antibiogram
+#> # Conf. interval: 95%
 #>   Pathogen  Piperacillin/tazobac…¹ Piperacillin/tazobac…² Piperacillin/tazobac…³
 #>   <chr>     <chr>                  <chr>                  <chr>                 
 #> 1 Gram-neg… 88% (85-91%,N=641)     99% (97-99%,N=691)     98% (97-99%,N=693)    
@@ -702,7 +824,7 @@ antibiogram(example_isolates,
 #> #   ²​`Piperacillin/tazobactam + Gentamicin`,
 #> #   ³​`Piperacillin/tazobactam + Tobramycin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see `antibiogram()`.
 
 # names of antimicrobials do not need to resemble columns exactly:
 antibiogram(example_isolates,
@@ -711,19 +833,19 @@ antibiogram(example_isolates,
   ab_transform = "name",
   sep = " & "
 )
-#> # An antibiogram: 2 × 3
-#> # Type:           Non-WISCA with 95% CI
+#> # A tibble:       2 × 3
+#> # Type:           Traditional Antibiogram
+#> # Conf. interval: 95%
 #>   Pathogen      Ciprofloxacin      `Ciprofloxacin & Gentamicin`
 #>   <chr>         <chr>              <chr>                       
 #> 1 Gram-negative 91% (88-93%,N=684) 99% (97-99%,N=694)          
 #> 2 Gram-positive 77% (74-80%,N=724) 93% (91-94%,N=847)          
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see `antibiogram()`.
 
 
-# Syndromic antibiogram ------------------------------------------------
+# Syndromic antibiogram (for AMR surveillance) --------------------------
 
-# the data set could contain a filter for e.g. respiratory specimens
 antibiogram(example_isolates,
   antimicrobials = c(aminoglycosides(), carbapenems()),
   syndromic_group = "ward"
@@ -731,8 +853,9 @@ antibiogram(example_isolates,
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
-#> # An antibiogram: 14 × 8
-#> # Type:           Non-WISCA with 95% CI
+#> # A tibble:       14 × 8
+#> # Type:           Syndromic Antibiogram
+#> # Conf. interval: 95%
 #>    `Syndromic Group` Pathogen   Amikacin Gentamicin Imipenem Kanamycin Meropenem
 #>    <chr>             <chr>      <chr>    <chr>      <chr>    <chr>     <chr>    
 #>  1 Clinical          CoNS       NA       89% (84-9… 57% (39… NA        57% (39-…
@@ -751,14 +874,12 @@ antibiogram(example_isolates,
 #> 14 ICU               S. pneumo… 0% (0-1… 0% (0-12%… NA       0% (0-12… NA       
 #> # ℹ 1 more variable: Tobramycin <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
-
-# now define a data set with only E. coli
-ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
-#> ℹ Using column mo as input for `mo_genus()`
+#> # or use it directly in R Markdown or Quarto, see `antibiogram()`.
 
 # with a custom language, though this will be determined automatically
 # (i.e., this table will be in Spanish on Spanish systems)
+ex1 <- example_isolates[which(mo_genus() == "Escherichia"), ]
+#> ℹ Using column mo as input for `mo_genus()`
 antibiogram(ex1,
   antimicrobials = aminoglycosides(),
   ab_transform = "name",
@@ -769,45 +890,25 @@ antibiogram(ex1,
 )
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
-#> # An antibiogram: 2 × 5
-#> # Type:           Non-WISCA with 95% CI
+#> # A tibble:       2 × 5
+#> # Type:           Syndromic Antibiogram
+#> # Conf. interval: 95%
 #>   `Grupo sindrómico` Patógeno Amikacina            Gentamicina       Tobramicina
 #>   <chr>              <chr>    <chr>                <chr>             <chr>      
 #> 1 No UCI             E. coli  100% (97-100%,N=119) 98% (96-99%,N=32… 98% (96-99…
 #> 2 UCI                E. coli  100% (93-100%,N=52)  99% (95-100%,N=1… 96% (92-99…
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
-
-
-# WISCA antibiogram ----------------------------------------------------
-
-# WISCA are not stratified by species, but rather on syndromes
-antibiogram(example_isolates,
-  antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-  syndromic_group = "ward",
-  wisca = TRUE
-)
-#> # An antibiogram: 3 × 4
-#> # Type:           WISCA with 95% CI
-#>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
-#>   <chr>             <chr>                     <chr>                             
-#> 1 Clinical          73.4% (68.3-78.6%)        92.3% (90.7-93.7%)                
-#> 2 ICU               57.4% (49.7-65.4%)        84.9% (82.1-87.6%)                
-#> 3 Outpatient        57% (47.4-66.7%)          74.6% (68.8-79.8%)                
-#> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
-#> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
-#> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
-#> # or use it directly in R Markdown or Quarto, see ?antibiogram
+#> # or use it directly in R Markdown or Quarto, see `antibiogram()`.
 
 
 # Print the output for R Markdown / Quarto -----------------------------
 
-ureido <- antibiogram(example_isolates,
+ureido <- wisca(example_isolates,
   antimicrobials = ureidopenicillins(),
-  syndromic_group = "ward",
-  wisca = TRUE
+  syndromic_group = "ward"
 )
 #> ℹ For `ureidopenicillins()` using column TZP (piperacillin/tazobactam)
+#> Warning: invalid microorganism code, NA generated
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
@@ -818,9 +919,9 @@ if (requireNamespace("knitr")) {
 #> 
 #> |Syndromic Group |Piperacillin/tazobactam |
 #> |:---------------|:-----------------------|
-#> |Clinical        |73.5% (68-79%)          |
-#> |ICU             |57.7% (49.9-65.3%)      |
-#> |Outpatient      |56.9% (46.5-66.8%)      |
+#> |Clinical        |74.6% (68.9-80%)        |
+#> |ICU             |57% (49.1-65.8%)        |
+#> |Outpatient      |57.4% (45.6-68.4%)      |
 
 
 # Generate plots with ggplot2 or base R --------------------------------
@@ -829,11 +930,11 @@ ab1 <- antibiogram(example_isolates,
   antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain"
 )
-ab2 <- antibiogram(example_isolates,
+ab2 <- wisca(example_isolates,
   antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
-  mo_transform = "gramstain",
   syndromic_group = "ward"
 )
+#> Warning: invalid microorganism code, NA generated
 
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab1)
@@ -847,6 +948,7 @@ if (requireNamespace("ggplot2")) {
 plot(ab1)
 
 plot(ab2)
+
 
 # }
 ```

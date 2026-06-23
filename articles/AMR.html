@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Lato-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Lato-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Fira_Code-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9057</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9061</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 website update since they are based on randomly created values and the
 page was written in <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a>. However, the methodology remains unchanged. This page was
-generated on 02 May 2026.</p>
+generated on 23 June 2026.</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -147,21 +147,21 @@ make the structure of your data generally look like this:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center">2026-05-02</td>
+<td align="center">2026-06-23</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">S</td>
 </tr>
 <tr class="even">
-<td align="center">2026-05-02</td>
+<td align="center">2026-06-23</td>
 <td align="center">abcd</td>
 <td align="center">Escherichia coli</td>
 <td align="center">S</td>
 <td align="center">R</td>
 </tr>
 <tr class="odd">
-<td align="center">2026-05-02</td>
+<td align="center">2026-06-23</td>
 <td align="center">efgh</td>
 <td align="center">Escherichia coli</td>
 <td align="center">R</td>
@@ -218,7 +218,7 @@ cleaned as SIR values as well.</p>
 <p>With <code><a href="../reference/as.mo.html">as.mo()</a></code>, users can transform arbitrary
 microorganism names or codes to current taxonomy. The <code>AMR</code>
 package contains up-to-date taxonomic data. To be specific, currently
-included data were retrieved on 24 Jun 2024.</p>
+included data were retrieved on 07 May 2026.</p>
 <p>The codes of the AMR packages that come from <code><a href="../reference/as.mo.html">as.mo()</a></code> are
 short, but still human readable. More importantly, <code><a href="../reference/as.mo.html">as.mo()</a></code>
 supports all kinds of input:</p>
@@ -287,24 +287,23 @@ taxonomic codes. Let’s check this:</p>
 <span><span class="co">#&gt; Also matched: <span style="font-style: italic;">Klebsiella pneumoniae</span> complex<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFFF87;">0.707</span>), <span style="font-style: italic;">Klebsiella pneumoniae</span></span></span>
 <span><span class="co">#&gt; <span style="font-style: italic;">ozaenae</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFFF87;">0.707</span>), <span style="font-style: italic;">Klebsiella pneumoniae pneumoniae</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFFF87;">0.688</span>), <span style="font-style: italic;">Klebsiella</span></span></span>
 <span><span class="co">#&gt; <span style="font-style: italic;">pneumoniae rhinoscleromatis</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFFF87;">0.658</span>), <span style="font-style: italic;">Klebsiella pasteurii</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.500</span>), <span style="font-style: italic;">Klebsiella</span></span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">planticola</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.500</span>), <span style="font-style: italic;">Kingella potus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.400</span>), <span style="font-style: italic;">Kluyveromyces pseudotropicale</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FF5F5F;">0.386</span>), <span style="font-style: italic;">Kluyveromyces pseudotropicalis</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.363</span>), and <span style="font-style: italic;">Kosakonia pseudosacchari</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FF5F5F;">0.361</span>)</span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">planticola</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.500</span>), <span style="font-style: italic;">Kosakonia pseudosacchari</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.471</span>), <span style="font-style: italic;">Kaistella palustris</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FF5F5F;">0.435</span>), <span style="font-style: italic;">Kingella potus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.435</span>), and <span style="font-style: italic;">Kocuria palustris</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.435</span>)</span></span>
 <span><span class="co">#&gt; <span style="color: #B2B2B2;">-------------------------------------------------------------------------------</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">"S. aureus"</span> -&gt; <span style="font-weight: bold; font-style: italic;">Staphylococcus aureus</span> (B_STPHY_AURS, <span style="color: #080808; background-color: #FFFF87;">0.690</span>)</span></span>
 <span><span class="co">#&gt; Also matched: <span style="font-style: italic;">Staphylococcus aureus aureus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.643</span>), <span style="font-style: italic;">Staphylococcus argenteus</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FFD787;">0.625</span>), <span style="font-style: italic;">Staphylococcus aureus anaerobius</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.625</span>), <span style="font-style: italic;">Staphylococcus auricularis</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FFD787;">0.615</span>), <span style="font-style: italic;">Salmonella</span> Aurelianis<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.595</span>), <span style="font-style: italic;">Salmonella</span> Aarhus<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.588</span>), <span style="font-style: italic;">Salmonella</span></span></span>
-<span><span class="co">#&gt; Amounderness<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.587</span>), <span style="font-style: italic;">Staphylococcus argensis</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.587</span>), <span style="font-style: italic;">Streptococcus australis</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FFD787;">0.587</span>), and <span style="font-style: italic;">Salmonella choleraesuis arizonae</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.562</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FFD787;">0.625</span>), <span style="font-style: italic;">Staphylococcus aureus anaerobius</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.625</span>), <span style="font-style: italic;">Streptomyces aureus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.618</span>),</span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">Staphylococcus auricularis</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.615</span>), <span style="font-style: italic;">Streptomyces azureus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.609</span>), <span style="font-style: italic;">Salmonella</span></span></span>
+<span><span class="co">#&gt; Aurelianis<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.595</span>), <span style="font-style: italic;">Salmonella</span> Aarhus<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.588</span>), <span style="font-style: italic;">Salmonella</span> Amounderness<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.587</span>),</span></span>
+<span><span class="co">#&gt; and <span style="font-style: italic;">Staphylococcus argensis</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.587</span>)</span></span>
 <span><span class="co">#&gt; <span style="color: #B2B2B2;">-------------------------------------------------------------------------------</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">"S. pneumoniae"</span> -&gt; <span style="font-weight: bold; font-style: italic;">Streptococcus pneumoniae</span> (B_STRPT_PNMN, <span style="color: #080808; background-color: #5FD7AF;">0.750</span>)</span></span>
-<span><span class="co">#&gt; Also matched: <span style="font-style: italic;">Streptococcus pseudopneumoniae</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFFF87;">0.700</span>), <span style="font-style: italic;">Streptococcus phocae</span></span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">salmonis</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.552</span>), <span style="font-style: italic;">Serratia proteamaculans quinovora</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.545</span>), <span style="font-style: italic;">Streptococcus</span></span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">pseudoporcinus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.536</span>), <span style="font-style: italic;">Staphylococcus piscifermentans</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.533</span>), <span style="font-style: italic;">Staphylococcus</span></span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">pseudintermedius</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.532</span>), <span style="font-style: italic;">Serratia proteamaculans proteamaculans</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.526</span>),</span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">Streptococcus gallolyticus pasteurianus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.526</span>), <span style="font-style: italic;">Salmonella</span> Portanigra<span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.524</span>),</span></span>
-<span><span class="co">#&gt; and <span style="font-style: italic;">Streptococcus periodonticum</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.519</span>)</span></span>
+<span><span class="co">#&gt; Also matched: <span style="font-style: italic;">Streptococcus parapneumoniae</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFFF87;">0.714</span>), <span style="font-style: italic;">Streptococcus</span></span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">pseudopneumoniae</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFFF87;">0.700</span>), <span style="font-style: italic;">Serratia proteamaculans quinivorans</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.557</span>),</span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">Streptococcus phocae salmonis</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FFD787;">0.552</span>), <span style="font-style: italic;">Serratia proteamaculans quinovora</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FF5F5F;">0.545</span>), <span style="font-style: italic;">Sphingomonas piscinae</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.538</span>), <span style="font-style: italic;">Streptococcus pseudoporcinus</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.536</span>),</span></span>
+<span><span class="co">#&gt; <span style="font-style: italic;">Staphylococcus piscifermentans</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.533</span>), <span style="font-style: italic;">Staphylococcus pseudintermedius</span></span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">(</span><span style="color: #080808; background-color: #FF5F5F;">0.532</span>), and <span style="font-style: italic;">Serratia proteamaculans proteamaculans</span><span style="color: #0000BB;"> (</span><span style="color: #080808; background-color: #FF5F5F;">0.526</span>)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Only the first 10 other matches of each record are shown. Run ``</span></span>
 <span><span class="co">#&gt;   `print(mo_uncertainties(), n = ...)` `` to view more entries, or save</span></span>
 <span><span class="co">#&gt;   `mo_uncertainties()` to an object.</span></span></code></pre></div>
@@ -633,36 +632,46 @@ in:</p>
 <div class="section level3">
 <h3 id="generate-antibiograms">Generate antibiograms<a class="anchor" aria-label="anchor" href="#generate-antibiograms"></a>
 </h3>
-<p>Since AMR v2.0 (March 2023), it is very easy to create different
-types of antibiograms, with support for 20 different languages.</p>
-<p>There are four antibiogram types, as proposed by Klinker <em>et
+<p>The <code>AMR</code> package supports 28 different languages for
+antibiograms and provides four types, as proposed by Klinker <em>et
 al.</em> (2021, <a href="https://doi.org/10.1177/20499361211011373" class="external-link">DOI
-10.1177/20499361211011373</a>), and they are all supported by the new
-<code><a href="../reference/antibiogram.html">antibiogram()</a></code> function:</p>
+10.1177/20499361211011373</a>):</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Traditional Antibiogram (TA)</strong> e.g, for the
-susceptibility of <em>Pseudomonas aeruginosa</em> to
-piperacillin/tazobactam (TZP)</li>
+<strong>Traditional Antibiogram (TA)</strong> – susceptibility of a
+species to individual antibiotics</li>
 <li>
-<strong>Combination Antibiogram (CA)</strong> e.g, for the
-sdditional susceptibility of <em>Pseudomonas aeruginosa</em> to TZP +
-tobramycin versus TZP alone</li>
+<strong>Combination Antibiogram (CA)</strong> – susceptibility of a
+species to combination regimens</li>
 <li>
-<strong>Syndromic Antibiogram (SA)</strong> e.g, for the
-susceptibility of <em>Pseudomonas aeruginosa</em> to TZP among
-respiratory specimens (obtained among ICU patients only)</li>
+<strong>Syndromic Antibiogram (SA)</strong> – susceptibility of a
+species, stratified by clinical syndrome or setting</li>
 <li>
 <strong>Weighted-Incidence Syndromic Combination Antibiogram
-(WISCA)</strong> e.g, for the susceptibility of <em>Pseudomonas
-aeruginosa</em> to TZP among respiratory specimens (obtained among ICU
-patients only) for male patients age &gt;=65 years with heart
-failure</li>
+(WISCA)</strong> – estimated empirical coverage of a <em>regimen</em>
+for a <em>syndrome</em>, weighted by pathogen incidence and with
+quantified uncertainty</li>
 </ol>
-<p>In this section, we show how to use the <code><a href="../reference/antibiogram.html">antibiogram()</a></code>
-function to create any of the above antibiogram types. For starters,
-this is what the included <code>example_isolates</code> data set looks
-like:</p>
+<p><strong>If your goal is to guide empirical therapy, WISCA should be
+your default.</strong> The reason is simple: when you start empirical
+treatment, you do not know which pathogen is causing the infection. Your
+next patient will not present with a species label attached to them.
+What matters is the probability that the <em>regimen</em> you choose
+will cover <em>whatever pathogen turns out to be the cause</em>, given
+the local epidemiology of the syndrome. Traditional antibiograms do not
+answer that question. They fragment information by species, ignore how
+frequently each species causes the syndrome, do not evaluate combination
+regimens, and provide no measure of uncertainty. WISCA addresses all of
+these limitations using a Bayesian framework (Hebert <em>et al.</em>,
+2012; Bielicki <em>et al.</em>, 2016). See the <a href="https://amr-for-r.org/articles/WISCA.html">WISCA vignette</a> for
+the full explanation.</p>
+<p>Traditional, combination, and syndromic antibiograms remain useful
+for <strong>surveillance</strong> purposes, i.e., tracking resistance
+trends per species over time. But if you care about clinical impact,
+about choosing the right empirical regimen for your patient, use
+WISCA.</p>
+<p>For starters, this is what the included <code>example_isolates</code>
+data set looks like:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,000 × 46</span></span></span>
@@ -686,13 +695,162 @@ like:</p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   TCY &lt;sir&gt;, TGC &lt;sir&gt;, DOX &lt;sir&gt;, ERY &lt;sir&gt;, CLI &lt;sir&gt;, AZM &lt;sir&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span></span></code></pre></div>
 <div class="section level4">
+<h4 id="wisca-recommended-for-empirical-therapy-guidance">WISCA (recommended for empirical therapy guidance)<a class="anchor" aria-label="anchor" href="#wisca-recommended-for-empirical-therapy-guidance"></a>
+</h4>
+<p>Use the <code><a href="../reference/antibiogram.html">wisca()</a></code> function, or equivalently
+<code>antibiogram(..., wisca = TRUE)</code>. WISCA produces a single
+coverage estimate per regimen for the entire syndrome, weighted by
+pathogen incidence, with a 95% credible interval from Bayesian Monte
+Carlo simulation:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">wisca_result</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span></span>
+<span>    antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
+<span>    minimum <span class="op">=</span> <span class="fl">10</span></span>
+<span>  <span class="op">)</span> <span class="co"># Recommended threshold: ≥30</span></span>
+<span><span class="va">wisca_result</span></span></code></pre></div>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="24%">
+<col width="37%">
+<col width="37%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Piperacillin/tazobactam</th>
+<th align="left">Piperacillin/tazobactam + Gentamicin</th>
+<th align="left">Piperacillin/tazobactam + Tobramycin</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">70.2% (64.8-75.2%)</td>
+<td align="left">93.6% (92.2-95%)</td>
+<td align="left">89.9% (87-92.3%)</td>
+</tr></tbody>
+</table>
+<p>The output tells you: <em>“given the species distribution in your
+data, there is an estimated X% probability that this regimen covers the
+infection, with 95% credible interval [lower, upper]”</em>. That is the
+clinically relevant question.</p>
+<p>For <strong>syndrome-specific</strong> or <strong>patient-specific
+WISCA</strong>, use the <code>syndromic_group</code> argument or group
+your data first. You can stratify by anything: ward, age group, risk
+profile, acquisition type. The <code>syndromic_group</code> argument
+accepts any column or expression:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">wisca_out</span> <span class="op">&lt;-</span> <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/top_n_microorganisms.html">top_n_microorganisms</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span></span>
+<span>    age_group <span class="op">=</span> <span class="fu"><a href="../reference/age_groups.html">age_groups</a></span><span class="op">(</span><span class="va">age</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="va">gender</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span>antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wisca_out</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="8%">
+<col width="6%">
+<col width="20%">
+<col width="32%">
+<col width="32%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">age_group</th>
+<th align="left">gender</th>
+<th align="left">Piperacillin/tazobactam</th>
+<th align="left">Piperacillin/tazobactam + Gentamicin</th>
+<th align="left">Piperacillin/tazobactam + Tobramycin</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">0-24</td>
+<td align="left">F</td>
+<td align="left">56.8% (29.9-81.3%)</td>
+<td align="left">70.7% (45.2-89%)</td>
+<td align="left">65.9% (42.3-86.6%)</td>
+</tr>
+<tr class="even">
+<td align="left">0-24</td>
+<td align="left">M</td>
+<td align="left">59.5% (31.2-85.5%)</td>
+<td align="left">76.1% (56.5-92%)</td>
+<td align="left">59.6% (31.7-85.1%)</td>
+</tr>
+<tr class="odd">
+<td align="left">25-49</td>
+<td align="left">F</td>
+<td align="left">67.7% (43.9-89.7%)</td>
+<td align="left">93.8% (87.4-98.1%)</td>
+<td align="left">87% (70.1-97%)</td>
+</tr>
+<tr class="even">
+<td align="left">25-49</td>
+<td align="left">M</td>
+<td align="left">56.9% (26.6-86.2%)</td>
+<td align="left">91% (82-97.2%)</td>
+<td align="left">76.6% (51.4-93.5%)</td>
+</tr>
+<tr class="odd">
+<td align="left">50-74</td>
+<td align="left">F</td>
+<td align="left">68% (54.1-81.8%)</td>
+<td align="left">96.9% (94.6-98.5%)</td>
+<td align="left">90.2% (82-96.2%)</td>
+</tr>
+<tr class="even">
+<td align="left">50-74</td>
+<td align="left">M</td>
+<td align="left">67% (56-78.5%)</td>
+<td align="left">96.7% (94.1-98.5%)</td>
+<td align="left">86.7% (77.3-94.4%)</td>
+</tr>
+<tr class="odd">
+<td align="left">75+</td>
+<td align="left">F</td>
+<td align="left">73.1% (61.8-84.1%)</td>
+<td align="left">97.7% (95.9-99%)</td>
+<td align="left">92.8% (85.7-97.2%)</td>
+</tr>
+<tr class="even">
+<td align="left">75+</td>
+<td align="left">M</td>
+<td align="left">74% (63.6-82.6%)</td>
+<td align="left">97.9% (96-99%)</td>
+<td align="left">94.7% (89.3-97.9%)</td>
+</tr>
+</tbody>
+</table>
+<p>Keep in mind that more granular stratification produces more relevant
+estimates for each subgroup, but with wider credible intervals due to
+smaller sample sizes. There is always a trade-off between granularity
+and precision. If local numbers are small, consider pooling data from
+multiple sites (Bielicki <em>et al.</em>, 2016).</p>
+<p>For reliable WISCA results, ensure your data includes <strong>only
+first isolates</strong> (use <code><a href="../reference/first_isolate.html">first_isolate()</a></code>) and consider
+filtering for <strong>the top <em>n</em> species</strong> (use
+<code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>), since rare contaminants can
+distort coverage estimates.</p>
+<p>After creating the WISCA model, assessments can be done on the
+distributions of the Monte Carlo simulations that WISCA carried out:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca_plot</a></span><span class="op">(</span><span class="va">wisca_out</span><span class="op">)</span></span></code></pre></div>
+<p><img src="AMR_files/figure-html/wisca_plots-1.png" class="r-plt" alt="" width="720"></p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca_plot</a></span><span class="op">(</span><span class="va">wisca_out</span>, wisca_plot_type <span class="op">=</span> <span class="st">"posterior_coverage"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="AMR_files/figure-html/wisca_plots-2.png" class="r-plt" alt="" width="720"></p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># a ggplot2 extension for WISCAs and other antibiograms:</span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">wisca_out</span><span class="op">)</span></span></code></pre></div>
+<p><img src="AMR_files/figure-html/wisca_plots-3.png" class="r-plt" alt="" width="720"></p>
+</div>
+<div class="section level4">
 <h4 id="traditional-antibiogram">Traditional Antibiogram<a class="anchor" aria-label="anchor" href="#traditional-antibiogram"></a>
 </h4>
-<p>To create a traditional antibiogram, simply state which antibiotics
-should be used. The <code>antibiotics</code> argument in the
-<code><a href="../reference/antibiogram.html">antibiogram()</a></code> function supports any (combination) of the
-previously mentioned antibiotic class selectors:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p>If you need per-species susceptibility rates, e.g., for AMR
+surveillance reports, the traditional antibiogram remains the right
+tool. It reports the proportion of susceptible isolates per species per
+antibiotic:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -821,7 +979,7 @@ Greek, Hindi, Indonesian, Italian, Japanese, Korean, Norwegian, Polish,
 Portuguese, Romanian, Russian, Spanish, Swahili, Swedish, Turkish,
 Ukrainian, Urdu, or Vietnamese. In this next example, we force the
 language to be Spanish using the <code>language</code> argument:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>  mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
 <span>  antibiotics <span class="op">=</span> <span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -864,11 +1022,13 @@ language to be Spanish using the <code>language</code> argument:</p>
 </table>
 </div>
 <div class="section level4">
-<h4 id="combined-antibiogram">Combined Antibiogram<a class="anchor" aria-label="anchor" href="#combined-antibiogram"></a>
+<h4 id="combination-antibiogram">Combination Antibiogram<a class="anchor" aria-label="anchor" href="#combination-antibiogram"></a>
 </h4>
-<p>To create a combined antibiogram, use antibiotic codes or names with
-a plus <code>+</code> character like this:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<p>A combination antibiogram shows how much additional susceptibility a
+second agent adds for a given species. This is useful for surveillance
+of combination regimens, but note that it is still species-stratified
+and does not account for pathogen incidence in the syndrome:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">combined_ab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
 <span>  ab_transform <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -948,10 +1108,13 @@ a plus <code>+</code> character like this:</p>
 <div class="section level4">
 <h4 id="syndromic-antibiogram">Syndromic Antibiogram<a class="anchor" aria-label="anchor" href="#syndromic-antibiogram"></a>
 </h4>
-<p>To create a syndromic antibiogram, the <code>syndromic_group</code>
-argument must be used. This can be any column in the data, or e.g. an
-<code><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse()</a></code> with calculations based on certain columns:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<p>A syndromic antibiogram stratifies per-species susceptibility by
+clinical context (ward, specimen type, etc.). It adds clinical context
+to the traditional antibiogram but is still species-level, without
+incidence weighting or uncertainty quantification. For surveillance by
+setting this is fine; for empirical therapy guidance, WISCA is
+preferred:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>  antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span></span>
@@ -1125,511 +1288,14 @@ argument must be used. This can be any column in the data, or e.g. an
 </table>
 </div>
 <div class="section level4">
-<h4 id="weighted-incidence-syndromic-combination-antibiogram-wisca">Weighted-Incidence Syndromic Combination Antibiogram (WISCA)<a class="anchor" aria-label="anchor" href="#weighted-incidence-syndromic-combination-antibiogram-wisca"></a>
-</h4>
-<p>To create a <strong>Weighted-Incidence Syndromic Combination
-Antibiogram (WISCA)</strong>, simply set <code>wisca = TRUE</code> in
-the <code><a href="../reference/antibiogram.html">antibiogram()</a></code> function, or use the dedicated
-<code><a href="../reference/antibiogram.html">wisca()</a></code> function. Unlike traditional antibiograms, WISCA
-provides syndrome-based susceptibility estimates, weighted by pathogen
-incidence and antimicrobial susceptibility patterns.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span></span>
-<span>    antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
-<span>    minimum <span class="op">=</span> <span class="fl">10</span></span>
-<span>  <span class="op">)</span> <span class="co"># Recommended threshold: ≥30</span></span></code></pre></div>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="24%">
-<col width="37%">
-<col width="37%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">Piperacillin/tazobactam</th>
-<th align="left">Piperacillin/tazobactam + Gentamicin</th>
-<th align="left">Piperacillin/tazobactam + Tobramycin</th>
-</tr></thead>
-<tbody><tr class="odd">
-<td align="left">69.4% (64.3-74.3%)</td>
-<td align="left">92.6% (91.1-93.9%)</td>
-<td align="left">88.7% (85.8-91.2%)</td>
-</tr></tbody>
-</table>
-<p>WISCA uses a <strong>Bayesian decision model</strong> to integrate
-data from multiple pathogens, improving empirical therapy guidance,
-especially for low-incidence infections. It is
-<strong>pathogen-agnostic</strong>, meaning results are syndrome-based
-rather than stratified by microorganism.</p>
-<p>For reliable results, ensure your data includes <strong>only first
-isolates</strong> (use <code><a href="../reference/first_isolate.html">first_isolate()</a></code>) and consider
-filtering for <strong>the top <em>n</em> species</strong> (use
-<code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>), as WISCA outcomes are most
-meaningful when based on robust incidence estimates.</p>
-<p>For <strong>patient- or syndrome-specific WISCA</strong>, run the
-function on a grouped <code>tibble</code>, i.e., using
-<code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> first:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/top_n_microorganisms.html">top_n_microorganisms</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span></span>
-<span>    age_group <span class="op">=</span> <span class="fu"><a href="../reference/age_groups.html">age_groups</a></span><span class="op">(</span><span class="va">age</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    <span class="va">gender</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span>antibiotics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="1%">
-<col width="0%">
-<col width="2%">
-<col width="2%">
-<col width="3%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="3%">
-<col width="2%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">age_group</th>
-<th align="left">gender</th>
-<th align="left">Amikacin</th>
-<th align="left">Amoxicillin</th>
-<th align="left">Amoxicillin/clavulanic acid</th>
-<th align="left">Ampicillin</th>
-<th align="left">Azithromycin</th>
-<th align="left">Benzylpenicillin</th>
-<th align="left">Cefazolin</th>
-<th align="left">Cefepime</th>
-<th align="left">Cefotaxime</th>
-<th align="left">Cefoxitin</th>
-<th align="left">Ceftazidime</th>
-<th align="left">Ceftriaxone</th>
-<th align="left">Cefuroxime</th>
-<th align="left">Chloramphenicol</th>
-<th align="left">Ciprofloxacin</th>
-<th align="left">Clindamycin</th>
-<th align="left">Colistin</th>
-<th align="left">Doxycycline</th>
-<th align="left">Erythromycin</th>
-<th align="left">Flucloxacillin</th>
-<th align="left">Fosfomycin</th>
-<th align="left">Gentamicin</th>
-<th align="left">Imipenem</th>
-<th align="left">Kanamycin</th>
-<th align="left">Linezolid</th>
-<th align="left">Meropenem</th>
-<th align="left">Metronidazole</th>
-<th align="left">Moxifloxacin</th>
-<th align="left">Mupirocin</th>
-<th align="left">Nitrofurantoin</th>
-<th align="left">Oxacillin</th>
-<th align="left">Piperacillin/tazobactam</th>
-<th align="left">Rifampicin</th>
-<th align="left">Teicoplanin</th>
-<th align="left">Tetracycline</th>
-<th align="left">Tigecycline</th>
-<th align="left">Tobramycin</th>
-<th align="left">Trimethoprim</th>
-<th align="left">Trimethoprim/sulfamethoxazole</th>
-<th align="left">Vancomycin</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">0-24</td>
-<td align="left">F</td>
-<td align="left">45.4% (15.4-79%)</td>
-<td align="left">50.1% (20.5-77.6%)</td>
-<td align="left">69% (44.5-88.5%)</td>
-<td align="left">50.4% (20.6-77.3%)</td>
-<td align="left">41.9% (18.1-65.6%)</td>
-<td align="left">36.1% (12.3-64.3%)</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">63.9% (34.6-87.6%)</td>
-<td align="left">56.7% (25.9-85.8%)</td>
-<td align="left">51.5% (25.6-74.4%)</td>
-<td align="left">63.4% (32-88.1%)</td>
-<td align="left">70.4% (45.4-89.1%)</td>
-<td align="left">54% (22.3-85.3%)</td>
-<td align="left">69.8% (45.9-88.9%)</td>
-<td align="left">39.3% (17.7-64.6%)</td>
-<td align="left">45.3% (18.1-75.9%)</td>
-<td align="left">50.1% (21.5-80.5%)</td>
-<td align="left">41.7% (19.1-67.6%)</td>
-<td align="left">55.8% (23.7-83.3%)</td>
-<td align="left">63.5% (32.6-89.4%)</td>
-<td align="left">69.3% (44.6-88.3%)</td>
-<td align="left">63.6% (36.1-88.2%)</td>
-<td align="left">45.5% (15.7-77.7%)</td>
-<td align="left">43.3% (17.8-71.2%)</td>
-<td align="left">55.9% (24.3-82.2%)</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">56.5% (24.3-85%)</td>
-<td align="left">56.8% (30.9-82.3%)</td>
-<td align="left">50.5% (19.4-80.8%)</td>
-<td align="left">56.9% (26.7-85%)</td>
-<td align="left">42.3% (18.3-68.8%)</td>
-<td align="left">40.2% (17.6-67.7%)</td>
-<td align="left">49.8% (20-79.3%)</td>
-<td align="left">56.1% (22-85.4%)</td>
-<td align="left">64.5% (39.6-85.5%)</td>
-<td align="left">69.7% (42.3-90.4%)</td>
-<td align="left">75.4% (52.1-91.7%)</td>
-<td align="left">48.5% (24.3-72.6%)</td>
-</tr>
-<tr class="even">
-<td align="left">0-24</td>
-<td align="left">M</td>
-<td align="left">41.9% (15.2-72.5%)</td>
-<td align="left">49.4% (23.3-75.5%)</td>
-<td align="left">73.8% (51.8-90.1%)</td>
-<td align="left">49.3% (22.7-76%)</td>
-<td align="left">63.4% (40.7-83.5%)</td>
-<td align="left">41.8% (20.4-64.8%)</td>
-<td align="left">56.8% (25.2-83.5%)</td>
-<td align="left">58.2% (29.1-85.8%)</td>
-<td align="left">59.7% (29.1-87.4%)</td>
-<td align="left">59.3% (29.1-86.6%)</td>
-<td align="left">24.9% (8.9-47.3%)</td>
-<td align="left">58.5% (28-86.5%)</td>
-<td align="left">72.1% (47.9-90.5%)</td>
-<td align="left">NA</td>
-<td align="left">77.2% (53-93.2%)</td>
-<td align="left">61.6% (36.2-83.6%)</td>
-<td align="left">25.5% (8.7-46.1%)</td>
-<td align="left">69.4% (44.6-89.4%)</td>
-<td align="left">63.4% (41.8-82.7%)</td>
-<td align="left">64% (37.6-85.6%)</td>
-<td align="left">NA</td>
-<td align="left">63.5% (40.9-83.1%)</td>
-<td align="left">58.7% (27.6-86.5%)</td>
-<td align="left">41.8% (13.6-71.2%)</td>
-<td align="left">48.3% (17.9-78%)</td>
-<td align="left">59.2% (27.4-86.4%)</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">53% (21.3-83.7%)</td>
-<td align="left">57.2% (24.6-84.6%)</td>
-<td align="left">59.9% (29.7-85.6%)</td>
-<td align="left">48.2% (16.1-80.4%)</td>
-<td align="left">48.4% (17.4-79.8%)</td>
-<td align="left">68% (43.5-87.3%)</td>
-<td align="left">65.7% (36-89.2%)</td>
-<td align="left">44.3% (17.2-73.4%)</td>
-<td align="left">69.4% (46.9-87.8%)</td>
-<td align="left">74% (50.8-90.9%)</td>
-<td align="left">75.3% (52.4-92.2%)</td>
-</tr>
-<tr class="odd">
-<td align="left">25-49</td>
-<td align="left">F</td>
-<td align="left">46.8% (26.7-65.6%)</td>
-<td align="left">39% (26.3-52.9%)</td>
-<td align="left">73.8% (63.5-82.6%)</td>
-<td align="left">39.3% (27.2-54.4%)</td>
-<td align="left">54.8% (44.9-64.8%)</td>
-<td align="left">36.5% (26.3-47.1%)</td>
-<td align="left">66.4% (46.1-85%)</td>
-<td align="left">69.2% (49.1-86.2%)</td>
-<td align="left">70.2% (50.5-86.2%)</td>
-<td align="left">68.1% (48.6-85.4%)</td>
-<td align="left">27.9% (19.2-37.9%)</td>
-<td align="left">70.1% (50.5-87.1%)</td>
-<td align="left">71.4% (61.7-80.4%)</td>
-<td align="left">58.2% (35.3-79.9%)</td>
-<td align="left">85.5% (74.1-94.2%)</td>
-<td align="left">67.1% (55.8-77.4%)</td>
-<td align="left">25.8% (17-36%)</td>
-<td align="left">75.5% (61.2-88.2%)</td>
-<td align="left">54.9% (44.8-65.6%)</td>
-<td align="left">55.2% (37.8-72.5%)</td>
-<td align="left">60.9% (38.3-81.8%)</td>
-<td align="left">75.2% (65.7-83.5%)</td>
-<td align="left">69.9% (50.1-86.6%)</td>
-<td align="left">37.5% (17.7-57.9%)</td>
-<td align="left">50.7% (30.8-68.7%)</td>
-<td align="left">69.4% (48.6-86.7%)</td>
-<td align="left">NA</td>
-<td align="left">56.9% (36.2-77.7%)</td>
-<td align="left">53.3% (30.9-75.6%)</td>
-<td align="left">60.1% (38.1-81.8%)</td>
-<td align="left">64.3% (43.2-83.6%)</td>
-<td align="left">66% (45.7-85.2%)</td>
-<td align="left">50.1% (30-69.6%)</td>
-<td align="left">38.8% (19.6-58.9%)</td>
-<td align="left">75.8% (61.6-88.1%)</td>
-<td align="left">73.3% (56.6-89.5%)</td>
-<td align="left">62.7% (47.6-77.1%)</td>
-<td align="left">70.4% (58.7-80.2%)</td>
-<td align="left">90% (82.9-95.4%)</td>
-<td align="left">71.6% (61.7-80.4%)</td>
-</tr>
-<tr class="even">
-<td align="left">25-49</td>
-<td align="left">M</td>
-<td align="left">49.8% (24.2-75.8%)</td>
-<td align="left">16.5% (8.1-27.4%)</td>
-<td align="left">72.4% (60.5-83.5%)</td>
-<td align="left">16.6% (7.7-28.2%)</td>
-<td align="left">55.9% (43.6-67.9%)</td>
-<td align="left">24.9% (14.7-37.6%)</td>
-<td align="left">60.3% (33.2-82.4%)</td>
-<td align="left">55.3% (27.6-81.8%)</td>
-<td align="left">55.9% (29.7-81.1%)</td>
-<td align="left">56.2% (27.7-82.1%)</td>
-<td align="left">22.2% (12.7-33.9%)</td>
-<td align="left">55.6% (29.1-81.8%)</td>
-<td align="left">73.7% (62.6-83.8%)</td>
-<td align="left">52.9% (25.2-79.6%)</td>
-<td align="left">67.1% (53-79.8%)</td>
-<td align="left">57.8% (43.5-71.8%)</td>
-<td align="left">22.3% (12.6-33.6%)</td>
-<td align="left">73% (57.8-85.5%)</td>
-<td align="left">55.8% (43-68.2%)</td>
-<td align="left">66.5% (51.6-79.4%)</td>
-<td align="left">63.1% (40.3-84.5%)</td>
-<td align="left">83.9% (74.5-91.7%)</td>
-<td align="left">56.4% (28.4-84%)</td>
-<td align="left">45.4% (18.9-73.8%)</td>
-<td align="left">59.4% (37.6-77.9%)</td>
-<td align="left">56.3% (28.8-81.1%)</td>
-<td align="left">NA</td>
-<td align="left">52.8% (24.7-78.7%)</td>
-<td align="left">64.2% (40.2-84.5%)</td>
-<td align="left">62.9% (37.7-85.1%)</td>
-<td align="left">60.5% (37.1-80.7%)</td>
-<td align="left">55.8% (29.4-82.9%)</td>
-<td align="left">65.4% (48.7-80.8%)</td>
-<td align="left">54.5% (31.7-73.7%)</td>
-<td align="left">72.8% (58.7-84.8%)</td>
-<td align="left">84.8% (72.4-93.6%)</td>
-<td align="left">66.7% (44.5-84.1%)</td>
-<td align="left">71.4% (58.9-82.6%)</td>
-<td align="left">86.6% (77.9-93.7%)</td>
-<td align="left">77.1% (65.5-87.1%)</td>
-</tr>
-<tr class="odd">
-<td align="left">50-74</td>
-<td align="left">F</td>
-<td align="left">44.8% (35.8-54.1%)</td>
-<td align="left">30.1% (24.9-35.3%)</td>
-<td align="left">74.1% (69.2-78.7%)</td>
-<td align="left">30% (24.6-35.4%)</td>
-<td align="left">41.9% (36.5-47.3%)</td>
-<td align="left">23.5% (18.6-29%)</td>
-<td align="left">73.1% (62-82.9%)</td>
-<td align="left">76.6% (66.1-86%)</td>
-<td align="left">74.8% (64.9-84.5%)</td>
-<td align="left">74.6% (64.2-83.3%)</td>
-<td align="left">37.5% (32.3-43.4%)</td>
-<td align="left">74.8% (64.4-83.8%)</td>
-<td align="left">74.5% (69.7-78.9%)</td>
-<td align="left">61.2% (40.3-82.4%)</td>
-<td align="left">79.4% (73-85%)</td>
-<td align="left">44.9% (38.7-51%)</td>
-<td align="left">37.8% (32.7-43.3%)</td>
-<td align="left">63.8% (47.6-80.1%)</td>
-<td align="left">41.7% (36.6-46.9%)</td>
-<td align="left">58.1% (40-75.1%)</td>
-<td align="left">65.2% (53.5-76.6%)</td>
-<td align="left">78.7% (73.8-83.2%)</td>
-<td align="left">80.6% (70.3-90%)</td>
-<td align="left">28.1% (10.1-46.6%)</td>
-<td align="left">53.2% (42.9-62.4%)</td>
-<td align="left">79.3% (68.7-88.6%)</td>
-<td align="left">NA</td>
-<td align="left">49.5% (37.5-61.8%)</td>
-<td align="left">67.8% (48.5-86%)</td>
-<td align="left">75.1% (63.3-86.3%)</td>
-<td align="left">56.6% (37.8-74.2%)</td>
-<td align="left">67.7% (56.4-79.6%)</td>
-<td align="left">50.6% (40.9-59.1%)</td>
-<td align="left">41.3% (31.5-50.4%)</td>
-<td align="left">59% (48.3-74.5%)</td>
-<td align="left">87.7% (80.4-94.1%)</td>
-<td align="left">62.2% (55.4-68.4%)</td>
-<td align="left">55.5% (49.8-61.1%)</td>
-<td align="left">68% (62.7-73.3%)</td>
-<td align="left">60.9% (55.8-66.1%)</td>
-</tr>
-<tr class="even">
-<td align="left">50-74</td>
-<td align="left">M</td>
-<td align="left">38.8% (30.6-48.6%)</td>
-<td align="left">34.6% (29.1-40.3%)</td>
-<td align="left">75% (70-79.5%)</td>
-<td align="left">34.7% (29.2-40.5%)</td>
-<td align="left">43.4% (37.8-48.5%)</td>
-<td align="left">21% (16.5-26.4%)</td>
-<td align="left">64.3% (54.1-74.1%)</td>
-<td align="left">65.9% (56.5-75.4%)</td>
-<td align="left">67.3% (58.3-77%)</td>
-<td align="left">65.9% (56.1-75.9%)</td>
-<td align="left">32.9% (27.6-38%)</td>
-<td align="left">67.3% (57.4-76.8%)</td>
-<td align="left">74.1% (69.2-78.8%)</td>
-<td align="left">63.5% (42.4-83%)</td>
-<td align="left">76.9% (71.6-81.9%)</td>
-<td align="left">47.3% (40.9-53.8%)</td>
-<td align="left">30.8% (26.1-36.1%)</td>
-<td align="left">68.5% (53.5-81.9%)</td>
-<td align="left">43.4% (37.7-48.8%)</td>
-<td align="left">58.1% (42.4-73.2%)</td>
-<td align="left">68.1% (53.5-82.2%)</td>
-<td align="left">79.1% (74.4-83.1%)</td>
-<td align="left">69% (59.7-78.3%)</td>
-<td align="left">24.8% (9.5-40.5%)</td>
-<td align="left">49.7% (35-63.2%)</td>
-<td align="left">68.1% (58.1-77.6%)</td>
-<td align="left">53.8% (32-75%)</td>
-<td align="left">51.7% (36.1-67.3%)</td>
-<td align="left">68.8% (51.1-85.7%)</td>
-<td align="left">70.2% (54.7-85.3%)</td>
-<td align="left">53.2% (37.5-68.7%)</td>
-<td align="left">66.5% (55-76.8%)</td>
-<td align="left">56.2% (45.8-65.4%)</td>
-<td align="left">44% (30.3-57.5%)</td>
-<td align="left">71.9% (58.2-82.2%)</td>
-<td align="left">86.8% (77.3-93.6%)</td>
-<td align="left">54.1% (46.9-61.4%)</td>
-<td align="left">67.1% (61.5-72.5%)</td>
-<td align="left">81% (76.4-85.2%)</td>
-<td align="left">66.3% (61-71.2%)</td>
-</tr>
-<tr class="odd">
-<td align="left">75+</td>
-<td align="left">F</td>
-<td align="left">51.4% (41.7-62%)</td>
-<td align="left">30.9% (26.2-36.5%)</td>
-<td align="left">74.4% (70.3-78.6%)</td>
-<td align="left">30.9% (25.7-36.1%)</td>
-<td align="left">36.6% (32-41.6%)</td>
-<td align="left">20.7% (16.2-25.4%)</td>
-<td align="left">73.6% (63.6-82.5%)</td>
-<td align="left">79.1% (70.6-86.8%)</td>
-<td align="left">78.6% (69.9-86.3%)</td>
-<td align="left">76% (67.5-83.7%)</td>
-<td align="left">43.1% (38.6-48%)</td>
-<td align="left">78.9% (70.5-86.4%)</td>
-<td align="left">77% (72.6-81.3%)</td>
-<td align="left">63.2% (43.2-84.1%)</td>
-<td align="left">77.7% (72.1-83.2%)</td>
-<td align="left">41.2% (36-46.4%)</td>
-<td align="left">39.1% (34.2-44.4%)</td>
-<td align="left">63.7% (46.3-80.6%)</td>
-<td align="left">36.5% (31.9-41.2%)</td>
-<td align="left">57.1% (39.8-76%)</td>
-<td align="left">65.8% (57.2-73.5%)</td>
-<td align="left">84.6% (80.6-88%)</td>
-<td align="left">81.9% (73.7-89.5%)</td>
-<td align="left">33.3% (13.7-53%)</td>
-<td align="left">49.6% (42.3-56.1%)</td>
-<td align="left">81.3% (73.2-88.9%)</td>
-<td align="left">55.9% (33.5-76.5%)</td>
-<td align="left">41% (31.4-51.8%)</td>
-<td align="left">63.7% (43.8-82.3%)</td>
-<td align="left">77.8% (66-87.4%)</td>
-<td align="left">56.3% (37.3-75.1%)</td>
-<td align="left">71.8% (62-82.2%)</td>
-<td align="left">48.3% (41.5-54.9%)</td>
-<td align="left">43.3% (36.2-50.7%)</td>
-<td align="left">63% (45.3-80.3%)</td>
-<td align="left">85.9% (79.9-90.9%)</td>
-<td align="left">70.4% (64.1-76.8%)</td>
-<td align="left">60.4% (55.1-65.8%)</td>
-<td align="left">77.6% (73.4-82.1%)</td>
-<td align="left">55.3% (50.4-60.1%)</td>
-</tr>
-<tr class="even">
-<td align="left">75+</td>
-<td align="left">M</td>
-<td align="left">52.6% (43.3-62.6%)</td>
-<td align="left">33% (28.1-38%)</td>
-<td align="left">77.4% (73.3-81.5%)</td>
-<td align="left">33% (28.2-38.2%)</td>
-<td align="left">36.8% (32.3-41.8%)</td>
-<td align="left">17.9% (12.6-23.2%)</td>
-<td align="left">64.4% (55.4-73.3%)</td>
-<td align="left">71.2% (63.1-79.1%)</td>
-<td align="left">67.9% (59.5-75.8%)</td>
-<td align="left">65.3% (56.3-73.6%)</td>
-<td align="left">42.6% (37.8-47.4%)</td>
-<td align="left">68.2% (59.7-76.4%)</td>
-<td align="left">75.1% (70.9-79.2%)</td>
-<td align="left">64.1% (45.8-81.8%)</td>
-<td align="left">77.6% (72-82.6%)</td>
-<td align="left">41% (36-46.4%)</td>
-<td align="left">39.9% (35.1-44.5%)</td>
-<td align="left">62.1% (46-78.8%)</td>
-<td align="left">36.9% (32.4-41.4%)</td>
-<td align="left">59.7% (43.4-76.6%)</td>
-<td align="left">64.7% (56.6-73.6%)</td>
-<td align="left">83% (79.4-86.7%)</td>
-<td align="left">75.7% (66.6-83%)</td>
-<td align="left">31.6% (12.1-51.7%)</td>
-<td align="left">51.8% (44.9-58%)</td>
-<td align="left">74.2% (65.8-82.7%)</td>
-<td align="left">NA</td>
-<td align="left">52.2% (41.5-60.8%)</td>
-<td align="left">69.3% (50.5-86.4%)</td>
-<td align="left">72.2% (58.7-83.4%)</td>
-<td align="left">59.3% (41.6-76.7%)</td>
-<td align="left">73.1% (64.3-81.4%)</td>
-<td align="left">49.9% (42.4-56.9%)</td>
-<td align="left">46.3% (38.2-53.1%)</td>
-<td align="left">59.7% (44.2-75.7%)</td>
-<td align="left">86.8% (81.4-91.3%)</td>
-<td align="left">72% (66.3-77.6%)</td>
-<td align="left">55.8% (50.3-61.1%)</td>
-<td align="left">73.3% (68.9-77.6%)</td>
-<td align="left">57% (52.2-61.6%)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section level4">
 <h4 id="plotting-antibiograms">Plotting antibiograms<a class="anchor" aria-label="anchor" href="#plotting-antibiograms"></a>
 </h4>
-<p>Antibiograms can be plotted using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> from the
-<code>ggplot2</code> packages, since this <code>AMR</code> package
-provides an extension to that function:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">combined_ab</span><span class="op">)</span></span></code></pre></div>
+<p>All antibiogram types, including WISCA, can be plotted using
+<code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> from the <code>ggplot2</code> package, since
+this <code>AMR</code> package provides an extension to that
+function:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">wisca_result</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="720"></p>
 <p>To calculate antimicrobial resistance in a more sensible way, also by
 correcting for too few results, we use the <code><a href="../reference/proportion.html">resistance()</a></code> and
@@ -1657,7 +1323,7 @@ proportion of R (<code><a href="../reference/proportion.html">proportion_R()</a>
 I (<code><a href="../reference/proportion.html">proportion_SI()</a></code>, equal to
 <code><a href="../reference/proportion.html">susceptibility()</a></code>). These functions can be used on their
 own:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> `resistance()` assumes the EUCAST guideline and thus considers the 'I'</span></span>
 <span><span class="co">#&gt;   category susceptible. Set the `guideline` argument or the `AMR_guideline`</span></span>
@@ -1666,7 +1332,7 @@ own:</p>
 <span><span class="co">#&gt; [1] 0.4203377</span></span></code></pre></div>
 <p>Or can be used in conjunction with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> and
 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, both from the <code>dplyr</code> package:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">our_data_1st</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>amoxicillin <span class="op">=</span> <span class="fu"><a href="../reference/proportion.html">resistance</a></span><span class="op">(</span><span class="va">AMX</span><span class="op">)</span><span class="op">)</span></span>
@@ -1684,7 +1350,7 @@ own:</p>
 diameters can be interpreted into clinical breakpoints (SIR) using
 <code><a href="../reference/as.sir.html">as.sir()</a></code>. Here’s an example with randomly generated MIC
 values for <em>Klebsiella pneumoniae</em> and ciprofloxacin:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">mic_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_mic</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">sir_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span><span class="op">)</span></span>
@@ -1715,7 +1381,7 @@ breakpoints, facilitating automated AMR data processing.</p>
 using <code>ggplot2</code>, using the new <code><a href="../reference/plot.html">scale_y_mic()</a></code> for
 the y-axis and <code><a href="../reference/plot.html">scale_colour_sir()</a></code> to colour-code SIR
 categories.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add a group</span></span>
 <span><span class="va">my_data</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span>
 <span></span>
@@ -1739,16 +1405,16 @@ across different groups while incorporating clinical breakpoints.</p>
 <code>ggplot2</code>’s function <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> has been
 extended by this package to directly plot MIC and disk diffusion
 values:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_values</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/autoplot-1.png" class="r-plt" alt="" width="720"></p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># by providing `mo` and `ab`, colours will indicate the SIR interpretation:</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/autoplot-2.png" class="r-plt" alt="" width="720"></p>
 <hr>
-<p><em>Author: Dr. Matthijs Berends, 23rd Feb 2025</em></p>
+<p><em>Author: Dr. Matthijs Berends, 23rd June 2026</em></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

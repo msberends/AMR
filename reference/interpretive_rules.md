@@ -15,57 +15,45 @@ at default, see *Details*.
 ## Usage
 
 ``` r
-interpretive_rules(x, col_mo = NULL, info = interactive(),
+interpretive_rules(
+  x,
+  col_mo = NULL,
+  info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
-  "expected_phenotypes")), guideline = getOption("AMR_guideline", "EUCAST"),
-  verbose = FALSE, version_breakpoints = 16,
-  version_expected_phenotypes = 1.2, version_expertrules = 3.3,
-  ampc_cephalosporin_resistance = NA, only_sir_columns = any(is.sir(x)),
-  custom_rules = NULL, overwrite = FALSE, add_if_missing = TRUE, ...)
+    "expected_phenotypes")),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  verbose = FALSE,
+  version_breakpoints = 16,
+  version_expected_phenotypes = 1.2,
+  version_expertrules = 3.3,
+  ampc_cephalosporin_resistance = NA,
+  only_sir_columns = any(is.sir(x)),
+  custom_rules = NULL,
+  overwrite = FALSE,
+  add_if_missing = TRUE,
+  ...
+)
 
-eucast_rules(x, col_mo = NULL, info = interactive(),
+eucast_rules(
+  x,
+  col_mo = NULL,
+  info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
-  "expected_phenotypes")), ...)
+    "expected_phenotypes")),
+  ...
+)
 
-clsi_rules(x, col_mo = NULL, info = interactive(),
+clsi_rules(
+  x,
+  col_mo = NULL,
+  info = interactive(),
   rules = getOption("AMR_interpretive_rules", default = c("breakpoints",
-  "expected_phenotypes")), ...)
+    "expected_phenotypes")),
+  ...
+)
 
 eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 ```
-
-## Source
-
-- EUCAST Expert Rules. Version 2.0, 2012.  
-  Leclercq et al. **EUCAST expert rules in antimicrobial susceptibility
-  testing.** *Clin Microbiol Infect.* 2013;19(2):141-60;
-  [doi:10.1111/j.1469-0691.2011.03703.x](https://doi.org/10.1111/j.1469-0691.2011.03703.x)
-
-- EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes
-  Tables. Version 3.1, 2016.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf)
-
-- EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf)
-
-- EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.3, 2021.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf)
-
-- EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters. Version 9.0, 2019.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx)
-
-- EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters. Version 10.0, 2020.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx)
-
-- EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters. Version 11.0, 2021.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
-
-- EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters. Version 12.0, 2022.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx)
 
 ## Arguments
 
@@ -232,7 +220,7 @@ The file containing all interpretive rules is located here:
 where applicable. For example, *Ochrobactrum anthropi* was renamed to
 *Brucella anthropi* in 2020; the original EUCAST rules v3.1 and v3.2 did
 not yet contain this new taxonomic name. The `AMR` package contains the
-full microbial taxonomy updated until June 24th, 2024, see
+full microbial taxonomy updated until 7th of May, 2026, see
 [microorganisms](https://amr-for-r.org/reference/microorganisms.md).
 
 ### Custom Rules
@@ -284,6 +272,39 @@ Visit [our website for direct download
 links](https://amr-for-r.org/articles/datasets.html), or explore the
 actual files in [our GitHub
 repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
+
+## References
+
+- EUCAST Expert Rules. Version 2.0, 2012.  
+  Leclercq et al. **EUCAST expert rules in antimicrobial susceptibility
+  testing.** *Clin Microbiol Infect.* 2013;19(2):141-60;
+  [doi:10.1111/j.1469-0691.2011.03703.x](https://doi.org/10.1111/j.1469-0691.2011.03703.x)
+
+- EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes
+  Tables. Version 3.1, 2016.
+  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf)
+
+- EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020.
+  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf)
+
+- EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.3, 2021.
+  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf)
+
+- EUCAST Breakpoint tables for interpretation of MICs and zone
+  diameters. Version 9.0, 2019.
+  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx)
+
+- EUCAST Breakpoint tables for interpretation of MICs and zone
+  diameters. Version 10.0, 2020.
+  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx)
+
+- EUCAST Breakpoint tables for interpretation of MICs and zone
+  diameters. Version 11.0, 2021.
+  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
+
+- EUCAST Breakpoint tables for interpretation of MICs and zone
+  diameters. Version 12.0, 2022.
+  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx)
 
 ## Examples
 

@@ -121,14 +121,23 @@ mo_gramstain("Enterobacter asburiae/cloacae")
 #> [1] "Gram-negative"
 
 mo_info("Enterobacter asburiae/cloacae")
+#> ℹ Since AMR v3.1.0, `mo_kingdom()` returns the taxonomic kingdom as defined by
+#>   Göker and Oren (2024), who formally introduced a new kingdom rank into
+#>   prokaryotic nomenclature (DOI: 10.1099/ijsem.0.006242
+#>   (<https://doi.org/10.1099/ijsem.0.006242>)). The former kingdom of Bacteria
+#>   was divided into four new kingdoms under the new domain of Bacteria. For the
+#>   old behaviour, use `mo_domain()`. This note will be shown once per session.
 #> $mo
 #> [1] "CUSTOM1_ENTRB_ASB/"
 #> 
 #> $rank
 #> [1] "species"
 #> 
-#> $kingdom
+#> $domain
 #> [1] "Bacteria"
+#> 
+#> $kingdom
+#> [1] "Pseudomonadati"
 #> 
 #> $phylum
 #> [1] "Pseudomonadota"
@@ -159,6 +168,9 @@ mo_info("Enterobacter asburiae/cloacae")
 #> 
 #> $gramstain
 #> [1] "Gram-negative"
+#> 
+#> $morphology
+#> [1] NA
 #> 
 #> $oxygen_tolerance
 #> [1] NA
@@ -215,9 +227,9 @@ add_custom_microorganisms(
 #> ℹ Added Citrobacter braakii complex and Citrobacter freundii complex to the
 #>   internal `microorganisms` data set.
 mo_name(c("C. freundii complex", "C. braakii complex"))
-#> [1] "Citrobacter freundii complex" "Citrobacter braakii complex" 
+#> [1] "Citrobacter freundii" "Citrobacter braakii" 
 mo_species(c("C. freundii complex", "C. braakii complex"))
-#> [1] "freundii complex" "braakii complex" 
+#> [1] "freundii" "braakii" 
 mo_gramstain(c("C. freundii complex", "C. braakii complex"))
 #> [1] "Gram-negative" "Gram-negative"
 # }

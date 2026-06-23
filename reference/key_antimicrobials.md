@@ -9,19 +9,31 @@ reliable than methods that disregard phenotypes.
 ## Usage
 
 ``` r
-key_antimicrobials(x = NULL, col_mo = NULL, universal = c("ampicillin",
-  "amoxicillin/clavulanic acid", "cefuroxime", "piperacillin/tazobactam",
-  "ciprofloxacin", "trimethoprim/sulfamethoxazole"),
-  gram_negative = c("gentamicin", "tobramycin", "colistin", "cefotaxime",
-  "ceftazidime", "meropenem"), gram_positive = c("vancomycin", "teicoplanin",
-  "tetracycline", "erythromycin", "oxacillin", "rifampin"),
-  antifungal = c("anidulafungin", "caspofungin", "fluconazole", "miconazole",
-  "nystatin", "voriconazole"), only_sir_columns = any(is.sir(x)), ...)
+key_antimicrobials(
+  x = NULL,
+  col_mo = NULL,
+  universal = c("ampicillin", "amoxicillin/clavulanic acid", "cefuroxime",
+    "piperacillin/tazobactam", "ciprofloxacin", "trimethoprim/sulfamethoxazole"),
+  gram_negative = c("gentamicin", "tobramycin", "colistin", "cefotaxime", "ceftazidime",
+    "meropenem"),
+  gram_positive = c("vancomycin", "teicoplanin", "tetracycline", "erythromycin",
+    "oxacillin", "rifampin"),
+  antifungal = c("anidulafungin", "caspofungin", "fluconazole", "miconazole", "nystatin",
+    "voriconazole"),
+  only_sir_columns = any(is.sir(x)),
+  ...
+)
 
 all_antimicrobials(x = NULL, only_sir_columns = any(is.sir(x)), ...)
 
-antimicrobials_equal(y, z, type = c("points", "keyantimicrobials"),
-  ignore_I = TRUE, points_threshold = 2, ...)
+antimicrobials_equal(
+  y,
+  z,
+  type = c("points", "keyantimicrobials"),
+  ignore_I = TRUE,
+  points_threshold = 2,
+  ...
+)
 ```
 
 ## Arguments

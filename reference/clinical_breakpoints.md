@@ -26,7 +26,7 @@ clinical_breakpoints
 ## Format
 
 A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 45
-730 observations and 14 variables:
+555 observations and 14 variables:
 
 - `guideline`  
   Name of the guideline
@@ -154,7 +154,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 clinical_breakpoints
-#> # A tibble: 45,730 × 14
+#> # A tibble: 45,555 × 14
 #>    guideline   type  host  method site    mo            rank_index ab   ref_tbl 
 #>    <chr>       <chr> <chr> <chr>  <chr>   <mo>               <dbl> <ab> <chr>   
 #>  1 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 MEM  A. xylo…
@@ -167,7 +167,7 @@ clinical_breakpoints
 #>  8 EUCAST 2026 human human DISK   Uncomp… B_ACNTB                3 AMK  Acineto…
 #>  9 EUCAST 2026 human human MIC    NA      B_ACNTB                3 AMK  Acineto…
 #> 10 EUCAST 2026 human human MIC    Uncomp… B_ACNTB                3 AMK  Acineto…
-#> # ℹ 45,720 more rows
+#> # ℹ 45,545 more rows
 #> # ℹ 5 more variables: disk_dose <chr>, breakpoint_S <dbl>, breakpoint_R <dbl>,
 #> #   uti <lgl>, is_SDD <lgl>
 ```

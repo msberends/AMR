@@ -14,24 +14,53 @@ website](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
 ## Usage
 
 ``` r
-resistance_predict(x, col_ab, col_date = NULL, year_min = NULL,
-  year_max = NULL, year_every = 1, minimum = 30, model = NULL,
-  I_as_S = TRUE, preserve_measurements = TRUE, info = interactive(), ...)
+resistance_predict(
+  x,
+  col_ab,
+  col_date = NULL,
+  year_min = NULL,
+  year_max = NULL,
+  year_every = 1,
+  minimum = 30,
+  model = NULL,
+  I_as_S = TRUE,
+  preserve_measurements = TRUE,
+  info = interactive(),
+  ...
+)
 
-sir_predict(x, col_ab, col_date = NULL, year_min = NULL, year_max = NULL,
-  year_every = 1, minimum = 30, model = NULL, I_as_S = TRUE,
-  preserve_measurements = TRUE, info = interactive(), ...)
+sir_predict(
+  x,
+  col_ab,
+  col_date = NULL,
+  year_min = NULL,
+  year_max = NULL,
+  year_every = 1,
+  minimum = 30,
+  model = NULL,
+  I_as_S = TRUE,
+  preserve_measurements = TRUE,
+  info = interactive(),
+  ...
+)
 
 # S3 method for class 'resistance_predict'
-plot(x, main = paste("Resistance Prediction of",
-  x_name), ...)
+plot(x, main = paste("Resistance Prediction of", x_name), ...)
 
-ggplot_sir_predict(x, main = paste("Resistance Prediction of", x_name),
-  ribbon = TRUE, ...)
+ggplot_sir_predict(
+  x,
+  main = paste("Resistance Prediction of", x_name),
+  ribbon = TRUE,
+  ...
+)
 
 # S3 method for class 'resistance_predict'
-autoplot(object,
-  main = paste("Resistance Prediction of", x_name), ribbon = TRUE, ...)
+autoplot(
+  object,
+  main = paste("Resistance Prediction of", x_name),
+  ribbon = TRUE,
+  ...
+)
 ```
 
 ## Arguments

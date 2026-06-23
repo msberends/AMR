@@ -2,13 +2,16 @@
 
 Clean up existing SIR values, or interpret minimum inhibitory
 concentration (MIC) values and disk diffusion diameters according to
-EUCAST or CLSI. \[as.sir()\] transforms the input to a new class
-\[\`sir\`\], which is an ordered \[factor\] containing the levels \`S\`,
-\`SDD\`, \`I\`, \`R\`, \`NI\`.
+EUCAST or CLSI. `as.sir()` transforms the input to a new class `sir`,
+which is an ordered
+[factor](https://rdrr.io/pkg/data.table/man/fctr.html) containing the
+levels `S`, `SDD`, `I`, `R`, `NI`.
 
-Breakpoints are currently implemented from EUCAST \`r
-min(as.integer(gsub("\[^0-9\]", "", subset(AMR::clinical_breakpoints,
-guideline
+Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI
+2011-2026, see *Details*. All breakpoints used for interpretation are
+available in our
+[clinical_breakpoints](https://amr-for-r.org/reference/clinical_breakpoints.md)
+data set.
 
 ## Usage
 
@@ -22,85 +25,92 @@ is.sir(x)
 is_sir_eligible(x, threshold = 0.05)
 
 # Default S3 method
-as.sir(x, S = "^(S|U|1)+$", I = "^(I|2)+$",
-  R = "^(R|3)+$", NI = "^(N|NI|V|4)+$", SDD = "^(SDD|D|H|5)+$",
-  WT = "^(WT|6)+$", NWT = "^(NWT|7)+$", NS = "^(NS|8)+$",
-  info = interactive(), ...)
+as.sir(
+  x,
+  S = "^(S|U|1)+$",
+  I = "^(I|2)+$",
+  R = "^(R|3)+$",
+  NI = "^(N|NI|V|4)+$",
+  SDD = "^(SDD|D|H|5)+$",
+  WT = "^(WT|6)+$",
+  NWT = "^(NWT|7)+$",
+  NS = "^(NS|8)+$",
+  info = interactive(),
+  ...
+)
 
 # S3 method for class 'mic'
-as.sir(x, mo = NULL, ab = deparse(substitute(x)),
-  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+as.sir(
+  x,
+  mo = NULL,
+  ab = deparse(substitute(x)),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
   capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
   as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
-  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  conserve_capped_values = NULL, ...)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  conserve_capped_values = NULL,
+  ...
+)
 
 # S3 method for class 'disk'
-as.sir(x, mo = NULL, ab = deparse(substitute(x)),
-  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+as.sir(
+  x,
+  mo = NULL,
+  ab = deparse(substitute(x)),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
   as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
-  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  ...)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  ...
+)
 
 # S3 method for class 'data.frame'
-as.sir(x, ..., col_mo = NULL,
-  guideline = getOption("AMR_guideline", "EUCAST"), uti = NULL,
+as.sir(
+  x,
+  ...,
+  col_mo = NULL,
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
   capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
   as_wt_nwt = identical(breakpoint_type, "ECOFF"),
   add_intrinsic_resistance = FALSE,
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
-  FALSE), include_screening = getOption("AMR_include_screening", FALSE),
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
-  breakpoint_type = getOption("AMR_breakpoint_type", "human"), host = NULL,
-  language = get_AMR_locale(), verbose = FALSE, info = interactive(),
-  parallel = FALSE, conserve_capped_values = NULL)
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  parallel = FALSE,
+  conserve_capped_values = NULL
+)
 
 sir_interpretation_history(clean = FALSE)
 ```
-
-## Source
-
-For interpretations of minimum inhibitory concentration (MIC) values and
-disk diffusion diameters:
-
-- **CLSI M39: Analysis and Presentation of Cumulative Antimicrobial
-  Susceptibility Test Data**, 2011-2026, *Clinical and Laboratory
-  Standards Institute* (CLSI).
-  <https://clsi.org/standards/products/microbiology/documents/m39/>.
-
-- **CLSI M100: Performance Standard for Antimicrobial Susceptibility
-  Testing**, 2011-2026, *Clinical and Laboratory Standards Institute*
-  (CLSI).
-  <https://clsi.org/standards/products/microbiology/documents/m100/>.
-
-- **CLSI VET01: Performance Standards for Antimicrobial Disk and
-  Dilution Susceptibility Tests for Bacteria Isolated From Animals**,
-  2019-2026, *Clinical and Laboratory Standards Institute* (CLSI).
-  <https://clsi.org/standards/products/veterinary-medicine/documents/vet01/>.
-
-- **EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters**, 2011-2026, *European Committee on Antimicrobial
-  Susceptibility Testing* (EUCAST).
-  <https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/>.
-
-- **WHONET** as a source for machine-reading the clinical breakpoints
-  ([read more
-  here](https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet)),
-  1989-2026, *WHO Collaborating Centre for Surveillance of Antimicrobial
-  Resistance*. <https://whonet.org/>.
 
 ## Arguments
 
@@ -364,7 +374,8 @@ disk diffusion diameters:
 
 ## Value
 
-Ordered \[factor\] with new class \`sir\`
+Ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with new
+class `sir`
 
 ## Details
 
@@ -577,6 +588,37 @@ links](https://amr-for-r.org/articles/datasets.html), or explore the
 actual files in [our GitHub
 repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
+## References
+
+For interpretations of minimum inhibitory concentration (MIC) values and
+disk diffusion diameters:
+
+- **CLSI M39: Analysis and Presentation of Cumulative Antimicrobial
+  Susceptibility Test Data**, 2011-2026, *Clinical and Laboratory
+  Standards Institute* (CLSI).
+  <https://clsi.org/standards/products/microbiology/documents/m39/>.
+
+- **CLSI M100: Performance Standard for Antimicrobial Susceptibility
+  Testing**, 2011-2026, *Clinical and Laboratory Standards Institute*
+  (CLSI).
+  <https://clsi.org/standards/products/microbiology/documents/m100/>.
+
+- **CLSI VET01: Performance Standards for Antimicrobial Disk and
+  Dilution Susceptibility Tests for Bacteria Isolated From Animals**,
+  2019-2026, *Clinical and Laboratory Standards Institute* (CLSI).
+  <https://clsi.org/standards/products/veterinary-medicine/documents/vet01/>.
+
+- **EUCAST Breakpoint tables for interpretation of MICs and zone
+  diameters**, 2011-2026, *European Committee on Antimicrobial
+  Susceptibility Testing* (EUCAST).
+  <https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/>.
+
+- **WHONET** as a source for machine-reading the clinical breakpoints
+  ([read more
+  here](https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet)),
+  1989-2026, *WHO Collaborating Centre for Surveillance of Antimicrobial
+  Resistance*. <https://whonet.org/>.
+
 ## See also
 
 [`as.mic()`](https://amr-for-r.org/reference/as.mic.md),
@@ -663,10 +705,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-05-02 13:02:42     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-05-02 13:02:42     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-05-02 13:02:42     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-05-02 13:02:43     1 DISK   genta       Escherich… human      18         
+#> 1 2026-06-23 17:55:31     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-06-23 17:55:31     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-06-23 17:55:32     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-06-23 17:55:32     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

@@ -15,44 +15,44 @@ laboratory information systems.
 
 ## `microorganisms`: Full Microbial Taxonomy
 
-A data set with 78 679 rows and 26 columns, containing the following
+A data set with 96 982 rows and 28 columns, containing the following
 column names:  
-*mo*, *fullname*, *status*, *kingdom*, *phylum*, *class*, *order*,
-*family*, *genus*, *species*, *subspecies*, *rank*, *ref*,
-*oxygen_tolerance*, *source*, *lpsn*, *lpsn_parent*, *lpsn_renamed_to*,
-*mycobank*, *mycobank_parent*, *mycobank_renamed_to*, *gbif*,
-*gbif_parent*, *gbif_renamed_to*, *prevalence*, and *snomed*.
+*mo*, *fullname*, *status*, *domain*, *kingdom*, *phylum*, *class*,
+*order*, *family*, *genus*, *species*, *subspecies*, *rank*, *ref*,
+*oxygen_tolerance*, *morphology*, *source*, *lpsn*, *lpsn_parent*,
+*lpsn_renamed_to*, *mycobank*, *mycobank_parent*, *mycobank_renamed_to*,
+*gbif*, *gbif_parent*, *gbif_renamed_to*, *prevalence*, and *snomed*.
 
 This data set is in R available as `microorganisms`, after you load the
 `AMR` package.
 
-It was last updated on 18 September 2025 12:58:34 UTC. Find more info
-about the contents, (scientific) source, and structure of this [data set
+It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
+the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/microorganisms.html).
 
 **Direct download links:**
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.rds)
-  (1.8 MB)  
+  (2.2 MB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.txt)
-  (17.7 MB)  
+  (23.1 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.xlsx)
-  (8.8 MB)  
+  (11.4 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.feather)
-  (8.4 MB)  
+  (11 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.parquet)
-  (3.8 MB)  
+  (4.6 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.sav)
-  (28.4 MB)  
+  (35.2 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.dta)
-  (89.5 MB)
+  (96.6 MB)
 
 **NOTE: The exported files for SPSS and Stata contain only the first 50
 SNOMED codes per record, as their file size would otherwise exceed 100
@@ -69,23 +69,23 @@ Included (sub)species per taxonomic kingdom:
 
 |      Kingdom      | Number of (sub)species |
 |:-----------------:|:----------------------:|
-| (unknown kingdom) |           1            |
-|     Animalia      |         1 628          |
-|      Archaea      |         1 419          |
-|     Bacteria      |         39 249         |
-|     Chromista     |          178           |
-|       Fungi       |         28 137         |
+|                   |           20           |
+| (unknown kingdom) |           8            |
+|     Animalia      |         2 015          |
+|      Archaea      |          150           |
+|     Bacillati     |         24 200         |
+|     Bacteria      |           2            |
 
 First 6 rows when filtering on genus *Escherichia*:
 
-| mo | fullname | status | kingdom | phylum | class | order | family | genus | species | subspecies | rank | ref | oxygen_tolerance | source | lpsn | lpsn_parent | lpsn_renamed_to | mycobank | mycobank_parent | mycobank_renamed_to | gbif | gbif_parent | gbif_renamed_to | prevalence | snomed |
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| B_ESCHR | Escherichia | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia |  |  | genus | Castellani et al., 1919 | facultative anaerobe | LPSN | 515602 | 482 |  |  |  |  |  | 11158430 |  | 1 | 407310004, 407251000, 407281008, … |
-| B_ESCHR_ADCR | Escherichia adecarboxylata | synonym | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | adecarboxylata |  | species | Leclerc, 1962 | likely facultative anaerobe | LPSN | 776052 | 515602 | 777447 |  |  |  |  |  |  | 1 |  |
-| B_ESCHR_ALBR | Escherichia albertii | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | albertii |  | species | Huys et al., 2003 | facultative anaerobe | LPSN | 776053 | 515602 |  |  |  |  | 5427575 |  |  | 1 | 419388003 |
-| B_ESCHR_BLTT | Escherichia blattae | synonym | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | blattae |  | species | Burgess et al., 1973 | likely facultative anaerobe | LPSN | 776056 | 515602 | 788468 |  |  |  |  |  |  | 1 |  |
-| B_ESCHR_COLI | Escherichia coli | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli |  | species | Castellani et al., 1919 | facultative anaerobe | LPSN | 776057 | 515602 |  |  |  |  | 11286021 |  |  | 1 | 1095001000112106, 715307006, 737528008, … |
-| B_ESCHR_COLI_COLI | Escherichia coli coli | accepted | Bacteria | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli | coli | subspecies |  |  | GBIF |  | 776057 |  |  |  |  | 12233256 | 11286021 |  | 1 |  |
+| mo | fullname | status | domain | kingdom | phylum | class | order | family | genus | species | subspecies | rank | ref | oxygen_tolerance | morphology | source | lpsn | lpsn_parent | lpsn_renamed_to | mycobank | mycobank_parent | mycobank_renamed_to | gbif | gbif_parent | gbif_renamed_to | prevalence | snomed |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| B_ESCHR | Escherichia | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia |  |  | genus | Castellani et al., 1919 | facultative anaerobe | rods | LPSN | 515602 | 482 |  |  |  |  | CS33H | CRYWR |  | 1 | 407310004, 407251000, 407281008, … |
+| B_ESCHR_ADCR | Escherichia adecarboxylata | synonym | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | adecarboxylata |  | species | Leclerc, 1962 | likely facultative anaerobe | rods | LPSN | 776052 | 515602 | 777447 |  |  |  | CS33J | CS33H | 3SVX6 | 1 |  |
+| B_ESCHR_ALBR | Escherichia albertii | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | albertii |  | species | Huys et al., 2003 | facultative anaerobe | rods | LPSN | 776053 | 515602 |  |  |  |  | 3BGTB | CS33H |  | 1 | 419388003 |
+| B_ESCHR_BLTT | Escherichia blattae | synonym | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | blattae |  | species | Burgess et al., 1973 | likely facultative anaerobe | rods | LPSN | 776056 | 515602 | 788468 |  |  |  | CS33K | CS33H | 4X4P7 | 1 |  |
+| B_ESCHR_COLI | Escherichia coli | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli |  | species | Castellani et al., 1919 | facultative anaerobe | rods | LPSN | 776057 | 515602 |  |  |  |  | NT3L7 | CS33H |  | 1 | 1095001000112106, 715307006, 737528008, … |
+| B_ESCHR_COLI_COLI | Escherichia coli coli | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli | coli | subspecies |  |  |  | GBIF |  | 776057 |  |  |  |  | 12233256 | NT3L7 |  | 1 |  |
 
 ------------------------------------------------------------------------
 
@@ -100,8 +100,8 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 2 May 2026 12:56:26 UTC. Find more info about the
-contents, (scientific) source, and structure of this [data set
+It was last updated on 23 June 2026 12:38:59 UTC. Find more info about
+the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
 **Direct download links:**
@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 45 730 rows and 14 columns, containing the following
+A data set with 45 555 rows and 14 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, and
@@ -156,7 +156,7 @@ column names:
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 2 April 2026 09:42:19 UTC. Find more info about
+It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -176,7 +176,7 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
   (2 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.parquet)
-  (0.2 MB)  
+  (0.1 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav)
   (7.5 MB)  
@@ -199,14 +199,14 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
 ## `microorganisms.groups`: Species Groups and Microbiological Complexes
 
-A data set with 534 rows and 4 columns, containing the following column
+A data set with 530 rows and 4 columns, containing the following column
 names:  
 *mo_group*, *mo*, *mo_group_name*, and *mo_name*.
 
 This data set is in R available as `microorganisms.groups`, after you
 load the `AMR` package.
 
-It was last updated on 26 March 2025 16:19:17 UTC. Find more info about
+It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/microorganisms.groups.html).
 
@@ -220,7 +220,7 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
   (50 kB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.xlsx)
-  (20 kB)  
+  (19 kB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.feather)
   (19 kB)  
@@ -229,10 +229,10 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
   (13 kB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.sav)
-  (65 kB)  
+  (64 kB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.dta)
-  (83 kB)
+  (82 kB)
 
 **Example content**
 
@@ -249,14 +249,14 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
 
 ## `intrinsic_resistant`: Intrinsic Bacterial Resistance
 
-A data set with 285 928 rows and 2 columns, containing the following
+A data set with 294 079 rows and 2 columns, containing the following
 column names:  
 *mo* and *ab*.
 
 This data set is in R available as `intrinsic_resistant`, after you load
 the `AMR` package.
 
-It was last updated on 22 April 2026 06:16:44 UTC. Find more info about
+It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/intrinsic_resistant.html).
 
@@ -267,10 +267,10 @@ here](https://amr-for-r.org/reference/intrinsic_resistant.html).
   (0.1 MB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.txt)
-  (10.6 MB)  
+  (10.9 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.xlsx)
-  (3.3 MB)  
+  (3.1 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.feather)
   (2.5 MB)  
@@ -279,10 +279,10 @@ here](https://amr-for-r.org/reference/intrinsic_resistant.html).
   (0.3 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.sav)
-  (15.5 MB)  
+  (16 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.dta)
-  (27.5 MB)
+  (28.6 MB)
 
 **Example content**
 
@@ -464,14 +464,14 @@ here](https://amr-for-r.org/reference/example_isolates_unclean.html).
 
 ## `microorganisms.codes`: Common Laboratory Codes
 
-A data set with 6 050 rows and 2 columns, containing the following
+A data set with 6 029 rows and 2 columns, containing the following
 column names:  
 *code* and *mo*.
 
 This data set is in R available as `microorganisms.codes`, after you
 load the `AMR` package.
 
-It was last updated on 30 March 2026 08:01:49 UTC. Find more info about
+It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/microorganisms.codes.html).
 
@@ -479,7 +479,7 @@ here](https://amr-for-r.org/reference/microorganisms.codes.html).
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.rds)
-  (28 kB)  
+  (27 kB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.txt)
   (0.1 MB)  
@@ -491,7 +491,7 @@ here](https://amr-for-r.org/reference/microorganisms.codes.html).
   (0.1 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.parquet)
-  (69 kB)  
+  (68 kB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.sav)
   (0.2 MB)  

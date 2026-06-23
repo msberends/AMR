@@ -1,4 +1,4 @@
-# Data Set with 6 050 Common Microorganism Codes
+# Data Set with 6 029 Common Microorganism Codes
 
 A data set containing commonly used codes for microorganisms, from
 laboratory systems and [WHONET](https://whonet.org). Define your own
@@ -17,7 +17,7 @@ microorganisms.codes
 ## Format
 
 A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 6
-050 observations and 2 variables:
+029 observations and 2 variables:
 
 - `code`  
   Commonly used code of a microorganism. ***This is a unique
@@ -53,7 +53,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 microorganisms.codes
-#> # A tibble: 6,050 × 2
+#> # A tibble: 6,029 × 2
 #>    code  mo               
 #>    <chr> <mo>             
 #>  1 1011  B_GRAMP          
@@ -66,7 +66,7 @@ microorganisms.codes
 #>  8 1100  B_STRPT          
 #>  9 1101  B_STRPT_VIRI     
 #> 10 1102  B_STRPT_HAEM     
-#> # ℹ 6,040 more rows
+#> # ℹ 6,019 more rows
 
 # 'ECO' or 'eco' is the WHONET code for E. coli:
 microorganisms.codes[microorganisms.codes$code == "ECO", ]
@@ -83,8 +83,11 @@ mo_info("eco")
 #> $rank
 #> [1] "species"
 #> 
-#> $kingdom
+#> $domain
 #> [1] "Bacteria"
+#> 
+#> $kingdom
+#> [1] "Pseudomonadati"
 #> 
 #> $phylum
 #> [1] "Pseudomonadota"
@@ -116,6 +119,9 @@ mo_info("eco")
 #> $gramstain
 #> [1] "Gram-negative"
 #> 
+#> $morphology
+#> [1] "Rods"
+#> 
 #> $oxygen_tolerance
 #> [1] "facultative anaerobe"
 #> 
@@ -142,7 +148,7 @@ mo_info("eco")
 #> [1] NA
 #> 
 #> $gbif
-#> [1] "11286021"
+#> [1] "NT3L7"
 #> 
 #> $group_members
 #> character(0)

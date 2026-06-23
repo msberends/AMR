@@ -2,24 +2,30 @@
 
 Use this function to get a valid microorganism code (`mo`) based on
 arbitrary user input. Determination is done using intelligent rules and
-the complete taxonomic tree of the kingdoms Animalia, Archaea, Bacteria,
-Chromista, and Protozoa, and most microbial species from the kingdom
-Fungi (see *Source*). The input can be almost anything: a full name
-(like `"Staphylococcus aureus"`), an abbreviated name (such as
+the complete taxonomic tree of the domains Animalia, Archaea, Bacteria,
+Chromista, Plantae, and Protozoa, and most microbial species from the
+domain Fungi (see *Source*). The input can be almost anything: a full
+name (like `"Staphylococcus aureus"`), an abbreviated name (such as
 `"S. aureus"`), an abbreviation known in the field (such as `"MRSA"`),
 or just a genus. See *Examples*.
 
 ## Usage
 
 ``` r
-as.mo(x, Becker = FALSE, Lancefield = FALSE,
+as.mo(
+  x,
+  Becker = FALSE,
+  Lancefield = FALSE,
   minimum_matching_score = NULL,
   keep_synonyms = getOption("AMR_keep_synonyms", FALSE),
   reference_df = get_mo_source(),
   ignore_pattern = getOption("AMR_ignore_pattern", NULL),
   cleaning_regex = getOption("AMR_cleaning_regex", mo_cleaning_regex()),
   only_fungi = getOption("AMR_only_fungi", FALSE),
-  language = get_AMR_locale(), info = interactive(), ...)
+  language = get_AMR_locale(),
+  info = interactive(),
+  ...
+)
 
 is.mo(x)
 
@@ -76,7 +82,7 @@ NA_mo_
   score](https://amr-for-r.org/reference/mo_matching_score.md). When
   left blank, this will be determined automatically based on the
   character length of `x`, its [taxonomic
-  kingdom](https://amr-for-r.org/reference/microorganisms.md) and [human
+  domain](https://amr-for-r.org/reference/microorganisms.md) and [human
   pathogenicity](https://amr-for-r.org/reference/mo_matching_score.md).
 
 - keep_synonyms:
@@ -130,7 +136,7 @@ NA_mo_
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate if only
   fungi must be found, making sure that e.g. misspellings always return
-  records from the kingdom of Fungi. This can be set globally for [all
+  records from the domain of Fungi. This can be set globally for [all
   microorganism
   functions](https://amr-for-r.org/reference/mo_property.md) with the
   package option
@@ -174,7 +180,7 @@ human-readable and typically looks like these examples:
       |   |    |    \---> subspecies, a 3-5 letter acronym
       |   |    \----> species, a 3-6 letter acronym
       |   \----> genus, a 4-8 letter acronym
-      \----> kingdom: A (Archaea), AN (Animalia), B (Bacteria),
+      \----> domain: A (Archaea), AN (Animalia), B (Bacteria),
                       C (Chromista), F (Fungi), PL (Plantae),
                       P (Protozoa)
 
@@ -201,7 +207,7 @@ score](https://amr-for-r.org/reference/mo_matching_score.md). The lowest
 allowed score can be set with the `minimum_matching_score` argument. At
 default this will be determined based on the character length of the
 input, the [taxonomic
-kingdom](https://amr-for-r.org/reference/microorganisms.md), and the
+domain](https://amr-for-r.org/reference/microorganisms.md), and the
 [human
 pathogenicity](https://amr-for-r.org/reference/mo_matching_score.md) of
 the taxonomic outcome. If values are matched with uncertainty, a message
@@ -263,32 +269,34 @@ their corresponding coagulase group:
   caeli*, *S. caledonicus*, *S. canis*, *S. capitis*, *S. capitis
   capitis*, *S. capitis urealyticus*, *S. capitis ureolyticus*, *S.
   caprae*, *S. carnosus*, *S. carnosus carnosus*, *S. carnosus utilis*,
-  *S. casei*, *S. caseolyticus*, *S. chromogenes*, *S. cohnii*, *S.
-  cohnii cohnii*, *S. cohnii urealyticum*, *S. cohnii urealyticus*, *S.
-  condimenti*, *S. croceilyticus*, *S. debuckii*, *S. devriesei*, *S.
-  durrellii*, *S. edaphicus*, *S. epidermidis*, *S. equorum*, *S.
-  equorum equorum*, *S. equorum linens*, *S. felis*, *S. fleurettii*,
-  *S. gallinarum*, *S. haemolyticus*, *S. hominis*, *S. hominis
-  hominis*, *S. hominis novobiosepticus*, *S. jettensis*, *S. kloosii*,
-  *S. lentus*, *S. lloydii*, *S. lugdunensis*, *S. marylandisciuri*, *S.
-  massiliensis*, *S. microti*, *S. muscae*, *S. nepalensis*, *S.
-  pasteuri*, *S. petrasii*, *S. petrasii croceilyticus*, *S. petrasii
-  jettensis*, *S. petrasii petrasii*, *S. petrasii pragensis*, *S.
-  pettenkoferi*, *S. piscifermentans*, *S. pragensis*, *S.
-  pseudoxylosus*, *S. pulvereri*, *S. ratti*, *S. rostri*, *S.
-  saccharolyticus*, *S. saprophyticus*, *S. saprophyticus bovis*, *S.
-  saprophyticus saprophyticus*, *S. schleiferi*, *S. schleiferi
-  schleiferi*, *S. sciuri*, *S. sciuri carnaticus*, *S. sciuri lentus*,
-  *S. sciuri rodentium*, *S. sciuri sciuri*, *S. shinii*, *S. simulans*,
-  *S. stepanovicii*, *S. succinus*, *S. succinus casei*, *S. succinus
-  succinus*, *S. taiwanensis*, *S. urealyticus*, *S. ureilyticus*, *S.
-  veratri*, *S. vitulinus*, *S. vitulus*, *S. warneri*, and *S. xylosus*
+  *S. casei*, *S. caseolyticus*, *S. caseorum*, *S. chromogenes*, *S.
+  cohnii*, *S. cohnii cohnii*, *S. cohnii urealyticum*, *S. cohnii
+  urealyticus*, *S. cohnii ureilyticus*, *S. condimenti*, *S.
+  croceilyticus*, *S. debuckii*, *S. devriesei*, *S. durrellii*, *S.
+  edaphicus*, *S. epidermidis*, *S. equorum*, *S. equorum equorum*, *S.
+  equorum linens*, *S. felis*, *S. fleurettii*, *S. gallinarum*, *S.
+  haemolyticus*, *S. halotolerans*, *S. hominis*, *S. hominis hominis*,
+  *S. hominis novobiosepticus*, *S. hsinchuensis*, *S. jettensis*, *S.
+  kloosii*, *S. lentus*, *S. lloydii*, *S. lugdunensis*, *S.
+  marylandisciuri*, *S. massiliensis*, *S. microti*, *S. muscae*, *S.
+  nepalensis*, *S. pasteuri*, *S. petrasii*, *S. petrasii
+  croceilyticus*, *S. petrasii jettensis*, *S. petrasii petrasii*, *S.
+  petrasii pragensis*, *S. pettenkoferi*, *S. piscifermentans*, *S.
+  pragensis*, *S. pseudoxylosus*, *S. pulvereri*, *S. ratti*, *S.
+  rostri*, *S. saccharolyticus*, *S. saprophyticus*, *S. saprophyticus
+  bovis*, *S. saprophyticus saprophyticus*, *S. schleiferi*, *S.
+  schleiferi schleiferi*, *S. sciuri*, *S. sciuri carnaticus*, *S.
+  sciuri lentus*, *S. sciuri rodentium*, *S. sciuri sciuri*, *S.
+  shinii*, *S. simulans*, *S. stepanovicii*, *S. succinus*, *S. succinus
+  casei*, *S. succinus succinus*, *S. taiwanensis*, *S. urealyticus*,
+  *S. ureilyticus*, *S. veratri*, *S. vitulinus*, *S. vitulus*, *S.
+  warneri*, and *S. xylosus*
 
 - Coagulase-positive: *S. agnetis*, *S. argenteus*, *S. coagulans*, *S.
   cornubiensis*, *S. delphini*, *S. hyicus*, *S. hyicus chromogenes*,
   *S. hyicus hyicus*, *S. intermedius*, *S. lutrae*, *S.
   pseudintermedius*, *S. roterodami*, *S. schleiferi coagulans*, *S.
-  schweitzeri*, *S. simiae*, and *S. singaporensis*
+  schweitzeri*, *S. simiae*, *S. singaporensis*, and *S. ursi*
 
 This is based on:
 
@@ -356,26 +364,28 @@ base R's [`NA_character_`](https://rdrr.io/r/base/NA.html).
   104(3), 1-31;
   [doi:10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)
 
-- Parte, AC *et al.* (2020). **List of Prokaryotic names with Standing
-  in Nomenclature (LPSN) moves to the DSMZ.** International Journal of
-  Systematic and Evolutionary Microbiology, 70, 5607-5612;
-  [doi:10.1099/ijsem.0.004332](https://doi.org/10.1099/ijsem.0.004332) .
-  Accessed from <https://lpsn.dsmz.de> on June 24th, 2024.
+- Freese, HM *et al.* (2026). **TYGS and LPSN in 2025: a Global Core
+  Biodata Resource for genome-based classification and nomenclature of
+  prokaryotes within DSMZ Digital Diversity.** Nucleic Acids Research,
+  54, D884–D891;
+  [doi:10.1093/nar/gkaf1110](https://doi.org/10.1093/nar/gkaf1110) .
+  Accessed from <https://lpsn.dsmz.de> on 7th of May, 2026.
 
 - Vincent, R *et al* (2013). **MycoBank gearing up for new horizons.**
   IMA Fungus, 4(2), 371-9;
   [doi:10.5598/imafungus.2013.04.02.16](https://doi.org/10.5598/imafungus.2013.04.02.16)
-  . Accessed from <https://www.mycobank.org> on June 24th, 2024.
+  . Accessed from <https://www.mycobank.org> on 7th of May, 2026.
 
-- GBIF Secretariat (2023). GBIF Backbone Taxonomy. Checklist dataset
-  [doi:10.15468/39omei](https://doi.org/10.15468/39omei) . Accessed from
-  <https://www.gbif.org> on June 24th, 2024.
+- Banki, O. *et al.* (2026). Catalogue of Life (2026-04-18 XR).
+  Catalogue of Life Foundation, Amsterdam, Netherlands.
+  [doi:10.48580/dgxjw](https://doi.org/10.48580/dgxjw) . Accessed from
+  <https://www.gbif.org> on 7th of May, 2026.
 
 - Reimer, LC *et al.* (2022). ***BacDive* in 2022: the knowledge base
   for standardized bacterial and archaeal data.** Nucleic Acids Res.,
   50(D1):D741-D74;
   [doi:10.1093/nar/gkab961](https://doi.org/10.1093/nar/gkab961) .
-  Accessed from <https://bacdive.dsmz.de> on July 16th, 2024.
+  Accessed from <https://bacdive.dsmz.de> on 7th of May, 2026.
 
 - Public Health Information Network Vocabulary Access and Distribution
   System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020.
@@ -413,8 +423,9 @@ where:
 - \\p_n\\ is the human pathogenic prevalence group of \\n\\, as
   described below;
 
-- \\k_n\\ is the taxonomic kingdom of \\n\\, set as Bacteria = 1, Fungi
-  = 1.25, Protozoa = 1.5, Chromista = 1.75, Archaea = 2, others = 3.
+- \\k_n\\ is the taxonomic domain ('kingdom' until taxonomic
+  reclassification of 2024) of \\n\\, set as Bacteria = 1, Fungi = 1.25,
+  Protozoa = 1.5, Chromista = 1.75, Archaea = 2, others = 3.
 
 The grouping into human pathogenic prevalence \\p\\ is based on recent
 work from Bartlett *et al.* (2022,
@@ -477,17 +488,18 @@ Furthermore,
   *Hymenolepis*, *Hypomyces*, *Hysterothylacium*, *Kloeckera*,
   *Kluyveromyces*, *Kodamaea*, *Lacazia*, *Leishmania*, *Lichtheimia*,
   *Lodderomyces*, *Lomentospora*, *Madurella*, *Malassezia*,
-  *Malbranchea*, *Metagonimus*, *Meyerozyma*, *Microsporidium*,
-  *Microsporum*, *Millerozyma*, *Mortierella*, *Mucor*,
-  *Mycocentrospora*, *Nannizzia*, *Necator*, *Nectria*, *Ochroconis*,
-  *Oesophagostomum*, *Oidiodendron*, *Opisthorchis*, *Paecilomyces*,
-  *Paracoccidioides*, *Pediculus*, *Penicillium*, *Phaeoacremonium*,
-  *Phaeomoniella*, *Phialophora*, *Phlebotomus*, *Phoma*, *Pichia*,
-  *Piedraia*, *Pithomyces*, *Pityrosporum*, *Pneumocystis*,
-  *Pseudallescheria*, *Pseudoscopulariopsis*, *Pseudoterranova*,
-  *Pulex*, *Purpureocillium*, *Quambalaria*, *Rhinocladiella*,
-  *Rhizomucor*, *Rhizopus*, *Rhodotorula*, *Saccharomyces*, *Saksenaea*,
-  *Saprochaete*, *Sarcoptes*, *Scedosporium*, *Schistosoma*,
+  *Malbranchea*, *Metagonimus*, *Meyerozyma*, *Microascus*,
+  *Microsporidium*, *Microsporum*, *Millerozyma*, *Mortierella*,
+  *Mucor*, *Mycocentrospora*, *Nannizzia*, *Necator*, *Nectria*,
+  *Ochroconis*, *Oesophagostomum*, *Oidiodendron*, *Opisthorchis*,
+  *Paecilomyces*, *Paracoccidioides*, *Pediculus*, *Penicillium*,
+  *Phaeoacremonium*, *Phaeomoniella*, *Phialophora*, *Phlebotomus*,
+  *Phoma*, *Pichia*, *Piedraia*, *Pithomyces*, *Pityrosporum*,
+  *Plasmodium*, *Pneumocystis*, *Pseudallescheria*,
+  *Pseudoscopulariopsis*, *Pseudoterranova*, *Pulex*, *Purpureocillium*,
+  *Quambalaria*, *Rhinocladiella*, *Rhizomucor*, *Rhizopus*,
+  *Rhodotorula*, *Saccharomyces*, *Saksenaea*, *Saprochaete*,
+  *Sarcoptes*, *Scedosporium*, *Schistosoma*, *Schizophyllum*,
   *Schizosaccharomyces*, *Scolecobasidium*, *Scopulariopsis*,
   *Scytalidium*, *Spirometra*, *Sporobolomyces*, *Sporopachydermia*,
   *Sporothrix*, *Sporotrichum*, *Stachybotrys*, *Strongyloides*,

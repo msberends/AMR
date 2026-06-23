@@ -45,7 +45,7 @@ antivirals
 
 - `atc`  
   ATC codes (Anatomical Therapeutic Chemical) as defined by the WHOCC,
-  like `J01CR02` (last updated May 4th, 2025):
+  like `J01CR02` (last updated 4th of May, 2025):
 
 - `atc_group1`  
   Official pharmacological subgroup (3rd level ATC code) as defined by
@@ -63,7 +63,7 @@ antivirals
   Synonyms (often trade names) of a drug, as found in PubChem based on
   their compound ID
 
-ATC properties (last updated May 4th, 2025):
+ATC properties (last updated 4th of May, 2025):
 
 - `oral_ddd`  
   Defined Daily Dose (DDD), oral treatment, currently available for 180
@@ -143,20 +143,6 @@ An object of class `deprecated_amr_dataset` (inherits from `tbl_df`,
 An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with 120
 rows and 11 columns.
 
-## Source
-
-- WHO Collaborating Centre for Drug Statistics Methodology, Guidelines
-  for ATC classification and DDD assignment, Oslo Accessed from
-  <https://atcddd.fhi.no/atc_ddd_index/> on May 4th, 2025.
-
-- Logical Observation Identifiers Names and Codes (LOINC), Version 2.76
-  (18 September, 2023). Accessed from <https://loinc.org> on October
-  19th, 2023.
-
-- European Commission Public Health PHARMACEUTICALS - COMMUNITY
-  REGISTER:
-  <https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>
-
 ## Details
 
 Properties that are based on an ATC code are only available when an ATC
@@ -197,7 +183,7 @@ groups and Defined Daily Dose (DDD) from the World Health Organization
 Collaborating Centre for Drug Statistics Methodology (WHOCC,
 <https://atcddd.fhi.no>) and the Pharmaceuticals Community Register of
 the European Commission
-(<https://ec.europa.eu/health/documents/community-register/html/reg_hum_atc.htm>).
+(<https://ec.europa.eu/health/documents/community-register/html/index_en.htm>).
 
 These have become the gold standard for international drug utilisation
 monitoring and research.
@@ -209,6 +195,20 @@ executive of the European Union and promotes its general interest.
 **NOTE: The WHOCC copyright does not allow use for commercial purposes,
 unlike any other info from this package.** See
 <https://atcddd.fhi.no/copyright_disclaimer/.>
+
+## References
+
+- WHO Collaborating Centre for Drug Statistics Methodology, Guidelines
+  for ATC classification and DDD assignment, Oslo Accessed from
+  <https://atcddd.fhi.no/atc_ddd_index/> on 4th of May, 2025.
+
+- Logical Observation Identifiers Names and Codes (LOINC), Version 2.76
+  (18 September, 2023). Accessed from <https://loinc.org> on 19th of
+  October, 2023.
+
+- European Commission Public Health PHARMACEUTICALS - COMMUNITY
+  REGISTER:
+  <https://ec.europa.eu/health/documents/community-register/html/index_en.htm>
 
 ## See also
 

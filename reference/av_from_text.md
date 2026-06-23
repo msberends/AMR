@@ -7,9 +7,15 @@ drugs, doses and forms of administration found in the texts.
 ## Usage
 
 ``` r
-av_from_text(text, type = c("drug", "dose", "administration"),
-  collapse = NULL, translate_av = FALSE, thorough_search = NULL,
-  info = interactive(), ...)
+av_from_text(
+  text,
+  type = c("drug", "dose", "administration"),
+  collapse = NULL,
+  translate_av = FALSE,
+  thorough_search = NULL,
+  info = interactive(),
+  ...
+)
 ```
 
 ## Arguments

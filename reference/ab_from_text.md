@@ -8,9 +8,15 @@ texts.
 ## Usage
 
 ``` r
-ab_from_text(text, type = c("drug", "dose", "administration"),
-  collapse = NULL, translate_ab = FALSE, thorough_search = NULL,
-  info = interactive(), ...)
+ab_from_text(
+  text,
+  type = c("drug", "dose", "administration"),
+  collapse = NULL,
+  translate_ab = FALSE,
+  thorough_search = NULL,
+  info = interactive(),
+  ...
+)
 ```
 
 ## Arguments

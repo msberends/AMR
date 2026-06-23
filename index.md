@@ -3,9 +3,9 @@
 - Provides an **all-in-one solution** for antimicrobial resistance (AMR)
   data analysis in a One Health approach
 - Peer-reviewed, used in over 175 countries, available in 28 languages
-- Generates **antibiograms** - traditional, combined, syndromic, and
-  even WISCA
-- Provides the **full microbiological taxonomy** of ~79 000 distinct
+- Generates **antibiograms** - WISCA for empiric coverage estimates, or
+  traditional/syndromic for AMR surveillance
+- Provides the **full microbiological taxonomy** of ~97 000 distinct
   species and extensive info of ~620 antimicrobial drugs
 - Applies **CLSI 2011-2026** and **EUCAST 2011-2026** clinical and
   veterinary breakpoints, and ECOFFs, for MIC and disk zone
@@ -49,7 +49,7 @@ formed the basis of two PhD theses ([DOI
 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and
 [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
 
-After installing this package, R knows [**~79 000 distinct microbial
+After installing this package, R knows [**~97 000 distinct microbial
 species**](https://amr-for-r.org/reference/microorganisms.md) (updated
 June 2024) and all [**~620 antimicrobial and antiviral
 drugs**](https://amr-for-r.org/reference/antimicrobials.md) by name and
@@ -117,26 +117,24 @@ example_isolates %>%
 #> ℹ Using column mo as input for `mo_fullname()`
 #> ℹ Using column mo as input for `mo_is_gram_negative()`
 #> ℹ Using column mo as input for `mo_is_intrinsic_resistant()`
-#> ℹ Determining intrinsic resistance based on 'EUCAST Expected
-#>   Resistant Phenotypes' v1.2 (2023). This note will be shown
-#>   once per session.
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB
-#>   (tobramycin), AMK (amikacin), and KAN (kanamycin)
-#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM
-#>   (meropenem)
+#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant
+#>   Phenotypes' v1.2 (2023). This note will be shown once per session.
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> # A tibble: 35 × 7
-#>    bacteria         GEN   TOB   AMK   KAN   IPM   MEM  
-#>    <chr>            <sir> <sir> <sir> <sir> <sir> <sir>
-#>  1 Pseudomonas aer… I     S     NA    R     S     NA   
-#>  2 Pseudomonas aer… I     S     NA    R     S     NA   
-#>  3 Pseudomonas aer… I     S     NA    R     S     NA   
-#>  4 Pseudomonas aer… S     S     S     R     NA    S    
-#>  5 Pseudomonas aer… S     S     S     R     S     S    
-#>  6 Pseudomonas aer… S     S     S     R     S     S    
-#>  7 Stenotrophomona… R     R     R     R     R     R    
-#>  8 Pseudomonas aer… S     S     S     R     NA    S    
-#>  9 Pseudomonas aer… S     S     S     R     NA    S    
-#> 10 Pseudomonas aer… S     S     S     R     S     S    
+#>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
+#>    <chr>                        <sir> <sir> <sir> <sir> <sir> <sir>
+#>  1 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
+#>  2 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
+#>  3 Pseudomonas aeruginosa       I     S     NA    R     S     NA   
+#>  4 Pseudomonas aeruginosa       S     S     S     R     NA    S    
+#>  5 Pseudomonas aeruginosa       S     S     S     R     S     S    
+#>  6 Pseudomonas aeruginosa       S     S     S     R     S     S    
+#>  7 Stenotrophomonas maltophilia R     R     R     R     R     R    
+#>  8 Pseudomonas aeruginosa       S     S     S     R     NA    S    
+#>  9 Pseudomonas aeruginosa       S     S     S     R     NA    S    
+#> 10 Pseudomonas aeruginosa       S     S     S     R     S     S    
 #> # ℹ 25 more rows
 ```
 
@@ -167,10 +165,9 @@ output format automatically (such as markdown, LaTeX, HTML, etc.).
 
 antibiogram(example_isolates,
             antimicrobials = c(aminoglycosides(), carbapenems()))
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB
-#>   (tobramycin), AMK (amikacin), and KAN (kanamycin)
-#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM
-#>   (meropenem)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
 | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
@@ -275,18 +272,16 @@ example_isolates %>%
   summarise(across(c(GEN, TOB),
                    list(total_R = resistance,
                         conf_int = function(x) sir_confidence_interval(x, collapse = "-"))))
-#> ℹ `resistance()` assumes the EUCAST guideline and thus
-#>   considers the 'I' category susceptible. Set the `guideline`
-#>   argument or the `AMR_guideline` option to either "CLSI" or
-#>   "EUCAST", see `?AMR-options`.
+#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
+#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
 #> ℹ This message will be shown once per session.
 #> # A tibble: 3 × 5
-#>   ward       GEN_total_R GEN_conf_int TOB_total_R
-#>   <chr>            <dbl> <chr>              <dbl>
-#> 1 Clinical         0.229 0.205-0.254        0.315
-#> 2 ICU              0.290 0.253-0.33         0.400
-#> 3 Outpatient       0.2   0.131-0.285        0.368
-#> # ℹ 1 more variable: TOB_conf_int <chr>
+#>   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int
+#>   <chr>            <dbl> <chr>              <dbl> <chr>       
+#> 1 Clinical         0.229 0.205-0.254        0.315 0.284-0.347 
+#> 2 ICU              0.290 0.253-0.33         0.400 0.353-0.449 
+#> 3 Outpatient       0.2   0.131-0.285        0.368 0.254-0.493
 ```
 
 Or use [antimicrobial
@@ -304,16 +299,15 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB
-#>   (tobramycin), AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
+#>   (amikacin), and KAN (kanamycin)
 #> ℹ For `polymyxins()` using column COL (colistin)
 #> Warning: There was 1 warning in `summarise()`.
-#> ℹ In argument: `across(c(aminoglycosides(), polymyxins()),
-#>   resistance)`.
+#> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
-#> ! Introducing NA: only 23 results available for KAN in group:
-#> ward = "Outpatient" (whilst `minimum = 30`).
+#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient"
+#> (whilst `minimum = 30`).
 out
 #> # A tibble: 3 × 6
 #>   ward         GEN   TOB   AMK   KAN   COL
@@ -328,12 +322,11 @@ out
 # transform the antibiotic columns to names:
 out %>% set_ab_names()
 #> # A tibble: 3 × 6
-#>   ward       gentamicin tobramycin amikacin kanamycin
-#>   <chr>           <dbl>      <dbl>    <dbl>     <dbl>
-#> 1 Clinical        0.229      0.315    0.626         1
-#> 2 ICU             0.290      0.400    0.662         1
-#> 3 Outpatient      0.2        0.368    0.605        NA
-#> # ℹ 1 more variable: colistin <dbl>
+#>   ward       gentamicin tobramycin amikacin kanamycin colistin
+#>   <chr>           <dbl>      <dbl>    <dbl>     <dbl>    <dbl>
+#> 1 Clinical        0.229      0.315    0.626         1    0.780
+#> 2 ICU             0.290      0.400    0.662         1    0.857
+#> 3 Outpatient      0.2        0.368    0.605        NA    0.889
 ```
 
 ``` r

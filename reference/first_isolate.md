@@ -11,33 +11,39 @@ that also supports grouping with the `dplyr` package.
 ## Usage
 
 ``` r
-first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
-  col_mo = NULL, col_testcode = NULL, col_specimen = NULL,
-  col_icu = NULL, col_keyantimicrobials = NULL, episode_days = 365,
-  testcodes_exclude = NULL, icu_exclude = FALSE, specimen_group = NULL,
-  type = "points", method = c("phenotype-based", "episode-based",
-  "patient-based", "isolate-based"), ignore_I = TRUE, points_threshold = 2,
-  info = interactive(), include_unknown = FALSE,
-  include_untested_sir = TRUE, ...)
+first_isolate(
+  x = NULL,
+  col_date = NULL,
+  col_patient_id = NULL,
+  col_mo = NULL,
+  col_testcode = NULL,
+  col_specimen = NULL,
+  col_icu = NULL,
+  col_keyantimicrobials = NULL,
+  episode_days = 365,
+  testcodes_exclude = NULL,
+  icu_exclude = FALSE,
+  specimen_group = NULL,
+  type = "points",
+  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
+  ignore_I = TRUE,
+  points_threshold = 2,
+  info = interactive(),
+  include_unknown = FALSE,
+  include_untested_sir = TRUE,
+  ...
+)
 
-filter_first_isolate(x = NULL, col_date = NULL, col_patient_id = NULL,
-  col_mo = NULL, episode_days = 365, method = c("phenotype-based",
-  "episode-based", "patient-based", "isolate-based"), ...)
+filter_first_isolate(
+  x = NULL,
+  col_date = NULL,
+  col_patient_id = NULL,
+  col_mo = NULL,
+  episode_days = 365,
+  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
+  ...
+)
 ```
-
-## Source
-
-Methodology of these functions is strictly based on:
-
-- **M39 Analysis and Presentation of Cumulative Antimicrobial
-  Susceptibility Test Data, 5th Edition**, 2022, *Clinical and
-  Laboratory Standards Institute (CLSI)*.
-  <https://clsi.org/standards/products/microbiology/documents/m39/>.
-
-- Hindler JF and Stelling J (2007). **Analysis and Presentation of
-  Cumulative Antibiograms: A New Consensus Guideline from the Clinical
-  and Laboratory Standards Institute.** Clinical Infectious Diseases,
-  44(6), 867-873. [doi:10.1086/511864](https://doi.org/10.1086/511864)
 
 ## Arguments
 
@@ -317,6 +323,20 @@ genus-species combination is selected per patient once per year, while
 taking into account all antimicrobial test results. If no antimicrobial
 test results are available in the data set, only the episode-based
 method is applied at default.
+
+## References
+
+Methodology of these functions is strictly based on:
+
+- **M39 Analysis and Presentation of Cumulative Antimicrobial
+  Susceptibility Test Data, 5th Edition**, 2022, *Clinical and
+  Laboratory Standards Institute (CLSI)*.
+  <https://clsi.org/standards/products/microbiology/documents/m39/>.
+
+- Hindler JF and Stelling J (2007). **Analysis and Presentation of
+  Cumulative Antibiograms: A New Consensus Guideline from the Clinical
+  and Laboratory Standards Institute.** Clinical Infectious Diseases,
+  44(6), 867-873. [doi:10.1086/511864](https://doi.org/10.1086/511864)
 
 ## See also
 

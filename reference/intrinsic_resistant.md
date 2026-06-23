@@ -14,8 +14,8 @@ intrinsic_resistant
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 285
-928 observations and 2 variables:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 294
+079 observations and 2 variables:
 
 - `mo`  
   Microorganism ID which occurs in
@@ -44,6 +44,10 @@ This data set is internally used by:
 
 - [`mo_is_intrinsic_resistant()`](https://amr-for-r.org/reference/mo_property.md)
 
+- [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) to model
+  \\\beta(1, 9999)\\ for resistant bug-drug combinations, per
+  [doi:10.1093/jac/dkv397](https://doi.org/10.1093/jac/dkv397)
+
 ## Download Our Reference Data
 
 All reference data sets in the AMR package - including information on
@@ -64,7 +68,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 intrinsic_resistant
-#> # A tibble: 285,928 × 2
+#> # A tibble: 294,079 × 2
 #>    mo          ab  
 #>    <mo>        <ab>
 #>  1 B_GRAMP     ATM 
@@ -77,5 +81,5 @@ intrinsic_resistant
 #>  8 B_ANAER-POS NAL 
 #>  9 B_ANAER-POS PLB 
 #> 10 B_ANAER-POS TEM 
-#> # ℹ 285,918 more rows
+#> # ℹ 294,069 more rows
 ```

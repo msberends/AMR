@@ -1,8 +1,27 @@
 # Changelog
 
-## AMR 3.0.1.9057
+## AMR 3.0.1.9061
 
-Planned as v3.1.0, May 2026.
+Planned as v3.1.0, end of June 2026.
+
+#### Breaking Changes
+
+- The former *kingdoms* Bacteria and Archaea are now each divided into
+  four kingdoms with new top-level *domains* ‘Bacteria’ and ‘Archaea’
+  (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a
+  new `domain` column in the `microorganisms` data set was added, and
+  more importantly,
+  [`mo_kingdom()`](https://amr-for-r.org/reference/mo_property.md) now
+  returns the formal kingdom (e.g. `"Pseudomonadati"` instead of
+  `"Bacteria"`). Use
+  [`mo_domain()`](https://amr-for-r.org/reference/mo_property.md) for
+  the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa,
+  etc.), `kingdom` and `domain` are identical.
+- Faster parallel computing via the `future` package for
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) and
+  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md): a
+  non-sequential plan (e.g. `future::plan(future::multisession)`) must
+  be active before using `parallel = TRUE`.
 
 #### New
 
@@ -14,14 +33,6 @@ Planned as v3.1.0, May 2026.
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md); WT/NWT
   results are fully supported in all resistance/susceptibility functions
   and plots ([\#254](https://github.com/msberends/AMR/issues/254))
-- Faster parallel computing via the `future` package; **breaking
-  change**: a non-sequential plan
-  (e.g. `future::plan(future::multisession)`) must be active before
-  using `parallel = TRUE`;
-  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
-  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) now also
-  support `parallel = TRUE`
-  ([\#281](https://github.com/msberends/AMR/issues/281))
 - *tidymodels* integration for using SIR, MIC and disk data in modelling
   pipelines:
   [`step_mic_log2()`](https://amr-for-r.org/reference/amr-tidymodels.md),
@@ -36,6 +47,10 @@ Planned as v3.1.0, May 2026.
   [`peptides()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
   [`phosphonics()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
   [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
+- New antimicrobials: cefepime/taniborbactam (`FTA`),
+  ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin
+  (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton
+  (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 - New
   [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
   a unified function for EUCAST and CLSI interpretive rules;
@@ -43,20 +58,35 @@ Planned as v3.1.0, May 2026.
   is now a wrapper around it
   ([\#235](https://github.com/msberends/AMR/issues/235),
   [\#259](https://github.com/msberends/AMR/issues/259))
+- New `morphology` column in the `microorganisms` data set and
+  corresponding
+  [`mo_morphology()`](https://amr-for-r.org/reference/mo_property.md)
+  function, returning the cell shape of bacteria. Data sourced from
+  BacDive; values prefixed with “likely” are extrapolated from
+  genus-level consensus. New `add_morphology` argument was added to
+  [`mo_gramstain()`](https://amr-for-r.org/reference/mo_property.md) to
+  return combined results such as `"Gram-negative rods"`.
 - New [`amr_course()`](https://amr-for-r.org/reference/amr_course.md) to
   download and unpack course or webinar materials from GitHub in one
   call
 - Typed missing value constants `NA_ab_` and `NA_mo_`, for use in
   pipelines that need missing values of a specific class
+- New [`wisca_plot()`](https://amr-for-r.org/reference/antibiogram.md)
+  to assess the susceptibility and incidence distributions from the
+  Monte Carlo simulations
 
-#### Fixes
+#### Fixed
 
-- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) on data
-  frames: already-converted SIR columns no longer dropped on re-run
-  ([\#278](https://github.com/msberends/AMR/issues/278)); metadata
-  columns (e.g. `patient`, `ward`) no longer misidentified as antibiotic
-  columns; `info = FALSE` now suppresses all messages, including for
-  columns without breakpoints
+- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
+  - On data frames: already-converted SIR columns no longer dropped on
+    re-run ([\#278](https://github.com/msberends/AMR/issues/278))
+  - Metadata columns (e.g. `patient`, `ward`) no longer misidentified as
+    antibiotic columns
+  - `info = FALSE` now suppresses all messages, including for columns
+    without breakpoints
+  - Assumption of disk zones are now preferred over MIC values when
+    input is only whole numbers
+    ([\#291](https://github.com/msberends/AMR/issues/291))
 - [`as.mic()`](https://amr-for-r.org/reference/as.mic.md): values in
   scientific notation (e.g. `1e-3`) now handled correctly
 - [`as.ab()`](https://amr-for-r.org/reference/as.ab.md): codes
@@ -66,6 +96,23 @@ Planned as v3.1.0, May 2026.
 - Combined MIC/SIR input values (e.g. `"<= 0.002; S"` or `"S; 0.002"`)
   now parsed correctly
   ([\#252](https://github.com/msberends/AMR/issues/252))
+- [`as.mo()`](https://amr-for-r.org/reference/as.mo.md):
+  - Input of the form `"X complex"` now falls back to `"X"` when the
+    complex is not a distinct taxon in the database, preventing `NA`
+    results for valid clinical descriptions such as
+    `"Proteus vulgaris complex"`
+    ([\#287](https://github.com/msberends/AMR/issues/287))
+  - Abbreviated-genus input (e.g. `"S. apiospermum"`) now correctly
+    ranks candidates whose species epithet exactly matches the input
+    above more-prevalent organisms whose species does not match; fixes
+    `"S. apiospermum"` resolving to *Staphylococcus* instead of
+    *Scedosporium apiospermum*
+    ([\#288](https://github.com/msberends/AMR/issues/288))
+- `get_author_year()` in the microorganism reproduction script now
+  strips `emend.` and everything after it, so `ref` reflects the
+  combination authority rather than the emendation author
+  (e.g. *Rhodococcus equi* now returns “Goodfellow et al., 1977” instead
+  of “Nouioui et al., 2018”)
 - BRMO classification now includes bacterial complexes
   ([\#275](https://github.com/msberends/AMR/issues/275))
 - Translation fixes for Italian CoNS/CoPS names
@@ -74,9 +121,21 @@ Planned as v3.1.0, May 2026.
   [`sir_df()`](https://amr-for-r.org/reference/proportion.md)
   foreign-language output
   ([\#272](https://github.com/msberends/AMR/issues/272))
+- Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 
-#### Updates
+#### Updated
 
+- Taxonomic update for all microorganisms, now updated to June 2026
+- [`mo_kingdom()`](https://amr-for-r.org/reference/mo_property.md) now
+  returns the formal taxonomic kingdom; a one-time note per session
+  explains the change when querying bacterial or archaeal records.
+- [`mo_taxonomy()`](https://amr-for-r.org/reference/mo_property.md) and
+  [`mo_info()`](https://amr-for-r.org/reference/mo_property.md) gained
+  `domain` for the list output
+- [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
+  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) now also
+  support parallel computing via the argument `parallel = TRUE`
+  ([\#281](https://github.com/msberends/AMR/issues/281))
 - [`custom_eucast_rules()`](https://amr-for-r.org/reference/AMR-deprecated.md)
   renamed to
   [`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md);
@@ -87,6 +146,11 @@ Planned as v3.1.0, May 2026.
   is absent (e.g. piperacillin inferred from piperacillin/tazobactam);
   controlled via new `infer_from_combinations` argument (default `TRUE`)
   ([\#209](https://github.com/msberends/AMR/issues/209))
+- [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) now more
+  strictly follows Bielicki et al. (2016) by using
+  $`\text{Beta}(1, 9999)`$ for intrinsically resistant pairs, forcing
+  near-zero susceptibility regardless of observed data (based on EUCAST
+  Expected Resistant Phenotypes)
 - [`susceptibility()`](https://amr-for-r.org/reference/proportion.md) /
   [`resistance()`](https://amr-for-r.org/reference/proportion.md): new
   `guideline` argument (default EUCAST) to ensure the ‘I’ category is
@@ -100,17 +164,17 @@ Planned as v3.1.0, May 2026.
   [`rescale_mic()`](https://amr-for-r.org/reference/as.mic.md): new
   `round_to_next_log2` argument to round values up to the nearest log2
   dilution level ([\#255](https://github.com/msberends/AMR/issues/255))
-- `antimicrobials$group` now a `list`, so drugs belonging to multiple
-  groups are fully represented; use `ab_group(all_groups = TRUE)` to
-  retrieve all groups for a drug
+- `antimicrobials$group` is now a `list`, so that drugs belonging to
+  multiple groups are fully represented; use
+  `ab_group(all_groups = TRUE)` to retrieve all groups for a drug
   ([\#246](https://github.com/msberends/AMR/issues/246))
-- New antimicrobials added: cefepime/taniborbactam (`FTA`),
-  ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin
-  (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton
-  (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 - Improved console messages with clickable links throughout, powered by
-  `cli` ([\#191](https://github.com/msberends/AMR/issues/191),
+  `cli` if it is installed
+  ([\#191](https://github.com/msberends/AMR/issues/191),
   [\#265](https://github.com/msberends/AMR/issues/265))
+- [`as.disk()`](https://amr-for-r.org/reference/as.disk.md): input
+  validation is now more strict, rejecting values that are not
+  recognisable as a numeric disk zone diameter
 
 ## AMR 3.0.1
 

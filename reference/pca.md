@@ -8,8 +8,15 @@ variables.
 ## Usage
 
 ``` r
-pca(x, ..., retx = TRUE, center = TRUE, scale. = TRUE, tol = NULL,
-  rank. = NULL)
+pca(
+  x,
+  ...,
+  retx = TRUE,
+  center = TRUE,
+  scale. = TRUE,
+  tol = NULL,
+  rank. = NULL
+)
 ```
 
 ## Arguments
