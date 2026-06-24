@@ -71,7 +71,10 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
     if (getRversion() < "4.0.0") {
       deparse1 <- AMR:::deparse1
     }
-    
+    if (getRversion() < "4.4.0") {
+      `%||%` <- AMR:::`%||%`
+    }
+
     suppressMessages(
       out <- test_package("AMR",
                           testdir = ifelse(dir.exists("inst/testthat"),
