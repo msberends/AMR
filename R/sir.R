@@ -525,7 +525,7 @@ as.sir.default <- function(x,
   } else if (!all(is.na(x)) && !identical(levels(x), VALID_SIR_LEVELS) && !all(x %in% c(VALID_SIR_LEVELS, NA))) {
     if (all(x %unlike% "(S|I|R)", na.rm = TRUE) && !all(x %in% c(1, 2, 3, 4, 5), na.rm = TRUE)) {
       # check if they are actually MICs or disks
-      if (all_valid_mics(x) && !(all_valid_disks(x) && identical(x, floor(x)))) {
+      if (all_valid_mics(x) && !(all_valid_disks(x) && identical(x, tryCatch(floor(x), error = function(e) NULL)))) {
         warning_("in {.help [{.fun as.sir}](AMR::as.sir)}: input values were guessed to be MIC values - preferably transform them with {.help [{.fun as.mic}](AMR::as.mic)} before running {.help [{.fun as.sir}](AMR::as.sir)}.")
         return(as.sir(as.mic(x), ...))
       } else if (all_valid_disks(x)) {
