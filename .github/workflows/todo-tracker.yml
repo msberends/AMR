@@ -87,14 +87,15 @@ jobs:
           > /tmp/issues_seen.txt
 
           while IFS= read -r match; do
-            file=$(echo "$match" | sed 's|^\./||' | cut -d: -f1)
-            lineno=$(echo "$match" | sed 's|^\./||' | cut -d: -f2)
-            text=$(echo "$match" | sed 's|^\./||' | cut -d: -f3-)
+            clean=$(printf '%s\n' "$match" | sed 's|^\./||')
+            file=$(printf '%s\n' "$clean" | cut -d: -f1)
+            lineno=$(printf '%s\n' "$clean" | cut -d: -f2)
+            text=$(printf '%s\n' "$clean" | cut -d: -f3-)
 
             # determine marker type (first match wins, TODO is default)
             marker="TODO"
             for m in FIXME HACK XXX; do
-              if echo "$text" | grep -qw "$m"; then marker="$m"; break; fi
+              if printf '%s\n' "$text" | grep -qw "$m"; then marker="$m"; break; fi
             done
 
             # git blame timestamp
@@ -109,7 +110,7 @@ jobs:
             fi
 
             # extract issue references (#NNN)
-            issues=$(echo "$text" | grep -oE '#[0-9]+' | sed 's/#//' | tr '\n' ',' | sed 's/,$//' || true)
+            issues=$(printf '%s\n' "$text" | grep -oE '#[0-9]+' | sed 's/#//' | tr '\n' ',' | sed 's/,$//' || true)
             if [ -n "$issues" ]; then
               for inum in $(echo "$issues" | tr ',' ' '); do
                 echo "$inum" >> /tmp/issues_seen.txt
@@ -197,7 +198,10 @@ jobs:
                   age_str=$(format_age "$d")
                   flag=""
                   [ "$d" -gt "$STALE_DAYS" ] 2>/dev/null && flag=" :warning:"
-                  echo "- \`${f}\` L${l} (${age_str} ago)${flag}"
+                  # re-read the actual source line and trim leading/trailing whitespace
+                  src_text=$(sed -n "${l}p" "$f" 2>/dev/null | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' || true)
+                  echo "- [\`${f}\` L${l}](${REPO_URL}/${f}#L${l}) (${age_str} ago)${flag}"
+                  [ -n "$src_text" ] && echo "  \`${src_text}\`"
                 done
 
                 echo ""
@@ -242,7 +246,9 @@ jobs:
               flag=""
               [ "$age_days" -gt "$STALE_DAYS" ] 2>/dev/null && flag=" !!"
 
-              printf 'L%s: %s  ◁ %s ago%s\n' "$lineno" "$text" "$age_str" "$flag"
+              # re-read the actual source line to avoid TSV round-trip corruption
+              src_line=$(sed -n "${lineno}p" "$file" 2>/dev/null | sed 's/[[:space:]]*$//' || true)
+              printf 'L%s: %s  ◁ %s ago%s\n' "$lineno" "$src_line" "$age_str" "$flag"
 
               prev_file="$file"
               prev_lineno="$lineno"
