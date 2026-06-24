@@ -1511,8 +1511,8 @@ mdro <- function(x = NULL,
     fluoroquinolones <- c(CIP, NOR, LVX) # note 5:  ciprofloxacin or norfloxacin or levofloxacin
     carbapenems <- carbapenems[!is.na(carbapenems)]
     carbapenems_without_imipenem <- carbapenems[carbapenems != IPM]
-    amino <- AMX %or% AMP
-    third <- CAZ %or% CTX
+    amino <- AMX %or_if_na% AMP
+    third <- CAZ %or_if_na% CTX
     ESBLs <- c(amino, third)
     ESBLs <- ESBLs[!is.na(ESBLs)]
     if (length(ESBLs) != 2) {
@@ -1524,7 +1524,7 @@ mdro <- function(x = NULL,
       trans_tbl(
         2, # positive, unconfirmed
         rows = which(x$order == "Enterobacterales" & col_values(x, ESBLs[1]) == "R" & col_values(x, ESBLs[2]) == "R" & is.na(esbl)),
-        cols = c(AMX %or% AMP, cephalosporins_3rd),
+        cols = c(AMX %or_if_na% AMP, cephalosporins_3rd),
         any_all = "all",
         reason = "Enterobacterales: potential ESBL"
       )
@@ -1634,7 +1634,7 @@ mdro <- function(x = NULL,
     trans_tbl(
       3,
       rows = which(x$genus == "Enterococcus" & x$species == "faecium"),
-      cols = c(PEN %or% AMX %or% AMP, VAN),
+      cols = c(PEN %or_if_na% AMX %or_if_na% AMP, VAN),
       any_all = "all",
       reason = "E. faecium: vancomycin + penicillin group"
     )
@@ -1677,8 +1677,8 @@ mdro <- function(x = NULL,
     aminoglycosides <- aminoglycosides[!is.na(aminoglycosides)]
     fluoroquinolones <- fluoroquinolones[!is.na(fluoroquinolones)]
     carbapenems <- carbapenems[!is.na(carbapenems)]
-    amino <- AMX %or% AMP
-    third <- CAZ %or% CTX
+    amino <- AMX %or_if_na% AMP
+    third <- CAZ %or_if_na% CTX
     ESBLs <- c(amino, third)
     ESBLs <- ESBLs[!is.na(ESBLs)]
     if (length(ESBLs) != 2) {

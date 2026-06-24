@@ -708,7 +708,7 @@ stop_ifnot <- function(expr, ..., call = TRUE) {
   }
 }
 
-"%or%" <- function(x, y) {
+"%or_if_na%" <- function(x, y) {
   if (is.null(x) || is.null(y)) {
     if (is.null(x)) {
       return(y)
@@ -1843,6 +1843,12 @@ if (getRversion() < "3.6.0") {
 if (getRversion() < "4.0.0") {
   deparse1 <- function(expr, collapse = " ", width.cutoff = 500L, ...) {
     paste(deparse(expr, width.cutoff, ...), collapse = collapse)
+  }
+}
+
+if (getRversion() < "4.4.0") {
+  `%||%` <- function(x, y) {
+    if (is.null(x)) y else x
   }
 }
 
