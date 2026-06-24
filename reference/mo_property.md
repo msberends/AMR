@@ -564,6 +564,8 @@ Data set
 ``` r
 # taxonomic tree -----------------------------------------------------------
 
+mo_domain("Klebsiella pneumoniae")
+#> [1] "Bacteria"
 mo_kingdom("Klebsiella pneumoniae")
 #> [1] "Pseudomonadati"
 mo_phylum("Klebsiella pneumoniae")
@@ -581,6 +583,35 @@ mo_species("Klebsiella pneumoniae")
 mo_subspecies("Klebsiella pneumoniae")
 #> [1] ""
 
+# all in one go
+mo_taxonomy("Klebsiella pneumoniae")
+#> $domain
+#> [1] "Bacteria"
+#> 
+#> $kingdom
+#> [1] "Pseudomonadati"
+#> 
+#> $phylum
+#> [1] "Pseudomonadota"
+#> 
+#> $class
+#> [1] "Gammaproteobacteria"
+#> 
+#> $order
+#> [1] "Enterobacterales"
+#> 
+#> $family
+#> [1] "Enterobacteriaceae"
+#> 
+#> $genus
+#> [1] "Klebsiella"
+#> 
+#> $species
+#> [1] "pneumoniae"
+#> 
+#> $subspecies
+#> [1] ""
+#> 
 
 # full names and short names -----------------------------------------------
 
@@ -618,6 +649,8 @@ mo_url("Klebsiella pneumoniae")
 mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 #> [1]  TRUE FALSE FALSE
 
+mo_group_members("Streptococcus group A")
+#> [1] "Streptococcus pyogenes"
 mo_group_members(c(
   "Streptococcus group A",
   "Streptococcus group C",
@@ -708,6 +741,7 @@ mo_fullname("Staph epidermidis")
 #> [1] "Staphylococcus epidermidis"
 mo_fullname("Staph epidermidis", Becker = TRUE)
 #> [1] "Coagulase-negative Staphylococcus (CoNS)"
+
 mo_shortname("Staph epidermidis")
 #> [1] "S. epidermidis"
 mo_shortname("Staph epidermidis", Becker = TRUE)
@@ -720,6 +754,7 @@ mo_fullname("Strep agalactiae")
 #> [1] "Streptococcus agalactiae"
 mo_fullname("Strep agalactiae", Lancefield = TRUE)
 #> [1] "Streptococcus Group B"
+
 mo_shortname("Strep agalactiae")
 #> [1] "S. agalactiae"
 mo_shortname("Strep agalactiae", Lancefield = TRUE)
@@ -739,13 +774,13 @@ mo_gramstain("Klebsiella pneumoniae", language = "el") # Greek
 mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
 #> [1] "Грамнегативні"
 
-# mo_type is equal to mo_kingdom, but mo_kingdom will remain untranslated
-mo_kingdom("Klebsiella pneumoniae")
-#> [1] "Pseudomonadati"
+# mo_type is equal to mo_domain, but mo_domain will remain untranslated
+mo_domain("Klebsiella pneumoniae")
+#> [1] "Bacteria"
 mo_type("Klebsiella pneumoniae")
 #> [1] "Bacteria"
-mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
-#> [1] "Pseudomonadati"
+mo_domain("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
+#> [1] "Bacteria"
 mo_type("Klebsiella pneumoniae", language = "zh") # Chinese, translated
 #> [1] "细菌"
 

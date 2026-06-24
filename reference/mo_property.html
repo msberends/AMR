@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9065</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9067</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -428,6 +428,8 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># taxonomic tree -----------------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">mo_domain</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteria"</span>
 <span class="r-in"><span><span class="fu">mo_kingdom</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Pseudomonadati"</span>
 <span class="r-in"><span><span class="fu">mo_phylum</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
@@ -445,6 +447,35 @@
 <span class="r-in"><span><span class="fu">mo_subspecies</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># all in one go</span></span></span>
+<span class="r-in"><span><span class="fu">mo_taxonomy</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $domain</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteria"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $kingdom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Pseudomonadati"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $phylum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Pseudomonadota"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Gammaproteobacteria"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $order</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Enterobacterales"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $family</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Enterobacteriaceae"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $genus</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Klebsiella"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pneumoniae"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $subspecies</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># full names and short names -----------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
@@ -482,6 +513,8 @@
 <span class="r-in"><span><span class="fu">mo_is_yeast</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Candida"</span>, <span class="st">"Trichophyton"</span>, <span class="st">"Klebsiella"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  TRUE FALSE FALSE</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">mo_group_members</span><span class="op">(</span><span class="st">"Streptococcus group A"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Streptococcus pyogenes"</span>
 <span class="r-in"><span><span class="fu">mo_group_members</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"Streptococcus group A"</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"Streptococcus group C"</span>,</span></span>
@@ -572,6 +605,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Staphylococcus epidermidis"</span>
 <span class="r-in"><span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"Staph epidermidis"</span>, Becker <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Coagulase-negative Staphylococcus (CoNS)"</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"Staph epidermidis"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S. epidermidis"</span>
 <span class="r-in"><span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"Staph epidermidis"</span>, Becker <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -584,6 +618,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Streptococcus agalactiae"</span>
 <span class="r-in"><span><span class="fu">mo_fullname</span><span class="op">(</span><span class="st">"Strep agalactiae"</span>, Lancefield <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Streptococcus Group B"</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"Strep agalactiae"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S. agalactiae"</span>
 <span class="r-in"><span><span class="fu">mo_shortname</span><span class="op">(</span><span class="st">"Strep agalactiae"</span>, Lancefield <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -603,13 +638,13 @@
 <span class="r-in"><span><span class="fu">mo_gramstain</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span>, language <span class="op">=</span> <span class="st">"uk"</span><span class="op">)</span> <span class="co"># Ukrainian</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Грамнегативні"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># mo_type is equal to mo_kingdom, but mo_kingdom will remain untranslated</span></span></span>
-<span class="r-in"><span><span class="fu">mo_kingdom</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Pseudomonadati"</span>
+<span class="r-in"><span><span class="co"># mo_type is equal to mo_domain, but mo_domain will remain untranslated</span></span></span>
+<span class="r-in"><span><span class="fu">mo_domain</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteria"</span>
 <span class="r-in"><span><span class="fu">mo_type</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteria"</span>
-<span class="r-in"><span><span class="fu">mo_kingdom</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span>, language <span class="op">=</span> <span class="st">"zh"</span><span class="op">)</span> <span class="co"># Chinese, no effect</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Pseudomonadati"</span>
+<span class="r-in"><span><span class="fu">mo_domain</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span>, language <span class="op">=</span> <span class="st">"zh"</span><span class="op">)</span> <span class="co"># Chinese, no effect</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Bacteria"</span>
 <span class="r-in"><span><span class="fu">mo_type</span><span class="op">(</span><span class="st">"Klebsiella pneumoniae"</span>, language <span class="op">=</span> <span class="st">"zh"</span><span class="op">)</span> <span class="co"># Chinese, translated</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "细菌"</span>
 <span class="r-in"><span></span></span>

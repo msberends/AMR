@@ -188,24 +188,19 @@ are:
 
 For convenience, some entries were added manually:
 
+- All 37 groups and complexes of the
+  [microorganisms.groups](https://amr-for-r.org/reference/microorganisms.groups.md)
+  data set, for cross-reference (examples include beta-haemolytic
+  *Streptococcus* groups A to K, coagulase-negative *Staphylococcus*
+  (CoNS), *Mycobacterium tuberculosis* complex, etc.)
+
 - ~1 500 entries of *Salmonella*, such as the city-like serovars and
   groups A to H
-
-- 37 species groups (such as the beta-haemolytic *Streptococcus* groups
-  A to K, coagulase-negative *Staphylococcus* (CoNS), *Mycobacterium
-  tuberculosis* complex, etc.), of which the group compositions are
-  stored in the
-  [microorganisms.groups](https://amr-for-r.org/reference/microorganisms.groups.md)
-  data set
 
 - 1 entry of *Blastocystis* (*B. hominis*), although it officially does
   not exist (Noel *et al.* 2005, PMID 15634993)
 
-- 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named
-  *Branhamella catarrhalis* (Catlin, 1970) though this change was never
-  accepted within the field of clinical microbiology
-
-- 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown
+- 9 other 'undefined' entries (unknown, unknown Gram-negatives, unknown
   Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic
   Gram-pos/Gram-neg bacteria)
 

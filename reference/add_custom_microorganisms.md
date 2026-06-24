@@ -121,12 +121,6 @@ mo_gramstain("Enterobacter asburiae/cloacae")
 #> [1] "Gram-negative"
 
 mo_info("Enterobacter asburiae/cloacae")
-#> ℹ Since AMR v3.1.0, `mo_kingdom()` returns the taxonomic kingdom as defined by
-#>   Göker and Oren (2024), who formally introduced a new kingdom rank into
-#>   prokaryotic nomenclature (DOI: 10.1099/ijsem.0.006242
-#>   (<https://doi.org/10.1099/ijsem.0.006242>)). The former kingdom of Bacteria
-#>   was divided into four new kingdoms under the new domain of Bacteria. For the
-#>   old behaviour, use `mo_domain()`. This note will be shown once per session.
 #> $mo
 #> [1] "CUSTOM1_ENTRB_ASB/"
 #> 

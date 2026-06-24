@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9065</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9067</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,15 +49,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9065" id="amr-3019065">AMR 3.0.1.9065<a class="anchor" aria-label="anchor" href="#amr-3019065"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9067" id="amr-3019067">AMR 3.0.1.9067<a class="anchor" aria-label="anchor" href="#amr-3019067"></a></h2>
 <p>Planned as v3.1.0, end of June 2026.</p>
 <div class="section level4">
-<h4 id="breaking-changes-3-0-1-9065">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9065"></a></h4>
+<h4 id="breaking-changes-3-0-1-9067">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9067"></a></h4>
 <ul><li>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms with new top-level <em>domains</em> ‘Bacteria’ and ‘Archaea’ (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column in the <code>microorganisms</code> data set was added, and more importantly, <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g. <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</li>
 <li>Faster parallel computing via the <code>future</code> package for <code><a href="../reference/as.sir.html">as.sir()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code>: a non-sequential plan (e.g. <code>future::plan(future::multisession)</code>) must be active before using <code>parallel = TRUE</code>.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9065">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9065"></a></h4>
+<h4 id="new-3-0-1-9067">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9067"></a></h4>
 <ul><li>EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the <code>clinical_breakpoints</code> data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations</li>
 <li>Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting <code>breakpoint_type = "ECOFF"</code> in <code><a href="../reference/as.sir.html">as.sir()</a></code>; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (<a href="https://github.com/msberends/AMR/issues/254" class="external-link">#254</a>)</li>
 <li>
@@ -74,7 +74,7 @@
 <li>New <code><a href="../reference/antibiogram.html">wisca_plot()</a></code> to assess the susceptibility and incidence distributions from the Monte Carlo simulations</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixed-3-0-1-9065">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9065"></a></h4>
+<h4 id="fixed-3-0-1-9067">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9067"></a></h4>
 <ul><li>
 <code><a href="../reference/as.sir.html">as.sir()</a></code>
 <ul><li>On data frames: already-converted SIR columns no longer dropped on re-run (<a href="https://github.com/msberends/AMR/issues/278" class="external-link">#278</a>)</li>
@@ -101,7 +101,7 @@
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="updated-3-0-1-9065">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9065"></a></h4>
+<h4 id="updated-3-0-1-9067">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9067"></a></h4>
 <ul><li>Taxonomic update for all microorganisms, now updated to June 2026</li>
 <li>
 <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal taxonomic kingdom; a one-time note per session explains the change when querying bacterial or archaeal records.</li>
