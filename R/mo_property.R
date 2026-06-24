@@ -83,6 +83,7 @@
 #' @examples
 #' # taxonomic tree -----------------------------------------------------------
 #'
+#' mo_domain("Klebsiella pneumoniae")
 #' mo_kingdom("Klebsiella pneumoniae")
 #' mo_phylum("Klebsiella pneumoniae")
 #' mo_class("Klebsiella pneumoniae")
@@ -92,6 +93,8 @@
 #' mo_species("Klebsiella pneumoniae")
 #' mo_subspecies("Klebsiella pneumoniae")
 #'
+#' # all in one go
+#' mo_taxonomy("Klebsiella pneumoniae")
 #'
 #' # full names and short names -----------------------------------------------
 #'
@@ -112,6 +115,7 @@
 #' mo_url("Klebsiella pneumoniae")
 #' mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 #'
+#' mo_group_members("Streptococcus group A")
 #' mo_group_members(c(
 #'   "Streptococcus group A",
 #'   "Streptococcus group C",
@@ -155,6 +159,7 @@
 #'
 #' mo_fullname("Staph epidermidis")
 #' mo_fullname("Staph epidermidis", Becker = TRUE)
+#'
 #' mo_shortname("Staph epidermidis")
 #' mo_shortname("Staph epidermidis", Becker = TRUE)
 #'
@@ -163,6 +168,7 @@
 #'
 #' mo_fullname("Strep agalactiae")
 #' mo_fullname("Strep agalactiae", Lancefield = TRUE)
+#'
 #' mo_shortname("Strep agalactiae")
 #' mo_shortname("Strep agalactiae", Lancefield = TRUE)
 #'
@@ -175,10 +181,10 @@
 #' mo_gramstain("Klebsiella pneumoniae", language = "el") # Greek
 #' mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
 #'
-#' # mo_type is equal to mo_kingdom, but mo_kingdom will remain untranslated
-#' mo_kingdom("Klebsiella pneumoniae")
+#' # mo_type is equal to mo_domain, but mo_domain will remain untranslated
+#' mo_domain("Klebsiella pneumoniae")
 #' mo_type("Klebsiella pneumoniae")
-#' mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
+#' mo_domain("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
 #' mo_type("Klebsiella pneumoniae", language = "zh") # Chinese, translated
 #'
 #' mo_fullname("S. pyogenes", Lancefield = TRUE, language = "de")
@@ -807,19 +813,19 @@ mo_taxonomy <- function(x, language = get_AMR_locale(), keep_synonyms = getOptio
   language <- validate_language(language)
   meet_criteria(keep_synonyms, allow_class = "logical", has_length = 1)
 
-  x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+  x.mo <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
   metadata <- get_mo_uncertainties()
 
   out <- list(
-    domain = mo_domain(x, language = language, keep_synonyms = keep_synonyms),
-    kingdom = mo_kingdom(x, language = language, keep_synonyms = keep_synonyms),
-    phylum = mo_phylum(x, language = language, keep_synonyms = keep_synonyms),
-    class = mo_class(x, language = language, keep_synonyms = keep_synonyms),
-    order = mo_order(x, language = language, keep_synonyms = keep_synonyms),
-    family = mo_family(x, language = language, keep_synonyms = keep_synonyms),
-    genus = mo_genus(x, language = language, keep_synonyms = keep_synonyms),
-    species = mo_species(x, language = language, keep_synonyms = keep_synonyms),
-    subspecies = mo_subspecies(x, language = language, keep_synonyms = keep_synonyms)
+    domain = mo_domain(x.mo, language = language, keep_synonyms = keep_synonyms),
+    kingdom = suppressMessages(mo_kingdom(x.mo, language = language, keep_synonyms = keep_synonyms)),
+    phylum = mo_phylum(x.mo, language = language, keep_synonyms = keep_synonyms),
+    class = mo_class(x.mo, language = language, keep_synonyms = keep_synonyms),
+    order = mo_order(x.mo, language = language, keep_synonyms = keep_synonyms),
+    family = mo_family(x.mo, language = language, keep_synonyms = keep_synonyms),
+    genus = mo_genus(x.mo, language = language, keep_synonyms = keep_synonyms),
+    species = mo_species(x.mo, language = language, keep_synonyms = keep_synonyms),
+    subspecies = mo_subspecies(x.mo, language = language, keep_synonyms = keep_synonyms)
   )
 
   load_mo_uncertainties(metadata)

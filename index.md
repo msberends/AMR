@@ -230,7 +230,7 @@ wisca(example_isolates,
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|
-| 70.1% (64.9-75.7%) | 93.6% (92.2-95%) | 89.8% (86.7-92.3%) |
+| 69.9% (64.7-75.2%) | 93.7% (92.2-95.1%) | 89.8% (86.8-92.3%) |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
@@ -245,9 +245,9 @@ wisca(example_isolates,
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|:---|
-| Clinical | 74.5% (69.3-80.1%) | 93.7% (92-95.1%) | 90.5% (87.1-93.1%) |
-| ICU | 56.7% (48-65.5%) | 86.7% (83.4-89.8%) | 82.9% (78.2-87.3%) |
-| Outpatient | 57.8% (46.4-69.7%) | 76.5% (70.1-82.2%) | 67.9% (57.9-77.5%) |
+| Clinical | 74.6% (69-80.1%) | 93.6% (91.9-95.1%) | 90.5% (86.9-93%) |
+| ICU | 57% (48.7-65.8%) | 86.7% (83.7-89.7%) | 82.8% (77.9-87.2%) |
+| Outpatient | 57.5% (46.5-68.7%) | 76.7% (70.6-82.4%) | 67.5% (57.2-76.7%) |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:

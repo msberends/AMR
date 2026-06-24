@@ -401,6 +401,7 @@ Visit \href{https://amr-for-r.org/articles/datasets.html}{our website for direct
 \examples{
 # taxonomic tree -----------------------------------------------------------
 
+mo_domain("Klebsiella pneumoniae")
 mo_kingdom("Klebsiella pneumoniae")
 mo_phylum("Klebsiella pneumoniae")
 mo_class("Klebsiella pneumoniae")
@@ -410,6 +411,8 @@ mo_genus("Klebsiella pneumoniae")
 mo_species("Klebsiella pneumoniae")
 mo_subspecies("Klebsiella pneumoniae")
 
+# all in one go
+mo_taxonomy("Klebsiella pneumoniae")
 
 # full names and short names -----------------------------------------------
 
@@ -430,6 +433,7 @@ mo_rank("Klebsiella pneumoniae")
 mo_url("Klebsiella pneumoniae")
 mo_is_yeast(c("Candida", "Trichophyton", "Klebsiella"))
 
+mo_group_members("Streptococcus group A")
 mo_group_members(c(
   "Streptococcus group A",
   "Streptococcus group C",
@@ -473,6 +477,7 @@ mo_shortname("K. pneu rh")
 
 mo_fullname("Staph epidermidis")
 mo_fullname("Staph epidermidis", Becker = TRUE)
+
 mo_shortname("Staph epidermidis")
 mo_shortname("Staph epidermidis", Becker = TRUE)
 
@@ -481,6 +486,7 @@ mo_shortname("Staph epidermidis", Becker = TRUE)
 
 mo_fullname("Strep agalactiae")
 mo_fullname("Strep agalactiae", Lancefield = TRUE)
+
 mo_shortname("Strep agalactiae")
 mo_shortname("Strep agalactiae", Lancefield = TRUE)
 
@@ -493,10 +499,10 @@ mo_gramstain("Klebsiella pneumoniae", language = "es") # Spanish
 mo_gramstain("Klebsiella pneumoniae", language = "el") # Greek
 mo_gramstain("Klebsiella pneumoniae", language = "uk") # Ukrainian
 
-# mo_type is equal to mo_kingdom, but mo_kingdom will remain untranslated
-mo_kingdom("Klebsiella pneumoniae")
+# mo_type is equal to mo_domain, but mo_domain will remain untranslated
+mo_domain("Klebsiella pneumoniae")
 mo_type("Klebsiella pneumoniae")
-mo_kingdom("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
+mo_domain("Klebsiella pneumoniae", language = "zh") # Chinese, no effect
 mo_type("Klebsiella pneumoniae", language = "zh") # Chinese, translated
 
 mo_fullname("S. pyogenes", Lancefield = TRUE, language = "de")

@@ -59,11 +59,10 @@ Included taxonomic data from \href{https://lpsn.dsmz.de}{LPSN}, \href{https://ww
 
 For convenience, some entries were added manually:
 \itemize{
+\item All 37 groups and complexes of the \link{microorganisms.groups} data set, for cross-reference (examples include beta-haemolytic \emph{Streptococcus} groups A to K, coagulase-negative \emph{Staphylococcus} (CoNS), \emph{Mycobacterium tuberculosis} complex, etc.)
 \item ~1 500 entries of \emph{Salmonella}, such as the city-like serovars and groups A to H
-\item 37 species groups (such as the beta-haemolytic \emph{Streptococcus} groups A to K, coagulase-negative \emph{Staphylococcus} (CoNS), \emph{Mycobacterium tuberculosis} complex, etc.), of which the group compositions are stored in the \link{microorganisms.groups} data set
 \item 1 entry of \emph{Blastocystis} (\emph{B.  hominis}), although it officially does not exist (Noel \emph{et al.} 2005, PMID 15634993)
-\item 1 entry of \emph{Moraxella} (\emph{M. catarrhalis}), which was formally named \emph{Branhamella catarrhalis} (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
-\item 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
+\item 9 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
 }
 
 The syntax used to transform the original data to a cleansed \R format, can be \href{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_microorganisms.R}{found here}.

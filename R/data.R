@@ -143,11 +143,10 @@
 #' ### Manual additions
 #' For convenience, some entries were added manually:
 #'
+#' - All `r format_included_data_number(length(which(microorganisms$rank == "species group")))` groups and complexes of the [microorganisms.groups] data set, for cross-reference (examples include beta-haemolytic *Streptococcus* groups A to K, coagulase-negative *Staphylococcus* (CoNS), *Mycobacterium tuberculosis* complex, etc.)
 #' - `r format_included_data_number(microorganisms[which(microorganisms$source == "manually added" & microorganisms$genus == "Salmonella"), , drop = FALSE])` entries of *Salmonella*, such as the city-like serovars and groups A to H
-#' - `r format_included_data_number(length(which(microorganisms$rank == "species group")))` species groups (such as the beta-haemolytic *Streptococcus* groups A to K, coagulase-negative *Staphylococcus* (CoNS), *Mycobacterium tuberculosis* complex, etc.), of which the group compositions are stored in the [microorganisms.groups] data set
 #' - 1 entry of *Blastocystis* (*B.  hominis*), although it officially does not exist (Noel *et al.* 2005, PMID 15634993)
-#' - 1 entry of *Moraxella* (*M. catarrhalis*), which was formally named *Branhamella catarrhalis* (Catlin, 1970) though this change was never accepted within the field of clinical microbiology
-#' - 8 other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
+#' - `r sum(microorganisms$fullname %like% "unknown")` other 'undefined' entries (unknown, unknown Gram-negatives, unknown Gram-positives, unknown yeast, unknown fungus, and unknown anaerobic Gram-pos/Gram-neg bacteria)
 #'
 #' The syntax used to transform the original data to a cleansed \R format, can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_microorganisms.R).
 #' @inheritSection AMR Download Our Reference Data
