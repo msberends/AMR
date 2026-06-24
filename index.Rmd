@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- index.md is generated from index.Rmd; please edit that file. -->
@@ -17,7 +19,7 @@ AMR:::reset_all_thrown_messages()
 # The `AMR` Package for R <a href="https://amr-for-r.org/"><img src="./logo.svg" align="right" height="139" /></a>
 
 * Provides an **all-in-one solution** for antimicrobial resistance (AMR) data analysis in a One Health approach
-* Peer-reviewed, used in over 175 countries, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
+* **Peer-reviewed**, used in over 175 countries, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
 * Generates **antibiograms** - WISCA for empiric coverage estimates, or traditional/syndromic for AMR surveillance
 * Provides the **full microbiological taxonomy** of `r AMR:::format_included_data_number(AMR::microorganisms)` distinct species and extensive info of `r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial drugs
 * Applies **CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`** and **EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`** clinical and veterinary breakpoints, and ECOFFs, for MIC and disk zone interpretation
@@ -25,7 +27,7 @@ AMR:::reset_all_thrown_messages()
 * Integrates with **WHONET**, ATC, **EARS-Net**, PubChem, **LOINC**, **SNOMED CT**, and **NCBI**
 * 100% free of costs and dependencies, highly suitable for places with **limited resources**
 
-> Now available for Python too! [Click here](./articles/AMR_for_Python.html) to read more.
+> Available for Python too! [Click here](./articles/AMR_for_Python.html) to read more.
 
 <div style="display: flex; font-size: 0.8em;">
   <p style="text-align:left; width: 50%;"><small><a href="https://amr-for-r.org/">amr-for-r.org</a></small></p>
@@ -42,7 +44,7 @@ The `AMR` package is a peer-reviewed, [free and open-source](#copyright) R packa
 
 This work was published in the Journal of Statistical Software (Volume 104(3); [DOI 10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
 
-After installing this package, R knows [**`r AMR:::format_included_data_number(AMR::microorganisms)` distinct microbial species**](./reference/microorganisms.html) (updated June 2024) and all [**`r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial and antiviral drugs**](./reference/antimicrobials.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))` and EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))` are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the [University Medical Center Groningen](https://www.umcg.nl).
+After installing this package, R knows [**`r AMR:::format_included_data_number(AMR::microorganisms)` distinct microbial species**](./reference/microorganisms.html) (updated `r format(AMR:::TAXONOMY_VERSION$GBIF$accessed_date, "%B %Y")`) and all [**`r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial and antiviral drugs**](./reference/antimicrobials.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))` and EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))` are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the [University Medical Center Groningen](https://www.umcg.nl).
 
 ### Used in over 175 countries, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
 
@@ -84,24 +86,42 @@ With only having defined a row filter on Gram-negative bacteria with intrinsic r
 
 ### Generating antibiograms
 
-The `AMR` package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).
+The `AMR` package supports four types of antibiograms, with support for `r length(AMR:::LANGUAGES_SUPPORTED)` languages. If used inside [R Markdown](https://rmarkdown.rstudio.com) or [Quarto](https://quarto.org), the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).
 
-If used inside [R Markdown](https://rmarkdown.rstudio.com) or [Quarto](https://quarto.org), the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).
+**For empirical therapy guidance (i.e., coverage estimates), use WISCA** (Weighted-Incidence Syndromic Combination Antibiogram). When a clinician starts empirical treatment, the causative pathogen is unknown. The relevant question is not *"what percentage of E. coli is susceptible?"* but *"what is the probability that this regimen will cover whatever pathogen is causing the infection?"*. WISCA answers that question directly, weighting susceptibility by pathogen incidence and providing credible intervals via Bayesian simulation. See `vignette("WISCA")` for the full explanation.
+
+```{r}
+wisca(example_isolates,
+      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+      minimum = 10) # Recommended threshold: >=30
+```
+
+WISCA supports stratification by any clinical variable, so you can generate syndrome-specific or ward-specific coverage estimates:
+
+```{r}
+wisca(example_isolates,
+      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+      syndromic_group = "ward",
+      minimum = 10) # Recommended threshold: >=30
+```
+
+**For AMR surveillance**, traditional antibiograms remain the right tool for tracking resistance per species over time:
 
 ```{r}
 antibiogram(example_isolates,
-            antimicrobials = c(aminoglycosides(), carbapenems()))
+            mo_transform = "gramstain",
+            antimicrobials = c("AMC", carbapenems(), "TZP"))
 ```
 
-In combination antibiograms, it is clear that combined antimicrobials yield higher empiric coverage:
+Combination antibiograms show the additional coverage gained by adding a second agent, stratified by species:
 
 ```{r}
 antibiogram(example_isolates,
-            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-            mo_transform = "gramstain")
+            mo_transform = "gramstain",
+            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
-Like many other functions in this package, `antibiogram()` comes with support for `r length(AMR:::LANGUAGES_SUPPORTED)` languages that are often detected automatically based on system language:
+Like many other functions in this package, `antibiogram()` and `wisca()` come with support for `r length(AMR:::LANGUAGES_SUPPORTED)` languages that are often detected automatically based on system language:
 
 ```{r}
 antibiogram(example_isolates,

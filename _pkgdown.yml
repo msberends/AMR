@@ -56,7 +56,7 @@ footer:
     left: [devtext]
     right: [logo]
   components:
-    devtext: '<code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE">GNU General Public License version 2.0 (GPL-2)</a>.<br>Developed at the <a target="_blank" href="https://www.rug.nl">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl">University Medical Center Groningen</a> in The Netherlands.'
+    devtext: '<code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE">GNU GPL 2.0</a>. Developed at the <a target="_blank" href="https://www.rug.nl">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl">University Medical Center Groningen</a> in The Netherlands, in collaboration with <a href="https://amr-for-r.org/authors.html">many colleagues from around the world</a>.'
     logo: '<a target="_blank" href="https://www.rug.nl"><img src="https://amr-for-r.org/logo_rug.svg" style="max-width: 150px;"></a><a target="_blank" href="https://www.umcg.nl"><img src="https://amr-for-r.org/logo_umcg.svg" style="max-width: 150px;"></a>'
 
 home:

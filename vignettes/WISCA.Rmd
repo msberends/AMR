@@ -143,6 +143,9 @@ data
 
 # Add a synthetic syndrome column for demonstration
 data$syndrome <- ifelse(data$mo %like% "coli", "UTI", "Non-UTI")
+
+# Keep only 10 most common microorganisms
+data <- top_n_microorganisms(data, n = 10, property = "species")
 ```
 
 ### Basic WISCA
@@ -168,10 +171,11 @@ wisca(data,
 Use `syndromic_group` to produce separate WISCA estimates per clinical stratum. You can pass a column name or any expression:
 
 ```{r}
-wisca(data,
+wisca_out <- wisca(data,
   antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
   syndromic_group = "syndrome"
 )
+wisca_out
 ```
 
 The `AMR` package is available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages, which can all be used for the `wisca()` function too:
@@ -190,6 +194,36 @@ Each row shows the estimated empirical coverage for a regimen, with a 95% credib
 
 - **Overlapping credible intervals** mean there is no statistically significant difference in coverage. If a narrower-spectrum regimen overlaps with a broader one, the narrower-spectrum option can be preferred on stewardship grounds.
 - **Non-overlapping credible intervals** indicate a clinically meaningful difference in coverage.
+
+### Plotting
+
+WISCA results can be visualised in several ways. All plot functions work on the output of `wisca()` (or `antibiogram(..., wisca = TRUE)`).
+
+Below we use the `wisca_out` object that was generated above.
+
+#### Coverage with credible intervals
+
+The extended `autoplot()` method from the `ggplot2()` package produces a point-and-interval plot showing the coverage estimate and 95% credible interval for each regimen, grouped by syndromic stratum. This is the most direct way to compare regimens: overlapping intervals suggest clinical non-inferiority, non-overlapping intervals indicate a meaningful difference.
+
+```{r, fig.width = 7.5, fig.height = 4.5}
+ggplot2::autoplot(wisca_out)
+```
+
+#### Susceptibility vs. incidence weight
+
+`wisca_plot()` produces a scatter plot of the Monte Carlo simulation draws, showing each pathogen's susceptibility (x-axis) against its incidence weight (y-axis) for each regimen. Each dot represents one of 1,000 simulated draws, so the spread reflects posterior uncertainty. This plot reveals *why* a regimen achieves its coverage: you can see which pathogens dominate the syndrome (high on the y-axis), how susceptible they are (position on the x-axis), and how uncertain both estimates are (spread of the cloud). The dashed vertical lines denote the point estimates, i.e., the coverage percentages. The ribbon behind the dashed lines denote the credible interval, which is 95% at default.
+
+```{r, fig.width = 7.5, fig.height = 5}
+wisca_plot(wisca_out)
+```
+
+#### Posterior coverage distributions
+
+Setting `wisca_plot_type = "posterior_coverage"` shows the full posterior distribution of coverage for each regimen as a density curve. This is the most complete representation of what the Bayesian model produces: each curve shows the relative likelihood of each coverage value across all 1,000 simulations. Narrow, tall peaks indicate high certainty; wide, flat curves indicate greater uncertainty. Where two curves overlap, the regimens cannot be confidently distinguished.
+
+```{r, fig.width = 7.5, fig.height = 4.5}
+wisca_plot(wisca_out, wisca_plot_type = "posterior_coverage")
+```
 
 ## Sensible defaults, which can be customised
 
