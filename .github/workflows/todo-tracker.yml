@@ -29,7 +29,6 @@
 
 on:
   push:
-    # only on main
     branches: "main"
 
 name: Update TODO Tracker
@@ -40,39 +39,221 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history required for git blame
 
-      - name: Generate TODO list from R/
+      - name: Generate TODO report
+        env:
+          GH_TOKEN: ${{ secrets.GH_REPO_SCOPE }}
         run: |
+          set -euo pipefail
           export TZ=Europe/Amsterdam
-          last_updated=$(date +"%e %B %Y %H:%M:%S %Z" | sed 's/^ *//')
-          echo "## \`TODO\` Report" > todo.md
-          echo "" >> todo.md
-          echo "**Last Updated: ${last_updated}**" >> todo.md
-          echo "" >> todo.md
-          echo "_This overview is automatically updated on each push to \`main\`. It provides an automated overview of all mentions of the text \`TODO\`._" >> todo.md
-          echo "" >> todo.md
-          todos=$(grep -rn --include=\*.{R,Rmd,yaml,yml,md,css,js}  --exclude={todo-tracker.yml,todo.md} "TODO" . || true)
-          if [ -z "$todos" ]; then
-            echo "✅ No TODOs found." >> todo.md
-          else
-            echo "$todos" | awk -F: -v repo="https://github.com/msberends/AMR/blob/main/" '
-              {
-                file = $1
-                gsub("^\\./", "", file)  # remove leading ./ if present
-                line = $2
-                text = substr($0, index($0,$3))
-                if (file != last_file) {
-                  if (last_file != "") print "```"
-                  print ""
-                  print "### [`" file "`](" repo file ")"
-                  print "```r"
-                  last_file = file
-                }
-                printf "L%s: %s\n", line, text
-              }
-            ' >> todo.md
-            echo "\`\`\`" >> todo.md
+
+          REPO="msberends/AMR"
+          REPO_URL="https://github.com/$REPO/blob/main"
+          NOW=$(date +%s)
+          LAST_UPDATED=$(date +"%e %B %Y %H:%M:%S %Z" | sed 's/^ *//')
+          STALE_DAYS=180
+
+          # ── helper: human-readable age ──────────────────────────────
+          format_age() {
+            local d=$1
+            if [ "$d" -lt 0 ] 2>/dev/null; then echo "unknown"; return; fi
+            local y=$((d / 365)) m=$(( (d % 365) / 30 ))
+            if [ "$y" -gt 0 ] && [ "$m" -gt 0 ]; then echo "${y}y ${m}m"
+            elif [ "$y" -gt 0 ]; then echo "${y}y"
+            elif [ "$m" -gt 0 ]; then echo "${m}m"
+            else echo "${d}d"
+            fi
+          }
+
+          export -f format_age
+
+          # ── step 1: find all markers ────────────────────────────────
+          grep -rn \
+            --include='*.R' --include='*.Rmd' --include='*.yaml' \
+            --include='*.yml' --include='*.md' --include='*.css' \
+            --include='*.js' \
+            --exclude='todo-tracker.yml' --exclude='todo.md' \
+            -E '\b(TODO|FIXME|HACK|XXX)\b' . > /tmp/raw.txt || true
+
+          if [ ! -s /tmp/raw.txt ]; then
+            echo -e "## \`TODO\` Report\n\n**Last Updated: ${LAST_UPDATED}**\n\nNo markers found." > todo.md
+            exit 0
           fi
+
+          # ── step 2: enrich with git blame & extract issue refs ──────
+          > /tmp/enriched.tsv
+          > /tmp/issues_seen.txt
+
+          while IFS= read -r match; do
+            file=$(echo "$match" | sed 's|^\./||' | cut -d: -f1)
+            lineno=$(echo "$match" | sed 's|^\./||' | cut -d: -f2)
+            text=$(echo "$match" | sed 's|^\./||' | cut -d: -f3-)
+
+            # determine marker type (first match wins, TODO is default)
+            marker="TODO"
+            for m in FIXME HACK XXX; do
+              if echo "$text" | grep -qw "$m"; then marker="$m"; break; fi
+            done
+
+            # git blame timestamp
+            blame_ts=$(git blame -L "${lineno},${lineno}" --porcelain -- "$file" 2>/dev/null \
+              | awk '/^author-time/{print $2}' || echo "0")
+            blame_ts=${blame_ts:-0}
+
+            if [ "$blame_ts" -gt 0 ] 2>/dev/null; then
+              age_days=$(( (NOW - blame_ts) / 86400 ))
+            else
+              age_days=-1
+            fi
+
+            # extract issue references (#NNN)
+            issues=$(echo "$text" | grep -oE '#[0-9]+' | sed 's/#//' | tr '\n' ',' | sed 's/,$//' || true)
+            if [ -n "$issues" ]; then
+              for inum in $(echo "$issues" | tr ',' ' '); do
+                echo "$inum" >> /tmp/issues_seen.txt
+              done
+            fi
+
+            printf '%s\t%s\t%s\t%s\t%s\t%s\n' \
+              "$file" "$lineno" "$marker" "$age_days" "$issues" "$text" >> /tmp/enriched.tsv
+          done < /tmp/raw.txt
+
+          # ── step 3: query GitHub API for referenced issues ──────────
+          > /tmp/issue_info.tsv
+          if [ -s /tmp/issues_seen.txt ]; then
+            sort -un /tmp/issues_seen.txt | while read -r inum; do
+              info=$(gh api "/repos/$REPO/issues/$inum" \
+                --jq '"\(.state)\t\(.title)"' 2>/dev/null \
+                || echo "unknown	(could not fetch)")
+              printf '%s\t%s\n' "$inum" "$info" >> /tmp/issue_info.tsv
+            done
+          fi
+
+          # ── step 4: build the report ────────────────────────────────
+          {
+            # ── header ──
+            echo "## \`TODO\` Report"
+            echo ""
+            echo "**Last Updated: ${LAST_UPDATED}**"
+            echo ""
+            echo "_This overview is automatically updated on each push to \`main\`. It scans for \`TODO\`, \`FIXME\`, \`HACK\`, and \`XXX\` markers across the codebase._"
+            echo ""
+
+            # ── summary table ──
+            total=$(wc -l < /tmp/enriched.tsv | tr -d ' ')
+            files_affected=$(awk -F'\t' '{print $1}' /tmp/enriched.tsv | sort -u | wc -l | tr -d ' ')
+            todo_n=$(awk -F'\t' '$3=="TODO"' /tmp/enriched.tsv | wc -l | tr -d ' ')
+            fixme_n=$(awk -F'\t' '$3=="FIXME"' /tmp/enriched.tsv | wc -l | tr -d ' ')
+            hack_n=$(awk -F'\t' '$3=="HACK"' /tmp/enriched.tsv | wc -l | tr -d ' ')
+            xxx_n=$(awk -F'\t' '$3=="XXX"' /tmp/enriched.tsv | wc -l | tr -d ' ')
+            stale_n=$(awk -F'\t' -v s="$STALE_DAYS" '$4 > s' /tmp/enriched.tsv | wc -l | tr -d ' ')
+            linked_n=$(awk -F'\t' '$5 != ""' /tmp/enriched.tsv | wc -l | tr -d ' ')
+            unlinked_n=$(awk -F'\t' '$5 == ""' /tmp/enriched.tsv | wc -l | tr -d ' ')
+
+            # oldest marker
+            oldest_line=$(awk -F'\t' '$4 >= 0' /tmp/enriched.tsv | sort -t$'\t' -k4 -rn | head -1)
+            oldest_days=$(echo "$oldest_line" | cut -f4)
+            oldest_file=$(echo "$oldest_line" | cut -f1)
+            oldest_lineno=$(echo "$oldest_line" | cut -f2)
+            oldest_age=$(format_age "$oldest_days")
+
+            echo "### Summary"
+            echo ""
+            echo "| Metric | Value |"
+            echo "|:---|---:|"
+            echo "| Total markers | **${total}** |"
+            [ "$todo_n" -gt 0 ] && echo "| \`TODO\` | ${todo_n} |"
+            [ "$fixme_n" -gt 0 ] && echo "| \`FIXME\` | ${fixme_n} |"
+            [ "$hack_n" -gt 0 ] && echo "| \`HACK\` | ${hack_n} |"
+            [ "$xxx_n" -gt 0 ] && echo "| \`XXX\` | ${xxx_n} |"
+            echo "| Files affected | ${files_affected} |"
+            echo "| Stale (> 6 months) | ${stale_n} |"
+            echo "| Oldest marker | ${oldest_age}, \`${oldest_file}\` L${oldest_lineno} |"
+            echo "| Linked to issues | ${linked_n} |"
+            echo "| Unlinked (no issue ref) | ${unlinked_n} |"
+            echo ""
+
+            # ── by referenced issue ──
+            if [ -s /tmp/issue_info.tsv ]; then
+              echo "### By Referenced Issue"
+              echo ""
+
+              has_closed=false
+
+              while IFS=$'\t' read -r inum state title; do
+                count=$(awk -F'\t' -v n="$inum" '$5 ~ "(^|,)"n"(,|$)"' /tmp/enriched.tsv | wc -l | tr -d ' ')
+                [ "$state" = "closed" ] && has_closed=true
+
+                state_icon=""
+                [ "$state" = "closed" ] && state_icon=" :warning:"
+
+                echo "<details><summary><b>#${inum}</b> (${state}): <i>${title}</i> &mdash; ${count} marker(s)${state_icon}</summary>"
+                echo ""
+
+                awk -F'\t' -v n="$inum" '$5 ~ "(^|,)"n"(,|$)"' /tmp/enriched.tsv \
+                | while IFS=$'\t' read -r f l m d refs txt; do
+                  age_str=$(format_age "$d")
+                  flag=""
+                  [ "$d" -gt "$STALE_DAYS" ] 2>/dev/null && flag=" :warning:"
+                  echo "- \`${f}\` L${l} (${age_str} ago)${flag}"
+                done
+
+                echo ""
+                echo "</details>"
+                echo ""
+              done < /tmp/issue_info.tsv
+
+              if [ "$has_closed" = true ]; then
+                echo "> **Warning:** some markers reference closed issues and may be stale."
+                echo ""
+              fi
+            fi
+
+            # ── by file ──
+            echo "### By File"
+            echo ""
+
+            prev_file=""
+            prev_lineno=-99
+
+            while IFS=$'\t' read -r file lineno marker age_days issues text; do
+              if [ "$file" != "$prev_file" ]; then
+                # close previous code block
+                if [ -n "$prev_file" ]; then
+                  echo '```'
+                  echo ""
+                fi
+
+                file_count=$(awk -F'\t' -v f="$file" '$1==f' /tmp/enriched.tsv | wc -l | tr -d ' ')
+                echo "#### [\`${file}\`](${REPO_URL}/${file}) &mdash; ${file_count} marker(s)"
+                echo '```r'
+
+                prev_lineno=-99
+              fi
+
+              # blank line between non-sequential lines (visual grouping)
+              if [ "$file" = "$prev_file" ] && [ $((lineno - prev_lineno)) -gt 1 ]; then
+                echo ""
+              fi
+
+              age_str=$(format_age "$age_days")
+              flag=""
+              [ "$age_days" -gt "$STALE_DAYS" ] 2>/dev/null && flag=" !!"
+
+              printf 'L%s: %s  ◁ %s ago%s\n' "$lineno" "$text" "$age_str" "$flag"
+
+              prev_file="$file"
+              prev_lineno="$lineno"
+            done < <(sort -t$'\t' -k1,1 -k2,2n /tmp/enriched.tsv)
+
+            # close final code block
+            if [ -n "$prev_file" ]; then
+              echo '```'
+            fi
+
+          } > todo.md
 
       - name: Update GitHub issue
         uses: peter-evans/create-or-update-comment@v4
