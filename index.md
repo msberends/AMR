@@ -2,7 +2,8 @@
 
 - Provides an **all-in-one solution** for antimicrobial resistance (AMR)
   data analysis in a One Health approach
-- Peer-reviewed, used in over 175 countries, available in 28 languages
+- **Peer-reviewed**, used in over 175 countries, available in 28
+  languages
 - Generates **antibiograms** - WISCA for empiric coverage estimates, or
   traditional/syndromic for AMR surveillance
 - Provides the **full microbiological taxonomy** of ~97 000 distinct
@@ -17,7 +18,7 @@
 - 100% free of costs and dependencies, highly suitable for places with
   **limited resources**
 
-> Now available for Python too! [Click
+> Available for Python too! [Click
 > here](https://amr-for-r.org/articles/AMR_for_Python.md) to read more.
 
 [amr-for-r.org](https://amr-for-r.org/)
@@ -51,7 +52,7 @@ formed the basis of two PhD theses ([DOI
 
 After installing this package, R knows [**~97 000 distinct microbial
 species**](https://amr-for-r.org/reference/microorganisms.md) (updated
-June 2024) and all [**~620 antimicrobial and antiviral
+May 2026) and all [**~620 antimicrobial and antiviral
 drugs**](https://amr-for-r.org/reference/antimicrobials.md) by name and
 code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED
 CT), and knows all about valid SIR and MIC values. The integral clinical
@@ -154,43 +155,76 @@ in the `AMR` package make sure you get what you meant.
 
 ### Generating antibiograms
 
-The `AMR` package supports generating traditional, combined, syndromic,
-and even weighted-incidence syndromic combination antibiograms (WISCA).
-
-If used inside [R Markdown](https://rmarkdown.rstudio.com) or
-[Quarto](https://quarto.org), the table will be printed in the right
+The `AMR` package supports four types of antibiograms, with support for
+28 languages. If used inside [R Markdown](https://rmarkdown.rstudio.com)
+or [Quarto](https://quarto.org), the table will be printed in the right
 output format automatically (such as markdown, LaTeX, HTML, etc.).
+
+**For empirical therapy guidance (i.e., coverage estimates), use WISCA**
+(Weighted-Incidence Syndromic Combination Antibiogram). When a clinician
+starts empirical treatment, the causative pathogen is unknown. The
+relevant question is not *“what percentage of E. coli is susceptible?”*
+but *“what is the probability that this regimen will cover whatever
+pathogen is causing the infection?”*. WISCA answers that question
+directly, weighting susceptibility by pathogen incidence and providing
+credible intervals via Bayesian simulation. See
+[`vignette("WISCA")`](https://amr-for-r.org/articles/WISCA.md) for the
+full explanation.
+
+``` r
+
+wisca(example_isolates,
+      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+      minimum = 10) # Recommended threshold: >=30
+#> Warning: invalid microorganism code, NA generated
+```
+
+| Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
+|:---|:---|:---|
+| 70.1% (64.9-75.7%) | 93.6% (92.2-95%) | 89.8% (86.7-92.3%) |
+
+WISCA supports stratification by any clinical variable, so you can
+generate syndrome-specific or ward-specific coverage estimates:
+
+``` r
+
+wisca(example_isolates,
+      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+      syndromic_group = "ward",
+      minimum = 10) # Recommended threshold: >=30
+#> Warning: invalid microorganism code, NA generated
+```
+
+| Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
+|:---|:---|:---|:---|
+| Clinical | 74.5% (69.3-80.1%) | 93.7% (92-95.1%) | 90.5% (87.1-93.1%) |
+| ICU | 56.7% (48-65.5%) | 86.7% (83.4-89.8%) | 82.9% (78.2-87.3%) |
+| Outpatient | 57.8% (46.4-69.7%) | 76.5% (70.1-82.2%) | 67.9% (57.9-77.5%) |
+
+**For AMR surveillance**, traditional antibiograms remain the right tool
+for tracking resistance per species over time:
 
 ``` r
 
 antibiogram(example_isolates,
-            antimicrobials = c(aminoglycosides(), carbapenems()))
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
-#>   (amikacin), and KAN (kanamycin)
+            mo_transform = "gramstain",
+            antimicrobials = c("AMC", carbapenems(), "TZP"))
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
-| Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
-|:---|:---|:---|:---|:---|:---|:---|
-| CoNS | 0% (0-8%,N=43) | 86% (82-90%,N=309) | 52% (37-67%,N=48) | 0% (0-8%,N=43) | 52% (37-67%,N=48) | 22% (12-35%,N=55) |
-| *E. coli* | 100% (98-100%,N=171) | 98% (96-99%,N=460) | 100% (99-100%,N=422) | NA | 100% (99-100%,N=418) | 97% (96-99%,N=462) |
-| *E. faecalis* | 0% (0-9%,N=39) | 0% (0-9%,N=39) | 100% (91-100%,N=38) | 0% (0-9%,N=39) | NA | 0% (0-9%,N=39) |
-| *K. pneumoniae* | NA | 90% (79-96%,N=58) | 100% (93-100%,N=51) | NA | 100% (93-100%,N=53) | 90% (79-96%,N=58) |
-| *P. aeruginosa* | NA | 100% (88-100%,N=30) | NA | 0% (0-12%,N=30) | NA | 100% (88-100%,N=30) |
-| *P. mirabilis* | NA | 94% (80-99%,N=34) | 94% (79-99%,N=32) | NA | NA | 94% (80-99%,N=34) |
-| *S. aureus* | NA | 99% (97-100%,N=233) | NA | NA | NA | 98% (92-100%,N=86) |
-| *S. epidermidis* | 0% (0-8%,N=44) | 79% (71-85%,N=163) | NA | 0% (0-8%,N=44) | NA | 51% (40-61%,N=89) |
-| *S. hominis* | NA | 92% (84-97%,N=80) | NA | NA | NA | 85% (74-93%,N=62) |
-| *S. pneumoniae* | 0% (0-3%,N=117) | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) |
+| Pathogen | Amoxicillin/clavulanic acid | Imipenem | Meropenem | Piperacillin/tazobactam |
+|:---|:---|:---|:---|:---|
+| Gram-negative | 76% (73-79%,N=726) | 99% (98-100%,N=631) | 100% (99-100%,N=626) | 88% (85-91%,N=641) |
+| Gram-positive | 76% (74-79%,N=1138) | 81% (75-85%,N=257) | 77% (70-82%,N=203) | 86% (82-89%,N=345) |
 
-In combination antibiograms, it is clear that combined antimicrobials
-yield higher empiric coverage:
+Combination antibiograms show the additional coverage gained by adding a
+second agent, stratified by species:
 
 ``` r
 
 antibiogram(example_isolates,
-            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-            mo_transform = "gramstain")
+            mo_transform = "gramstain",
+            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
 | Pathogen | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
@@ -199,9 +233,10 @@ antibiogram(example_isolates,
 | Gram-positive | 86% (82-89%,N=345) | 98% (96-98%,N=1044) | 95% (93-97%,N=550) |
 
 Like many other functions in this package,
-[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) comes
-with support for 28 languages that are often detected automatically
-based on system language:
+[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
+[`wisca()`](https://amr-for-r.org/reference/antibiogram.md) come with
+support for 28 languages that are often detected automatically based on
+system language:
 
 ``` r
 

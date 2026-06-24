@@ -1,7 +1,7 @@
 # Data Set with 96 982 Taxonomic Records of Microorganisms
 
 A data set containing the full microbial taxonomy (**last updated: 7th
-of May, 2026**) of 15 kingdoms. This data set is the backbone of this
+of May, 2026**) of seven domains. This data set is the backbone of this
 `AMR` package. MO codes can be looked up using
 [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) and microorganism
 properties can be looked up using any of the
@@ -69,7 +69,7 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 96
   were retrieved from BacDive (see *Source*). Items that contain
   "likely" are missing from BacDive and were extrapolated from other
   species within the same genus to guess the oxygen tolerance. Currently
-  1.3784 × 10⁶% of all 2 bacteria in the data set contain an oxygen
+  59.5% of all ~46 000 bacteria in the data set contain an oxygen
   tolerance.
 
 - `morphology`  
@@ -81,8 +81,8 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 96
   (the HACEK group and beyond, such as *Haemophilus* and
   *Acinetobacter*) are classified as such regardless of BacDive majority
   vote. Items that contain "likely" are missing from BacDive and were
-  extrapolated from other species within the same genus. Currently
-  1.3232 × 10⁶% of all 2 bacteria in the data set contain a morphology.
+  extrapolated from other species within the same genus. Currently 57.1%
+  of all ~46 000 bacteria in the data set contain a morphology.
 
 - `source`  
   Either `"GBIF"`, `"LPSN"`, `"MycoBank"`, or `"manually added"` (see
@@ -159,7 +159,7 @@ Included taxonomic data from [LPSN](https://lpsn.dsmz.de),
 [MycoBank](https://www.mycobank.org), and [GBIF](https://www.gbif.org)
 are:
 
-- All 2 (sub)species from the kingdoms of Archaea and Bacteria
+- All ~46 000 (sub)species from the domains of Archaea and Bacteria
 
 - ~36 000 species from the kingdom of Fungi. The kingdom of Fungi is a
   very large taxon with almost 300,000 different (sub)species, of which
@@ -177,7 +177,7 @@ are:
 - All ~31 000 previously accepted names of all included (sub)species
   (these were taxonomically renamed)
 
-- The complete taxonomic tree of all included (sub)species: from kingdom
+- The complete taxonomic tree of all included (sub)species: from domain
   to subspecies
 
 - The identifier of the parent taxons

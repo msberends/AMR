@@ -418,8 +418,8 @@ column names:
 This data set is in R available as `example_isolates`, after you load
 the `AMR` package.
 
-It was last updated on 9 February 2026 12:16:36 UTC. Find more info
-about the contents, (scientific) source, and structure of this [data set
+It was last updated on 24 June 2026 16:36:47 UTC. Find more info about
+the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/example_isolates.html).
 
 **Example content**

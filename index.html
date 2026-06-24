@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9063</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9065</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,8 @@
 </div>
 <ul>
 <li>Provides an <strong>all-in-one solution</strong> for antimicrobial resistance (AMR) data analysis in a One Health approach</li>
-<li>Peer-reviewed, used in over 175 countries, available in 28 languages</li>
+<li>
+<strong>Peer-reviewed</strong>, used in over 175 countries, available in 28 languages</li>
 <li>Generates <strong>antibiograms</strong> - WISCA for empiric coverage estimates, or traditional/syndromic for AMR surveillance</li>
 <li>Provides the <strong>full microbiological taxonomy</strong> of ~97 000 distinct species and extensive info of ~620 antimicrobial drugs</li>
 <li>Applies <strong>CLSI 2011-2026</strong> and <strong>EUCAST 2011-2026</strong> clinical and veterinary breakpoints, and ECOFFs, for MIC and disk zone interpretation</li>
@@ -95,7 +96,7 @@
 </li>
 </ul>
 <blockquote>
-<p>Now available for Python too! <a href="./articles/AMR_for_Python.html">Click here</a> to read more.</p>
+<p>Available for Python too! <a href="./articles/AMR_for_Python.html">Click here</a> to read more.</p>
 </blockquote>
 <div style="display: flex; font-size: 0.8em;">
 <p style="text-align:left; width: 50%;">
@@ -112,7 +113,7 @@
 </h2>
 <p>The <code>AMR</code> package is a peer-reviewed, <a href="#copyright">free and open-source</a> R package with <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">zero dependencies</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of <a href="./authors.html">many different researchers</a> from around the globe to make this a successful and durable project!</p>
 <p>This work was published in the Journal of Statistical Software (Volume 104(3); <a href="https://doi.org/10.18637/jss.v104.i03" class="external-link">DOI 10.18637/jss.v104.i03</a>) and formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.192486375</a>).</p>
-<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~97 000 distinct microbial species</strong></a> (updated June 2024) and all <a href="./reference/antimicrobials.html"><strong>~620 antimicrobial and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a> and the <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
+<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~97 000 distinct microbial species</strong></a> (updated May 2026) and all <a href="./reference/antimicrobials.html"><strong>~620 antimicrobial and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a> and the <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
 <div class="section level3">
 <h3 id="used-in-over-175-countries-available-in-28-languages">Used in over 175 countries, available in 28 languages<a class="anchor" aria-label="anchor" href="#used-in-over-175-countries-available-in-28-languages"></a>
 </h3>
@@ -169,131 +170,114 @@
 <div class="section level3">
 <h3 id="generating-antibiograms">Generating antibiograms<a class="anchor" aria-label="anchor" href="#generating-antibiograms"></a>
 </h3>
-<p>The <code>AMR</code> package supports generating traditional, combined, syndromic, and even weighted-incidence syndromic combination antibiograms (WISCA).</p>
-<p>If used inside <a href="https://rmarkdown.rstudio.com" class="external-link">R Markdown</a> or <a href="https://quarto.org" class="external-link">Quarto</a>, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
+<p>The <code>AMR</code> package supports four types of antibiograms, with support for 28 languages. If used inside <a href="https://rmarkdown.rstudio.com" class="external-link">R Markdown</a> or <a href="https://quarto.org" class="external-link">Quarto</a>, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
+<p><strong>For empirical therapy guidance (i.e., coverage estimates), use WISCA</strong> (Weighted-Incidence Syndromic Combination Antibiogram). When a clinician starts empirical treatment, the causative pathogen is unknown. The relevant question is not <em>“what percentage of E. coli is susceptible?”</em> but <em>“what is the probability that this regimen will cover whatever pathogen is causing the infection?”</em>. WISCA answers that question directly, weighting susceptibility by pathogen incidence and providing credible intervals via Bayesian simulation. See <code><a href="articles/WISCA.html">vignette("WISCA")</a></code> for the full explanation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
-<span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="reference/antimicrobial_selectors.html">aminoglycosides</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK</span></span>
-<span><span class="co">#&gt;   (amikacin), and KAN (kanamycin)</span></span>
-<span><span class="co">#&gt; ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
+<span>      minimum <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Recommended threshold: &gt;=30</span></span>
+<span><span class="co">#&gt; Warning: invalid microorganism code, NA generated</span></span></code></pre></div>
+<table class="table">
 <colgroup>
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
+<col width="33%">
+<col width="33%">
+<col width="33%">
 </colgroup>
 <thead><tr>
-<th align="left">Pathogen</th>
-<th align="left">Amikacin</th>
-<th align="left">Gentamicin</th>
-<th align="left">Imipenem</th>
-<th align="left">Kanamycin</th>
-<th align="left">Meropenem</th>
-<th align="left">Tobramycin</th>
+<th align="left">Piperacillin/tazobactam</th>
+<th align="left">Piperacillin/tazobactam + Gentamicin</th>
+<th align="left">Piperacillin/tazobactam + Tobramycin</th>
+</tr></thead>
+<tbody><tr>
+<td align="left">70.1% (64.9-75.7%)</td>
+<td align="left">93.6% (92.2-95%)</td>
+<td align="left">89.8% (86.7-92.3%)</td>
+</tr></tbody>
+</table>
+<p>WISCA supports stratification by any clinical variable, so you can generate syndrome-specific or ward-specific coverage estimates:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
+<span>      syndromic_group <span class="op">=</span> <span class="st">"ward"</span>,</span>
+<span>      minimum <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Recommended threshold: &gt;=30</span></span>
+<span><span class="co">#&gt; Warning: invalid microorganism code, NA generated</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead><tr>
+<th align="left">Syndromic Group</th>
+<th align="left">Piperacillin/tazobactam</th>
+<th align="left">Piperacillin/tazobactam + Gentamicin</th>
+<th align="left">Piperacillin/tazobactam + Tobramycin</th>
 </tr></thead>
 <tbody>
 <tr>
-<td align="left">CoNS</td>
-<td align="left">0% (0-8%,N=43)</td>
-<td align="left">86% (82-90%,N=309)</td>
-<td align="left">52% (37-67%,N=48)</td>
-<td align="left">0% (0-8%,N=43)</td>
-<td align="left">52% (37-67%,N=48)</td>
-<td align="left">22% (12-35%,N=55)</td>
+<td align="left">Clinical</td>
+<td align="left">74.5% (69.3-80.1%)</td>
+<td align="left">93.7% (92-95.1%)</td>
+<td align="left">90.5% (87.1-93.1%)</td>
 </tr>
 <tr>
-<td align="left"><em>E. coli</em></td>
-<td align="left">100% (98-100%,N=171)</td>
-<td align="left">98% (96-99%,N=460)</td>
-<td align="left">100% (99-100%,N=422)</td>
-<td align="left">NA</td>
-<td align="left">100% (99-100%,N=418)</td>
-<td align="left">97% (96-99%,N=462)</td>
+<td align="left">ICU</td>
+<td align="left">56.7% (48-65.5%)</td>
+<td align="left">86.7% (83.4-89.8%)</td>
+<td align="left">82.9% (78.2-87.3%)</td>
 </tr>
 <tr>
-<td align="left"><em>E. faecalis</em></td>
-<td align="left">0% (0-9%,N=39)</td>
-<td align="left">0% (0-9%,N=39)</td>
-<td align="left">100% (91-100%,N=38)</td>
-<td align="left">0% (0-9%,N=39)</td>
-<td align="left">NA</td>
-<td align="left">0% (0-9%,N=39)</td>
-</tr>
-<tr>
-<td align="left"><em>K. pneumoniae</em></td>
-<td align="left">NA</td>
-<td align="left">90% (79-96%,N=58)</td>
-<td align="left">100% (93-100%,N=51)</td>
-<td align="left">NA</td>
-<td align="left">100% (93-100%,N=53)</td>
-<td align="left">90% (79-96%,N=58)</td>
-</tr>
-<tr>
-<td align="left"><em>P. aeruginosa</em></td>
-<td align="left">NA</td>
-<td align="left">100% (88-100%,N=30)</td>
-<td align="left">NA</td>
-<td align="left">0% (0-12%,N=30)</td>
-<td align="left">NA</td>
-<td align="left">100% (88-100%,N=30)</td>
-</tr>
-<tr>
-<td align="left"><em>P. mirabilis</em></td>
-<td align="left">NA</td>
-<td align="left">94% (80-99%,N=34)</td>
-<td align="left">94% (79-99%,N=32)</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">94% (80-99%,N=34)</td>
-</tr>
-<tr>
-<td align="left"><em>S. aureus</em></td>
-<td align="left">NA</td>
-<td align="left">99% (97-100%,N=233)</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">98% (92-100%,N=86)</td>
-</tr>
-<tr>
-<td align="left"><em>S. epidermidis</em></td>
-<td align="left">0% (0-8%,N=44)</td>
-<td align="left">79% (71-85%,N=163)</td>
-<td align="left">NA</td>
-<td align="left">0% (0-8%,N=44)</td>
-<td align="left">NA</td>
-<td align="left">51% (40-61%,N=89)</td>
-</tr>
-<tr>
-<td align="left"><em>S. hominis</em></td>
-<td align="left">NA</td>
-<td align="left">92% (84-97%,N=80)</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">85% (74-93%,N=62)</td>
-</tr>
-<tr>
-<td align="left"><em>S. pneumoniae</em></td>
-<td align="left">0% (0-3%,N=117)</td>
-<td align="left">0% (0-3%,N=117)</td>
-<td align="left">NA</td>
-<td align="left">0% (0-3%,N=117)</td>
-<td align="left">NA</td>
-<td align="left">0% (0-3%,N=117)</td>
+<td align="left">Outpatient</td>
+<td align="left">57.8% (46.4-69.7%)</td>
+<td align="left">76.5% (70.1-82.2%)</td>
+<td align="left">67.9% (57.9-77.5%)</td>
 </tr>
 </tbody>
 </table>
-<p>In combination antibiograms, it is clear that combined antimicrobials yield higher empiric coverage:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p><strong>For AMR surveillance</strong>, traditional antibiograms remain the right tool for tracking resistance per species over time:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
-<span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
-<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span><span class="op">)</span></span></code></pre></div>
+<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
+<span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="fu"><a href="reference/antimicrobial_selectors.html">carbapenems</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"TZP"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+</colgroup>
+<thead><tr>
+<th align="left">Pathogen</th>
+<th align="left">Amoxicillin/clavulanic acid</th>
+<th align="left">Imipenem</th>
+<th align="left">Meropenem</th>
+<th align="left">Piperacillin/tazobactam</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">Gram-negative</td>
+<td align="left">76% (73-79%,N=726)</td>
+<td align="left">99% (98-100%,N=631)</td>
+<td align="left">100% (99-100%,N=626)</td>
+<td align="left">88% (85-91%,N=641)</td>
+</tr>
+<tr>
+<td align="left">Gram-positive</td>
+<td align="left">76% (74-79%,N=1138)</td>
+<td align="left">81% (75-85%,N=257)</td>
+<td align="left">77% (70-82%,N=203)</td>
+<td align="left">86% (82-89%,N=345)</td>
+</tr>
+</tbody>
+</table>
+<p>Combination antibiograms show the additional coverage gained by adding a second agent, stratified by species:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
+<span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="25%">
@@ -322,8 +306,8 @@
 </tr>
 </tbody>
 </table>
-<p>Like many other functions in this package, <code><a href="reference/antibiogram.html">antibiogram()</a></code> comes with support for 28 languages that are often detected automatically based on system language:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>Like many other functions in this package, <code><a href="reference/antibiogram.html">antibiogram()</a></code> and <code><a href="reference/antibiogram.html">wisca()</a></code> come with support for 28 languages that are often detected automatically based on system language:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cipro"</span>, <span class="st">"tobra"</span>, <span class="st">"genta"</span><span class="op">)</span>, <span class="co"># any arbitrary name or code will work</span></span>
 <span>            mo_transform <span class="op">=</span> <span class="st">"gramstain"</span>,</span>
@@ -362,7 +346,7 @@
 <h3 id="interpreting-and-plotting-mic-and-sir-values">Interpreting and plotting MIC and SIR values<a class="anchor" aria-label="anchor" href="#interpreting-and-plotting-mic-and-sir-values"></a>
 </h3>
 <p>The <code>AMR</code> package allows interpretation of MIC and disk diffusion values based on CLSI and EUCAST. Moreover, the <code>ggplot2</code> package is extended with new scale functions, to allow plotting of log2-distributed MIC values and SIR values.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://amr-for-r.org">AMR</a></span><span class="op">)</span></span>
 <span></span>
@@ -395,7 +379,7 @@
 <h3 id="calculating-resistance-per-group">Calculating resistance per group<a class="anchor" aria-label="anchor" href="#calculating-resistance-per-group"></a>
 </h3>
 <p>For a manual approach, you can use the <code>resistance</code> or <code><a href="reference/proportion.html">susceptibility()</a></code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># group by ward:</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -415,7 +399,7 @@
 <span><span class="co">#&gt; 2 ICU              0.290 0.253-0.33         0.400 0.353-0.449 </span></span>
 <span><span class="co">#&gt; 3 Outpatient       0.2   0.131-0.285        0.368 0.254-0.493</span></span></code></pre></div>
 <p>Or use <a href="https://amr-for-r.org/reference/antimicrobial_selectors.html">antimicrobial selectors</a> to select a series of antibiotic columns:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://amr-for-r.org">AMR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
@@ -441,7 +425,7 @@
 <span><span class="co">#&gt; 1 Clinical   0.229 0.315 0.626     1 0.780</span></span>
 <span><span class="co">#&gt; 2 ICU        0.290 0.400 0.662     1 0.857</span></span>
 <span><span class="co">#&gt; 3 Outpatient 0.2   0.368 0.605    NA 0.889</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform the antibiotic columns to names:</span></span>
 <span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
@@ -450,7 +434,7 @@
 <span><span class="co">#&gt; 1 Clinical        0.229      0.315    0.626         1    0.780</span></span>
 <span><span class="co">#&gt; 2 ICU             0.290      0.400    0.662         1    0.857</span></span>
 <span><span class="co">#&gt; 3 Outpatient      0.2        0.368    0.605        NA    0.889</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform the antibiotic column to ATC codes:</span></span>
 <span><span class="va">out</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/ab_property.html">set_ab_names</a></span><span class="op">(</span>property <span class="op">=</span> <span class="st">"atc"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
@@ -492,7 +476,7 @@
 </h3>
 <p><a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/AMR" alt="CRAN"></a> <a href="https://cran.r-project.org/package=AMR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/AMR" alt="CRANlogs"></a></p>
 <p>This package is available <a href="https://cran.r-project.org/package=AMR" class="external-link">here on the official R network (CRAN)</a>. Install this package in R from CRAN by using the command:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span><span class="op">)</span></span></code></pre></div>
 <p>It will be downloaded and installed automatically. For RStudio, click on the menu <em>Tools</em> &gt; <em>Install Packages…</em> and then type in “AMR” and press <kbd>Install</kbd>.</p>
 <p><strong>Note:</strong> Not all functions on this website may be available in this latest release. To use all functions and data sets mentioned on this website, install the latest beta version.</p>
@@ -503,7 +487,7 @@
 <p><a href="https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml" class="external-link"><img src="https://github.com/msberends/AMR/actions/workflows/check-old-tinytest.yaml/badge.svg?branch=main" alt="check-old"></a> <a href="https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml" class="external-link"><img src="https://github.com/msberends/AMR/actions/workflows/check-current-testthat.yaml/badge.svg?branch=main" alt="check-recent"></a> <a href="https://www.codefactor.io/repository/github/msberends/amr" class="external-link"><img src="https://www.codefactor.io/repository/github/msberends/amr/badge" alt="CodeFactor"></a> <a href="https://codecov.io/gh/msberends/AMR?branch=main" class="external-link"><img src="https://codecov.io/gh/msberends/AMR/branch/main/graph/badge.svg" alt="Codecov"></a></p>
 <p>Please read our <a href="https://github.com/msberends/AMR/wiki/Developer-Guideline" class="external-link">Developer Guideline here</a>.</p>
 <p>To install the latest and unpublished beta version:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"AMR"</span>, repos <span class="op">=</span> <span class="st">"beta.amr-for-r.org"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># if this does not work, try to install directly from GitHub using the 'remotes' package:</span></span>
@@ -572,7 +556,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE" class="external-link">GNU General Public License version 2.0 (GPL-2)</a>.<br>Developed at the <a target="_blank" href="https://www.rug.nl" class="external-link">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a> in The Netherlands.</p>
+  <p><code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE" class="external-link">GNU GPL 2.0</a>. Developed at the <a target="_blank" href="https://www.rug.nl" class="external-link">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a> in The Netherlands, in collaboration with <a href="https://amr-for-r.org/authors.html">many colleagues from around the world</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

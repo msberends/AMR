@@ -214,6 +214,10 @@ data
 
 # Add a synthetic syndrome column for demonstration
 data$syndrome <- ifelse(data$mo %like% "coli", "UTI", "Non-UTI")
+
+# Keep only 10 most common microorganisms
+data <- top_n_microorganisms(data, n = 10, property = "species")
+#> ℹ Using column mo as input for `col_mo`.
 ```
 
 ### Basic WISCA
@@ -225,9 +229,9 @@ wisca(data,
 )
 ```
 
-| Amoxicillin/clavulanic acid | Ciprofloxacin      | Gentamicin         |
-|:----------------------------|:-------------------|:-------------------|
-| 74.2% (72.1-76.1%)          | 78.4% (75.6-81.1%) | 72.5% (70.4-74.6%) |
+| Amoxicillin/clavulanic acid | Ciprofloxacin      | Gentamicin       |
+|:----------------------------|:-------------------|:-----------------|
+| 76.8% (74.7-79.1%)          | 81.5% (78.9-84.1%) | 82.9% (81-84.8%) |
 
 ### Use combination regimens
 
@@ -243,7 +247,7 @@ wisca(data,
 
 | Amoxicillin/clavulanic acid | Amoxicillin/clavulanic acid + Ciprofloxacin | Amoxicillin/clavulanic acid + Gentamicin |
 |:---|:---|:---|
-| 74.2% (72.2-76.1%) | 88.8% (87.2-90.4%) | 90.8% (89.4-92.2%) |
+| 76.8% (74.6-78.9%) | 89.6% (88-91.1%) | 93.7% (92.5-94.9%) |
 
 ### Stratify by syndrome
 
@@ -252,16 +256,17 @@ stratum. You can pass a column name or any expression:
 
 ``` r
 
-wisca(data,
+wisca_out <- wisca(data,
   antimicrobials = c("AMC", "AMC + CIP", "AMC + GEN"),
   syndromic_group = "syndrome"
 )
+wisca_out
 ```
 
 | Syndromic Group | Amoxicillin/clavulanic acid | Amoxicillin/clavulanic acid + Ciprofloxacin | Amoxicillin/clavulanic acid + Gentamicin |
 |:---|:---|:---|:---|
-| Non-UTI | 70.3% (67.9-72.7%) | 86.8% (84.9-88.7%) | 88.4% (86.4-90.2%) |
-| UTI | 80.3% (77-83.3%) | 88.4% (85.7-90.8%) | 91% (88.3-93.3%) |
+| Non-UTI | 72.5% (69.9-75.1%) | 86.9% (84.8-89%) | 91.4% (89.5-93%) |
+| UTI | 86% (82.5-89%) | 94.8% (92.5-96.6%) | 97.9% (96.3-99%) |
 
 The `AMR` package is available in 28 languages, which can all be used
 for the [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -278,8 +283,8 @@ wisca(data,
 
 | Grupo sindrómico | Amoxicilina/ácido clavulánico | Amoxicilina/ácido clavulánico + Ciprofloxacina | Amoxicilina/ácido clavulánico + Gentamicina |
 |:---|:---|:---|:---|
-| Non-UCI | 70.4% (68-72.8%) | 86.7% (84.6-88.7%) | 88.5% (86.5-90.2%) |
-| UCI | 80.3% (77.2-83.5%) | 88.4% (85.5-90.8%) | 91% (88.4-93.1%) |
+| Non-UCI | 72.6% (69.9-75.3%) | 87% (84.9-89.1%) | 91.4% (89.7-92.9%) |
+| UCI | 86% (82.7-89%) | 94.8% (92.7-96.4%) | 97.9% (96.5-99%) |
 
 ### Interpreting the output
 
@@ -292,6 +297,71 @@ Each row shows the estimated empirical coverage for a regimen, with a
   preferred on stewardship grounds.
 - **Non-overlapping credible intervals** indicate a clinically
   meaningful difference in coverage.
+
+### Plotting
+
+WISCA results can be visualised in several ways. All plot functions work
+on the output of
+[`wisca()`](https://amr-for-r.org/reference/antibiogram.md) (or
+`antibiogram(..., wisca = TRUE)`).
+
+Below we use the `wisca_out` object that was generated above.
+
+#### Coverage with credible intervals
+
+The extended
+[`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+method from the `ggplot2()` package produces a point-and-interval plot
+showing the coverage estimate and 95% credible interval for each
+regimen, grouped by syndromic stratum. This is the most direct way to
+compare regimens: overlapping intervals suggest clinical
+non-inferiority, non-overlapping intervals indicate a meaningful
+difference.
+
+``` r
+
+ggplot2::autoplot(wisca_out)
+```
+
+![](WISCA_files/figure-html/unnamed-chunk-6-1.png)
+
+#### Susceptibility vs. incidence weight
+
+[`wisca_plot()`](https://amr-for-r.org/reference/antibiogram.md)
+produces a scatter plot of the Monte Carlo simulation draws, showing
+each pathogen’s susceptibility (x-axis) against its incidence weight
+(y-axis) for each regimen. Each dot represents one of 1,000 simulated
+draws, so the spread reflects posterior uncertainty. This plot reveals
+*why* a regimen achieves its coverage: you can see which pathogens
+dominate the syndrome (high on the y-axis), how susceptible they are
+(position on the x-axis), and how uncertain both estimates are (spread
+of the cloud). The dashed vertical lines denote the point estimates,
+i.e., the coverage percentages. The ribbon behind the dashed lines
+denote the credible interval, which is 95% at default.
+
+``` r
+
+wisca_plot(wisca_out)
+```
+
+![](WISCA_files/figure-html/unnamed-chunk-7-1.png)
+
+#### Posterior coverage distributions
+
+Setting `wisca_plot_type = "posterior_coverage"` shows the full
+posterior distribution of coverage for each regimen as a density curve.
+This is the most complete representation of what the Bayesian model
+produces: each curve shows the relative likelihood of each coverage
+value across all 1,000 simulations. Narrow, tall peaks indicate high
+certainty; wide, flat curves indicate greater uncertainty. Where two
+curves overlap, the regimens cannot be confidently distinguished.
+
+``` r
+
+wisca_plot(wisca_out, wisca_plot_type = "posterior_coverage")
+```
+
+![](WISCA_files/figure-html/unnamed-chunk-8-1.png)
 
 ## Sensible defaults, which can be customised
 

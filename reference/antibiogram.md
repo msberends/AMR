@@ -660,7 +660,7 @@ wisca(example_isolates,
 #> # Simulations:    1000 per stratum
 #>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²
 #>   <chr>                         <chr>                     <chr>                 
-#> 1 74.2% (72.1-76.1%)            88.8% (87.2-90.3%)        90.8% (89.3-92.1%)    
+#> 1 74.2% (72.2-76.1%)            88.8% (87.1-90.3%)        90.8% (89.3-92.2%)    
 #> # ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,
 #> #   ²​`Amoxicillin/clavulanic acid + Gentamicin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -679,7 +679,7 @@ antibiogram(example_isolates,
 #> # Simulations:    1000 per stratum
 #>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²
 #>   <chr>                         <chr>                     <chr>                 
-#> 1 74.2% (72.2-76.1%)            88.8% (87.1-90.4%)        90.8% (89.4-92.2%)    
+#> 1 74.1% (72.1-75.9%)            88.8% (87.1-90.3%)        90.8% (89.5-92.1%)    
 #> # ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,
 #> #   ²​`Amoxicillin/clavulanic acid + Gentamicin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -699,8 +699,8 @@ out
 #> # Simulations:    1000 per stratum
 #>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
 #>   <chr>             <chr>                     <chr>                             
-#> 1 Clinical          74.5% (68.8-79.8%)        93.6% (91.9-95.1%)                
-#> 2 ICU               57.1% (48.2-65.9%)        86.7% (83.3-89.9%)                
+#> 1 Clinical          74.7% (69-80.3%)          93.6% (91.9-95.1%)                
+#> 2 ICU               57% (48.2-66%)            86.7% (83.5-89.7%)                
 #> 3 Outpatient        57.5% (46-68.7%)          76.5% (70.6-82.2%)                
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
@@ -729,14 +729,14 @@ if (requireNamespace("dplyr")) {
 #> # Simulations:    1000 per stratum
 #>   age_group gender `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentami…¹
 #>   <chr>     <chr>  <chr>                     <chr>                              
-#> 1 0-24      F      57.7% (29.5-82.6%)        70.5% (45.9-89.1%)                 
-#> 2 0-24      M      59.1% (33-84.2%)          76.1% (55.7-90.6%)                 
-#> 3 25-49     F      67.4% (43.3-90.5%)        93.8% (87.8-97.9%)                 
-#> 4 25-49     M      56.8% (27.5-86.5%)        90.9% (82.4-96.8%)                 
-#> 5 50-74     F      68% (53.3-82.3%)          96.9% (94.7-98.5%)                 
-#> 6 50-74     M      67.1% (56.5-77.5%)        96.8% (94.2-98.8%)                 
-#> 7 75+       F      73.3% (62.9-83.6%)        97.7% (96-98.9%)                   
-#> 8 75+       M      74% (64.2-83.1%)          97.9% (96.1-99.1%)                 
+#> 1 0-24      F      57.7% (29.5-82.1%)        70.5% (46.1-89%)                   
+#> 2 0-24      M      59.3% (33.1-84.2%)        76.2% (55.7-90.9%)                 
+#> 3 25-49     F      67.4% (43.3-90.4%)        93.8% (87.8-97.9%)                 
+#> 4 25-49     M      56.9% (27.1-86.5%)        90.9% (82.6-96.8%)                 
+#> 5 50-74     F      68.1% (53.3-82.6%)        96.9% (94.7-98.5%)                 
+#> 6 50-74     M      67.1% (56.3-77.3%)        96.8% (94.3-98.8%)                 
+#> 7 75+       F      73.3% (62.9-83.7%)        97.7% (96.1-98.9%)                 
+#> 8 75+       M      74% (64.1-82.9%)          97.9% (96-99%)                     
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -919,8 +919,8 @@ if (requireNamespace("knitr")) {
 #> 
 #> |Syndromic Group |Piperacillin/tazobactam |
 #> |:---------------|:-----------------------|
-#> |Clinical        |74.6% (68.9-80%)        |
-#> |ICU             |57% (49.1-65.8%)        |
+#> |Clinical        |74.7% (68.7-79.8%)      |
+#> |ICU             |56.8% (48.9-65.7%)      |
 #> |Outpatient      |57.4% (45.6-68.4%)      |
 
 

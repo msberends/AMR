@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9063</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9065</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -341,7 +341,11 @@ traditional antibiogram remains fit for purpose.</p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   IPM &lt;sir&gt;, MEM &lt;sir&gt;, MTR &lt;sir&gt;, CHL &lt;sir&gt;, COL &lt;sir&gt;, MUP &lt;sir&gt;, …</span></span></span>
 <span></span>
 <span><span class="co"># Add a synthetic syndrome column for demonstration</span></span>
-<span><span class="va">data</span><span class="op">$</span><span class="va">syndrome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">mo</span> <span class="op"><a href="../reference/like.html">%like%</a></span> <span class="st">"coli"</span>, <span class="st">"UTI"</span>, <span class="st">"Non-UTI"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">data</span><span class="op">$</span><span class="va">syndrome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">mo</span> <span class="op"><a href="../reference/like.html">%like%</a></span> <span class="st">"coli"</span>, <span class="st">"UTI"</span>, <span class="st">"Non-UTI"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Keep only 10 most common microorganisms</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/top_n_microorganisms.html">top_n_microorganisms</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">10</span>, property <span class="op">=</span> <span class="st">"species"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Using column <span style="color: #00BB00; font-weight: bold;">mo</span> as input for `col_mo`.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="basic-wisca">Basic WISCA<a class="anchor" aria-label="anchor" href="#basic-wisca"></a>
@@ -357,9 +361,9 @@ traditional antibiogram remains fit for purpose.</p>
 <th align="left">Gentamicin</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">74.2% (72.1-76.1%)</td>
-<td align="left">78.4% (75.6-81.1%)</td>
-<td align="left">72.5% (70.4-74.6%)</td>
+<td align="left">76.8% (74.7-79.1%)</td>
+<td align="left">81.5% (78.9-84.1%)</td>
+<td align="left">82.9% (81-84.8%)</td>
 </tr></tbody>
 </table>
 </div>
@@ -385,9 +389,9 @@ covers the pathogen:</p>
 <th align="left">Amoxicillin/clavulanic acid + Gentamicin</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">74.2% (72.2-76.1%)</td>
-<td align="left">88.8% (87.2-90.4%)</td>
-<td align="left">90.8% (89.4-92.2%)</td>
+<td align="left">76.8% (74.6-78.9%)</td>
+<td align="left">89.6% (88-91.1%)</td>
+<td align="left">93.7% (92.5-94.9%)</td>
 </tr></tbody>
 </table>
 </div>
@@ -397,10 +401,11 @@ covers the pathogen:</p>
 <p>Use <code>syndromic_group</code> to produce separate WISCA estimates
 per clinical stratum. You can pass a column name or any expression:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<code class="sourceCode R"><span><span class="va">wisca_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">data</span>,</span>
 <span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC + CIP"</span>, <span class="st">"AMC + GEN"</span><span class="op">)</span>,</span>
 <span>  syndromic_group <span class="op">=</span> <span class="st">"syndrome"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="va">wisca_out</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="12%">
@@ -417,15 +422,15 @@ per clinical stratum. You can pass a column name or any expression:</p>
 <tbody>
 <tr class="odd">
 <td align="left">Non-UTI</td>
-<td align="left">70.3% (67.9-72.7%)</td>
-<td align="left">86.8% (84.9-88.7%)</td>
-<td align="left">88.4% (86.4-90.2%)</td>
+<td align="left">72.5% (69.9-75.1%)</td>
+<td align="left">86.9% (84.8-89%)</td>
+<td align="left">91.4% (89.5-93%)</td>
 </tr>
 <tr class="even">
 <td align="left">UTI</td>
-<td align="left">80.3% (77-83.3%)</td>
-<td align="left">88.4% (85.7-90.8%)</td>
-<td align="left">91% (88.3-93.3%)</td>
+<td align="left">86% (82.5-89%)</td>
+<td align="left">94.8% (92.5-96.6%)</td>
+<td align="left">97.9% (96.3-99%)</td>
 </tr>
 </tbody>
 </table>
@@ -453,15 +458,15 @@ all be used for the <code><a href="../reference/antibiogram.html">wisca()</a></c
 <tbody>
 <tr class="odd">
 <td align="left">Non-UCI</td>
-<td align="left">70.4% (68-72.8%)</td>
-<td align="left">86.7% (84.6-88.7%)</td>
-<td align="left">88.5% (86.5-90.2%)</td>
+<td align="left">72.6% (69.9-75.3%)</td>
+<td align="left">87% (84.9-89.1%)</td>
+<td align="left">91.4% (89.7-92.9%)</td>
 </tr>
 <tr class="even">
 <td align="left">UCI</td>
-<td align="left">80.3% (77.2-83.5%)</td>
-<td align="left">88.4% (85.5-90.8%)</td>
-<td align="left">91% (88.4-93.1%)</td>
+<td align="left">86% (82.7-89%)</td>
+<td align="left">94.8% (92.7-96.4%)</td>
+<td align="left">97.9% (96.5-99%)</td>
 </tr>
 </tbody>
 </table>
@@ -481,6 +486,62 @@ preferred on stewardship grounds.</li>
 <strong>Non-overlapping credible intervals</strong> indicate a
 clinically meaningful difference in coverage.</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="plotting">Plotting<a class="anchor" aria-label="anchor" href="#plotting"></a>
+</h3>
+<p>WISCA results can be visualised in several ways. All plot functions
+work on the output of <code><a href="../reference/antibiogram.html">wisca()</a></code> (or
+<code>antibiogram(..., wisca = TRUE)</code>).</p>
+<p>Below we use the <code>wisca_out</code> object that was generated
+above.</p>
+<div class="section level4">
+<h4 id="coverage-with-credible-intervals">Coverage with credible intervals<a class="anchor" aria-label="anchor" href="#coverage-with-credible-intervals"></a>
+</h4>
+<p>The extended <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> method from the
+<code>ggplot2()</code> package produces a point-and-interval plot
+showing the coverage estimate and 95% credible interval for each
+regimen, grouped by syndromic stratum. This is the most direct way to
+compare regimens: overlapping intervals suggest clinical
+non-inferiority, non-overlapping intervals indicate a meaningful
+difference.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">wisca_out</span><span class="op">)</span></span></code></pre></div>
+<p><img src="WISCA_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="720"></p>
+</div>
+<div class="section level4">
+<h4 id="susceptibility-vs--incidence-weight">Susceptibility vs. incidence weight<a class="anchor" aria-label="anchor" href="#susceptibility-vs--incidence-weight"></a>
+</h4>
+<p><code><a href="../reference/antibiogram.html">wisca_plot()</a></code> produces a scatter plot of the Monte Carlo
+simulation draws, showing each pathogen’s susceptibility (x-axis)
+against its incidence weight (y-axis) for each regimen. Each dot
+represents one of 1,000 simulated draws, so the spread reflects
+posterior uncertainty. This plot reveals <em>why</em> a regimen achieves
+its coverage: you can see which pathogens dominate the syndrome (high on
+the y-axis), how susceptible they are (position on the x-axis), and how
+uncertain both estimates are (spread of the cloud). The dashed vertical
+lines denote the point estimates, i.e., the coverage percentages. The
+ribbon behind the dashed lines denote the credible interval, which is
+95% at default.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca_plot</a></span><span class="op">(</span><span class="va">wisca_out</span><span class="op">)</span></span></code></pre></div>
+<p><img src="WISCA_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="720"></p>
+</div>
+<div class="section level4">
+<h4 id="posterior-coverage-distributions">Posterior coverage distributions<a class="anchor" aria-label="anchor" href="#posterior-coverage-distributions"></a>
+</h4>
+<p>Setting <code>wisca_plot_type = "posterior_coverage"</code> shows the
+full posterior distribution of coverage for each regimen as a density
+curve. This is the most complete representation of what the Bayesian
+model produces: each curve shows the relative likelihood of each
+coverage value across all 1,000 simulations. Narrow, tall peaks indicate
+high certainty; wide, flat curves indicate greater uncertainty. Where
+two curves overlap, the regimens cannot be confidently
+distinguished.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca_plot</a></span><span class="op">(</span><span class="va">wisca_out</span>, wisca_plot_type <span class="op">=</span> <span class="st">"posterior_coverage"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="WISCA_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="720"></p>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -554,7 +615,7 @@ by any clinical variable</li>
 intervals that honestly communicate uncertainty</li>
 </ul>
 <p>It is available in the <code>AMR</code> package via either:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/antibiogram.html">antibiogram</a></span><span class="op">(</span><span class="va">...</span>, wisca <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -593,7 +654,7 @@ of weighted-incidence syndromic combination antibiograms (WISCA).
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE" class="external-link">GNU General Public License version 2.0 (GPL-2)</a>.<br>Developed at the <a target="_blank" href="https://www.rug.nl" class="external-link">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a> in The Netherlands.</p>
+  <p><code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE" class="external-link">GNU GPL 2.0</a>. Developed at the <a target="_blank" href="https://www.rug.nl" class="external-link">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a> in The Netherlands, in collaboration with <a href="https://amr-for-r.org/authors.html">many colleagues from around the world</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
