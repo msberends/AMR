@@ -73,15 +73,12 @@ base._libPaths(r_lib_path)
 if not isinstalled('AMR', lib_loc=r_lib_path):
     print(f"AMR: Installing latest AMR R package to {r_lib_path}...", flush=True)
     utils.install_packages(
-        'remotes',
+        StrVector(['remotes', 'desc']),
         repos='https://cloud.r-project.org',
         lib=r_lib_path,
-        dependencies=True,
         quiet=True
     )
-    rint(f"AMR: Installed 'remotes'", flush=True)
     remotes = importr('remotes', lib_loc=r_lib_path)
-    rint(f"AMR: Loaded 'remotes'", flush=True)
     remotes.install_github('msberends/AMR', lib=r_lib_path, quiet=True)
 
 # Retrieve Python AMR version
@@ -99,10 +96,9 @@ if r_amr_version != python_amr_version:
     try:
         print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
         utils.install_packages(
-            'remotes',
+            StrVector(['remotes', 'desc']),
             repos='https://cloud.r-project.org',
             lib=r_lib_path,
-            dependencies=True,
             quiet=True
         )
         remotes = importr('remotes', lib_loc=r_lib_path)
