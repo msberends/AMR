@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9069
+## AMR 3.0.1.9070
 
 Planned as v3.1.0, end of June 2026.
 
@@ -175,6 +175,11 @@ Planned as v3.1.0, end of June 2026.
 - [`as.disk()`](https://amr-for-r.org/reference/as.disk.md): input
   validation is now more strict, rejecting values that are not
   recognisable as a numeric disk zone diameter
+- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) gains an
+  `enforce_method` argument (`"auto"`, `"mic"`, or `"disk"`) to force
+  the interpretation method when S3 class information is lost, e.g. when
+  called from Python
+  ([\#291](https://github.com/msberends/AMR/issues/291))
 
 ## AMR 3.0.1
 

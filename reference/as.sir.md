@@ -16,7 +16,7 @@ data set.
 ## Usage
 
 ``` r
-as.sir(x, ...)
+as.sir(x, ..., enforce_method = "auto")
 
 NA_sir_
 
@@ -130,6 +130,13 @@ sir_interpretation_history(clean = FALSE)
   can thus also be [antimicrobial
   selectors](https://amr-for-r.org/reference/antimicrobial_selectors.md),
   e.g. `as.sir(df, penicillins())`.
+
+- enforce_method:
+
+  A [character](https://rdrr.io/r/base/character.html) string to force
+  interpretation as a specific method, useful when the S3 class of `x`
+  is lost (e.g., when called from Python via rpy2). Must be one of
+  `"auto"` (default), `"mic"`, or `"disk"`.
 
   Otherwise: arguments passed on to methods.
 
@@ -705,10 +712,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-06-24 18:34:31     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-06-24 18:34:31     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-06-24 18:34:32     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-06-24 18:34:32     1 DISK   genta       Escherich… human      18         
+#> 1 2026-06-26 07:32:01     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-06-26 07:32:01     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-06-26 07:32:01     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-06-26 07:32:02     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
@@ -829,7 +836,7 @@ if (require("dplyr")) {
 #> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
 #> interpretation guideline.
 #> Warning: There was 1 warning in `mutate()`.
-#> ℹ In argument: `cipro = (function (x, ...) ...`.
+#> ℹ In argument: `cipro = (function (x, ..., enforce_method = "auto") ...`.
 #> Caused by warning:
 #> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
 #> interpretation guideline.
@@ -839,7 +846,7 @@ if (require("dplyr")) {
 #> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
 #> interpretation guideline.
 #> Warning: There was 1 warning in `mutate()`.
-#> ℹ In argument: `mics = (function (x, ...) ...`.
+#> ℹ In argument: `mics = (function (x, ..., enforce_method = "auto") ...`.
 #> Caused by warning:
 #> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
 #> interpretation guideline.
@@ -849,7 +856,7 @@ if (require("dplyr")) {
 #> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
 #> interpretation guideline.
 #> Warning: There was 1 warning in `mutate()`.
-#> ℹ In argument: `cipro = (function (x, ...) ...`.
+#> ℹ In argument: `cipro = (function (x, ..., enforce_method = "auto") ...`.
 #> Caused by warning:
 #> ! Some MICs were converted to the nearest higher log2 level, following the CLSI
 #> interpretation guideline.
