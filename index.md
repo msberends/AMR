@@ -27,12 +27,9 @@
 <div style="display: flex; font-size: 0.8em;">
 
 <p style="text-align:left; width: 50%;">
-
 <small><a href="https://amr-for-r.org/">amr-for-r.org</a></small>
 </p>
-
 <p style="text-align:right; width: 50%;">
-
 <small><a href="https://doi.org/10.18637/jss.v104.i03" target="_blank">doi.org/10.18637/jss.v104.i03</a></small>
 </p>
 
@@ -64,7 +61,7 @@ formed the basis of two PhD theses ([DOI
 [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
 
 After installing this package, R knows [**~97 000 distinct microbial
-species**](./reference/microorganisms.html) (updated May 2026) and all
+species**](./reference/microorganisms.html) (updated mei 2026) and all
 [**~620 antimicrobial and antiviral
 drugs**](./reference/antimicrobials.html) by name and code (including
 ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all
@@ -175,11 +172,13 @@ example_isolates %>%
 #> ℹ Using column mo as input for `mo_fullname()`
 #> ℹ Using column mo as input for `mo_is_gram_negative()`
 #> ℹ Using column mo as input for `mo_is_intrinsic_resistant()`
-#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant
-#>   Phenotypes' v1.2 (2023). This note will be shown once per session.
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
-#>   (amikacin), and KAN (kanamycin)
-#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ Determining intrinsic resistance based on 'EUCAST Expected
+#>   Resistant Phenotypes' v1.2 (2023). This note will be shown
+#>   once per session.
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB
+#>   (tobramycin), AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM
+#>   (meropenem)
 #> # A tibble: 35 × 7
 #>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
 #>    <chr>                        <sir> <sir> <sir> <sir> <sir> <sir>
@@ -229,8 +228,8 @@ wisca(example_isolates,
 ```
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
-|:---|:---|:---|
-| 69.9% (64.7-75.2%) | 93.7% (92.2-95.1%) | 89.8% (86.8-92.3%) |
+|:------------------------|:-------------------------------------|:-------------------------------------|
+| 70% (64.7-75.2%)        | 93.6% (92.2-95.1%)                   | 89.8% (87-92.5%)                     |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
@@ -244,10 +243,10 @@ wisca(example_isolates,
 ```
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
-|:---|:---|:---|:---|
-| Clinical | 74.6% (69-80.1%) | 93.6% (91.9-95.1%) | 90.5% (86.9-93%) |
-| ICU | 57% (48.7-65.8%) | 86.7% (83.7-89.7%) | 82.8% (77.9-87.2%) |
-| Outpatient | 57.5% (46.5-68.7%) | 76.7% (70.6-82.4%) | 67.5% (57.2-76.7%) |
+|:----------------|:------------------------|:-------------------------------------|:-------------------------------------|
+| Clinical        | 74.6% (68.6-80.6%)      | 93.7% (92.1-95.1%)                   | 90.4% (87-93.1%)                     |
+| ICU             | 57% (48.6-65.7%)        | 86.8% (83.6-89.8%)                   | 82.9% (78.1-87.3%)                   |
+| Outpatient      | 56.9% (45.9-68.2%)      | 76.7% (70.6-82.3%)                   | 68% (57.6-77.2%)                     |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:
@@ -256,13 +255,14 @@ for tracking resistance per species over time:
 antibiogram(example_isolates,
             mo_transform = "gramstain",
             antimicrobials = c("AMC", carbapenems(), "TZP"))
-#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM
+#>   (meropenem)
 ```
 
-| Pathogen | Amoxicillin/clavulanic acid | Imipenem | Meropenem | Piperacillin/tazobactam |
-|:---|:---|:---|:---|:---|
-| Gram-negative | 76% (73-79%,N=726) | 99% (98-100%,N=631) | 100% (99-100%,N=626) | 88% (85-91%,N=641) |
-| Gram-positive | 76% (74-79%,N=1138) | 81% (75-85%,N=257) | 77% (70-82%,N=203) | 86% (82-89%,N=345) |
+| Pathogen      | Amoxicillin/clavulanic acid | Imipenem            | Meropenem            | Piperacillin/tazobactam |
+|:--------------|:----------------------------|:--------------------|:---------------------|:------------------------|
+| Gram-negative | 76% (73-79%,N=726)          | 99% (98-100%,N=631) | 100% (99-100%,N=626) | 88% (85-91%,N=641)      |
+| Gram-positive | 76% (74-79%,N=1138)         | 81% (75-85%,N=257)  | 77% (70-82%,N=203)   | 86% (82-89%,N=345)      |
 
 Combination antibiograms show the additional coverage gained by adding a
 second agent, stratified by species:
@@ -273,10 +273,10 @@ antibiogram(example_isolates,
             antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
-| Pathogen | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
-|:---|:---|:---|:---|
-| Gram-negative | 88% (85-91%,N=641) | 99% (97-99%,N=691) | 98% (97-99%,N=693) |
-| Gram-positive | 86% (82-89%,N=345) | 98% (96-98%,N=1044) | 95% (93-97%,N=550) |
+| Pathogen      | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
+|:--------------|:------------------------|:-------------------------------------|:-------------------------------------|
+| Gram-negative | 88% (85-91%,N=641)      | 99% (97-99%,N=691)                   | 98% (97-99%,N=693)                   |
+| Gram-positive | 86% (82-89%,N=345)      | 98% (96-98%,N=1044)                  | 95% (93-97%,N=550)                   |
 
 Like many other functions in this package, `antibiogram()` and `wisca()`
 come with support for 28 languages that are often detected automatically
@@ -349,9 +349,10 @@ example_isolates %>%
   summarise(across(c(GEN, TOB),
                    list(total_R = resistance,
                         conf_int = function(x) sir_confidence_interval(x, collapse = "-"))))
-#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
-#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
+#> ℹ `resistance()` assumes the EUCAST guideline and thus
+#>   considers the 'I' category susceptible. Set the `guideline`
+#>   argument or the `AMR_guideline` option to either "CLSI" or
+#>   "EUCAST", see `?AMR-options`.
 #> ℹ This message will be shown once per session.
 #> # A tibble: 3 × 5
 #>   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int
@@ -375,15 +376,16 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
-#>   (amikacin), and KAN (kanamycin)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB
+#>   (tobramycin), AMK (amikacin), and KAN (kanamycin)
 #> ℹ For `polymyxins()` using column COL (colistin)
 #> Warning: There was 1 warning in `summarise()`.
-#> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
+#> ℹ In argument: `across(c(aminoglycosides(), polymyxins()),
+#>   resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
-#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient"
-#> (whilst `minimum = 30`).
+#> ! Introducing NA: only 23 results available for KAN in group:
+#> ward = "Outpatient" (whilst `minimum = 30`).
 out
 #> # A tibble: 3 × 6
 #>   ward         GEN   TOB   AMK   KAN   COL
