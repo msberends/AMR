@@ -72,9 +72,9 @@ base._libPaths(r_lib_path)
 # Check if the AMR package is installed in R
 if not isinstalled('AMR', lib_loc=r_lib_path):
     print(f"AMR: Installing latest AMR R package to {r_lib_path}...", flush=True)
-    utils.install_packages('remotes', quiet=True)
-    remotes = importr('remotes')
-    remotes.install_github('msberends/AMR', quiet=True)
+    utils.install_packages('remotes', repos='https://cloud.r-project.org', lib=r_lib_path, quiet=True)
+    remotes = importr('remotes', lib_loc=r_lib_path)
+    remotes.install_github('msberends/AMR', lib=r_lib_path, quiet=True)
 
 # Retrieve Python AMR version
 try:
@@ -90,9 +90,9 @@ r_amr_version = str(r_amr_version[0])
 if r_amr_version != python_amr_version:
     try:
         print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
-        utils.install_packages('remotes', quiet=True)
-        remotes = importr('remotes')
-        remotes.install_github('msberends/AMR', quiet=True)
+        utils.install_packages('remotes', repos='https://cloud.r-project.org', lib=r_lib_path, quiet=True)
+        remotes = importr('remotes', lib_loc=r_lib_path)
+        remotes.install_github('msberends/AMR', lib=r_lib_path, quiet=True)
         r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
         r_amr_version = str(r_amr_version[0])
     except Exception as e:
