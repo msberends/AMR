@@ -33,18 +33,20 @@
 rm -rf ../PythonPackage/AMR/*
 mkdir -p ../PythonPackage/AMR/AMR
 
-# Output Python file
+# Output files
 setup_file="../PythonPackage/AMR/setup.py"
-functions_file="../PythonPackage/AMR/AMR/functions.py"
-datasets_file="../PythonPackage/AMR/AMR/datasets.py"
 init_file="../PythonPackage/AMR/AMR/__init__.py"
+engine_file="../PythonPackage/AMR/AMR/_engine.py"
+datasets_file="../PythonPackage/AMR/AMR/datasets.py"
+functions_file="../PythonPackage/AMR/AMR/functions.py"
+beta_file="../PythonPackage/AMR/AMR/beta.py"
 description_file="../DESCRIPTION"
 
-# Write header to the datasets Python file, including the convert_to_python function
-cat <<EOL > "$datasets_file"
+# ---- _engine.py: R environment setup and installation logic ---- #
+
+cat <<'EOL' > "$engine_file"
 import os
 import sys
-import pandas as pd
 import importlib.metadata as metadata
 
 # Get the path to the virtual environment
@@ -56,22 +58,47 @@ os.makedirs(r_lib_path, exist_ok=True)
 os.environ['R_LIBS_SITE'] = r_lib_path
 
 from rpy2 import robjects
-from rpy2.robjects.conversion import localconverter
-from rpy2.robjects import default_converter, numpy2ri, pandas2ri
+from rpy2.robjects.vectors import StrVector
 from rpy2.robjects.packages import importr, isinstalled
 
-# Import base and utils
+# Import base and utils once
 base = importr('base')
 utils = importr('utils')
 
-base.options(warn=-1)
-
-# Ensure library paths explicitly
+# Silence R console output entirely
+robjects.r('suppressMessages(suppressWarnings(sink(tempfile())))')
 base._libPaths(r_lib_path)
 
-# Check if the AMR package is installed in R
-if not isinstalled('AMR', lib_loc=r_lib_path):
-    print(f"AMR: Installing latest AMR R package to {r_lib_path}...", flush=True)
+_installed_source = None
+
+def _r_version():
+    """Return the currently installed AMR R package version, or None."""
+    try:
+        return str(robjects.r(
+            f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')[0])
+    except Exception:
+        return None
+
+def _py_version():
+    """Return the Python AMR package version from metadata, or empty string."""
+    try:
+        return str(metadata.version('AMR'))
+    except metadata.PackageNotFoundError:
+        return ''
+
+def _install_cran():
+    """Install AMR from CRAN into the isolated library."""
+    print("AMR: Installing from CRAN...", flush=True)
+    utils.install_packages(
+        'AMR',
+        repos='https://cloud.r-project.org',
+        lib=r_lib_path,
+        quiet=True
+    )
+
+def _install_github():
+    """Install AMR development version from GitHub into the isolated library."""
+    print("AMR: Installing development version from GitHub...", flush=True)
     utils.install_packages(
         StrVector(['remotes', 'desc']),
         repos='https://cloud.r-project.org',
@@ -81,40 +108,77 @@ if not isinstalled('AMR', lib_loc=r_lib_path):
     remotes = importr('remotes', lib_loc=r_lib_path)
     remotes.install_github('msberends/AMR', lib=r_lib_path, quiet=True)
 
-# Retrieve Python AMR version
-try:
-    python_amr_version = str(metadata.version('AMR'))
-except metadata.PackageNotFoundError:
-    python_amr_version = str('')
+def ensure_amr(source="cran"):
+    """Ensure AMR is installed from the requested source. Idempotent per source."""
+    global _installed_source
+    
+    if _installed_source == source:
+        return
+    
+    install_fn = _install_github if source == "github" else _install_cran
+    
+    if not isinstalled('AMR', lib_loc=r_lib_path):
+        install_fn()
+    else:
+        # Check for version mismatch and update if needed
+        r_ver = _r_version()
+        py_ver = _py_version()
+        if r_ver != py_ver:
+            try:
+                install_fn()
+            except Exception as e:
+                print(f"AMR: Could not update ({e})", flush=True)
+    
+    print(f"AMR: R package version {_r_version()} ready.", flush=True)
+    _installed_source = source
 
-# Retrieve R AMR version
-r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
-r_amr_version = str(r_amr_version[0])
-
-# Compare R and Python package versions
-if r_amr_version != python_amr_version:
+def restore_sink():
+    """Restore R console output after setup is complete."""
     try:
-        print(f"AMR: Updating AMR package in {r_lib_path}...", flush=True)
-        utils.install_packages(
-            StrVector(['remotes', 'desc']),
-            repos='https://cloud.r-project.org',
-            lib=r_lib_path,
-            quiet=True
-        )
-        remotes = importr('remotes', lib_loc=r_lib_path)
-        remotes.install_github('msberends/AMR', lib=r_lib_path, quiet=True)
-        r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
-        r_amr_version = str(r_amr_version[0])
-    except Exception as e:
-        print(f"AMR: Could not update: {e}", flush=True)
+        robjects.r('sink()')
+    except Exception:
+        pass
+EOL
 
-print(f"AMR: R package version {r_amr_version} loaded.", flush=True)
-print(f"AMR: Setting up R environment and AMR datasets...", flush=True)
+# ---- datasets.py: only dataset loading ---- #
 
-# Activate the automatic conversion between R and pandas DataFrames
-with localconverter(default_converter + numpy2ri.converter + pandas2ri.converter):
-    # example_isolates
-    example_isolates = robjects.r('''
+cat <<'EOL' > "$datasets_file"
+import pandas as pd
+from rpy2 import robjects
+from rpy2.robjects.conversion import localconverter
+from rpy2.robjects import default_converter, numpy2ri, pandas2ri
+
+from ._engine import ensure_amr, restore_sink
+
+_cache = {}
+_loaded_source = None
+
+def _load_datasets(source="cran"):
+    """Load all AMR datasets into the module cache."""
+    global _loaded_source
+    
+    if _cache and _loaded_source == source:
+        return
+    
+    if _cache and _loaded_source != source:
+        _cache.clear()
+    
+    ensure_amr(source)
+    
+    with localconverter(default_converter + numpy2ri.converter + pandas2ri.converter):
+        _cache['example_isolates'] = _load_example_isolates()
+        _cache['microorganisms'] = robjects.r(
+            'AMR::microorganisms[, !sapply(AMR::microorganisms, is.list)]')
+        _cache['antimicrobials'] = robjects.r(
+            'AMR::antimicrobials[, !sapply(AMR::antimicrobials, is.list)]')
+        _cache['clinical_breakpoints'] = robjects.r(
+            'AMR::clinical_breakpoints[, !sapply(AMR::clinical_breakpoints, is.list)]')
+    
+    restore_sink()
+    _loaded_source = source
+
+def _load_example_isolates():
+    df = robjects.r('''
     df <- AMR::example_isolates
     df[] <- lapply(df, function(x) {
         if (inherits(x, c("Date", "POSIXt", "factor"))) {
@@ -126,26 +190,72 @@ with localconverter(default_converter + numpy2ri.converter + pandas2ri.converter
     df <- df[, !sapply(df, is.list)]
     df
     ''')
-    example_isolates['date'] = pd.to_datetime(example_isolates['date'])
+    df['date'] = pd.to_datetime(df['date'])
+    return df
 
-    # microorganisms
-    microorganisms = robjects.r('AMR::microorganisms[, !sapply(AMR::microorganisms, is.list)]')
-    antimicrobials = robjects.r('AMR::antimicrobials[, !sapply(AMR::antimicrobials, is.list)]')
-    clinical_breakpoints = robjects.r('AMR::clinical_breakpoints[, !sapply(AMR::clinical_breakpoints, is.list)]')
-
-base.options(warn = 0)
-
-print(f"AMR: Done.", flush=True)
+def get(name, source="cran"):
+    """Retrieve a dataset by name, installing AMR if needed."""
+    _load_datasets(source)
+    return _cache[name]
 EOL
 
-echo "from .datasets import example_isolates" >> $init_file
-echo "from .datasets import microorganisms" >> $init_file
-echo "from .datasets import antimicrobials" >> $init_file
-echo "from .datasets import clinical_breakpoints" >> $init_file
+# ---- __init__.py: lazy module, CRAN by default ---- #
 
+cat <<'EOL' > "$init_file"
+import sys
 
-# Write header to the functions Python file, including the convert_to_python function
-cat <<EOL > "$functions_file"
+_DATASETS = frozenset({
+    'example_isolates', 'microorganisms',
+    'antimicrobials', 'clinical_breakpoints'
+})
+
+class _AMRModule(type(sys.modules[__name__])):
+    """Lazy-loading module: nothing runs until an attribute is accessed."""
+    
+    def __getattr__(self, name):
+        if name in _DATASETS:
+            from .datasets import get
+            return get(name, source="cran")
+        try:
+            from . import functions
+            return getattr(functions, name)
+        except AttributeError:
+            raise AttributeError(
+                f"module 'AMR' has no attribute '{name}'")
+
+sys.modules[__name__].__class__ = _AMRModule
+EOL
+
+# ---- beta.py: GitHub development version ---- #
+
+cat <<'EOL' > "$beta_file"
+import sys
+
+_DATASETS = frozenset({
+    'example_isolates', 'microorganisms',
+    'antimicrobials', 'clinical_breakpoints'
+})
+
+class _BetaModule(type(sys.modules[__name__])):
+    """Lazy-loading module: installs AMR from GitHub on first access."""
+    
+    def __getattr__(self, name):
+        if name in _DATASETS:
+            from .datasets import get
+            return get(name, source="github")
+        try:
+            from . import functions
+            return getattr(functions, name)
+        except AttributeError:
+            raise AttributeError(
+                f"module 'AMR.beta' has no attribute '{name}'")
+
+sys.modules[__name__].__class__ = _BetaModule
+EOL
+
+# ---- functions.py: R-to-Python wrapper functions ---- #
+
+cat <<'EOL' > "$functions_file"
 import functools
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
@@ -155,7 +265,10 @@ from rpy2.robjects import default_converter, numpy2ri, pandas2ri
 import pandas as pd
 import numpy as np
 
-# Import the AMR R package
+from ._engine import ensure_amr
+
+# Ensure AMR is available before importing it in R
+ensure_amr("cran")
 amr_r = importr('AMR')
 
 def convert_to_r(value):
@@ -221,12 +334,11 @@ def r_to_python(r_func):
     return wrapper
 EOL
 
-# Directory where the .Rd files are stored
+# ---- Generate wrapper functions from .Rd files ---- #
+
 rd_dir="../man"
 
-# Iterate through each .Rd file in the man directory
 for rd_file in "$rd_dir"/*.Rd; do
-    # Extract function names and their arguments from the .Rd files
     awk '
     BEGIN {
         usage_started = 0
@@ -309,18 +421,19 @@ for rd_file in "$rd_dir"/*.Rd; do
     ' "$rd_file"
 done
 
-# Output completion message
 echo "Python wrapper functions generated in $functions_file."
 echo "Python wrapper functions listed in $init_file."
 
+# ---- README ---- #
+
 cp ../vignettes/AMR_for_Python.Rmd ../PythonPackage/AMR/README.md
 sed -i '1,/^# Introduction$/d' ../PythonPackage/AMR/README.md
-echo "README copied"
+echo "README copied."
 
-# Extract the relevant fields from DESCRIPTION
+# ---- setup.py ---- #
+
 version=$(grep "^Version:" "$description_file" | awk '{print $2}')
 
-# Write the setup.py file
 cat <<EOL > "$setup_file"
 from setuptools import setup, find_packages
 
@@ -351,10 +464,10 @@ setup(
 )
 EOL
 
-# Output completion message
-echo "setup.py has been generated in $setup_file."
+echo "setup.py generated."
+
+# ---- Build ---- #
 
 cd ../PythonPackage/AMR
 pip3 install build
 python3 -m build
-# python3 setup.py sdist bdist_wheel
