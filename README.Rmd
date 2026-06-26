@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   # fig.path = "man/figures/README-",
   out.width = "100%"
 )
+options(width = 100)
 AMR:::reset_all_thrown_messages()
 ```
 

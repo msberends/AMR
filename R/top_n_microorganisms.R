@@ -29,73 +29,88 @@
 
 #' Filter Top *n* Microorganisms
 #'
-#' This function filters a data set to include only the top *n* microorganisms based on a specified property, such as taxonomic family or genus. For example, it can filter a data set to the top 3 species, or to any species in the top 5 genera, or to the top 3 species in each of the top 5 genera.
+#' Filters a data set to include only the top *n* microorganisms based on a specified property, such as taxonomic family or genus. For example, it can filter a data set to the top 3 species, to any species in the top 5 genera, or to the top 3 species in each of the top 5 genera.
 #' @param x A data frame containing microbial data.
-#' @param n An integer specifying the maximum number of unique values of the `property` to include in the output.
-#' @param property A character string indicating the microorganism property to use for filtering. Must be one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, documentation = TRUE)`. If `NULL`, the raw values from `col_mo` will be used without transformation. When using `"species"` (default) or `"subpecies"`, the genus will be added to make sure each (sub)species still belongs to the right genus.
-#' @param n_for_each An optional integer specifying the maximum number of rows to retain for each value of the selected property. If `NULL`, all rows within the top *n* groups will be included.
+#' @param n A positive whole number specifying the maximum number of unique values of `property` to include in the output.
+#' @param property A character string indicating the microorganism property to use for filtering. Must be one of the column names of the [microorganisms] data set: `r vector_or(colnames(microorganisms), sort = FALSE, documentation = TRUE)`. If `NULL`, the raw values from `col_mo` will be used without transformation. When using `"species"` (default) or `"subspecies"`, the genus is prepended to ensure each name is unambiguous.
+#' @param n_for_each An optional positive whole number specifying the maximum number of distinct microorganism groups at the level of `property_for_each` to retain within each of the top *n* groups. Only used when `property_for_each` is also set.
+#' @param property_for_each The microorganism property to use for sub-grouping within each top *n* group. Must be one of the column names of the [microorganisms] data set and at a strictly lower taxonomic rank than `property` (allowed order: domain > kingdom > phylum > class > order > family > genus > species > subspecies). Defaults to `"species"`. Only relevant when `n_for_each` is set.
 #' @param col_mo A character string indicating the column in `x` that contains microorganism names or codes. Defaults to the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param ... Additional arguments passed on to [mo_property()] when `property` is not `NULL`.
-#' @details This function is useful for preprocessing data before creating [antibiograms][antibiogram()] or other analyses that require focused subsets of microbial data. For example, it can filter a data set to only include isolates from the top 10 species.
+#' @details This function is useful for preprocessing data before creating [antibiograms][antibiogram()] or other analyses that require focused subsets of microbial data.
 #' @export
 #' @seealso [mo_property()], [as.mo()], [antibiogram()]
 #' @examples
 #' # filter to the top 3 species:
-#' top_n_microorganisms(example_isolates,
-#'   n = 3
-#' )
+#' top_n_microorganisms(example_isolates, n = 3)
 #'
 #' # filter to any species in the top 5 genera:
-#' top_n_microorganisms(example_isolates,
-#'   n = 5, property = "genus"
-#' )
+#' top_n_microorganisms(example_isolates, n = 5, property = "genus")
 #'
 #' # filter to the top 3 species in each of the top 5 genera:
 #' top_n_microorganisms(example_isolates,
 #'   n = 5, property = "genus", n_for_each = 3
 #' )
-top_n_microorganisms <- function(x, n, property = "species", n_for_each = NULL, col_mo = NULL, ...) {
+#'
+#' # filter to the top 2 genera in each of the top 3 families:
+#' top_n_microorganisms(example_isolates,
+#'   n = 3, property = "family", n_for_each = 2, property_for_each = "genus"
+#' )
+top_n_microorganisms <- function(x, n, property = "species", n_for_each = NULL, property_for_each = "species", col_mo = NULL, ...) {
   meet_criteria(x, allow_class = "data.frame") # also checks dimensions to be >0
   meet_criteria(n, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, is_positive = TRUE)
-  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR::microorganisms))
+  meet_criteria(property, allow_class = "character", has_length = 1, is_in = colnames(AMR::microorganisms), allow_NULL = TRUE)
   meet_criteria(n_for_each, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, is_positive = TRUE, allow_NULL = TRUE)
+  meet_criteria(property_for_each, allow_class = "character", has_length = 1, is_in = colnames(AMR::microorganisms), allow_NULL = TRUE)
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
+
   if (is.null(col_mo)) {
     col_mo <- search_type_in_df(x = x, type = "mo", info = TRUE)
     stop_if(is.null(col_mo), "{.arg col_mo} must be set")
   }
 
-  x.bak <- x
+  .taxonomic_ranks <- c("domain", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies")
+  if (!is.null(n_for_each) && !is.null(property) && !is.null(property_for_each)) {
+    prop_rank <- match(property, .taxonomic_ranks)
+    each_rank <- match(property_for_each, .taxonomic_ranks)
+    if (!is.na(prop_rank) && !is.na(each_rank) && each_rank <= prop_rank) {
+      stop_(
+        "`property_for_each` (\"", property_for_each, "\") must be at a lower ",
+        "taxonomic rank than `property` (\"", property, "\")"
+      )
+    }
+  }
 
+  x.bak <- x
   x[, col_mo] <- as.mo(x[, col_mo, drop = TRUE], keep_synonyms = TRUE)
 
-  if (is.null(property)) {
-    x$prop_val <- x[[col_mo]]
-  } else if (property == "species") {
-    x$prop_val <- paste(mo_genus(x[[col_mo]], ...), mo_species(x[[col_mo]], ...))
-  } else if (property == "subspecies") {
-    x$prop_val <- paste(mo_genus(x[[col_mo]], ...), mo_species(x[[col_mo]], ...), mo_subspecies(x[[col_mo]], ...))
-  } else {
-    x$prop_val <- mo_property(x[[col_mo]], property = property, ...)
+  get_prop_val <- function(prop) {
+    if (is.null(prop)) {
+      x[[col_mo]]
+    } else if (prop == "species") {
+      paste(mo_genus(x[[col_mo]], ...), mo_species(x[[col_mo]], ...))
+    } else if (prop == "subspecies") {
+      paste(mo_genus(x[[col_mo]], ...), mo_species(x[[col_mo]], ...), mo_subspecies(x[[col_mo]], ...))
+    } else {
+      mo_property(x[[col_mo]], property = prop, ...)
+    }
   }
-  counts <- sort(table(x$prop_val), decreasing = TRUE)
 
-  n <- as.integer(n)
-  if (length(counts) < n) {
-    n <- length(counts)
-  }
-  count_values <- names(counts)[seq_len(n)]
-  filtered_rows <- which(x$prop_val %in% count_values)
+  x$prop_val <- get_prop_val(property)
+  counts <- sort(table(x$prop_val), decreasing = TRUE)
+  n <- min(as.integer(n), length(counts))
+  filtered_rows <- which(x$prop_val %in% names(counts)[seq_len(n)])
 
   if (!is.null(n_for_each)) {
     n_for_each <- as.integer(n_for_each)
+    x$prop_val_each <- get_prop_val(property_for_each)
     filtered_x <- x[filtered_rows, , drop = FALSE]
+    filtered_x$.orig_row <- filtered_rows
     filtered_rows <- do.call(
       c,
       lapply(split(filtered_x, filtered_x$prop_val), function(group) {
-        top_values <- names(sort(table(group[[col_mo]]), decreasing = TRUE)[seq_len(n_for_each)])
-        top_values <- top_values[!is.na(top_values)]
-        which(x[[col_mo]] %in% top_values)
+        top_each <- names(sort(table(group$prop_val_each), decreasing = TRUE)[seq_len(n_for_each)])
+        group$.orig_row[group$prop_val_each %in% top_each[!is.na(top_each)]]
       })
     )
   }

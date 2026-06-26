@@ -1,4 +1,4 @@
-# AMR 3.0.1.9076
+# AMR 3.0.1.9077
 
 Planned as v3.1.0, end of June 2026.
 
@@ -37,6 +37,7 @@ Planned as v3.1.0, end of June 2026.
 * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 
 ### Updated
+* `top_n_microorganisms()`: new `property_for_each` argument for sub-grouping within top *n* groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed `property = NULL` not being accepted; inner filter now tracks original row indices to prevent cross-group contamination
 * Taxonomic update for all microorganisms, now updated to June 2026
 * `mo_kingdom()` now returns the formal taxonomic kingdom; a one-time note per session explains the change when querying bacterial or archaeal records.
 * `mo_taxonomy()` and `mo_info()` gained `domain` for the list output

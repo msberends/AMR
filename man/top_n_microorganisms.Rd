@@ -9,6 +9,7 @@ top_n_microorganisms(
   n,
   property = "species",
   n_for_each = NULL,
+  property_for_each = "species",
   col_mo = NULL,
   ...
 )
@@ -16,36 +17,39 @@ top_n_microorganisms(
 \arguments{
 \item{x}{A data frame containing microbial data.}
 
-\item{n}{An integer specifying the maximum number of unique values of the \code{property} to include in the output.}
+\item{n}{A positive whole number specifying the maximum number of unique values of \code{property} to include in the output.}
 
-\item{property}{A character string indicating the microorganism property to use for filtering. Must be one of the column names of the \link{microorganisms} data set: \code{"mo"}, \code{"fullname"}, \code{"status"}, \code{"domain"}, \code{"kingdom"}, \code{"phylum"}, \code{"class"}, \code{"order"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"subspecies"}, \code{"rank"}, \code{"ref"}, \code{"oxygen_tolerance"}, \code{"morphology"}, \code{"source"}, \code{"lpsn"}, \code{"lpsn_parent"}, \code{"lpsn_renamed_to"}, \code{"mycobank"}, \code{"mycobank_parent"}, \code{"mycobank_renamed_to"}, \code{"gbif"}, \code{"gbif_parent"}, \code{"gbif_renamed_to"}, \code{"prevalence"}, or \code{"snomed"}. If \code{NULL}, the raw values from \code{col_mo} will be used without transformation. When using \code{"species"} (default) or \code{"subpecies"}, the genus will be added to make sure each (sub)species still belongs to the right genus.}
+\item{property}{A character string indicating the microorganism property to use for filtering. Must be one of the column names of the \link{microorganisms} data set: \code{"mo"}, \code{"fullname"}, \code{"status"}, \code{"domain"}, \code{"kingdom"}, \code{"phylum"}, \code{"class"}, \code{"order"}, \code{"family"}, \code{"genus"}, \code{"species"}, \code{"subspecies"}, \code{"rank"}, \code{"ref"}, \code{"oxygen_tolerance"}, \code{"morphology"}, \code{"source"}, \code{"lpsn"}, \code{"lpsn_parent"}, \code{"lpsn_renamed_to"}, \code{"mycobank"}, \code{"mycobank_parent"}, \code{"mycobank_renamed_to"}, \code{"gbif"}, \code{"gbif_parent"}, \code{"gbif_renamed_to"}, \code{"prevalence"}, or \code{"snomed"}. If \code{NULL}, the raw values from \code{col_mo} will be used without transformation. When using \code{"species"} (default) or \code{"subspecies"}, the genus is prepended to ensure each name is unambiguous.}
 
-\item{n_for_each}{An optional integer specifying the maximum number of rows to retain for each value of the selected property. If \code{NULL}, all rows within the top \emph{n} groups will be included.}
+\item{n_for_each}{An optional positive whole number specifying the maximum number of distinct microorganism groups at the level of \code{property_for_each} to retain within each of the top \emph{n} groups. Only used when \code{property_for_each} is also set.}
+
+\item{property_for_each}{The microorganism property to use for sub-grouping within each top \emph{n} group. Must be one of the column names of the \link{microorganisms} data set and at a strictly lower taxonomic rank than \code{property} (allowed order: domain > kingdom > phylum > class > order > family > genus > species > subspecies). Defaults to \code{"species"}. Only relevant when \code{n_for_each} is set.}
 
 \item{col_mo}{A character string indicating the column in \code{x} that contains microorganism names or codes. Defaults to the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
 \item{...}{Additional arguments passed on to \code{\link[=mo_property]{mo_property()}} when \code{property} is not \code{NULL}.}
 }
 \description{
-This function filters a data set to include only the top \emph{n} microorganisms based on a specified property, such as taxonomic family or genus. For example, it can filter a data set to the top 3 species, or to any species in the top 5 genera, or to the top 3 species in each of the top 5 genera.
+Filters a data set to include only the top \emph{n} microorganisms based on a specified property, such as taxonomic family or genus. For example, it can filter a data set to the top 3 species, to any species in the top 5 genera, or to the top 3 species in each of the top 5 genera.
 }
 \details{
-This function is useful for preprocessing data before creating \link[=antibiogram]{antibiograms} or other analyses that require focused subsets of microbial data. For example, it can filter a data set to only include isolates from the top 10 species.
+This function is useful for preprocessing data before creating \link[=antibiogram]{antibiograms} or other analyses that require focused subsets of microbial data.
 }
 \examples{
 # filter to the top 3 species:
-top_n_microorganisms(example_isolates,
-  n = 3
-)
+top_n_microorganisms(example_isolates, n = 3)
 
 # filter to any species in the top 5 genera:
-top_n_microorganisms(example_isolates,
-  n = 5, property = "genus"
-)
+top_n_microorganisms(example_isolates, n = 5, property = "genus")
 
 # filter to the top 3 species in each of the top 5 genera:
 top_n_microorganisms(example_isolates,
   n = 5, property = "genus", n_for_each = 3
+)
+
+# filter to the top 2 genera in each of the top 3 families:
+top_n_microorganisms(example_isolates,
+  n = 3, property = "family", n_for_each = 2, property_for_each = "genus"
 )
 }
 \seealso{
