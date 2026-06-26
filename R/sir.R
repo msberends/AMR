@@ -73,6 +73,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @param threshold Maximum fraction of invalid antimicrobial interpretations of `x`, see *Examples*.
 #' @param conserve_capped_values Deprecated, use `capped_mic_handling` instead.
 #' @param ... For using on a [data.frame]: selection of columns to apply `as.sir()` to. Supports [tidyselect language][tidyselect::starts_with()] such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and can thus also be [antimicrobial selectors][amr_selector()], e.g. `as.sir(df, penicillins())`.
+#' @param enforce_method A [character] string to force interpretation as a specific method, useful when the S3 class of `x` is lost (e.g., when called from Python via rpy2). Must be one of `"auto"` (default), `"mic"`, or `"disk"`.
 #'
 #' Otherwise: arguments passed on to methods.
 #' @details
@@ -385,8 +386,15 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #'   #   mutate(across(where(is_sir_eligible), as.sir))
 #' }
 #' }
-as.sir <- function(x, ...) {
-  UseMethod("as.sir")
+as.sir <- function(x, ..., enforce_method = "auto") {
+  meet_criteria(enforce_method, allow_class = "character", has_length = 1, is_in = c("auto", "mic", "disk"))
+  if (enforce_method == "mic") {
+    as.sir.mic(x, ...)
+  } else if (enforce_method == "disk") {
+    as.sir.disk(x, ...)
+  } else {
+    UseMethod("as.sir")
+  }
 }
 
 as_sir_structure <- function(x,

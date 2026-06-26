@@ -14,7 +14,7 @@
 \alias{sir_interpretation_history}
 \title{Interpret MIC and Disk Diffusion as SIR, or Clean Existing SIR Data}
 \usage{
-as.sir(x, ...)
+as.sir(x, ..., enforce_method = "auto")
 
 NA_sir_
 
@@ -108,7 +108,9 @@ sir_interpretation_history(clean = FALSE)
 \arguments{
 \item{x}{Vector of values (for class \code{\link{mic}}: MIC values in mg/L, for class \code{\link{disk}}: a disk diffusion radius in millimetres).}
 
-\item{...}{For using on a \link{data.frame}: selection of columns to apply \code{as.sir()} to. Supports \link[tidyselect:starts_with]{tidyselect language} such as \code{where(is.mic)}, \code{starts_with(...)}, or \code{column1:column4}, and can thus also be \link[=amr_selector]{antimicrobial selectors}, e.g. \code{as.sir(df, penicillins())}.
+\item{...}{For using on a \link{data.frame}: selection of columns to apply \code{as.sir()} to. Supports \link[tidyselect:starts_with]{tidyselect language} such as \code{where(is.mic)}, \code{starts_with(...)}, or \code{column1:column4}, and can thus also be \link[=amr_selector]{antimicrobial selectors}, e.g. \code{as.sir(df, penicillins())}.}
+
+\item{enforce_method}{A \link{character} string to force interpretation as a specific method, useful when the S3 class of \code{x} is lost (e.g., when called from Python via rpy2). Must be one of \code{"auto"} (default), \code{"mic"}, or \code{"disk"}.
 
 Otherwise: arguments passed on to methods.}
 

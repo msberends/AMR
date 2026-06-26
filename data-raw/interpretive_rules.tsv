@@ -439,9 +439,9 @@ EUCAST	Breakpoints	14	Enterobacterales (Order)	order	is	Enterobacterales	AMP	I	A
 EUCAST	Breakpoints	14	Enterobacterales (Order)	order	is	Enterobacterales	AMP	R	AMX	R	
 EUCAST	Breakpoints	14	Enterobacterales (Order)	order	is	Enterobacterales	LEX	S	CZO	I	
 EUCAST	Breakpoints	14	Enterobacterales (Order)	order	is	Enterobacterales	CFR	S	CZO	I	
-EUCAST	Breakpoints	14	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	S	CIP	S	
-EUCAST	Breakpoints	14	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	I	CIP	I	
-EUCAST	Breakpoints	14	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	R	CIP	R	
+EUCAST	Breakpoints	14	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	14	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	14	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	14	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	S	DOX	S	
 EUCAST	Breakpoints	14	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	I	DOX	I	
 EUCAST	Breakpoints	14	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	R	DOX	R	
@@ -630,9 +630,9 @@ EUCAST	Breakpoints	15	Enterobacterales (Order)	order	is	Enterobacterales	AMP	I	A
 EUCAST	Breakpoints	15	Enterobacterales (Order)	order	is	Enterobacterales	AMP	R	AMX	R	
 EUCAST	Breakpoints	15	Enterobacterales (Order)	order	is	Enterobacterales	LEX	S	CZO	I	
 EUCAST	Breakpoints	15	Enterobacterales (Order)	order	is	Enterobacterales	CFR	S	CZO	I	
-EUCAST	Breakpoints	15	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	S	CIP	S	
-EUCAST	Breakpoints	15	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	I	CIP	I	
-EUCAST	Breakpoints	15	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	R	CIP	R	
+EUCAST	Breakpoints	15	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	15	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	15	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	15	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	S	DOX	S	
 EUCAST	Breakpoints	15	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	I	DOX	I	
 EUCAST	Breakpoints	15	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	R	DOX	R	
@@ -818,9 +818,9 @@ EUCAST	Breakpoints	16	Enterobacterales (Order)	order	is	Enterobacterales	AMP	I	A
 EUCAST	Breakpoints	16	Enterobacterales (Order)	order	is	Enterobacterales	AMP	R	AMX	R	
 EUCAST	Breakpoints	16	Enterobacterales (Order)	order	is	Enterobacterales	LEX	S	CZO	I	
 EUCAST	Breakpoints	16	Enterobacterales (Order)	order	is	Enterobacterales	CFR	S	CZO	I	
-EUCAST	Breakpoints	16	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	S	CIP	S	
-EUCAST	Breakpoints	16	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	I	CIP	I	
-EUCAST	Breakpoints	16	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	R	CIP	R	
+EUCAST	Breakpoints	16	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	16	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	16	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	16	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	S	DOX	S	
 EUCAST	Breakpoints	16	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	I	DOX	I	
 EUCAST	Breakpoints	16	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	R	DOX	R	
@@ -1003,9 +1003,9 @@ EUCAST	Breakpoints	13.1	Enterobacterales (Order)	order	is	Enterobacterales	AMP	I
 EUCAST	Breakpoints	13.1	Enterobacterales (Order)	order	is	Enterobacterales	AMP	R	AMX	R	
 EUCAST	Breakpoints	13.1	Enterobacterales (Order)	order	is	Enterobacterales	LEX	S	CZO	I	
 EUCAST	Breakpoints	13.1	Enterobacterales (Order)	order	is	Enterobacterales	CFR	S	CZO	I	
-EUCAST	Breakpoints	13.1	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	S	CIP	S	
-EUCAST	Breakpoints	13.1	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	I	CIP	I	
-EUCAST	Breakpoints	13.1	Enterobacterales (Order)	genus	is	Salmonella	PEF-S	R	CIP	R	
+EUCAST	Breakpoints	13.1	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	13.1	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	13.1	Enterobacterales (Order)	order	is	Enterobacterales	PEF-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	13.1	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	S	DOX	S	
 EUCAST	Breakpoints	13.1	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	I	DOX	I	
 EUCAST	Breakpoints	13.1	Enterobacterales (Order)	genus_species	is	Yersinia enterocolitica	TCY	R	DOX	R	

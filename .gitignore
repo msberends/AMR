@@ -22,6 +22,7 @@ vignettes/*.R
 ^CRAN-RELEASE$
 packrat/lib*/
 packrat/src/
+*~$*
 data-raw/taxa.txt
 data-raw/taxon.tab
 data-raw/CLSI*.pdf
