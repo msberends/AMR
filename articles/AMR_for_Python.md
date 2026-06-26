@@ -200,6 +200,61 @@ AMR.antimicrobials
 | ZID | 77846445.0 | Zidebactam | Other antibacterials | NaN | None | NaN | None |
 | ZFD | NaN | Zoliflodacin | None | NaN | None | NaN | None |
 
+## Installation Channels
+
+### Stable Release (CRAN)
+
+The default `AMR` Python package uses the latest stable version of the
+`AMR` R package, published on CRAN. After running `pip install AMR`,
+import it as usual:
+
+``` python
+import AMR
+
+AMR.example_isolates
+```
+
+### Development Version (GitHub)
+
+To use the latest development version of the `AMR` R package (sourced
+directly from GitHub), import the `beta` sub-package and alias it as
+`AMR`:
+
+``` python
+import AMR.beta as AMR
+
+AMR.example_isolates
+```
+
+Aliasing with `as AMR` keeps all downstream code identical to the stable
+import. Switching between the stable release and the development version
+requires changing only the import line — nothing else in your script
+needs to change.
+
+## SIR Classification with `as_sir()`
+
+### Using `enforce_method`
+
+The `as_sir()` function in R uses S3 method dispatch to select the
+correct calculation method based on the input class: `<mic>` for MIC
+values and `<disk>` for disk diffusion values. Because Python objects do
+not carry R class attributes through the `rpy2` bridge, this automatic
+dispatch may not resolve correctly.
+
+To explicitly specify the input type, use the `enforce_method` argument:
+
+``` python
+# Treat the column as MIC values — maps to R's as.sir.mic()
+AMR.as_sir(df["MIC_col"], mo="E. coli", ab="AMX", guideline="EUCAST", enforce_method="mic")
+
+# Treat the column as disk diffusion values — maps to R's as.sir.disk()
+AMR.as_sir(df["disk_col"], mo="E. coli", ab="AMX", guideline="EUCAST", enforce_method="disk")
+```
+
+Without `enforce_method`, R falls back to class-based dispatch on the
+raw Python input, which may fail or return unexpected results. Always
+supply `enforce_method` when calling `as_sir()` from Python.
+
 ## Conclusion
 
 With the `AMR` Python package, Python users can now effortlessly call R

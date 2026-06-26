@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9075
+## AMR 3.0.1.9076
 
 Planned as v3.1.0, end of June 2026.
 
@@ -180,6 +180,9 @@ Planned as v3.1.0, end of June 2026.
   the interpretation method when S3 class information is lost, e.g. when
   called from Python
   ([\#291](https://github.com/msberends/AMR/issues/291))
+- `AMR for Python` vignette: added sections on installation channels
+  (stable CRAN vs. development GitHub via `AMR.beta`) and on using
+  `enforce_method` in `as_sir()` from Python
 
 ## AMR 3.0.1
 

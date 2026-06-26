@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9075</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9076</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -616,6 +616,59 @@ frames:</p>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="section level2">
+<h2 id="installation-channels">Installation Channels<a class="anchor" aria-label="anchor" href="#installation-channels"></a>
+</h2>
+<div class="section level3">
+<h3 id="stable-release-cran">Stable Release (CRAN)<a class="anchor" aria-label="anchor" href="#stable-release-cran"></a>
+</h3>
+<p>The default <code>AMR</code> Python package uses the latest stable
+version of the <code>AMR</code> R package, published on CRAN. After
+running <code>pip install AMR</code>, import it as usual:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">import</span> AMR</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>AMR.example_isolates</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="development-version-github">Development Version (GitHub)<a class="anchor" aria-label="anchor" href="#development-version-github"></a>
+</h3>
+<p>To use the latest development version of the <code>AMR</code> R
+package (sourced directly from GitHub), import the <code>beta</code>
+sub-package and alias it as <code>AMR</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">import</span> AMR.beta <span class="im">as</span> AMR</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>AMR.example_isolates</span></code></pre></div>
+<p>Aliasing with <code>as AMR</code> keeps all downstream code identical
+to the stable import. Switching between the stable release and the
+development version requires changing only the import line — nothing
+else in your script needs to change.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="sir-classification-with-as_sir">SIR Classification with <code>as_sir()</code><a class="anchor" aria-label="anchor" href="#sir-classification-with-as_sir"></a>
+</h2>
+<div class="section level3">
+<h3 id="using-enforce_method">Using <code>enforce_method</code><a class="anchor" aria-label="anchor" href="#using-enforce_method"></a>
+</h3>
+<p>The <code>as_sir()</code> function in R uses S3 method dispatch to
+select the correct calculation method based on the input class:
+<code>&lt;mic&gt;</code> for MIC values and <code>&lt;disk&gt;</code>
+for disk diffusion values. Because Python objects do not carry R class
+attributes through the <code>rpy2</code> bridge, this automatic dispatch
+may not resolve correctly.</p>
+<p>To explicitly specify the input type, use the
+<code>enforce_method</code> argument:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># Treat the column as MIC values — maps to R's as.sir.mic()</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>AMR.as_sir(df[<span class="st">"MIC_col"</span>], mo<span class="op">=</span><span class="st">"E. coli"</span>, ab<span class="op">=</span><span class="st">"AMX"</span>, guideline<span class="op">=</span><span class="st">"EUCAST"</span>, enforce_method<span class="op">=</span><span class="st">"mic"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># Treat the column as disk diffusion values — maps to R's as.sir.disk()</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>AMR.as_sir(df[<span class="st">"disk_col"</span>], mo<span class="op">=</span><span class="st">"E. coli"</span>, ab<span class="op">=</span><span class="st">"AMX"</span>, guideline<span class="op">=</span><span class="st">"EUCAST"</span>, enforce_method<span class="op">=</span><span class="st">"disk"</span>)</span></code></pre></div>
+<p>Without <code>enforce_method</code>, R falls back to class-based
+dispatch on the raw Python input, which may fail or return unexpected
+results. Always supply <code>enforce_method</code> when calling
+<code>as_sir()</code> from Python.</p>
 </div>
 </div>
 <div class="section level2">
