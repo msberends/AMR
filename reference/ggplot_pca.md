@@ -85,11 +85,12 @@ the changes made based on the source code were:
 
 - pc.biplot:
 
-  If true, use what Gabriel (1971) refers to as a "principal component
-  biplot", with `lambda = 1` and observations scaled up by sqrt(n) and
-  variables scaled down by sqrt(n). Then inner products between
-  variables approximate covariances and distances between observations
-  approximate Mahalanobis distance.
+  If true, use what [Gabriel
+  (1971)](#reference+biplot.princomp.Rd+R+3AGabriel+3A1971) refers to as
+  a “principal component biplot”, with `lambda = 1` and observations
+  scaled up by sqrt(n) and variables scaled down by sqrt(n). Then inner
+  products between variables approximate covariances and distances
+  between observations approximate Mahalanobis distance.
 
 - labels:
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9076
+## AMR 3.0.1.9077
 
 Planned as v3.1.0, end of June 2026.
 
@@ -125,6 +125,11 @@ Planned as v3.1.0, end of June 2026.
 
 #### Updated
 
+- [`top_n_microorganisms()`](https://amr-for-r.org/reference/top_n_microorganisms.md):
+  new `property_for_each` argument for sub-grouping within top *n*
+  groups; rank ordering enforced (only lower taxonomic ranks allowed);
+  fixed `property = NULL` not being accepted; inner filter now tracks
+  original row indices to prevent cross-group contamination
 - Taxonomic update for all microorganisms, now updated to June 2026
 - [`mo_kingdom()`](https://amr-for-r.org/reference/mo_property.md) now
   returns the formal taxonomic kingdom; a one-time note per session

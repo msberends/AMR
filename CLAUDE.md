@@ -90,6 +90,33 @@ R CMD check AMR
 - `ggplot_sir.R` / `ggplot_pca.R` / `plotting.R` — visualisation
   functions
 
+## Code Style
+
+Follow the [tidyverse style guide](https://style.tidyverse.org/)
+precisely. Key rules:
+
+- 2-space indentation; no tabs
+- `<-` for assignment, not `=`
+- Spaces around all binary operators and after commas; no spaces inside
+  parentheses
+- When a function call must break across lines, place the first argument
+  on a new line indented by 2 spaces, and put the closing `)` on its own
+  line — **never align arguments to the opening parenthesis** (no
+  hanging/forced mid-line indentation)
+
+``` r
+
+# good
+stop_(
+  "some long message part one ",
+  "part two"
+)
+
+# bad — forces indentation to match the opening parenthesis
+stop_("some long message part one ",
+      "part two")
+```
+
 ## Custom S3 Classes
 
 The package defines five S3 classes with full print/format/plot/vctrs

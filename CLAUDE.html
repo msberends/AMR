@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9076</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9077</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,6 +134,26 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <code>ggplot_sir.R</code> / <code>ggplot_pca.R</code> / <code>plotting.R</code> — visualisation functions</li>
 </ul></div>
 <div class="section level2">
+<h2 id="code-style">Code Style<a class="anchor" aria-label="anchor" href="#code-style"></a></h2>
+<p>Follow the <a href="https://style.tidyverse.org/" class="external-link">tidyverse style guide</a> precisely. Key rules:</p>
+<ul><li>2-space indentation; no tabs</li>
+<li>
+<code>&lt;-</code> for assignment, not <code>=</code>
+</li>
+<li>Spaces around all binary operators and after commas; no spaces inside parentheses</li>
+<li>When a function call must break across lines, place the first argument on a new line indented by 2 spaces, and put the closing <code>)</code> on its own line — <strong>never align arguments to the opening parenthesis</strong> (no hanging/forced mid-line indentation)</li>
+</ul><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># good</span></span>
+<span><span class="fu">stop_</span><span class="op">(</span></span>
+<span>  <span class="st">"some long message part one "</span>,</span>
+<span>  <span class="st">"part two"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># bad — forces indentation to match the opening parenthesis</span></span>
+<span><span class="fu">stop_</span><span class="op">(</span><span class="st">"some long message part one "</span>,</span>
+<span>      <span class="st">"part two"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="custom-s3-classes">Custom S3 Classes<a class="anchor" aria-label="anchor" href="#custom-s3-classes"></a></h2>
 <p>The package defines five S3 classes with full print/format/plot/vctrs support:</p>
 <table class="table"><thead><tr><th>Class</th>
@@ -181,7 +201,7 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <div class="section level2">
 <h2 id="zero-dependency-design">Zero-Dependency Design<a class="anchor" aria-label="anchor" href="#zero-dependency-design"></a></h2>
 <p>The package has <strong>no <code>Imports</code></strong> in <code>DESCRIPTION</code>. All optional integrations (ggplot2, dplyr, data.table, tidymodels, cli, crayon, etc.) are listed in <code>Suggests</code> and guarded with:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pkg"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span> <span class="va">...</span> <span class="op">}</span></span></code></pre></div>
 <p>Never add packages to <code>Imports</code>. If new functionality requires an external package, add it to <code>Suggests</code> and guard usage appropriately.</p>
 </div>
@@ -222,18 +242,18 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <div class="section level4">
 <h4 id="computing-the-correct-version-number">Computing the correct version number<a class="anchor" aria-label="anchor" href="#computing-the-correct-version-number"></a></h4>
 <p><strong>First, ensure <code>git</code> and <code>gh</code> are installed</strong> — both are required for the version computation and for pushing changes. Install them if missing before doing anything else:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">which</span> git <span class="kw">||</span> <span class="ex">apt-get</span> install <span class="at">-y</span> git</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">which</span> gh   <span class="kw">||</span> <span class="ex">apt-get</span> install <span class="at">-y</span> gh</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co"># Also ensure all tags are fetched so git describe works</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--tags</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">which</span> git <span class="kw">||</span> <span class="ex">apt-get</span> install <span class="at">-y</span> git</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">which</span> gh   <span class="kw">||</span> <span class="ex">apt-get</span> install <span class="at">-y</span> gh</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># Also ensure all tags are fetched so git describe works</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--tags</span></span></code></pre></div>
 <p>Then run the following from the repo root to determine the version string to use:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="va">currenttag</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> describe <span class="at">--tags</span> <span class="at">--abbrev</span><span class="op">=</span>0 <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/v//'</span><span class="va">)</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="va">currenttagfull</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> describe <span class="at">--tags</span> <span class="at">--abbrev</span><span class="op">=</span>0<span class="va">)</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="va">defaultbranch</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> branch <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-c</span> 3- <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">'^master$|^main$'</span><span class="va">)</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">git</span> fetch origin <span class="va">${defaultbranch}</span> <span class="at">--quiet</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="va">currentcommit</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> rev-list <span class="at">--count</span> <span class="va">${currenttagfull}</span>..origin/<span class="va">${defaultbranch})</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="va">currentversion</span><span class="op">=</span><span class="st">"</span><span class="va">${currenttag}</span><span class="st">.</span><span class="va">$((currentcommit</span> <span class="op">+</span> <span class="dv">9001</span> <span class="op">+</span> <span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$currentversion</span><span class="st">"</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="va">currenttag</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> describe <span class="at">--tags</span> <span class="at">--abbrev</span><span class="op">=</span>0 <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/v//'</span><span class="va">)</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="va">currenttagfull</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> describe <span class="at">--tags</span> <span class="at">--abbrev</span><span class="op">=</span>0<span class="va">)</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="va">defaultbranch</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> branch <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-c</span> 3- <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">'^master$|^main$'</span><span class="va">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">git</span> fetch origin <span class="va">${defaultbranch}</span> <span class="at">--quiet</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="va">currentcommit</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> rev-list <span class="at">--count</span> <span class="va">${currenttagfull}</span>..origin/<span class="va">${defaultbranch})</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="va">currentversion</span><span class="op">=</span><span class="st">"</span><span class="va">${currenttag}</span><span class="st">.</span><span class="va">$((currentcommit</span> <span class="op">+</span> <span class="dv">9001</span> <span class="op">+</span> <span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$currentversion</span><span class="st">"</span></span></code></pre></div>
 <p>The <code>+ 1</code> accounts for the fact that this PR’s squash commit is not yet on the default branch. Set <strong>both</strong> of these files to the resulting version string (and only once per PR, even across multiple commits):</p>
 <ol style="list-style-type: decimal"><li><p><strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field</p></li>
 <li>

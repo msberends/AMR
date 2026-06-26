@@ -1,10 +1,9 @@
 # Filter Top *n* Microorganisms
 
-This function filters a data set to include only the top *n*
-microorganisms based on a specified property, such as taxonomic family
-or genus. For example, it can filter a data set to the top 3 species, or
-to any species in the top 5 genera, or to the top 3 species in each of
-the top 5 genera.
+Filters a data set to include only the top *n* microorganisms based on a
+specified property, such as taxonomic family or genus. For example, it
+can filter a data set to the top 3 species, to any species in the top 5
+genera, or to the top 3 species in each of the top 5 genera.
 
 ## Usage
 
@@ -14,6 +13,7 @@ top_n_microorganisms(
   n,
   property = "species",
   n_for_each = NULL,
+  property_for_each = "species",
   col_mo = NULL,
   ...
 )
@@ -27,8 +27,8 @@ top_n_microorganisms(
 
 - n:
 
-  An integer specifying the maximum number of unique values of the
-  `property` to include in the output.
+  A positive whole number specifying the maximum number of unique values
+  of `property` to include in the output.
 
 - property:
 
@@ -43,14 +43,25 @@ top_n_microorganisms(
   `"mycobank_renamed_to"`, `"gbif"`, `"gbif_parent"`,
   `"gbif_renamed_to"`, `"prevalence"`, or `"snomed"`. If `NULL`, the raw
   values from `col_mo` will be used without transformation. When using
-  `"species"` (default) or `"subpecies"`, the genus will be added to
-  make sure each (sub)species still belongs to the right genus.
+  `"species"` (default) or `"subspecies"`, the genus is prepended to
+  ensure each name is unambiguous.
 
 - n_for_each:
 
-  An optional integer specifying the maximum number of rows to retain
-  for each value of the selected property. If `NULL`, all rows within
-  the top *n* groups will be included.
+  An optional positive whole number specifying the maximum number of
+  distinct microorganism groups at the level of `property_for_each` to
+  retain within each of the top *n* groups. Only used when
+  `property_for_each` is also set.
+
+- property_for_each:
+
+  The microorganism property to use for sub-grouping within each top *n*
+  group. Must be one of the column names of the
+  [microorganisms](https://amr-for-r.org/reference/microorganisms.md)
+  data set and at a strictly lower taxonomic rank than `property`
+  (allowed order: domain \> kingdom \> phylum \> class \> order \>
+  family \> genus \> species \> subspecies). Defaults to `"species"`.
+  Only relevant when `n_for_each` is set.
 
 - col_mo:
 
@@ -69,8 +80,7 @@ top_n_microorganisms(
 
 This function is useful for preprocessing data before creating
 [antibiograms](https://amr-for-r.org/reference/antibiogram.md) or other
-analyses that require focused subsets of microbial data. For example, it
-can filter a data set to only include isolates from the top 10 species.
+analyses that require focused subsets of microbial data.
 
 ## See also
 
@@ -82,9 +92,7 @@ can filter a data set to only include isolates from the top 10 species.
 
 ``` r
 # filter to the top 3 species:
-top_n_microorganisms(example_isolates,
-  n = 3
-)
+top_n_microorganisms(example_isolates, n = 3)
 #> # A tibble: 1,015 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
@@ -107,9 +115,7 @@ top_n_microorganisms(example_isolates,
 #> #   IPM <sir>, MEM <sir>, MTR <sir>, CHL <sir>, COL <sir>, MUP <sir>, …
 
 # filter to any species in the top 5 genera:
-top_n_microorganisms(example_isolates,
-  n = 5, property = "genus"
-)
+top_n_microorganisms(example_isolates, n = 5, property = "genus")
 #> # A tibble: 1,742 × 46
 #>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
 #>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
@@ -149,6 +155,31 @@ top_n_microorganisms(example_isolates,
 #>  9 2003-09-05 F35553     52 M      ICU      B_ENTRC_FCLS   NA    NA    NA    NA 
 #> 10 2003-09-28 1B0933     80 M      Clinical B_ENTRC        NA    NA    NA    NA 
 #> # ℹ 1,487 more rows
+#> # ℹ 36 more variables: AMC <sir>, AMP <sir>, TZP <sir>, CZO <sir>, FEP <sir>,
+#> #   CXM <sir>, FOX <sir>, CTX <sir>, CAZ <sir>, CRO <sir>, GEN <sir>,
+#> #   TOB <sir>, AMK <sir>, KAN <sir>, TMP <sir>, SXT <sir>, NIT <sir>,
+#> #   FOS <sir>, LNZ <sir>, CIP <sir>, MFX <sir>, VAN <sir>, TEC <sir>,
+#> #   TCY <sir>, TGC <sir>, DOX <sir>, ERY <sir>, CLI <sir>, AZM <sir>,
+#> #   IPM <sir>, MEM <sir>, MTR <sir>, CHL <sir>, COL <sir>, MUP <sir>, …
+
+# filter to the top 2 genera in each of the top 3 families:
+top_n_microorganisms(example_isolates,
+  n = 3, property = "family", n_for_each = 2, property_for_each = "genus"
+)
+#> # A tibble: 1,659 × 46
+#>    date       patient   age gender ward     mo           PEN   OXA   FLC   AMX  
+#>    <date>     <chr>   <dbl> <chr>  <chr>    <mo>         <sir> <sir> <sir> <sir>
+#>  1 2002-01-02 A77334     65 F      Clinical B_ESCHR_COLI   R     NA    NA    NA 
+#>  2 2002-01-03 A77334     65 F      Clinical B_ESCHR_COLI   R     NA    NA    NA 
+#>  3 2002-01-19 738003     71 M      Clinical B_ESCHR_COLI   R     NA    NA    NA 
+#>  4 2002-01-19 738003     71 M      Clinical B_ESCHR_COLI   R     NA    NA    NA 
+#>  5 2002-02-27 066895     85 F      Clinical B_KLBSL_PNMN   R     NA    NA    R  
+#>  6 2002-02-27 066895     85 F      Clinical B_KLBSL_PNMN   R     NA    NA    R  
+#>  7 2002-03-08 4FC193     69 M      Clinical B_ESCHR_COLI   R     NA    NA    R  
+#>  8 2002-04-01 496896     46 F      ICU      B_ESCHR_COLI   R     NA    NA    NA 
+#>  9 2002-04-01 496896     46 F      ICU      B_ESCHR_COLI   R     NA    NA    NA 
+#> 10 2002-04-23 EE2510     69 F      ICU      B_ESCHR_COLI   R     NA    NA    NA 
+#> # ℹ 1,649 more rows
 #> # ℹ 36 more variables: AMC <sir>, AMP <sir>, TZP <sir>, CZO <sir>, FEP <sir>,
 #> #   CXM <sir>, FOX <sir>, CTX <sir>, CAZ <sir>, CRO <sir>, GEN <sir>,
 #> #   TOB <sir>, AMK <sir>, KAN <sir>, TMP <sir>, SXT <sir>, NIT <sir>,
