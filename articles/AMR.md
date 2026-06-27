@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 26 June 2026.
+methodology remains unchanged. This page was generated on 27 June 2026.
 
 ## Introduction
 
@@ -51,9 +51,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-06-26 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-06-26 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-06-26 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-06-27 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-06-27 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-06-27 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -912,10 +912,6 @@ These functions can be used on their own:
 ``` r
 
 our_data_1st %>% resistance(AMX)
-#> ℹ `resistance()` assumes the EUCAST guideline and thus considers the 'I'
-#>   category susceptible. Set the `guideline` argument or the `AMR_guideline`
-#>   option to either "CLSI" or "EUCAST", see `?AMR-options`.
-#> ℹ This message will be shown once per session.
 #> [1] 0.4203377
 ```
 

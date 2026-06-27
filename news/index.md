@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9077
+## AMR 3.0.1.9078
 
 Planned as v3.1.0, end of June 2026.
 
@@ -77,6 +77,15 @@ Planned as v3.1.0, end of June 2026.
 
 #### Fixed
 
+- Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified
+  value no longer causes errors or silent wrong behaviour in
+  [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  [`resistance()`](https://amr-for-r.org/reference/proportion.md),
+  [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
+  [`count_resistant()`](https://amr-for-r.org/reference/count.md),
+  [`count_susceptible()`](https://amr-for-r.org/reference/count.md), and
+  SIR plotting/printing functions
+  ([\#298](https://github.com/msberends/AMR/issues/298))
 - [`as.sir()`](https://amr-for-r.org/reference/as.sir.md)
   - On data frames: already-converted SIR columns no longer dropped on
     re-run ([\#278](https://github.com/msberends/AMR/issues/278))
