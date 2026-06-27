@@ -352,16 +352,34 @@ as.mo <- function(x,
             (MO_lookup_current$species_first == substr(x_parts[2], 1, 1) |
               MO_lookup_current$subspecies_first == substr(x_parts[2], 1, 1) |
               MO_lookup_current$subspecies_first == substr(x_parts[3], 1, 1)))
-          # Issue #288: if the species (and subspecies) word(s) in the input exactly match
-          # exactly one candidate, use only that candidate and bypass the 0.55 cutoff.
-          # This prevents prevalent bacteria from outranking a rarer organism whose species
-          # epithet is an unambiguous exact match, e.g. "S. apiospermum" → Scedosporium.
+          # Issue #288 (extended): if the species (and subspecies) word(s) in the input
+          # exactly match candidates that all belong to one and the same genus, bypass the
+          # 0.55 cutoff. A species together with its subspecies/autonyms (e.g. Plasmodium
+          # ovale + curtisi + wallikeri) is the same taxon, so for a genus+species input we
+          # collapse to the species-rank record (subspecies == ""). This prevents prevalent
+          # bacteria from outranking a rarer organism whose species epithet is an
+          # unambiguous exact match, e.g. "S. apiospermum" -> Scedosporium, "P. ovale" ->
+          # Plasmodium ovale. If two different genera share the epithet, the genus check
+          # stays FALSE and the normal matching score arbitrates.
           sp_exact <- tolower(MO_lookup_current$species[filtr]) == x_parts[2]
           if (length(x_parts) == 3) {
             sp_exact <- sp_exact & tolower(MO_lookup_current$subspecies[filtr]) == x_parts[3]
           }
-          if (sum(sp_exact) == 1) {
-            filtr <- filtr[sp_exact]
+          exact_idx <- filtr[sp_exact]
+          if (length(exact_idx) >= 1 &&
+            length(unique(MO_lookup_current$genus_lower[exact_idx])) == 1) {
+            if (length(x_parts) == 2) {
+              # genus + species only: collapse to the species-rank record (subspecies == "")
+              is_species_rank <- MO_lookup_current$subspecies[exact_idx] == ""
+              if (any(is_species_rank)) {
+                filtr <- exact_idx[is_species_rank][1]
+              } else {
+                filtr <- exact_idx[1]
+              }
+            } else {
+              # explicit subspecies given, unambiguous within the genus
+              filtr <- exact_idx[1]
+            }
             minimum_matching_score <- 0
           }
         } else {

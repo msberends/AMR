@@ -338,3 +338,30 @@ test_that("test-mo.R", {
     )
   }
 })
+
+test_that("as.mo() resolves abbreviated genus when species carries subspecies (#288 follow-up)", {
+  # "P. ovale" must resolve to Plasmodium ovale, not a Pseudomonas species,
+  # even though P. ovale has subspecies (curtisi, wallikeri) sharing the epithet.
+  expect_identical(
+    as.mo("P. ovale", keep_synonyms = TRUE, info = FALSE),
+    as.mo("Plasmodium ovale", keep_synonyms = TRUE, info = FALSE)
+  )
+  expect_identical(
+    mo_name("P. ovale", keep_synonyms = TRUE, language = NULL),
+    "Plasmodium ovale"
+  )
+
+  # Non-regression: the original #288 example must still work.
+  expect_identical(
+    mo_genus("S. apiospermum", keep_synonyms = TRUE, language = NULL),
+    "Scedosporium"
+  )
+
+  # Explicit subspecies must not be collapsed to species rank.
+  if (any(microorganisms$fullname == "Plasmodium ovale curtisi")) {
+    expect_identical(
+      mo_name("P. ovale curtisi", keep_synonyms = TRUE, language = NULL),
+      "Plasmodium ovale curtisi"
+    )
+  }
+})

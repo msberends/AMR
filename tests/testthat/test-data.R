@@ -142,3 +142,9 @@ test_that("test-data.R", {
   # x <- check_non_ascii() %>%
   #   filter(file %unlike% "^(data-raw|docs|git_)")
 })
+
+test_that("taxonomic name columns contain no NA (empty string is used instead)", {
+  for (col in c("domain", "kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies")) {
+    expect_false(anyNA(microorganisms[[col]]), info = col)
+  }
+})
