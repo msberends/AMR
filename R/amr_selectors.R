@@ -202,7 +202,7 @@
 #' # data.table --------------------------------------------------------------
 #'
 #' # data.table is supported as well, just use it in the same way as with
-#' # base R, but add `with = FALSE` if using a single AB selector.
+#' # base R, but add `with = FALSE` if using a single AMR selector.
 #'
 #' if (require("data.table")) {
 #'   dt <- as.data.table(example_isolates)
@@ -215,7 +215,7 @@
 #'   dt[, carbapenems(), with = FALSE]
 #' }
 #'
-#' # for multiple selections or AB selectors, `with = FALSE` is not needed:
+#' # for multiple selections or AMR selectors, `with = FALSE` is not needed:
 #' if (require("data.table")) {
 #'   dt[, c("mo", aminoglycosides())]
 #' }

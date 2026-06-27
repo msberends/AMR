@@ -1,4 +1,4 @@
-# AMR 3.0.1.9078
+# AMR 3.0.1.9079
 
 Planned as v3.1.0, end of June 2026.
 
@@ -21,6 +21,7 @@ Planned as v3.1.0, end of June 2026.
 
 ### Fixed
 * Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified value no longer causes errors or silent wrong behaviour in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and SIR plotting/printing functions (#298)
+* Remaining occurrences of old "antibiotic selectors"/"AB selectors" terminology renamed to "antimicrobial selectors"/"AMR selectors" in the AMR vignette, test file, and `amr_selectors.R` roxygen examples
 * `as.sir()`
   * On data frames: already-converted SIR columns no longer dropped on re-run (#278)
   * Metadata columns (e.g. `patient`, `ward`) no longer misidentified as antibiotic columns
