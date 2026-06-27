@@ -1,4 +1,4 @@
-# AMR 3.0.1.9079
+# AMR 3.0.1.9080
 
 Planned as v3.1.0, end of June 2026.
 
@@ -32,6 +32,7 @@ Planned as v3.1.0, end of June 2026.
 * `as.mo()`: 
   * Input of the form `"X complex"` now falls back to `"X"` when the complex is not a distinct taxon in the database, preventing `NA` results for valid clinical descriptions such as `"Proteus vulgaris complex"` (#287)
   * Abbreviated-genus input (e.g. `"S. apiospermum"`) now correctly ranks candidates whose species epithet exactly matches the input above more-prevalent organisms whose species does not match; fixes `"S. apiospermum"` resolving to *Staphylococcus* instead of *Scedosporium apiospermum* (#288)
+  * Abbreviated-genus input for species that have subspecies (e.g. `"P. ovale"`) now collapses to the species-rank record instead of incorrectly matching a more-prevalent organism; explicit subspecies queries (e.g. `"P. ovale curtisi"`) are preserved (#288)
 * `get_author_year()` in the microorganism reproduction script now strips `emend.` and everything after it, so `ref` reflects the combination authority rather than the emendation author (e.g. *Rhodococcus equi* now returns "Goodfellow et al., 1977" instead of "Nouioui et al., 2018")
 * BRMO classification now includes bacterial complexes (#275)
 * Translation fixes for Italian CoNS/CoPS names (#256), Dutch antimicrobials, and `sir_df()` foreign-language output (#272)
