@@ -1,4 +1,4 @@
-# AMR 3.0.1.9077
+# AMR 3.0.1.9078
 
 Planned as v3.1.0, end of June 2026.
 
@@ -20,6 +20,7 @@ Planned as v3.1.0, end of June 2026.
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
 
 ### Fixed
+* Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified value no longer causes errors or silent wrong behaviour in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and SIR plotting/printing functions (#298)
 * `as.sir()`
   * On data frames: already-converted SIR columns no longer dropped on re-run (#278)
   * Metadata columns (e.g. `patient`, `ward`) no longer misidentified as antibiotic columns

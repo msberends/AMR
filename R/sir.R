@@ -2119,7 +2119,7 @@ pillar_shaft.sir <- function(x, ...) {
     out[is.na(x)] <- pillar::style_subtle("  NA")
     out[x == "S"] <- font_green_bg("  S  ") # has font_black internally
     out[x == "SDD"] <- font_green_lighter_bg(" SDD ") # has font_black internally
-    if (getOption("AMR_guideline", "EUCAST")[1] == "EUCAST") {
+    if (getOption("AMR_guideline", "EUCAST")[1] %like% "EUCAST") {
       out[x == "I"] <- font_green_lighter_bg("  I  ") # has font_black internally
     } else {
       out[x == "I"] <- font_orange_bg("  I  ") # has font_black internally

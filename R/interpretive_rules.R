@@ -175,6 +175,11 @@ interpretive_rules <- function(x,
                                ...) {
   meet_criteria(x, allow_class = "data.frame")
   meet_criteria(col_mo, allow_class = "character", has_length = 1, is_in = colnames(x), allow_NULL = TRUE)
+  if (guideline %like% "EUCAST") {
+    guideline <- "EUCAST"
+  } else if (guideline %like% "CLSI") {
+    guideline <- "CLSI"
+  }
   meet_criteria(guideline, allow_class = "character", has_length = 1, is_in = c("EUCAST", "CLSI"))
   meet_criteria(info, allow_class = "logical", has_length = 1)
   meet_criteria(rules, allow_class = "character", has_length = c(1, 2, 3, 4, 5, 6), is_in = c("breakpoints", "expected_phenotypes", "expert", "other", "all", "custom"))
@@ -199,12 +204,6 @@ interpretive_rules <- function(x,
   )
 
   add_MO_lookup_to_AMR_env()
-
-  if (guideline %like% "EUCAST") {
-    guideline <- "EUCAST"
-  } else if (guideline %like% "CLSI") {
-    guideline <- "CLSI"
-  }
 
   if ("custom" %in% rules && is.null(custom_rules)) {
     warning_("in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: no custom rules were set with the {.arg custom_rules} argument",
