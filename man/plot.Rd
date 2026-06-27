@@ -36,21 +36,21 @@ scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
 scale_x_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+  eucast_I = getOption("AMR_guideline", "EUCAST") \%like\% "EUCAST",
   ...
 )
 
 scale_colour_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+  eucast_I = getOption("AMR_guideline", "EUCAST") \%like\% "EUCAST",
   ...
 )
 
 scale_fill_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+  eucast_I = getOption("AMR_guideline", "EUCAST") \%like\% "EUCAST",
   ...
 )
 

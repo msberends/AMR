@@ -88,7 +88,7 @@ test_that("test-amr selectors.R", {
   expect_equal(nrow(example_isolates[any(carbapenems() != "R"), ]), 910, tolerance = 0.5)
   expect_equal(nrow(example_isolates[carbapenems() != "R", ]), 704, tolerance = 0.5)
 
-  # filter with multiple antibiotic selectors using c()
+  # filter with multiple antimicrobial selectors using c()
   expect_equal(nrow(example_isolates[all(c(carbapenems(), aminoglycosides()) == "R"), ]), 26, tolerance = 0.5)
 
   # filter + select in one go: get penicillins in carbapenems-resistant strains
