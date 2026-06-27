@@ -450,11 +450,11 @@ our_data_1st %>%
 #> 4 Klebsiella pneumoniae      319
 ```
 
-### Select and filter with antibiotic selectors
+### Select and filter with antimicrobial selectors
 
-Using so-called antibiotic class selectors, you can select or filter
-columns based on the antibiotic class that your antibiotic results are
-in:
+Using so-called antimicrobial class selectors, you can select or filter
+columns based on the antimicrobial class that your antimicrobial results
+are in:
 
 ``` r
 
@@ -513,7 +513,7 @@ our_data_1st %>%
 #> 10 B_ESCHR_COLI   S     S     S     S  
 #> # ℹ 2,714 more rows
 
-# filtering using AB selectors is also possible:
+# filtering using antimicrobial selectors is also possible:
 our_data_1st %>%
   filter(any(aminoglycosides() == "R"))
 #> ℹ For `aminoglycosides()` using column GEN
