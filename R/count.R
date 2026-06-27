@@ -126,6 +126,11 @@ count_resistant <- function(...,
                             only_all_tested = FALSE,
                             guideline = getOption("AMR_guideline", "EUCAST")) {
   # other arguments for meet_criteria are handled by sir_calc()
+  if (guideline %like% "EUCAST") {
+    guideline <- "EUCAST"
+  } else if (guideline %like% "CLSI") {
+    guideline <- "CLSI"
+  }
   meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
   if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("count_resistant", "eucast_default", entire_session = TRUE)) {
     message_("{.help [{.fun count_resistant}](AMR::count_resistant)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")
@@ -150,6 +155,11 @@ count_susceptible <- function(...,
                               only_all_tested = FALSE,
                               guideline = getOption("AMR_guideline", "EUCAST")) {
   # other arguments for meet_criteria are handled by sir_calc()
+  if (guideline %like% "EUCAST") {
+    guideline <- "EUCAST"
+  } else if (guideline %like% "CLSI") {
+    guideline <- "CLSI"
+  }
   meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
   if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("count_susceptible", "eucast_default", entire_session = TRUE)) {
     message_("{.help [{.fun count_susceptible}](AMR::count_susceptible)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")

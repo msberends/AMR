@@ -482,7 +482,7 @@ scale_x_sir <- function(colours_SIR = c(
                           R = "#ED553B"
                         ),
                         language = get_AMR_locale(),
-                        eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+                        eucast_I = getOption("AMR_guideline", "EUCAST") %like% "EUCAST",
                         ...) {
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
@@ -499,7 +499,7 @@ scale_colour_sir <- function(colours_SIR = c(
                                R = "#ED553B"
                              ),
                              language = get_AMR_locale(),
-                             eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+                             eucast_I = getOption("AMR_guideline", "EUCAST") %like% "EUCAST",
                              ...) {
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
@@ -528,7 +528,7 @@ scale_fill_sir <- function(colours_SIR = c(
                              R = "#ED553B"
                            ),
                            language = get_AMR_locale(),
-                           eucast_I = getOption("AMR_guideline", "EUCAST") == "EUCAST",
+                           eucast_I = getOption("AMR_guideline", "EUCAST") %like% "EUCAST",
                            ...) {
   meet_criteria(colours_SIR, allow_class = "character", has_length = c(1, 3, 4))
   language <- validate_language(language)
