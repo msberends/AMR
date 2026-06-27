@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9079
+## AMR 3.0.1.9080
 
 Planned as v3.1.0, end of June 2026.
 
@@ -116,6 +116,11 @@ Planned as v3.1.0, end of June 2026.
     above more-prevalent organisms whose species does not match; fixes
     `"S. apiospermum"` resolving to *Staphylococcus* instead of
     *Scedosporium apiospermum*
+    ([\#288](https://github.com/msberends/AMR/issues/288))
+  - Abbreviated-genus input for species that have subspecies
+    (e.g. `"P. ovale"`) now collapses to the species-rank record instead
+    of incorrectly matching a more-prevalent organism; explicit
+    subspecies queries (e.g. `"P. ovale curtisi"`) are preserved
     ([\#288](https://github.com/msberends/AMR/issues/288))
 - `get_author_year()` in the microorganism reproduction script now
   strips `emend.` and everything after it, so `ref` reflects the

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9079</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9080</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,15 +49,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9079" id="amr-3019079">AMR 3.0.1.9079<a class="anchor" aria-label="anchor" href="#amr-3019079"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9080" id="amr-3019080">AMR 3.0.1.9080<a class="anchor" aria-label="anchor" href="#amr-3019080"></a></h2>
 <p>Planned as v3.1.0, end of June 2026.</p>
 <div class="section level4">
-<h4 id="breaking-changes-3-0-1-9079">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9079"></a></h4>
+<h4 id="breaking-changes-3-0-1-9080">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9080"></a></h4>
 <ul><li>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms with new top-level <em>domains</em> ‘Bacteria’ and ‘Archaea’ (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column in the <code>microorganisms</code> data set was added, and more importantly, <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g. <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</li>
 <li>Faster parallel computing via the <code>future</code> package for <code><a href="../reference/as.sir.html">as.sir()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code>: a non-sequential plan (e.g. <code>future::plan(future::multisession)</code>) must be active before using <code>parallel = TRUE</code>.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9079">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9079"></a></h4>
+<h4 id="new-3-0-1-9080">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9080"></a></h4>
 <ul><li>EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the <code>clinical_breakpoints</code> data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations</li>
 <li>Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting <code>breakpoint_type = "ECOFF"</code> in <code><a href="../reference/as.sir.html">as.sir()</a></code>; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (<a href="https://github.com/msberends/AMR/issues/254" class="external-link">#254</a>)</li>
 <li>
@@ -74,7 +74,7 @@
 <li>New <code><a href="../reference/antibiogram.html">wisca_plot()</a></code> to assess the susceptibility and incidence distributions from the Monte Carlo simulations</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixed-3-0-1-9079">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9079"></a></h4>
+<h4 id="fixed-3-0-1-9080">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9080"></a></h4>
 <ul><li>Setting <code>options(AMR_guideline = "EUCAST 2012")</code> or any year-qualified value no longer causes errors or silent wrong behaviour in <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/proportion.html">resistance()</a></code>, <code><a href="../reference/proportion.html">susceptibility()</a></code>, <code><a href="../reference/count.html">count_resistant()</a></code>, <code><a href="../reference/count.html">count_susceptible()</a></code>, and SIR plotting/printing functions (<a href="https://github.com/msberends/AMR/issues/298" class="external-link">#298</a>)</li>
 <li>
 <code><a href="../reference/as.sir.html">as.sir()</a></code>
@@ -93,6 +93,7 @@
 <code><a href="../reference/as.mo.html">as.mo()</a></code>:
 <ul><li>Input of the form <code>"X complex"</code> now falls back to <code>"X"</code> when the complex is not a distinct taxon in the database, preventing <code>NA</code> results for valid clinical descriptions such as <code>"Proteus vulgaris complex"</code> (<a href="https://github.com/msberends/AMR/issues/287" class="external-link">#287</a>)</li>
 <li>Abbreviated-genus input (e.g. <code>"S. apiospermum"</code>) now correctly ranks candidates whose species epithet exactly matches the input above more-prevalent organisms whose species does not match; fixes <code>"S. apiospermum"</code> resolving to <em>Staphylococcus</em> instead of <em>Scedosporium apiospermum</em> (<a href="https://github.com/msberends/AMR/issues/288" class="external-link">#288</a>)</li>
+<li>Abbreviated-genus input for species that have subspecies (e.g. <code>"P. ovale"</code>) now collapses to the species-rank record instead of incorrectly matching a more-prevalent organism; explicit subspecies queries (e.g. <code>"P. ovale curtisi"</code>) are preserved (<a href="https://github.com/msberends/AMR/issues/288" class="external-link">#288</a>)</li>
 </ul></li>
 <li>
 <code>get_author_year()</code> in the microorganism reproduction script now strips <code>emend.</code> and everything after it, so <code>ref</code> reflects the combination authority rather than the emendation author (e.g. <em>Rhodococcus equi</em> now returns “Goodfellow et al., 1977” instead of “Nouioui et al., 2018”)</li>
@@ -102,7 +103,7 @@
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="updated-3-0-1-9079">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9079"></a></h4>
+<h4 id="updated-3-0-1-9080">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9080"></a></h4>
 <ul><li>
 <code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>: new <code>property_for_each</code> argument for sub-grouping within top <em>n</em> groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed <code>property = NULL</code> not being accepted; inner filter now tracks original row indices to prevent cross-group contamination</li>
 <li>Taxonomic update for all microorganisms, now updated to June 2026</li>

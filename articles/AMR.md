@@ -196,11 +196,6 @@ mo_uncertainties()
 #> (0.571), and Enterobacter cloacae dissolvens (0.565)
 #> -------------------------------------------------------------------------------
 #> "K. pneumoniae" -> Klebsiella pneumoniae (B_KLBSL_PNMN, 0.786)
-#> Also matched: Klebsiella pneumoniae complex (0.707), Klebsiella pneumoniae
-#> ozaenae (0.707), Klebsiella pneumoniae pneumoniae (0.688), Klebsiella
-#> pneumoniae rhinoscleromatis (0.658), Klebsiella pasteurii (0.500), Klebsiella
-#> planticola (0.500), Kosakonia pseudosacchari (0.471), Kaistella palustris
-#> (0.435), Kingella potus (0.435), and Kocuria palustris (0.435)
 #> -------------------------------------------------------------------------------
 #> "S. aureus" -> Staphylococcus aureus (B_STPHY_AURS, 0.690)
 #> Also matched: Staphylococcus aureus aureus (0.643), Staphylococcus argenteus
