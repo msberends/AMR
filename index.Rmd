@@ -20,7 +20,7 @@ AMR:::reset_all_thrown_messages()
 # The `AMR` Package for R <a href="https://amr-for-r.org/"><img src="./logo.svg" align="right" height="139" /></a>
 
 * Provides an **all-in-one solution** for antimicrobial resistance (AMR) data analysis in a One Health approach
-* **Peer-reviewed**, used in over 175 countries, cites over 100 times, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
+* **Peer-reviewed**, used in over 175 countries, cited over 100 times, available in `r length(AMR:::LANGUAGES_SUPPORTED)` languages
 * Generates **antibiograms** - WISCA for empiric coverage estimates, or traditional/syndromic for AMR surveillance
 * Provides the **full microbiological taxonomy** of `r AMR:::format_included_data_number(AMR::microorganisms)` distinct species and extensive info of `r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial drugs
 * Applies **CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`** and **EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`** clinical and veterinary breakpoints, and ECOFFs, for MIC and disk zone interpretation
@@ -41,9 +41,7 @@ AMR:::reset_all_thrown_messages()
 
 ## Introduction
 
-The `AMR` package is a peer-reviewed, [free and open-source](#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of [many different researchers](./authors.html) from around the globe to make this a successful and durable project!
-
-This work was published in the Journal of Statistical Software (Volume 104(3); [DOI 10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and formed the basis of two PhD theses ([DOI 10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and [DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
+The `AMR` package is a peer-reviewed, [free and open-source](#copyright) R package with [zero dependencies](https://en.wikipedia.org/wiki/Dependency_hell) to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. **Our aim is to provide a standard** for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of [many different researchers](./authors.html) from around the globe to make this a successful and durable project! The `AMR` package was already cited [over 100 times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC) in scientific research.
 
 After installing this package, R knows [**`r AMR:::format_included_data_number(AMR::microorganisms)` distinct microbial species**](./reference/microorganisms.html) (updated `r format(AMR:::TAXONOMY_VERSION$GBIF$accessed_date, "%B %Y")`) and all [**`r AMR:::format_included_data_number(NROW(AMR::antimicrobials) + NROW(AMR::antivirals))` antimicrobial and antiviral drugs**](./reference/antimicrobials.html) by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("CLSI", guideline))$guideline)))` and EUCAST `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, grepl("EUCAST", guideline))$guideline)))` are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). **It was designed to work in any setting, including those with very limited resources**. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the [University of Groningen](https://www.rug.nl) and the [University Medical Center Groningen](https://www.umcg.nl).
 
@@ -60,8 +58,6 @@ lang_txt <- AMR:::vector_and(paste(img, langs), sort = FALSE, quotes = FALSE)
 ```
 
 With the help of contributors from all corners of the world, the `AMR` package is available in `r lang_txt`. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.
-
-The `AMR` package was cited [over 100 times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC) in scientific research.
 
 ## Practical examples
 

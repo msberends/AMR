@@ -5,7 +5,7 @@
 
 - Provides an **all-in-one solution** for antimicrobial resistance (AMR)
   data analysis in a One Health approach
-- **Peer-reviewed**, used in over 175 countries, cites over 100 times,
+- **Peer-reviewed**, used in over 175 countries, cited over 100 times,
   available in 28 languages
 - Generates **antibiograms** - WISCA for empiric coverage estimates, or
   traditional/syndromic for AMR surveillance
@@ -51,14 +51,10 @@ and reproducible AMR data analysis, that can therefore empower
 epidemiological analyses to continuously enable surveillance and
 treatment evaluation in any setting. We are a team of [many different
 researchers](./authors.html) from around the globe to make this a
-successful and durable project!
-
-This work was published in the Journal of Statistical Software (Volume
-104(3); [DOI
-10.18637/jss.v104.i03](https://doi.org/10.18637/jss.v104.i03)) and
-formed the basis of two PhD theses ([DOI
-10.33612/diss.177417131](https://doi.org/10.33612/diss.177417131) and
-[DOI 10.33612/diss.192486375](https://doi.org/10.33612/diss.192486375)).
+successful and durable project! The `AMR` package was already cited
+[over 100
+times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC)
+in scientific research.
 
 After installing this package, R knows [**~97 000 distinct microbial
 species**](./reference/microorganisms.html) (updated mei 2026) and all
@@ -143,10 +139,6 @@ Urdu, and
 <img src="lang_vi.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;">
 Vietnamese. Antimicrobial drug (group) names and colloquial
 microorganism names are provided in these languages.
-
-The `AMR` package was cited [over 100
-times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC)
-in scientific research.
 
 ## Practical examples
 
@@ -233,7 +225,7 @@ wisca(example_isolates,
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:------------------------|:-------------------------------------|:-------------------------------------|
-| 69.9% (64.9-75.3%)      | 93.6% (92.1-95%)                     | 89.9% (87-92.4%)                     |
+| 70.1% (65.1-75.4%)      | 93.6% (92.1-95%)                     | 89.8% (87.3-92.4%)                   |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
@@ -248,9 +240,9 @@ wisca(example_isolates,
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:----------------|:------------------------|:-------------------------------------|:-------------------------------------|
-| Clinical        | 74.5% (68.6-80.5%)      | 93.7% (91.7-95.1%)                   | 90.4% (87.1-93.1%)                   |
-| ICU             | 57% (48.6-65.6%)        | 86.7% (83.3-89.9%)                   | 83% (78.1-87.5%)                     |
-| Outpatient      | 57.4% (46-69.1%)        | 76.7% (70.5-82.7%)                   | 67.7% (57.3-77.4%)                   |
+| Clinical        | 74.4% (68.2-79.9%)      | 93.6% (91.9-95.1%)                   | 90.4% (86.9-93.3%)                   |
+| ICU             | 57% (48.6-65.9%)        | 86.8% (83.4-89.8%)                   | 82.9% (77.5-87.1%)                   |
+| Outpatient      | 57.5% (45.9-69.3%)      | 76.6% (70.6-82.3%)                   | 67.9% (57.6-77.2%)                   |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:
