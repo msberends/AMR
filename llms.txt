@@ -2,8 +2,8 @@
 
 - Provides an **all-in-one solution** for antimicrobial resistance (AMR)
   data analysis in a One Health approach
-- **Peer-reviewed**, used in over 175 countries, available in 28
-  languages
+- **Peer-reviewed**, used in over 175 countries, cites over 100 times,
+  available in 28 languages
 - Generates **antibiograms** - WISCA for empiric coverage estimates, or
   traditional/syndromic for AMR surveillance
 - Provides the **full microbiological taxonomy** of ~97 000 distinct
@@ -88,6 +88,10 @@ Swahili, ![](lang_sv.svg) Swedish, ![](lang_tr.svg) Turkish,
 ![](lang_uk.svg) Ukrainian, ![](lang_ur.svg) Urdu, and ![](lang_vi.svg)
 Vietnamese. Antimicrobial drug (group) names and colloquial
 microorganism names are provided in these languages.
+
+The `AMR` package was cited [over 100
+times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC)
+in scientific research.
 
 ## Practical examples
 
@@ -183,7 +187,7 @@ wisca(example_isolates,
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|
-| 70% (64.7-75.2%) | 93.6% (92.2-95.1%) | 89.8% (87-92.5%) |
+| 69.9% (64.9-75.3%) | 93.6% (92.1-95%) | 89.9% (87-92.4%) |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
@@ -199,9 +203,9 @@ wisca(example_isolates,
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|:---|
-| Clinical | 74.6% (68.6-80.6%) | 93.7% (92.1-95.1%) | 90.4% (87-93.1%) |
-| ICU | 57% (48.6-65.7%) | 86.8% (83.6-89.8%) | 82.9% (78.1-87.3%) |
-| Outpatient | 56.9% (45.9-68.2%) | 76.7% (70.6-82.3%) | 68% (57.6-77.2%) |
+| Clinical | 74.5% (68.6-80.5%) | 93.7% (91.7-95.1%) | 90.4% (87.1-93.1%) |
+| ICU | 57% (48.6-65.6%) | 86.7% (83.3-89.9%) | 83% (78.1-87.5%) |
+| Outpatient | 57.4% (46-69.1%) | 76.7% (70.5-82.7%) | 67.7% (57.3-77.4%) |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:
@@ -310,11 +314,6 @@ example_isolates %>%
   summarise(across(c(GEN, TOB),
                    list(total_R = resistance,
                         conf_int = function(x) sir_confidence_interval(x, collapse = "-"))))
-#> ℹ `resistance()` assumes the EUCAST guideline and thus
-#>   considers the 'I' category susceptible. Set the `guideline`
-#>   argument or the `AMR_guideline` option to either "CLSI" or
-#>   "EUCAST", see `?AMR-options`.
-#> ℹ This message will be shown once per session.
 #> # A tibble: 3 × 5
 #>   ward       GEN_total_R GEN_conf_int TOB_total_R TOB_conf_int
 #>   <chr>            <dbl> <chr>              <dbl> <chr>       
