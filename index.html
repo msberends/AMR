@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9082</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9083</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@
 <ul>
 <li>Provides an <strong>all-in-one solution</strong> for antimicrobial resistance (AMR) data analysis in a One Health approach</li>
 <li>
-<strong>Peer-reviewed</strong>, used in over 175 countries, cites over 100 times, available in 28 languages</li>
+<strong>Peer-reviewed</strong>, used in over 175 countries, cited over 100 times, available in 28 languages</li>
 <li>Generates <strong>antibiograms</strong> - WISCA for empiric coverage estimates, or traditional/syndromic for AMR surveillance</li>
 <li>Provides the <strong>full microbiological taxonomy</strong> of ~97 000 distinct species and extensive info of ~620 antimicrobial drugs</li>
 <li>Applies <strong>CLSI 2011-2026</strong> and <strong>EUCAST 2011-2026</strong> clinical and veterinary breakpoints, and ECOFFs, for MIC and disk zone interpretation</li>
@@ -111,8 +111,7 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <code>AMR</code> package is a peer-reviewed, <a href="#copyright">free and open-source</a> R package with <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">zero dependencies</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of <a href="./authors.html">many different researchers</a> from around the globe to make this a successful and durable project!</p>
-<p>This work was published in the Journal of Statistical Software (Volume 104(3); <a href="https://doi.org/10.18637/jss.v104.i03" class="external-link">DOI 10.18637/jss.v104.i03</a>) and formed the basis of two PhD theses (<a href="https://doi.org/10.33612/diss.177417131" class="external-link">DOI 10.33612/diss.177417131</a> and <a href="https://doi.org/10.33612/diss.192486375" class="external-link">DOI 10.33612/diss.192486375</a>).</p>
+<p>The <code>AMR</code> package is a peer-reviewed, <a href="#copyright">free and open-source</a> R package with <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">zero dependencies</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods. <strong>Our aim is to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of <a href="./authors.html">many different researchers</a> from around the globe to make this a successful and durable project! The <code>AMR</code> package was already cited <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC" class="external-link">over 100 times</a> in scientific research.</p>
 <p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~97 000 distinct microbial species</strong></a> (updated mei 2026) and all <a href="./reference/antimicrobials.html"><strong>~620 antimicrobial and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a> and the <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
 <div class="section level3">
 <h3 id="used-in-over-175-countries-available-in-28-languages">Used in over 175 countries, available in 28 languages<a class="anchor" aria-label="anchor" href="#used-in-over-175-countries-available-in-28-languages"></a>
@@ -120,7 +119,6 @@
 <p><a href="./countries_large.png" target="_blank"><img src="./countries.png" align="right" style="max-width: 300px;"></a></p>
 <p>Since its first public release in early 2018, this R package has been used in almost all countries in the world. Click the map to enlarge and to see the country names.</p>
 <p>With the help of contributors from all corners of the world, the <code>AMR</code> package is available in <img src="lang_en.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> English, <img src="lang_ar.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Arabic, <img src="lang_bn.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Bengali, <img src="lang_zh.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Chinese, <img src="lang_cs.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Czech, <img src="lang_da.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Danish, <img src="lang_nl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Dutch, <img src="lang_fi.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Finnish, <img src="lang_fr.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> French, <img src="lang_de.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> German, <img src="lang_el.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Greek, <img src="lang_hi.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Hindi, <img src="lang_id.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Indonesian, <img src="lang_it.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Italian, <img src="lang_ja.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Japanese, <img src="lang_ko.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Korean, <img src="lang_no.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Norwegian, <img src="lang_pl.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Polish, <img src="lang_pt.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Portuguese, <img src="lang_ro.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Romanian, <img src="lang_ru.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Russian, <img src="lang_es.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Spanish, <img src="lang_sw.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Swahili, <img src="lang_sv.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Swedish, <img src="lang_tr.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Turkish, <img src="lang_uk.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Ukrainian, <img src="lang_ur.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Urdu, and <img src="lang_vi.svg" style="height: 13px !important; border: 1px solid #cccccc; vertical-align: initial !important;"> Vietnamese. Antimicrobial drug (group) names and colloquial microorganism names are provided in these languages.</p>
-<p>The <code>AMR</code> package was cited <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC" class="external-link">over 100 times</a> in scientific research.</p>
 </div>
 </div>
 <div class="section level2">
@@ -192,9 +190,9 @@
 <th align="left">Piperacillin/tazobactam + Tobramycin</th>
 </tr></thead>
 <tbody><tr>
-<td align="left">69.9% (64.9-75.3%)</td>
+<td align="left">70.1% (65.1-75.4%)</td>
 <td align="left">93.6% (92.1-95%)</td>
-<td align="left">89.9% (87-92.4%)</td>
+<td align="left">89.8% (87.3-92.4%)</td>
 </tr></tbody>
 </table>
 <p>WISCA supports stratification by any clinical variable, so you can generate syndrome-specific or ward-specific coverage estimates:</p>
@@ -220,21 +218,21 @@
 <tbody>
 <tr>
 <td align="left">Clinical</td>
-<td align="left">74.5% (68.6-80.5%)</td>
-<td align="left">93.7% (91.7-95.1%)</td>
-<td align="left">90.4% (87.1-93.1%)</td>
+<td align="left">74.4% (68.2-79.9%)</td>
+<td align="left">93.6% (91.9-95.1%)</td>
+<td align="left">90.4% (86.9-93.3%)</td>
 </tr>
 <tr>
 <td align="left">ICU</td>
-<td align="left">57% (48.6-65.6%)</td>
-<td align="left">86.7% (83.3-89.9%)</td>
-<td align="left">83% (78.1-87.5%)</td>
+<td align="left">57% (48.6-65.9%)</td>
+<td align="left">86.8% (83.4-89.8%)</td>
+<td align="left">82.9% (77.5-87.1%)</td>
 </tr>
 <tr>
 <td align="left">Outpatient</td>
-<td align="left">57.4% (46-69.1%)</td>
-<td align="left">76.7% (70.5-82.7%)</td>
-<td align="left">67.7% (57.3-77.4%)</td>
+<td align="left">57.5% (45.9-69.3%)</td>
+<td align="left">76.6% (70.6-82.3%)</td>
+<td align="left">67.9% (57.6-77.2%)</td>
 </tr>
 </tbody>
 </table>
