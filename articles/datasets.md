@@ -100,7 +100,7 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 27 June 2026 12:31:58 UTC. Find more info about
+It was last updated on 9 July 2026 15:14:59 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 45 555 rows and 14 columns, containing the following
+A data set with 45 735 rows and 14 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, and
@@ -156,7 +156,7 @@ column names:
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
+It was last updated on 9 July 2026 15:14:59 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -164,7 +164,7 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.rds)
-  (92 kB)  
+  (93 kB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.txt)
   (4.2 MB)  
@@ -176,7 +176,7 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
   (2 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.parquet)
-  (0.1 MB)  
+  (0.2 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav)
   (7.5 MB)  

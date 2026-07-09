@@ -280,31 +280,12 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
   testing.** *Clin Microbiol Infect.* 2013;19(2):141-60;
   [doi:10.1111/j.1469-0691.2011.03703.x](https://doi.org/10.1111/j.1469-0691.2011.03703.x)
 
-- EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes
-  Tables. Version 3.1, 2016.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/Expert_rules_intrinsic_exceptional_V3.1.pdf)
-
-- EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.2, 2020.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2020/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.2_20200225.pdf)
-
-- EUCAST Intrinsic Resistance and Unusual Phenotypes. Version 3.3, 2021.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Expert_Rules/2021/Intrinsic_Resistance_and_Unusual_Phenotypes_Tables_v3.3_20211018.pdf)
+- EUCAST Expected Phenotypes.
+  [(link)](https://www.eucast.org/bacteria/important-additional-information/expected-phenotypes/)
 
 - EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters. Version 9.0, 2019.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_9.0_Breakpoint_Tables.xlsx)
-
-- EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters. Version 10.0, 2020.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_10.0_Breakpoint_Tables.xlsx)
-
-- EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters. Version 11.0, 2021.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_11.0_Breakpoint_Tables.xlsx)
-
-- EUCAST Breakpoint tables for interpretation of MICs and zone
-  diameters. Version 12.0, 2022.
-  [(link)](https://www.eucast.org/fileadmin/src/media/PDFs/EUCAST_files/Breakpoint_tables/v_12.0_Breakpoint_Tables.xlsx)
+  diameters.
+  [(link)](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/)
 
 ## Examples
 

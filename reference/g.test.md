@@ -93,9 +93,8 @@ A list with class `"htest"` containing the following components:
 - stdres:
 
   standardized residuals, `(observed - expected) / sqrt(V)`, where `V`
-  is the residual cell variance ([Agresti
-  2007](#reference+chisq.test.Rd+R+3AAgresti+3A2007), section 2.4.5) for
-  the case where `x` is a matrix, `n * p * (1 - p)` otherwise).
+  is the residual cell variance (Agresti, 2007, section 2.4.5 for the
+  case where `x` is a matrix, `n * p * (1 - p)` otherwise).
 
 ## Details
 
