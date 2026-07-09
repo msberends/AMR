@@ -90,7 +90,7 @@ EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	NOR	S	CIP, LVX, MFX
 EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	
 EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	ERY	I	AZM, CLR, RXT	I	
 EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	
-EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	TCY	S	DOX, MNO	S	
+EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	TCY-S	S	DOX, MNO	S	
 EUCAST	Breakpoints	10	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	S	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	S	
 EUCAST	Breakpoints	10	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	I	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	I	
 EUCAST	Breakpoints	10	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	R	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	R	
@@ -199,7 +199,7 @@ EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	NOR	S	CIP, LVX, MFX
 EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	
 EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	ERY	I	AZM, CLR, RXT	I	
 EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	
-EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	TCY	S	DOX, MNO	S	
+EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	TCY-S	S	DOX, MNO	S	
 EUCAST	Breakpoints	11	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	S	CTX, CRO	I	
 EUCAST	Breakpoints	11	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	S	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	S	
 EUCAST	Breakpoints	11	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	I	aminopenicillins, ureidopenicillins, cephalosporins_except_CAZ, carbapenems, FLC, AMC	I	
@@ -260,7 +260,7 @@ EUCAST	Breakpoints	12	Enterococcus	genus	is	Enterococcus	AMP	R	AMP, SAM, AMX, AM
 EUCAST	Breakpoints	12	Enterococcus	genus	is	Enterococcus	NOR-S	S	CIP, LVX	S	
 EUCAST	Breakpoints	12	Enterococcus	genus	is	Enterococcus	NOR-S	I	CIP, LVX	I	
 EUCAST	Breakpoints	12	Enterococcus	genus	is	Enterococcus	NOR-S	R	CIP, LVX	R	
-EUCAST	Breakpoints	12	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("H. influenzae"))]), "IMR", "MEV"); sort(x[x %in% betalactams()])
+EUCAST	Breakpoints	12	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, PEN, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("H. influenzae"))])); sort(x[x %in% penicillins()]) |> toString()
 EUCAST	Breakpoints	12	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S, BLA-S	R, R	AMP, AMX, PIP	R	
 EUCAST	Breakpoints	12	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	
 EUCAST	Breakpoints	12	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	
@@ -331,6 +331,9 @@ EUCAST	Breakpoints	12	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-
 EUCAST	Breakpoints	12	Staphylococcus	genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	
 EUCAST	Breakpoints	12	Staphylococcus	genus	is	Staphylococcus	TCY-S	S	DOX, MNO	S	
 EUCAST	Breakpoints	12	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	S	CTX, CRO	I	
+EUCAST	Breakpoints	12	Staphylococcus	genus	is	Staphylococcus	TCY-S	R	DOX, MNO	R	
+EUCAST	Breakpoints	12	Staphylococcus	genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	
+EUCAST	Breakpoints	12	Staphylococcus	genus	is	Staphylococcus	NOR-S	R	CIP, MFX, LVX	R	
 EUCAST	Breakpoints	12	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	S	penicillins	S	
 EUCAST	Breakpoints	12	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	I	penicillins	I	
 EUCAST	Breakpoints	12	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	R	penicillins	R	
@@ -351,8 +354,8 @@ EUCAST	Breakpoints	12	Streptococcus groups A, B, C, G	genus_species	one_of	Strep
 EUCAST	Breakpoints	12	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	12	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	S	DOX, MNO	S	
 EUCAST	Breakpoints	12	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	R	DOX, MNO	R	
-EUCAST	Breakpoints	12	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV"))
-EUCAST	Breakpoints	12	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV"))
+EUCAST	Breakpoints	12	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
+EUCAST	Breakpoints	12	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
 EUCAST	Breakpoints	12	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	CEC	I	
 EUCAST	Breakpoints	12	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	CEC	I	
 EUCAST	Breakpoints	12	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	R	PEN, PHN	R	from flowchart: when OXA < 20 or PEN > 0.06
@@ -381,7 +384,6 @@ EUCAST	Breakpoints	12	Viridans group streptococci	genus_species	one_of	Viridans 
 EUCAST	Breakpoints	12	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	S	AMX, AMC, SAM, PIP, TZP	S	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
 EUCAST	Breakpoints	12	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	I	AMX, AMC, SAM, PIP, TZP	I	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
 EUCAST	Breakpoints	12	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	R	AMX, AMC, SAM, PIP, TZP	R	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
-EUCAST	Breakpoints	13	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	S	CTX, CRO	I	
 EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
 EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
 EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
@@ -391,19 +393,19 @@ EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus
 EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
 EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
 EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
-EUCAST	Breakpoints	14	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & mo_genus(clinical_breakpoints$mo) == "Prevotella")]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()])
+EUCAST	Breakpoints	14	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & mo_genus(clinical_breakpoints$mo) == "Prevotella" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus	is	Prevotella	AMP	R	AMX	R	
-EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("Fusobacterium necrophorum"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()])
+EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("Fusibacterium necrophorum") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	S	AMX	S	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	I	AMX	I	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	R	AMX	R	
-EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("Fusobacterium necrophorum"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()])
+EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("Clostridium perfringens") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	S	AMX	S	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	I	AMX	I	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	R	AMX	R	
-EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, CRO, CTX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM", "TZP", "CTX", "CRO"); sort(x[x %in% betalactams()])
+EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, CRO, CTX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	S	AMX	S	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	I	AMX	I	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	R	AMX	R	
@@ -451,7 +453,7 @@ EUCAST	Breakpoints	14	Enterococcus	genus	is	Enterococcus	AMP	R	AMP, SAM, AMX, AM
 EUCAST	Breakpoints	14	Enterococcus	genus	is	Enterococcus	NOR-S	S	CIP, LVX	S	
 EUCAST	Breakpoints	14	Enterococcus	genus	is	Enterococcus	NOR-S	I	CIP, LVX	I	
 EUCAST	Breakpoints	14	Enterococcus	genus	is	Enterococcus	NOR-S	R	CIP, LVX	R	
-EUCAST	Breakpoints	14	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, CEC, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("H. influenzae"))]), "IMR", "MEV"); sort(x[x %in% betalactams()]) |> sort() |> toString()
+EUCAST	Breakpoints	14	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("Haemophilus influenzae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% penicillins()] |> sort() |> toString()
 EUCAST	Breakpoints	14	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S, BLA-S	R, R	AMP, AMX, PIP	R	
 EUCAST	Breakpoints	14	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	
 EUCAST	Breakpoints	14	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	
@@ -521,8 +523,11 @@ EUCAST	Breakpoints	14	Staphylococcus	genus_species	is	Staphylococcus coagulase-n
 EUCAST	Breakpoints	14	Staphylococcus	genus_species	is	Staphylococcus aureus	VAN	S	DAL, ORI	S	
 EUCAST	Breakpoints	14	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S, VAN	R, S	TLV	S	MRSA isolates are in this file safely denoted as FOX resistant
 EUCAST	Breakpoints	14	Staphylococcus	genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	
-EUCAST	Breakpoints	14	Staphylococcus	genus	is	Staphylococcus	TCY-S	S	DOX, MNO	S	
+EUCAST	Breakpoints	14	Staphylococcus	genus	is	Staphylococcus	TCY	S	DOX, MNO	S	
 EUCAST	Breakpoints	14	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	S	CTX, CRO	I	
+EUCAST	Breakpoints	14	Staphylococcus	genus	is	Staphylococcus	TCY	R	DOX, MNO	R	
+EUCAST	Breakpoints	14	Staphylococcus	genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	
+EUCAST	Breakpoints	14	Staphylococcus	genus	is	Staphylococcus	NOR-S	R	CIP, MFX, LVX	R	
 EUCAST	Breakpoints	14	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	S	penicillins	S	
 EUCAST	Breakpoints	14	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	I	penicillins	I	
 EUCAST	Breakpoints	14	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	R	penicillins	R	
@@ -543,8 +548,8 @@ EUCAST	Breakpoints	14	Streptococcus groups A, B, C, G	genus_species	one_of	Strep
 EUCAST	Breakpoints	14	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	14	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	S	DOX, MNO	S	
 EUCAST	Breakpoints	14	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	R	DOX, MNO	R	
-EUCAST	Breakpoints	14	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(c("SAM", "PIP", "TZP", "PHN", "IMR", "MEV", clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$mo == as.mo("S. pneumoniae"))])); x[x %in% betalactams()] |> sort() |> toString() AND REMOVE CEC
-EUCAST	Breakpoints	14	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(c("SAM", "PIP", "TZP", "PHN", "IMR", "MEV", clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$mo == as.mo("S. pneumoniae"))])); x[x %in% betalactams()] |> sort() |> toString() AND REMOVE CEC
+EUCAST	Breakpoints	14	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
+EUCAST	Breakpoints	14	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
 EUCAST	Breakpoints	14	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	CEC	I	
 EUCAST	Breakpoints	14	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	CEC	I	
 EUCAST	Breakpoints	14	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	R	PEN, PHN	R	from flowchart: when OXA < 20 or PEN > 0.06
@@ -582,19 +587,19 @@ EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus
 EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
 EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
 EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
-EUCAST	Breakpoints	15	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & mo_genus(clinical_breakpoints$mo) == "Prevotella")]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	15	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & mo_genus(clinical_breakpoints$mo) == "Prevotella" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus	is	Prevotella	AMP	R	AMX	R	
-EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("Fusobacterium necrophorum"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("Fusibacterium necrophorum") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	S	AMX	S	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	I	AMX	I	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	R	AMX	R	
-EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("Clostridium perfringens"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("Clostridium perfringens") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	S	AMX	S	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	I	AMX	I	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	R	AMX	R	
-EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, CRO, CTX, ETP, IPM, MEM, PEN, PIP, SAM, TZP, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM", "TZP", "CTX", "CRO"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, CRO, CTX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	S	AMX	S	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	I	AMX	I	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	R	AMX	R	
@@ -643,7 +648,7 @@ EUCAST	Breakpoints	15	Enterococcus	genus	is	Enterococcus	AMP	R	AMX, AMC	R
 EUCAST	Breakpoints	15	Enterococcus	genus	is	Enterococcus	NOR-S	S	CIP, LVX	S	
 EUCAST	Breakpoints	15	Enterococcus	genus	is	Enterococcus	NOR-S	I	CIP, LVX	I	
 EUCAST	Breakpoints	15	Enterococcus	genus	is	Enterococcus	NOR-S	R	CIP, LVX	R	
-EUCAST	Breakpoints	15	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, CAZ, CEC, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TEM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("H. influenzae"))]), "IMR", "MEV"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	15	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("Haemophilus influenzae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% penicillins()] |> sort() |> toString()
 EUCAST	Breakpoints	15	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S, BLA-S	R, R	AMP, AMX, PIP	R	
 EUCAST	Breakpoints	15	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	
 EUCAST	Breakpoints	15	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	
@@ -708,9 +713,12 @@ EUCAST	Breakpoints	15	Staphylococcus	genus_species	one_of	Staphylococcus pseudin
 EUCAST	Breakpoints	15	Staphylococcus	genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	R	carbapenems	R	Not explicitly mentioned in guidelines in this section, but previous section about these 3 species do mention OXA as preferred method
 EUCAST	Breakpoints	15	Staphylococcus	genus	is	Staphylococcus	NOR-S	S	MFX	S	
 EUCAST	Breakpoints	15	Staphylococcus	genus	is	Staphylococcus	NOR-S	S	CIP, LVX	I	
+EUCAST	Breakpoints	15	Staphylococcus	genus	is	Staphylococcus	NOR-S	R	CIP, MFX, LVX	R	
 EUCAST	Breakpoints	15	Staphylococcus	genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	
-EUCAST	Breakpoints	15	Staphylococcus	genus	is	Staphylococcus	TCY-S	S	DOX, MNO	S	
+EUCAST	Breakpoints	15	Staphylococcus	genus	is	Staphylococcus	TCY	S	DOX, MNO	S	
 EUCAST	Breakpoints	15	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	S	CTX, CRO	I	
+EUCAST	Breakpoints	15	Staphylococcus	genus	is	Staphylococcus	TCY	R	DOX, MNO	R	
+EUCAST	Breakpoints	15	Staphylococcus	genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	15	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	S	penicillins	S	
 EUCAST	Breakpoints	15	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	I	penicillins	I	
 EUCAST	Breakpoints	15	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	R	penicillins	R	
@@ -731,8 +739,8 @@ EUCAST	Breakpoints	15	Streptococcus groups A, B, C, G	genus_species	one_of	Strep
 EUCAST	Breakpoints	15	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	15	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	S	DOX, MNO	S	
 EUCAST	Breakpoints	15	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	R	DOX, MNO	R	
-EUCAST	Breakpoints	15	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, BPR, CFM, CPD, CPT, CRO, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PHN, PIP, PIP, SAM, TZP, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
-EUCAST	Breakpoints	15	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, BPR, CFM, CPD, CPT, CRO, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PHN, PIP, PIP, SAM, TZP, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
+EUCAST	Breakpoints	15	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, FPE, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV", "FPE")) |> toString()
+EUCAST	Breakpoints	15	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, FPE, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV", "FPE")) |> toString()
 EUCAST	Breakpoints	15	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	CEC	I	
 EUCAST	Breakpoints	15	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	CEC	I	
 EUCAST	Breakpoints	15	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	R	PEN, PHN	R	from flowchart: when OXA < 20 or PEN > 0.06
@@ -770,19 +778,19 @@ EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus
 EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
 EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
 EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
-EUCAST	Breakpoints	16	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & mo_genus(clinical_breakpoints$mo) == "Prevotella")]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	16	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & mo_genus(clinical_breakpoints$mo) == "Prevotella" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus	is	Prevotella	AMP	R	AMX	R	
-EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & clinical_breakpoints$mo == as.mo("Fusobacterium necrophorum"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()])
+EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Fusibacterium necrophorum") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	S	AMX	S	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	I	AMX	I	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	R	AMX	R	
-EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Clostridium perfringens"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Clostridium perfringens") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	S	AMX	S	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	I	AMX	I	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	R	AMX	R	
-EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, CRO, CTX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	S	AMX	S	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	I	AMX	I	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	R	AMX	R	
@@ -831,7 +839,7 @@ EUCAST	Breakpoints	16	Enterococcus	genus	is	Enterococcus	AMP	R	AMX, AMC	R
 EUCAST	Breakpoints	16	Enterococcus	genus	is	Enterococcus	NOR-S	S	CIP, LVX	S	
 EUCAST	Breakpoints	16	Enterococcus	genus	is	Enterococcus	NOR-S	I	CIP, LVX	I	
 EUCAST	Breakpoints	16	Enterococcus	genus	is	Enterococcus	NOR-S	R	CIP, LVX	R	
-EUCAST	Breakpoints	16	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, CAZ, CEC, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TEM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("H. influenzae"))]), "IMR", "MEV"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	16	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Haemophilus influenzae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% penicillins()] |> sort() |> toString()
 EUCAST	Breakpoints	16	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S, BLA-S	R, R	AMP, AMX, PIP	R	
 EUCAST	Breakpoints	16	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	
 EUCAST	Breakpoints	16	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	
@@ -897,9 +905,12 @@ EUCAST	Breakpoints	16	Staphylococcus	genus_species	one_of	Staphylococcus pseudin
 EUCAST	Breakpoints	16	Staphylococcus	genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	I	carbapenems	I	Not explicitly mentioned in guidelines in this section, but previous section about these 3 species do mention OXA as preferred method
 EUCAST	Breakpoints	16	Staphylococcus	genus_species	one_of	Staphylococcus pseudintermedius, Staphylococcus schleiferi, Staphylococcus coagulans	OXA-S	R	carbapenems	R	Not explicitly mentioned in guidelines in this section, but previous section about these 3 species do mention OXA as preferred method
 EUCAST	Breakpoints	16	Staphylococcus	genus	is	Staphylococcus	NOR-S	S	MFX	S	
+EUCAST	Breakpoints	16	Staphylococcus	genus	is	Staphylococcus	NOR-S	R	CIP, MFX, LVX	R	
 EUCAST	Breakpoints	16	Staphylococcus	genus	is	Staphylococcus	NOR-S	S	CIP, LVX	I	
 EUCAST	Breakpoints	16	Staphylococcus	genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	
-EUCAST	Breakpoints	16	Staphylococcus	genus	is	Staphylococcus	TCY-S	S	DOX, MNO	S	
+EUCAST	Breakpoints	16	Staphylococcus	genus	is	Staphylococcus	TCY	S	DOX, MNO	S	
+EUCAST	Breakpoints	16	Staphylococcus	genus	is	Staphylococcus	TCY	R	DOX, MNO	R	
+EUCAST	Breakpoints	16	Staphylococcus	genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	16	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	S	penicillins	S	
 EUCAST	Breakpoints	16	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	I	penicillins	I	
 EUCAST	Breakpoints	16	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	R	penicillins	R	
@@ -920,8 +931,8 @@ EUCAST	Breakpoints	16	Streptococcus groups A, B, C, G	genus_species	one_of	Strep
 EUCAST	Breakpoints	16	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	16	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	S	DOX, MNO	S	
 EUCAST	Breakpoints	16	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	R	DOX, MNO	R	
-EUCAST	Breakpoints	16	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, BPR, CFM, CPD, CPT, CRO, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PHN, PIP, PIP, SAM, TZP, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
-EUCAST	Breakpoints	16	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, BPR, CFM, CPD, CPT, CRO, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PHN, PIP, PIP, SAM, TZP, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
+EUCAST	Breakpoints	16	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, FPE, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV", "FPE")) |> toString()
+EUCAST	Breakpoints	16	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, FPE, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV", "FPE")) |> toString()
 EUCAST	Breakpoints	16	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	CEC	I	
 EUCAST	Breakpoints	16	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	CEC	I	
 EUCAST	Breakpoints	16	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	R	PEN, PHN	R	from flowchart: when OXA < 20 or PEN > 0.06
@@ -959,19 +970,19 @@ EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococc
 EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
 EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
 EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
-EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & mo_genus(clinical_breakpoints$mo) == "Prevotella")]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & mo_genus(clinical_breakpoints$mo) == "Prevotella" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus	is	Prevotella	AMP	R	AMX	R	
-EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Fusobacterium necrophorum"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("Fusibacterium necrophorum") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	S	AMX	S	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	I	AMX	I	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	R	AMX	R	
-EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Clostridium perfringensm"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("Clostridium perfringens") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	S	AMX	S	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	I	AMX	I	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	R	AMX	R	
-EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, CRO, CTX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM", "TZP", "CTX", "CRO"); sort(x[x %in% betalactams()]) |> toString()
+EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, CRO, CTX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	S	AMX	S	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	I	AMX	I	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	R	AMX	R	
@@ -1015,7 +1026,7 @@ EUCAST	Breakpoints	13.1	Enterococcus	genus	is	Enterococcus	AMP	R	AMP, SAM, AMX, 
 EUCAST	Breakpoints	13.1	Enterococcus	genus	is	Enterococcus	NOR-S	S	CIP, LVX	S	
 EUCAST	Breakpoints	13.1	Enterococcus	genus	is	Enterococcus	NOR-S	I	CIP, LVX	I	
 EUCAST	Breakpoints	13.1	Enterococcus	genus	is	Enterococcus	NOR-S	R	CIP, LVX	R	
-EUCAST	Breakpoints	13.1	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, CFM, CPD, CPT, CRO, CTB, CTX, CXM, CZT, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("H. influenzae"))]), "IMR", "MEV"); sort(x[x %in% betalactams()])
+EUCAST	Breakpoints	13.1	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S	S	AMC, AMP, AMX, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("Haemophilus influenzae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% penicillins()] |> sort() |> toString()
 EUCAST	Breakpoints	13.1	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	PEN-S, BLA-S	R, R	AMP, AMX, PIP	R	
 EUCAST	Breakpoints	13.1	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	S	SAM	S	
 EUCAST	Breakpoints	13.1	Haemophilus influenzae	genus_species	is	Haemophilus influenzae	AMC	I	SAM	I	
@@ -1084,7 +1095,10 @@ EUCAST	Breakpoints	13.1	Staphylococcus	genus	is	Staphylococcus	NOR-S	S	CIP, LVX	
 EUCAST	Breakpoints	13.1	Staphylococcus	genus_species	is	Staphylococcus aureus	VAN	S	DAL, ORI	S	
 EUCAST	Breakpoints	13.1	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S, VAN	R, S	TLV	S	MRSA isolates are in this file safely denoted as FOX resistant
 EUCAST	Breakpoints	13.1	Staphylococcus	genus	is	Staphylococcus	ERY	S	AZM, CLR, RXT	S	
-EUCAST	Breakpoints	13.1	Staphylococcus	genus	is	Staphylococcus	TCY-S	S	DOX, MNO	S	
+EUCAST	Breakpoints	13.1	Staphylococcus	genus	is	Staphylococcus	TCY	S	DOX, MNO	S	
+EUCAST	Breakpoints	13.1	Staphylococcus	genus	is	Staphylococcus	TCY	R	DOX, MNO	R	
+EUCAST	Breakpoints	13.1	Staphylococcus	genus	is	Staphylococcus	ERY	R	AZM, CLR, RXT	R	
+EUCAST	Breakpoints	13.1	Staphylococcus	genus	is	Staphylococcus	NOR-S	R	CIP, MFX, LVX	R	
 EUCAST	Breakpoints	13.1	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	S	penicillins	S	
 EUCAST	Breakpoints	13.1	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	I	penicillins	I	
 EUCAST	Breakpoints	13.1	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group C, Streptococcus Group G	PEN	R	penicillins	R	
@@ -1105,8 +1119,8 @@ EUCAST	Breakpoints	13.1	Streptococcus groups A, B, C, G	genus_species	one_of	Str
 EUCAST	Breakpoints	13.1	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	13.1	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	S	DOX, MNO	S	
 EUCAST	Breakpoints	13.1	Streptococcus groups A, B, C, G	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	TCY-S	R	DOX, MNO	R	
-EUCAST	Breakpoints	13.1	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV"))
-EUCAST	Breakpoints	13.1	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, OXA, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2022" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV"))
+EUCAST	Breakpoints	13.1	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
+EUCAST	Breakpoints	13.1	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	AMC, AMP, AMX, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IMR, IPM, MEM, MEV, PEN, PHN, PIP, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$ab != as.ab("cefaclor"))]); sort(c(x[x %in% betalactams()], "SAM", "PIP", "TZP", "PHN", "IMR", "MEV")) |> toString()
 EUCAST	Breakpoints	13.1	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	S	CEC	I	
 EUCAST	Breakpoints	13.1	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	PEN	S	CEC	I	
 EUCAST	Breakpoints	13.1	Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA-S	R	PEN, PHN	R	from flowchart: when OXA < 20 or PEN > 0.06
@@ -1135,25 +1149,6 @@ EUCAST	Breakpoints	13.1	Viridans group streptococci	genus_species	one_of	Viridan
 EUCAST	Breakpoints	13.1	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	S	AMX, AMC, SAM, PIP, TZP	S	will be expanded in eucast_rules()
 EUCAST	Breakpoints	13.1	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	I	AMX, AMC, SAM, PIP, TZP	I	will be expanded in eucast_rules()
 EUCAST	Breakpoints	13.1	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	R	AMX, AMC, SAM, PIP, TZP	R	will be expanded in eucast_rules()
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & mo_genus(clinical_breakpoints$mo) == "Prevotella")]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()])
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus	is	Prevotella	AMP	R	AMX	R	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("Fusobacterium necrophorum"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()])
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	S	AMX	S	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	I	AMX	I	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Fusobacterium necrophorum	AMP	R	AMX	R	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Clostridium perfringens	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("Fusobacterium necrophorum"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM"); sort(x[x %in% betalactams()])
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	S	AMX	S	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	I	AMX	I	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Clostridium perfringens	AMP	R	AMX	R	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	PEN	S	AMC, AMP, AMX, CRO, CTX, ETP, IPM, MEM, PEN, PIP, SAM, TZP	S	x <- c(unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & clinical_breakpoints$mo == as.mo("Cutibacterium acnes"))]), "AMP", "SAM", "AMX", "AMC", "PIP", "ETP", "IPM", "TZP", "CTX", "CRO"); sort(x[x %in% betalactams()])
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	S	AMX	S	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	I	AMX	I	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	AMP	R	AMX	R	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	CTX	S	CRO	S	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	CTX	I	CRO	I	
-EUCAST	Breakpoints	13.0	Anaerobic bacteria	genus_species	is	Cutibacterium acnes	CTX	R	CRO	R	
 EUCAST	Breakpoints		Corynebacterium diphtheriae/ulcerans	genus_species	one_of	Corynebacterium diphtheriae, Corynebacterium ulcerans	PEN	I	AMX	S	
 EUCAST	Breakpoints		Corynebacterium diphtheriae/ulcerans	genus_species	one_of	Corynebacterium diphtheriae, Corynebacterium ulcerans	PEN	R	AMX	R	
 EUCAST	Breakpoints		Corynebacterium diphtheriae/ulcerans	genus_species	one_of	Corynebacterium diphtheriae, Corynebacterium ulcerans	PEN	S	CTX	S	
@@ -1455,13 +1450,7 @@ EUCAST	Expert Rules	3.3	Expert Rules on Staphylococcus	genus	is	Staphylococcus	M
 EUCAST	Expert Rules	3.3	Expert Rules on Staphylococcus	genus	is	Staphylococcus	TCY	S	DOX, MNO, TGC	S	
 EUCAST	Expert Rules	3.3	Expert Rules on Staphylococcus	genus	is	Staphylococcus	TCY	R	DOX, MNO	R	
 EUCAST	Expert Rules	3.3	Expert Rules on Staphylococcus	genus	is	Staphylococcus	LNZ	S	TZD	S	
-EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	S	aminopenicillins, cephalosporins, carbapenems	S	
-EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Viridans Group Streptococcus (VGS)	PEN	S	aminopenicillins, CTX, CRO	S	Weird that this rules in in the Strep A/B/C/G document, while it's not in the Strep viridans document - document title itself it for "S. species"
-EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Viridans Group Streptococcus (VGS)	PEN	R	aminopenicillins, CTX, CRO	R	Weird that this rules in in the Strep A/B/C/G document, while it's not in the Strep viridans document - document title itself it for "S. species"
-EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	S	LVX	I	
-EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	S	MFX	S	
-EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	R	LVX, MFX	R	
-EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA	S	AMC, AMP, AMX, CEC, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IPM, MEM, PEN	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)) & clinical_breakpoints$mo == as.mo("S. pneumoniae"))]); x[x %in% betalactams()] |> toString()
+EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	OXA	S	AMC, AMP, AMX, CEC, CPD, CPT, CRO, CTX, CXM, DOR, ETP, FEP, IPM, MEM, PEN	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & clinical_breakpoints$mo == as.mo("S. pneumoniae") & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); sort(c(x[x %in% betalactams()])) |> toString()
 EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	NOR	S	LVX	I	
 EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	NOR	S	MFX	S	
 EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	ERY, CLI	S, S	macrolides, lincosamides	S	
@@ -1470,6 +1459,12 @@ EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	i
 EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	MFX	R	fluoroquinolones	R	
 EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	TCY	S	DOX, MNO	S	
 EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus pneumoniae	genus_species	is	Streptococcus pneumoniae	TCY	R	DOX, MNO	R	
+EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	PEN	S	aminopenicillins, cephalosporins, carbapenems	S	
+EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Viridans Group Streptococcus (VGS)	PEN	S	aminopenicillins, CTX, CRO	S	Weird that this rules in in the Strep A/B/C/G document, while it's not in the Strep viridans document - document title itself it for "S. species"
+EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Viridans Group Streptococcus (VGS)	PEN	R	aminopenicillins, CTX, CRO	R	Weird that this rules in in the Strep A/B/C/G document, while it's not in the Strep viridans document - document title itself it for "S. species"
+EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	S	LVX	I	
+EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	S	MFX	S	
+EUCAST	Expert Rules	3.3	Expert Rules on Streptococcus species	genus_species	one_of	Streptococcus Group A, Streptococcus Group B, Streptococcus Group C, Streptococcus Group G	NOR	R	LVX, MFX	R	
 EUCAST	Expert Rules	3.3	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	order	is	Enterobacterales			PEN, glycopeptides_except_lipo, lipoglycopeptides, FUS, macrolides, lincosamides, streptogramins, RIF, oxazolidinones	R	
 EUCAST	Expert Rules	3.3	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	fullname	like	^Citrobacter (koseri|amalonaticus|sedlakii|farmeri|rodentium)			aminopenicillins, TIC	R	
 EUCAST	Expert Rules	3.3	Table 1: Intrinsic resistance in Enterobacterales and Aeromonas spp.	fullname	like	^Citrobacter (freundii|braakii|murliniae|werkmanii|youngae)			aminopenicillins, AMC, SAM, CZO, CEP, LEX, CFR, FOX	R	

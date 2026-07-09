@@ -503,6 +503,72 @@ dim(breakpoints_new)
 dim(clinical_breakpoints)
 
 
+# Correct anaerobic bacteria in EUCAST ----
+
+eucast_anaerobe_corrections <- tibble::tribble(
+  ~guideline, ~type, ~host, ~method, ~site, ~mo, ~rank_index, ~ab, ~ref_tbl, ~disk_dose, ~breakpoint_S, ~breakpoint_R, ~uti, ~is_SDD,
+  
+  # Prevotella spp.
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Prevotella"), 3, as.ab("AMP"), "Prevotella", NA,             0.5,   0.5,   FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Prevotella"), 3, as.ab("AMP"), "Prevotella", "2 mcg",        25,    25,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Prevotella"), 3, as.ab("SAM"), "Prevotella", "10/10 mcg",    33,    33,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Prevotella"), 3, as.ab("AMX"), "Prevotella", NA,             0.25,  0.25,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Prevotella"), 3, as.ab("AMC"), "Prevotella", "2/1 mcg",      24,    24,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Prevotella"), 3, as.ab("ETP"), "Prevotella", NA,             0.5,   0.5,   FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Prevotella"), 3, as.ab("ETP"), "Prevotella", "10 mcg",       29,    29,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Prevotella"), 3, as.ab("IPM"), "Prevotella", NA,             0.125, 0.125, FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Prevotella"), 3, as.ab("IPM"), "Prevotella", "10 mcg",       35,    35,    FALSE, FALSE,
+  
+  # Fusobacterium necrophorum
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("AMP"), "F. necrophorum", NA,             0.5,   0.5,   FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("AMP"), "F. necrophorum", "2 mcg",        27,    27,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("SAM"), "F. necrophorum", NA,             0.5,   0.5,   FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("SAM"), "F. necrophorum", "10/10 mcg",    33,    33,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("AMX"), "F. necrophorum", NA,             0.5,   0.5,   FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("AMC"), "F. necrophorum", NA,             0.5,   0.5,   FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("AMC"), "F. necrophorum", "2/1 mcg",      23,    23,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("ETP"), "F. necrophorum", NA,             0.06,  0.06,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("ETP"), "F. necrophorum", "10 mcg",       35,    35,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("IPM"), "F. necrophorum", NA,             0.125, 0.125, FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Fusobacterium necrophorum"), 2, as.ab("IPM"), "F. necrophorum", "10 mcg",       36,    36,    FALSE, FALSE,
+  
+  # Clostridium perfringens
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Clostridium perfringens"), 2, as.ab("AMP"), "C. perfringens", NA,             0.25,  0.25,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Clostridium perfringens"), 2, as.ab("AMP"), "C. perfringens", "2 mcg",        23,    23,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Clostridium perfringens"), 2, as.ab("SAM"), "C. perfringens", NA,             0.25,  0.25,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Clostridium perfringens"), 2, as.ab("SAM"), "C. perfringens", "10/10 mcg",    27,    27,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Clostridium perfringens"), 2, as.ab("AMX"), "C. perfringens", NA,             0.25,  0.25,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Clostridium perfringens"), 2, as.ab("AMC"), "C. perfringens", NA,             0.25,  0.25,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Clostridium perfringens"), 2, as.ab("AMC"), "C. perfringens", "2/1 mcg",      23,    23,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Clostridium perfringens"), 2, as.ab("ETP"), "C. perfringens", NA,             0.5,   0.5,   FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Clostridium perfringens"), 2, as.ab("ETP"), "C. perfringens", "10 mcg",       24,    24,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Clostridium perfringens"), 2, as.ab("IPM"), "C. perfringens", NA,             0.5,   0.5,   FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Clostridium perfringens"), 2, as.ab("IPM"), "C. perfringens", "10 mcg",       25,    25,    FALSE, FALSE,
+  
+  # Cutibacterium acnes
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Cutibacterium acnes"), 2, as.ab("AMP"), "C. acnes", NA,             0.25,  0.25,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Cutibacterium acnes"), 2, as.ab("AMP"), "C. acnes", "2 mcg",        23,    23,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Cutibacterium acnes"), 2, as.ab("SAM"), "C. acnes", "10/10 mcg",    33,    33,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Cutibacterium acnes"), 2, as.ab("AMX"), "C. acnes", NA,             0.25,  0.25,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Cutibacterium acnes"), 2, as.ab("AMC"), "C. acnes", "2/1 mcg",      24,    24,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Cutibacterium acnes"), 2, as.ab("CTX"), "C. acnes", "5 mcg",        26,    26,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Cutibacterium acnes"), 2, as.ab("CRO"), "C. acnes", NA,             0.06,  0.06,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Cutibacterium acnes"), 2, as.ab("CRO"), "C. acnes", "30 mcg",       33,    33,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Cutibacterium acnes"), 2, as.ab("ETP"), "C. acnes", NA,             0.25,  0.25,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Cutibacterium acnes"), 2, as.ab("ETP"), "C. acnes", "10 mcg",       28,    28,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Cutibacterium acnes"), 2, as.ab("IPM"), "C. acnes", NA,             0.03,  0.03,  FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Cutibacterium acnes"), 2, as.ab("IPM"), "C. acnes", "10 mcg",       39,    39,    FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "MIC",  NA, as.mo("Cutibacterium acnes"), 2, as.ab("LNZ"), "C. acnes", NA,             2,     2,     FALSE, FALSE,
+  "EUCAST 2025", "human", "human", "DISK", NA, as.mo("Cutibacterium acnes"), 2, as.ab("LNZ"), "C. acnes", "10 mcg",       34,    34,    FALSE, FALSE
+)
+
+breakpoints_new <- clinical_breakpoints |>
+  bind_rows(eucast_anaerobe_corrections) |>
+  bind_rows(eucast_anaerobe_corrections |> mutate(guideline = "EUCAST 2026")) |>
+  bind_rows(eucast_anaerobe_corrections |> mutate(guideline = "EUCAST 2023")) |>
+  bind_rows(eucast_anaerobe_corrections |> mutate(guideline = "EUCAST 2024"))
+
+
 # SAVE TO PACKAGE ----
 
 # determine rank again now that some changes were made on taxonomic level (genus -> species)
