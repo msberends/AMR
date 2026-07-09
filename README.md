@@ -32,10 +32,11 @@ The `AMR` package is a peer-reviewed, free and open-source R package
 with zero dependencies to simplify the analysis and prediction of
 Antimicrobial Resistance (AMR) and to work with microbial and
 antimicrobial data and properties, by using evidence-based methods.
-**Our aim is to provide a standard** for clean and reproducible AMR data
-analysis, that can therefore empower epidemiological analyses to
-continuously enable surveillance and treatment evaluation in any
-setting.
+
+**Our aim has always been to provide a standard** for clean and
+reproducible AMR data analysis, that can therefore empower
+epidemiological analyses to continuously enable surveillance and
+treatment evaluation in any setting.
 
 The `AMR` package supports and can read any data format, including
 WHONET data. This package works on Windows, macOS and Linux with all
