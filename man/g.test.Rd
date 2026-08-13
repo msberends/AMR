@@ -46,7 +46,7 @@ A list with class \code{"htest"} containing the following
     \code{(observed - expected) / sqrt(expected)}.}
   \item{stdres}{standardized residuals,
     \code{(observed - expected) / sqrt(V)}, where \code{V} is the
-    residual cell variance {(\if{html}{\out{<a href="#reference+chisq.test.Rd+R+3AAgresti+3A2007" class="citation">}}Agresti 2007\if{html}{\out{</a>}}, section 2.4.5)}
+    residual cell variance (Agresti, 2007, section 2.4.5
     for the case where \code{x} is a matrix, \code{n * p * (1 - p)} otherwise).}
 }
 \description{
