@@ -1,9 +1,28 @@
-# AMR 3.0.1.9086
+# AMR 3.0.1.9087
 
-Planned as v3.1.0, end of June 2026.
+Planned as v3.1.0, end of September 2026.
 
 ### Breaking Changes
 * The former *kingdoms* Bacteria and Archaea are now each divided into four kingdoms with new top-level *domains* 'Bacteria' and 'Archaea' (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new `domain` column in the `microorganisms` data set was added, and more importantly, `mo_kingdom()` now returns the formal kingdom (e.g. `"Pseudomonadati"` instead of `"Bacteria"`). Use `mo_domain()` for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), `kingdom` and `domain` are identical.
+
+  | `mo_kingdom()` < 3.1.0 | `mo_kingdom()` now  | `mo_domain()` (unchanged) |
+  |------------------------|---------------------|---------------------------|
+  | Bacteria               | Bacillati           | Bacteria                  |
+  |                        | Fusobacteriati      | Bacteria                  |
+  |                        | Pseudomonadati      | Bacteria                  |
+  |                        | Thermotogati        | Bacteria                  |
+  |                        |                     |                           |
+  | Archaea                | Methanobacteriati   | Archaea                   |
+  |                        | Nanobdellati        | Archaea                   |
+  |                        | Promethearchaeati   | Archaea                   |
+  |                        | Thermoproteati      | Archaea                   |
+  |                        |                     |                           |
+  | Fungi                  | Fungi               | Fungi                     |
+  |                        |                     |                           |
+  | Protozoa               | Protozoa            | Protozoa                  |
+  
+  Thus, `mo_domain()` was previously an alias of `mo_kingdom()`; it is now a distinct function returning the domain. Output of `mo_domain()` is therefore unchanged, while `mo_kingdom()` now returns the formal, new kingdom.
+
 * Faster parallel computing via the `future` package for `as.sir()` and `wisca()`: a non-sequential plan (e.g. `future::plan(future::multisession)`) must be active before using `parallel = TRUE`.
 
 ### New
