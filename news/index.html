@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9086</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9087</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,15 +49,63 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9086" id="amr-3019086">AMR 3.0.1.9086<a class="anchor" aria-label="anchor" href="#amr-3019086"></a></h2>
-<p>Planned as v3.1.0, end of June 2026.</p>
+<h2 class="pkg-version" data-toc-text="3.0.1.9087" id="amr-3019087">AMR 3.0.1.9087<a class="anchor" aria-label="anchor" href="#amr-3019087"></a></h2>
+<p>Planned as v3.1.0, end of September 2026.</p>
 <div class="section level4">
-<h4 id="breaking-changes-3-0-1-9086">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9086"></a></h4>
-<ul><li>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms with new top-level <em>domains</em> ‘Bacteria’ and ‘Archaea’ (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column in the <code>microorganisms</code> data set was added, and more importantly, <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g. <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</li>
-<li>Faster parallel computing via the <code>future</code> package for <code><a href="../reference/as.sir.html">as.sir()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code>: a non-sequential plan (e.g. <code>future::plan(future::multisession)</code>) must be active before using <code>parallel = TRUE</code>.</li>
+<h4 id="breaking-changes-3-0-1-9087">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9087"></a></h4>
+<ul><li>
+<p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms with new top-level <em>domains</em> ‘Bacteria’ and ‘Archaea’ (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column in the <code>microorganisms</code> data set was added, and more importantly, <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g. <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
+<table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
+<code><a href="../reference/mo_property.html">mo_kingdom()</a></code> &lt; 3.1.0</th>
+<th>
+<code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now</th>
+<th>
+<code><a href="../reference/mo_property.html">mo_domain()</a></code> (unchanged)</th>
+</tr></thead><tbody><tr><td>Bacteria</td>
+<td>Bacillati</td>
+<td>Bacteria</td>
+</tr><tr><td></td>
+<td>Fusobacteriati</td>
+<td>Bacteria</td>
+</tr><tr><td></td>
+<td>Pseudomonadati</td>
+<td>Bacteria</td>
+</tr><tr><td></td>
+<td>Thermotogati</td>
+<td>Bacteria</td>
+</tr><tr><td></td>
+<td></td>
+<td></td>
+</tr><tr><td>Archaea</td>
+<td>Methanobacteriati</td>
+<td>Archaea</td>
+</tr><tr><td></td>
+<td>Nanobdellati</td>
+<td>Archaea</td>
+</tr><tr><td></td>
+<td>Promethearchaeati</td>
+<td>Archaea</td>
+</tr><tr><td></td>
+<td>Thermoproteati</td>
+<td>Archaea</td>
+</tr><tr><td></td>
+<td></td>
+<td></td>
+</tr><tr><td>Fungi</td>
+<td>Fungi</td>
+<td>Fungi</td>
+</tr><tr><td></td>
+<td></td>
+<td></td>
+</tr><tr><td>Protozoa</td>
+<td>Protozoa</td>
+<td>Protozoa</td>
+</tr></tbody></table><p>Thus, <code><a href="../reference/mo_property.html">mo_domain()</a></code> was previously an alias of <code><a href="../reference/mo_property.html">mo_kingdom()</a></code>; it is now a distinct function returning the domain. Output of <code><a href="../reference/mo_property.html">mo_domain()</a></code> is therefore unchanged, while <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal, new kingdom.</p>
+</li>
+<li><p>Faster parallel computing via the <code>future</code> package for <code><a href="../reference/as.sir.html">as.sir()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code>: a non-sequential plan (e.g. <code>future::plan(future::multisession)</code>) must be active before using <code>parallel = TRUE</code>.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9086">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9086"></a></h4>
+<h4 id="new-3-0-1-9087">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9087"></a></h4>
 <ul><li>EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the <code>clinical_breakpoints</code> data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations</li>
 <li>Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting <code>breakpoint_type = "ECOFF"</code> in <code><a href="../reference/as.sir.html">as.sir()</a></code>; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (<a href="https://github.com/msberends/AMR/issues/254" class="external-link">#254</a>)</li>
 <li>
@@ -74,7 +122,7 @@
 <li>New <code><a href="../reference/antibiogram.html">wisca_plot()</a></code> to assess the susceptibility and incidence distributions from the Monte Carlo simulations</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixed-3-0-1-9086">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9086"></a></h4>
+<h4 id="fixed-3-0-1-9087">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9087"></a></h4>
 <ul><li>Setting <code>options(AMR_guideline = "EUCAST 2012")</code> or any year-qualified value no longer causes errors or silent wrong behaviour in <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/proportion.html">resistance()</a></code>, <code><a href="../reference/proportion.html">susceptibility()</a></code>, <code><a href="../reference/count.html">count_resistant()</a></code>, <code><a href="../reference/count.html">count_susceptible()</a></code>, and SIR plotting/printing functions (<a href="https://github.com/msberends/AMR/issues/298" class="external-link">#298</a>)</li>
 <li>
 <code><a href="../reference/as.sir.html">as.sir()</a></code>
@@ -103,7 +151,7 @@
 </li>
 </ul></div>
 <div class="section level4">
-<h4 id="updated-3-0-1-9086">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9086"></a></h4>
+<h4 id="updated-3-0-1-9087">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9087"></a></h4>
 <ul><li>
 <code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>: new <code>property_for_each</code> argument for sub-grouping within top <em>n</em> groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed <code>property = NULL</code> not being accepted; inner filter now tracks original row indices to prevent cross-group contamination</li>
 <li>Taxonomic update for all microorganisms, now updated to June 2026</li>
@@ -345,7 +393,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE" class="external-link">GNU GPL 2.0</a>. Developed at the <a target="_blank" href="https://www.rug.nl" class="external-link">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a> in The Netherlands, in collaboration with <a href="https://amr-for-r.org/authors.html">many colleagues from around the world</a>.</p>
+  <p><code>AMR</code> (for R). Free and open-source, licenced under the <a target="_blank" href="https://github.com/msberends/AMR/blob/main/LICENSE" class="external-link">GNU GPL 2.0</a>. Developed at the <a target="_blank" href="https://www.rug.nl" class="external-link">University of Groningen</a> and <a target="_blank" href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a> in the Netherlands, in collaboration with <a href="https://amr-for-r.org/authors.html">many colleagues from around the world</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

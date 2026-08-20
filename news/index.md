@@ -1,8 +1,8 @@
 # Changelog
 
-## AMR 3.0.1.9086
+## AMR 3.0.1.9087
 
-Planned as v3.1.0, end of June 2026.
+Planned as v3.1.0, end of September 2026.
 
 #### Breaking Changes
 
@@ -17,6 +17,32 @@ Planned as v3.1.0, end of June 2026.
   [`mo_domain()`](https://amr-for-r.org/reference/mo_property.md) for
   the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa,
   etc.), `kingdom` and `domain` are identical.
+
+  | [`mo_kingdom()`](https://amr-for-r.org/reference/mo_property.md) \< 3.1.0 | [`mo_kingdom()`](https://amr-for-r.org/reference/mo_property.md) now | [`mo_domain()`](https://amr-for-r.org/reference/mo_property.md) (unchanged) |
+  |----|----|----|
+  | Bacteria | Bacillati | Bacteria |
+  |  | Fusobacteriati | Bacteria |
+  |  | Pseudomonadati | Bacteria |
+  |  | Thermotogati | Bacteria |
+  |  |  |  |
+  | Archaea | Methanobacteriati | Archaea |
+  |  | Nanobdellati | Archaea |
+  |  | Promethearchaeati | Archaea |
+  |  | Thermoproteati | Archaea |
+  |  |  |  |
+  | Fungi | Fungi | Fungi |
+  |  |  |  |
+  | Protozoa | Protozoa | Protozoa |
+
+  Thus, [`mo_domain()`](https://amr-for-r.org/reference/mo_property.md)
+  was previously an alias of
+  [`mo_kingdom()`](https://amr-for-r.org/reference/mo_property.md); it
+  is now a distinct function returning the domain. Output of
+  [`mo_domain()`](https://amr-for-r.org/reference/mo_property.md) is
+  therefore unchanged, while
+  [`mo_kingdom()`](https://amr-for-r.org/reference/mo_property.md) now
+  returns the formal, new kingdom.
+
 - Faster parallel computing via the `future` package for
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) and
   [`wisca()`](https://amr-for-r.org/reference/antibiogram.md): a
