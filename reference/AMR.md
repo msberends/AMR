@@ -102,6 +102,9 @@ Useful links:
 
 Authors:
 
+- Matthijs S. Berends <m.s.berends@umcg.nl>
+  ([ORCID](https://orcid.org/0000-0001-7620-1800))
+
 - Dennis Souverein ([ORCID](https://orcid.org/0000-0003-0455-0336))
   \[contributor\]
 

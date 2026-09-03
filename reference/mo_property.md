@@ -400,9 +400,9 @@ genus and the full species, such as `"E. coli"`, for species and
 subspecies. Exceptions are abbreviations of staphylococci (such as
 *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic
 streptococci (such as *"GBS"*, Group B Streptococci). Please bear in
-mind that e.g. *E. coli* could mean *Escherichia coli* (kingdom of
-Bacteria) as well as *Entamoeba coli* (kingdom of Protozoa). Returning
-to the full name will be done using
+mind that e.g. *E. coli* could mean *Escherichia coli* (domain of
+Bacteria) as well as *Entamoeba coli* (domain of Protozoa). Returning to
+the full name will be done using
 [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) internally, giving
 priority to bacteria and human pathogens, i.e. `"E. coli"` will always
 be considered *Escherichia coli*. As a result,
@@ -426,7 +426,7 @@ function returns a
 *Pathogenic*, *Potentially pathogenic*, *Non-pathogenic*, and *Unknown*.
 
 Determination of the Gram stain (`mo_gramstain()` is based on the
-taxonomic kingdom and phylum. Originally, Cavalier-Smith defined the
+taxonomic domain and phylum. Originally, Cavalier-Smith defined the
 so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID
 11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only
 considered these phyla as Posibacteria: Actinobacteria, Chloroflexi,
@@ -443,7 +443,7 @@ is `UNKNOWN`), thus always return `FALSE` for species outside the
 taxonomic kingdom of Bacteria.
 
 Determination of yeasts (`mo_is_yeast()`) is based on the taxonomic
-kingdom and class. *Budding yeasts* are yeasts that reproduce asexually
+domain and class. *Budding yeasts* are yeasts that reproduce asexually
 through a process called budding, where a new cell develops from a small
 protrusion on the parent cell. Taxonomically, these are members of the
 phylum Ascomycota, class Saccharomycetes (also called Hemiascomycetes)
@@ -468,7 +468,7 @@ Determination of both bacterial oxygen tolerance
 on BacDive, see *Source*. The function `mo_is_anaerobic()` only returns
 `TRUE` if the oxygen tolerance is `"anaerobe"`, indicating an obligate
 anaerobic species or genus. It always returns `FALSE` for species
-outside the taxonomic kingdom of Bacteria.
+outside the taxonomic domain of Bacteria.
 
 The function `mo_url()` will return the direct URL to the online
 database entry, which also shows the scientific reference of the

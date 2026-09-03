@@ -249,15 +249,15 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
 
 ## `intrinsic_resistant`: Intrinsic Bacterial Resistance
 
-A data set with 294 079 rows and 2 columns, containing the following
+A data set with 294 079 rows and 3 columns, containing the following
 column names:  
-*mo* and *ab*.
+*mo*, *ab*, and *version*.
 
 This data set is in R available as `intrinsic_resistant`, after you load
 the `AMR` package.
 
-It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
-the contents, (scientific) source, and structure of this [data set
+It was last updated on 3 September 2026 10:14:25 UTC. Find more info
+about the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/intrinsic_resistant.html).
 
 **Direct download links:**

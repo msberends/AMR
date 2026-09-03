@@ -14,10 +14,6 @@ NA_disk_
 is.disk(x)
 ```
 
-## Format
-
-An object of class `disk` (inherits from `integer`) of length 1.
-
 ## Arguments
 
 - x:

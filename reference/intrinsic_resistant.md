@@ -15,7 +15,7 @@ intrinsic_resistant
 ## Format
 
 A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 294
-079 observations and 2 variables:
+079 observations and 3 variables:
 
 - `mo`  
   Microorganism ID which occurs in
@@ -29,12 +29,15 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 294
   Names can be retrieved using
   [`ab_name()`](https://amr-for-r.org/reference/ab_property.md).
 
+- `version`  
+  Guideline name and version.
+
 ## Details
 
-This data set is currently based on ['EUCAST Expected Resistant
+This data set is currently strictly follows ['EUCAST Expected Resistant
 Phenotypes'
 v1.2](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
-(2023).
+(2023). The
 
 This data set is internally used by:
 
@@ -68,18 +71,18 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 intrinsic_resistant
-#> # A tibble: 294,079 × 2
-#>    mo          ab  
-#>    <mo>        <ab>
-#>  1 B_GRAMP     ATM 
-#>  2 B_GRAMP     COL 
-#>  3 B_GRAMP     NAL 
-#>  4 B_GRAMP     PLB 
-#>  5 B_GRAMP     TEM 
-#>  6 B_ANAER-POS ATM 
-#>  7 B_ANAER-POS COL 
-#>  8 B_ANAER-POS NAL 
-#>  9 B_ANAER-POS PLB 
-#> 10 B_ANAER-POS TEM 
+#> # A tibble: 294,079 × 3
+#>    mo          ab   version                                    
+#>    <mo>        <ab> <chr>                                      
+#>  1 B_GRAMP     ATM  'EUCAST Expected Resistant Phenotypes' v1.2
+#>  2 B_GRAMP     COL  'EUCAST Expected Resistant Phenotypes' v1.2
+#>  3 B_GRAMP     NAL  'EUCAST Expected Resistant Phenotypes' v1.2
+#>  4 B_GRAMP     PLB  'EUCAST Expected Resistant Phenotypes' v1.2
+#>  5 B_GRAMP     TEM  'EUCAST Expected Resistant Phenotypes' v1.2
+#>  6 B_ANAER-POS ATM  'EUCAST Expected Resistant Phenotypes' v1.2
+#>  7 B_ANAER-POS COL  'EUCAST Expected Resistant Phenotypes' v1.2
+#>  8 B_ANAER-POS NAL  'EUCAST Expected Resistant Phenotypes' v1.2
+#>  9 B_ANAER-POS PLB  'EUCAST Expected Resistant Phenotypes' v1.2
+#> 10 B_ANAER-POS TEM  'EUCAST Expected Resistant Phenotypes' v1.2
 #> # ℹ 294,069 more rows
 ```
