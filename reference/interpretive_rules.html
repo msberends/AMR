@@ -9,7 +9,7 @@ To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9088</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9089</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,11 +135,11 @@ To improve the interpretation of the antibiogram before CLSI/EUCAST interpretive
 
 
 <dt id="arg-version-expertrules">version_expertrules<a class="anchor" aria-label="anchor" href="#arg-version-expertrules"></a></dt>
-<dd><p>The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be <code>"3.3"</code>, <code>"3.2"</code>, or <code>"3.1"</code>.</p></dd>
+<dd><p>The version number to use for the EUCAST Expert Rules and Intrinsic Resistance guideline. Can be <code>"3.3"</code>.</p></dd>
 
 
 <dt id="arg-ampc-cephalosporin-resistance">ampc_cephalosporin_resistance<a class="anchor" aria-label="anchor" href="#arg-ampc-cephalosporin-resistance"></a></dt>
-<dd><p>(only applies when <code>rules</code> contains <code>"expert"</code> or <code>"all"</code>) a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is <code>NA</code>. Currently only works when <code>version_expertrules</code> is <code>3.2</code> and higher; these versions of '<em>EUCAST Expert Rules on Enterobacterales</em>' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of <code>NA</code> (the default) for this argument will remove results for these three drugs, while e.g. a value of <code>"R"</code> will make the results for these drugs resistant. Use <code>NULL</code> or <code>FALSE</code> to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using <code>TRUE</code> is equal to using <code>"R"</code>. <br> For <em>EUCAST Expert Rules</em> v3.2, this rule applies to: <em>Citrobacter braakii</em>, <em>Citrobacter freundii</em>, <em>Citrobacter gillenii</em>, <em>Citrobacter murliniae</em>, <em>Citrobacter rodenticum</em>, <em>Citrobacter sedlakii</em>, <em>Citrobacter werkmanii</em>, <em>Citrobacter youngae</em>, <em>Enterobacter</em>, <em>Hafnia alvei</em>, <em>Klebsiella aerogenes</em>, <em>Morganella morganii</em>, <em>Providencia</em>, and <em>Serratia</em>.</p></dd>
+<dd><p>(only applies when <code>rules</code> contains <code>"expert"</code> or <code>"all"</code>) a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> value that should be applied to cefotaxime, ceftriaxone and ceftazidime for AmpC de-repressed cephalosporin-resistant mutants - the default is <code>NA</code>. Currently only works when <code>version_expertrules</code> is <code>3.2</code> and higher; these versions of '<em>EUCAST Expert Rules on Enterobacterales</em>' state that results of cefotaxime, ceftriaxone and ceftazidime should be reported with a note, or results should be suppressed (emptied) for these three drugs. A value of <code>NA</code> (the default) for this argument will remove results for these three drugs, while e.g. a value of <code>"R"</code> will make the results for these drugs resistant. Use <code>NULL</code> or <code>FALSE</code> to not alter results for these three drugs of AmpC de-repressed cephalosporin-resistant mutants. Using <code>TRUE</code> is equal to using <code>"R"</code>. <br> For <em>EUCAST Expert Rules</em> v3.2, this rule applies to: <em>Citrobacter braakii</em>, <em>Citrobacter freundii</em>, <em>Citrobacter gillenii</em>, <em>Citrobacter murliniae</em>, <em>Citrobacter rodenticum</em>, <em>Citrobacter sedlakii</em>, <em>Citrobacter werkmanii</em>, <em>Citrobacter youngae</em>, <em>Enterobacter</em>, <em>Hafnia alvei</em>, and <em>Klebsiella aerogenes</em>.</p></dd>
 
 
 <dt id="arg-only-sir-columns">only_sir_columns<a class="anchor" aria-label="anchor" href="#arg-only-sir-columns"></a></dt>

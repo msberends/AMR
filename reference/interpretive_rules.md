@@ -118,7 +118,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
 - version_expertrules:
 
   The version number to use for the EUCAST Expert Rules and Intrinsic
-  Resistance guideline. Can be `"3.3"`, `"3.2"`, or `"3.1"`.
+  Resistance guideline. Can be `"3.3"`.
 
 - ampc_cephalosporin_resistance:
 
@@ -140,8 +140,7 @@ eucast_dosage(ab, administration = "iv", version_breakpoints = 15)
   braakii*, *Citrobacter freundii*, *Citrobacter gillenii*, *Citrobacter
   murliniae*, *Citrobacter rodenticum*, *Citrobacter sedlakii*,
   *Citrobacter werkmanii*, *Citrobacter youngae*, *Enterobacter*,
-  *Hafnia alvei*, *Klebsiella aerogenes*, *Morganella morganii*,
-  *Providencia*, and *Serratia*.
+  *Hafnia alvei*, and *Klebsiella aerogenes*.
 
 - only_sir_columns:
 
