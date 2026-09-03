@@ -79,18 +79,6 @@ EUCAST_VERSION_EXPERT_RULES <- list(
     year = 2021,
     title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
     url = "https://www.eucast.org/bacteria/important-additional-information/expert-rules/"
-  ),
-  "3.2" = list(
-    version_txt = "v3.2",
-    year = 2020,
-    title = "'EUCAST Expert Rules' and 'EUCAST Intrinsic Resistance and Unusual Phenotypes'",
-    url = "https://www.eucast.org/bacteria/important-additional-information/expert-rules/"
-  ),
-  "3.1" = list(
-    version_txt = "v3.1",
-    year = 2016,
-    title = "'EUCAST Expert Rules, Intrinsic Resistance and Exceptional Phenotypes'",
-    url = "https://www.eucast.org/bacteria/important-additional-information/expert-rules/"
   )
 )
 EUCAST_VERSION_EXPECTED_PHENOTYPES <- list(
