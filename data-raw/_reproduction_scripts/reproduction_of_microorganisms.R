@@ -2361,6 +2361,7 @@ mo_family <- mo_family %>%
 # construct code part for genus - keep old code where available and generate new ones where needed
 mo_genus <- taxonomy %>%
   filter(rank == "genus") %>%
+  arrange(status, fullname) %>% # sort on accepted < synonym < unknown, added 2026-09-03
   distinct(domain, genus) %>%
   # get available old MO codes
   left_join(
@@ -2427,6 +2428,7 @@ mo_genus <- mo_genus %>%
 # same for species - keep old where available and create new per domain-genus where needed:
 mo_species <- taxonomy %>%
   filter(rank == "species") %>%
+  arrange(status, fullname) %>% # sort on accepted < synonym < unknown, added 2026-09-03
   distinct(domain, genus, species) %>%
   left_join(
     existing_mo_tbl %>%
@@ -2488,6 +2490,7 @@ mo_species <- mo_species %>%
 # same for subspecies - keep old where available and create new per domain-genus-species where needed:
 mo_subspecies <- taxonomy %>%
   filter(rank == "subspecies") %>%
+  arrange(status, fullname) %>% # sort on accepted < synonym < unknown, added 2026-09-03
   distinct(domain, genus, species, subspecies) %>%
   left_join(
     existing_mo_tbl %>%

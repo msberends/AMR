@@ -11,16 +11,16 @@ amr_course(github_repo, branch = "main", ...)
 
 \item{branch}{A character string specifying the branch to download. Defaults to \code{"main"}.}
 
-\item{...}{Additional arguments passed on to \code{\link[usethis:zip-utils]{usethis::use_course()}}.}
+\item{...}{Additional arguments passed on to \code{\link[usethis:use_course]{usethis::use_course()}}.}
 }
 \value{
-Called for its side effect. \code{\link[usethis:zip-utils]{usethis::use_course()}} will prompt the user to choose a destination and open the extracted project. Returns invisibly whatever \code{\link[usethis:zip-utils]{usethis::use_course()}} returns.
+Called for its side effect. \code{\link[usethis:use_course]{usethis::use_course()}} will prompt the user to choose a destination and open the extracted project. Returns invisibly whatever \code{\link[usethis:use_course]{usethis::use_course()}} returns.
 }
 \description{
-Downloads and unpacks a GitHub repository containing course materials, using \code{\link[usethis:zip-utils]{usethis::use_course()}}. This is a convenience wrapper intended for use in educational settings, such as workshops or tutorials associated with the AMR package.
+Downloads and unpacks a GitHub repository containing course materials, using \code{\link[usethis:use_course]{usethis::use_course()}}. This is a convenience wrapper intended for use in educational settings, such as workshops or tutorials associated with the AMR package.
 }
 \details{
-This function constructs a ZIP archive URL from the provided \code{github_repo} and \code{branch}, then delegates to \code{\link[usethis:zip-utils]{usethis::use_course()}} to handle the download and extraction.
+This function constructs a ZIP archive URL from the provided \code{github_repo} and \code{branch}, then delegates to \code{\link[usethis:use_course]{usethis::use_course()}} to handle the download and extraction.
 
 The function is designed for interactive use in course or workshop settings and is not intended for use in non-interactive or automated pipelines.
 }
@@ -32,5 +32,5 @@ amr_course("https://github.com/my_user_name/our_AMR_course")
 }
 }
 \seealso{
-\code{\link[usethis:zip-utils]{usethis::use_course()}}
+\code{\link[usethis:use_course]{usethis::use_course()}}
 }

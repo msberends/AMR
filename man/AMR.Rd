@@ -59,6 +59,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Matthijs S. Berends \email{m.s.berends@umcg.nl} (\href{https://orcid.org/0000-0001-7620-1800}{ORCID})
   \item Dennis Souverein (\href{https://orcid.org/0000-0003-0455-0336}{ORCID}) [contributor]
   \item Erwin E. A. Hassing [contributor]
 }

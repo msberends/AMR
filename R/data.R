@@ -313,12 +313,12 @@
 #'
 #' ### Imported From WHONET
 #' Some breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
-#' 
+#'
 #' From WHONET, imported were:
-#' 
+#'
 #' * All CLSI breakpoints, including ECOFF
 #' * EUCAST breakpoints between  `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and 2018
-#' 
+#'
 #' EUCAST breakpoints from 2019 onwards, were retrieved directly from <https://www.eucast.org>.
 #'
 #' Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R>.
@@ -340,8 +340,9 @@
 #' @format A [tibble][tibble::tibble] with `r format(nrow(intrinsic_resistant), big.mark = " ")` observations and `r ncol(intrinsic_resistant)` variables:
 #' - `mo`\cr Microorganism ID which occurs in [`microorganisms$mo`][microorganisms]. Names can be retrieved using [mo_name()].
 #' - `ab`\cr Antimicrobial ID which occurs in [`antimicrobials$ab`][antimicrobials]. Names can be retrieved using [ab_name()].
+#' - `version`\cr Guideline name and version.
 #' @details
-#' This data set is currently based on `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`.
+#' This data set is currently strictly follows `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`. The
 #'
 #' This data set is internally used by:
 #' * [not_intrinsic_resistant()] (an [antimicrobial selector][antimicrobial_selectors])

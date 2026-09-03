@@ -61,6 +61,9 @@ all(int_resis3$ab %in% antimicrobials$ab)
 
 intrinsic_resistant <- int_resis3
 
+intrinsic_resistant$version <- paste(EUCAST_VERSION_EXPECTED_PHENOTYPES$`1.2`$title,
+                                     EUCAST_VERSION_EXPECTED_PHENOTYPES$`1.2`$version_txt)
+
 usethis::use_data(intrinsic_resistant, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")
 rm(intrinsic_resistant)
 

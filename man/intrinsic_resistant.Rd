@@ -5,10 +5,11 @@
 \alias{intrinsic_resistant}
 \title{Data Set Denoting Bacterial Intrinsic Resistance}
 \format{
-A \link[tibble:tibble]{tibble} with 294 079 observations and 2 variables:
+A \link[tibble:tibble]{tibble} with 294 079 observations and 3 variables:
 \itemize{
 \item \code{mo}\cr Microorganism ID which occurs in \code{\link[=microorganisms]{microorganisms$mo}}. Names can be retrieved using \code{\link[=mo_name]{mo_name()}}.
 \item \code{ab}\cr Antimicrobial ID which occurs in \code{\link[=antimicrobials]{antimicrobials$ab}}. Names can be retrieved using \code{\link[=ab_name]{ab_name()}}.
+\item \code{version}\cr Guideline name and version.
 }
 }
 \usage{
@@ -18,7 +19,7 @@ intrinsic_resistant
 Data set containing 'EUCAST Expected Resistant Phenotypes' of \emph{all} bug-drug combinations between the \link{microorganisms} and \link{antimicrobials} data sets.
 }
 \details{
-This data set is currently based on \href{https://www.eucast.org/bacteria/important-additional-information/expert-rules/}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023).
+This data set is currently strictly follows \href{https://www.eucast.org/bacteria/important-additional-information/expert-rules/}{'EUCAST Expected Resistant Phenotypes' v1.2} (2023). The
 
 This data set is internally used by:
 \itemize{

@@ -98,7 +98,7 @@ At default, the names of antimicrobials will be shown on the plots using \code{\
 Additional functions include:
 \itemize{
 \item \code{\link[=facet_sir]{facet_sir()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
-\item \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_y_continuous()}}.
+\item \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_y_continuous]{ggplot2::scale_y_continuous()}}.
 \item \code{\link[=scale_sir_colours]{scale_sir_colours()}} sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.
 \item \code{\link[=theme_sir]{theme_sir()}} is a \link[ggplot2:theme]{ggplot2 theme} with minimal distraction.
 \item \code{\link[=labels_sir_count]{labels_sir_count()}} print datalabels on the bars with percentage and amount of isolates using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.

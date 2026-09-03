@@ -248,7 +248,7 @@ At default, they translate the S/I/R values to an interpretative text ("Suscepti
 This package contains more functions that extend the \code{ggplot2} package, to help in visualising AMR data results. All these functions are internally used by \code{\link[=ggplot_sir]{ggplot_sir()}} too.
 \itemize{
 \item \code{\link[=facet_sir]{facet_sir()}} creates 2d plots (at default based on S/I/R) using \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.
-\item \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_continuous]{ggplot2::scale_y_continuous()}}.
+\item \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_y_continuous]{ggplot2::scale_y_continuous()}}.
 \item \code{\link[=scale_sir_colours]{scale_sir_colours()}} allows to set colours to any aesthetic, even for \code{shape} or \code{linetype}.
 \item \code{\link[=theme_sir]{theme_sir()}} is a \link[ggplot2:theme]{ggplot2 theme} with minimal distraction.
 \item \code{\link[=labels_sir_count]{labels_sir_count()}} print datalabels on the bars with percentage and number of isolates, using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.

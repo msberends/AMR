@@ -474,22 +474,26 @@ if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, sir.default)
 if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype2, sir.sir)
 if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype_abbr, disk)
 if(getRversion() >= "3.0.0") S3method(vctrs::vec_ptype_full, disk)
-importFrom(graphics,arrows)
-importFrom(graphics,axis)
-importFrom(graphics,barplot)
-importFrom(graphics,hist)
-importFrom(graphics,legend)
-importFrom(graphics,mtext)
-importFrom(graphics,plot)
-importFrom(graphics,points)
-importFrom(graphics,text)
-importFrom(stats,complete.cases)
-importFrom(stats,glm)
-importFrom(stats,lm)
-importFrom(stats,median)
-importFrom(stats,pchisq)
-importFrom(stats,prcomp)
-importFrom(stats,predict)
-importFrom(stats,qchisq)
-importFrom(stats,quantile)
-importFrom(stats,var)
+importFrom(graphics,
+  arrows,
+  axis,
+  barplot,
+  hist,
+  legend,
+  mtext,
+  plot,
+  points,
+  text
+)
+importFrom(stats,
+  complete.cases,
+  glm,
+  lm,
+  median,
+  pchisq,
+  prcomp,
+  predict,
+  qchisq,
+  quantile,
+  var
+)

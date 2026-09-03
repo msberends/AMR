@@ -19,7 +19,7 @@ Define custom interpretive rules for your organisation or specific analysis and 
 Some organisations have their own adoption of interpretive rules. This function can be used to define custom rules to be used in the \code{\link[=interpretive_rules]{interpretive_rules()}} function.
 \subsection{Basics}{
 
-If you are familiar with the \code{\link[dplyr:case-and-replace-when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:
+If you are familiar with the \code{\link[dplyr:case_when]{case_when()}} function of the \code{dplyr} package, you will recognise the input method to set your own rules. Rules must be set using what \R considers to be the 'formula notation'. The rule itself is written \emph{before} the tilde (\code{~}) and the consequence of the rule is written \emph{after} the tilde:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- custom_interpretive_rules(TZP == "S" ~ aminopenicillins == "S",
                                TZP == "R" ~ aminopenicillins == "R")

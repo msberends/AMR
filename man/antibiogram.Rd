@@ -109,7 +109,7 @@ wisca_plot(
 
 \item{ab_transform}{A character to transform antimicrobial input - must be one of the column names of the \link{antimicrobials} data set (defaults to \code{"name"}): \code{"ab"}, \code{"cid"}, \code{"name"}, \code{"group"}, \code{"atc"}, \code{"atc_group1"}, \code{"atc_group2"}, \code{"abbreviations"}, \code{"synonyms"}, \code{"oral_ddd"}, \code{"oral_units"}, \code{"iv_ddd"}, \code{"iv_units"}, or \code{"loinc"}. Can also be \code{NULL} to not transform the input.}
 
-\item{syndromic_group}{A column name of \code{x}, or values calculated to split rows of \code{x}, e.g. by using \code{\link[=ifelse]{ifelse()}} or \code{\link[dplyr:case-and-replace-when]{case_when()}}. See \emph{Examples}.}
+\item{syndromic_group}{A column name of \code{x}, or values calculated to split rows of \code{x}, e.g. by using \code{\link[=ifelse]{ifelse()}} or \code{\link[dplyr:case_when]{case_when()}}. See \emph{Examples}.}
 
 \item{only_all_tested}{(for combination antibiograms): a \link{logical} to indicate that isolates must be tested for all antimicrobials, see \emph{Details}.}
 
