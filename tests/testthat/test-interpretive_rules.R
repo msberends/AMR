@@ -108,17 +108,17 @@ test_that("test-interpretive_rules.R", {
   )
   expect_equal(suppressWarnings(interpretive_rules(a, "mo", info = FALSE)), b)
 
-  # piperacillin must be R in Enterobacteriaceae when tica is R
+  # piperacillin must be R in E. coli when ampi is R
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     expect_equal(
       suppressWarnings(
         example_isolates %>%
-          filter(mo_family(mo) == "Enterobacteriaceae") %>%
+          filter(mo_name(mo) == "Escherichia coli") %>%
           mutate(
-            TIC = as.sir("R"),
-            PIP = as.sir("S")
+            AMP = as.sir("R"),
+            PIP = as.sir(NA)
           ) %>%
-          interpretive_rules(col_mo = "mo", version_expertrules = 3.1, rules = "expert", info = FALSE, overwrite = TRUE) %>%
+          interpretive_rules(col_mo = "mo", version_expertrules = 3.3, rules = "expert", info = FALSE, overwrite = TRUE) %>%
           pull(PIP) %>%
           unique() %>%
           as.character()

@@ -972,10 +972,14 @@ meet_criteria <- function(object, # can be literally `list(...)` for `allow_argu
     if ("logical" %in% allow_class) {
       or_values <- paste0(or_values, ", or TRUE or FALSE")
     }
-    stop_ifnot(all(object %in% is_in.bak, na.rm = TRUE), "argument {.arg ", obj_name, "} ",
-      ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
-        "must be either ",
-        "must only contain values "
+    stop_ifnot(all(object %in% is_in.bak, na.rm = TRUE),
+      "argument {.arg ", obj_name, "} ",
+      ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1 && length(is_in.bak) == 1,
+        "must be ",
+        ifelse(!is.null(has_length) && length(has_length) == 1 && has_length == 1,
+          "must be either ",
+          "must only contain values "
+        )
       ),
       or_values,
       ifelse(allow_NA == TRUE, ", or NA", ""),
