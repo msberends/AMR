@@ -136,7 +136,7 @@ test_that("test-interpretive_rules.R", {
       CLR = factor("R"),
       stringsAsFactors = FALSE
     ),
-    version_expertrules = 3.1,
+    version_expertrules = 3.3,
     rules = "expert",
     overwrite = TRUE,
     only_sir_columns = FALSE
