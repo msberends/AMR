@@ -49,6 +49,13 @@ library(dplyr, warn.conflicts = FALSE)
 library(purrr)
 devtools::load_all()
 
+# Log of deliberate deviations from the literal cell contents, reported after
+# parsing so that every one of them can be reviewed
+parse_log <- new.env()
+parse_log$disk_dose_inherited <- NULL
+parse_log$mic_scope_extensions <- NULL
+parse_log$no_breakpoints_determined <- NULL
+
 # ==============================================================================
 # 1. Rich text parser
 # ==============================================================================
@@ -57,20 +64,61 @@ devtools::load_all()
 # since EUCAST uses strike-through to mark removed/superseded text within a
 # cell (most commonly within Notes blocks) that must not end up in the parsed
 # output.
-split_rich_text <- function(fmt_list) {
-  map_dfr(fmt_list, function(fmt) {
+split_rich_text <- function(fmt_list, cell_strike = rep(FALSE, length(fmt_list))) {
+  map2_dfr(fmt_list, cell_strike, function(fmt, cell_struck) {
     if (is.null(fmt) || nrow(fmt) == 0)
-      return(tibble(base_text = NA_character_, note_super = NA_character_))
-    is_struck <- !is.na(fmt$strike) & fmt$strike
+      return(tibble(is_rich = FALSE, base_text = NA_character_, note_super = NA_character_, full_text = NA_character_))
+    # A run without its own strike setting inherits the cell's font
+    is_struck <- coalesce(fmt$strike, isTRUE(cell_struck))
     fmt <- fmt[!is_struck, , drop = FALSE]
     if (nrow(fmt) == 0)
-      return(tibble(base_text = NA_character_, note_super = NA_character_))
+      return(tibble(is_rich = TRUE, base_text = NA_character_, note_super = NA_character_, full_text = NA_character_))
     is_super <- !is.na(fmt$vertAlign) & fmt$vertAlign == "superscript"
     tibble(
+      is_rich    = TRUE,
       base_text  = paste0(fmt$character[!is_super], collapse = ""),
-      note_super = paste0(fmt$character[is_super],  collapse = "")
+      note_super = paste0(fmt$character[is_super],  collapse = ""),
+      # Text including superscripts, for note bodies, where a superscript is
+      # part of the text rather than a reference, e.g. "Ca2+" or "Mg2+"
+      full_text  = paste0(fmt$character, collapse = "")
     )
   })
+}
+
+# Parses all cells of a sheet into row, col, base_text (without superscripts
+# and struck-through text), note_super (superscript note references) and
+# full_text (with superscripts, for note bodies). For rich-text cells, the
+# result of split_rich_text() is authoritative, also when it is empty because
+# the whole cell is struck through: falling back to the raw cell text there
+# would bring deleted text back. Plain (non-rich-text) cells with a struck-
+# through cell font are disregarded entirely, for the same reason.
+parse_cells <- function(cells, formats) {
+  cell_strike <- coalesce(formats$local$font$strike[cells$local_format_id], FALSE)
+  target <- cells[!cells$is_blank, , drop = FALSE]
+  target_strike <- cell_strike[!cells$is_blank]
+  rich <- split_rich_text(target$character_formatted, target_strike)
+  target |>
+    select(-any_of(c("full_text", "base_text", "note_super"))) |>
+    bind_cols(rich) |>
+    mutate(
+      plain_struck = !is_rich & target_strike,
+      base_text = case_when(
+        plain_struck                        ~ NA_character_,
+        is_rich                             ~ na_if(trimws(base_text), ""),
+        !is.na(character)                   ~ trimws(character),
+        !is.na(numeric)                     ~ as.character(numeric),
+        TRUE                                ~ NA_character_
+      ),
+      full_text = case_when(
+        plain_struck                        ~ NA_character_,
+        is_rich                             ~ na_if(trimws(full_text), ""),
+        TRUE                                ~ base_text
+      ),
+      note_super = if_else(is.na(note_super) | note_super == "",
+                           NA_character_, note_super)
+    ) |>
+    filter(!is.na(base_text) | !is.na(note_super) | !is.na(full_text)) |>
+    select(row, col, base_text, note_super, full_text)
 }
 
 # ==============================================================================
@@ -122,6 +170,7 @@ split_agent_organism <- function(cells, formats, sheet_name, valid_rows) {
     return(tibble(row = integer(0), ab_text = character(0), mo_override = character(0)))
   }
   base_bold <- formats$local$font$bold[col_a$local_format_id]
+  base_strike <- coalesce(formats$local$font$strike[col_a$local_format_id], FALSE)
   
   out <- vector("list", nrow(col_a))
   for (i in seq_len(nrow(col_a))) {
@@ -129,13 +178,16 @@ split_agent_organism <- function(cells, formats, sheet_name, valid_rows) {
     row_i <- col_a$row[i]
     
     if (is.null(fmt) || nrow(fmt) == 0) {
-      # Plain (non-rich-text) cell: nothing to split, whole text is the agent name
-      out[[i]] <- tibble(row = row_i, ab_text = col_a$character[i], mo_override = NA_character_)
+      # Plain (non-rich-text) cell: nothing to split, whole text is the agent
+      # name, unless the whole cell is struck through
+      if (!base_strike[i]) {
+        out[[i]] <- tibble(row = row_i, ab_text = col_a$character[i], mo_override = NA_character_)
+      }
       next
     }
     
     # Drop struck-through and superscript runs first, exactly as split_rich_text() does
-    is_struck <- !is.na(fmt$strike) & fmt$strike
+    is_struck <- coalesce(fmt$strike, base_strike[i])
     fmt <- fmt[!is_struck, , drop = FALSE]
     is_super <- !is.na(fmt$vertAlign) & fmt$vertAlign == "superscript"
     fmt <- fmt[!is_super, , drop = FALSE]
@@ -147,6 +199,21 @@ split_agent_organism <- function(cells, formats, sheet_name, valid_rows) {
     }
     
     bold_resolved <- ifelse(is.na(fmt$bold), base_bold[i], fmt$bold)
+
+    # An indication qualifier may also follow the organism restriction as a
+    # trailing bold parenthetical, e.g. Staphylococcus sheet v9.0/v10.0:
+    # "Ceftaroline" (bold) ", S. aureus" (not bold) "(pneumonia)" (bold),
+    # which v11.0 onwards writes as "Ceftaroline (pneumonia), S. aureus".
+    # Such a trailing bold run belongs to the agent name, not to the
+    # organism, so it is set aside here and appended to the agent name.
+    trailing_qualifier <- NA_character_
+    n <- length(bold_resolved)
+    if (n > 2 && bold_resolved[n] && !bold_resolved[n - 1] &&
+        grepl("^\\s*\\([^()]+\\)\\s*$", fmt$character[n])) {
+      trailing_qualifier <- trimws(fmt$character[n])
+      fmt <- fmt[-n, , drop = FALSE]
+      bold_resolved <- bold_resolved[-n]
+    }
     n <- length(bold_resolved)
     # Find the earliest k (k < n) such that runs (k+1):n are all non-bold
     split_at <- NA_integer_
@@ -163,7 +230,9 @@ split_agent_organism <- function(cells, formats, sheet_name, valid_rows) {
       # all-non-bold tail, which is the genuinely unexpected case.
       if (all(bold_resolved) || !any(bold_resolved)) {
         out[[i]] <- tibble(row = row_i,
-                           ab_text = paste0(fmt$character, collapse = ""),
+                           ab_text = paste(c(paste0(fmt$character, collapse = ""),
+                                             trailing_qualifier[!is.na(trailing_qualifier)]),
+                                           collapse = " "),
                            mo_override = NA_character_)
         next
       }
@@ -177,6 +246,9 @@ split_agent_organism <- function(cells, formats, sheet_name, valid_rows) {
     }
     
     ab_text <- paste0(fmt$character[seq_len(split_at)], collapse = "")
+    if (!is.na(trailing_qualifier)) {
+      ab_text <- paste(gsub(",\\s*$", "", trimws(ab_text)), trailing_qualifier)
+    }
     mo_override <- paste0(fmt$character[(split_at + 1):n], collapse = "")
     out[[i]] <- tibble(row = row_i, ab_text = ab_text, mo_override = mo_override)
   }
@@ -194,8 +266,15 @@ split_agent_organism <- function(cells, formats, sheet_name, valid_rows) {
       # other staphylococci" -- leaving a leading ", " on mo_override that
       # would otherwise reach as.mo() and fail to resolve.
       mo_override = sub("^,\\s*", "", mo_override),
-      mo_override = na_if(mo_override, "")
-    )
+      mo_override = na_if(mo_override, ""),
+      # a non-bold part that is entirely a parenthetical is an indication, not
+      # an organism, e.g. v12.0-v16.1 streptococci: "Mecillinam oral
+      # (pivmecillinam)" (bold) "(uncomplicated UTI only)" (not bold)
+      is_indication = !is.na(mo_override) & grepl("^\\([^()]+\\)$", mo_override),
+      ab_text = if_else(is_indication, paste(ab_text, mo_override), ab_text),
+      mo_override = if_else(is_indication, NA_character_, mo_override)
+    ) |>
+    select(-is_indication)
 }
 
 # ==============================================================================
@@ -214,64 +293,65 @@ parse_notes_block <- function(txt) {
       return(data.frame(pos = integer(0), key = character(0),
                         mlen = integer(0), stringsAsFactors = FALSE))
     lens <- attr(m, "match.length")
-    keys <- gsub("[.\\s]+$", "", trimws(substring(txt, m, m + lens - 1)))
+    keys <- gsub("[.\\s]+$", "", trimws(substring(txt, m, m + lens - 1)), perl = TRUE)
     data.frame(pos = as.integer(m), key = keys, mlen = as.integer(lens),
                stringsAsFactors = FALSE)
   }
   
-  # Combined key: 1/A. or 5/A.
-  r1 <- find_keys("(?:^|(?<=\\n)|(?<=\\.))\\s*\\d+/[A-Z]\\.\\s*", txt)
+  # A note key only starts at the beginning of a line or directly after the
+  # end of a sentence, since EUCAST does not always put each note on its own
+  # line (e.g. "...meropenem only. 3.The addition of..." or "...urinary
+  # tract infections only.2/A. Susceptibility to..."). A sentence end is a
+  # period followed by whitespace, or a period directly preceded by a
+  # non-digit: this keeps decimals such as "MIC <=0.5. Isolates" from being
+  # read as a key "5". Cross-references within a note, such as "See Note B."
+  # or "Notes 5/D and 7/F", are preceded by a word and therefore never match.
+  # Keys are not always followed by a space either, e.g. "2.Gentamicin can
+  # be used..." or "C.Isolates categorised...", so a directly following
+  # uppercase letter (or opening parenthesis) is accepted too.
+  key_start <- "(?:^|(?<=\\n)|(?<=\\.\\s)|(?<=[^0-9\\s]\\.))[ \\t]*"
+  # Combined key: "1/A." or "5/A."
+  r1 <- find_keys(paste0(key_start, "\\d+/[A-Z]\\.(?:\\s+|(?=[A-Z(]))"), txt)
   # Numbered with dot: "1." "2."
-  r2 <- find_keys("(?:^|(?<=\\n)|(?<=\\.))\\s*\\d+\\.\\s+", txt)
-  # Lettered: "A." followed by uppercase (not species names like "C. difficile")
-  r3 <- find_keys("(?:^|(?<=\\n)|(?<=\\.)|(?<=\\s))\\s*[A-Z]\\.\\s+(?=[A-Z])", txt)
-  # Numbered without dot (e.g. C. difficile style): digit space uppercase
-  r4 <- find_keys("(?:^|(?<=\\n))\\d+\\s+(?=[A-Z])", txt)
+  r2 <- find_keys(paste0(key_start, "\\d+\\.(?:\\s+|(?=[A-Z(]))"), txt)
+  # Lettered: "A." followed by an uppercase letter, which is not a species
+  # name such as "C. difficile"
+  r3 <- find_keys(paste0(key_start, "[A-Z]\\.(?:\\s+(?=[A-Z(])|(?=[A-Z][a-z]))"), txt)
+  # Numbered without dot at the start of a line (e.g. C. difficile sheet):
+  # digit, space, uppercase letter
+  r4 <- find_keys("(?:^|(?<=\\n))[ \\t]*\\d+[ \\t]+(?=[A-Z])", txt)
   
   all_keys <- rbind(r1, r2, r3, r4)
   if (nrow(all_keys) == 0) return(list())
-  all_keys <- all_keys[order(all_keys$pos), ]
-  
-  # Remove overlapping matches (keep longer/more specific)
+  # At the same position, keep the longest (most specific) match, e.g. "1/A."
+  # over "1.", and drop any match that starts within an earlier kept match
+  all_keys <- all_keys[order(all_keys$pos, -all_keys$mlen), ]
+  all_keys <- all_keys[!duplicated(all_keys$pos), ]
   keep <- rep(TRUE, nrow(all_keys))
   for (i in seq_len(nrow(all_keys))) {
     if (!keep[i]) next
-    for (j in seq_len(nrow(all_keys))) {
-      if (i == j || !keep[j]) next
-      if (all_keys$pos[j] >= all_keys$pos[i] &&
-          all_keys$pos[j] < all_keys$pos[i] + all_keys$mlen[i]) {
-        if (nchar(all_keys$key[i]) >= nchar(all_keys$key[j])) {
-          keep[j] <- FALSE
-        } else {
-          keep[i] <- FALSE
-        }
-      }
-    }
+    keep[seq_len(nrow(all_keys)) > i & all_keys$pos < all_keys$pos[i] + all_keys$mlen[i]] <- FALSE
   }
   all_keys <- all_keys[keep, ]
   
-  # Build note lookup, allowing multiple bodies per key
   notes <- list()
-  add_note <- function(key, body) {
-    if (is.null(notes[[key]])) {
-      notes[[key]] <<- body
-    } else if (!body %in% notes[[key]]) {
-      notes[[key]] <<- c(notes[[key]], body)
-    }
-  }
-  
   for (i in seq_len(nrow(all_keys))) {
     body_start <- all_keys$pos[i] + all_keys$mlen[i]
     body_end <- if (i < nrow(all_keys)) all_keys$pos[i + 1] - 1 else nchar(txt)
     body <- trimws(substr(txt, body_start, body_end))
     key <- all_keys$key[i]
-    
-    if (grepl("/", key)) {
-      subkeys <- unlist(strsplit(key, "/"))
-      for (sk in subkeys) add_note(sk, body)
-      add_note(key, body)
-    } else {
-      add_note(key, body)
+    # A combined key "1/A" also serves the MIC reference "1" and the disk
+    # reference "A" individually
+    for (k in unique(c(key, if (grepl("/", key)) strsplit(key, "/")[[1]]))) {
+      if (!nzchar(body)) {
+        stop("parse_notes_block(): note key '", key, "' has an empty body, which means a ",
+             "cross-reference or other text was taken for a key. Text: '", substr(txt, 1, 300), "'")
+      }
+      if (!is.null(notes[[k]]) && !identical(notes[[k]], body)) {
+        stop("parse_notes_block(): note key '", k, "' occurs more than once with different ",
+             "bodies. Text: '", substr(txt, 1, 300), "'")
+      }
+      notes[[k]] <- body
     }
   }
   notes
@@ -280,18 +360,33 @@ parse_notes_block <- function(txt) {
 # ==============================================================================
 # 3. Note resolver
 # ==============================================================================
-resolve_notes <- function(notes_list, mic_super, disk_super) {
-  nl <- notes_list
-  if (is.null(nl) || length(nl) == 0) return(NA_character_)
-  
+resolve_notes <- function(notes_list, mic_super, disk_super, abbreviations = list()) {
+  # References are normally separated by commas, but occasionally by a
+  # period or a space instead, e.g. "0.125" with superscript "3.4" (v9.0,
+  # Staphylococcus) or "1" with superscript "4.5" (v16.1, H. influenzae)
   mic_refs <- character(0)
   disk_refs <- character(0)
   if (!is.na(mic_super) && mic_super != "")
-    mic_refs <- trimws(unlist(strsplit(mic_super, ",")))
+    mic_refs <- trimws(unlist(strsplit(mic_super, "[,.[:space:]]+")))
   if (!is.na(disk_super) && disk_super != "")
-    disk_refs <- trimws(unlist(strsplit(disk_super, ",")))
+    disk_refs <- trimws(unlist(strsplit(disk_super, "[,.[:space:]]+")))
   all_refs <- unique(c(mic_refs, disk_refs))
+  all_refs <- all_refs[nzchar(all_refs)]
   if (length(all_refs) == 0) return(NA_character_)
+
+  # A reference that is not a key of the table's own notes block can be an
+  # abbreviation from the workbook's general "Notes" sheet, e.g. superscript
+  # "HE" in v9.0 ("HE = High exposure for agent (see table of dosages...)").
+  # Anything else would silently lose a note, so it is an error.
+  nl <- if (is.null(notes_list)) list() else notes_list
+  from_abbr <- setdiff(intersect(all_refs, names(abbreviations)), names(nl))
+  nl <- c(nl, abbreviations[from_abbr])
+  unresolved <- setdiff(all_refs, names(nl))
+  if (length(unresolved) > 0) {
+    stop("resolve_notes(): note reference(s) '", paste(unresolved, collapse = "', '"),
+         "' not found in the notes block (keys found: ", paste(names(notes_list), collapse = " "),
+         ") nor in the workbook abbreviations (", paste(names(abbreviations), collapse = " "), ")")
+  }
   
   # Detect combined keys (e.g. "1/A")
   combined_keys <- grep("/", names(nl), value = TRUE)
@@ -347,24 +442,49 @@ resolve_notes <- function(notes_list, mic_super, disk_super) {
 get_cell <- function(df, r, c) {
   hit <- df[df$row == r & df$col == c, ]
   if (nrow(hit) == 0) return(list(base = NA_character_, super = NA_character_))
-  list(base = hit$base_text[1], super = hit$note_super[1])
+  base <- hit$base_text[1]
+  super <- hit$note_super[1]
+  # EUCAST occasionally omits the superscript formatting of a note reference
+  # on a breakpoint value, e.g. "33A" (C. acnes, ampicillin-sulbactam disk,
+  # v16.1). Move such a trailing letter from the base text to the references.
+  m <- regmatches(base, regexec("^(\\(?[0-9.]+\\)?)([A-Z])$", base))[[1]]
+  if (length(m) == 3) {
+    base <- m[2]
+    super <- if (is.na(super) || super == "") m[3] else paste(super, m[3], sep = ",")
+  }
+  list(base = base, super = super)
 }
 
 parse_bp <- function(txt) {
   if (is.na(txt) || txt == "") return(NA_character_)
   t <- trimws(txt)
-  if (toupper(t) %in% c("NA", "-")) return(NA_character_)
-  # Parenthesised values like "(2)" are screening breakpoints. They are
-  # preserved as-is in the raw file (e.g. "(2)") so they remain
-  # distinguishable from clinical breakpoints. The cleanup section
-  # later strips the parentheses for numeric conversion and filters
-  # screening rows out of the clean clinical_breakpoints table.
+  # placeholders such as "-" (susceptibility testing not recommended), "IE"
+  # or "Note" are kept as they are: the cleanup turns them into blocking rows
+  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets"
+  # (see is_bracketed_bp()). They are preserved as-is in the raw file so
+  # they remain distinguishable from clinical breakpoints. The cleanup
+  # section later excludes them from the clinical_breakpoints table.
   t
 }
 
-is_screening_bp <- function(txt) {
+# Cells without a breakpoint hold a placeholder: "Note" (see the notes),
+# "IE" (insufficient evidence), "IP" (in preparation), "ND" (not determined,
+# Topical agents sheet), "NA" (not applicable) or "-"
+bp_placeholders <- c("NOTE", "IE", "IP", "ND", "NA", "-")
+is_bp_value <- function(txt) {
+  !is.na(txt) & nzchar(trimws(txt)) & !toupper(trimws(txt)) %in% bp_placeholders
+}
+
+is_bracketed_bp <- function(txt) {
   # A breakpoint cell value wrapped in parentheses, e.g. "(2)" or "(0.5)",
-  # is a screening breakpoint in EUCAST terminology (present since v12).
+  # is what EUCAST calls a "breakpoint in brackets" (used since v10.0): a
+  # value based on ECOFFs that distinguishes isolates without and with
+  # phenotypically detectable resistance mechanisms. EUCAST states that
+  # clinical evidence as monotherapy is usually lacking and that reporting
+  # S or I should be avoided. These are not screening breakpoints: EUCAST
+  # marks screening tests in the agent name instead, e.g. "Cefoxitin
+  # (screen only)". The definition is read per workbook by
+  # parse_workbook_notes() and added to the note of every bracketed row.
   if (is.na(txt) || txt == "") return(FALSE)
   grepl("^\\(.+\\)$", trimws(txt))
 }
@@ -434,7 +554,7 @@ detect_version <- function(cells) {
 # ==============================================================================
 # 6. Main parser: parse a single sheet
 # ==============================================================================
-parse_sheet <- function(xlsx_path, sheet_name) {
+parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
   cells <- xlsx_cells(xlsx_path, sheets = sheet_name)
   
   # --- Detect version ---
@@ -443,22 +563,37 @@ parse_sheet <- function(xlsx_path, sheet_name) {
   formats <- xlsx_formats(xlsx_path)
   
   # --- Parse rich text for cols A:I ---
-  target <- cells |> filter(col >= 1, col <= 9, !is_blank)
-  rich <- split_rich_text(target$character_formatted)
+  parsed <- parse_cells(cells |> filter(col >= 1, col <= 9), formats)
   
-  parsed <- target |>
-    bind_cols(rich) |>
-    mutate(
-      base_text = case_when(
-        !is.na(base_text) & base_text != "" ~ trimws(base_text),
-        !is.na(character)                   ~ trimws(character),
-        !is.na(numeric)                     ~ as.character(numeric),
-        TRUE                                ~ NA_character_
-      ),
-      note_super = if_else(is.na(note_super) | note_super == "",
-                           NA_character_, note_super)
-    ) |>
-    select(row, col, base_text, note_super)
+  # --- Statements extending MIC breakpoints to another species ---
+  # The H. influenzae sheet states (v9.0-v16.1): "In the absence of specific
+  # breakpoints, the H. influenzae MIC breakpoints can be applied to H.
+  # parainfluenzae." This applies to MIC breakpoints only, not to zone
+  # diameters. Such statements are logged here (with the sheet's own text)
+  # and applied in the cleanup section, see `parse_log$mic_scope_extensions`.
+  # Any other "breakpoints can be applied to <species>" statement that this
+  # pattern does not recognise stops the script, so that it is not missed.
+  sheet_text <- unique(parsed$full_text[!is.na(parsed$full_text) & parsed$col == 1])
+  scope_pattern <- "In the absence of specific breakpoints, the ([A-Z])\\. ([a-z]+) MIC ?breakpoints can be applied to ([A-Z])\\. ([a-z]+)\\."
+  for (txt in sheet_text) {
+    txt_squished <- gsub("\\s+", " ", txt)
+    m <- regmatches(txt_squished, regexec(scope_pattern, txt_squished))[[1]]
+    if (length(m) == 5) {
+      sheet_title <- trimws(get_cell(parsed, 1, 1)$base)
+      genus <- sub("\\s.*$", "", sheet_title)
+      if (substr(genus, 1, 1) != m[2] || m[2] != m[4]) {
+        stop("parse_sheet(): MIC scope statement on sheet '", sheet_name, "' does not match the sheet's genus '", genus, "': ", m[1])
+      }
+      parse_log$mic_scope_extensions <- rbind(
+        parse_log$mic_scope_extensions,
+        data.frame(guideline = ver$guideline, sheet = sheet_name,
+                   from_text = paste(genus, m[3]), to_text = paste(genus, m[5]), statement = m[1])
+      )
+    } else if (grepl("breakpoints can (also )?be applied to [A-Z]\\.", txt_squished)) {
+      stop("parse_sheet(): unrecognised statement about applying breakpoints to another species on sheet '",
+           sheet_name, "': ", substr(txt_squished, 1, 300))
+    }
+  }
   
   # --- Detect header rows (col 2 contains "MIC breakpoint") ---
   header_rows <- parsed |>
@@ -467,8 +602,34 @@ parse_sheet <- function(xlsx_path, sheet_name) {
     sort()
   
   if (length(header_rows) == 0) {
-    message("  No MIC breakpoint headers found in sheet '", sheet_name, "', skipping")
-    return(NULL)
+    # Only acceptable when EUCAST states on the sheet itself that it has not
+    # determined breakpoints, e.g. "EUCAST has not determined breakpoints for
+    # Burkholderia cepacia complex organisms..." (likewise L. pneumophila).
+    # Any other sheet without a breakpoint table means its layout was not
+    # recognised, which must not silently drop the sheet.
+    # These organisms are logged, so that the non-species related PK-PD
+    # breakpoints (v9.0-v13.1) can be blocked for them in the cleanup.
+    no_bp_statement <- parsed$full_text[!is.na(parsed$full_text) & grepl("has not determined breakpoints", parsed$full_text, fixed = TRUE)]
+    if (length(no_bp_statement) > 0) {
+      parse_log$no_breakpoints_determined <- rbind(
+        parse_log$no_breakpoints_determined,
+        data.frame(guideline = ver$guideline, sheet = sheet_name,
+                   organism = trimws(get_cell(parsed, 1, 1)$base),
+                   statement = gsub("\\s+", " ", trimws(no_bp_statement[1])))
+      )
+      message("  EUCAST has not determined breakpoints in sheet '", sheet_name, "', skipping")
+      return(NULL)
+    }
+    # From v14.0 on, the PK-PD sheet holds no table anymore but an explanation
+    # why EUCAST withdrew the non-species related breakpoints ("A common
+    # misunderstanding is that PK/PD breakpoints are overarching ... This is
+    # not the intention."), and from v15.0 on it is called "PK/PD cut-off
+    # values". Such a sheet has nothing to extract.
+    if (grepl("^PK.?PD", trimws(coalesce(get_cell(parsed, 1, 1)$base, "")))) {
+      message("  PK-PD sheet '", sheet_name, "' holds no breakpoint table, skipping")
+      return(NULL)
+    }
+    stop("parse_sheet(): no 'MIC breakpoint' header row found in sheet '", sheet_name, "'")
   }
   
   # Sub-header rows: one row below each header (contains "S " pattern)
@@ -574,7 +735,7 @@ parse_sheet <- function(xlsx_path, sheet_name) {
       # Notes cell: notes_col, in the data range (usually at first_data, merged)
       note_cell <- parsed |> filter(col == notes_col, row >= first_data, row <= last_data) |>
         slice_min(row, n = 1)
-      note_text <- if (nrow(note_cell) > 0) note_cell$base_text[1] else NA_character_
+      note_text <- if (nrow(note_cell) > 0) note_cell$full_text[1] else NA_character_
       notes_parsed <- parse_notes_block(note_text)
       
       tables[[i]] <- list(organism = organism, first_data = first_data,
@@ -617,7 +778,7 @@ parse_sheet <- function(xlsx_path, sheet_name) {
         filter(col == notes_col, row >= hr, row <= last_data,
                !grepl("^Notes", base_text))
       note_text <- if (nrow(note_cells) > 0) {
-        paste(note_cells$base_text, collapse = "\n")
+        paste(note_cells$full_text, collapse = "\n")
       } else {
         NA_character_
       }
@@ -646,10 +807,11 @@ parse_sheet <- function(xlsx_path, sheet_name) {
   for (tbl in tables) {
     org <- tbl$organism
     nl  <- tbl$notes
+    prev_agent_base <- NA_character_
+    prev_disk_dose <- NA_character_
     
     for (r in tbl$first_data:tbl$last_data) {
       agent <- get_cell(parsed, r, 1)
-      if (is.na(agent$base)) next
       # Skip category headers (rows that have col A text but no data).
       # Columns 5:7 only hold disk data when the sheet actually has disk
       # columns; on MIC-only sheets col 5 is the notes column and must not
@@ -657,6 +819,17 @@ parse_sheet <- function(xlsx_path, sheet_name) {
       data_cols <- if (has_disk_columns) c(2, 3, 5, 6, 7) else c(2, 3)
       has_any_data <- any(!is.na(vapply(data_cols, function(cc) get_cell(parsed, r, cc)$base,
                                         character(1))))
+      if (is.na(agent$base)) {
+        # A row with values but without an agent name would otherwise be
+        # skipped silently, e.g. if a future table merged agent cells. Rows
+        # holding only "-" (such as an empty spacer row) carry nothing.
+        bp_cols <- if (has_disk_columns) c(2, 3, 6, 7) else c(2, 3)
+        bp_cells <- vapply(bp_cols, function(cc) coalesce(get_cell(parsed, r, cc)$base, ""), character(1))
+        if (any(is_bp_value(bp_cells) | toupper(trimws(bp_cells)) %in% c("IE", "NOTE", "IP"))) {
+          stop("parse_sheet(): row ", r, " of sheet '", sheet_name, "' has breakpoint data but no agent name")
+        }
+        next
+      }
       if (!has_any_data) next
       
       # Agent name and any organism restriction encoded in its formatting
@@ -689,6 +862,28 @@ parse_sheet <- function(xlsx_path, sheet_name) {
         disk_atu <- list(base = NA_character_, super = NA_character_)
       }
       
+      # EUCAST occasionally leaves the disk content empty in a row that
+      # continues the previous row's agent, e.g. v16.1 "Amoxicillin-
+      # clavulanic acid, F. nucleatum" directly below "Amoxicillin-
+      # clavulanic acid, F. necrophorum" (2-1 mcg), or v15.0 VGS
+      # "Benzylpenicillin (endocarditis)" directly below "Benzylpenicillin
+      # (indications other than endocarditis)" (1 unit; filled in in
+      # v16.1). Only then is the disk content of that previous row used.
+      # Every such case is logged; any other disk breakpoint without a disk
+      # content stops the script in the integrity checks of the cleanup.
+      agent_base <- tolower(trimws(sub("\\s+(iv|oral)$", "", sub("\\s*[(,].*$", "", agent_text), ignore.case = TRUE)))
+      disk_dose <- format_disk_dose(disk_dose_cell$base)
+      has_disk_bp <- is_bp_value(disk_s$base) || is_bp_value(disk_r$base)
+      if (is.na(disk_dose) && has_disk_bp && identical(agent_base, prev_agent_base) && !is.na(prev_disk_dose)) {
+        disk_dose <- prev_disk_dose
+        parse_log$disk_dose_inherited <- rbind(
+          parse_log$disk_dose_inherited,
+          data.frame(file = basename(xlsx_path), sheet = sheet_name, row = r, agent = agent_text, disk_dose = disk_dose)
+        )
+      }
+      prev_agent_base <- agent_base
+      prev_disk_dose <- disk_dose
+      
       # Notes must apply only to the method they were referenced from: MIC
       # superscripts resolve to the MIC row's note, disk superscripts to the
       # DISK row's note. Resolving both against the union of MIC and disk
@@ -702,8 +897,8 @@ parse_sheet <- function(xlsx_path, sheet_name) {
         if (length(parts) == 0) return(NA_character_)
         paste(parts, collapse = ",")
       }
-      mic_note  <- resolve_notes(nl, combine_super(mic_s$super, agent$super), NA)
-      disk_note <- resolve_notes(nl, NA, combine_super(disk_s$super, agent$super))
+      mic_note  <- resolve_notes(nl, combine_super(mic_s$super, agent$super), NA, abbreviations = abbreviations)
+      disk_note <- resolve_notes(nl, NA, combine_super(disk_s$super, agent$super), abbreviations = abbreviations)
       
       # MIC row
       s_val <- parse_bp(mic_s$base)
@@ -719,12 +914,13 @@ parse_sheet <- function(xlsx_path, sheet_name) {
           method       = "MIC",
           site         = NA_character_,
           mo           = row_mo,
+          table_organism = org,
           rank_index   = NA_integer_,
           ab           = agent_text,
           disk_dose    = NA_character_,
           breakpoint_S = s_val,
           breakpoint_R = r_val,
-          is_screening = is_screening_bp(mic_s$base) || is_screening_bp(mic_r$base),
+          is_bracketed = is_bracketed_bp(mic_s$base) || is_bracketed_bp(mic_r$base),
           note         = mic_note
         )
       }
@@ -743,12 +939,13 @@ parse_sheet <- function(xlsx_path, sheet_name) {
           method       = "DISK",
           site         = NA_character_,
           mo           = row_mo,
+          table_organism = org,
           rank_index   = NA_integer_,
           ab           = agent_text,
-          disk_dose    = format_disk_dose(disk_dose_cell$base),
+          disk_dose    = disk_dose,
           breakpoint_S = s_val,
           breakpoint_R = r_val,
-          is_screening = is_screening_bp(disk_s$base) || is_screening_bp(disk_r$base),
+          is_bracketed = is_bracketed_bp(disk_s$base) || is_bracketed_bp(disk_r$base),
           note         = disk_note
         )
       }
@@ -756,35 +953,56 @@ parse_sheet <- function(xlsx_path, sheet_name) {
   }
   
   if (idx == 0) return(NULL)
-  bind_rows(results[seq_len(idx)])
+  out <- bind_rows(results[seq_len(idx)])
+  
+  # The non-species related PK-PD breakpoints (v9.0-v13.1) come with EUCAST's
+  # condition for their use, e.g. "These breakpoints are used only when there
+  # are no species-specific breakpoints or other recommendations (a dash or a
+  # note) in the species-specific tables. ...". This statement is added to
+  # the note of every PK-PD row.
+  if (grepl("Non-species related", organism, ignore.case = TRUE)) {
+    usage <- parsed$full_text[!is.na(parsed$full_text) & parsed$col == 1 &
+                                grepl("^These breakpoints are used only when", trimws(parsed$full_text))]
+    if (length(usage) != 1) {
+      stop("parse_sheet(): the condition for using the PK-PD breakpoints was not found on sheet '", sheet_name, "'")
+    }
+    usage <- paste0("[PK-PD] ", gsub("\\s+", " ", trimws(usage)))
+    out$note <- if_else(is.na(out$note), usage, paste(usage, out$note, sep = " | "))
+  }
+  out
 }
 
 # ==============================================================================
 # 7. Parse "Topical agents" sheet (transposed layout)
 # ==============================================================================
-parse_topical_sheet <- function(xlsx_path) {
+parse_topical_sheet <- function(xlsx_path, abbreviations = list()) {
   cells <- xlsx_cells(xlsx_path, sheets = "Topical agents")
   
   ver <- detect_version(cells)
   
-  target <- cells |> filter(!is_blank)
-  rich <- split_rich_text(target$character_formatted)
-  parsed <- target |>
-    bind_cols(rich) |>
-    mutate(
-      base_text = case_when(
-        !is.na(base_text) & base_text != "" ~ trimws(base_text),
-        !is.na(character)                   ~ trimws(character),
-        !is.na(numeric)                     ~ as.character(numeric),
-        TRUE                                ~ NA_character_
-      ),
-      note_super = if_else(is.na(note_super) | note_super == "",
-                           NA_character_, note_super)
-    ) |>
-    select(row, col, base_text, note_super)
-  
-  # Antimicrobial names from row 6, cols 4:18
-  ab_cols <- 4:18
+  parsed <- parse_cells(cells, xlsx_formats(xlsx_path))
+
+  # v9.0 has a different, informational table here ("ECOFFs and systemic
+  # clinical breakpoints for antimicrobial agents that are used topically"):
+  # EUCAST states it could not reach consensus on topical breakpoints and
+  # presents a mix of systemic clinical breakpoints and ECOFFs "for
+  # information" only, so it holds no topical breakpoints to extract.
+  title <- get_cell(parsed, 1, 1)$base
+  if (!is.na(title) && grepl("^ECOFFs and systemic clinical breakpoints", title)) {
+    message("  Informational table without topical breakpoints in '", basename(xlsx_path), "', skipping")
+    return(NULL)
+  }
+  # From v10.0 on, the layout is fixed: agent names in row 6 from column D
+  # on, disk contents in row 10, and organism rows (MIC row followed by a
+  # zone diameter row) from row 11 on. Verify this rather than assume it.
+  if (!identical(get_cell(parsed, 6, 1)$base, "Organisms") ||
+      !identical(get_cell(parsed, 10, 2)$base, "Disk content") ||
+      !grepl("^Screening cut-off values", coalesce(get_cell(parsed, 6, 2)$base, ""))) {
+    stop("parse_topical_sheet(): unexpected layout of sheet 'Topical agents' in '", basename(xlsx_path), "'")
+  }
+
+  # Antimicrobial names from row 6, column D up to the last populated column
+  ab_cols <- seq(4, max(parsed$col[parsed$row == 6]))
   ab_info <- list()
   for (col_idx in ab_cols) {
     name_cell <- get_cell(parsed, 6, col_idx)
@@ -822,7 +1040,7 @@ parse_topical_sheet <- function(xlsx_path) {
   notes_cells <- parsed |>
     filter(col == 1, row > last_data_row, !grepl("^Notes$", base_text))
   notes_text <- if (nrow(notes_cells) > 0)
-    paste(notes_cells$base_text, collapse = "\n") else ""
+    paste(notes_cells$full_text, collapse = "\n") else ""
   if (is.na(notes_text)) notes_text <- ""
   notes_lookup <- parse_notes_block(notes_text)
   
@@ -844,18 +1062,18 @@ parse_topical_sheet <- function(xlsx_path) {
       # Combine superscripts from the cell and the agent name
       all_supers <- c(mic_cell$super, ab_super)
       all_supers <- all_supers[!is.na(all_supers) & all_supers != ""]
-      mic_note <- resolve_notes(notes_lookup, paste(all_supers, collapse = ","), NA)
+      mic_note <- resolve_notes(notes_lookup, paste(all_supers, collapse = ","), NA, abbreviations = abbreviations)
       
       if (!is.na(mic_val)) {
         idx <- idx + 1L
         results[[idx]] <- tibble(
           guideline = ver$guideline, version = ver$version, file_desc = ver$file_desc,
           type = "human", host = "human", method = "MIC",
-          site = "Topical", mo = od$organism, rank_index = NA_integer_,
+          site = "Topical", mo = od$organism, table_organism = od$organism, rank_index = NA_integer_,
           ab = ab_name,
           disk_dose = NA_character_,
           breakpoint_S = mic_val, breakpoint_R = mic_val,
-          is_screening = is_screening_bp(mic_cell$base),
+          is_bracketed = is_bracketed_bp(mic_cell$base),
           note = mic_note
         )
       }
@@ -865,18 +1083,18 @@ parse_topical_sheet <- function(xlsx_path) {
       disk_val <- parse_bp(disk_cell$base)
       all_supers_d <- c(disk_cell$super, ab_super)
       all_supers_d <- all_supers_d[!is.na(all_supers_d) & all_supers_d != ""]
-      disk_note <- resolve_notes(notes_lookup, NA, paste(all_supers_d, collapse = ","))
+      disk_note <- resolve_notes(notes_lookup, NA, paste(all_supers_d, collapse = ","), abbreviations = abbreviations)
       
       if (!is.na(disk_val)) {
         idx <- idx + 1L
         results[[idx]] <- tibble(
           guideline = ver$guideline, version = ver$version, file_desc = ver$file_desc,
           type = "human", host = "human", method = "DISK",
-          site = "Topical", mo = od$organism, rank_index = NA_integer_,
+          site = "Topical", mo = od$organism, table_organism = od$organism, rank_index = NA_integer_,
           ab = ab_name,
           disk_dose = ab_dose,
           breakpoint_S = disk_val, breakpoint_R = disk_val,
-          is_screening = is_screening_bp(disk_cell$base),
+          is_bracketed = is_bracketed_bp(disk_cell$base),
           note = disk_note
         )
       }
@@ -902,26 +1120,12 @@ parse_topical_sheet <- function(xlsx_path) {
 #    used elsewhere.
 # Antifungal breakpoints on these sheets are MIC-only; there is no disk
 # diffusion method, so only method = "MIC" rows are produced.
-parse_yeast_sheet <- function(xlsx_path, sheet_name) {
+parse_yeast_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
   cells <- xlsx_cells(xlsx_path, sheets = sheet_name)
   
   ver <- detect_version(cells)
   
-  target <- cells |> filter(!is_blank)
-  rich <- split_rich_text(target$character_formatted)
-  parsed <- target |>
-    bind_cols(rich) |>
-    mutate(
-      base_text = case_when(
-        !is.na(base_text) & base_text != "" ~ trimws(base_text),
-        !is.na(character)                   ~ trimws(character),
-        !is.na(numeric)                     ~ as.character(numeric),
-        TRUE                                ~ NA_character_
-      ),
-      note_super = if_else(is.na(note_super) | note_super == "",
-                           NA_character_, note_super)
-    ) |>
-    select(row, col, base_text, note_super)
+  parsed <- parse_cells(cells, xlsx_formats(xlsx_path))
   
   # --- Locate the "Antifungal agent" header row ---
   hdr_row <- parsed |>
@@ -997,7 +1201,7 @@ parse_yeast_sheet <- function(xlsx_path, sheet_name) {
     note_cells <- parsed |>
       filter(col == 1, row > min(notes_label_row)) |>
       arrange(row)
-    paste(note_cells$base_text, collapse = "\n")
+    paste(note_cells$full_text, collapse = "\n")
   } else {
     ""
   }
@@ -1023,7 +1227,7 @@ parse_yeast_sheet <- function(xlsx_path, sheet_name) {
       
       all_supers <- c(s_cell$super, r_cell$super, agent_super)
       all_supers <- all_supers[!is.na(all_supers) & all_supers != ""]
-      note_text <- resolve_notes(notes_lookup, paste(all_supers, collapse = ","), NA)
+      note_text <- resolve_notes(notes_lookup, paste(all_supers, collapse = ","), NA, abbreviations = abbreviations)
       
       idx <- idx + 1L
       results[[idx]] <- tibble(
@@ -1035,12 +1239,13 @@ parse_yeast_sheet <- function(xlsx_path, sheet_name) {
         method       = "MIC",
         site         = NA_character_,
         mo           = sb$species,
+        table_organism = sb$species,
         rank_index   = NA_integer_,
         ab           = agent_name,
         disk_dose    = NA_character_,
         breakpoint_S = s_val,
         breakpoint_R = r_val,
-        is_screening = is_screening_bp(s_cell$base) || is_screening_bp(r_cell$base),
+        is_bracketed = is_bracketed_bp(s_cell$base) || is_bracketed_bp(r_cell$base),
         note         = note_text
       )
     }
@@ -1051,45 +1256,122 @@ parse_yeast_sheet <- function(xlsx_path, sheet_name) {
 }
 
 # ==============================================================================
-# 9. Parse all data sheets
+# 9. Workbook-level notes: abbreviations and the definition of brackets
+# ==============================================================================
+# Besides the notes block of each table, every workbook has a general "Notes"
+# sheet ("Notes" or e.g. "1. Notes") with two things the tables rely on:
+#  - Abbreviations of the form "XX = text", e.g. "HE = High exposure for agent
+#    (see table of dosages, last tab in breakpoint table)" in v9.0 and v10.0,
+#    where "HE" is used as a superscript on agent names.
+#  - EUCAST's definition of "breakpoints in brackets", which differs between
+#    versions: within note 7 (v10.0), as "( ) = ..." (v11.0), or as a note of
+#    its own starting with "Breakpoints in brackets" (v12.0 on).
+# Both are read from the workbook itself, so they always match its version.
+# Names of the hidden sheets of a workbook (tidyxl does not report sheet
+# visibility, so it is read from the workbook definition itself)
+xlsx_hidden_sheets <- function(xlsx_path) {
+  tmp <- tempfile()
+  dir.create(tmp)
+  on.exit(unlink(tmp, recursive = TRUE))
+  utils::unzip(xlsx_path, files = "xl/workbook.xml", exdir = tmp)
+  wb <- paste(readLines(file.path(tmp, "xl", "workbook.xml"), warn = FALSE, encoding = "UTF-8"), collapse = "")
+  sheets <- regmatches(wb, gregexpr("<sheet [^>]*/>", wb))[[1]]
+  hidden <- sheets[grepl('state="(hidden|veryHidden)"', sheets)]
+  nm <- sub('.*name="([^"]*)".*', "\\1", hidden)
+  nm <- gsub("&amp;", "&", gsub("&apos;", "'", gsub("&quot;", "\"", nm, fixed = TRUE), fixed = TRUE), fixed = TRUE)
+  if (!all(nm %in% xlsx_sheet_names(xlsx_path))) {
+    stop("xlsx_hidden_sheets(): could not match hidden sheet names in '", basename(xlsx_path), "'")
+  }
+  nm
+}
+
+parse_workbook_notes <- function(xlsx_path) {
+  all_sheets <- xlsx_sheet_names(xlsx_path)
+  notes_sheet <- all_sheets[grepl("^\\s*(\\d+\\.\\s*)?Notes\\s*$", all_sheets, ignore.case = TRUE)]
+  if (length(notes_sheet) != 1) {
+    stop("parse_workbook_notes(): expected exactly one 'Notes' sheet in '", basename(xlsx_path),
+         "', found: ", paste(notes_sheet, collapse = ", "))
+  }
+  txt <- parse_cells(xlsx_cells(xlsx_path, sheets = notes_sheet), xlsx_formats(xlsx_path)) |>
+    filter(!is.na(full_text)) |>
+    pull(full_text) |>
+    gsub(pattern = "\u00A0", replacement = " ", fixed = TRUE) |>
+    trimws()
+  
+  abbr_txt <- txt[grepl("^[A-Z]{2,5}\\s*=\\s*\\S", txt)]
+  abbreviations <- as.list(trimws(sub("^[A-Z]{2,5}\\s*=\\s*", "", abbr_txt)))
+  names(abbreviations) <- sub("\\s*=.*$", "", abbr_txt)
+  
+  bracket_definition <- NA_character_
+  def_brackets_sign <- txt[grepl("^\\(\\s*\\)\\s*=", txt)]
+  def_own_note <- sub("^\\d+\\.\\s*", "", txt[grepl("^(\\d+\\.\\s*)?Breakpoints in brackets", txt)])
+  def_in_note <- txt[grepl("Breakpoints in brackets", txt, fixed = TRUE)]
+  if (length(def_brackets_sign) > 0) {
+    bracket_definition <- sub("^\\(\\s*\\)\\s*=\\s*", "", def_brackets_sign[1])
+  } else if (length(def_own_note) > 0) {
+    bracket_definition <- def_own_note[1]
+  } else if (length(def_in_note) > 0) {
+    bracket_definition <- sub("^.*?(Breakpoints in brackets)", "\\1", def_in_note[1])
+  }
+  bracket_definition <- trimws(gsub("\\s+", " ", bracket_definition))
+  
+  list(abbreviations = abbreviations, bracket_definition = bracket_definition)
+}
+
+# ==============================================================================
+# 10. Parse all data sheets
 # ==============================================================================
 parse_workbook <- function(xlsx_path,
                            skip_sheets = c("Content", "Changes", "Notes",
                                            "Guidance", "Dosages",
                                            "Technical uncertainty",
-                                           "Non-species related breakpoints",
-                                           "PKPD breakpoints",
-                                           "PK PD breakpoints")) {
+                                           "Non-species related breakpoints")) {
   all_sheets <- xlsx_sheet_names(xlsx_path)
   
   # Some workbooks (e.g. the antifungal AFST tables) number-prefix their
   # sheet names, e.g. "1. Notes", "7. Dosages", "6. Aspergillus ", and are
-  # not always consistent in capitalisation, e.g. "3. Technical Uncertainty"
-  # vs "Technical uncertainty". Matching skip_sheets by exact equality would
-  # fail to skip these, so match case-insensitively by whether a skip name
-  # occurs anywhere in the (trimmed) sheet name instead.
-  is_skipped <- vapply(trimws(all_sheets), function(s) {
+  # not always consistent in capitalisation or separators, e.g.
+  # "3. Technical Uncertainty" vs "Technical uncertainty", or
+  # "PK_PD breakpoints" (v14.0) vs "PK PD breakpoints". Matching skip_sheets
+  # by exact equality would fail to skip these, so match case-insensitively
+  # (with underscores read as spaces) by whether a skip name occurs anywhere
+  # in the (trimmed) sheet name instead.
+  is_skipped <- vapply(gsub("_", " ", trimws(all_sheets)), function(s) {
     any(vapply(skip_sheets, function(skip) grepl(tolower(skip), tolower(s), fixed = TRUE),
                logical(1)))
   }, logical(1))
-  data_sheets <- all_sheets[!is_skipped]
+  # Hidden sheets are not part of the published tables: v14.0-v16.1 contain a
+  # hidden, outdated copy of the v14.0 PK-PD table with editorial comments
+  # ("Remove sheet from BP table"), which must not be read
+  hidden <- xlsx_hidden_sheets(xlsx_path)
+  if (length(hidden) > 0) {
+    message("  skipping hidden sheet(s): ", paste(hidden, collapse = ", "))
+  }
+  data_sheets <- all_sheets[!is_skipped & !all_sheets %in% hidden]
+  
+  wb_notes <- parse_workbook_notes(xlsx_path)
   
   results <- list()
   for (s in data_sheets) {
     message("Parsing ", basename(xlsx_path), ": ", s)
-    res <- tryCatch({
-      if (trimws(s) == "Topical agents") {
-        parse_topical_sheet(xlsx_path)
-      } else if (trimws(s) %in% c("5. Yeast", "6. Aspergillus")) {
-        parse_yeast_sheet(xlsx_path, s)
-      } else {
-        parse_sheet(xlsx_path, s)
+    # Errors are deliberately re-thrown, not absorbed: the parsers stop on
+    # anything that does not match the expected source structure, and
+    # absorbing that here would silently drop the whole sheet instead (as
+    # happened before with the Staphylococcus sheet of v9.0 and v10.0).
+    res <- tryCatch(
+      {
+        if (trimws(s) == "Topical agents") {
+          parse_topical_sheet(xlsx_path, abbreviations = wb_notes$abbreviations)
+        } else if (trimws(s) %in% c("5. Yeast", "6. Aspergillus")) {
+          parse_yeast_sheet(xlsx_path, s, abbreviations = wb_notes$abbreviations)
+        } else {
+          parse_sheet(xlsx_path, s, abbreviations = wb_notes$abbreviations)
+        }
+      },
+      error = function(e) {
+        stop("Parsing '", basename(xlsx_path), "', sheet '", s, "' failed: ", conditionMessage(e), call. = FALSE)
       }
-    },
-    error = function(e) {
-      message("  ERROR: ", conditionMessage(e))
-      NULL
-    })
+    )
     if (!is.null(res) && nrow(res) > 0) {
       res$sheet <- s
       results[[s]] <- res
@@ -1097,11 +1379,26 @@ parse_workbook <- function(xlsx_path,
     }
   }
   
-  bind_rows(results)
+  out <- bind_rows(results)
+  
+  # Add EUCAST's own definition of breakpoints in brackets to the note of
+  # every bracketed row, so the caveat travels with the values in the raw
+  # data (they are excluded from the clinical_breakpoints table).
+  if (any(out$is_bracketed)) {
+    if (is.na(wb_notes$bracket_definition)) {
+      stop("parse_workbook(): '", basename(xlsx_path), "' has bracketed breakpoints, ",
+           "but no definition of breakpoints in brackets was found on its Notes sheet")
+    }
+    bracket_note <- paste0("[( )] ", wb_notes$bracket_definition)
+    out$note[out$is_bracketed] <- ifelse(is.na(out$note[out$is_bracketed]),
+                                         bracket_note,
+                                         paste(bracket_note, out$note[out$is_bracketed], sep = " | "))
+  }
+  out
 }
 
 # ==============================================================================
-# 10. Run
+# 11. Run
 # ==============================================================================
 
 breakpoint_files <- list.files(path = "data-raw",
@@ -1138,8 +1435,14 @@ for (xlsx_path in breakpoint_files) {
 
 breakpoints_eucast_raw <- breakpoints_eucast
 
+if (!is.null(parse_log$disk_dose_inherited)) {
+  message("NOTE: ", nrow(parse_log$disk_dose_inherited), " disk breakpoint row(s) had no disk content and took it ",
+          "from the previous row of the same agent:")
+  print(parse_log$disk_dose_inherited)
+}
+
 saveRDS(breakpoints_eucast_raw, "data-raw/breakpoints_eucast_raw.rds")
-write.csv(breakpoints_eucast_raw, "data-raw/breakpoints_eucast_raw.csv", row.names = FALSE)
+write.csv(breakpoints_eucast_raw, "data-raw/breakpoints_eucast_raw.csv", row.names = FALSE, eol = "\n")
 
 
 # Cleanup for `clinical_breakpoints` table ----
@@ -1265,6 +1568,87 @@ extract_trailing_parenthetical <- function(x) {
   out
 }
 
+# Route of administration as part of the agent name, e.g. "Cefuroxime iv",
+# "Amoxicillin-clavulanic acid oral (uncomplicated UTI only)" or "Ampicillin
+# iv (all indications)". Returns "Intravenous", "Oral" or NA.
+extract_route <- function(ab) {
+  base <- trimws(sub("\\s*\\(.*$", "", ab))
+  case_when(
+    grepl("\\s(iv|i\\.v\\.)$", base, ignore.case = TRUE) ~ "Intravenous",
+    grepl("\\soral$", base, ignore.case = TRUE) ~ "Oral",
+    TRUE ~ NA_character_
+  )
+}
+
+# EUCAST's indication qualifiers mapped to the `site` vocabulary already used
+# in clinical_breakpoints (originating from WHONET, e.g. "Non-meningitis",
+# "Uncomplicated urinary tract infection" or "Screen"), so that EUCAST rows
+# from these tables and from older guidelines are labelled alike. NA means
+# the qualifier does not restrict the indication, or is not an indication at
+# all: "framycetin" ("Neomycin (framycetin)"), "pivmecillinam" ("Mecillinam
+# oral (pivmecillinam)") and "for polymyxin B"
+# ("Colistin (for polymyxin B)") name an agent, and "surrogate agent"
+# ("Benzylpenicillin (surrogate agent)") describes the agent's use.
+# Screening tests become "Screen", which as.sir() leaves out unless
+# `include_screening = TRUE`. A qualifier missing from this list stops the
+# script, so a new EUCAST wording is never silently taken over as a site.
+eucast_site_vocabulary <- c(
+  "uncomplicated uti only" = "Uncomplicated urinary tract infection",
+  "uti only" = "Urinary tract infection",
+  "infections originating from the urinary tract" = "Infections originating from the urinary tract",
+  "meningitis" = "Meningitis",
+  "indications other than meningitis" = "Non-meningitis",
+  "endocarditis" = "Endocarditis",
+  "indications other than endocarditis" = "Non-endocarditis",
+  "endocarditis and meningitis" = "Meningitis, Endocarditis",
+  "indications other than endocarditis and meningitis" = "Non-meningitis, Non-endocarditis",
+  "endocarditis, in combination with other antimicrobial treatment" = "Endocarditis with combination treatment",
+  "pneumonia" = "Pneumonia",
+  "indications other than pneumonia" = "Non-pneumonia",
+  "community-acquired pneumonia" = "Community-acquired pneumonia",
+  "skin and skin structure infections" = "Skin",
+  "systemic infections" = "Systemic infections",
+  "other indications" = "Other indications",
+  "prophylaxis only" = "Prophylaxis",
+  "for prophylaxis only" = "Prophylaxis",
+  "screen" = "Screen",
+  "screen only" = "Screen",
+  "test for high-level aminoglycoside resistance" = "Screen",
+  "test for high-level streptomycin resistance" = "Screen",
+  "test for acquired aminoglycoside-modifying enzyme" = "Screen",
+  "all indications" = NA_character_,
+  "all indications including prophylaxis" = NA_character_,
+  "all indications, including meningitis and prophylaxis" = NA_character_,
+  "surrogate agent" = NA_character_,
+  "framycetin" = NA_character_,
+  "pivmecillinam" = NA_character_, # "Mecillinam oral (pivmecillinam)", the oral prodrug
+  "for polymyxin b" = NA_character_
+)
+
+# Builds `site` from the sheet-level site (only "Topical" for the Topical
+# agents sheet), the route and the indication qualifier, in the established
+# "Route, Indication" form, e.g. "Oral, Uncomplicated urinary tract
+# infection". The values on the Topical agents sheet are, in EUCAST's own
+# words, "Screening cut-off values" (EUCAST "has not been able to determine
+# relevant clinical breakpoints for topical use"), so they get "Topical,
+# Screen" and are, like other screening values, only used by as.sir() with
+# `include_screening = TRUE`.
+build_site <- function(sheet_site, route, qualifier) {
+  q <- tolower(gsub("\\s+", " ", trimws(qualifier)))
+  unknown <- unique(qualifier[!is.na(q) & !q %in% names(eucast_site_vocabulary)])
+  if (length(unknown) > 0) {
+    stop("build_site(): unknown indication qualifier(s), add to eucast_site_vocabulary: '",
+         paste(unknown, collapse = "', '"), "'")
+  }
+  indication <- unname(eucast_site_vocabulary[q])
+  vapply(seq_along(q), function(i) {
+    parts <- c(sheet_site[i], route[i], indication[i])
+    if (identical(sheet_site[i], "Topical")) parts <- c(parts, "Screen")
+    parts <- unique(parts[!is.na(parts)])
+    if (length(parts) == 0) NA_character_ else paste(parts, collapse = ", ")
+  }, character(1))
+}
+
 resolve_other_x <- function(x, sheet_name) {
   # A few agent-name-embedded organism restrictions use elliptical phrasing
   # that refers back to the sheet's own organism rather than naming a taxon
@@ -1369,6 +1753,41 @@ split_mo_list <- function(x, sheet_name = NA_character_) {
   })
 }
 
+# Descriptive organism groups that as.mo() cannot resolve correctly on its
+# own, mapped explicitly, following how the WHONET-based breakpoints encode
+# them:
+#  - "Gram-negative anaerobes" and "Gram-positive anaerobes" (v9.0-v11.0)
+#    would resolve to B_GRAMN and B_GRAMP, which as.sir() applies to every
+#    Gram-negative or Gram-positive isolate, aerobes included. B_ANAER-NEG
+#    and B_ANAER-POS only apply to anaerobes.
+#  - "S. anginosus group" would resolve to the subspecies S. anginosus
+#    subsp. anginosus. There is no code for the group, so it becomes its
+#    three species.
+#  - "Streptococcus groups A, C and G" would resolve to groups A, B, C and G,
+#    while EUCAST deliberately excludes group B in such rows.
+#  - "MRSA" (telavancin) becomes S. aureus, as there is no taxon for MRSA.
+#  - "enterococci" is the genus Enterococcus (its exceptions are handled by
+#    rank_index, see above).
+eucast_organism_groups <- list(
+  "gram-negative anaerobes" = "B_ANAER-NEG",
+  "gram-positive anaerobes" = "B_ANAER-POS",
+  "s. anginosus group" = c("B_STRPT_ANGN", "B_STRPT_CNST", "B_STRPT_INTR"),
+  "streptococcus anginosus group" = c("B_STRPT_ANGN", "B_STRPT_CNST", "B_STRPT_INTR"),
+  "streptococcus groups a, c and g" = c("B_STRPT_GRPA", "B_STRPT_GRPC", "B_STRPT_GRPG"),
+  "mrsa" = "B_STPHY_AURS",
+  # "Vancomycin, enterococci other than E. casseliflavus and E. gallinarum"
+  "enterococci" = "B_ENTRC",
+  # the non-species related PK-PD breakpoints (v9.0-v13.1), which as.sir()
+  # uses as the last resort for organism code "UNKNOWN"
+  "pk-pd (non-species related) breakpoints" = "UNKNOWN"
+)
+expand_organism_groups <- function(x) {
+  lapply(x, function(txt) {
+    key <- tolower(gsub("\\s+", " ", trimws(txt)))
+    if (key %in% names(eucast_organism_groups)) eucast_organism_groups[[key]] else txt
+  })
+}
+
 split_mo_list_one <- function(s, sheet_genus_fallback) {
   s_clean <- trimws(gsub("[\r\n]+", " ", s))
   s_clean <- gsub("\u00A0", " ", s_clean, fixed = TRUE) # normalise non-breaking spaces (seen in some source cells)
@@ -1378,6 +1797,10 @@ split_mo_list_one <- function(s, sheet_genus_fallback) {
   # by "." and a lowercase letter with no space, which never occurs
   # correctly formed any other way in these cells.
   s_clean <- gsub("([A-Z])\\.(?=[a-z])", "\\1. ", s_clean, perl = TRUE)
+  # "spp." always ends a taxon, so a capitalised genus directly following it
+  # starts the next list member even if the separating comma is missing, e.g.
+  # v12.0 Mecillinam: "E. coli, Citrobacter spp.<line break>Klebsiella spp., ..."
+  s_clean <- gsub("\\bspp\\.\\s+(?=[A-Z][a-z]{2,})", "spp., ", s_clean, perl = TRUE)
   # Split on commas and top-level " and " (not inside parentheses)
   pieces <- unlist(strsplit(s_clean, ",(?![^(]*\\))|\\s+and\\s+(?![^(]*\\))", perl = TRUE))
   pieces <- trimws(pieces)
@@ -1440,14 +1863,64 @@ split_mo_list_one <- function(s, sheet_genus_fallback) {
   expand_abbreviated_genus(pieces, fallback_genus = sheet_genus_fallback)
 }
 
+# Blocking rows ----
+# Where EUCAST gives no breakpoint for an organism, as.sir() must not fall back
+# to the breakpoint of a broader taxon (or to the non-species related PK-PD
+# breakpoints), e.g. Vibrio fluvialis and cefotaxime ("IE") would otherwise be
+# interpreted with the breakpoints for Vibrio spp. Such cases are therefore
+# kept as "blocking rows": breakpoint_S and breakpoint_R are NA, so as.sir()
+# returns NA, and the note starts with "[No breakpoint]" and the reason. A
+# blocking row is only kept where the organism has no breakpoint of its own
+# for that agent and method (see "Pruning blocking rows" below), and its
+# rank_index is that of its organism + 0.1, so that a breakpoint for the same
+# organism (e.g. for another route, or a screening breakpoint when
+# as.sir(..., include_screening = TRUE)) always takes precedence. Blocking rows
+# arise from:
+#  1. cells with "IE", "-", "Note", "IP", "NA" or "ND", and EUCAST's
+#     breakpoints in brackets (see is_bracketed_bp());
+#  2. organisms excluded with "except" or "other than", e.g. "Bacillus spp.
+#     except B. anthracis" or "Klebsiella spp. (except K. aerogenes)";
+#  3. restrictions in the notes, see eucast_note_rules;
+#  4. the organism scope of a table: an agent listed for only some organisms
+#     of a table (e.g. phenoxymethylpenicillin for "Streptococcus groups A, C
+#     and G" on the sheet for groups A, B, C and G) has no breakpoint for the
+#     other organisms of that table;
+#  5. organisms for which EUCAST has not determined breakpoints at all (B.
+#     cepacia complex, L. pneumophila), for the years with PK-PD breakpoints.
+# The Topical agents sheet never yields blocking rows: that a topical
+# screening cut-off value is lacking says nothing about systemic use.
+bp_placeholder_meaning <- c(
+  "IE" = "IE (insufficient evidence)",
+  "NOTE" = "Note (see note)",
+  "-" = "- (susceptibility testing is not recommended)",
+  "IP" = "IP (in preparation)",
+  "NA" = "NA (not applicable)",
+  "ND" = "ND (not determined)"
+)
+blocking_note <- function(reason, note) {
+  reason <- paste0("[No breakpoint] ", reason)
+  note <- rep_len(as.character(note), length(reason))
+  if_else(is.na(note), reason, paste(reason, note, sep = " | "))
+}
+
 breakpoints_eucast <- breakpoints_eucast_raw |>
-  filter(!breakpoint_S %in% c("NOTE", "IE", "IP", "NA", "-"),
-         !breakpoint_R %in% c("NOTE", "IE", "IP", "NA", "-")) |>
-  # Screening breakpoints (parenthesised values like "(2)") are kept in
-  # breakpoints_eucast_raw but excluded from the clinical_breakpoints table:
-  # they are screening cut-offs, not interpretive breakpoints for clinical
-  # reporting. The is_screening flag was set during parsing.
-  filter(!is_screening)
+  mutate(
+    is_blocker = is_bracketed | (!is_bp_value(breakpoint_S) & !is_bp_value(breakpoint_R)),
+    note = case_when(
+      is_bracketed ~ blocking_note(paste0("EUCAST gives breakpoints in brackets only (S ", breakpoint_S, ", R ", breakpoint_R, ")"), note),
+      is_blocker ~ blocking_note(paste0("EUCAST gives ",
+                                        coalesce(bp_placeholder_meaning[toupper(trimws(breakpoint_S))],
+                                                 bp_placeholder_meaning[toupper(trimws(breakpoint_R))],
+                                                 "no value")), note),
+      TRUE ~ note
+    ),
+    # placeholders become NA; a row keeps a breakpoint as long as one of S and
+    # R is a value, e.g. the screening tests of v9.0-v12.0 that give only an S
+    # value with "Note" for R
+    breakpoint_S = if_else(is_blocker | !is_bp_value(breakpoint_S), NA_character_, breakpoint_S),
+    breakpoint_R = if_else(is_blocker | !is_bp_value(breakpoint_R), NA_character_, breakpoint_R)
+  ) |>
+  filter(!(is_blocker & sheet == "Topical agents"))
 
 # Occasionally, split_agent_organism() could not separate an organism
 # restriction from the drug name (see split_organism_from_ab comment).
@@ -1462,12 +1935,80 @@ if (any(fixed_rows)) {
   breakpoints_eucast$mo[fixed_rows] <- ab_mo_fix$mo_from_ab[fixed_rows]
 }
 
+# "MRSA" (telavancin) can only be coded as S. aureus, so state the scope
+breakpoints_eucast <- breakpoints_eucast |>
+  mutate(note = case_when(
+    trimws(gsub("\\s+", " ", mo)) != "MRSA" ~ note,
+    is_blocker ~ trimws(paste0(trimws(sub("^(\\[No breakpoint\\][^|]*).*$", "\\1", note)), " | [Scope] EUCAST gives this for MRSA ",
+                               sub("^\\[No breakpoint\\][^|]*", "", note))),
+    is.na(note) ~ "[Scope] EUCAST gives this breakpoint for MRSA",
+    TRUE ~ paste("[Scope] EUCAST gives this breakpoint for MRSA", note, sep = " | ")
+  ))
+
+# Exceptions ("except" / "other than") become blocking rows for the excluded
+# organisms, e.g. "Bacillus spp. except B. anthracis" gives a blocking row for
+# B. anthracis. An abbreviated genus in the exception is expanded with the
+# genus of the organism it is an exception to.
+plural_genus <- c("staphylococci" = "Staphylococcus", "enterococci" = "Enterococcus", "streptococci" = "Streptococcus")
+extract_mo_exceptions <- function(x) {
+  lapply(x, function(txt) {
+    txt <- gsub("\\s+", " ", trimws(txt))
+    out <- character(0)
+    # parenthesised exception attached to one list member, e.g.
+    # "Klebsiella spp. (except K. aerogenes)"
+    m <- gregexpr("([A-Z][a-z]+)[^,(]*\\(\\s*(?:except|other than)\\s+([^)]+)\\)", txt, perl = TRUE, ignore.case = TRUE)
+    for (hit in regmatches(txt, m)[[1]]) {
+      genus <- sub("^([A-Z][a-z]+).*$", "\\1", hit)
+      exc <- sub("^.*\\(\\s*(?:except|other than)\\s+([^)]+)\\).*$", "\\1", hit, perl = TRUE, ignore.case = TRUE)
+      out <- c(out, paste0(genus, "|", exc))
+    }
+    txt_rest <- gsub("\\([^)]*\\)", "", txt)
+    m2 <- regmatches(txt_rest, regexec("^(.*?)\\b(?:except|other than)\\b\\s*(.+)$", txt_rest, perl = TRUE, ignore.case = TRUE))[[1]]
+    if (length(m2) == 3) {
+      base <- m2[2]
+      genus <- regmatches(base, regexpr("[A-Z][a-z]+(?=\\s+spp\\.?|\\s*$|\\s+other|\\s+except)", base, perl = TRUE))
+      if (length(genus) == 0) {
+        plural <- names(plural_genus)[vapply(names(plural_genus), function(p) grepl(p, base, ignore.case = TRUE), logical(1))]
+        genus <- if (length(plural) > 0) unname(plural_genus[plural[1]]) else NA_character_
+      }
+      out <- c(out, paste0(coalesce(genus[1], ""), "|", m2[3]))
+    }
+    # split each exception list into taxa and expand abbreviated genera
+    unlist(lapply(out, function(o) {
+      genus <- sub("\\|.*$", "", o)
+      exc <- sub("^[^|]*\\|", "", o)
+      pieces <- trimws(unlist(strsplit(exc, ",|\\s+and\\s+")))
+      pieces <- pieces[nzchar(pieces)]
+      if (nzchar(genus)) {
+        pieces <- ifelse(grepl("^[A-Z]\\.\\s*[a-z]", pieces) & substr(pieces, 1, 1) == substr(genus, 1, 1),
+                         sub("^[A-Z]\\.\\s*", paste0(genus, " "), pieces), pieces)
+      }
+      pieces
+    }))
+  })
+}
+exceptions <- breakpoints_eucast |>
+  filter(sheet != "Topical agents") |>
+  mutate(exception = extract_mo_exceptions(mo)) |>
+  filter(lengths(exception) > 0) |>
+  tidyr::unnest(exception)
+if (nrow(exceptions) > 0) {
+  exception_blockers <- exceptions |>
+    mutate(note = blocking_note(paste0("EUCAST excludes ", exception, " ('", gsub("\\s+", " ", mo), "')"), NA_character_),
+           mo = exception, site = NA_character_, is_blocker = TRUE,
+           breakpoint_S = NA_character_, breakpoint_R = NA_character_) |>
+    select(-exception)
+  breakpoints_eucast <- bind_rows(breakpoints_eucast, exception_blockers)
+}
+
 breakpoints_eucast <- breakpoints_eucast |>
   mutate(
     mo_text = strip_mo_exceptions_wholecell(mo),
     mo_text = resolve_other_x(mo_text, sheet),
     mo_text = split_mo_list(mo_text, sheet_name = sheet)
   ) |>
+  tidyr::unnest(mo_text) |>
+  mutate(mo_text = expand_organism_groups(mo_text)) |>
   tidyr::unnest(mo_text) |>
   mutate(
     # ref_tbl is pure metadata for a human reviewer to trace a row back to
@@ -1493,6 +2034,25 @@ breakpoints_eucast <- breakpoints_eucast |>
 # for inspection regardless of what AMR functions run afterward or how the
 # script is subsequently sourced.
 mo_uncertainties_eucast <- AMR:::AMR_env$mo_uncertainties
+
+# A descriptive organism group (e.g. "... group", "... anaerobes", "MRSA")
+# must either be mapped in eucast_organism_groups or resolve to a species
+# group code (such as Viridans group streptococci or coagulase-negative
+# staphylococci). Otherwise as.mo() has matched it to a single taxon that
+# does not cover the group, as happened with "S. anginosus group".
+unmapped_groups <- breakpoints_eucast |>
+  distinct(mo_text, mo) |>
+  filter(grepl("group|anaerob|MRSA|MSSA|-negative|-positive|cocci\\b|bacteria\\b", mo_text, ignore.case = TRUE),
+         !grepl("spp\\.$", mo_text),
+         # a text that is exactly the name of the taxon it resolved to, such
+         # as "Peptostreptococcus anaerobius", is not a descriptive group
+         tolower(mo_text) != tolower(mo_name(mo, keep_synonyms = TRUE)),
+         !mo_rank(mo, keep_synonyms = TRUE) %in% "species group",
+         !mo %in% unlist(eucast_organism_groups))
+if (nrow(unmapped_groups) > 0) {
+  print(unmapped_groups |> mutate(name = mo_name(mo, keep_synonyms = TRUE)))
+  stop(nrow(unmapped_groups), " descriptive organism group(s) resolved to a single taxon, add them to eucast_organism_groups")
+}
 if (nrow(mo_uncertainties_eucast) > 0) {
   message("NOTE: ", nrow(mo_uncertainties_eucast), " organism string(s) were resolved with uncertainty ",
           "(matched below the default confidence, or against multiple candidates). ",
@@ -1511,22 +2071,20 @@ breakpoints_eucast <- breakpoints_eucast |>
       mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
       TRUE ~ 6
     ),
-    # The route/indication qualifier (if any) is captured into `site` before
-    # it is stripped from `ab`, e.g. "Cefuroxime oral (uncomplicated UTI
-    # only)" -> ab = "Cefuroxime oral", site = "uncomplicated UTI only".
-    # This keeps the iv/oral or indication-specific variants of the same
-    # drug+organism+method distinguishable in the distinct() step below
-    # (site is part of its key); without it, e.g. "Cefuroxime iv" and
-    # "Cefuroxime oral (uncomplicated UTI only)" against the same organism
-    # would otherwise collide on identical (ab, mo, method, breakpoint_S)
-    # if their S breakpoints happen to match, silently losing one of them.
-    # uti is derived from that same qualifier text: every "UTI" mention in
-    # the raw agent-name text is confirmed to sit inside a trailing
-    # parenthetical qualifier, never in the base drug name itself, so no
-    # separate check against the (by this point already-coded) ab is needed.
+    # The route and indication (if any) are captured into `site` before they
+    # are stripped from `ab`, e.g. "Cefuroxime oral (uncomplicated UTI
+    # only)" -> ab = "Cefuroxime", site = "Oral, Uncomplicated urinary tract
+    # infection" (see build_site()). This keeps the iv/oral or indication-
+    # specific variants of the same drug+organism+method distinguishable,
+    # both for the distinct() step below (site is part of its key) and for
+    # as.sir(), which would otherwise see e.g. "Cefuroxime iv" and
+    # "Cefuroxime oral" as two conflicting breakpoints for the same drug.
     qualifier = extract_trailing_parenthetical(ab),
-    site = coalesce(site, qualifier),
-    ab_input = gsub("\\s*\\(.*$", "", ab), # also fixes a source cell missing a space before "(", e.g. "Meropenem(indications..."
+    route = extract_route(ab),
+    site = build_site(site, route, qualifier),
+    # also fixes a source cell missing a space before "(", e.g. "Meropenem(indications..."
+    ab_input = gsub("\\s*\\(.*$", "", ab),
+    ab_input = trimws(sub("\\s+(iv|i\\.v\\.|oral)$", "", ab_input, ignore.case = TRUE)),
     ab = as.ab(ab_input)
   )
 
@@ -1547,17 +2105,357 @@ if (nrow(ab_previously_coerced_eucast) > 0) {
           "Inspect `ab_previously_coerced_eucast` and cross-check against the source sheet before trusting these rows.")
 }
 
+# Restrictions in the notes ----
+# Notes can restrict a breakpoint to some organisms, methods or indications,
+# e.g. "Zone diameter breakpoints apply to E. coli only. For other
+# Enterobacterales, use an MIC method." Every sentence in the notes with such
+# wording must match exactly one of these rules, either with an action or as
+# informational (e.g. advice on the route of administration, which does not
+# change the interpretation of an MIC or zone diameter). A sentence matching
+# no rule stops the script, so that a new restriction is never missed.
+#  - block:      the governed rows of `method` become blocking rows
+#  - site:       `target` is added to the site of the governed rows
+#  - restrict:   the governed rows of `method` apply to organism `target`
+#                only: a row for a broader taxon containing `target` is set to
+#                `target` (with a blocking row for the broader taxon), a row
+#                for any other organism becomes a blocking row
+#  - exclude:    organism `target` gets a blocking row for `method`
+#  - must_block: the governed rows of `method` must already be blocking rows
+#                (e.g. "Use an MIC method" for zone diameters given as "Note")
+#  - none:       informational
+eucast_note_rules <- tibble::tribble(
+  ~pattern, ~action, ~method, ~target,
+  "zone diameter breakpoint is valid for MSSA only", "block", "DISK", NA,
+  "Breakpoints relate to topical use only", "block", NA, NA,
+  "Breakpoints apply only to use in the prophylaxis of meningococcal disease", "site", NA, "Prophylaxis",
+  "For prophylaxis of meningitis only", "site", NA, "Prophylaxis",
+  "Zone diameter breakpoints (apply to|validated for) E\\. coli only", "restrict", "DISK", "B_ESCHR_COLI",
+  "For C\\. ?koseri, use an MIC method", "exclude", "DISK", "B_CTRBC_KOSR",
+  "For other Enterobacterales, use an MIC method", "none", NA, NA, # see the E. coli restriction
+  "^Use an MIC method", "must_block", "DISK", NA,
+  "Disk diffusion is unreliable", "must_block", "DISK", NA,
+  "^May be tested for epidemiological purposes only \\(ECOFF", "must_block", NA, NA,
+  "The .IE. in the table pertains to intravenous therapy only", "none", NA, NA,
+  "ATU relevant only if", "none", NA, NA,
+  "have been determined for meropenem only", "none", NA, NA,
+  "Meropenem is the only carbapenem used for meningitis", "none", NA, NA,
+  "Not for meningitis \\(meropenem is the only carbapenem", "none", NA, NA,
+  "Breakpointss? apply only to tests performed on Middlebrook", "none", NA, NA,
+  "Combinations between penicillins or glycopeptides and aminoglycosides", "none", NA, NA,
+  "EUCAST does not recommend systematic screening for BORSA", "none", NA, NA,
+  "(For oral administration the breakpoints|Breakpoints for oral administration|Oral administration) (are|is) relevant for (uncomplicated )?urinary tract infections only", "none", NA, NA,
+  "For staphylococci other than S\\. aureus, S\\. lugdunensis and S\\. saprophyticus, the cefoxitin MIC is a poorer predictor", "none", NA, NA,
+  "only a small number of cases involving these species", "none", NA, NA,
+  "Isolates must not be reported susceptible before 24 h incubation", "none", NA, NA,
+  "^(Positive|Negative) test:", "none", NA, NA, # see the derived screening breakpoints
+  "^The isolate is high-level resistant to gentamicin and other aminoglycosides", "none", NA, NA,
+  "Read and interpret the benzylpenicillin disk only for isolates with oxacillin", "none", NA, NA,
+  "^Susceptibility inferred from ampicillin", "none", NA, NA,
+  "Susceptibility of staphylococci to cephalosporins is inferred from the cefoxitin susceptibility", "none", NA, NA,
+  "The breakpoints also apply to meningitis", "none", NA, NA,
+  "apply to oral treatment of C\\. difficile infections", "none", NA, NA,
+  "The susceptibility of streptococcus groups A, B, C and G to penicillins is inferred", "none", NA, NA,
+  "Vancomycin resistance is the expected phenotype for E\\. casseliflavus and E\\. gallinarum", "none", NA, NA,
+  "^When the screen is negative", "none", NA, NA,
+  "^These breakpoints are used only when there are no species-specific breakpoints", "none", NA, NA, # PK-PD, see parse_sheet()
+  "^Include a note that the guidance is based on PK-PD breakpoints only", "none", NA, NA # PK-PD, reporting advice
+)
+restriction_wording <- "\\bonly\\b|do(es)? not apply|not applicable|not valid|apply to|applies to|\\bexcept\\b|other than|should not be|must not be|cannot be used|not be used|are not reliable|unreliable|not recommended|do not use|use an MIC method|exclusively"
+note_sentences <- function(note) {
+  bodies <- sub("^\\[[^]]+\\]\\s*", "", unlist(strsplit(note, " \\| ")))
+  trimws(unlist(strsplit(gsub("\\s+", " ", bodies), "(?<=[a-z0-9)])\\.\\s+(?=[A-Z])", perl = TRUE)))
+}
+# (the source notes, i.e. without the "[No breakpoint]" reasons added above)
+all_sentences <- unique(note_sentences(breakpoints_eucast_raw$note[!is.na(breakpoints_eucast_raw$note)]))
+restriction_sentences <- all_sentences[grepl(restriction_wording, all_sentences, ignore.case = TRUE)]
+rule_hits <- vapply(restriction_sentences, function(x) sum(vapply(eucast_note_rules$pattern, function(p) grepl(p, x, perl = TRUE), logical(1))), integer(1))
+if (any(rule_hits != 1)) {
+  print(data.frame(rules_matched = rule_hits[rule_hits != 1], sentence = substr(restriction_sentences[rule_hits != 1], 1, 200)))
+  stop("note sentence(s) with restriction wording that match no rule (or more than one) in eucast_note_rules, see above")
+}
+
+taxon_contains <- function(broad, narrow) {
+  # TRUE if taxon `narrow` belongs to taxon or species group `broad`
+  narrow <- as.mo(narrow, info = FALSE)
+  broad <- as.character(broad)
+  broad == as.character(narrow) |
+    broad == as.character(as.mo(mo_genus(narrow, keep_synonyms = TRUE), info = FALSE)) |
+    broad == as.character(as.mo(mo_family(narrow, keep_synonyms = TRUE), info = FALSE)) |
+    broad == as.character(as.mo(mo_order(narrow, keep_synonyms = TRUE), info = FALSE)) |
+    broad %in% AMR::microorganisms.groups$mo_group[AMR::microorganisms.groups$mo == as.character(narrow)]
+}
+to_blocker <- function(df, reason) {
+  df |> mutate(is_blocker = TRUE, breakpoint_S = NA_character_, breakpoint_R = NA_character_,
+               site = NA_character_, note = blocking_note(reason, note))
+}
+for (i in seq_len(nrow(eucast_note_rules))) {
+  rule <- eucast_note_rules[i, ]
+  if (rule$action == "none") next
+  governed <- !is.na(breakpoints_eucast$note) &
+    vapply(breakpoints_eucast$note, function(n) any(grepl(rule$pattern, note_sentences(n), perl = TRUE)), logical(1)) &
+    (is.na(rule$method) | breakpoints_eucast$method == rule$method)
+  if (!any(governed)) next
+  # the reason quotes the matching sentence of each row's own note
+  reason_of <- function(rows) {
+    vapply(breakpoints_eucast$note[rows], function(n) {
+      paste0("EUCAST: '", note_sentences(n)[grepl(rule$pattern, note_sentences(n), perl = TRUE)][1], "'")
+    }, character(1), USE.NAMES = FALSE)
+  }
+  if (rule$action == "must_block") {
+    if (any(!breakpoints_eucast$is_blocker[governed])) {
+      print(breakpoints_eucast[governed & !breakpoints_eucast$is_blocker, c("guideline", "sheet", "mo", "ab", "method", "breakpoint_S", "breakpoint_R")])
+      stop("rows governed by '", rule$pattern, "' have breakpoints, see above")
+    }
+  } else if (rule$action == "block") {
+    rows <- which(governed & !breakpoints_eucast$is_blocker)
+    breakpoints_eucast[rows, ] <- to_blocker(breakpoints_eucast[rows, ], reason_of(rows))
+  } else if (rule$action == "site") {
+    breakpoints_eucast$site[governed] <- if_else(is.na(breakpoints_eucast$site[governed]), rule$target,
+                                                 if_else(grepl(rule$target, breakpoints_eucast$site[governed], fixed = TRUE),
+                                                         breakpoints_eucast$site[governed],
+                                                         paste(breakpoints_eucast$site[governed], rule$target, sep = ", ")))
+  } else if (rule$action == "restrict") {
+    rows <- which(governed & !breakpoints_eucast$is_blocker)
+    for (r in rows) {
+      if (as.character(breakpoints_eucast$mo[r]) == rule$target) next
+      if (taxon_contains(breakpoints_eucast$mo[r], rule$target)) {
+        breakpoints_eucast <- bind_rows(breakpoints_eucast, to_blocker(breakpoints_eucast[r, ], reason_of(r)))
+        breakpoints_eucast$mo[r] <- as.mo(rule$target)
+      } else {
+        breakpoints_eucast[r, ] <- to_blocker(breakpoints_eucast[r, ], reason_of(r))
+      }
+    }
+  } else if (rule$action == "exclude") {
+    rows <- which(governed & !breakpoints_eucast$is_blocker)
+    for (r in rows) {
+      if (as.character(breakpoints_eucast$mo[r]) == rule$target) {
+        breakpoints_eucast[r, ] <- to_blocker(breakpoints_eucast[r, ], reason_of(r))
+      } else if (taxon_contains(breakpoints_eucast$mo[r], rule$target)) {
+        new_row <- to_blocker(breakpoints_eucast[r, ], reason_of(r))
+        new_row$mo <- as.mo(rule$target)
+        breakpoints_eucast <- bind_rows(breakpoints_eucast, new_row)
+      }
+    }
+  } else {
+    stop("unknown action in eucast_note_rules: ", rule$action)
+  }
+}
+
+# Screening breakpoints stated in the notes ----
+# A few screening tests have their breakpoints in the note instead of the
+# table cell ("Note"). Only explicit, decisive thresholds are taken over, and
+# each is read from the note of the row itself (so it follows the version):
+#  1. High-level aminoglycoside resistance in enterococci and viridans group
+#     streptococci: "Negative test: Isolates with gentamicin MIC <=128 mg/L or
+#     a zone diameter >=8 mm" / "Positive test: ... MIC >128 mg/L or a zone
+#     diameter <8 mm", likewise for streptomycin. These are coded as the
+#     agents gentamicin-high (GEH) and streptomycin-high (STH), as before.
+#  2. Methicillin resistance by cefoxitin MIC in staphylococci: "S. aureus and
+#     S. lugdunensis with cefoxitin MIC values >4 mg/L and S. saprophyticus
+#     with cefoxitin MIC values >8 mg/L are methicillin resistant". Like the
+#     cefoxitin disk ("screen only"), these get site "Screen".
+#  3. Cefoxitin zone diameters for coagulase-negative staphylococci that are
+#     not identified to species level: "If coagulase-negative staphylococci
+#     are not identified to species level, use zone diameter breakpoints
+#     S>=25, R<25 mm". The breakpoint for "S. aureus and coagulase-negative
+#     staphylococci except S. epidermidis and S. lugdunensis" then applies to
+#     the identified CoNS species (one row per species), while the CoNS group
+#     itself (an isolate only identified as CoNS) gets 25 mm.
+# Statements that are not breakpoints, such as ECOFFs ("There are no clinical
+# breakpoints but acquired resistance (indicated by MIC >1 mg/L) should be
+# excluded") or hedged ones ("... with oxacillin MIC values >2 mg/L are mostly
+# methicillin resistant"), are not taken over.
+derived_rows <- list()
+# (only the rows of the test itself, e.g. "Gentamicin (test for high-level
+# aminoglycoside resistance)"; other aminoglycosides refer to the same note)
+hlar_rows <- breakpoints_eucast |>
+  filter(grepl("Negative test: Isolates with (gentamicin|streptomycin) MIC \u2264", note),
+         ab %in% c("GEN", "STR1"), site %in% "Screen")
+for (r in seq_len(nrow(hlar_rows))) {
+  row <- hlar_rows[r, ]
+  # the note of a row can also hold the test for the other agent, so the
+  # agent is taken from the row itself
+  agent <- c(GEN = "gentamicin", STR1 = "streptomycin")[as.character(row$ab)]
+  if (is.na(agent)) stop("unexpected agent for a high-level aminoglycoside screening test: ", row$ab)
+  neg <- regmatches(row$note, regexec(paste0("Negative test: Isolates with ", agent, " MIC \u2264([0-9]+) mg/L(?: or a zone diameter \u2265([0-9]+) mm)?"), row$note, perl = TRUE))[[1]]
+  pos <- regmatches(row$note, regexec(paste0("Positive test: Isolates with ", agent, " MIC >([0-9]+) mg/L(?: or a zone diameter <([0-9]+) mm)?"), row$note, perl = TRUE))[[1]]
+  if (length(neg) != 3 || length(pos) != 3 || neg[2] != pos[2] || neg[3] != pos[3]) {
+    stop("inconsistent high-level aminoglycoside screening test in the note of ", row$guideline, " ", row$sheet, ": ", substr(row$note, 1, 300))
+  }
+  value <- if (row$method == "MIC") neg[2] else neg[3]
+  if (!nzchar(value)) next # e.g. no zone diameter given in this version
+  derived_rows[[length(derived_rows) + 1]] <- row |>
+    mutate(ab = as.ab(if (agent == "gentamicin") "GEH" else "STH"), site = NA_character_, is_blocker = FALSE,
+           breakpoint_S = value, breakpoint_R = value,
+           note = sub("^\\[No breakpoint\\][^|]*(\\| )?", "", note))
+}
+fox_mic <- breakpoints_eucast |>
+  filter(ab == "FOX", method == "MIC",
+         grepl("S\\. aureus and S\\. lugdunensis with cefoxitin MIC values >[0-9]+ mg/L and S\\. saprophyticus with cefoxitin MIC values >[0-9]+ mg/L are methicillin resistant", note)) |>
+  distinct(guideline, .keep_all = TRUE)
+for (r in seq_len(nrow(fox_mic))) {
+  row <- fox_mic[r, ]
+  m <- regmatches(row$note, regexec("S\\. aureus and S\\. lugdunensis with cefoxitin MIC values >([0-9]+) mg/L and S\\. saprophyticus with cefoxitin MIC values >([0-9]+) mg/L", row$note))[[1]]
+  for (sp in list(c("B_STPHY_AURS", m[2]), c("B_STPHY_LGDN", m[2]), c("B_STPHY_SPRP", m[3]))) {
+    derived_rows[[length(derived_rows) + 1]] <- row |>
+      mutate(mo = as.mo(sp[1]), site = "Screen", is_blocker = FALSE, breakpoint_S = sp[2], breakpoint_R = sp[2],
+             note = sub("^\\[No breakpoint\\][^|]*(\\| )?", "", note))
+  }
+}
+if (length(derived_rows) > 0) {
+  derived <- bind_rows(derived_rows)
+  message("NOTE: ", nrow(derived), " screening breakpoint row(s) taken from the notes (",
+          paste(unique(paste(derived$guideline, derived$ab, derived$method)), collapse = ", "), ")")
+  breakpoints_eucast <- bind_rows(breakpoints_eucast, derived)
+}
+cons_rule <- "If coagulase-negative staphylococci are not identified to species level, use zone diameter breakpoints S\u2265([0-9]+), R<([0-9]+) mm"
+for (g in unique(breakpoints_eucast$guideline[grepl(cons_rule, breakpoints_eucast$note) & breakpoints_eucast$ab == "FOX" & breakpoints_eucast$method == "DISK"])) {
+  rows <- which(breakpoints_eucast$guideline == g & breakpoints_eucast$ab == "FOX" & breakpoints_eucast$method == "DISK" &
+                  breakpoints_eucast$mo == "B_STPHY_CONS" & !breakpoints_eucast$is_blocker)
+  if (length(rows) != 1) stop("expected one cefoxitin zone diameter row for coagulase-negative staphylococci in ", g)
+  m <- regmatches(breakpoints_eucast$note[rows], regexec(cons_rule, breakpoints_eucast$note[rows]))[[1]]
+  if (length(m) != 3 || m[2] != m[3]) stop("unexpected cefoxitin rule for unidentified CoNS in ", g)
+  own_rows <- unique(as.character(breakpoints_eucast$mo[breakpoints_eucast$guideline == g & breakpoints_eucast$ab == "FOX" &
+                                                           breakpoints_eucast$method == "DISK" & breakpoints_eucast$mo != "B_STPHY_CONS"]))
+  members <- setdiff(as.character(AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group == "B_STPHY_CONS"]), own_rows)
+  species_rows <- breakpoints_eucast[rep(rows, length(members)), ]
+  species_rows$mo <- as.mo(members)
+  breakpoints_eucast$breakpoint_S[rows] <- m[2]
+  breakpoints_eucast$breakpoint_R[rows] <- m[3]
+  breakpoints_eucast$note[rows] <- paste0("[Scope] EUCAST: '", m[1], "' | ", breakpoints_eucast$note[rows])
+  breakpoints_eucast <- bind_rows(breakpoints_eucast, species_rows)
+}
+
+# Organism scope of each table ----
+# For every agent and method listed in a table, the organism of the table
+# (e.g. Enterobacterales, or Streptococcus groups A, B, C and G) gets a
+# blocking row if it has no breakpoint of its own for that agent and method,
+# so that an organism of the table that is not listed for that agent (e.g.
+# group B for phenoxymethylpenicillin, or Salmonella for cefuroxime iv) does
+# not fall back to a broader breakpoint. Not for the Topical agents sheet and
+# the PK-PD table.
+table_scope <- breakpoints_eucast |>
+  filter(sheet != "Topical agents", !grepl("^PK", sheet)) |>
+  distinct(guideline, sheet, table_organism) |>
+  mutate(table_mo = split_mo_list(resolve_other_x(strip_mo_exceptions_wholecell(table_organism), sheet), sheet_name = sheet)) |>
+  tidyr::unnest(table_mo) |>
+  mutate(table_mo = expand_organism_groups(table_mo)) |>
+  tidyr::unnest(table_mo) |>
+  mutate(table_mo = as.mo(table_mo, info = FALSE))
+if (any(is.na(table_scope$table_mo) | table_scope$table_mo == "UNKNOWN")) {
+  print(table_scope |> filter(is.na(table_mo) | table_mo == "UNKNOWN"))
+  stop("table organism(s) could not be resolved, see above")
+}
+scope_blockers <- breakpoints_eucast |>
+  filter(sheet != "Topical agents", !grepl("^PK", sheet)) |>
+  distinct(guideline, sheet, table_organism, ab, method, .keep_all = TRUE) |>
+  inner_join(table_scope, by = c("guideline", "sheet", "table_organism"), relationship = "many-to-many") |>
+  mutate(mo = table_mo, note = NA_character_) |>
+  select(-table_mo) |>
+  to_blocker("EUCAST lists this agent in this table for other organisms only")
+breakpoints_eucast <- bind_rows(breakpoints_eucast, scope_blockers)
+
+# Apply the statements that extend MIC breakpoints to another species (see
+# parse_sheet(), "Statements extending MIC breakpoints to another species"):
+# the MIC rows of the source species on that sheet are copied for the target
+# species, with EUCAST's statement in the note. A breakpoint that the source
+# gives for the target species itself always takes precedence.
+if (!is.null(parse_log$mic_scope_extensions)) {
+  scope_ext <- parse_log$mic_scope_extensions |>
+    distinct() |>
+    mutate(from_mo = as.character(as.mo(from_text, info = FALSE)),
+           to_mo = as.character(as.mo(to_text, info = FALSE)))
+  if (anyNA(scope_ext$from_mo) || anyNA(scope_ext$to_mo) || any(c(scope_ext$from_mo, scope_ext$to_mo) == "UNKNOWN")) {
+    print(scope_ext)
+    stop("species in a MIC scope statement could not be resolved, see above")
+  }
+  scope_rows <- breakpoints_eucast |>
+    filter(method == "MIC") |>
+    mutate(mo_chr = as.character(mo)) |>
+    inner_join(scope_ext |> select(guideline, sheet, mo_chr = from_mo, to_mo, statement),
+               by = c("guideline", "sheet", "mo_chr")) |>
+    mutate(mo = as.mo(to_mo),
+           note = case_when(
+             is_blocker ~ trimws(paste0(trimws(sub("^(\\[No breakpoint\\][^|]*).*$", "\\1", note)), " | [Scope] ", statement, " ",
+                                        sub("^\\[No breakpoint\\][^|]*", "", note))),
+             is.na(note) ~ paste0("[Scope] ", statement),
+             TRUE ~ paste0("[Scope] ", statement, " | ", note)
+           )) |>
+    select(-mo_chr, -to_mo, -statement) |>
+    anti_join(breakpoints_eucast |> filter(method == "MIC"), by = c("guideline", "mo", "ab", "method", "site"))
+  message("NOTE: ", nrow(scope_rows), " MIC breakpoint row(s) added following EUCAST's statement(s): ",
+          paste(unique(paste0(scope_ext$guideline, " ", scope_ext$from_text, " -> ", scope_ext$to_text)), collapse = ", "))
+  breakpoints_eucast <- bind_rows(breakpoints_eucast, scope_rows)
+}
+
+# Organisms for which EUCAST has not determined breakpoints at all ("EUCAST
+# has not determined breakpoints for Burkholderia cepacia complex organisms",
+# likewise L. pneumophila) must not be interpreted with the non-species
+# related PK-PD breakpoints either (v9.0-v13.1)
+pkpd <- breakpoints_eucast |> filter(grepl("^PK", sheet), !is_blocker)
+if (nrow(pkpd) > 0 && !is.null(parse_log$no_breakpoints_determined)) {
+  no_bp <- parse_log$no_breakpoints_determined |>
+    distinct(guideline, organism, .keep_all = TRUE) |>
+    mutate(no_bp_mo = as.mo(organism, info = FALSE))
+  if (any(is.na(no_bp$no_bp_mo) | no_bp$no_bp_mo == "UNKNOWN")) {
+    print(no_bp)
+    stop("organism(s) without EUCAST breakpoints could not be resolved, see above")
+  }
+  no_bp_blockers <- pkpd |>
+    distinct(guideline, ab, method, .keep_all = TRUE) |>
+    inner_join(no_bp |> select(guideline, no_bp_mo, statement), by = "guideline", relationship = "many-to-many") |>
+    mutate(mo = no_bp_mo, note = NA_character_) |>
+    select(-no_bp_mo)
+  no_bp_blockers <- to_blocker(no_bp_blockers, paste0("EUCAST: '", no_bp_blockers$statement, "'")) |> select(-statement)
+  breakpoints_eucast <- bind_rows(breakpoints_eucast, no_bp_blockers)
+}
+
+# Any breakpoint that is not purely numeric (placeholders are NA by now)
+# would silently become NA in as.numeric() below, so stop here instead.
+is_unexpected_bp <- function(x) {
+  !is.na(x) & x %unlike_case% "^[0-9.]+$"
+}
+non_numeric_bp <- breakpoints_eucast |>
+  filter(is_unexpected_bp(breakpoint_S) | is_unexpected_bp(breakpoint_R))
+if (nrow(non_numeric_bp) > 0) {
+  print(non_numeric_bp |> select(guideline, sheet, mo_text, ab, method, breakpoint_S, breakpoint_R))
+  stop(nrow(non_numeric_bp), " breakpoint(s) are not numeric and would become NA, see above")
+}
+
 breakpoints_eucast <- breakpoints_eucast |>
   mutate(
-    # Strip any residual parentheses before numeric conversion (defensive:
-    # is_screening rows are already filtered out above, but a missed edge
-    # case would otherwise introduce silent NAs via as.numeric()).
-    breakpoint_S = as.numeric(gsub("^\\((.+)\\)$", "\\1", breakpoint_S)),
-    breakpoint_R = as.numeric(gsub("^\\((.+)\\)$", "\\1", breakpoint_R)),
-    uti = qualifier %like_case% "UTI",
+    # the check above guarantees purely numeric values, so this conversion
+    # cannot introduce NAs (blocking rows are NA by design)
+    breakpoint_S = as.numeric(breakpoint_S),
+    breakpoint_R = as.numeric(breakpoint_R),
+    # EUCAST's "arbitrary, off scale" MIC breakpoint S <= 0.001 mg/L (from
+    # v10.0 on) is meant to categorise wild-type isolates as "I", not "S".
+    # MICs of 0.0005 mg/L and below do occur in vitro, so, as before, it is
+    # stored as 0.0001 mg/L to keep such isolates out of "S".
+    breakpoint_S = if_else(method == "MIC" & !is.na(breakpoint_S) & breakpoint_S == 0.001, 0.0001, breakpoint_S),
+    # same definition as used for the WHONET-based rows
+    uti = !is.na(site) & site %like% "(UTI|urinary|urine)",
     is_SDD = FALSE # EUCAST has no "susceptible, dose dependent" category (CLSI-only concept)
   ) |>
-  select(-mo_text, -qualifier, -is_screening) |>
+  # EUCAST prints the twofold dilutions below 0.125 mg/L rounded, e.g. 0.03 and
+  # 0.06 for 0.03125 and 0.0625, while this package (as.mic(), and the WHONET-
+  # based breakpoints of all other guidelines) uses 0.032 and 0.064. Since
+  # as.sir() compares values literally, an MIC of 0.064 would otherwise fall
+  # above an S breakpoint of 0.06. MIC breakpoints are therefore set to the
+  # package's dilution level they denote; a value that is not close to any
+  # dilution level stops the script. The raw data keep EUCAST's notation.
+  mutate(across(c(breakpoint_S, breakpoint_R), function(x) {
+    if (!all(method %in% c("MIC", "DISK"))) stop("unexpected method")
+    is_mic <- method == "MIC" & !is.na(x)
+    levels <- AMR:::COMMON_MIC_VALUES
+    nearest <- vapply(x[is_mic], function(z) levels[which.min(abs(log2(z) - log2(levels)))], numeric(1))
+    off_level <- abs(log2(x[is_mic]) - log2(nearest)) > 0.15
+    if (any(off_level)) {
+      stop("MIC breakpoint(s) not on a dilution level: ", paste(unique(x[is_mic][off_level]), collapse = ", "))
+    }
+    x[is_mic] <- nearest
+    x
+  })) |>
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>%
            gsub("\u03bc", "mc", ., fixed = TRUE) %>% # this is 'mu', \u03bc
@@ -1565,43 +2463,44 @@ breakpoints_eucast <- breakpoints_eucast |>
            gsub("\u2013", "-", ., fixed = TRUE) %>%
            gsub("(?<=\\d)(?=[a-zA-Z])", " ", ., perl = TRUE)) # keep a space after a number, e.g. "1mcg" to "1 mcg"
 
-# Surface any rows whose organism or antibiotic text failed to resolve,
-# rather than letting the final filter() drop them silently -- a growing
-# list here across EUCAST versions usually means a new free-text pattern
-# needs handling above, not a data error.
-#
-# as.mo() returns the literal code "UNKNOWN" rather than NA when it finds
-# no match at all (unlike as.ab(), which returns NA), so a plain
-# is.na(mo) check misses genuine resolution failures entirely. UNKNOWN is
-# not automatically wrong to keep -- it is a real, meaningful category
-# already used throughout this table (e.g. the rank_index case_when
-# above), and the currently published clinical_breakpoints legitimately
-# contains hundreds of such rows for cases EUCAST itself left organism-
-# unspecific. It is reported here for review rather than dropped
-# outright, since only a source-text defect that split_mo_list_one()
-# doesn't yet handle (checked by cross-referencing ref_tbl/ab against the
-# source sheet) would make a specific UNKNOWN row here spurious rather
-# than a genuine EUCAST ambiguity.
-unresolved_mo <- breakpoints_eucast |> filter(is.na(mo) | mo == "UNKNOWN") |> distinct(sheet, ref_tbl, ab)
-unresolved_ab <- breakpoints_eucast |> filter(is.na(ab)) |> distinct(sheet, ab)
-if (nrow(unresolved_mo) > 0) {
-  message("NOTE: ", nrow(unresolved_mo), " row(s) have an organism that either could not be resolved (NA, will be dropped) ",
-          "or resolved to UNKNOWN (kept, but review whether this is a genuine EUCAST ambiguity or a parsing gap):")
-  print(unresolved_mo)
-}
-if (nrow(unresolved_ab) > 0) {
-  message("NOTE: ", nrow(unresolved_ab), " distinct antibiotic string(s) could not be resolved by as.ab() and will be dropped:")
-  print(unresolved_ab)
+# Every row must have resolved to an organism and an antimicrobial. as.mo()
+# returns the code "UNKNOWN" rather than NA when it finds no match at all
+# (unlike as.ab(), which returns NA), so both are checked. Every EUCAST table
+# names its organisms and agents, so an unresolved one always means a gap in
+# the parsing above (e.g. a new free-text pattern), never a genuine ambiguity.
+# The only exception is the non-species related PK-PD table, which is coded
+# as "UNKNOWN" on purpose (as.sir() uses it as the last resort).
+unresolved_mo <- breakpoints_eucast |> filter(is.na(mo) | (mo == "UNKNOWN" & !grepl("^PK", sheet))) |> distinct(sheet, ref_tbl, ab, mo_text)
+unresolved_ab <- breakpoints_eucast |> filter(is.na(ab)) |> distinct(sheet, ref_tbl)
+if (nrow(unresolved_mo) > 0 || nrow(unresolved_ab) > 0) {
+  print(unresolved_mo, n = Inf)
+  print(unresolved_ab, n = Inf)
+  stop(nrow(unresolved_mo), " organism(s) and ", nrow(unresolved_ab), " antimicrobial(s) could not be resolved, see above")
 }
 
+# Pruning blocking rows ----
+# A blocking row is only needed where its organism has no (non-screening)
+# breakpoint of its own for that agent and method, and blocking rows for the
+# PK-PD table ("UNKNOWN") have no function. Of several blocking rows for the
+# same organism, agent and method, the first is kept.
+has_own_bp <- breakpoints_eucast |>
+  filter(!is_blocker, !grepl("screen", site, ignore.case = TRUE)) |>
+  distinct(guideline, type, host, mo, ab, method)
+breakpoints_eucast <- bind_rows(
+  breakpoints_eucast |> filter(!is_blocker),
+  breakpoints_eucast |>
+    filter(is_blocker, mo != "UNKNOWN") |>
+    anti_join(has_own_bp, by = c("guideline", "type", "host", "mo", "ab", "method")) |>
+    distinct(guideline, type, host, mo, ab, method, .keep_all = TRUE) |>
+    mutate(site = NA_character_, uti = FALSE, disk_dose = NA_character_)
+)
+
 breakpoints_eucast <- breakpoints_eucast |>
-  filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)), !is.na(mo), !is.na(ab)) |>
   distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE) |>
-  select(guideline, type, host, method, site, mo, rank_index, ab, ref_tbl,
-         disk_dose, breakpoint_S, breakpoint_R, uti, is_SDD, note) |>
   mutate(
     rank_index = case_when(
-      is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
+      mo == "UNKNOWN" ~ 7, # the PK-PD table, as for the WHONET-based rows
+      is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
       mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
       mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
       mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,
@@ -1610,23 +2509,101 @@ breakpoints_eucast <- breakpoints_eucast |>
       mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
       TRUE ~ 6
     ),
-    uti = ifelse(is.na(site), FALSE, site %like% ".*(UTI|urinary|urine).*")
+    # a breakpoint of the same organism always precedes its blocking row
+    rank_index = rank_index + if_else(is_blocker, 0.1, 0)
   )
 
-breakpoints_eucast %>% count(guideline)
+# Integrity checks on the final table ----
+# 1. One breakpoint per guideline, organism, agent, method and site: two rows
+#    sharing these but differing in their values would leave as.sir() to pick
+#    one of them arbitrarily.
+conflicting_bp <- breakpoints_eucast |>
+  group_by(guideline, type, host, ab, mo, method, site) |>
+  filter(n() > 1) |>
+  ungroup()
+if (nrow(conflicting_bp) > 0) {
+  print(conflicting_bp |> select(guideline, mo, ab, method, site, disk_dose, breakpoint_S, breakpoint_R, ref_tbl), n = Inf)
+  stop(nrow(conflicting_bp), " rows have more than one breakpoint for the same guideline, organism, agent, method and site, see above")
+}
+# 2. Breakpoints must be in the right order: for MICs S <= R, for zone
+#    diameters S >= R.
+misordered_bp <- breakpoints_eucast |>
+  filter((method == "MIC" & breakpoint_S > breakpoint_R) | (method == "DISK" & breakpoint_S < breakpoint_R))
+if (nrow(misordered_bp) > 0) {
+  print(misordered_bp |> select(guideline, mo, ab, method, site, breakpoint_S, breakpoint_R, ref_tbl), n = Inf)
+  stop(nrow(misordered_bp), " rows have S and R breakpoints in the wrong order, see above")
+}
+# 3. A disk breakpoint needs a disk content, an MIC breakpoint none.
+missing_dose <- breakpoints_eucast |>
+  filter(!is_blocker, (method == "DISK" & is.na(disk_dose)) | (method == "MIC" & !is.na(disk_dose)))
+if (nrow(missing_dose) > 0) {
+  print(missing_dose |> select(guideline, mo, ab, method, disk_dose, ref_tbl), n = Inf)
+  stop(nrow(missing_dose), " rows have a disk content that does not match their method, see above")
+}
+# 4. Blocking rows have no values and state their reason; other rows have an
+#    S breakpoint, and only screening tests may lack an R breakpoint.
+bad_rows <- breakpoints_eucast |>
+  filter((is_blocker & (!is.na(breakpoint_S) | !is.na(breakpoint_R) | !grepl("^\\[No breakpoint\\] ", note))) |
+           (!is_blocker & (is.na(breakpoint_S) | (is.na(breakpoint_R) & !grepl("screen", site, ignore.case = TRUE)))))
+if (nrow(bad_rows) > 0) {
+  print(bad_rows |> select(guideline, mo, ab, method, site, breakpoint_S, breakpoint_R, ref_tbl, note), n = Inf)
+  stop(nrow(bad_rows), " rows are neither a complete breakpoint nor a proper blocking row, see above")
+}
 
-saveRDS(breakpoints_eucast_raw, "data-raw/breakpoints_eucast_raw.rds")
+breakpoints_eucast <- breakpoints_eucast |>
+  select(guideline, type, host, method, site, mo, rank_index, ab, ref_tbl,
+         disk_dose, breakpoint_S, breakpoint_R, uti, is_SDD, note)
 
-message(paste0(c("Finished. Now add to the package by running:\n\n",
-                 "clinical_breakpoints <- clinical_breakpoints |>",
-                 "  filter(guideline %like% \"CLSI\" | type != \"human\" | guideline %like% \"2010|2011|2012|2013|2014|2015|2016|2017|2018\") |>",
-                 "  bind_rows(breakpoints_eucast) |>",
-                 "  arrange(desc(guideline), mo, ab, type, method) |>",
-                 "  filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) |>",
-                 "  distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE) |>",
-                 "  dataset_UTF8_to_ASCII()",
-                 "",
-                 "usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = \"xz\", version = 2)",
-                 "rm(clinical_breakpoints)",
-                 "devtools::load_all(\".\")"),
-               collapse = "\n"))
+breakpoints_eucast |> count(guideline) |> print()
+
+# Which guideline years these workbooks cover, separately for bacteria and
+# fungi: the bacterial tables and the antifungal (AFST) tables are separate
+# EUCAST documents, and only these years may replace the WHONET-based rows
+# (see merge_eucast_breakpoints()).
+eucast_coverage <- breakpoints_eucast_raw |>
+  distinct(guideline, file_desc) |>
+  mutate(scope = if_else(file_desc %like% "Antifungal", "Fungi", "Bacteria")) |>
+  distinct(guideline, scope)
+
+# Merges these EUCAST breakpoints into the (WHONET-based) clinical
+# breakpoints: human EUCAST rows are replaced for exactly those guideline
+# years and organism groups (bacteria or fungi) that the EUCAST workbooks
+# here cover. Everything else is kept as is, e.g. EUCAST antifungal
+# breakpoints of guideline years for which no AFST workbook is available,
+# EUCAST ECOFFs, EUCAST animal breakpoints and all CLSI breakpoints.
+merge_eucast_breakpoints <- function(clinical_breakpoints, breakpoints_eucast, eucast_coverage) {
+  # bacteria or fungi; for the non-species related rows ("UNKNOWN"), this
+  # follows the agent, e.g. the PK-PD breakpoints of fluconazole belong to
+  # the antifungal tables
+  scope_of <- function(mo, ab) {
+    if_else(mo_kingdom(mo, keep_synonyms = TRUE) %in% "Fungi" |
+              (as.character(mo) == "UNKNOWN" & ab_group(ab) %in% "Antifungals"),
+            "Fungi", "Bacteria")
+  }
+  # the organisms in the EUCAST rows must agree with the type of workbook
+  # they come from
+  new_scope <- breakpoints_eucast |>
+    mutate(scope = scope_of(mo, ab), from_afst = ref_tbl %like% "Antifungal")
+  mismatch <- new_scope |> filter((scope == "Fungi") != from_afst)
+  if (nrow(mismatch) > 0) {
+    print(mismatch |> select(guideline, mo, ab, method, ref_tbl), n = Inf)
+    stop("merge_eucast_breakpoints(): organisms do not match the type of EUCAST workbook, see above")
+  }
+  replaced <- clinical_breakpoints |>
+    mutate(scope = scope_of(mo, ab)) |>
+    semi_join(eucast_coverage, by = c("guideline", "scope")) |>
+    filter(type == "human")
+  kept <- clinical_breakpoints |>
+    anti_join(replaced, by = names(clinical_breakpoints))
+  message("Replacing ", nrow(replaced), " WHONET-based human EUCAST rows (",
+          paste(sort(unique(paste(replaced$guideline, replaced$scope))), collapse = ", "),
+          ") with ", nrow(breakpoints_eucast), " rows from the EUCAST workbooks")
+  # rows without any breakpoint are only kept as the blocking rows of the
+  # EUCAST workbooks (see "Blocking rows")
+  kept |>
+    filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) |>
+    bind_rows(breakpoints_eucast) |>
+    arrange(desc(guideline), mo, ab, type, host, method, rank_index) |>
+    distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE) |>
+    dataset_UTF8_to_ASCII()
+}

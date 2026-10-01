@@ -297,19 +297,23 @@
 #' - `method`\cr Testing method, either `r vector_or(clinical_breakpoints$method, documentation = TRUE)`
 #' - `site`\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]
-#' - `rank_index`\cr Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
+#' - `rank_index`\cr Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 7 (non-species related breakpoints), used to choose the most specific breakpoint; blocking rows (see *Details*) have the rank index of their organism + 0.1
 #' - `ab`\cr Antimicrobial code as used by this package, EARS-Net and WHONET, see [as.ab()]
 #' - `ref_tbl`\cr Info about where the guideline rule can be found
 #' - `disk_dose`\cr Dose of the used disk diffusion method
-#' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S"
+#' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S", is `NA` for blocking rows (see *Details*)
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R", can be `NA`
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' - `is_SDD`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to `r sum(clinical_breakpoints$is_SDD)` breakpoints.
+#' - `note`\cr Notes from the guideline that apply to the breakpoint, if available
 #' @details
 #' ### Different Types of Breakpoints
 #' Supported types of breakpoints are `r vector_and(clinical_breakpoints$type, quotes = FALSE)`. ECOFF (Epidemiological cut-off) values are used in antimicrobial susceptibility testing to differentiate between wild-type and non-wild-type strains of bacteria or fungi.
 #'
 #' The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. Use [`as.sir(..., breakpoint_type = ...)`][as.sir()] to interpret raw data using a specific breakpoint type, e.g. `as.sir(..., breakpoint_type = "ECOFF")` to use ECOFFs.
+#'
+#' ### Blocking Rows
+#' Where EUCAST lists an organism but gives no breakpoint for it (e.g. "IE", "-", "Note", breakpoints in brackets, or an organism excluded with "except"), [as.sir()] must not fall back to the breakpoint of a broader taxon, such as the breakpoint for *Vibrio* spp. where EUCAST gives "IE" for *V. fluvialis*. Such cases are included as "blocking rows": rows in which `breakpoint_S` and `breakpoint_R` are both `NA` and the `note` starts with `"[No breakpoint]"` followed by the reason. [as.sir()] returns `NA` for these. This currently applies to `r format(sum(is.na(clinical_breakpoints$breakpoint_S) & is.na(clinical_breakpoints$breakpoint_R)), big.mark = " ")` rows. Remove them with `subset(clinical_breakpoints, !is.na(breakpoint_S))` if only actual breakpoints are needed.
 #'
 #' ### Imported From WHONET
 #' Some breakpoints in this package were validated through and imported from [WHONET](https://whonet.org), a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on [their website](https://whonet.org). The developers of WHONET and this `AMR` package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
@@ -319,9 +323,10 @@
 #' * All CLSI breakpoints, including ECOFF
 #' * All non-human EUCAST breakpoints, including ECOFF
 #' * Human EUCAST breakpoints between `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and 2018
+#' * Human EUCAST antifungal breakpoints between 2019 and 2025
 #'
-#' Human EUCAST breakpoints from 2019 onwards, were retrieved directly from <https://www.eucast.org> using [this script](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R).
-#' 
+#' Human EUCAST breakpoints from 2019 onwards (antifungal breakpoints from 2026 onwards) were retrieved directly from the EUCAST Clinical Breakpoint Tables published on <https://www.eucast.org>, using [this script](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R).
+#'
 #' Our WHONET import script can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R).
 #'
 #' ### Response From CLSI and EUCAST

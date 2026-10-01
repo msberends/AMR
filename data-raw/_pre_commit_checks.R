@@ -653,7 +653,8 @@ if (changed_md5(clin_break)) {
   try(saveRDS(clin_break, "data-raw/datasets/clinical_breakpoints.rds", version = 2, compress = "xz"), silent = TRUE)
   try(write.table(clinical_breakpoints, "data-raw/datasets/clinical_breakpoints.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
   try(haven::write_sav(clin_break, "data-raw/datasets/clinical_breakpoints.sav"), silent = TRUE)
-  try(haven::write_dta(clin_break, "data-raw/datasets/clinical_breakpoints.dta"), silent = TRUE)
+  # long notes as strL, otherwise Stata's fixed-width strings make the file exceed 100 MB; a missing string is "" in Stata
+  try(haven::write_dta(clin_break %>% mutate(note = if_else(is.na(note), "", note)), "data-raw/datasets/clinical_breakpoints.dta", strl_threshold = 255), silent = TRUE)
   try(openxlsx2::write_xlsx(clin_break, "data-raw/datasets/clinical_breakpoints.xlsx"), silent = TRUE)
   try(arrow::write_feather(clin_break, "data-raw/datasets/clinical_breakpoints.feather"), silent = TRUE)
   try(arrow::write_parquet(clin_break, "data-raw/datasets/clinical_breakpoints.parquet"), silent = TRUE)
