@@ -38,7 +38,7 @@ for (i in seq_len(nrow(antimicrobials))) {
 int_resis <- interpretive_rules(int_resis,
                                 interpretive_rules_df = subset(
                                   AMR:::INTERPRETIVE_RULES_DF,
-                                  is.na(have_these_values) & reference.rule_group == "Expected phenotypes" & reference.version == 1.2
+                                  reference.rule_group %like% "Expected.* Phenotypes"
                                 ),
                                 overwrite = TRUE,
                                 info = FALSE

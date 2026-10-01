@@ -2340,6 +2340,28 @@ rep.sir <- function(x, ...) {
   y
 }
 
+#' @method Ops sir
+#' @export
+#' @noRd
+Ops.sir <- function(e1, e2) {
+  comparison_ops <- c("==", "!=", "<", ">", "<=", ">=")
+  if (nargs() == 2 && .Generic %in% comparison_ops) {
+    # coerce both sides to the current sir structure (identical levels),
+    # after which comparing the integer codes is exact, including ordering
+    e1 <- as.sir(e1)
+    e2 <- as.sir(e2)
+    return(get(.Generic, mode = "function")(as.integer(e1), as.integer(e2)))
+  }
+  NextMethod()
+}
+
+#' @rawNamespace if(getRversion() >= "4.3.0") S3method(chooseOpsMethod, sir)
+#' @exportS3Method NULL
+#' @noRd
+chooseOpsMethod.sir <- function(x, y, mx, my, cl, reverse) {
+  TRUE
+}
+
 coerce_reference_data_columns <- function(x) {
   ref <- AMR::clinical_breakpoints
   for (col in names(ref)) {

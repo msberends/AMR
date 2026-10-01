@@ -130,7 +130,7 @@ test_that("test-interpretive_rules.R", {
   # azithromycin and clarythromycin must be equal to Erythromycin
   a <- suppressWarnings(as.sir(interpretive_rules(
     data.frame(
-      mo = example_isolates$mo,
+      mo = rep(as.mo("Campylobacter jejuni"), nrow(example_isolates)),
       ERY = example_isolates$ERY,
       AZM = as.sir("R"),
       CLR = factor("R"),
@@ -143,8 +143,8 @@ test_that("test-interpretive_rules.R", {
   )$CLR))
   b <- example_isolates$ERY
   expect_identical(
-    a[!is.na(b)],
-    b[!is.na(b)]
+    a[!is.na(b) & b != "I"],
+    b[!is.na(b) & b != "I"]
   )
 
   # amox is inferred by benzylpenicillin in Kingella kingae

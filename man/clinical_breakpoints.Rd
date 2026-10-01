@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 45 735 observations and 14 variables:
+A \link[tibble:tibble]{tibble} with 44 089 observations and 15 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either \code{"ECOFF"}, \code{"animal"}, or \code{"human"}
@@ -53,12 +53,13 @@ Some breakpoints in this package were validated through and imported from \href{
 From WHONET, imported were:
 \itemize{
 \item All CLSI breakpoints, including ECOFF
-\item EUCAST breakpoints between  2011 and 2018
+\item All non-human EUCAST breakpoints, including ECOFF
+\item Human EUCAST breakpoints between 2011 and 2018
 }
 
-EUCAST breakpoints from 2019 onwards, were retrieved directly from \url{https://www.eucast.org}.
+Human EUCAST breakpoints from 2019 onwards, were retrieved directly from \url{https://www.eucast.org} using \href{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R}{this script}.
 
-Our import and reproduction script can be found here: \url{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R}.
+Our WHONET import script can be \href{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R}{found here}.
 }
 
 \subsection{Response From CLSI and EUCAST}{

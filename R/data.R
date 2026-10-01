@@ -317,11 +317,12 @@
 #' From WHONET, imported were:
 #'
 #' * All CLSI breakpoints, including ECOFF
-#' * EUCAST breakpoints between  `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and 2018
+#' * All non-human EUCAST breakpoints, including ECOFF
+#' * Human EUCAST breakpoints between `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST" & type == "human")$guideline)))` and 2018
 #'
-#' EUCAST breakpoints from 2019 onwards, were retrieved directly from <https://www.eucast.org>.
-#'
-#' Our import and reproduction script can be found here: <https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R>.
+#' Human EUCAST breakpoints from 2019 onwards, were retrieved directly from <https://www.eucast.org> using [this script](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R).
+#' 
+#' Our WHONET import script can be [found here](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R).
 #'
 #' ### Response From CLSI and EUCAST
 #' The CEO of CLSI and the chairman of EUCAST have endorsed the work and public use of this `AMR` package (and consequently the use of their breakpoints) in June 2023, when future development of distributing clinical breakpoints was discussed in a meeting between CLSI, EUCAST, WHO, developers of WHONET software, and developers of this `AMR` package.

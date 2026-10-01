@@ -180,6 +180,7 @@ This data set is in R available as `clinical_breakpoints`, after you load the `A
 clinical_breakpoints %>%
   mutate(mo_name = mo_name(mo, language = NULL), .after = mo) %>%
   mutate(ab_name = ab_name(ab, language = NULL), .after = ab) %>%
+  select(-site, -mo, -ab, -ref_tbl) %>%
   print_df()
 ```
 

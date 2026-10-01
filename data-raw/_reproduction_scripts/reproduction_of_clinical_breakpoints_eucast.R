@@ -351,13 +351,22 @@ get_cell <- function(df, r, c) {
 }
 
 parse_bp <- function(txt) {
-  if (is.na(txt) || txt == "") return(NA_real_)
+  if (is.na(txt) || txt == "") return(NA_character_)
   t <- trimws(txt)
-  # if (toupper(t) %in% c("NOTE", "IE", "IP", "NA", "-")) return(NA_real_)
-  if (toupper(t) %in% c("NA", "-")) return(NA_real_)
-  t <- gsub("^\\((.+)\\)$", "\\1", t)
-  # suppressWarnings(as.numeric(t))
+  if (toupper(t) %in% c("NA", "-")) return(NA_character_)
+  # Parenthesised values like "(2)" are screening breakpoints. They are
+  # preserved as-is in the raw file (e.g. "(2)") so they remain
+  # distinguishable from clinical breakpoints. The cleanup section
+  # later strips the parentheses for numeric conversion and filters
+  # screening rows out of the clean clinical_breakpoints table.
   t
+}
+
+is_screening_bp <- function(txt) {
+  # A breakpoint cell value wrapped in parentheses, e.g. "(2)" or "(0.5)",
+  # is a screening breakpoint in EUCAST terminology (present since v12).
+  if (is.na(txt) || txt == "") return(FALSE)
+  grepl("^\\(.+\\)$", trimws(txt))
 }
 
 format_disk_dose <- function(dose) {
@@ -715,6 +724,7 @@ parse_sheet <- function(xlsx_path, sheet_name) {
           disk_dose    = NA_character_,
           breakpoint_S = s_val,
           breakpoint_R = r_val,
+          is_screening = is_screening_bp(mic_s$base) || is_screening_bp(mic_r$base),
           note         = mic_note
         )
       }
@@ -738,6 +748,7 @@ parse_sheet <- function(xlsx_path, sheet_name) {
           disk_dose    = format_disk_dose(disk_dose_cell$base),
           breakpoint_S = s_val,
           breakpoint_R = r_val,
+          is_screening = is_screening_bp(disk_s$base) || is_screening_bp(disk_r$base),
           note         = disk_note
         )
       }
@@ -844,6 +855,7 @@ parse_topical_sheet <- function(xlsx_path) {
           ab = ab_name,
           disk_dose = NA_character_,
           breakpoint_S = mic_val, breakpoint_R = mic_val,
+          is_screening = is_screening_bp(mic_cell$base),
           note = mic_note
         )
       }
@@ -864,6 +876,7 @@ parse_topical_sheet <- function(xlsx_path) {
           ab = ab_name,
           disk_dose = ab_dose,
           breakpoint_S = disk_val, breakpoint_R = disk_val,
+          is_screening = is_screening_bp(disk_cell$base),
           note = disk_note
         )
       }
@@ -1027,6 +1040,7 @@ parse_yeast_sheet <- function(xlsx_path, sheet_name) {
         disk_dose    = NA_character_,
         breakpoint_S = s_val,
         breakpoint_R = r_val,
+        is_screening = is_screening_bp(s_cell$base) || is_screening_bp(r_cell$base),
         note         = note_text
       )
     }
@@ -1167,6 +1181,56 @@ write.csv(breakpoints_eucast_raw, "data-raw/breakpoints_eucast_raw.csv", row.nam
 #     cases (as separate rows, not a joint entry).
 strip_mo_exceptions <- function(x) {
   trimws(sub("\\s*\\(?(except|other than)\\b.*$", "", x, ignore.case = TRUE, perl = TRUE))
+}
+
+# Occasionally, split_agent_organism() fails to separate an organism
+# restriction from the antibiotic name in column A -- typically when
+# the cell has no rich-text formatting at all (plain text, no bold/non-
+# bold boundary to split on), leaving the full string in `ab` while `mo`
+# carries only the sheet's default organism. The observed cases all
+# follow a pattern of "DrugName, organism-restriction", where the text
+# after the comma is recognisably an organism (genus-like capitalised
+# word, or "other than" / "except" phrasing) rather than a drug-name
+# continuation. For example, EUCAST 2024 Enterococcus sheet:
+#   ab = "Vancomycin, enterococci other than E. casseliflavus and E. gallinarum"
+# This function detects such cases and returns a two-column tibble
+# (ab_clean, mo_from_ab) that the pipeline uses to correct both columns.
+split_organism_from_ab <- function(ab, mo) {
+  # Only act on ab values that contain a bare comma (i.e. not inside
+  # parentheses, which are route/indication qualifiers like "(endocarditis,
+  # in combination with...)" that are part of the drug name).
+  # Strip parenthetical content first to test for a bare comma.
+  ab_no_parens <- gsub("\\([^)]*\\)", "", ab)
+  has_bare_comma <- grepl(",", ab_no_parens)
+  
+  ab_clean <- ab
+  mo_from_ab <- rep(NA_character_, length(ab))
+  
+  for (i in which(has_bare_comma)) {
+    # Split at the first bare comma (outside parentheses)
+    # Simple approach: find the first comma in ab_no_parens, use its
+    # position to split the original ab string
+    comma_pos <- regexpr(",", ab_no_parens[i])
+    if (comma_pos < 1) next
+    before <- trimws(substr(ab[i], 1, comma_pos - 1))
+    after  <- trimws(substr(ab[i], comma_pos + 1, nchar(ab[i])))
+    if (!nzchar(after)) next
+    
+    # The part after the comma must look like an organism restriction,
+    # not a drug-name continuation. Heuristic: starts with a genus-like
+    # capitalised word (3+ letters), or starts with "other" / "except",
+    # or contains known taxonomic suffixes (cocci, bacill, etc.)
+    is_organism <- grepl(
+      "^(other\\b|except\\b|[a-z]*cocc|[a-z]*bacill|[A-Z][a-z]{2,}\\b)",
+      after, ignore.case = FALSE, perl = TRUE
+    )
+    if (!is_organism) next
+    
+    ab_clean[i] <- before
+    mo_from_ab[i] <- after
+  }
+  
+  tibble(ab_clean = ab_clean, mo_from_ab = mo_from_ab)
 }
 
 # Whole-cell variant of the above, used before any list-splitting is
@@ -1379,6 +1443,26 @@ split_mo_list_one <- function(s, sheet_genus_fallback) {
 breakpoints_eucast <- breakpoints_eucast_raw |>
   filter(!breakpoint_S %in% c("NOTE", "IE", "IP", "NA", "-"),
          !breakpoint_R %in% c("NOTE", "IE", "IP", "NA", "-")) |>
+  # Screening breakpoints (parenthesised values like "(2)") are kept in
+  # breakpoints_eucast_raw but excluded from the clinical_breakpoints table:
+  # they are screening cut-offs, not interpretive breakpoints for clinical
+  # reporting. The is_screening flag was set during parsing.
+  filter(!is_screening)
+
+# Occasionally, split_agent_organism() could not separate an organism
+# restriction from the drug name (see split_organism_from_ab comment).
+# Detect and fix those before mo resolution, so the organism restriction
+# is processed alongside the regular mo text.
+ab_mo_fix <- split_organism_from_ab(breakpoints_eucast$ab, breakpoints_eucast$mo)
+fixed_rows <- !is.na(ab_mo_fix$mo_from_ab)
+if (any(fixed_rows)) {
+  message("NOTE: ", sum(fixed_rows), " row(s) had an organism restriction embedded in the ab column; ",
+          "splitting into ab + mo (e.g. '", breakpoints_eucast$ab[which(fixed_rows)[1]], "').")
+  breakpoints_eucast$ab[fixed_rows] <- ab_mo_fix$ab_clean[fixed_rows]
+  breakpoints_eucast$mo[fixed_rows] <- ab_mo_fix$mo_from_ab[fixed_rows]
+}
+
+breakpoints_eucast <- breakpoints_eucast |>
   mutate(
     mo_text = strip_mo_exceptions_wholecell(mo),
     mo_text = resolve_other_x(mo_text, sheet),
@@ -1465,12 +1549,15 @@ if (nrow(ab_previously_coerced_eucast) > 0) {
 
 breakpoints_eucast <- breakpoints_eucast |>
   mutate(
-    breakpoint_S = as.numeric(breakpoint_S),
-    breakpoint_R = as.numeric(breakpoint_R),
+    # Strip any residual parentheses before numeric conversion (defensive:
+    # is_screening rows are already filtered out above, but a missed edge
+    # case would otherwise introduce silent NAs via as.numeric()).
+    breakpoint_S = as.numeric(gsub("^\\((.+)\\)$", "\\1", breakpoint_S)),
+    breakpoint_R = as.numeric(gsub("^\\((.+)\\)$", "\\1", breakpoint_R)),
     uti = qualifier %like_case% "UTI",
     is_SDD = FALSE # EUCAST has no "susceptible, dose dependent" category (CLSI-only concept)
   ) |>
-  select(-mo_text, -qualifier) |>
+  select(-mo_text, -qualifier, -is_screening) |>
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>%
            gsub("\u03bc", "mc", ., fixed = TRUE) %>% # this is 'mu', \u03bc
@@ -1512,7 +1599,34 @@ breakpoints_eucast <- breakpoints_eucast |>
   distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE) |>
   select(guideline, type, host, method, site, mo, rank_index, ab, ref_tbl,
          disk_dose, breakpoint_S, breakpoint_R, uti, is_SDD, note) |>
-  arrange(desc(guideline), mo, ab, type, host, method)
+  mutate(
+    rank_index = case_when(
+      is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for UNKNOWN, B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
+      mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
+      mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
+      mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,
+      mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
+      mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
+      mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
+      TRUE ~ 6
+    ),
+    uti = ifelse(is.na(site), FALSE, site %like% ".*(UTI|urinary|urine).*")
+  )
 
 breakpoints_eucast %>% count(guideline)
-glimpse(breakpoints_eucast)
+
+saveRDS(breakpoints_eucast_raw, "data-raw/breakpoints_eucast_raw.rds")
+
+message(paste0(c("Finished. Now add to the package by running:\n\n",
+                 "clinical_breakpoints <- clinical_breakpoints |>",
+                 "  filter(guideline %like% \"CLSI\" | type != \"human\" | guideline %like% \"2010|2011|2012|2013|2014|2015|2016|2017|2018\") |>",
+                 "  bind_rows(breakpoints_eucast) |>",
+                 "  arrange(desc(guideline), mo, ab, type, method) |>",
+                 "  filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) |>",
+                 "  distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE) |>",
+                 "  dataset_UTF8_to_ASCII()",
+                 "",
+                 "usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = \"xz\", version = 2)",
+                 "rm(clinical_breakpoints)",
+                 "devtools::load_all(\".\")"),
+               collapse = "\n"))

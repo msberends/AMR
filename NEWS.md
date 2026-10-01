@@ -1,6 +1,6 @@
-# AMR 3.0.1.9091
+# AMR 3.0.1.9092
 
-Planned as v3.1.0, end of September 2026.
+Planned as v3.1.0, mid October 2026.
 
 ### Breaking Changes
 * The former *kingdoms* Bacteria and Archaea are now each divided into four kingdoms with new top-level *domains* 'Bacteria' and 'Archaea' (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new `domain` column in the `microorganisms` data set was added, and more importantly, `mo_kingdom()` now returns the formal kingdom (e.g. `"Pseudomonadati"` instead of `"Bacteria"`). Use `mo_domain()` for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), `kingdom` and `domain` are identical.
@@ -27,6 +27,7 @@ Planned as v3.1.0, end of September 2026.
 
 ### New
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
+* Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
 * Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting `breakpoint_type = "ECOFF"` in `as.sir()`; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (#254)
 * *tidymodels* integration for using SIR, MIC and disk data in modelling pipelines: `step_mic_log2()`, `step_sir_numeric()`, and new column selectors `all_sir()`, `all_mic()`, `all_disk()`
 * New `esbl_isolates` data set for practising AMR modelling
@@ -56,6 +57,7 @@ Planned as v3.1.0, end of September 2026.
 * BRMO classification now includes bacterial complexes (#275)
 * Translation fixes for Italian CoNS/CoPS names (#256), Dutch antimicrobials, and `sir_df()` foreign-language output (#272)
 * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
+* Logical comparison (`==`, `!=`) of `sir` class with a `factor` is now possible on R >= 4.3
 
 ### Updated
 * `top_n_microorganisms()`: new `property_for_each` argument for sub-grouping within top *n* groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed `property = NULL` not being accepted; inner filter now tracks original row indices to prevent cross-group contamination
