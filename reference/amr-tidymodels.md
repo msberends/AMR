@@ -182,7 +182,7 @@ if (require("tidymodels")) {
 #> ✔ dials        1.4.4      ✔ tailor       0.1.0 
 #> ✔ infer        1.1.0      ✔ tidyr        1.3.2 
 #> ✔ modeldata    1.6.0      ✔ tune         2.1.0 
-#> ✔ parsnip      1.6.0      ✔ workflows    1.3.0 
+#> ✔ parsnip      1.6.1      ✔ workflows    1.3.0 
 #> ✔ purrr        1.2.2      ✔ workflowsets 1.1.1 
 #> ✔ recipes      1.4.0      ✔ yardstick    1.4.0 
 #> ── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──

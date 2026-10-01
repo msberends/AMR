@@ -21,7 +21,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9091</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9092</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 45 735 observations and 14 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with 44 089 observations and 15 variables:</p><ul><li><p><code>guideline</code><br> Name of the guideline</p></li>
 <li><p><code>type</code><br> Breakpoint type, either <code>"ECOFF"</code>, <code>"animal"</code>, or <code>"human"</code></p></li>
 <li><p><code>host</code><br> Host of infectious agent. This is mostly useful for veterinary breakpoints and is either <code>"ECOFF"</code>, <code>"aquatic"</code>, <code>"cats"</code>, <code>"cattle"</code>, <code>"dogs"</code>, <code>"horse"</code>, <code>"human"</code>, <code>"poultry"</code>, or <code>"swine"</code></p></li>
 <li><p><code>method</code><br> Testing method, either <code>"DISK"</code> or <code>"MIC"</code></p></li>
@@ -110,9 +110,10 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
 <p>Some breakpoints in this package were validated through and imported from <a href="https://whonet.org" class="external-link">WHONET</a>, a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on <a href="https://whonet.org" class="external-link">their website</a>. The developers of WHONET and this <code>AMR</code> package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.</p>
 <p>From WHONET, imported were:</p><ul><li><p>All CLSI breakpoints, including ECOFF</p></li>
-<li><p>EUCAST breakpoints between  2011 and 2018</p></li>
-</ul><p>EUCAST breakpoints from 2019 onwards, were retrieved directly from <a href="https://www.eucast.org" class="external-link">https://www.eucast.org</a>.</p>
-<p>Our import and reproduction script can be found here: <a href="https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R" class="external-link">https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R</a>.</p>
+<li><p>All non-human EUCAST breakpoints, including ECOFF</p></li>
+<li><p>Human EUCAST breakpoints between 2011 and 2018</p></li>
+</ul><p>Human EUCAST breakpoints from 2019 onwards, were retrieved directly from <a href="https://www.eucast.org" class="external-link">https://www.eucast.org</a> using <a href="https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R" class="external-link">this script</a>.</p>
+<p>Our WHONET import script can be <a href="https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R" class="external-link">found here</a>.</p>
 </div>
 
 <div class="section">
@@ -146,22 +147,22 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">clinical_breakpoints</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 45,735 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 44,089 × 15</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    guideline   type  host  method site    mo            rank_index ab   ref_tbl </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;mo&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ab&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 MEM  A. xylo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> EUCAST 2026 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 MEM  A. xylo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 SXT  A. xylo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> EUCAST 2026 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 SXT  A. xylo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 TZP  A. xylo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> EUCAST 2026 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 TZP  A. xylo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> EUCAST 2026 human human DISK   Uncomp… <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> EUCAST 2026 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> EUCAST 2026 human human MIC    Uncomp… <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 45,725 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: disk_dose &lt;chr&gt;, breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   uti &lt;lgl&gt;, is_SDD &lt;lgl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 MEM  A.xylos…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> EUCAST 2026 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 MEM  A.xylos…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 SXT  A.xylos…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> EUCAST 2026 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 SXT  A.xylos…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 TZP  A.xylos…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> EUCAST 2026 human human MIC    <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACHRMB<span style="color: #949494;">_</span>XYLS          2 TZP  A.xylos…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> EUCAST 2026 human human DISK   infect… <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> EUCAST 2026 human human MIC    infect… <span style="color: #949494;">B_</span>ACNTB                3 AMK  Acineto…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> EUCAST 2026 human human DISK   <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">B_</span>ACNTB                3 CIP  Acineto…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> EUCAST 2026 human human DISK   Topical <span style="color: #949494;">B_</span>ACNTB                3 CIP  Topical…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 44,079 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: disk_dose &lt;chr&gt;, breakpoint_S &lt;dbl&gt;, breakpoint_R &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   uti &lt;lgl&gt;, is_SDD &lt;lgl&gt;, note &lt;chr&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

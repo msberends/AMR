@@ -100,7 +100,7 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 13 August 2026 09:12:12 UTC. Find more info about
+It was last updated on 1 October 2026 13:50:25 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
@@ -147,16 +147,16 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 45 735 rows and 14 columns, containing the following
+A data set with 44 089 rows and 15 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
-*ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, and
-*is_SDD*.
+*ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, *is_SDD*,
+and *note*.
 
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 9 July 2026 15:14:59 UTC. Find more info about
+It was last updated on 1 October 2026 13:50:25 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -186,14 +186,14 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
 **Example content**
 
-| guideline | type | host | method | site | mo | mo_name | rank_index | ab | ab_name | ref_tbl | disk_dose | breakpoint_S | breakpoint_R | uti | is_SDD |
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| EUCAST 2026 | human | human | DISK |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | MEM | Meropenem | A. xylosoxidans | 10 mcg | 26.000 | 20.000 | FALSE | FALSE |
-| EUCAST 2026 | human | human | MIC |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | MEM | Meropenem | A. xylosoxidans |  | 1.000 | 4.000 | FALSE | FALSE |
-| EUCAST 2026 | human | human | DISK |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans | 1.25/23.75 mcg | 26.000 | 26.000 | FALSE | FALSE |
-| EUCAST 2026 | human | human | MIC |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | SXT | Trimethoprim/sulfamethoxazole | A. xylosoxidans |  | 0.125 | 0.125 | FALSE | FALSE |
-| EUCAST 2026 | human | human | DISK |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | TZP | Piperacillin/tazobactam | A. xylosoxidans | 30/6 mcg | 26.000 | 26.000 | FALSE | FALSE |
-| EUCAST 2026 | human | human | MIC |  | B_ACHRMB_XYLS | Achromobacter xylosoxidans | 2 | TZP | Piperacillin/tazobactam | A. xylosoxidans |  | 4.000 | 4.000 | FALSE | FALSE |
+| guideline | type | host | method | mo_name | rank_index | ab_name | disk_dose | breakpoint_S | breakpoint_R | uti | is_SDD | note |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2 | Meropenem | 10 mcg | 26.000 | 20.000 | FALSE | FALSE |  |
+| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2 | Meropenem |  | 1.000 | 4.000 | FALSE | FALSE |  |
+| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2 | Trimethoprim/sulfamethoxazole | 1.25/23.75 mcg | 26.000 | 26.000 | FALSE | FALSE | \[A\] There may be growth within the inhibition zone. The density of growth may vary from a fine haze to substantial growth (see pictures below). If any zone edge can be seen, ignore growth within the inhibition zone and read the zone diameter. \| \[1\] Trimethoprim:sulfamethoxazole in the ratio 1:19. Breakpoints are expressed as the trimethoprim concentration. |
+| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2 | Trimethoprim/sulfamethoxazole |  | 0.125 | 0.125 | FALSE | FALSE | \[1\] Trimethoprim:sulfamethoxazole in the ratio 1:19. Breakpoints are expressed as the trimethoprim concentration. |
+| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2 | Piperacillin/tazobactam | 30/6 mcg | 26.000 | 26.000 | FALSE | FALSE |  |
+| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2 | Piperacillin/tazobactam |  | 4.000 | 4.000 | FALSE | FALSE | \[1\] For susceptibility testing purposes, the concentration of tazobactam is fixed at 4 mg/L. |
 
 ------------------------------------------------------------------------
 
@@ -256,8 +256,8 @@ column names:
 This data set is in R available as `intrinsic_resistant`, after you load
 the `AMR` package.
 
-It was last updated on 3 September 2026 10:14:25 UTC. Find more info
-about the contents, (scientific) source, and structure of this [data set
+It was last updated on 1 October 2026 13:50:25 UTC. Find more info about
+the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/intrinsic_resistant.html).
 
 **Direct download links:**

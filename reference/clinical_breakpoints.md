@@ -25,8 +25,8 @@ clinical_breakpoints
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 45
-735 observations and 14 variables:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 44
+089 observations and 15 variables:
 
 - `guideline`  
   Name of the guideline
@@ -112,13 +112,16 @@ From WHONET, imported were:
 
 - All CLSI breakpoints, including ECOFF
 
-- EUCAST breakpoints between 2011 and 2018
+- All non-human EUCAST breakpoints, including ECOFF
 
-EUCAST breakpoints from 2019 onwards, were retrieved directly from
-<https://www.eucast.org>.
+- Human EUCAST breakpoints between 2011 and 2018
 
-Our import and reproduction script can be found here:
-<https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R>.
+Human EUCAST breakpoints from 2019 onwards, were retrieved directly from
+<https://www.eucast.org> using [this
+script](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R).
+
+Our WHONET import script can be [found
+here](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R).
 
 ### Response From CLSI and EUCAST
 
@@ -163,20 +166,20 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 clinical_breakpoints
-#> # A tibble: 45,735 × 14
+#> # A tibble: 44,089 × 15
 #>    guideline   type  host  method site    mo            rank_index ab   ref_tbl 
 #>    <chr>       <chr> <chr> <chr>  <chr>   <mo>               <dbl> <ab> <chr>   
-#>  1 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 MEM  A. xylo…
-#>  2 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 MEM  A. xylo…
-#>  3 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 SXT  A. xylo…
-#>  4 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 SXT  A. xylo…
-#>  5 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 TZP  A. xylo…
-#>  6 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 TZP  A. xylo…
-#>  7 EUCAST 2026 human human DISK   NA      B_ACNTB                3 AMK  Acineto…
-#>  8 EUCAST 2026 human human DISK   Uncomp… B_ACNTB                3 AMK  Acineto…
-#>  9 EUCAST 2026 human human MIC    NA      B_ACNTB                3 AMK  Acineto…
-#> 10 EUCAST 2026 human human MIC    Uncomp… B_ACNTB                3 AMK  Acineto…
-#> # ℹ 45,725 more rows
-#> # ℹ 5 more variables: disk_dose <chr>, breakpoint_S <dbl>, breakpoint_R <dbl>,
-#> #   uti <lgl>, is_SDD <lgl>
+#>  1 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 MEM  A.xylos…
+#>  2 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 MEM  A.xylos…
+#>  3 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 SXT  A.xylos…
+#>  4 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 SXT  A.xylos…
+#>  5 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 TZP  A.xylos…
+#>  6 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 TZP  A.xylos…
+#>  7 EUCAST 2026 human human DISK   infect… B_ACNTB                3 AMK  Acineto…
+#>  8 EUCAST 2026 human human MIC    infect… B_ACNTB                3 AMK  Acineto…
+#>  9 EUCAST 2026 human human DISK   NA      B_ACNTB                3 CIP  Acineto…
+#> 10 EUCAST 2026 human human DISK   Topical B_ACNTB                3 CIP  Topical…
+#> # ℹ 44,079 more rows
+#> # ℹ 6 more variables: disk_dose <chr>, breakpoint_S <dbl>, breakpoint_R <dbl>,
+#> #   uti <lgl>, is_SDD <lgl>, note <chr>
 ```
