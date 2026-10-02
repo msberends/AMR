@@ -282,6 +282,24 @@ breakpoints |>
 breakpoints <- breakpoints |>
   filter(!is.na(WHONET_ABX_CODE))
 
+# a WHONET code can also exist in `antimicrobials` as the code of another
+# agent, e.g. WHONET "STR" (streptomycin) is "STR" (streptoduocin) here, so
+# compare the code with WHONET's own name of the agent:
+whonet_code_check <- breakpoints |>
+  distinct(WHONET_ABX_CODE) |>
+  left_join(whonet_antibiotics_raw |> select(WHONET_ABX_CODE, ANTIBIOTIC), by = "WHONET_ABX_CODE") |>
+  filter(!is.na(ANTIBIOTIC)) |>
+  mutate(
+    by_code = as.ab(if_else(WHONET_ABX_CODE == "STR", "STR1", WHONET_ABX_CODE), info = FALSE),
+    by_name = as.ab(ANTIBIOTIC, info = FALSE)
+  ) |>
+  filter(is.na(by_code) | is.na(by_name) | by_code != by_name)
+# 2026-10-01: SUD (WHONET: sulbactam-durlobactam, CLSI 2024-2026) is
+# sulfadimethoxine here, and sulbactam-durlobactam is not in `antimicrobials`
+# yet; this must be resolved before these breakpoints can be used. This
+# should otherwise be empty:
+whonet_code_check
+
 
 ## Build new breakpoints table ----
 
@@ -304,7 +322,10 @@ breakpoints_new <- breakpoints |>
       mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
       TRUE ~ 6
     ),
-    ab = as.ab(WHONET_ABX_CODE),
+    # WHONET code "STR" is streptomycin, but in this package "STR" is
+    # streptoduocin (streptomycin is "STR1"), so as.ab("STR") would return
+    # the wrong agent
+    ab = as.ab(if_else(WHONET_ABX_CODE == "STR", "STR1", WHONET_ABX_CODE)),
     ref_tbl = ifelse(type == "ECOFF" & is.na(REFERENCE_TABLE), "ECOFF", REFERENCE_TABLE),
     disk_dose = POTENCY,
     breakpoint_S = ifelse(type == "ECOFF" & is.na(S) & !is.na(ECV_ECOFF), ECV_ECOFF, S),
@@ -505,6 +526,9 @@ dim(clinical_breakpoints)
 
 # Retrieve >= EUCAST 2019 directly from EUCAST ----
 
+# This parses the EUCAST Clinical Breakpoint Tables in data-raw/ and creates
+# `breakpoints_eucast`, `eucast_coverage` and merge_eucast_breakpoints(), used
+# below to replace the WHONET-based human EUCAST rows that these tables cover
 source("data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R")
 
 
@@ -525,8 +549,7 @@ breakpoints_new <- breakpoints_new |>
   # and arrange
   arrange(desc(guideline), mo, ab, type, host, method)
 
-clinical_breakpoints <- breakpoints_new
-clinical_breakpoints <- clinical_breakpoints |> dataset_UTF8_to_ASCII()
+clinical_breakpoints <- merge_eucast_breakpoints(breakpoints_new, breakpoints_eucast, eucast_coverage)
 usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = "xz", version = 2)
 rm(clinical_breakpoints)
 devtools::load_all(".")
