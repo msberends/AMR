@@ -107,7 +107,12 @@
 <div class="section level4">
 <h4 id="new-3-0-1-9092">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9092"></a></h4>
 <ul><li>EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the <code>clinical_breakpoints</code> data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations</li>
-<li>Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.</li>
+<li>Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
+<ul><li>
+<code>clinical_breakpoints</code> now contains blocking rows (<code>NA</code> breakpoints, reason in <code>note</code>) where EUCAST gives no breakpoint for an organism, so <code><a href="../reference/as.sir.html">as.sir()</a></code> no longer falls back to the breakpoint of a broader taxon</li>
+<li>Restrictions in EUCAST notes are applied, e.g. zone diameter breakpoints for <em>E. coli</em> only</li>
+<li>EUCAST PK-PD (non-species related) breakpoints 2019-2023 and <em>H. parainfluenzae</em> MIC breakpoints are included</li>
+</ul></li>
 <li>Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting <code>breakpoint_type = "ECOFF"</code> in <code><a href="../reference/as.sir.html">as.sir()</a></code>; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (<a href="https://github.com/msberends/AMR/issues/254" class="external-link">#254</a>)</li>
 <li>
 <em>tidymodels</em> integration for using SIR, MIC and disk data in modelling pipelines: <code><a href="../reference/amr-tidymodels.html">step_mic_log2()</a></code>, <code><a href="../reference/amr-tidymodels.html">step_sir_numeric()</a></code>, and new column selectors <code><a href="../reference/amr-tidymodels.html">all_sir()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_mic()</a></code>, <code><a href="../reference/amr-tidymodels.html">all_disk()</a></code>
@@ -124,7 +129,8 @@
 </ul></div>
 <div class="section level4">
 <h4 id="fixed-3-0-1-9092">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9092"></a></h4>
-<ul><li>Setting <code>options(AMR_guideline = "EUCAST 2012")</code> or any year-qualified value no longer causes errors or silent wrong behaviour in <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/proportion.html">resistance()</a></code>, <code><a href="../reference/proportion.html">susceptibility()</a></code>, <code><a href="../reference/count.html">count_resistant()</a></code>, <code><a href="../reference/count.html">count_susceptible()</a></code>, and SIR plotting/printing functions (<a href="https://github.com/msberends/AMR/issues/298" class="external-link">#298</a>)</li>
+<ul><li>Streptomycin breakpoints imported from WHONET were coded as streptoduocin (<code>STR</code>) instead of streptomycin (<code>STR1</code>)</li>
+<li>Setting <code>options(AMR_guideline = "EUCAST 2012")</code> or any year-qualified value no longer causes errors or silent wrong behaviour in <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/proportion.html">resistance()</a></code>, <code><a href="../reference/proportion.html">susceptibility()</a></code>, <code><a href="../reference/count.html">count_resistant()</a></code>, <code><a href="../reference/count.html">count_susceptible()</a></code>, and SIR plotting/printing functions (<a href="https://github.com/msberends/AMR/issues/298" class="external-link">#298</a>)</li>
 <li>
 <code><a href="../reference/as.sir.html">as.sir()</a></code>
 <ul><li>On data frames: already-converted SIR columns no longer dropped on re-run (<a href="https://github.com/msberends/AMR/issues/278" class="external-link">#278</a>)</li>

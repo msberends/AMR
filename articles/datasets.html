@@ -80,7 +80,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Download data sets for download / own use</h1>
             
-            <h4 data-toc-skip class="date">01 October 2026</h4>
+            <h4 data-toc-skip class="date">02 October 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/vignettes/datasets.Rmd" class="external-link"><code>vignettes/datasets.Rmd</code></a></small>
       <div class="d-none name"><code>datasets.Rmd</code></div>
@@ -441,7 +441,7 @@ column names:<br><em>ab</em>, <em>cid</em>, <em>name</em>, <em>group</em>, <em>a
 <em>iv_ddd</em>, <em>iv_units</em>, and <em>loinc</em>.</p>
 <p>This data set is in R available as <code>antimicrobials</code>, after
 you load the <code>AMR</code> package.</p>
-<p>It was last updated on 1 October 2026 13:50:25 UTC. Find more info
+<p>It was last updated on 2 October 2026 04:01:58 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/antimicrobials.html">data set
 here</a>.</p>
 <p><strong>Direct download links:</strong></p>
@@ -612,7 +612,7 @@ inhibitors</td>
 <code>clinical_breakpoints</code>: Interpretation from MIC values
 &amp; disk diameters to SIR<a class="anchor" aria-label="anchor" href="#clinical_breakpoints-interpretation-from-mic-values-disk-diameters-to-sir"></a>
 </h2>
-<p>A data set with 44 089 rows and 15 columns, containing the following
+<p>A data set with 60 173 rows and 15 columns, containing the following
 column names:<br><em>guideline</em>, <em>type</em>, <em>host</em>, <em>method</em>,
 <em>site</em>, <em>mo</em>, <em>rank_index</em>, <em>ab</em>,
 <em>ref_tbl</em>, <em>disk_dose</em>, <em>breakpoint_S</em>,
@@ -620,48 +620,48 @@ column names:<br><em>guideline</em>, <em>type</em>, <em>host</em>, <em>method</e
 <em>note</em>.</p>
 <p>This data set is in R available as <code>clinical_breakpoints</code>,
 after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 1 October 2026 13:50:25 UTC. Find more info
+<p>It was last updated on 2 October 2026 04:01:58 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/clinical_breakpoints.html">data
 set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.rds" class="external-link">original
-R Data Structure (RDS) file</a> (93 kB)<br>
+R Data Structure (RDS) file</a> (0.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.txt" class="external-link">tab-separated
-text file</a> (4.2 MB)<br>
+text file</a> (10.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.xlsx" class="external-link">Microsoft
-Excel workbook</a> (2.7 MB)<br>
+Excel workbook</a> (4.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.feather" class="external-link">Apache
-Feather file</a> (2 MB)<br>
+Feather file</a> (3 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.parquet" class="external-link">Apache
-Parquet file</a> (0.2 MB)<br>
+Parquet file</a> (0.3 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav" class="external-link">IBM
-SPSS Statistics data file</a> (7.5 MB)<br>
+SPSS Statistics data file</a> (25.7 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.dta" class="external-link">Stata
-DTA file</a> (12.6 MB)</li>
+DTA file</a> (19.1 MB)</li>
 </ul>
 <p><strong>Example content</strong></p>
 <table class="table">
 <colgroup>
+<col width="0%">
+<col width="0%">
+<col width="0%">
+<col width="0%">
+<col width="2%">
+<col width="0%">
 <col width="2%">
 <col width="1%">
 <col width="1%">
 <col width="1%">
-<col width="5%">
-<col width="2%">
-<col width="5%">
-<col width="3%">
-<col width="2%">
-<col width="2%">
-<col width="1%">
-<col width="1%">
-<col width="68%">
+<col width="0%">
+<col width="0%">
+<col width="87%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">guideline</th>
@@ -685,7 +685,67 @@ DTA file</a> (12.6 MB)</li>
 <td align="center">human</td>
 <td align="center">DISK</td>
 <td align="center">Achromobacter xylosoxidans</td>
-<td align="center">2</td>
+<td align="center">2.1</td>
+<td align="center">Cefiderocol</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">FALSE</td>
+<td align="center">FALSE</td>
+<td align="center">[No breakpoint] EUCAST gives Note (see note) | [A]
+The in vitro activity of cefiderocol against Achromobacter xylosoxidans
+is comparable to the activity of the agent against Enterobacterales and
+there is animal data to suggest efficacy. However, there is insufficient
+clinical data to determine a clinical breakpoint. Isolates with MIC
+values &lt;=0.5 mg/L (zone diameter &gt;=26 mm) are mostly devoid of
+resistance mechanisms and are likely to be a target for treatment with
+this agent. Isolates with MICs 1-2 mg/L have some acquired resistance
+mechanisms. Little clinical data exists regarding clinical outcome for
+these isolates, however, they may still be a target for treatment with
+this agent if there are limited treatment options. Isolates with MIC
+values &gt;2 mg/L (zone diameter &lt;22 mm) have acquired resistance
+mechanisms and are likely to be resistant to this agent. | [1] Broth
+microdilution MIC determination must be performed in iron-depleted
+Mueller-Hinton broth and specific reading instructions must be followed.
+For testing conditions and reading instructions, see <a href="https://www.eucast.org/eucastguidancedocuments/" class="external-link uri">https://www.eucast.org/eucastguidancedocuments/</a>.</td>
+</tr>
+<tr class="even">
+<td align="center">EUCAST 2026</td>
+<td align="center">human</td>
+<td align="center">human</td>
+<td align="center">MIC</td>
+<td align="center">Achromobacter xylosoxidans</td>
+<td align="center">2.1</td>
+<td align="center">Cefiderocol</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">FALSE</td>
+<td align="center">FALSE</td>
+<td align="center">[No breakpoint] EUCAST gives Note (see note) | [2]
+The in vitro activity of cefiderocol against Achromobacter xylosoxidans
+is comparable to the activity of the agent against Enterobacterales and
+there is animal data to suggest efficacy. However, there is insufficient
+clinical data to determine a clinical breakpoint. Isolates with MIC
+values &lt;=0.5 mg/L (zone diameter &gt;=26 mm) are mostly devoid of
+resistance mechanisms and are likely to be a target for treatment with
+this agent. Isolates with MICs 1-2 mg/L have some acquired resistance
+mechanisms. Little clinical data exists regarding clinical outcome for
+these isolates, however, they may still be a target for treatment with
+this agent if there are limited treatment options. Isolates with MIC
+values &gt;2 mg/L (zone diameter &lt;22 mm) have acquired resistance
+mechanisms and are likely to be resistant to this agent. | [1] Broth
+microdilution MIC determination must be performed in iron-depleted
+Mueller-Hinton broth and specific reading instructions must be followed.
+For testing conditions and reading instructions, see <a href="https://www.eucast.org/eucastguidancedocuments/" class="external-link uri">https://www.eucast.org/eucastguidancedocuments/</a>.</td>
+</tr>
+<tr class="odd">
+<td align="center">EUCAST 2026</td>
+<td align="center">human</td>
+<td align="center">human</td>
+<td align="center">DISK</td>
+<td align="center">Achromobacter xylosoxidans</td>
+<td align="center">2.0</td>
 <td align="center">Meropenem</td>
 <td align="center">10 mcg</td>
 <td align="center">26.000</td>
@@ -700,7 +760,7 @@ DTA file</a> (12.6 MB)</li>
 <td align="center">human</td>
 <td align="center">MIC</td>
 <td align="center">Achromobacter xylosoxidans</td>
-<td align="center">2</td>
+<td align="center">2.0</td>
 <td align="center">Meropenem</td>
 <td align="center"></td>
 <td align="center">1.000</td>
@@ -715,7 +775,7 @@ DTA file</a> (12.6 MB)</li>
 <td align="center">human</td>
 <td align="center">DISK</td>
 <td align="center">Achromobacter xylosoxidans</td>
-<td align="center">2</td>
+<td align="center">2.0</td>
 <td align="center">Trimethoprim/sulfamethoxazole</td>
 <td align="center">1.25/23.75 mcg</td>
 <td align="center">26.000</td>
@@ -735,7 +795,7 @@ expressed as the trimethoprim concentration.</td>
 <td align="center">human</td>
 <td align="center">MIC</td>
 <td align="center">Achromobacter xylosoxidans</td>
-<td align="center">2</td>
+<td align="center">2.0</td>
 <td align="center">Trimethoprim/sulfamethoxazole</td>
 <td align="center"></td>
 <td align="center">0.125</td>
@@ -744,37 +804,6 @@ expressed as the trimethoprim concentration.</td>
 <td align="center">FALSE</td>
 <td align="center">[1] Trimethoprim:sulfamethoxazole in the ratio 1:19.
 Breakpoints are expressed as the trimethoprim concentration.</td>
-</tr>
-<tr class="odd">
-<td align="center">EUCAST 2026</td>
-<td align="center">human</td>
-<td align="center">human</td>
-<td align="center">DISK</td>
-<td align="center">Achromobacter xylosoxidans</td>
-<td align="center">2</td>
-<td align="center">Piperacillin/tazobactam</td>
-<td align="center">30/6 mcg</td>
-<td align="center">26.000</td>
-<td align="center">26.000</td>
-<td align="center">FALSE</td>
-<td align="center">FALSE</td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="center">EUCAST 2026</td>
-<td align="center">human</td>
-<td align="center">human</td>
-<td align="center">MIC</td>
-<td align="center">Achromobacter xylosoxidans</td>
-<td align="center">2</td>
-<td align="center">Piperacillin/tazobactam</td>
-<td align="center"></td>
-<td align="center">4.000</td>
-<td align="center">4.000</td>
-<td align="center">FALSE</td>
-<td align="center">FALSE</td>
-<td align="center">[1] For susceptibility testing purposes, the
-concentration of tazobactam is fixed at 4 mg/L.</td>
 </tr>
 </tbody>
 </table>

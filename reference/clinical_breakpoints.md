@@ -25,8 +25,8 @@ clinical_breakpoints
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 44
-089 observations and 15 variables:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 60
+173 observations and 15 variables:
 
 - `guideline`  
   Name of the guideline
@@ -51,8 +51,10 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 44
   [`as.mo()`](https://amr-for-r.org/reference/as.mo.md)
 
 - `rank_index`  
-  Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 5
-  (unknown microorganism)
+  Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 7
+  (non-species related breakpoints), used to choose the most specific
+  breakpoint; blocking rows (see *Details*) have the rank index of their
+  organism + 0.1
 
 - `ab`  
   Antimicrobial code as used by this package, EARS-Net and WHONET, see
@@ -65,7 +67,8 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 44
   Dose of the used disk diffusion method
 
 - `breakpoint_S`  
-  Lowest MIC value or highest number of millimetres that leads to "S"
+  Lowest MIC value or highest number of millimetres that leads to "S",
+  is `NA` for blocking rows (see *Details*)
 
 - `breakpoint_R`  
   Highest MIC value or lowest number of millimetres that leads to "R",
@@ -82,6 +85,9 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 44
   "S" and "R" should be interpreted as "SDD", instead of "I". This
   currently applies to 72 breakpoints.
 
+- `note`  
+  Notes from the guideline that apply to the breakpoint, if available
+
 ## Details
 
 ### Different Types of Breakpoints
@@ -97,6 +103,21 @@ Use
 [`as.sir(..., breakpoint_type = ...)`](https://amr-for-r.org/reference/as.sir.md)
 to interpret raw data using a specific breakpoint type, e.g.
 `as.sir(..., breakpoint_type = "ECOFF")` to use ECOFFs.
+
+### Blocking Rows
+
+Where EUCAST lists an organism but gives no breakpoint for it (e.g.
+"IE", "-", "Note", breakpoints in brackets, or an organism excluded with
+"except"), [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) must
+not fall back to the breakpoint of a broader taxon, such as the
+breakpoint for *Vibrio* spp. where EUCAST gives "IE" for *V. fluvialis*.
+Such cases are included as "blocking rows": rows in which `breakpoint_S`
+and `breakpoint_R` are both `NA` and the `note` starts with
+`"[No breakpoint]"` followed by the reason.
+[`as.sir()`](https://amr-for-r.org/reference/as.sir.md) returns `NA` for
+these. This currently applies to 14 523 rows. Remove them with
+`subset(clinical_breakpoints, !is.na(breakpoint_S))` if only actual
+breakpoints are needed.
 
 ### Imported From WHONET
 
@@ -116,8 +137,11 @@ From WHONET, imported were:
 
 - Human EUCAST breakpoints between 2011 and 2018
 
-Human EUCAST breakpoints from 2019 onwards, were retrieved directly from
-<https://www.eucast.org> using [this
+- Human EUCAST antifungal breakpoints between 2019 and 2025
+
+Human EUCAST breakpoints from 2019 onwards (antifungal breakpoints from
+2026 onwards) were retrieved directly from the EUCAST Clinical
+Breakpoint Tables published on <https://www.eucast.org>, using [this
 script](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R).
 
 Our WHONET import script can be [found
@@ -166,20 +190,20 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 clinical_breakpoints
-#> # A tibble: 44,089 × 15
-#>    guideline   type  host  method site    mo            rank_index ab   ref_tbl 
-#>    <chr>       <chr> <chr> <chr>  <chr>   <mo>               <dbl> <ab> <chr>   
-#>  1 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 MEM  A.xylos…
-#>  2 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 MEM  A.xylos…
-#>  3 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 SXT  A.xylos…
-#>  4 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 SXT  A.xylos…
-#>  5 EUCAST 2026 human human DISK   NA      B_ACHRMB_XYLS          2 TZP  A.xylos…
-#>  6 EUCAST 2026 human human MIC    NA      B_ACHRMB_XYLS          2 TZP  A.xylos…
-#>  7 EUCAST 2026 human human DISK   infect… B_ACNTB                3 AMK  Acineto…
-#>  8 EUCAST 2026 human human MIC    infect… B_ACNTB                3 AMK  Acineto…
-#>  9 EUCAST 2026 human human DISK   NA      B_ACNTB                3 CIP  Acineto…
-#> 10 EUCAST 2026 human human DISK   Topical B_ACNTB                3 CIP  Topical…
-#> # ℹ 44,079 more rows
+#> # A tibble: 60,173 × 15
+#>    guideline   type  host  method site  mo            rank_index ab   ref_tbl   
+#>    <chr>       <chr> <chr> <chr>  <chr> <mo>               <dbl> <ab> <chr>     
+#>  1 EUCAST 2026 human human DISK   NA    B_ACHRMB_XYLS        2.1 FDC  A.xylosox…
+#>  2 EUCAST 2026 human human MIC    NA    B_ACHRMB_XYLS        2.1 FDC  A.xylosox…
+#>  3 EUCAST 2026 human human DISK   NA    B_ACHRMB_XYLS        2   MEM  A.xylosox…
+#>  4 EUCAST 2026 human human MIC    NA    B_ACHRMB_XYLS        2   MEM  A.xylosox…
+#>  5 EUCAST 2026 human human DISK   NA    B_ACHRMB_XYLS        2   SXT  A.xylosox…
+#>  6 EUCAST 2026 human human MIC    NA    B_ACHRMB_XYLS        2   SXT  A.xylosox…
+#>  7 EUCAST 2026 human human DISK   NA    B_ACHRMB_XYLS        2   TZP  A.xylosox…
+#>  8 EUCAST 2026 human human MIC    NA    B_ACHRMB_XYLS        2   TZP  A.xylosox…
+#>  9 EUCAST 2026 human human DISK   NA    B_ACNTB              3.1 AMC  Acinetoba…
+#> 10 EUCAST 2026 human human MIC    NA    B_ACNTB              3.1 AMC  Acinetoba…
+#> # ℹ 60,163 more rows
 #> # ℹ 6 more variables: disk_dose <chr>, breakpoint_S <dbl>, breakpoint_R <dbl>,
 #> #   uti <lgl>, is_SDD <lgl>, note <chr>
 ```

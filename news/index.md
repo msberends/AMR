@@ -57,6 +57,14 @@ Planned as v3.1.0, mid October 2026.
 - Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved
   directly from EUCAST Excel files instead of relying on the WHONET
   repository.
+  - `clinical_breakpoints` now contains blocking rows (`NA` breakpoints,
+    reason in `note`) where EUCAST gives no breakpoint for an organism,
+    so [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) no longer
+    falls back to the breakpoint of a broader taxon
+  - Restrictions in EUCAST notes are applied, e.g. zone diameter
+    breakpoints for *E. coli* only
+  - EUCAST PK-PD (non-species related) breakpoints 2019-2023 and *H.
+    parainfluenzae* MIC breakpoints are included
 - Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based
   interpretation, by setting `breakpoint_type = "ECOFF"` in
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md); WT/NWT
@@ -106,6 +114,8 @@ Planned as v3.1.0, mid October 2026.
 
 #### Fixed
 
+- Streptomycin breakpoints imported from WHONET were coded as
+  streptoduocin (`STR`) instead of streptomycin (`STR1`)
 - Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified
   value no longer causes errors or silent wrong behaviour in
   [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),

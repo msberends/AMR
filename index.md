@@ -50,7 +50,7 @@ in scientific research.
 
 After installing this package, R knows [**~97 000 distinct microbial
 species**](https://amr-for-r.org/reference/microorganisms.md) (updated
-May 2026) and all [**~620 antimicrobial and antiviral
+mei 2026) and all [**~620 antimicrobial and antiviral
 drugs**](https://amr-for-r.org/reference/antimicrobials.md) by name and
 code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED
 CT), and knows all about valid SIR and MIC values. The integral clinical
@@ -179,7 +179,7 @@ wisca(example_isolates,
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|
-| 70.2% (64.6-75.4%) | 93.6% (92.1-95%) | 89.9% (87-92.5%) |
+| 70% (64.9-75.3%) | 93.6% (92.1-95%) | 89.9% (87.1-92.3%) |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
@@ -195,9 +195,9 @@ wisca(example_isolates,
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|:---|
-| Clinical | 74.7% (68.9-80.8%) | 93.7% (92.1-95.2%) | 90.5% (87-93.2%) |
-| ICU | 57% (48.2-65.7%) | 86.8% (83.4-89.8%) | 83% (78-87.6%) |
-| Outpatient | 57.2% (46.2-68.9%) | 76.6% (70.1-82.1%) | 67.7% (57.6-77.5%) |
+| Clinical | 74.8% (69.1-80.2%) | 93.6% (92.1-95.1%) | 90.4% (87.2-93.1%) |
+| ICU | 57.2% (49.2-65.6%) | 86.7% (83.4-89.9%) | 82.9% (78.1-87.2%) |
+| Outpatient | 57.6% (46.3-69.2%) | 76.5% (70.5-82%) | 67.6% (57.3-77.1%) |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:

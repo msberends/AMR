@@ -100,7 +100,7 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 1 October 2026 13:50:25 UTC. Find more info about
+It was last updated on 2 October 2026 04:01:58 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 44 089 rows and 15 columns, containing the following
+A data set with 60 173 rows and 15 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, *is_SDD*,
@@ -156,7 +156,7 @@ and *note*.
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 1 October 2026 13:50:25 UTC. Find more info about
+It was last updated on 2 October 2026 04:01:58 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -164,36 +164,36 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.rds)
-  (93 kB)  
+  (0.2 MB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.txt)
-  (4.2 MB)  
+  (10.2 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.xlsx)
-  (2.7 MB)  
+  (4.2 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.feather)
-  (2 MB)  
+  (3 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.parquet)
-  (0.2 MB)  
+  (0.3 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav)
-  (7.5 MB)  
+  (25.7 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.dta)
-  (12.6 MB)
+  (19.1 MB)
 
 **Example content**
 
 | guideline | type | host | method | mo_name | rank_index | ab_name | disk_dose | breakpoint_S | breakpoint_R | uti | is_SDD | note |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2 | Meropenem | 10 mcg | 26.000 | 20.000 | FALSE | FALSE |  |
-| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2 | Meropenem |  | 1.000 | 4.000 | FALSE | FALSE |  |
-| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2 | Trimethoprim/sulfamethoxazole | 1.25/23.75 mcg | 26.000 | 26.000 | FALSE | FALSE | \[A\] There may be growth within the inhibition zone. The density of growth may vary from a fine haze to substantial growth (see pictures below). If any zone edge can be seen, ignore growth within the inhibition zone and read the zone diameter. \| \[1\] Trimethoprim:sulfamethoxazole in the ratio 1:19. Breakpoints are expressed as the trimethoprim concentration. |
-| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2 | Trimethoprim/sulfamethoxazole |  | 0.125 | 0.125 | FALSE | FALSE | \[1\] Trimethoprim:sulfamethoxazole in the ratio 1:19. Breakpoints are expressed as the trimethoprim concentration. |
-| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2 | Piperacillin/tazobactam | 30/6 mcg | 26.000 | 26.000 | FALSE | FALSE |  |
-| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2 | Piperacillin/tazobactam |  | 4.000 | 4.000 | FALSE | FALSE | \[1\] For susceptibility testing purposes, the concentration of tazobactam is fixed at 4 mg/L. |
+| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2.1 | Cefiderocol |  |  |  | FALSE | FALSE | \[No breakpoint\] EUCAST gives Note (see note) \| \[A\] The in vitro activity of cefiderocol against Achromobacter xylosoxidans is comparable to the activity of the agent against Enterobacterales and there is animal data to suggest efficacy. However, there is insufficient clinical data to determine a clinical breakpoint. Isolates with MIC values \<=0.5 mg/L (zone diameter \>=26 mm) are mostly devoid of resistance mechanisms and are likely to be a target for treatment with this agent. Isolates with MICs 1-2 mg/L have some acquired resistance mechanisms. Little clinical data exists regarding clinical outcome for these isolates, however, they may still be a target for treatment with this agent if there are limited treatment options. Isolates with MIC values \>2 mg/L (zone diameter \<22 mm) have acquired resistance mechanisms and are likely to be resistant to this agent. \| \[1\] Broth microdilution MIC determination must be performed in iron-depleted Mueller-Hinton broth and specific reading instructions must be followed. For testing conditions and reading instructions, see <https://www.eucast.org/eucastguidancedocuments/>. |
+| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2.1 | Cefiderocol |  |  |  | FALSE | FALSE | \[No breakpoint\] EUCAST gives Note (see note) \| \[2\] The in vitro activity of cefiderocol against Achromobacter xylosoxidans is comparable to the activity of the agent against Enterobacterales and there is animal data to suggest efficacy. However, there is insufficient clinical data to determine a clinical breakpoint. Isolates with MIC values \<=0.5 mg/L (zone diameter \>=26 mm) are mostly devoid of resistance mechanisms and are likely to be a target for treatment with this agent. Isolates with MICs 1-2 mg/L have some acquired resistance mechanisms. Little clinical data exists regarding clinical outcome for these isolates, however, they may still be a target for treatment with this agent if there are limited treatment options. Isolates with MIC values \>2 mg/L (zone diameter \<22 mm) have acquired resistance mechanisms and are likely to be resistant to this agent. \| \[1\] Broth microdilution MIC determination must be performed in iron-depleted Mueller-Hinton broth and specific reading instructions must be followed. For testing conditions and reading instructions, see <https://www.eucast.org/eucastguidancedocuments/>. |
+| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2.0 | Meropenem | 10 mcg | 26.000 | 20.000 | FALSE | FALSE |  |
+| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2.0 | Meropenem |  | 1.000 | 4.000 | FALSE | FALSE |  |
+| EUCAST 2026 | human | human | DISK | Achromobacter xylosoxidans | 2.0 | Trimethoprim/sulfamethoxazole | 1.25/23.75 mcg | 26.000 | 26.000 | FALSE | FALSE | \[A\] There may be growth within the inhibition zone. The density of growth may vary from a fine haze to substantial growth (see pictures below). If any zone edge can be seen, ignore growth within the inhibition zone and read the zone diameter. \| \[1\] Trimethoprim:sulfamethoxazole in the ratio 1:19. Breakpoints are expressed as the trimethoprim concentration. |
+| EUCAST 2026 | human | human | MIC | Achromobacter xylosoxidans | 2.0 | Trimethoprim/sulfamethoxazole |  | 0.125 | 0.125 | FALSE | FALSE | \[1\] Trimethoprim:sulfamethoxazole in the ratio 1:19. Breakpoints are expressed as the trimethoprim concentration. |
 
 ------------------------------------------------------------------------
 

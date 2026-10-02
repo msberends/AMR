@@ -113,7 +113,7 @@
 </h2>
 <p>The <code>AMR</code> package is a peer-reviewed, <a href="#copyright">free and open-source</a> R package with <a href="https://en.wikipedia.org/wiki/Dependency_hell" class="external-link">zero dependencies</a> to simplify the analysis and prediction of Antimicrobial Resistance (AMR) and to work with microbial and antimicrobial data and properties, by using evidence-based methods.</p>
 <p><strong>Our aim has always been to provide a standard</strong> for clean and reproducible AMR data analysis, that can therefore empower epidemiological analyses to continuously enable surveillance and treatment evaluation in any setting. We are a team of <a href="./authors.html">many different researchers</a> from around the globe to make this a successful and durable project! The <code>AMR</code> package was already cited <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC" class="external-link">over 100 times</a> in scientific research.</p>
-<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~97 000 distinct microbial species</strong></a> (updated May 2026) and all <a href="./reference/antimicrobials.html"><strong>~620 antimicrobial and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a> and the <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
+<p>After installing this package, R knows <a href="./reference/microorganisms.html"><strong>~97 000 distinct microbial species</strong></a> (updated mei 2026) and all <a href="./reference/antimicrobials.html"><strong>~620 antimicrobial and antiviral drugs</strong></a> by name and code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all about valid SIR and MIC values. The integral clinical breakpoint guidelines from CLSI 2011-2026 and EUCAST 2011-2026 are included, even with epidemiological cut-off (ECOFF) values. It supports and can read any data format, including WHONET data. This package works on Windows, macOS and Linux with all versions of R since R-3.0 (April 2013). <strong>It was designed to work in any setting, including those with very limited resources</strong>. It was created for both routine data analysis and academic research at the Faculty of Medical Sciences of the <a href="https://www.rug.nl" class="external-link">University of Groningen</a> and the <a href="https://www.umcg.nl" class="external-link">University Medical Center Groningen</a>.</p>
 <div class="section level3">
 <h3 id="used-in-over-175-countries-available-in-28-languages">Used in over 175 countries, available in 28 languages<a class="anchor" aria-label="anchor" href="#used-in-over-175-countries-available-in-28-languages"></a>
 </h3>
@@ -179,9 +179,9 @@
 <span><span class="co">#&gt; Warning: invalid microorganism code, NA generated</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="33%">
-<col width="33%">
-<col width="33%">
+<col width="24%">
+<col width="37%">
+<col width="37%">
 </colgroup>
 <thead><tr>
 <th align="left">Piperacillin/tazobactam</th>
@@ -189,9 +189,9 @@
 <th align="left">Piperacillin/tazobactam + Tobramycin</th>
 </tr></thead>
 <tbody><tr>
-<td align="left">70.2% (64.6-75.4%)</td>
+<td align="left">70% (64.9-75.3%)</td>
 <td align="left">93.6% (92.1-95%)</td>
-<td align="left">89.9% (87-92.5%)</td>
+<td align="left">89.9% (87.1-92.3%)</td>
 </tr></tbody>
 </table>
 <p>WISCA supports stratification by any clinical variable, so you can generate syndrome-specific or ward-specific coverage estimates:</p>
@@ -203,10 +203,10 @@
 <span><span class="co">#&gt; Warning: invalid microorganism code, NA generated</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="25%">
-<col width="25%">
-<col width="25%">
-<col width="25%">
+<col width="14%">
+<col width="21%">
+<col width="32%">
+<col width="32%">
 </colgroup>
 <thead><tr>
 <th align="left">Syndromic Group</th>
@@ -217,21 +217,21 @@
 <tbody>
 <tr>
 <td align="left">Clinical</td>
-<td align="left">74.7% (68.9-80.8%)</td>
-<td align="left">93.7% (92.1-95.2%)</td>
-<td align="left">90.5% (87-93.2%)</td>
+<td align="left">74.8% (69.1-80.2%)</td>
+<td align="left">93.6% (92.1-95.1%)</td>
+<td align="left">90.4% (87.2-93.1%)</td>
 </tr>
 <tr>
 <td align="left">ICU</td>
-<td align="left">57% (48.2-65.7%)</td>
-<td align="left">86.8% (83.4-89.8%)</td>
-<td align="left">83% (78-87.6%)</td>
+<td align="left">57.2% (49.2-65.6%)</td>
+<td align="left">86.7% (83.4-89.9%)</td>
+<td align="left">82.9% (78.1-87.2%)</td>
 </tr>
 <tr>
 <td align="left">Outpatient</td>
-<td align="left">57.2% (46.2-68.9%)</td>
-<td align="left">76.6% (70.1-82.1%)</td>
-<td align="left">67.7% (57.6-77.5%)</td>
+<td align="left">57.6% (46.3-69.2%)</td>
+<td align="left">76.5% (70.5-82%)</td>
+<td align="left">67.6% (57.3-77.1%)</td>
 </tr>
 </tbody>
 </table>
@@ -243,11 +243,11 @@
 <span><span class="co">#&gt; ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+<col width="13%">
+<col width="25%">
+<col width="18%">
+<col width="19%">
+<col width="22%">
 </colgroup>
 <thead><tr>
 <th align="left">Pathogen</th>
@@ -280,10 +280,10 @@
 <span>            antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="25%">
-<col width="25%">
-<col width="25%">
-<col width="25%">
+<col width="12%">
+<col width="21%">
+<col width="32%">
+<col width="32%">
 </colgroup>
 <thead><tr>
 <th align="left">Pathogen</th>
