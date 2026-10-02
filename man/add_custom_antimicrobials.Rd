@@ -2,15 +2,22 @@
 % Please edit documentation in R/custom_antimicrobials.R
 \name{add_custom_antimicrobials}
 \alias{add_custom_antimicrobials}
+\alias{add_custom_antimicrobial_synonyms}
 \alias{clear_custom_antimicrobials}
 \title{Add Custom Antimicrobials}
 \usage{
 add_custom_antimicrobials(x)
 
+add_custom_antimicrobial_synonyms(ab, synonyms = NULL)
+
 clear_custom_antimicrobials()
 }
 \arguments{
 \item{x}{A \link{data.frame} resembling the \link{antimicrobials} data set, at least containing columns "ab" and "name".}
+
+\item{ab}{For \code{\link[=add_custom_antimicrobial_synonyms]{add_custom_antimicrobial_synonyms()}}: a \link{character} vector of existing antimicrobial codes (see \code{\link[=as.ab]{as.ab()}}), or a \link{data.frame} with columns "ab" and "synonym".}
+
+\item{synonyms}{A \link{character} vector of synonyms. If \code{ab} has length 1, all \code{synonyms} are added to that antimicrobial; otherwise \code{ab} and \code{synonyms} must have the same length.}
 }
 \description{
 With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial drug names and codes.
@@ -46,7 +53,9 @@ Upon package load, this file will be loaded and run through the \code{\link[=add
 }\if{html}{\out{</div>}}
 }
 
-Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to clear the previously added antimicrobials.
+Use \code{\link[=add_custom_antimicrobial_synonyms]{add_custom_antimicrobial_synonyms()}} to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}). These synonyms are recognised by \code{\link[=as.ab]{as.ab()}} and all \verb{ab_*()} functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before \code{\link[=as.ab]{as.ab()}} transliterates the input to ASCII. Matching ignores case and white space; there is no fuzzy matching for synonyms added this way.
+
+Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to clear the previously added antimicrobials and synonyms.
 }
 \examples{
 \donttest{
@@ -95,6 +104,13 @@ x <- data.frame(
 )
 x
 x[, betalactams()]
+
+# add local trade names as synonyms to existing antimicrobials
+add_custom_antimicrobial_synonyms("TZP", c("Tazocin", "Tazocin Inj"))
+as.ab("Tazocin Inj")
+# names in other scripts work as well, here a Korean trade name of piperacillin/tazobactam
+add_custom_antimicrobial_synonyms("TZP", "\uD0C0\uC870\uC2E0\uC8FC")
+ab_name("\uD0C0\uC870\uC2E0\uC8FC")
 }
 }
 \seealso{

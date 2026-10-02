@@ -108,6 +108,21 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   already_regex <- isTRUE(list(...)$already_regex)
   fast_mode <- isTRUE(list(...)$fast_mode)
 
+  # user-added synonyms (add_custom_antimicrobial_synonyms()) are matched on the input as given,
+  # before the input is transliterated to ASCII below, so that names in non-Latin scripts can be used
+  if (NROW(AMR_env$custom_ab_synonyms) > 0 && already_regex == FALSE) {
+    hit <- match(custom_ab_synonym_key(x), AMR_env$custom_ab_synonyms$key)
+    if (any(!is.na(hit))) {
+      out <- rep(NA_character_, length(x))
+      out[!is.na(hit)] <- AMR_env$custom_ab_synonyms$ab[hit[!is.na(hit)]]
+      rest <- is.na(hit) & !is.na(x)
+      if (any(rest)) {
+        out[rest] <- as.character(as.ab(x[rest], flag_multiple_results = flag_multiple_results, language = language, info = info, ...))
+      }
+      return(set_clean_class(out, new_class = c("ab", "character")))
+    }
+  }
+
   x_bak <- x
   x <- toupper(x)
 

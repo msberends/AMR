@@ -26,6 +26,7 @@ Planned as v3.1.0, mid October 2026.
 * Faster parallel computing via the `future` package for `as.sir()` and `wisca()`: a non-sequential plan (e.g. `future::plan(future::multisession)`) must be active before using `parallel = TRUE`.
 
 ### New
+* `add_custom_antimicrobial_synonyms()` to add synonyms, such as local trade names, to existing antimicrobials (including custom ones). Synonyms may be written in any script: they are matched before `as.ab()` transliterates the input to ASCII, so no non-ASCII characters are stored in the package itself (#307)
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
 * Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
 * Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting `breakpoint_type = "ECOFF"` in `as.sir()`; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (#254)
