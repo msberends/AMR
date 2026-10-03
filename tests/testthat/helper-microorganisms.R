@@ -61,6 +61,14 @@ read_mo_renames <- function(root = mo_repository_root()) {
   # only approved renames count
   renames[renames$approved_by != "" & renames$approved_date != "", , drop = FALSE]
 }
+# MO codes that are retired on purpose, because their taxon was another organism (see the README)
+read_mo_retirements <- function(root = mo_repository_root()) {
+  file <- file.path(root, "data-raw", "microorganisms_files", "mo_code_retirements.csv")
+  if (is.null(root) || !file.exists(file)) {
+    return(NULL)
+  }
+  utils::read.csv(file, colClasses = "character", na.strings = character(0))
+}
 mo_repository_root <- function() {
   # works from the root of the repository and from tests/testthat
   for (path in c(".", "../..", "..")) {
@@ -78,7 +86,7 @@ mo_name_without_suffix <- function(x) {
 
 # Returns a named list with one character vector per rule, each describing the records that break the rule.
 # All vectors must be empty.
-mo_integrity_issues <- function(df, registry = NULL, renames = NULL) {
+mo_integrity_issues <- function(df, registry = NULL, renames = NULL, retirements = NULL) {
   df <- as.data.frame(df, stringsAsFactors = FALSE)
   df$mo <- as.character(df$mo)
   describe <- function(rows) {
@@ -161,6 +169,17 @@ mo_integrity_issues <- function(df, registry = NULL, renames = NULL) {
     issues$registered_code_with_other_taxon <- describe(
       !is.na(registered_name) & mo_name_without_suffix(registered_name) != mo_name_without_suffix(df$fullname)
     )
+    # a released taxon is never removed, unless its code was retired on purpose
+    expected <- registry$fullname
+    if (!is.null(renames) && nrow(renames) > 0) {
+      renamed <- match(registry$mo, renames$mo)
+      expected[!is.na(renamed)] <- renames$new_name[renamed[!is.na(renamed)]]
+    }
+    missing <- !mo_name_without_suffix(expected) %in% mo_name_without_suffix(df$fullname)
+    if (!is.null(retirements)) {
+      missing <- missing & !registry$mo %in% retirements$mo
+    }
+    issues$released_taxon_missing <- if (any(missing)) paste0(registry$mo[missing], " (", expected[missing], ")") else character(0)
   }
 
   issues

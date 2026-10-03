@@ -454,6 +454,8 @@ add_missing_parents <- function(taxonomy, current_gbif) {
       filter(.data[[rank_name]] != "") %>%
       distinct(across(all_of(unique(c("domain", rank_levels[seq_len(which(rank_levels == rank_name))]))))) %>%
       mutate(fullname = .data[[rank_name]], rank = rank_name) %>%
+      # placeholders such as "(unknown class)" are no taxa
+      filter(fullname %unlike% "^[(]unknown") %>%
       anti_join(
         taxonomy %>% filter(rank == rank_name),
         by = unique(c("domain", setNames(rank_name, rank_name), "rank"))
@@ -483,7 +485,8 @@ add_missing_parents <- function(taxonomy, current_gbif) {
   }))
   # species implied by subspecies but missing as a species-rank row
   missing_species <- taxonomy %>%
-    filter(species != "") %>%
+    # placeholders such as "(unknown species)" are no taxa
+    filter(species != "", genus %unlike% "^[(]unknown", species %unlike% "^[(]unknown") %>%
     distinct(domain, genus, species, .keep_all = TRUE) %>%
     select(domain:species) %>%
     mutate(fullname = paste(genus, species), rank = "species") %>%
@@ -1538,6 +1541,16 @@ review(
   taxonomy %>% filter(.resolve == "remove") %>% count(genus, domain, best_domain, source, sort = TRUE),
   "Records removed as homonyms of a genus in another domain"
 )
+# these are other organisms with the same genus name, so they may never be restored as released taxa later on
+# (e.g. the Graphium butterflies, which were in the Fungi until v3.0.1), saved for 'Restore released taxa'
+saveRDS(
+  taxonomy %>%
+    filter(.resolve == "remove") %>%
+    distinct(fullname, .keep_all = TRUE) %>%
+    transmute(fullname, domain, genus, best_domain),
+  "data-raw/taxonomy_homonyms_removed.rds",
+  version = 2
+)
 taxonomy <- taxonomy %>%
   filter(.resolve != "remove") %>%
   mutate(
@@ -2527,6 +2540,215 @@ taxonomy <- taxonomy %>%
   distinct(fullname, .keep_all = TRUE)
 message("Removed ", n_before - nrow(taxonomy), " nonsense names")
 
+# Restore released taxa ---------------------------------------------------------------------------
+
+# A taxon that was part of a release (since v2.0.0) is never removed, since users have stored its MO code
+# (decision by Matthijs S. Berends, 3 October 2026). Taxa that are missing now, e.g. because they are not
+# validly published or not clinically relevant, are restored from their last release, with their old code and
+# their last known status. The only exception: records that were removed as homonyms above, i.e. other organisms
+# with the same genus name (such as the Graphium butterflies, which were wrongly in the Fungi until v3.0.1).
+# Their codes are retired, with the reason, in data-raw/microorganisms_files/mo_code_retirements.csv, and are
+# translated to NA by as.mo() with that reason, so that they never lead to a wrong organism and are never reused.
+restore_registry <- read_mo_registry(".")
+restore_renames <- read_mo_renames(".")
+restore_registry$expected_name <- restore_registry$fullname
+renamed <- match(restore_registry$mo, restore_renames$mo)
+restore_registry$expected_name[!is.na(renamed)] <- restore_renames$new_name[renamed[!is.na(renamed)]]
+missing_released <- restore_registry %>%
+  filter(
+    !mo_name_without_suffix(expected_name) %in% mo_name_without_suffix(taxonomy$fullname),
+    # species groups are added at the end of this script
+    rank != "species group"
+  )
+homonyms_removed <- if (file.exists("data-raw/taxonomy_homonyms_removed.rds")) {
+  readRDS("data-raw/taxonomy_homonyms_removed.rds")
+} else {
+  tibble(fullname = character(0), domain = character(0), genus = character(0), best_domain = character(0))
+}
+
+# codes to retire: released taxa that are other organisms than the genus with their name
+retirements_file <- "data-raw/microorganisms_files/mo_code_retirements.csv"
+retirements <- utils::read.csv(retirements_file, colClasses = "character", na.strings = character(0))
+new_retirements <- missing_released %>%
+  inner_join(
+    homonyms_removed %>% select(fullname, removed_domain = domain, removed_genus = genus, best_domain),
+    by = c("expected_name" = "fullname")
+  ) %>%
+  filter(!mo %in% retirements$mo) %>%
+  transmute(
+    mo,
+    fullname = expected_name,
+    reason = paste0(
+      "another organism (", removed_domain, ") with the same genus name as ", removed_genus, " (", best_domain, ")"
+    ),
+    decided_by = "taxonomy build (automatic, homonym of a genus in another domain)",
+    date = as.character(Sys.Date())
+  )
+review(new_retirements, "Released MO codes that are retired, since their taxon is another organism with the same genus name")
+if (nrow(new_retirements) > 0) {
+  retirements <- bind_rows(retirements, new_retirements) %>% arrange(mo)
+  utils::write.csv(retirements, retirements_file, row.names = FALSE, na = "")
+}
+missing_released <- missing_released %>%
+  filter(!mo %in% retirements$mo)
+
+# get the full records from the releases in which these taxa were last present
+read_release_data <- function(tag) {
+  tmp <- tempfile(fileext = ".rda")
+  on.exit(unlink(tmp))
+  if (!identical(system2("git", c("show", paste0(tag, ":data/microorganisms.rda")), stdout = tmp), 0L)) {
+    stop("Could not read data/microorganisms.rda of release ", tag, call. = FALSE)
+  }
+  env <- new.env()
+  load(tmp, envir = env)
+  out <- as.data.frame(env$microorganisms, stringsAsFactors = FALSE)
+  out$mo <- as.character(out$mo)
+  # until v3.0.1, `kingdom` contained what is now called `domain`
+  if (!"domain" %in% colnames(out)) {
+    out$domain <- out$kingdom
+    out$domain[out$domain == "(unknown kingdom)"] <- "(unknown domain)"
+    out$kingdom <- NA_character_
+  }
+  out
+}
+released_records <- bind_rows(lapply(unique(missing_released$last_release), function(tag) {
+  read_release_data(tag) %>%
+    filter(mo %in% missing_released$mo[missing_released$last_release == tag]) %>%
+    select(any_of(c(
+      "mo", "fullname", "status", "domain", "kingdom", "phylum", "class", "order", "family", "genus", "species",
+      "subspecies", "rank", "ref", "lpsn_renamed_to", "mycobank_renamed_to", "gbif_renamed_to", "prevalence"
+    ))) %>%
+    mutate(across(c(fullname, domain:subspecies), ascii_names))
+}))
+
+# a released taxon of which the genus now only exists in another domain cannot be restored consistently: it may be
+# the same organism in a new classification, or another organism (homonym), which cannot be decided automatically.
+# Its code is retired (as.mo() then gives NA with this reason, and translates it if the name exists elsewhere).
+genus_domains <- taxonomy %>%
+  filter(rank == "genus") %>%
+  distinct(genus, domain)
+conflicting <- released_records %>%
+  filter(
+    genus != "",
+    !paste(domain, genus) %in% paste(genus_domains$domain, genus_domains$genus),
+    genus %in% genus_domains$genus
+  ) %>%
+  left_join(genus_domains %>% group_by(genus) %>% summarise(now_in = toString(domain)), by = "genus")
+conflict_retirements <- conflicting %>%
+  transmute(
+    mo,
+    fullname,
+    reason = paste0("its genus ", genus, " is now only known in another domain (", now_in, ") and could not be restored"),
+    decided_by = "taxonomy build (automatic, genus in another domain), NEEDS REVIEW",
+    date = as.character(Sys.Date())
+  ) %>%
+  filter(!mo %in% read_mo_retirements(".")$mo)
+review(conflict_retirements, "Released MO codes that are retired, since their genus is now only known in another domain")
+if (nrow(conflict_retirements) > 0) {
+  utils::write.csv(
+    bind_rows(read_mo_retirements("."), conflict_retirements) %>% arrange(mo),
+    retirements_file,
+    row.names = FALSE, na = ""
+  )
+}
+released_records <- released_records %>%
+  filter(!mo %in% conflicting$mo)
+
+# the current kingdom of prokaryotes (until v3.0.1, the kingdom was the domain) and the current higher taxonomy
+# of the genus if it still exists
+kingdom_of_phylum <- taxonomy %>%
+  filter(domain %in% c("Bacteria", "Archaea"), phylum != "", kingdom != "") %>%
+  count(domain, phylum, kingdom) %>%
+  arrange(desc(n)) %>%
+  distinct(domain, phylum, .keep_all = TRUE) %>%
+  select(domain, phylum, new_kingdom = kingdom)
+lineage_of_genus <- taxonomy %>%
+  filter(rank == "genus") %>%
+  distinct(domain, genus, .keep_all = TRUE) %>%
+  select(domain, genus, g_kingdom = kingdom, g_phylum = phylum, g_class = class, g_order = order, g_family = family)
+restored <- released_records %>%
+  left_join(kingdom_of_phylum, by = c("domain", "phylum")) %>%
+  left_join(lineage_of_genus, by = c("domain", "genus")) %>%
+  mutate(
+    kingdom = case_when(
+      !is.na(g_kingdom) ~ g_kingdom,
+      domain %in% c("Bacteria", "Archaea") & !is.na(new_kingdom) ~ new_kingdom,
+      domain %in% c("Bacteria", "Archaea") ~ "(unknown kingdom)",
+      TRUE ~ coalesce(kingdom, domain)
+    ),
+    phylum = coalesce(g_phylum, phylum),
+    class = coalesce(g_class, class),
+    order = coalesce(g_order, order),
+    family = coalesce(g_family, family),
+    across(kingdom:subspecies, function(x) if_else(is.na(x), "", x)),
+    # older releases used placeholders such as "(unknown class)", which would become records themselves
+    across(phylum:family, function(x) if_else(x %like% "^[(]unknown", "", x)),
+    # older releases also had other status values, such as "not validly published"
+    status = if_else(status %in% c("accepted", "synonym", "unknown"), status, "unknown"),
+    source = "manually added"
+  ) %>%
+  select(-mo, -new_kingdom, -starts_with("g_"))
+review(
+  restored %>% count(domain, rank, status, sort = TRUE),
+  "Released taxa that were missing and are restored (by domain, rank and status)"
+)
+review(
+  restored %>% filter(prevalence < 2) %>% select(fullname, domain, rank, status, ref, prevalence),
+  "Restored released taxa that are clinically relevant"
+)
+n_before <- nrow(taxonomy)
+taxonomy <- taxonomy %>%
+  bind_rows(restored) %>%
+  add_missing_parents(current_gbif) %>%
+  arrange(fullname, source_prio(source)) %>%
+  distinct(fullname, .keep_all = TRUE) %>%
+  compute_prevalence()
+message("Restored ", nrow(restored), " released taxa (", nrow(taxonomy) - n_before, " records including their parents)")
+rm(restore_registry, restore_renames, renamed, missing_released, homonyms_removed, retirements, new_retirements,
+   released_records, genus_domains, conflicting, conflict_retirements, kingdom_of_phylum, lineage_of_genus, restored)
+
+
+# Link orthographic variants without a current name ----------------------------------------------
+
+# A synonym without a current name of which the epithet only differs from an accepted name in the same genus by a
+# Latin gender ending (e.g. -us, -a, -um) is an orthographic variant of that name: under the nomenclatural codes,
+# such epithets are variants of one name, so two valid species in one genus cannot differ only in this way.
+# E.g. 'Nakaseomyces glabrata' -> 'Nakaseomyces glabratus' (from Candida glabrata, renamed in 2022).
+epithet_stem <- function(x) {
+  sub("(us|um|a|is|e|er|ra|rum)$", "", x)
+}
+variant_candidates <- taxonomy %>%
+  filter(
+    status == "synonym",
+    is.na(lpsn_renamed_to), is.na(mycobank_renamed_to), is.na(gbif_renamed_to),
+    rank %in% c("species", "subspecies")
+  ) %>%
+  mutate(stem = epithet_stem(if_else(rank == "species", species, subspecies)))
+accepted_variants <- taxonomy %>%
+  filter(status == "accepted", rank %in% c("species", "subspecies")) %>%
+  mutate(stem = epithet_stem(if_else(rank == "species", species, subspecies))) %>%
+  select(domain, genus, rank, stem, species_acc = species, target = fullname, t_lpsn = lpsn, t_mycobank = mycobank, t_gbif = gbif)
+variant_links <- variant_candidates %>%
+  inner_join(accepted_variants, by = c("domain", "genus", "rank", "stem")) %>%
+  # for subspecies, the species must be the same variant too
+  filter(rank == "species" | epithet_stem(species) == epithet_stem(species_acc)) %>%
+  # only unambiguous links, and the target must have an identifier to link to
+  group_by(fullname) %>%
+  filter(n() == 1) %>%
+  ungroup() %>%
+  filter(!is.na(t_lpsn) | !is.na(t_mycobank) | !is.na(t_gbif))
+review(variant_links %>% select(fullname, target, source), "Orthographic variants linked to their accepted name")
+taxonomy <- taxonomy %>%
+  left_join(variant_links %>% select(fullname, t_lpsn, t_mycobank, t_gbif), by = "fullname") %>%
+  mutate(
+    lpsn_renamed_to = coalesce(lpsn_renamed_to, t_lpsn),
+    mycobank_renamed_to = coalesce(mycobank_renamed_to, t_mycobank),
+    gbif_renamed_to = coalesce(gbif_renamed_to, t_gbif)
+  ) %>%
+  select(-t_lpsn, -t_mycobank, -t_gbif)
+rm(variant_candidates, accepted_variants, variant_links)
+
+
 # Break cycles of synonyms ------------------------------------------------------------------------
 
 # Sources can contradict each other, e.g. in 2026 GBIF listed Capillidium denaeosporus as synonym of
@@ -2972,9 +3194,10 @@ taxonomy %>%
 #   filter(mo != "")
 
 # keep the codes from manually added ones
+# (by domain and name, so that a code can never end up in another domain)
 manual_mos <- as.character(existing_mo_tbl$mo)[match(
-  taxonomy$fullname[taxonomy$source == "manually added"],
-  existing_mo_tbl$fullname
+  paste(taxonomy$domain, taxonomy$fullname)[taxonomy$source == "manually added"],
+  paste(existing_mo_tbl$domain, existing_mo_tbl$fullname)
 )]
 taxonomy$mo[taxonomy$source == "manually added"][!is.na(manual_mos)] <- manual_mos[!is.na(manual_mos)]
 
@@ -3595,26 +3818,30 @@ taxonomy %>%
 
 # Remove childless non-bacterial genera -----------------------------------------------------------
 
-# this removes all genera that have no species, except for the domain of Bacteria.
+# this removes all genera that have no species, except for the domain of Bacteria, and except for released taxa
+# (a taxon that was part of a release is never removed, see 'Restore released taxa')
+released_names <- mo_name_without_suffix(read_mo_registry(".")$fullname)
 taxonomy <- taxonomy %>%
   filter(
     rank != "genus" |
       domain == "Bacteria" |
-      genus %in% taxonomy$genus[taxonomy$rank == "species"]
+      genus %in% taxonomy$genus[taxonomy$rank == "species"] |
+      mo_name_without_suffix(fullname) %in% released_names
   )
 
-# then remove all childless upper taxonomy caused by this
+# then remove all childless upper taxonomy caused by this (again except for released taxa)
 for (rank_name in c("family", "order", "class", "phylum", "kingdom")) {
   has_children <- taxonomy %>%
     filter(rank != rank_name, .data[[rank_name]] != "") %>%
     distinct(.data[[rank_name]]) %>%
     pull()
-  
+
   n_before <- nrow(taxonomy)
   taxonomy <- taxonomy %>%
-    filter(!(rank == rank_name & !fullname %in% has_children))
+    filter(!(rank == rank_name & !fullname %in% has_children & !mo_name_without_suffix(fullname) %in% released_names))
   message("Removed ", n_before - nrow(taxonomy), " childless ", rank_name, " entries")
 }
+rm(released_names)
 
 # records that were only inferred by this script get the same label as before
 taxonomy$source[taxonomy$source == "inferred"] <- "manually added"
@@ -3649,7 +3876,7 @@ review(mo_synonyms_without_current_name(taxonomy), "Synonyms without a current n
 
 # the integrity rules of the data set and the MO code registry (shared with the unit tests in
 # tests/testthat/helper-microorganisms.R): these must never fail, as the package and its users rely on them
-integrity_issues <- mo_integrity_issues(taxonomy, registry = mo_registry, renames = mo_renames)
+integrity_issues <- mo_integrity_issues(taxonomy, registry = mo_registry, renames = mo_renames, retirements = read_mo_retirements("."))
 if (!is.null(mo_integrity_report(integrity_issues))) {
   stop("The new data set breaks integrity rules, fix the cause in this script:\n",
     mo_integrity_report(integrity_issues),
@@ -3727,7 +3954,7 @@ taxonomy <- taxonomy %>%
   AMR:::dataset_UTF8_to_ASCII()
 
 # check again after the conversion to ASCII
-integrity_issues <- mo_integrity_issues(taxonomy, registry = mo_registry, renames = mo_renames)
+integrity_issues <- mo_integrity_issues(taxonomy, registry = mo_registry, renames = mo_renames, retirements = read_mo_retirements("."))
 if (!is.null(mo_integrity_report(integrity_issues))) {
   stop("The data set breaks integrity rules after the conversion to ASCII:\n",
     mo_integrity_report(integrity_issues),

@@ -1,4 +1,4 @@
-# AMR 3.0.1.9096
+# AMR 3.0.1.9097
 
 Planned as v3.1.0, mid October 2026.
 
@@ -42,7 +42,7 @@ Planned as v3.1.0, mid October 2026.
 * New `amr_course()` to download and unpack course or webinar materials from GitHub in one call
 * Typed missing value constants `NA_ab_` and `NA_mo_`, for use in pipelines that need missing values of a specific class
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
-* MO codes of all releases since v2.0.0 are now reliably translated to their current code, also for taxa that moved to another domain; a registry guarantees that an MO code never gets another meaning
+* A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
 
 ### Fixed
 * Streptomycin breakpoints imported from WHONET were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)

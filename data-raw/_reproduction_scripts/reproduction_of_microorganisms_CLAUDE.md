@@ -211,7 +211,10 @@ v2.0.0 may never be given to another taxon. Never weaken a rule to get past this
 code may only get another name (e.g. a corrected spelling) if it is listed in
 `data-raw/microorganisms_files/mo_code_renames.csv`, and you may only add such rows with an empty
 `approved_by`: the build will then stop on it until the human approves it, so list every proposed rename under
-"Needs a human". After the build, `tests/testthat/microorganisms_known_defects.csv` (the known defects of the
+"Needs a human". The build never removes a released taxon: missing ones are restored, except codes it retires in
+`data-raw/microorganisms_files/mo_code_retirements.csv` (other organisms with the same genus name, or a genus that
+is now only known in another domain). Every new row in that file needs its own checkbox in the report, and rows
+marked `NEEDS REVIEW` also under "Needs a human". After the build, `tests/testthat/microorganisms_known_defects.csv` (the known defects of the
 data set before this rebuild) must be emptied: delete the rows that are solved, and the file itself if none
 are left. Any remaining row must be explained under "Needs a human".
 

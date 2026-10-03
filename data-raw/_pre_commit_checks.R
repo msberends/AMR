@@ -638,13 +638,17 @@ by_rank <- as.character(microorganisms$mo)[match(
   paste(mo_name_without_suffix(retired$fullname), retired$rank),
   paste(mo_name_without_suffix(microorganisms$fullname), microorganisms$rank)
 )]
+mo_retirements <- read_mo_retirements(".")
 pre_commit_lst$MO_RETIRED_CODES <- data.frame(
   old_mo = retired$mo,
   mo = ifelse(is.na(current_mo), by_rank, current_mo),
   fullname = retired$fullname,
+  # codes retired on purpose, because their taxon was another organism, never lead to a taxon
+  reason = mo_retirements$reason[match(retired$mo, mo_retirements$mo)],
   stringsAsFactors = FALSE
 )
-rm(mo_registry, mo_renames, retired, renamed, current_mo, by_rank)
+pre_commit_lst$MO_RETIRED_CODES$mo[!is.na(pre_commit_lst$MO_RETIRED_CODES$reason)] <- NA_character_
+rm(mo_registry, mo_renames, mo_retirements, retired, renamed, current_mo, by_rank)
 
 # Export to package as internal data ----
 # usethis::use_data() must receive unquoted object names, which is not flexible at all.

@@ -1296,9 +1296,11 @@ replace_old_mo_codes <- function(x, property) {
     }
     if (any(is.na(current))) {
       gone <- MO_RETIRED_CODES$fullname[match(retired[is.na(current)], MO_RETIRED_CODES$old_mo)]
+      reason <- MO_RETIRED_CODES$reason[match(retired[is.na(current)], MO_RETIRED_CODES$old_mo)]
+      gone <- ifelse(is.na(reason), gone, paste0(gone, ": ", reason))
       msg <- paste0(
         msg, sum(is.na(current)), ifelse(sum(is.na(current)) == 1, " was", " were"),
-        " set to NA, as the taxon is not in the current data set anymore (", listing(paste0(retired[is.na(current)], " = ", gone)), "). "
+        " set to NA, as the taxon is not in the current data set (", listing(paste0(retired[is.na(current)], " = ", gone)), "). "
       )
     }
     warning_(msg, "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)}.")

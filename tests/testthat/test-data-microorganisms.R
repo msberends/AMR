@@ -97,7 +97,7 @@ sentinel_defects <- function() {
 
 test_that("microorganisms: integrity rules", {
   skip_on_cran()
-  issues <- mo_integrity_issues(microorganisms, registry = read_mo_registry(), renames = read_mo_renames())
+  issues <- mo_integrity_issues(microorganisms, registry = read_mo_registry(), renames = read_mo_renames(), retirements = read_mo_retirements())
   for (rule in names(issues)) {
     defects <- new_defects(rule, issues[[rule]])
     expect_true(length(defects) == 0,
@@ -111,7 +111,7 @@ test_that("microorganisms: known defects are no longer than needed", {
   # a known defect that is solved must be removed from the list, so that it cannot come back unnoticed
   kd <- known_defects()
   skip_if(nrow(kd) == 0)
-  issues <- mo_integrity_issues(microorganisms, registry = read_mo_registry(), renames = read_mo_renames())
+  issues <- mo_integrity_issues(microorganisms, registry = read_mo_registry(), renames = read_mo_renames(), retirements = read_mo_retirements())
   current <- c(
     unlist(lapply(names(issues), function(rule) paste(rule, issues[[rule]], sep = "|"))),
     paste("sentinel", sentinel_defects(), sep = "|")
@@ -145,6 +145,12 @@ test_that("MO codes: every code of every release since v2.0.0 still means the sa
   expected_name[!is.na(renamed)] <- renames$new_name[renamed[!is.na(renamed)]]
   # deliberate in as.mo() since v2.0.0: the kingdom/domain Fungi returns the code for an unknown fungus
   expected_name[registry$mo == "F_[KNG]_FUNGI"] <- "(unknown fungus)"
+  # codes retired on purpose (their taxon was another organism) must lead to NA
+  retirements <- read_mo_retirements()
+  retired_on_purpose <- registry$mo %in% retirements$mo
+  expect_true(all(is.na(suppressWarnings(as.mo(registry$mo[retired_on_purpose], info = FALSE)))))
+  registry <- registry[!retired_on_purpose, , drop = FALSE]
+  expected_name <- expected_name[!retired_on_purpose]
   result <- suppressWarnings(as.mo(registry$mo, keep_synonyms = TRUE, info = FALSE))
   result_name <- microorganisms$fullname[match(result, microorganisms$mo)]
   wrong <- !is.na(result) & mo_name_without_suffix(result_name) != mo_name_without_suffix(expected_name)
@@ -154,8 +160,8 @@ test_that("MO codes: every code of every release since v2.0.0 still means the sa
   )
 
   # the internal lookup table must be up to date with the registry
-  retired <- registry$mo[!registry$mo %in% microorganisms$mo]
-  expect_setequal(AMR:::MO_RETIRED_CODES$old_mo, retired)
+  full_registry <- read_mo_registry()
+  expect_setequal(AMR:::MO_RETIRED_CODES$old_mo, full_registry$mo[!full_registry$mo %in% microorganisms$mo])
 })
 
 test_that("MO codes: codes of earlier releases are translated, never guessed", {

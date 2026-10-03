@@ -11,6 +11,7 @@ the registry that guarantees this.
 | `mo_code_registry.csv` | Every MO code that was ever part of a **released** version of the AMR package since v2.0.0, with the taxon it denotes (name, rank, domain, genus, species, subspecies), the first and last release it was in, and older names of the same code (e.g. a corrected spelling). |
 | `build_mo_code_registry.R` | Recreates `mo_code_registry.csv` from the git tags of all releases. Run it after every new release. |
 | `mo_code_renames.csv` | The only allowed exceptions: registered codes that get another name, because it is the same taxon (e.g. a corrected spelling or a renamed species group). Every row needs `approved_by` and `approved_date`. |
+| `mo_code_retirements.csv` | Registered codes that are retired on purpose, because their taxon was another organism (e.g. the *Graphium* butterflies, which were wrongly in the Fungi until v3.0.1). Written by the taxonomy build, with the reason; `as.mo()` translates these codes to `NA` with that reason. Every new row must be reviewed in the git diff. |
 
 ## Rules
 
@@ -24,11 +25,15 @@ the registry that guarantees this.
    registry (most recent release first), never gives a registered code to a new taxon, and stops if a
    registered code would get another name than in the registry, unless that is listed and approved in
    `mo_code_renames.csv`.
-4. **A registered code that is no longer in the data still works.** `as.mo()` translates it to the current
+4. **A released taxon is never removed.** Decision by Matthijs S. Berends, 3 October 2026. If a released taxon is
+   missing in a new build (e.g. not validly published or not clinically relevant anymore), the build restores it
+   from its last release, with its old code and last known status. The only exception are retired codes (see
+   `mo_code_retirements.csv`).
+5. **A registered code that is no longer in the data still works.** `as.mo()` translates it to the current
    code of the same taxon (by its name, so also if the taxon moved to another domain), using an internal lookup
    table (`MO_RETIRED_CODES`) that is created from the registry in `data-raw/_pre_commit_checks.R`. If the
    taxon is no longer in the data at all, the result is `NA` with a warning. The package never guesses.
-5. **Tests enforce all of this.** `tests/testthat/test-data-microorganisms.R` checks the current data against
+6. **Tests enforce all of this.** `tests/testthat/test-data-microorganisms.R` checks the current data against
    the registry and the renames, and checks that every registered code resolves to its own taxon.
 
 ## After a release
