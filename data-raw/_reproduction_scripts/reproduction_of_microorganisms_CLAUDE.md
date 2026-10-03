@@ -230,9 +230,11 @@ something (then fix the script)? Never weaken a test just to make it pass.
 1. Update `TAXONOMY_VERSION` in `R/aa_globals.R` with the values from step 1.
 2. Run `devtools::document()`.
 3. `NEWS.md`: add one short bullet under `### Updates` (e.g. "Updated taxonomy of microorganisms to
-   GBIF/COL <release>, LPSN and MycoBank of <month year>"), no full stop at the end. The version
-   number in `DESCRIPTION` and on line 1 of `NEWS.md` is set by the git pre-commit hook; check after
-   the first commit that it was bumped exactly once for this PR, following `CLAUDE.md`.
+   GBIF/COL <release>, LPSN and MycoBank of <month year>"), no full stop at the end.
+4. **Never touch the version number or date**: not the `Version:` or `Date:` field in `DESCRIPTION`,
+   not line 1 of `NEWS.md`, and no version prefix in commit messages. This overrides the PR section
+   of `CLAUDE.md` for this PR: the human sets the version when merging. The git pre-commit hook only
+   acts on `main`, so it leaves them unchanged on this branch.
 
 ## Step 5: findings report for the human
 

@@ -181,15 +181,16 @@ test_that("MO codes: codes of earlier releases are translated, never guessed", {
     mo_name_without_suffix(translated$fullname)
   )
 
+  # warnings are wrapped to the console width, so the patterns allow a line break between words
   # regression: in October 2026, the code of Trichophyton (F_TRCHP, v3.0.1) was guessed as Talaromyces
-  expect_warning(x <- as.mo("F_TRCHP_RBRM", info = FALSE), "earlier AMR package version")
+  expect_warning(x <- as.mo("F_TRCHP_RBRM", info = FALSE), "earlier AMR package\\s+version")
   expect_identical(mo_name(x, language = NULL), "Trichophyton rubrum")
   expect_identical(suppressWarnings(mo_genus("F_TRCHP", language = NULL)), "Trichophyton")
 
   # codes from before v2.0.0 and unknown codes are never guessed (decision by Matthijs S. Berends, 3 October 2026)
-  expect_warning(x <- as.mo("B_ESCH_COL", info = FALSE), "not supported")
+  expect_warning(x <- as.mo("B_ESCH_COL", info = FALSE), "not\\s+supported")
   expect_true(is.na(x))
-  expect_warning(x <- as.mo(c("B_ESCHR_COL", "B_ESCHR_COLI"), info = FALSE), "unknown MO code")
+  expect_warning(x <- as.mo(c("B_ESCHR_COL", "B_ESCHR_COLI"), info = FALSE), "unknown\\s+MO\\s+code")
   expect_identical(as.character(x), c(NA, "B_ESCHR_COLI"))
 
   # regression: until October 2026, a MycoBank target that was not in the data set replaced a valid GBIF target by NA
