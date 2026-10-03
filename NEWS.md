@@ -27,6 +27,7 @@ Planned as v3.1.0, mid October 2026.
 * `as.mo()` no longer guesses unknown MO codes (these become `NA` with a warning), and MO codes from versions before v2.0.0 are no longer supported
 
 ### New
+* `add_custom_antimicrobial_synonyms()` to add synonyms, such as local trade names, to existing antimicrobials (including custom ones). Synonyms may be written in any script: they are matched before `as.ab()` transliterates the input to ASCII, so no non-ASCII characters are stored in the package itself (#307)
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
 * Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
   * `clinical_breakpoints` now contains blocking rows (`NA` breakpoints, reason in `note`) where EUCAST gives no breakpoint for an organism, so `as.sir()` no longer falls back to the breakpoint of a broader taxon

@@ -48,3 +48,37 @@ test_that("test-custom ab.R", {
   expect_identical(ab_name("testab"), "Test Antibiotic")
   expect_identical(ab_group("testab"), "Test Group")
 })
+
+test_that("test-custom ab synonyms", {
+  skip_on_cran()
+
+  suppressMessages(clear_custom_antimicrobials())
+  suppressMessages(ab_reset_session())
+
+  # codes must exist
+  expect_error(add_custom_antimicrobial_synonyms("NOTANAB", "something"))
+
+  # ASCII and non-ASCII synonyms (a Korean trade name of piperacillin/tazobactam)
+  tazocin_ko <- "\uD0C0\uC870\uC2E0\uC8FC"
+  suppressMessages(add_custom_antimicrobial_synonyms("TZP", c("Tazocinum Testname", tazocin_ko)))
+  expect_identical(as.character(as.ab("Tazocinum Testname")), "TZP")
+  expect_identical(as.character(as.ab(tazocin_ko)), "TZP")
+  expect_identical(as.character(as.ab("\uD0C0\uC870 \uC2E0\uC8FC")), "TZP") # white space is ignored
+  expect_identical(as.character(as.ab(c(tazocin_ko, "amoxicillin", NA))), c("TZP", "AMX", NA))
+  expect_identical(ab_name(tazocin_ko), ab_name("TZP"))
+
+  # another non-ASCII name that was not added must not be matched to TZP
+  expect_false(identical(as.character(suppressWarnings(suppressMessages(as.ab("\uBA54\uB85C\uD39C")))), "TZP"))
+
+  # data.frame input, also for custom antimicrobials
+  suppressMessages(add_custom_antimicrobials(data.frame(ab = "TESTSYN", name = "Test Synonym Antibiotic")))
+  suppressMessages(add_custom_antimicrobial_synonyms(data.frame(ab = "TESTSYN", synonym = "Testosyn")))
+  expect_identical(as.character(as.ab("testosyn")), "TESTSYN")
+
+  # one synonym cannot refer to two antimicrobials
+  expect_error(add_custom_antimicrobial_synonyms("MEM", tazocin_ko))
+
+  # clearing removes the synonyms as well
+  suppressMessages(clear_custom_antimicrobials())
+  expect_false(identical(as.character(suppressWarnings(suppressMessages(as.ab(tazocin_ko)))), "TZP"))
+})
