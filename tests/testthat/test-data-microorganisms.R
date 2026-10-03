@@ -32,15 +32,13 @@
 #
 # KNOWN DEFECTS: the data set on the main branch of October 2026 contains defects that will be solved by the
 # next taxonomy rebuild (e.g. Trichophyton as a bacterium, issue #309). These are listed in
-# microorganisms_known_defects.csv, so that these tests fail on every NEW defect, while the current ones are
-# visible. This list may only become shorter, and must be empty after the rebuild (then delete the file).
+# data-raw/microorganisms_files/microorganisms_known_defects.csv, so that these tests fail on every NEW defect,
+# while the current ones are visible. This list may only become shorter, and must be empty after the rebuild (then
+# delete the file). As data-raw/ does not ship with the package, the tests that use this list only run in the
+# source repository.
 
 known_defects <- function() {
-  file <- test_path("microorganisms_known_defects.csv")
-  if (!file.exists(file)) {
-    return(data.frame(rule = character(0), record = character(0)))
-  }
-  utils::read.csv(file, colClasses = "character", na.strings = character(0))
+  read_mo_known_defects()
 }
 new_defects <- function(rule, records) {
   setdiff(records, known_defects()$record[known_defects()$rule == rule])
@@ -97,6 +95,7 @@ sentinel_defects <- function() {
 
 test_that("microorganisms: integrity rules", {
   skip_on_cran()
+  skip_if_no_mo_repository()
   issues <- mo_integrity_issues(microorganisms, registry = read_mo_registry(), renames = read_mo_renames(), retirements = read_mo_retirements())
   for (rule in names(issues)) {
     defects <- new_defects(rule, issues[[rule]])
@@ -108,6 +107,7 @@ test_that("microorganisms: integrity rules", {
 
 test_that("microorganisms: known defects are no longer than needed", {
   skip_on_cran()
+  skip_if_no_mo_repository()
   # a known defect that is solved must be removed from the list, so that it cannot come back unnoticed
   kd <- known_defects()
   skip_if(nrow(kd) == 0)
@@ -124,6 +124,7 @@ test_that("microorganisms: known defects are no longer than needed", {
 
 test_that("microorganisms: sentinel organisms", {
   skip_on_cran()
+  skip_if_no_mo_repository()
   defects <- new_defects("sentinel", sentinel_defects())
   expect_true(length(defects) == 0, info = paste(defects, collapse = "; "))
 })

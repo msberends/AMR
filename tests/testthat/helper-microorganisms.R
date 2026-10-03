@@ -69,14 +69,36 @@ read_mo_retirements <- function(root = mo_repository_root()) {
   }
   utils::read.csv(file, colClasses = "character", na.strings = character(0))
 }
+# known defects of the data set on the main branch (see test-data-microorganisms.R), returns an empty data set
+# if the file is not there, as it must be deleted once no defects are left
+read_mo_known_defects <- function(root = mo_repository_root()) {
+  file <- file.path(root, "data-raw", "microorganisms_files", "microorganisms_known_defects.csv")
+  if (is.null(root) || !file.exists(file)) {
+    return(data.frame(rule = character(0), record = character(0)))
+  }
+  utils::read.csv(file, colClasses = "character", na.strings = character(0))
+}
+# the root of the source repository, found by walking up from the working directory; this works from the root
+# itself, from tests/testthat, and from an R CMD check directory inside the repository (as on GitHub Actions).
+# Returns NULL elsewhere, such as for an installed package, since data-raw/ never ships with the package.
 mo_repository_root <- function() {
-  # works from the root of the repository and from tests/testthat
-  for (path in c(".", "../..", "..")) {
-    if (file.exists(file.path(path, "data-raw", "microorganisms_files", "mo_code_registry.csv"))) {
-      return(normalizePath(path))
+  path <- normalizePath(".", mustWork = FALSE)
+  for (i in seq_len(6)) {
+    if (file.exists(file.path(path, "data-raw", "microorganisms_files", "mo_code_registry.csv")) &&
+      file.exists(file.path(path, "DESCRIPTION")) &&
+      identical(unname(read.dcf(file.path(path, "DESCRIPTION"), fields = "Package")[1, 1]), "AMR")) {
+      return(path)
     }
+    parent <- dirname(path)
+    if (parent == path) {
+      break
+    }
+    path <- parent
   }
   NULL
+}
+skip_if_no_mo_repository <- function() {
+  testthat::skip_if(is.null(mo_repository_root()), "Source repository not available (data-raw/ does not ship with the package)")
 }
 
 # names without a rank suffix, e.g. "Kapabacteria {class}" and "Nitrospira (class)" are both the class

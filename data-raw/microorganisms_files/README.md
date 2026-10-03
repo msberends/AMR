@@ -12,6 +12,7 @@ the registry that guarantees this.
 | `build_mo_code_registry.R` | Recreates `mo_code_registry.csv` from the git tags of all releases. Run it after every new release. |
 | `mo_code_renames.csv` | The only allowed exceptions: registered codes that get another name, because it is the same taxon (e.g. a corrected spelling or a renamed species group). Every row needs `approved_by` and `approved_date`. |
 | `mo_code_retirements.csv` | Registered codes that are retired on purpose, because their taxon was another organism (e.g. the *Graphium* butterflies, which were wrongly in the Fungi until v3.0.1). Written by the taxonomy build, with the reason; `as.mo()` translates these codes to `NA` with that reason. Every new row must be reviewed in the git diff. |
+| `microorganisms_known_defects.csv` | Known defects of the `microorganisms` data set on the main branch, so that the unit tests fail on every new defect. This list may only become shorter, and the file must be deleted once it is empty (after the next taxonomy rebuild). The tests that use it only run in the source repository. |
 
 ## Rules
 
