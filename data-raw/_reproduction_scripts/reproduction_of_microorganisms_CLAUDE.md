@@ -65,20 +65,22 @@ These are needed for `TAXONOMY_VERSION` in `R/aa_globals.R` later. Write them do
 ## Step 2: run the build
 
 The script takes several hours (most of it is LPSN scraping, which is cached in
-`data-raw/lpsn_scrape_cache.rds`, so a restart is fast). Run it detached from your tool calls, so that
-it survives time limits, and write everything to a log:
+`data-raw/lpsn_scrape_cache.rds`, so a restart is fast). Never `source()` the whole script. Use the runner
+`data-raw/_reproduction_scripts/run_microorganisms_build.R`: it cuts the script into chunks at its
+checkpoints, runs them one by one in a single R process, logs each chunk with its duration in
+`<scratch>/logs/progress.tsv`, stops with the name of the failing chunk, and can resume from any checkpoint.
+See the chunks first with `--list`. Run it detached from your tool calls, so that it survives time limits:
 
 ```bash
 mkdir -p <scratch>/logs
 cd <repo root>
-nohup Rscript -e 'options(AMR_build_view = FALSE, AMR_build_print_rows = 200, AMR_build_review_dir = "<review dir>", warn = 1, width = 200); source("data-raw/_reproduction_scripts/reproduction_of_microorganisms.R", echo = TRUE, max.deparse.length = Inf, keep.source = TRUE)' > <scratch>/logs/build_1.log 2>&1 &
+nohup Rscript data-raw/_reproduction_scripts/run_microorganisms_build.R --review-dir=<review dir> --log-dir=<scratch>/logs > <scratch>/logs/build_1.log 2>&1 &
 ```
 
-Monitor the log at sensible intervals (every 10 to 20 minutes, not continuously). Read every
-`>>> REVIEW:` block as soon as it appears; you do not have to wait until the end to start thinking.
-With `AMR_build_review_dir` set, every review block is also saved in full as a CSV file in
-`<review dir>`, named after its title. These files are part of the PR. Set the same option in every
-resumed run.
+Monitor the log and `progress.tsv` at sensible intervals (every 10 to 20 minutes, not continuously). Read
+every `>>> REVIEW:` block as soon as it appears; you do not have to wait until the end to start thinking.
+Every review block is also saved in full as a CSV file in `<review dir>`, named after its title. These
+files are part of the PR.
 
 ### Intermediate results
 
@@ -105,24 +107,18 @@ and must not be committed.
 
 ### If the run fails
 
-1. Read the error and the 100 lines before it. Find the root cause in the script, fix it, and
-   check the syntax with `Rscript -e 'invisible(parse("<script>"))'`.
-2. Do not start from scratch if a checkpoint exists. Write a resume script in `<scratch>` (never in
-   the repository) that contains, in this order:
-   - the script from the top up to (not including) `# Read LPSN data ---`: setup, guard, helpers,
-     clinically relevant genera;
-   - `taxonomy_lpsn`, `taxonomy_mycobank` and `taxonomy_gbif` from their `.rds` files;
-   - if resuming at or after `taxonomy0.rds`: the two lines that read the raw GBIF file
-     (`taxonomy_gbif.bak <- vroom(...)` and the `colnames()` line after it) and the definition of
-     `current_gbif` (needed by `add_missing_parents()`);
-   - if resuming at or after `taxonomy2.rds`: the section `# Add prevalence ---` up to and including
-     the definition of `compute_prevalence()` (needed later on);
-   - `taxonomy <- readRDS("data-raw/<latest checkpoint>.rds")`;
-   - the remainder of the script after that checkpoint's `saveRDS()` line.
-   Number the logs (`build_2.log`, etc.).
-3. If the same section fails three times for different reasons, or the cause lies outside the
-   script (e.g. the format of a source file changed fundamentally), stop and report (see "When to
-   stop").
+1. Read the error in the log and the 100 lines before it, and `progress.tsv`. Find the root cause in
+   the script, fix it, and check the syntax with `Rscript -e 'invisible(parse("<script>"))'`.
+2. Do not start from scratch if a checkpoint exists. The runner tells you where to resume; add
+   `--resume-from=<checkpoint>` (e.g. `--resume-from=taxonomy1b`) and use the same `--review-dir` and
+   `--log-dir`. It runs the setup chunk, loads the saved results and the parts of earlier chunks that
+   later chunks need (the blocks marked with `# @resume-block` in the script), and continues after that
+   checkpoint. Number the logs (`build_2.log`, etc.).
+3. If you add code to an earlier chunk that a later chunk needs (a function or an object), either move it
+   to the setup part at the top of the script, or mark it as a `# @resume-block` with the right `after=`,
+   otherwise resuming breaks. Check with `--list`.
+4. If the same chunk fails three times for different reasons, or the cause lies outside the script (e.g.
+   the format of a source file changed fundamentally), stop and report (see "When to stop").
 
 ## Step 3: review as an expert
 
@@ -207,7 +203,19 @@ change of more than 5% in a domain needs an explanation. Also report:
 - the 30 most relevant (prevalence <= 1.25) new genera and species, and the 30 most relevant removed
   ones.
 
-### 3d. Unit tests
+### 3d. Integrity rules and MO code registry
+
+The script stops before saving if any rule in `tests/testthat/helper-microorganisms.R` is broken, including
+the MO code registry rules (see `data-raw/microorganisms_files/README.md`): a code from any release since
+v2.0.0 may never be given to another taxon. Never weaken a rule to get past this; fix the cause. A registered
+code may only get another name (e.g. a corrected spelling) if it is listed in
+`data-raw/microorganisms_files/mo_code_renames.csv`, and you may only add such rows with an empty
+`approved_by`: the build will then stop on it until the human approves it, so list every proposed rename under
+"Needs a human". After the build, `tests/testthat/microorganisms_known_defects.csv` (the known defects of the
+data set before this rebuild) must be emptied: delete the rows that are solved, and the file itself if none
+are left. Any remaining row must be explained under "Needs a human".
+
+### 3e. Unit tests
 
 After the data are saved and the package is reloaded, run the tests at the end of the script and then
 the full suite with `devtools::test()`. Analyse every failure: is the test outdated because of a
@@ -242,7 +250,7 @@ human can review it before merging and next year's run can learn from it. Struct
    Every item states the check, the finding in numbers, your decision, and a link to the CSV file in
    `<review dir>` where relevant. There is one item for each review block of 3a, one for each sentinel
    organism of 3b that deviates (and one item for all sentinels that passed), one for each comparison
-   of 3c, one for the unit tests (3d) and one for each changed test. Leave all boxes unticked: ticking
+   of 3c, one for the integrity rules and registry (3d), one for the unit tests (3e) and one for each changed test. Leave all boxes unticked: ticking
    them is the human's job, it means "reviewed and agreed".
 5. **Needs a human**: also as checkboxes, everything you could not verify or decide, each with your
    recommendation. Be concrete, e.g. "COL lists *Enterobius vermicularis* as a synonym of ...;

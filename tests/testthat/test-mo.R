@@ -255,10 +255,10 @@ test_that("test-mo.R", {
   # # expect_warning(as.mo("TestingOwnID", reference_df = NULL))
   expect_error(as.mo("E. coli", reference_df = data.frame(mycol = "TestingOwnID")))
 
-  # combination of existing mo and other code
+  # combination of an unknown MO code and other code: MO codes are never guessed (see test-data-microorganisms.R)
   expect_identical(
     suppressWarnings(as.character(as.mo(c("B_ESCHR_COL", "ESCCOL")))),
-    c("B_ESCHR_COLI", "B_ESCHR_COLI")
+    c(NA, "B_ESCHR_COLI")
   )
 
   # from different sources

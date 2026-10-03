@@ -115,6 +115,9 @@ devtools::load_all(".") # to load the AMR package
 # keep the previous data set at hand, `AMR::microorganisms` will be replaced at the end of this script
 microorganisms_old <- AMR::microorganisms
 
+# the integrity rules of the data set and the MO code registry, shared with the unit tests
+source("tests/testthat/helper-microorganisms.R")
+
 
 # Helper functions --------------------------------------------------------------------------------
 
@@ -141,6 +144,11 @@ review <- function(x, title = deparse(substitute(x))) {
     }
   }
   invisible(x)
+}
+
+# taxonomic names in ASCII and without quotes
+ascii_names <- function(x) {
+  gsub("[\"'`]", "", stringi::stri_trans_general(x, "Latin-ASCII"))
 }
 
 # the priority of sources, used everywhere in this script
@@ -1052,8 +1060,11 @@ saveRDS(taxonomy_mycobank, "data-raw/taxonomy_mycobank.rds", version = 2)
 
 # Read GBIF data ----------------------------------------------------------------------------------
 
+# @resume-block gbif_raw after=taxonomy_gbif
+# (needed by `current_gbif` when resuming from a checkpoint with run_microorganisms_build.R)
 taxonomy_gbif.bak <- vroom(file_gbif, guess_max = 5e5)
 colnames(taxonomy_gbif.bak) <- gsub(".*:(.*)", "\\1", colnames(taxonomy_gbif.bak))
+# @end-resume-block
 
 # include all fungal orders from the mycobank db
 include_fungal_orders <- unique(taxonomy_mycobank$order[
@@ -1282,10 +1293,7 @@ taxonomy_gbif <- readRDS("data-raw/taxonomy_gbif.rds")
 # Add full names ----------------------------------------------------------------------------------
 
 # names must be ASCII before they are made unique, otherwise e.g. 'Fusarium aloës' and 'Fusarium aloes'
-# both end up as 'Fusarium aloes' in the final data set (which happened to 12 names in 2026)
-ascii_names <- function(x) {
-  gsub("[\"'`]", "", stringi::stri_trans_general(x, "Latin-ASCII"))
-}
+# both end up as 'Fusarium aloes' in the final data set (which happened to 12 names in 2026), see ascii_names()
 taxonomy_gbif <- taxonomy_gbif %>%
   mutate(across(domain:subspecies, ascii_names))
 taxonomy_lpsn <- taxonomy_lpsn %>%
@@ -1639,6 +1647,8 @@ saveRDS(taxonomy, "data-raw/taxonomy0.rds")
 # Ensure every referenced rank has its own row (domain through species).
 # Where possible, enrich with GBIF identifiers.
 
+# @resume-block current_gbif after=taxonomy1
+# (needed by add_missing_parents() after filtering, when resuming from a checkpoint)
 current_gbif <- taxonomy_gbif.bak %>%
   filter(is.na(acceptedNameUsageID)) %>%
   mutate(
@@ -1663,6 +1673,7 @@ current_gbif <- taxonomy_gbif.bak %>%
     phylum = if_else(taxonRank == "phylum", canonical, phylum)
   ) %>%
   select(-canonical)
+# @end-resume-block
 
 taxonomy <- add_missing_parents(taxonomy, current_gbif)
 
@@ -2035,6 +2046,8 @@ taxonomy$rank[is.na(taxonomy$rank)] <- "domain"
 # this part is required here, because it's needed for filtering on 'relevant' species to keep later on
 # (`pathogens` was read at the start of this script)
 
+# @resume-block prevalence after=taxonomy2
+# (compute_prevalence() is used again later on, when resuming from a checkpoint)
 # get all established, both old and current taxonomic names
 established <- pathogens %>%
   filter(status == "established") %>%
@@ -2147,6 +2160,7 @@ compute_prevalence <- function(taxonomy) {
     mutate(prevalence = if_else(rank == "genus", pmin(prevalence, gen_prevalence, na.rm = TRUE), prevalence)) %>%
     select(-gen_prevalence)
 }
+# @end-resume-block
 taxonomy <- compute_prevalence(taxonomy)
 
 table(taxonomy$prevalence, useNA = "always")
@@ -2513,6 +2527,77 @@ taxonomy <- taxonomy %>%
   distinct(fullname, .keep_all = TRUE)
 message("Removed ", n_before - nrow(taxonomy), " nonsense names")
 
+# Break cycles of synonyms ------------------------------------------------------------------------
+
+# Sources can contradict each other, e.g. in 2026 GBIF listed Capillidium denaeosporus as synonym of
+# Conidiobolus denaeosporum and also the other way around, so that the 'current name' depended on the starting
+# point. In a cycle, the statement of the most authoritative source counts: that record stays a synonym, and its
+# target becomes accepted.
+next_synonym_step <- function(df) {
+  by_gbif <- df$fullname[match(df$gbif_renamed_to, df$gbif, incomparables = NA)]
+  by_mycobank <- df$fullname[match(df$mycobank_renamed_to, df$mycobank, incomparables = NA)]
+  by_lpsn <- df$fullname[match(df$lpsn_renamed_to, df$lpsn, incomparables = NA)]
+  out <- coalesce(by_lpsn, by_mycobank, by_gbif)
+  out[df$status != "synonym"] <- NA_character_
+  setNames(out, df$fullname)
+}
+synonym_next <- next_synonym_step(taxonomy)
+synonym_cycles <- list()
+for (start in names(synonym_next)[!is.na(synonym_next)]) {
+  path <- start
+  repeat {
+    nxt <- unname(synonym_next[path[length(path)]])
+    if (is.na(nxt)) {
+      break
+    }
+    if (nxt %in% path) {
+      cycle <- sort(path[match(nxt, path):length(path)])
+      synonym_cycles[[paste(cycle, collapse = " | ")]] <- cycle
+      break
+    }
+    path <- c(path, nxt)
+    if (length(path) > 25) {
+      break
+    }
+  }
+}
+# If multiple records in the cycle come from the most authoritative source, the sources contradict themselves and
+# the direction cannot be determined automatically (in 2026, even the authors in `ref` of these GBIF records were
+# unreliable). Then ALL records in the cycle become accepted, so that no wrong current name is given, and they are
+# shown for a human decision.
+cycle_fixes <- bind_rows(lapply(synonym_cycles, function(cycle_members) {
+  # (not named `cycle`, since tibble() below would then use its own new column `cycle`)
+  members <- taxonomy[match(cycle_members, taxonomy$fullname), , drop = FALSE]
+  best <- members[source_prio(members$source) == min(source_prio(members$source)), , drop = FALSE]
+  if (nrow(best) == 1) {
+    tibble(
+      cycle = paste(cycle_members, collapse = " | "),
+      made_accepted = unname(synonym_next[best$fullname]),
+      reason = paste("statement of", best$fullname, "from", best$source, "(most authoritative source)")
+    )
+  } else {
+    tibble(
+      cycle = paste(cycle_members, collapse = " | "),
+      made_accepted = cycle_members,
+      reason = paste("contradicting statements of", toString(unique(best$source)), "- all accepted, NEEDS A HUMAN DECISION")
+    )
+  }
+}))
+review(cycle_fixes, "Cycles of synonyms")
+if (nrow(cycle_fixes) > 0) {
+  taxonomy <- taxonomy %>%
+    mutate(
+      fix = fullname %in% cycle_fixes$made_accepted,
+      status = if_else(fix, "accepted", status),
+      lpsn_renamed_to = if_else(fix, NA_character_, lpsn_renamed_to),
+      mycobank_renamed_to = if_else(fix, NA_character_, mycobank_renamed_to),
+      gbif_renamed_to = if_else(fix, NA_character_, gbif_renamed_to)
+    ) %>%
+    select(-fix)
+}
+rm(synonym_next, synonym_cycles, cycle_fixes)
+
+
 # Fix genera that are synonyms while they contain accepted species --------------------------------
 
 # e.g. in 2026, MycoBank listed the genus Blastomyces as a synonym, while Blastomyces dermatitidis was accepted
@@ -2560,150 +2645,58 @@ mo_domain <- taxonomy %>%
   )
 mo_domain
 
-# `domain` exists in the data set since 2026, so codes are kept per domain
-# (in the 2026 build, this was `AMR::microorganisms %>% rename(domain = kingdom)`, which would now fail)
-existing_mo_tbl <- microorganisms_old %>%
-  mutate(mo = as.character(mo))
-
+# @resume-block mo_registry after=taxonomy2c
+# (the MO code registry is used by the final checks, when resuming from a checkpoint)
 # parts of existing MO codes, split on the underscore (genus codes can contain digits or hyphens, such as
 # B_RBCLM1 or B_CND-P, so a regex with only [A-Z] does not work and caused repeated elements like
 # B_SCLLM_CNNM_LNSM_LNSM_LNSM in earlier versions)
 mo_part <- function(mo, i) {
   vapply(strsplit(as.character(mo), "_", fixed = TRUE), function(x) if (length(x) >= i) x[i] else NA_character_, character(1))
 }
+# parts of a name, e.g. the species of 'Escherichia coli'
+mo_part_of_name <- function(x, i) {
+  vapply(strsplit(x, " ", fixed = TRUE), function(x) if (length(x) >= i) x[i] else "", character(1))
+}
+
+# Existing codes come from the MO code registry (data-raw/microorganisms_files/), which contains every code of
+# every release since v2.0.0, and NOT from the previous data set: codes that only existed in a development
+# version carry no weight (decision by Matthijs S. Berends, 3 October 2026). A registered code is never given
+# to another taxon, also not when its taxon is not in the new data set anymore, since users store these codes.
+mo_registry <- read_mo_registry(".")
+mo_renames <- read_mo_renames(".")
+if (is.null(mo_registry)) {
+  stop("MO code registry not found, see data-raw/microorganisms_files/README.md", call. = FALSE)
+}
+release_order <- function(release) {
+  as.integer(factor(release, levels = unique(release[order(numeric_version(sub("^v", "", release)))])))
+}
+existing_mo_tbl <- mo_registry %>%
+  # approved renames, e.g. a corrected spelling: the code continues with the new name
+  left_join(mo_renames %>% select(mo, new_name), by = "mo") %>%
+  mutate(
+    fullname = coalesce(new_name, fullname),
+    species = if_else(!is.na(new_name) & rank %in% c("species", "subspecies"), mo_part_of_name(new_name, 2), species),
+    subspecies = if_else(!is.na(new_name) & rank == "subspecies", mo_part_of_name(new_name, 3), subspecies)
+  ) %>%
+  select(-new_name) %>%
+  # if a taxon had multiple codes over time, the code of the most recent release is used
+  arrange(desc(release_order(last_release)), desc(release_order(first_release))) %>%
+  distinct(domain, rank, fullname, .keep_all = TRUE)
+
 # all codes that have ever been used must never be given to another taxon, also not when their taxon
 # is not in the new data set anymore (users may have stored old codes)
-reserved_genus_codes <- existing_mo_tbl %>%
+reserved_genus_codes <- mo_registry %>%
   filter(rank %in% c("genus", "species", "subspecies")) %>%
   transmute(domain, code = mo_part(mo, 2)) %>%
   distinct()
-reserved_species_codes <- existing_mo_tbl %>%
+reserved_species_codes <- mo_registry %>%
   filter(rank %in% c("species", "subspecies")) %>%
   transmute(domain, genus_code = mo_part(mo, 2), code = mo_part(mo, 3)) %>%
   distinct()
+# @end-resume-block
 
 
 # phylum until family are abbreviated with 8 characters and prefixed with their rank
-
-# Phylum - keep old and fill up for new ones
-mo_phylum <- taxonomy %>%
-  filter(rank == "phylum") %>%
-  distinct(domain, phylum) %>%
-  left_join(
-    existing_mo_tbl %>%
-      filter(rank == "phylum") %>%
-      transmute(
-        domain,
-        phylum = fullname,
-        mo_old = gsub("^[A-Z]{1,2}_", "", as.character(mo))
-      ),
-    by = c("domain", "phylum")
-  ) %>%
-  group_by(domain) %>%
-  mutate(
-    mo_phylum8 = AMR:::abbreviate_mo(phylum, minlength = 8, prefix = "[PHL]_"),
-    mo_phylum9 = AMR:::abbreviate_mo(phylum, minlength = 9, prefix = "[PHL]_"),
-    mo_phylum = if_else(!is.na(mo_old), mo_old, mo_phylum8),
-    mo_duplicated = duplicated(mo_phylum),
-    mo_phylum = if_else(mo_duplicated, mo_phylum9, mo_phylum),
-    mo_duplicated = duplicated(mo_phylum)
-  ) %>%
-  ungroup()
-if (any(mo_phylum$mo_duplicated, na.rm = TRUE)) {
-  stop("Duplicate MO codes for phylum!")
-}
-mo_phylum <- mo_phylum %>%
-  select(domain, phylum, mo_phylum)
-
-# Class - keep old and fill up for new ones
-mo_class <- taxonomy %>%
-  filter(rank == "class") %>%
-  distinct(domain, class) %>%
-  left_join(
-    existing_mo_tbl %>%
-      filter(rank == "class") %>%
-      transmute(
-        domain,
-        class = fullname,
-        mo_old = gsub("^[A-Z]{1,2}_", "", as.character(mo))
-      ),
-    by = c("domain", "class")
-  ) %>%
-  group_by(domain) %>%
-  mutate(
-    mo_class8 = AMR:::abbreviate_mo(class, minlength = 8, prefix = "[CLS]_"),
-    mo_class9 = AMR:::abbreviate_mo(class, minlength = 9, prefix = "[CLS]_"),
-    mo_class = if_else(!is.na(mo_old), mo_old, mo_class8),
-    mo_duplicated = duplicated(mo_class),
-    mo_class = if_else(mo_duplicated, mo_class9, mo_class),
-    mo_duplicated = duplicated(mo_class)
-  ) %>%
-  ungroup()
-if (any(mo_class$mo_duplicated, na.rm = TRUE)) {
-  stop("Duplicate MO codes for class!")
-}
-mo_class <- mo_class %>%
-  select(domain, class, mo_class)
-
-# Order - keep old and fill up for new ones
-mo_order <- taxonomy %>%
-  filter(rank == "order") %>%
-  distinct(domain, order) %>%
-  left_join(
-    existing_mo_tbl %>%
-      filter(rank == "order") %>%
-      transmute(
-        domain,
-        order = fullname,
-        mo_old = gsub("^[A-Z]{1,2}_", "", as.character(mo))
-      ),
-    by = c("domain", "order")
-  ) %>%
-  group_by(domain) %>%
-  mutate(
-    mo_order8 = AMR:::abbreviate_mo(order, minlength = 8, prefix = "[ORD]_"),
-    mo_order9 = AMR:::abbreviate_mo(order, minlength = 9, prefix = "[ORD]_"),
-    mo_order = if_else(!is.na(mo_old), mo_old, mo_order8),
-    mo_duplicated = duplicated(mo_order),
-    mo_order = if_else(mo_duplicated, mo_order9, mo_order),
-    mo_duplicated = duplicated(mo_order)
-  ) %>%
-  ungroup()
-if (any(mo_order$mo_duplicated, na.rm = TRUE)) {
-  stop("Duplicate MO codes for order!")
-}
-mo_order <- mo_order %>%
-  select(domain, order, mo_order)
-
-# Family - keep old and fill up for new ones
-mo_family <- taxonomy %>%
-  filter(rank == "family") %>%
-  distinct(domain, family) %>%
-  left_join(
-    existing_mo_tbl %>%
-      filter(rank == "family") %>%
-      transmute(
-        domain,
-        family = fullname,
-        mo_old = gsub("^[A-Z]{1,2}_", "", as.character(mo))
-      ),
-    by = c("domain", "family")
-  ) %>%
-  group_by(domain) %>%
-  mutate(
-    mo_family8 = AMR:::abbreviate_mo(family, minlength = 8, prefix = "[FAM]_"),
-    mo_family9 = AMR:::abbreviate_mo(family, minlength = 9, prefix = "[FAM]_"),
-    mo_family = if_else(!is.na(mo_old), mo_old, mo_family8),
-    mo_duplicated = duplicated(mo_family),
-    mo_family = if_else(mo_duplicated, mo_family9, mo_family),
-    mo_duplicated = duplicated(mo_family)
-  ) %>%
-  ungroup()
-if (any(mo_family$mo_duplicated, na.rm = TRUE)) {
-  stop("Duplicate MO codes for family!")
-}
-mo_family <- mo_family %>%
-  select(domain, family, mo_family)
 
 # keep the old code where available, and give every new taxon the first candidate code that is not in use
 # and was never used before (`reserved`) - if all candidates are taken, a number is added to the first one
@@ -2725,6 +2718,47 @@ assign_codes <- function(old, candidates, reserved = character(0)) {
   }
   out
 }
+
+# Phylum until family - keep old (from the registry) and fill up for new ones, never with a registered code
+higher_rank_codes <- function(rank_name, tag) {
+  reserved <- mo_registry %>%
+    filter(rank == rank_name) %>%
+    transmute(domain, code = sub("^[A-Z]{1,2}_", "", mo))
+  out <- taxonomy %>%
+    filter(rank == rank_name) %>%
+    distinct(domain, name = .data[[rank_name]]) %>%
+    left_join(
+      existing_mo_tbl %>%
+        filter(rank == rank_name) %>%
+        transmute(domain, name = mo_name_without_suffix(fullname), mo_old = sub("^[A-Z]{1,2}_", "", mo)) %>%
+        distinct(domain, name, .keep_all = TRUE),
+      by = c("domain", "name")
+    ) %>%
+    group_by(domain) %>%
+    mutate(
+      code = assign_codes(
+        old = mo_old,
+        candidates = Map(
+          c,
+          AMR:::abbreviate_mo(name, minlength = 8, prefix = paste0("[", tag, "]_")),
+          AMR:::abbreviate_mo(name, minlength = 9, prefix = paste0("[", tag, "]_"))
+        ),
+        reserved = reserved$code[reserved$domain == cur_group()$domain]
+      )
+    ) %>%
+    ungroup()
+  if (anyDuplicated(paste(out$domain, out$code)) > 0 || anyNA(out$code)) {
+    stop("Duplicate MO codes for ", rank_name, "!", call. = FALSE)
+  }
+  out %>%
+    select(domain, name, code) %>%
+    setNames(c("domain", rank_name, paste0("mo_", rank_name)))
+}
+mo_phylum <- higher_rank_codes("phylum", "PHL")
+mo_class <- higher_rank_codes("class", "CLS")
+mo_order <- higher_rank_codes("order", "ORD")
+mo_family <- higher_rank_codes("family", "FAM")
+
 
 # construct code part for genus - keep old code where available and generate new ones where needed
 mo_genus <- taxonomy %>%
@@ -2863,6 +2897,13 @@ mo_subspecies <- mo_subspecies %>%
 mo_unknown <- existing_mo_tbl %>%
   filter(fullname %like% "unknown") %>%
   transmute(fullname, mo_unknown = as.character(mo))
+# unknowns that were added after the last release keep their code too, as long as it is not registered
+mo_unknown <- mo_unknown %>%
+  bind_rows(
+    microorganisms_old %>%
+      filter(fullname %like% "unknown", !fullname %in% mo_unknown$fullname, !mo %in% mo_registry$mo) %>%
+      transmute(fullname, mo_unknown = as.character(mo))
+  )
 
 # apply the new codes!
 taxonomy1 <- taxonomy
@@ -3588,23 +3629,33 @@ microorganisms_old %>%
   select(mo, fullname, rank, status, prevalence) %>%
   review("Previously manually added taxa that are not in the new data set")
 
-# LPSN records must be prokaryotes and MycoBank records must be fungi, also in their MO code (issue #309)
-if (!all(taxonomy$domain[taxonomy$source == "LPSN"] %in% c("Bacteria", "Archaea")) ||
-  !all(taxonomy$mo[taxonomy$source == "LPSN"] %like% "^(B|A)_") ||
-  !all(taxonomy$domain[taxonomy$source == "MycoBank"] == "Fungi") ||
-  !all(taxonomy$mo[taxonomy$source == "MycoBank"] %like% "^F_")) {
-  warning("LPSN records outside prokaryotes or MycoBank records outside fungi, check 'Combine the datasets'", call. = FALSE)
-}
-
-# these must never fail, as the package relies on them
-stopifnot(
-  "MO codes must be unique" = !anyDuplicated(taxonomy$mo),
-  "full names must be unique" = !anyDuplicated(taxonomy$fullname),
-  "MO codes must not be empty" = !any(taxonomy$mo %in% c("", NA)),
-  "prevalence must not be empty" = !anyNA(taxonomy$prevalence),
-  "status must be accepted, synonym or unknown" = all(taxonomy$status %in% c("accepted", "synonym", "unknown")),
-  "sources must be known" = all(taxonomy$source %in% c("LPSN", "MycoBank", "GBIF", "manually added"))
+# 'renamed to' identifiers of records that were removed after the earlier clean-up (e.g. by deduplication) lead
+# nowhere, so remove them again: these synonyms then have no current name, instead of a broken one
+n_dangling <- sum(
+  (!is.na(taxonomy$lpsn_renamed_to) & !taxonomy$lpsn_renamed_to %in% taxonomy$lpsn) |
+    (!is.na(taxonomy$mycobank_renamed_to) & !taxonomy$mycobank_renamed_to %in% taxonomy$mycobank) |
+    (!is.na(taxonomy$gbif_renamed_to) & !taxonomy$gbif_renamed_to %in% taxonomy$gbif)
 )
+taxonomy <- taxonomy %>%
+  mutate(
+    lpsn_renamed_to = if_else(lpsn_renamed_to %in% lpsn, lpsn_renamed_to, NA_character_),
+    mycobank_renamed_to = if_else(mycobank_renamed_to %in% mycobank, mycobank_renamed_to, NA_character_),
+    gbif_renamed_to = if_else(gbif_renamed_to %in% gbif, gbif_renamed_to, NA_character_)
+  )
+message("Removed dangling 'renamed to' identifiers of ", n_dangling, " records")
+
+# synonyms without a current name are no error, but every one of them is a name that as.mo() cannot update
+review(mo_synonyms_without_current_name(taxonomy), "Synonyms without a current name")
+
+# the integrity rules of the data set and the MO code registry (shared with the unit tests in
+# tests/testthat/helper-microorganisms.R): these must never fail, as the package and its users rely on them
+integrity_issues <- mo_integrity_issues(taxonomy, registry = mo_registry, renames = mo_renames)
+if (!is.null(mo_integrity_report(integrity_issues))) {
+  stop("The new data set breaks integrity rules, fix the cause in this script:\n",
+    mo_integrity_report(integrity_issues),
+    call. = FALSE
+  )
+}
 
 
 # Update other data sets --------------------------------------------------------------------------
@@ -3676,11 +3727,13 @@ taxonomy <- taxonomy %>%
   AMR:::dataset_UTF8_to_ASCII()
 
 # check again after the conversion to ASCII
-stopifnot(
-  "full names must be unique after conversion to ASCII" = !anyDuplicated(taxonomy$fullname),
-  "MO codes must be unique after conversion to ASCII" = !anyDuplicated(taxonomy$mo),
-  "MO codes may only contain A-Z, 0-9, _, -, [ and ]" = all(taxonomy$mo %like_case% "^[][A-Z0-9_-]+$")
-)
+integrity_issues <- mo_integrity_issues(taxonomy, registry = mo_registry, renames = mo_renames)
+if (!is.null(mo_integrity_report(integrity_issues))) {
+  stop("The data set breaks integrity rules after the conversion to ASCII:\n",
+    mo_integrity_report(integrity_issues),
+    call. = FALSE
+  )
+}
 
 microorganisms <- taxonomy
 

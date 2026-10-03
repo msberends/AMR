@@ -1,4 +1,4 @@
-# AMR 3.0.1.9095
+# AMR 3.0.1.9096
 
 Planned as v3.1.0, mid October 2026.
 
@@ -24,6 +24,7 @@ Planned as v3.1.0, mid October 2026.
   Thus, `mo_domain()` was previously an alias of `mo_kingdom()`; it is now a distinct function returning the domain. Output of `mo_domain()` is therefore unchanged, while `mo_kingdom()` now returns the formal, new kingdom.
 
 * Faster parallel computing via the `future` package for `as.sir()` and `wisca()`: a non-sequential plan (e.g. `future::plan(future::multisession)`) must be active before using `parallel = TRUE`.
+* `as.mo()` no longer guesses unknown MO codes (these become `NA` with a warning), and MO codes from versions before v2.0.0 are no longer supported
 
 ### New
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
@@ -41,6 +42,7 @@ Planned as v3.1.0, mid October 2026.
 * New `amr_course()` to download and unpack course or webinar materials from GitHub in one call
 * Typed missing value constants `NA_ab_` and `NA_mo_`, for use in pipelines that need missing values of a specific class
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
+* MO codes of all releases since v2.0.0 are now reliably translated to their current code, also for taxa that moved to another domain; a registry guarantees that an MO code never gets another meaning
 
 ### Fixed
 * Streptomycin breakpoints imported from WHONET were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)
@@ -62,6 +64,7 @@ Planned as v3.1.0, mid October 2026.
 * Translation fixes for Italian CoNS/CoPS names (#256), Dutch antimicrobials, and `sir_df()` foreign-language output (#272)
 * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 * Logical comparison (`==`, `!=`) of `sir` class with a `factor` is now possible on R >= 4.3
+* `mo_current()` and `as.mo()` could not find the current name of some synonyms with multiple sources (e.g. *Chaetomium abuense*)
 
 ### Updated
 * `top_n_microorganisms()`: new `property_for_each` argument for sub-grouping within top *n* groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed `property = NULL` not being accepted; inner filter now tracks original row indices to prevent cross-group contamination
