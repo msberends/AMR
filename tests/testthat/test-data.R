@@ -63,10 +63,14 @@ test_that("test-data.R", {
   )
 
   # check valid disks/MICs
-  expect_false(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE])))
-  expect_true(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE])))
-  expect_false(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_S", drop = TRUE])))
-  expect_true(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF"), "breakpoint_R", drop = TRUE])))
+  # rows without any breakpoint are EUCAST's blocking rows ("no breakpoint" for that organism), which must state their reason
+  is_blocking <- is.na(clinical_breakpoints$breakpoint_S) & is.na(clinical_breakpoints$breakpoint_R)
+  expect_true(all(grepl("^\\[No breakpoint\\] ", clinical_breakpoints$note[is_blocking])))
+  expect_true(all(clinical_breakpoints$guideline[is_blocking] %like% "EUCAST"))
+  expect_false(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking), "breakpoint_S", drop = TRUE])))
+  expect_true(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking), "breakpoint_R", drop = TRUE])))
+  expect_false(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking), "breakpoint_S", drop = TRUE])))
+  expect_true(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking), "breakpoint_R", drop = TRUE])))
 
   # antibiotic names must always be coercible to their original AB code
   expect_identical(as.ab(AMR::antimicrobials$name), AMR::antimicrobials$ab)

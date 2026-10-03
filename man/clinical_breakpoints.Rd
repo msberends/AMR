@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 44 089 observations and 15 variables:
+A \link[tibble:tibble]{tibble} with 60 173 observations and 15 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either \code{"ECOFF"}, \code{"animal"}, or \code{"human"}
@@ -13,14 +13,15 @@ A \link[tibble:tibble]{tibble} with 44 089 observations and 15 variables:
 \item \code{method}\cr Testing method, either \code{"DISK"} or \code{"MIC"}
 \item \code{site}\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 \item \code{mo}\cr Microbial ID, see \code{\link[=as.mo]{as.mo()}}
-\item \code{rank_index}\cr Taxonomic rank index of \code{mo} from 1 (subspecies/infraspecies) to 5 (unknown microorganism)
+\item \code{rank_index}\cr Taxonomic rank index of \code{mo} from 1 (subspecies/infraspecies) to 7 (non-species related breakpoints), used to choose the most specific breakpoint; blocking rows (see \emph{Details}) have the rank index of their organism + 0.1
 \item \code{ab}\cr Antimicrobial code as used by this package, EARS-Net and WHONET, see \code{\link[=as.ab]{as.ab()}}
 \item \code{ref_tbl}\cr Info about where the guideline rule can be found
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
-\item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S"
+\item \code{breakpoint_S}\cr Lowest MIC value or highest number of millimetres that leads to "S", is \code{NA} for blocking rows (see \emph{Details})
 \item \code{breakpoint_R}\cr Highest MIC value or lowest number of millimetres that leads to "R", can be \code{NA}
 \item \code{uti}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the rule applies to a urinary tract infection (UTI)
 \item \code{is_SDD}\cr A \link{logical} value (\code{TRUE}/\code{FALSE}) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to 72 breakpoints.
+\item \code{note}\cr Notes from the guideline that apply to the breakpoint, if available
 }
 }
 \usage{
@@ -46,6 +47,11 @@ Supported types of breakpoints are ECOFF, animal, and human. ECOFF (Epidemiologi
 The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. Use \code{\link[=as.sir]{as.sir(..., breakpoint_type = ...)}} to interpret raw data using a specific breakpoint type, e.g. \code{as.sir(..., breakpoint_type = "ECOFF")} to use ECOFFs.
 }
 
+\subsection{Blocking Rows}{
+
+Where EUCAST lists an organism but gives no breakpoint for it (e.g. "IE", "-", "Note", breakpoints in brackets, or an organism excluded with "except"), \code{\link[=as.sir]{as.sir()}} must not fall back to the breakpoint of a broader taxon, such as the breakpoint for \emph{Vibrio} spp. where EUCAST gives "IE" for \emph{V. fluvialis}. Such cases are included as "blocking rows": rows in which \code{breakpoint_S} and \code{breakpoint_R} are both \code{NA} and the \code{note} starts with \code{"[No breakpoint]"} followed by the reason. \code{\link[=as.sir]{as.sir()}} returns \code{NA} for these. This currently applies to 14 523 rows. Remove them with \code{subset(clinical_breakpoints, !is.na(breakpoint_S))} if only actual breakpoints are needed.
+}
+
 \subsection{Imported From WHONET}{
 
 Some breakpoints in this package were validated through and imported from \href{https://whonet.org}{WHONET}, a free desktop Windows application developed and supported by the WHO Collaborating Centre for Surveillance of Antimicrobial Resistance. More can be read on \href{https://whonet.org}{their website}. The developers of WHONET and this \code{AMR} package have been in contact about sharing their work. We highly appreciate their great development on the WHONET software.
@@ -55,9 +61,10 @@ From WHONET, imported were:
 \item All CLSI breakpoints, including ECOFF
 \item All non-human EUCAST breakpoints, including ECOFF
 \item Human EUCAST breakpoints between 2011 and 2018
+\item Human EUCAST antifungal breakpoints between 2019 and 2025
 }
 
-Human EUCAST breakpoints from 2019 onwards, were retrieved directly from \url{https://www.eucast.org} using \href{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R}{this script}.
+Human EUCAST breakpoints from 2019 onwards (antifungal breakpoints from 2026 onwards) were retrieved directly from the EUCAST Clinical Breakpoint Tables published on \url{https://www.eucast.org}, using \href{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R}{this script}.
 
 Our WHONET import script can be \href{https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R}{found here}.
 }

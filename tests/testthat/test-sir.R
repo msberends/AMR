@@ -602,3 +602,45 @@ test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
   )
   expect_equal(as.character(result), "R")
 })
+
+test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
+  skip_on_cran()
+  sir <- function(x, mo, ab, guideline, include_screening = FALSE) {
+    as.character(suppressMessages(suppressWarnings(
+      as.sir(x, mo = mo, ab = ab, guideline = guideline, include_screening = include_screening)
+    )))
+  }
+  # IE for V. fluvialis, while Vibrio spp. has breakpoints
+  expect_identical(sir(as.mic(0.125), "Vibrio fluvialis", "CTX", "EUCAST 2026"), NA_character_)
+  expect_identical(sir(as.mic(0.125), "Vibrio cholerae", "CTX", "EUCAST 2026"), "S")
+  # fosfomycin zone diameter breakpoints apply to E. coli only
+  expect_identical(sir(as.disk(25), "Klebsiella pneumoniae", "FOS", "EUCAST 2019"), NA_character_)
+  expect_identical(sir(as.disk(25), "Escherichia coli", "FOS", "EUCAST 2019"), "S")
+  # "-" for enterococci must not fall back to the PK-PD breakpoints
+  expect_identical(sir(as.mic(1), "Enterococcus faecalis", "CTX", "EUCAST 2021"), NA_character_)
+  # exceptions: "Klebsiella spp. (except K. aerogenes)"
+  expect_identical(sir(as.mic(2), "Klebsiella aerogenes", "CXM", "EUCAST 2026"), NA_character_)
+  # agent listed in the Enterobacterales table for other organisms only
+  expect_identical(sir(as.mic(0.5), "Salmonella enterica", "CXM", "EUCAST 2026"), NA_character_)
+  # no EUCAST breakpoints at all, so no PK-PD breakpoints either
+  expect_identical(sir(as.mic(0.5), "Burkholderia cepacia complex", "MEM", "EUCAST 2020"), NA_character_)
+  # PK-PD breakpoints only until EUCAST 2023
+  expect_identical(sir(as.mic(0.25), "Nocardia asteroides", "AMX", "EUCAST 2020"), "S")
+  expect_identical(sir(as.mic(0.25), "Nocardia asteroides", "AMX", "EUCAST 2024"), NA_character_)
+  # H. influenzae MIC breakpoints apply to H. parainfluenzae, zone diameters do not
+  expect_identical(sir(as.mic(0.5), "Haemophilus parainfluenzae", "CIP", "EUCAST 2026"), "R")
+  expect_identical(sir(as.disk(30), "Haemophilus parainfluenzae", "CIP", "EUCAST 2026"), NA_character_)
+  # cefoxitin screen: CoNS not identified to species level use S >= 25 mm
+  expect_identical(sir(as.disk(23), "B_STPHY_CONS", "FOX", "EUCAST 2026", include_screening = TRUE), "R")
+  expect_identical(sir(as.disk(23), "Staphylococcus hominis", "FOX", "EUCAST 2026", include_screening = TRUE), "S")
+  expect_identical(sir(as.disk(26), "Staphylococcus epidermidis", "FOX", "EUCAST 2026", include_screening = TRUE), "R")
+  expect_identical(sir(as.disk(26), "Staphylococcus epidermidis", "FOX", "EUCAST 2026"), NA_character_)
+  # topical screening cut-off values do not replace systemic breakpoints
+  expect_identical(sir(as.mic(0.5), "Staphylococcus aureus", "FUS", "EUCAST 2026"), "S")
+  # off-scale breakpoint S <= 0.001 mg/L categorises wild type isolates as I
+  expect_identical(sir(as.mic(0.0005), "Pseudomonas aeruginosa", "CIP", "EUCAST 2026"), "I")
+  # EUCAST's 0.06 mg/L is the dilution 0.0625, i.e. 0.064 in this package
+  expect_identical(sir(as.mic(0.064), "Haemophilus influenzae", "LVX", "EUCAST 2026"), "S")
+  # high-level gentamicin resistance (screening test given in the notes)
+  expect_identical(sir(as.mic(256), "Enterococcus faecium", "GEH", "EUCAST 2026"), "R")
+})

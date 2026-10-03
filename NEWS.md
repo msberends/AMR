@@ -29,6 +29,9 @@ Planned as v3.1.0, mid October 2026.
 * `add_custom_antimicrobial_synonyms()` to add synonyms, such as local trade names, to existing antimicrobials (including custom ones). Synonyms may be written in any script: they are matched before `as.ab()` transliterates the input to ASCII, so no non-ASCII characters are stored in the package itself (#307)
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
 * Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
+  * `clinical_breakpoints` now contains blocking rows (`NA` breakpoints, reason in `note`) where EUCAST gives no breakpoint for an organism, so `as.sir()` no longer falls back to the breakpoint of a broader taxon
+  * Restrictions in EUCAST notes are applied, e.g. zone diameter breakpoints for *E. coli* only
+  * EUCAST PK-PD (non-species related) breakpoints 2019-2023 and *H. parainfluenzae* MIC breakpoints are included
 * Wildtype/Non-wildtype (WT/NWT) output when using ECOFF-based interpretation, by setting `breakpoint_type = "ECOFF"` in `as.sir()`; WT/NWT results are fully supported in all resistance/susceptibility functions and plots (#254)
 * *tidymodels* integration for using SIR, MIC and disk data in modelling pipelines: `step_mic_log2()`, `step_sir_numeric()`, and new column selectors `all_sir()`, `all_mic()`, `all_disk()`
 * New `esbl_isolates` data set for practising AMR modelling
@@ -41,6 +44,7 @@ Planned as v3.1.0, mid October 2026.
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
 
 ### Fixed
+* Streptomycin breakpoints imported from WHONET were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)
 * Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified value no longer causes errors or silent wrong behaviour in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and SIR plotting/printing functions (#298)
 * `as.sir()`
   * On data frames: already-converted SIR columns no longer dropped on re-run (#278)
