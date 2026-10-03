@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9098</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9099</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -237,6 +237,10 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <li>
 <code>NEWS.md</code> uses sections <strong>New</strong>, <strong>Fixes</strong>, <strong>Updates</strong> with GitHub issue references (<code>#NNN</code>)</li>
 </ul><div class="section level3">
+<h3 id="local-commits-on-main-never-touch-the-version-number">Local commits on <code>main</code>: never touch the version number<a class="anchor" aria-label="anchor" href="#local-commits-on-main-never-touch-the-version-number"></a></h3>
+<p>When committing directly on <code>main</code> in a local clone, <strong>never</strong> edit the <code>Version:</code> or <code>Date:</code> field in <code>DESCRIPTION</code>, nor line 1 of <code>NEWS.md</code>, and do not add a version prefix to the commit message. The git hooks in <code>.github/prehooks/</code> do this on every commit to <code>main</code>: <code>pre-commit</code> sets the version (commit count since the last tag + 9001) and date in <code>DESCRIPTION</code> and line 1 of <code>NEWS.md</code>, and <code>commit-msg</code> prepends <code>(vX.Y.Z.9NNN)</code> to the commit message. Adding NEWS bullets is still allowed. The section below applies only to PRs.</p>
+</div>
+<div class="section level3">
 <h3 id="version-and-date-bump-required-for-every-pr">Version and date bump required for every PR<a class="anchor" aria-label="anchor" href="#version-and-date-bump-required-for-every-pr"></a></h3>
 <p>All PRs are <strong>squash-merged</strong>, so each PR lands as exactly <strong>one commit</strong> on the default branch. Version numbers are kept in sync with the cumulative commit count since the last released tag. Therefore <strong>exactly one version bump is allowed per PR</strong>, regardless of how many intermediate commits are made on the branch.</p>
 <div class="section level4">

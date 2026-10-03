@@ -190,6 +190,17 @@ Version format: `major.minor.patch.dev` (e.g., `3.0.1.9021`)
 - `NEWS.md` uses sections **New**, **Fixes**, **Updates** with GitHub
   issue references (`#NNN`)
 
+### Local commits on `main`: never touch the version number
+
+When committing directly on `main` in a local clone, **never** edit the
+`Version:` or `Date:` field in `DESCRIPTION`, nor line 1 of `NEWS.md`,
+and do not add a version prefix to the commit message. The git hooks in
+`.github/prehooks/` do this on every commit to `main`: `pre-commit` sets
+the version (commit count since the last tag + 9001) and date in
+`DESCRIPTION` and line 1 of `NEWS.md`, and `commit-msg` prepends
+`(vX.Y.Z.9NNN)` to the commit message. Adding NEWS bullets is still
+allowed. The section below applies only to PRs.
+
 ### Version and date bump required for every PR
 
 All PRs are **squash-merged**, so each PR lands as exactly **one
