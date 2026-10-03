@@ -1242,8 +1242,19 @@ taxonomy <- taxonomy %>%
 taxonomy %>% count(rank, sort = TRUE)
 
 # Resolve genera that appear in multiple domains (e.g. Giardia in Protozoa
-# and Animalia). Prefer Bacteria > Fungi > Protozoa > Archaea > Chromista >
-# Animalia, then overwrite domain-to-family for the entire genus.
+# and Animalia, or Trichophyton in Fungi and as a cyanobacterium in GBIF).
+# The winning lineage per genus is decided in this order:
+# 1. Authoritative sources (LPSN, MycoBank) always beat GBIF and other sources,
+#    so GBIF can never overrule LPSN or MycoBank.
+# 2. Accepted beats non-accepted, based on the genus-rank record of that
+#    source/domain (or its species if the genus record is missing). So a
+#    synonymic bacterial genus in LPSN loses from an accepted fungal genus in
+#    MycoBank with the same name (e.g. Pirella), and vice versa.
+# 3. Source: LPSN > MycoBank > GBIF > other.
+# 4. Genus-rank records over species/subspecies records.
+# 5. Domain: Bacteria > Fungi > Protozoa > Archaea > Chromista > Animalia >
+#    Plantae, which only breaks ties within the same source (e.g. Giardia within GBIF).
+# The winning lineage then overwrites domain-to-family for the entire genus.
 taxonomy %>% count(domain, sort = TRUE)
 domain_priority <- c(
   "Bacteria" = 1L,
@@ -1254,18 +1265,41 @@ domain_priority <- c(
   "Animalia" = 6L,
   "Plantae" = 7L
 )
+source_priority <- c("LPSN" = 1L, "MycoBank" = 2L, "GBIF" = 3L, "manually added" = 4L)
 
-# find the best domain per genus from genus-rank records
+# find the best domain per genus, from all records of that genus (so that e.g. a
+# MycoBank species also counts when the genus-rank record only came from GBIF)
 best_domain <- taxonomy %>%
-  filter(rank == "genus", genus != "", domain %in% names(domain_priority)) %>%
+  filter(
+    genus != "",
+    rank %in% c("genus", "species", "subspecies"),
+    domain %in% names(domain_priority),
+    # a source only counts within its own scope, so that a lineage inherited
+    # from an older (possibly flawed) version of `microorganisms` cannot vote
+    !(source == "LPSN" & !domain %in% c("Bacteria", "Archaea")),
+    !(source == "MycoBank" & domain != "Fungi")
+  ) %>%
+  group_by(genus, source, domain) %>%
   mutate(
-    dprio = domain_priority[domain],
-    sprio = recode_values(source,
-                          "LPSN" ~ 1L,
-                          "MycoBank" ~ 2L,
-                          "GBIF" ~ 3L,
-                          default = 4L)) %>%
-  arrange(genus, dprio, sprio) %>%
+    # status of this genus in this source/domain: from the genus-rank record if
+    # available, otherwise accepted if any of its species/subspecies is accepted
+    genus_status = if (any(rank == "genus")) {
+      status[rank == "genus"][1]
+    } else if (any(status == "accepted")) {
+      "accepted"
+    } else {
+      status[1]
+    }
+  ) %>%
+  ungroup() %>%
+  mutate(
+    tprio = if_else(source %in% c("LPSN", "MycoBank"), 1L, 2L),
+    stprio = if_else(genus_status %in% "accepted", 1L, 2L),
+    sprio = coalesce(unname(source_priority[source]), 5L),
+    rprio = if_else(rank == "genus", 1L, 2L),
+    dprio = unname(domain_priority[domain])
+  ) %>%
+  arrange(genus, tprio, stprio, sprio, rprio, dprio) %>%
   distinct(genus, .keep_all = TRUE) %>%
   select(genus, best_domain = domain, best_kingdom = kingdom,
          best_phylum = phylum, best_class = class,
@@ -1273,6 +1307,15 @@ best_domain <- taxonomy %>%
 
 taxonomy <- taxonomy %>%
   left_join(best_domain, by = "genus") %>%
+  # LPSN and MycoBank records of a losing homonym are different organisms under
+  # another nomenclatural code, so remove them instead of moving them to the
+  # winning domain (e.g. the bacterial Pirella species if the fungal Pirella wins)
+  filter(
+    !(genus != "" & !is.na(best_domain) & source == "LPSN" &
+        !best_domain %in% c("Bacteria", "Archaea")),
+    !(genus != "" & !is.na(best_domain) & source == "MycoBank" &
+        best_domain != "Fungi")
+  ) %>%
   mutate(
     domain  = if_else(genus != "" & !is.na(best_domain), best_domain, domain),
     kingdom = if_else(genus != "" & !is.na(best_kingdom), best_kingdom, kingdom),
@@ -1285,6 +1328,20 @@ taxonomy <- taxonomy %>%
     family  = if_else(genus != "" & !is.na(best_family) & rank %in%
                         c("genus", "species", "subspecies"), best_family, family)) %>%
   select(-starts_with("best_"))
+
+# integrity tests: no LPSN record may have left the prokaryotes and no MycoBank
+# record may have left the fungi (see issue #309, Trichophyton as cyanobacterium).
+# Both must return 0 rows - otherwise check the genus resolution above.
+taxonomy %>%
+  filter(source == "LPSN", !domain %in% c("Bacteria", "Archaea", "", NA)) %>%
+  count(domain, genus, sort = TRUE)
+taxonomy %>%
+  filter(source == "MycoBank", !domain %in% c("Fungi", "", NA)) %>%
+  count(domain, genus, sort = TRUE)
+# and these known cross-domain homonyms must end up in the right domain
+taxonomy %>%
+  filter(rank == "genus", genus %in% c("Trichophyton", "Pirella", "Tubercularia")) %>%
+  select(fullname, domain, kingdom, phylum, family, source)
 
 # check if some genera within kingdoms have multiple families / orders, etc:
 taxonomy %>%
@@ -1345,9 +1402,12 @@ taxonomy <- taxonomy %>%
       rank == "kingdom" ~ kingdom,
       rank == "domain" ~ domain,
       TRUE ~ paste(genus, species, subspecies) # already trimmed 7 lines up
-    ))) %>% 
-  arrange(fullname) %>% 
-  distinct(fullname, .keep_all = TRUE)
+    ))) %>%
+  # keep the record of the most authoritative source: LPSN > MycoBank > GBIF > other
+  mutate(sprio = coalesce(unname(source_priority[source]), 5L)) %>%
+  arrange(fullname, sprio) %>%
+  distinct(fullname, .keep_all = TRUE) %>%
+  select(-sprio)
 
 
 # *** Save intermediate results (0) *** -----------------------------------------------------------
@@ -3293,6 +3353,12 @@ microorganisms$fullname[
 # we added an MO code, so make sure everything is still unique
 any(duplicated(taxonomy$mo))
 any(duplicated(taxonomy$fullname))
+
+# LPSN records must be prokaryotes and MycoBank records must be fungi, also in their MO code (issue #309)
+all(taxonomy$domain[taxonomy$source == "LPSN"] %in% c("Bacteria", "Archaea"))
+all(taxonomy$mo[taxonomy$source == "LPSN"] %like% "^(B|A)_")
+all(taxonomy$domain[taxonomy$source == "MycoBank"] == "Fungi")
+all(taxonomy$mo[taxonomy$source == "MycoBank"] %like% "^F_")
 
 
 # Update other data sets --------------------------------------------------------------------------
