@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9095
+## AMR 3.0.1.9098
 
 Planned as v3.1.0, mid October 2026.
 
@@ -48,6 +48,10 @@ Planned as v3.1.0, mid October 2026.
   [`wisca()`](https://amr-for-r.org/reference/antibiogram.md): a
   non-sequential plan (e.g. `future::plan(future::multisession)`) must
   be active before using `parallel = TRUE`.
+
+- [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) no longer
+  guesses unknown MO codes (these become `NA` with a warning), and MO
+  codes from versions before v2.0.0 are no longer supported
 
 #### New
 
@@ -111,6 +115,9 @@ Planned as v3.1.0, mid October 2026.
 - New [`wisca_plot()`](https://amr-for-r.org/reference/antibiogram.md)
   to assess the susceptibility and incidence distributions from the
   Monte Carlo simulations
+- A registry of all microbial IDs (MO codes) since v2.0.0 now prevents
+  existing IDs from being reused or mixed up; IDs of earlier releases
+  are translated to the current ID of the same taxon
 
 #### Fixed
 
@@ -177,6 +184,10 @@ Planned as v3.1.0, mid October 2026.
 - Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 - Logical comparison (`==`, `!=`) of `sir` class with a `factor` is now
   possible on R \>= 4.3
+- [`mo_current()`](https://amr-for-r.org/reference/mo_property.md) and
+  [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) could not find
+  the current name of some synonyms with multiple sources
+  (e.g. *Chaetomium abuense*)
 
 #### Updated
 
