@@ -847,7 +847,7 @@ if (files_changed()) {
   # Function to extract URLs from a file
   extract_urls_from_file <- function(file_path) {
     lines <- readLines(file_path, warn = FALSE)
-    urls <- stringr::str_extract_all(lines, "https?://[^\\s)\"'>]+")
+    urls <- stringr::str_extract_all(lines, "https?://[^\\s)\"'>}]+")
     urls <- unlist(urls)
     if (length(urls) == 0) {
       return(NULL)
