@@ -510,7 +510,7 @@ if (require("dplyr")) {
 For interpretations of minimum inhibitory concentration (MIC) values and disk diffusion diameters:
 \itemize{
 \item \strong{CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data}, 2011-2026, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
-\item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2026, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/microbiology/documents/m100/}.
+\item \strong{CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing}, 2011-2026, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/shop/standards/m100/}.
 \item \strong{CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals}, 2019-2026, \emph{Clinical and Laboratory Standards Institute} (CLSI). \url{https://clsi.org/standards/products/veterinary-medicine/documents/vet01/}.
 \item \strong{EUCAST Breakpoint tables for interpretation of MICs and zone diameters}, 2011-2026, \emph{European Committee on Antimicrobial Susceptibility Testing} (EUCAST). \url{https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/}.
 \item \strong{WHONET} as a source for machine-reading the clinical breakpoints (\href{https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet}{read more here}), 1989-2026, \emph{WHO Collaborating Centre for Surveillance of Antimicrobial Resistance}. \url{https://whonet.org/}.
