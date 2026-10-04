@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9100
+## AMR 3.0.1.9103
 
 Planned as v3.1.0, mid October 2026.
 
@@ -121,6 +121,9 @@ Planned as v3.1.0, mid October 2026.
 
 #### Fixed
 
+- EUCAST breakpoint rules for *Aerococcus* (v12 onwards) were never
+  applied, and *Pasteurella* rules were partly filed under *Neisseria
+  meningitidis* ([\#290](https://github.com/msberends/AMR/issues/290))
 - Streptomycin breakpoints imported from WHONET were coded as
   streptoduocin (`STR`) instead of streptomycin (`STR1`)
 - Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified

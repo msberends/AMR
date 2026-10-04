@@ -162,7 +162,7 @@ World Health Organization (WHO) Collaborating Centre for Drug Statistics
 Methodology: <https://atcddd.fhi.no/atc_ddd_index/>
 
 European Commission Public Health PHARMACEUTICALS - COMMUNITY REGISTER:
-<https://health.ec.europa.eu/documents/community-register/html/index_en.htm>
+<https://ec.europa.eu/health/documents/community-register/html/index_en.htm>
 
 ## Download Our Reference Data
 

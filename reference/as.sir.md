@@ -607,8 +607,7 @@ disk diffusion diameters:
 
 - **CLSI M100: Performance Standard for Antimicrobial Susceptibility
   Testing**, 2011-2026, *Clinical and Laboratory Standards Institute*
-  (CLSI).
-  <https://clsi.org/standards/products/microbiology/documents/m100/>.
+  (CLSI). <https://clsi.org/shop/standards/m100/>.
 
 - **CLSI VET01: Performance Standards for Antimicrobial Disk and
   Dilution Susceptibility Tests for Bacteria Isolated From Animals**,
@@ -712,10 +711,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-10-03 18:38:04     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-10-03 18:38:04     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-10-03 18:38:05     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-10-03 18:38:05     1 DISK   genta       Escherich… human      18         
+#> 1 2026-10-04 18:00:20     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-10-04 18:00:20     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-10-04 18:00:21     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-10-04 18:00:21     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>
