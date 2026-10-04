@@ -1254,68 +1254,68 @@ parse_and_convert <- function(x) {
 }
 
 replace_old_mo_codes <- function(x, property) {
-  # this function transform old MO codes to current codes, such as:
-  # B_ESCH_COL (AMR v0.5.0) -> B_ESCHR_COLI
-  ind <- x %like_case% "^[A-Z]_[A-Z_]+$" & !x %in% AMR_env$MO_lookup$mo
-  if (any(ind, na.rm = TRUE)) {
-    add_MO_lookup_to_AMR_env()
-    # get the ones that match
-    affected <- x[ind]
-    affected_unique <- unique(affected)
-    all_direct_matches <- TRUE
-    # find their new codes, once per code
-    solved_unique <- unlist(lapply(
-      strsplit(affected_unique, ""),
-      function(m) {
-        domain <- paste0("^", m[1])
-        name <- m[3:length(m)]
-        name[name == "_"] <- " "
-        name <- tolower(paste0(name, ".*", collapse = ""))
-        name <- gsub(" .*", " ", name, fixed = TRUE)
-        name <- paste0("^", name)
-        results <- AMR_env$MO_lookup$mo[AMR_env$MO_lookup$domain %like_case% domain &
-          AMR_env$MO_lookup$fullname_lower %like_case% name]
-        if (length(results) > 1) {
-          all_direct_matches <<- FALSE
-        }
-        results[1L]
-      }
-    ), use.names = FALSE)
-    solved <- solved_unique[match(affected, affected_unique)]
-    # assign on places where a match was found
-    x[ind] <- solved
-    n_matched <- length(affected[!is.na(affected)])
-    n_solved <- length(affected[!is.na(solved)])
-    n_unsolved <- length(affected[is.na(solved)])
-    n_unique <- length(affected_unique[!is.na(affected_unique)])
-    if (n_unique < n_matched) {
-      n_unique <- paste0(n_unique, " unique, ")
-    } else {
-      n_unique <- ""
+  # MO codes of earlier releases (since v2.0.0) that are not in the current data set anymore are translated
+  # with the MO code registry (internal data `MO_RETIRED_CODES`, see data-raw/microorganisms_files/README.md),
+  # e.g. a taxon that moved to another domain.
+  # MO codes are never guessed: a wrong organism is worse than NA. Codes from releases before v2.0.0 are
+  # not supported (decision by Matthijs S. Berends, 3 October 2026).
+  add_MO_lookup_to_AMR_env()
+  not_current <- !is.na(x) & !x %in% AMR_env$MO_lookup$mo
+  if (!any(not_current)) {
+    return(x)
+  }
+  # list at most 10 items, and escape curly brackets of names such as "Kapabacteria {class}" for the cli package
+  listing <- function(v) {
+    v <- gsub("}", "}}", gsub("{", "{{", v, fixed = TRUE), fixed = TRUE)
+    out <- vector_and(utils::head(v, 10), quotes = FALSE, sort = FALSE)
+    if (length(v) > 10) {
+      out <- paste0(out, ", and ", length(v) - 10, " more")
     }
-    if (property != "mo") {
-      warning_(
-        "in {.help [{.fun mo_", property, "}](AMR::mo_", property, ")}: the input contained ", n_matched,
-        " old MO code", ifelse(n_matched == 1, "", "s"),
-        " (", n_unique, "from another AMR package version). ",
-        "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)} to increase speed."
-      )
-    } else {
-      warning_(
-        "in {.help [{.fun as.mo}](AMR::as.mo)}: the input contained ", n_matched,
-        " old MO code", ifelse(n_matched == 1, "", "s"),
-        " (", n_unique, "from another AMR package version). ",
-        n_solved, " old MO code", ifelse(n_solved == 1, "", "s"),
-        ifelse(n_solved == 1, " was", " were"),
-        ifelse(all_direct_matches, " updated ", font_bold(" guessed ")),
-        "to ", ifelse(n_solved == 1, "a ", ""),
-        "currently used MO code", ifelse(n_solved == 1, "", "s"),
-        ifelse(n_unsolved > 0,
-          paste0(" and ", n_unsolved, " old MO code", ifelse(n_unsolved == 1, "", "s"), " could not be updated."),
-          "."
-        )
+    out
+  }
+  in_function <- ifelse(property == "mo",
+    "in {.help [{.fun as.mo}](AMR::as.mo)}: ",
+    paste0("in {.help [{.fun mo_", property, "}](AMR::mo_", property, ")}: ")
+  )
+
+  # codes from earlier releases
+  is_retired <- not_current & x %in% MO_RETIRED_CODES$old_mo
+  if (any(is_retired)) {
+    retired <- unique(x[is_retired])
+    current <- MO_RETIRED_CODES$mo[match(retired, MO_RETIRED_CODES$old_mo)]
+    x[is_retired] <- current[match(x[is_retired], retired)]
+    msg <- paste0(
+      in_function, "the input contained ", length(retired), " MO code", ifelse(length(retired) == 1, "", "s"),
+      " from an earlier AMR package version. "
+    )
+    if (any(!is.na(current))) {
+      msg <- paste0(
+        msg, sum(!is.na(current)), ifelse(sum(!is.na(current)) == 1, " was", " were"),
+        " translated to the current MO code of the same taxon (", listing(paste0(retired[!is.na(current)], " -> ", current[!is.na(current)])), "). "
       )
     }
+    if (any(is.na(current))) {
+      gone <- MO_RETIRED_CODES$fullname[match(retired[is.na(current)], MO_RETIRED_CODES$old_mo)]
+      reason <- MO_RETIRED_CODES$reason[match(retired[is.na(current)], MO_RETIRED_CODES$old_mo)]
+      gone <- ifelse(is.na(reason), gone, paste0(gone, ": ", reason))
+      msg <- paste0(
+        msg, sum(is.na(current)), ifelse(sum(is.na(current)) == 1, " was", " were"),
+        " set to NA, as the taxon is not in the current data set (", listing(paste0(retired[is.na(current)], " = ", gone)), "). "
+      )
+    }
+    warning_(msg, "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)}.")
+  }
+
+  # anything else that looks like an MO code, but was never part of a release since v2.0.0
+  is_unknown_code <- not_current & !is_retired & x %like_case% "^[A-Z]{1,2}_[][A-Z0-9_-]+$"
+  if (any(is_unknown_code)) {
+    unknown <- unique(x[is_unknown_code])
+    x[is_unknown_code] <- NA_character_
+    warning_(
+      in_function, "the input contained ", length(unknown), " unknown MO code", ifelse(length(unknown) == 1, "", "s"),
+      " (", listing(unknown), "), which ", ifelse(length(unknown) == 1, "was", "were"),
+      " set to NA. MO codes of AMR package versions before v2.0.0 are not supported."
+    )
   }
   x
 }
@@ -1395,15 +1395,24 @@ synonym_mo_to_accepted_mo <- function(x, fill_in_accepted = FALSE, dataset = AMR
     x_mycobank <- dataset$mycobank_renamed_to[match(out, dataset$mo)]
     x_lpsn <- dataset$lpsn_renamed_to[match(out, dataset$mo)]
 
-    out[must_be_corrected & !is.na(x_gbif)] <- dataset$mo[match(x_gbif[must_be_corrected & !is.na(x_gbif)], dataset$gbif)]
-    out[must_be_corrected & !is.na(x_mycobank)] <- dataset$mo[match(x_mycobank[must_be_corrected & !is.na(x_mycobank)], dataset$mycobank)]
-    out[must_be_corrected & !is.na(x_lpsn)] <- dataset$mo[match(x_lpsn[must_be_corrected & !is.na(x_lpsn)], dataset$lpsn)]
+    # priority LPSN > MycoBank > GBIF, but a source may only overwrite the result if its target exists in the
+    # data set (before 3.1.0, e.g. a MycoBank target that was not included replaced a valid GBIF target by NA)
+    by_gbif <- dataset$mo[match(x_gbif, dataset$gbif, incomparables = NA)]
+    by_mycobank <- dataset$mo[match(x_mycobank, dataset$mycobank, incomparables = NA)]
+    by_lpsn <- dataset$mo[match(x_lpsn, dataset$lpsn, incomparables = NA)]
+    out[must_be_corrected & !is.na(by_gbif)] <- by_gbif[must_be_corrected & !is.na(by_gbif)]
+    out[must_be_corrected & !is.na(by_mycobank)] <- by_mycobank[must_be_corrected & !is.na(by_mycobank)]
+    out[must_be_corrected & !is.na(by_lpsn)] <- by_lpsn[must_be_corrected & !is.na(by_lpsn)]
 
     is_still_synonym <- dataset$status[match(out, dataset$mo)] == "synonym"
   }
 
   x_no_synonym <- dataset$status[match(x, dataset$mo)] != "synonym"
   out[x_no_synonym] <- NA_character_
+  if (isFALSE(fill_in_accepted)) {
+    # a synonym without any known current name is not 'renamed' to itself
+    out[!is.na(out) & out == x] <- NA_character_
+  }
   if (isTRUE(fill_in_accepted)) {
     out[!is.na(x_no_synonym) & x_no_synonym] <- x[!is.na(x_no_synonym) & x_no_synonym]
   }

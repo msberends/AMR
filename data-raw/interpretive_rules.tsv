@@ -8,18 +8,18 @@
 # >>>>> IF YOU WANT TO IMPORT THIS FILE INTO YOUR OWN SOFTWARE, HAVE THE FIRST 9 LINES SKIPPED <<<<<
 # -------------------------------------------------------------------------------------------------------------------------------
 rule.provider	reference.rule_group	reference.version	reference.rule	if_mo_property	like.is.one_of	this_value	and_these_antibiotics	have_these_values	then_change_these_antibiotics	to_value	note
-EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	NOR	S	fluoroquinolones	S	
-EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	NOR	I	fluoroquinolones	I	
-EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	NOR	R	fluoroquinolones	R	
-EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	CIP	S	LVX	S	
-EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	CIP	I	LVX	I	
-EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	is	Aerococcus sanguinicola	CIP	R	LVX	R	
-EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	is	Aerococcus urinae	NOR	S	fluoroquinolones	S	
-EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	is	Aerococcus urinae	NOR	I	fluoroquinolones	I	
-EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	is	Aerococcus urinae	NOR	R	fluoroquinolones	R	
-EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	is	Aerococcus urinae	CIP	S	LVX	S	
-EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	is	Aerococcus urinae	CIP	I	LVX	I	
-EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	is	Aerococcus urinae	CIP	R	LVX	R	
+EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	NOR	S	fluoroquinolones	S	
+EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	NOR	I	fluoroquinolones	I	
+EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	NOR	R	fluoroquinolones	R	
+EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	CIP	S	LVX	S	
+EUCAST	Breakpoints	10	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	CIP	I	LVX	I	
+EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	one_of	Aerococcus sanguinicola	CIP	R	LVX	R	
+EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	NOR	S	fluoroquinolones	S	
+EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	NOR	I	fluoroquinolones	I	
+EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	NOR	R	fluoroquinolones	R	
+EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	CIP	S	LVX	S	
+EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	CIP	I	LVX	I	
+EUCAST	Breakpoints	10	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	CIP	R	LVX	R	
 EUCAST	Breakpoints	10	Anaerobic Gram-negatives	genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	S	AMP, AMX, PIP, TZP, TIC	S	
 EUCAST	Breakpoints	10	Anaerobic Gram-negatives	genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	I	AMP, AMX, PIP, TZP, TIC	I	
 EUCAST	Breakpoints	10	Anaerobic Gram-negatives	genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	R	AMP, AMX, PIP, TZP, TIC	R	
@@ -76,9 +76,9 @@ EUCAST	Breakpoints	10	Moraxella catarrhalis	genus_species	is	Moraxella catarrhal
 EUCAST	Breakpoints	10	Moraxella catarrhalis	genus_species	is	Moraxella catarrhalis	ERY	I	AZM, CLR, RXT	I	
 EUCAST	Breakpoints	10	Moraxella catarrhalis	genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	10	Moraxella catarrhalis	genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	
-EUCAST	Breakpoints	10	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	
-EUCAST	Breakpoints	10	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	
-EUCAST	Breakpoints	10	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	
+EUCAST	Breakpoints	10	Pasteurella	genus	is	Pasteurella	PEN	S	AMP, AMX	S	
+EUCAST	Breakpoints	10	Pasteurella	genus	is	Pasteurella	PEN	I	AMP, AMX	I	
+EUCAST	Breakpoints	10	Pasteurella	genus	is	Pasteurella	PEN	R	AMP, AMX	R	
 EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	PEN, FOX	S	betalactams_with_inhibitor	S	
 EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	
 EUCAST	Breakpoints	10	Staphylococcus	genus	is	Staphylococcus	FOX	R	betalactams	R	
@@ -114,18 +114,18 @@ EUCAST	Breakpoints	10	Viridans group streptococci	genus_species	like	^Streptococ
 EUCAST	Breakpoints	10	Viridans group streptococci	genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	S	AMX, AMC, PIP, TZP	S	
 EUCAST	Breakpoints	10	Viridans group streptococci	genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	I	AMX, AMC, PIP, TZP	I	
 EUCAST	Breakpoints	10	Viridans group streptococci	genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	R	AMX, AMC, PIP, TZP	R	
-EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	NOR	S	fluoroquinolones	S	
-EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	NOR	I	fluoroquinolones	I	
-EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	NOR	R	fluoroquinolones	R	
-EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	CIP	S	LVX	S	
-EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	is	Aerococcus sanguinicola	CIP	I	LVX	I	
-EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	is	Aerococcus sanguinicola	CIP	R	LVX	R	
-EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	is	Aerococcus urinae	NOR	S	fluoroquinolones	S	
-EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	is	Aerococcus urinae	NOR	I	fluoroquinolones	I	
-EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	is	Aerococcus urinae	NOR	R	fluoroquinolones	R	
-EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	is	Aerococcus urinae	CIP	S	LVX	S	
-EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	is	Aerococcus urinae	CIP	I	LVX	I	
-EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	is	Aerococcus urinae	CIP	R	LVX	R	
+EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	NOR	S	fluoroquinolones	S	
+EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	NOR	I	fluoroquinolones	I	
+EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	NOR	R	fluoroquinolones	R	
+EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	CIP	S	LVX	S	
+EUCAST	Breakpoints	11	Aerococcus sanguinicola	genus_species	one_of	Aerococcus sanguinicola	CIP	I	LVX	I	
+EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	one_of	Aerococcus sanguinicola	CIP	R	LVX	R	
+EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	NOR	S	fluoroquinolones	S	
+EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	NOR	I	fluoroquinolones	I	
+EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	NOR	R	fluoroquinolones	R	
+EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	CIP	S	LVX	S	
+EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	CIP	I	LVX	I	
+EUCAST	Breakpoints	11	Aerococcus urinae	genus_species	one_of	Aerococcus urinae	CIP	R	LVX	R	
 EUCAST	Breakpoints	11	Anaerobic Gram-negatives	genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	S	AMP, AMX, PIP, TIC	S	
 EUCAST	Breakpoints	11	Anaerobic Gram-negatives	genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	I	AMP, AMX, PIP, TIC	I	
 EUCAST	Breakpoints	11	Anaerobic Gram-negatives	genus	one_of	Bacteroides, Bilophila , Fusobacterium, Mobiluncus, Porphyromonas, Prevotella	PEN	R	AMP, AMX, PIP, TIC	R	
@@ -185,9 +185,9 @@ EUCAST	Breakpoints	11	Moraxella catarrhalis	genus_species	is	Moraxella catarrhal
 EUCAST	Breakpoints	11	Moraxella catarrhalis	genus_species	is	Moraxella catarrhalis	ERY	I	AZM, CLR, RXT	I	
 EUCAST	Breakpoints	11	Moraxella catarrhalis	genus_species	is	Moraxella catarrhalis	ERY	R	AZM, CLR, RXT	R	
 EUCAST	Breakpoints	11	Moraxella catarrhalis	genus_species	is	Moraxella catarrhalis	TCY	S	DOX, MNO	S	
-EUCAST	Breakpoints	11	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	
-EUCAST	Breakpoints	11	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	
-EUCAST	Breakpoints	11	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	
+EUCAST	Breakpoints	11	Pasteurella	genus	is	Pasteurella	PEN	S	AMP, AMX	S	
+EUCAST	Breakpoints	11	Pasteurella	genus	is	Pasteurella	PEN	I	AMP, AMX	I	
+EUCAST	Breakpoints	11	Pasteurella	genus	is	Pasteurella	PEN	R	AMP, AMX	R	
 EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	PEN, FOX	S	betalactams_with_inhibitor	S	
 EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	PEN, FOX	R, S	OXA, FLC	S	
 EUCAST	Breakpoints	11	Staphylococcus	genus	is	Staphylococcus	FOX	R	betalactams	R	
@@ -224,15 +224,15 @@ EUCAST	Breakpoints	11	Viridans group streptococci	genus_species	like	^Streptococ
 EUCAST	Breakpoints	11	Viridans group streptococci	genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	S	AMX, AMC, PIP, TZP	S	
 EUCAST	Breakpoints	11	Viridans group streptococci	genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	I	AMX, AMC, PIP, TZP	I	
 EUCAST	Breakpoints	11	Viridans group streptococci	genus_species	like	^Streptococcus (anginosus|australis|bovis|constellatus|cristatus|equinus|gallolyticus|gordonii|infantarius|infantis|intermedius|mitis|mutans|oligofermentans|oralis|parasanguinis|peroris|pseudopneumoniae|salivarius|sanguinis|sinensis|sobrinus|thermophilus|vestibularis|viridans)$	AMP	R	AMX, AMC, PIP, TZP	R	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
-EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	12	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	12	Bacillus	genus	is	Bacillus	NOR-S	S	CIP, LVX	I	
 EUCAST	Breakpoints	12	Bacillus	genus	is	Bacillus	NOR-S	R	CIP, LVX	R	
 EUCAST	Breakpoints	12	Burkholderia pseudomallei	genus_species	is	Burkholderia pseudomallei	TCY-S	S	DOX	I	
@@ -296,14 +296,14 @@ EUCAST	Breakpoints	12	Neisseria gonorrhoeae	genus_species	is	Neisseria gonorrhoe
 EUCAST	Breakpoints	12	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	
 EUCAST	Breakpoints	12	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	
 EUCAST	Breakpoints	12	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	
-EUCAST	Breakpoints	12	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	S	DOX	S	
-EUCAST	Breakpoints	12	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	I	DOX	I	
-EUCAST	Breakpoints	12	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	R	DOX	R	
-EUCAST	Breakpoints	12	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	
-EUCAST	Breakpoints	12	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	
-EUCAST	Breakpoints	12	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	
-EUCAST	Breakpoints	12	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	S	CIP, LVX	S	
-EUCAST	Breakpoints	12	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	R	CIP, LVX	R	
+EUCAST	Breakpoints	12	Pasteurella	genus	is	Pasteurella	TCY-S	S	DOX	S	
+EUCAST	Breakpoints	12	Pasteurella	genus	is	Pasteurella	TCY-S	I	DOX	I	
+EUCAST	Breakpoints	12	Pasteurella	genus	is	Pasteurella	TCY-S	R	DOX	R	
+EUCAST	Breakpoints	12	Pasteurella	genus	is	Pasteurella	PEN	S	AMP, AMX	S	
+EUCAST	Breakpoints	12	Pasteurella	genus	is	Pasteurella	PEN	I	AMP, AMX	I	
+EUCAST	Breakpoints	12	Pasteurella	genus	is	Pasteurella	PEN	R	AMP, AMX	R	
+EUCAST	Breakpoints	12	Pasteurella	genus	is	Pasteurella	NAL-S	S	CIP, LVX	S	
+EUCAST	Breakpoints	12	Pasteurella	genus	is	Pasteurella	NAL-S	R	CIP, LVX	R	
 EUCAST	Breakpoints	12	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	R	penicillins	R	See last sentence: Isolates that test resistant to cefoxitin are resistant to all penicillins
 EUCAST	Breakpoints	12	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	S, S	penicillins	S	
 EUCAST	Breakpoints	12	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	R, S	betalactams_with_inhibitor, isoxazolylpenicillins, NAF	S	
@@ -384,15 +384,15 @@ EUCAST	Breakpoints	12	Viridans group streptococci	genus_species	one_of	Viridans 
 EUCAST	Breakpoints	12	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	S	AMX, AMC, SAM, PIP, TZP	S	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
 EUCAST	Breakpoints	12	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	I	AMX, AMC, SAM, PIP, TZP	I	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
 EUCAST	Breakpoints	12	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	R	AMX, AMC, SAM, PIP, TZP	R	paste("Streptococcus", mo_species(microorganisms.groups$mo[which(microorganisms.groups$mo_group == "B_STRPT_VIRI")]), collapse = ", ")
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
-EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	14	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2024" & mo_genus(clinical_breakpoints$mo) == "Prevotella" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
 EUCAST	Breakpoints	14	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
@@ -489,14 +489,14 @@ EUCAST	Breakpoints	14	Neisseria gonorrhoeae	genus_species	is	Neisseria gonorrhoe
 EUCAST	Breakpoints	14	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	
 EUCAST	Breakpoints	14	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	
 EUCAST	Breakpoints	14	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	
-EUCAST	Breakpoints	14	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	S	DOX	S	
-EUCAST	Breakpoints	14	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	I	DOX	I	
-EUCAST	Breakpoints	14	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	R	DOX	R	
-EUCAST	Breakpoints	14	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	
-EUCAST	Breakpoints	14	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	
-EUCAST	Breakpoints	14	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	
-EUCAST	Breakpoints	14	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	S	CIP, LVX	S	
-EUCAST	Breakpoints	14	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	R	CIP, LVX	R	
+EUCAST	Breakpoints	14	Pasteurella	genus	is	Pasteurella	TCY-S	S	DOX	S	
+EUCAST	Breakpoints	14	Pasteurella	genus	is	Pasteurella	TCY-S	I	DOX	I	
+EUCAST	Breakpoints	14	Pasteurella	genus	is	Pasteurella	TCY-S	R	DOX	R	
+EUCAST	Breakpoints	14	Pasteurella	genus	is	Pasteurella	PEN	S	AMP, AMX	S	
+EUCAST	Breakpoints	14	Pasteurella	genus	is	Pasteurella	PEN	I	AMP, AMX	I	
+EUCAST	Breakpoints	14	Pasteurella	genus	is	Pasteurella	PEN	R	AMP, AMX	R	
+EUCAST	Breakpoints	14	Pasteurella	genus	is	Pasteurella	NAL-S	S	CIP, LVX	S	
+EUCAST	Breakpoints	14	Pasteurella	genus	is	Pasteurella	NAL-S	R	CIP, LVX	R	
 EUCAST	Breakpoints	14	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	R	penicillins	R	See last sentence: Isolates that test resistant to cefoxitin are resistant to all penicillins
 EUCAST	Breakpoints	14	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	S, S	penicillins	S	
 EUCAST	Breakpoints	14	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	R, S	betalactams_with_inhibitor, isoxazolylpenicillins, NAF	S	
@@ -578,15 +578,15 @@ EUCAST	Breakpoints	14	Viridans group streptococci	genus_species	one_of	Viridans 
 EUCAST	Breakpoints	14	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	S	AMX, AMC, SAM, PIP, TZP	S	will be expanded in eucast_rules()
 EUCAST	Breakpoints	14	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	I	AMX, AMC, SAM, PIP, TZP	I	will be expanded in eucast_rules()
 EUCAST	Breakpoints	14	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	R	AMX, AMC, SAM, PIP, TZP	R	will be expanded in eucast_rules()
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
-EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	15	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2025" & mo_genus(clinical_breakpoints$mo) == "Prevotella" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
 EUCAST	Breakpoints	15	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
@@ -683,14 +683,14 @@ EUCAST	Breakpoints	15	Neisseria gonorrhoeae	genus_species	is	Neisseria gonorrhoe
 EUCAST	Breakpoints	15	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	
 EUCAST	Breakpoints	15	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	
 EUCAST	Breakpoints	15	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	
-EUCAST	Breakpoints	15	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	S	DOX	S	
-EUCAST	Breakpoints	15	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	I	DOX	I	
-EUCAST	Breakpoints	15	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	R	DOX	R	
-EUCAST	Breakpoints	15	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	
-EUCAST	Breakpoints	15	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	
-EUCAST	Breakpoints	15	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	
-EUCAST	Breakpoints	15	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	S	CIP, LVX	S	
-EUCAST	Breakpoints	15	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	R	CIP, LVX	R	
+EUCAST	Breakpoints	15	Pasteurella	genus	is	Pasteurella	TCY-S	S	DOX	S	
+EUCAST	Breakpoints	15	Pasteurella	genus	is	Pasteurella	TCY-S	I	DOX	I	
+EUCAST	Breakpoints	15	Pasteurella	genus	is	Pasteurella	TCY-S	R	DOX	R	
+EUCAST	Breakpoints	15	Pasteurella	genus	is	Pasteurella	PEN	S	AMP, AMX	S	
+EUCAST	Breakpoints	15	Pasteurella	genus	is	Pasteurella	PEN	I	AMP, AMX	I	
+EUCAST	Breakpoints	15	Pasteurella	genus	is	Pasteurella	PEN	R	AMP, AMX	R	
+EUCAST	Breakpoints	15	Pasteurella	genus	is	Pasteurella	NAL-S	S	CIP, LVX	S	
+EUCAST	Breakpoints	15	Pasteurella	genus	is	Pasteurella	NAL-S	R	CIP, LVX	R	
 EUCAST	Breakpoints	15	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	R	penicillins	R	See last sentence: Isolates that test resistant to cefoxitin are resistant to all penicillins
 EUCAST	Breakpoints	15	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	S, S	penicillins	S	
 EUCAST	Breakpoints	15	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	R, S	betalactams_with_inhibitor, isoxazolylpenicillins, NAF	S	
@@ -769,15 +769,15 @@ EUCAST	Breakpoints	15	Viridans group streptococci	genus_species	one_of	Viridans 
 EUCAST	Breakpoints	15	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	S	AMX, AMC, SAM, PIP, TZP	S	MO group name will be expanded in eucast_rules()
 EUCAST	Breakpoints	15	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	I	AMX, AMC, SAM, PIP, TZP	I	MO group name will be expanded in eucast_rules()
 EUCAST	Breakpoints	15	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	R	AMX, AMC, SAM, PIP, TZP	R	MO group name will be expanded in eucast_rules()
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
-EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	16	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2026" & mo_genus(clinical_breakpoints$mo) == "Prevotella" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
 EUCAST	Breakpoints	16	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
@@ -874,14 +874,14 @@ EUCAST	Breakpoints	16	Neisseria gonorrhoeae	genus_species	is	Neisseria gonorrhoe
 EUCAST	Breakpoints	16	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	
 EUCAST	Breakpoints	16	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	
 EUCAST	Breakpoints	16	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	
-EUCAST	Breakpoints	16	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	S	DOX	S	
-EUCAST	Breakpoints	16	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	I	DOX	I	
-EUCAST	Breakpoints	16	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	R	DOX	R	
-EUCAST	Breakpoints	16	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	
-EUCAST	Breakpoints	16	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	
-EUCAST	Breakpoints	16	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	
-EUCAST	Breakpoints	16	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	S	CIP, LVX	S	
-EUCAST	Breakpoints	16	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	R	CIP, LVX	R	
+EUCAST	Breakpoints	16	Pasteurella	genus	is	Pasteurella	TCY-S	S	DOX	S	
+EUCAST	Breakpoints	16	Pasteurella	genus	is	Pasteurella	TCY-S	I	DOX	I	
+EUCAST	Breakpoints	16	Pasteurella	genus	is	Pasteurella	TCY-S	R	DOX	R	
+EUCAST	Breakpoints	16	Pasteurella	genus	is	Pasteurella	PEN	S	AMP, AMX	S	
+EUCAST	Breakpoints	16	Pasteurella	genus	is	Pasteurella	PEN	I	AMP, AMX	I	
+EUCAST	Breakpoints	16	Pasteurella	genus	is	Pasteurella	PEN	R	AMP, AMX	R	
+EUCAST	Breakpoints	16	Pasteurella	genus	is	Pasteurella	NAL-S	S	CIP, LVX	S	
+EUCAST	Breakpoints	16	Pasteurella	genus	is	Pasteurella	NAL-S	R	CIP, LVX	R	
 EUCAST	Breakpoints	16	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	R	penicillins	R	See last sentence: Isolates that test resistant to cefoxitin are resistant to all penicillins
 EUCAST	Breakpoints	16	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	S, S	penicillins	S	
 EUCAST	Breakpoints	16	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	R, S	betalactams_with_inhibitor, isoxazolylpenicillins, NAF	S	
@@ -961,15 +961,15 @@ EUCAST	Breakpoints	16	Viridans group streptococci	genus_species	one_of	Viridans 
 EUCAST	Breakpoints	16	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	S	AMX, AMC, SAM, PIP, TZP	S	MO group name will be expanded in eucast_rules()
 EUCAST	Breakpoints	16	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	I	AMX, AMC, SAM, PIP, TZP	I	MO group name will be expanded in eucast_rules()
 EUCAST	Breakpoints	16	Viridans group streptococci	genus_species	one_of	Viridans Group Streptococcus (VGS)	AMP	R	AMX, AMC, SAM, PIP, TZP	R	MO group name will be expanded in eucast_rules()
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
-EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	is	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	S	AMX	S	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	I	AMX	I	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	AMP	R	AMX	R	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	S	LVX	S	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	I	LVX	I	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	CIP	R	LVX	R	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	S	fluoroquinolones	S	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	I	fluoroquinolones	I	
+EUCAST	Breakpoints	13.1	Aerococcus sanguinicola/urinae	genus_species	one_of	Aerococcus sanguinicola, Aerococcus urinae	NOR-S	R	fluoroquinolones	R	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus	is	Prevotella	PEN	S	AMC, AMP, AMX, ETP, IPM, MEM, PEN, SAM, TZP	S	x <- unique(clinical_breakpoints$ab[which(clinical_breakpoints$guideline == "EUCAST 2023" & mo_genus(clinical_breakpoints$mo) == "Prevotella" & clinical_breakpoints$host == "human" & (clinical_breakpoints$site != "Screen" | is.na(clinical_breakpoints$site)))]); x[x %in% betalactams()] |> sort() |> toString()
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus	is	Prevotella	AMP	S	AMX	S	
 EUCAST	Breakpoints	13.1	Anaerobic bacteria	genus	is	Prevotella	AMP	I	AMX	I	
@@ -1062,14 +1062,14 @@ EUCAST	Breakpoints	13.1	Neisseria gonorrhoeae	genus_species	is	Neisseria gonorrh
 EUCAST	Breakpoints	13.1	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	S	MNO	S	
 EUCAST	Breakpoints	13.1	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	I	MNO	I	
 EUCAST	Breakpoints	13.1	Neisseria meningitidis	genus_species	is	Neisseria meningitidis	TCY-S	R	MNO	R	
-EUCAST	Breakpoints	13.1	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	S	DOX	S	
-EUCAST	Breakpoints	13.1	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	I	DOX	I	
-EUCAST	Breakpoints	13.1	Neisseria meningitidis	genus_species	is	Pasteurella multocida	TCY-S	R	DOX	R	
-EUCAST	Breakpoints	13.1	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	S	AMP, AMX	S	
-EUCAST	Breakpoints	13.1	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	I	AMP, AMX	I	
-EUCAST	Breakpoints	13.1	Pasteurella multocida	genus_species	is	Pasteurella multocida	PEN	R	AMP, AMX	R	
-EUCAST	Breakpoints	13.1	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	S	CIP, LVX	S	
-EUCAST	Breakpoints	13.1	Pasteurella multocida	genus_species	is	Pasteurella multocida	NAL-S	R	CIP, LVX	R	
+EUCAST	Breakpoints	13.1	Pasteurella	genus	is	Pasteurella	TCY-S	S	DOX	S	
+EUCAST	Breakpoints	13.1	Pasteurella	genus	is	Pasteurella	TCY-S	I	DOX	I	
+EUCAST	Breakpoints	13.1	Pasteurella	genus	is	Pasteurella	TCY-S	R	DOX	R	
+EUCAST	Breakpoints	13.1	Pasteurella	genus	is	Pasteurella	PEN	S	AMP, AMX	S	
+EUCAST	Breakpoints	13.1	Pasteurella	genus	is	Pasteurella	PEN	I	AMP, AMX	I	
+EUCAST	Breakpoints	13.1	Pasteurella	genus	is	Pasteurella	PEN	R	AMP, AMX	R	
+EUCAST	Breakpoints	13.1	Pasteurella	genus	is	Pasteurella	NAL-S	S	CIP, LVX	S	
+EUCAST	Breakpoints	13.1	Pasteurella	genus	is	Pasteurella	NAL-S	R	CIP, LVX	R	
 EUCAST	Breakpoints	13.1	Staphylococcus	genus_species	is	Staphylococcus aureus	FOX-S	R	penicillins	R	See last sentence: Isolates that test resistant to cefoxitin are resistant to all penicillins
 EUCAST	Breakpoints	13.1	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	S, S	penicillins	S	
 EUCAST	Breakpoints	13.1	Staphylococcus	genus_species	is	Staphylococcus aureus	PEN, FOX-S	R, S	betalactams_with_inhibitor, isoxazolylpenicillins, NAF	S	

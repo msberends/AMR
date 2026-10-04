@@ -207,17 +207,24 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Angiostrongylus",
   "Anisakis",
   "Anopheles",
+  "Apiotrichum",
   "Apophysomyces",
   "Arthroderma",
+  "Ascaris",
   "Aspergillus",
   "Aureobasidium",
+  "Babesia",
+  "Balamuthia",
+  "Balantioides",
   "Basidiobolus",
   "Beauveria",
   "Bipolaris",
   "Blastobotrys",
   "Blastocystis",
   "Blastomyces",
+  "Brugia",
   "Candida",
+  "Candidozyma",
   "Capillaria",
   "Chaetomium",
   "Chilomastix",
@@ -226,6 +233,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Cladophialophora",
   "Cladosporium",
   "Clavispora",
+  "Clonorchis",
   "Coccidioides",
   "Cokeromyces",
   "Conidiobolus",
@@ -236,21 +244,31 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Cryptosporidium",
   "Cunninghamella",
   "Curvularia",
+  "Cutaneotrichosporon",
   "Cyberlindnera",
+  "Cyclospora",
+  "Cystoisospora",
   "Debaryozyma",
   "Demodex",
   "Dermatobia",
   "Dientamoeba",
   "Diphyllobothrium",
   "Dirofilaria",
+  "Diutina",
+  "Echinococcus",
   "Echinostoma",
+  "Emergomyces",
+  "Emmonsia",
+  "Encephalitozoon",
   "Entamoeba",
   "Enterobius",
+  "Enterocytozoon",
   "Epidermophyton",
   "Exidia",
   "Exophiala",
   "Exserohilum",
   "Fasciola",
+  "Fasciolopsis",
   "Fonsecaea",
   "Fusarium",
   "Geotrichum",
@@ -268,17 +286,21 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Hymenolepis",
   "Hypomyces",
   "Hysterothylacium",
+  "Kazachstania",
   "Kloeckera",
   "Kluyveromyces",
   "Kodamaea",
   "Lacazia",
   "Leishmania",
   "Lichtheimia",
+  "Loa",
   "Lodderomyces",
   "Lomentospora",
   "Madurella",
+  "Magnusiomyces",
   "Malassezia",
   "Malbranchea",
+  "Mansonella",
   "Metagonimus",
   "Meyerozyma",
   "Microascus",
@@ -288,15 +310,20 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Mortierella",
   "Mucor",
   "Mycocentrospora",
+  "Naegleria",
+  "Nakaseomyces",
   "Nannizzia",
   "Necator",
   "Nectria",
+  "Neocosmospora",
   "Ochroconis",
   "Oesophagostomum",
   "Oidiodendron",
+  "Onchocerca",
   "Opisthorchis",
   "Paecilomyces",
   "Paracoccidioides",
+  "Paragonimus",
   "Pediculus",
   "Penicillium",
   "Phaeoacremonium",
@@ -316,6 +343,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Pulex",
   "Purpureocillium",
   "Quambalaria",
+  "Rasamsonia",
   "Rhinocladiella",
   "Rhizomucor",
   "Rhizopus",
@@ -323,6 +351,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Saccharomyces",
   "Saksenaea",
   "Saprochaete",
+  "Sarcocystis",
   "Sarcoptes",
   "Scedosporium",
   "Schistosoma",
@@ -344,6 +373,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Talaromyces",
   "Teleomorph",
   "Toxocara",
+  "Toxoplasma",
   "Trichinella",
   "Trichobilharzia",
   "Trichoderma",
@@ -594,6 +624,32 @@ usethis::use_data(antimicrobials, overwrite = TRUE, version = 2, compress = "xz"
 pre_commit_lst$AB_LOOKUP <- create_AB_AV_lookup(antimicrobials)
 pre_commit_lst$AV_LOOKUP <- create_AB_AV_lookup(antivirals)
 
+# MO codes of earlier releases that are not in the current data set anymore, with the current code of the same
+# taxon (see data-raw/microorganisms_files/README.md). as.mo() uses this to translate them, instead of guessing.
+source("tests/testthat/helper-microorganisms.R")
+mo_registry <- read_mo_registry(".")
+mo_renames <- read_mo_renames(".")
+retired <- mo_registry[!mo_registry$mo %in% as.character(microorganisms$mo), c("mo", "fullname", "rank"), drop = FALSE]
+renamed <- match(retired$mo, mo_renames$mo)
+retired$fullname[!is.na(renamed)] <- mo_renames$new_name[renamed[!is.na(renamed)]]
+# the same name, or else the same name without a rank suffix (such as "Kapabacteria {class}") and the same rank
+current_mo <- as.character(microorganisms$mo)[match(retired$fullname, microorganisms$fullname)]
+by_rank <- as.character(microorganisms$mo)[match(
+  paste(mo_name_without_suffix(retired$fullname), retired$rank),
+  paste(mo_name_without_suffix(microorganisms$fullname), microorganisms$rank)
+)]
+mo_retirements <- read_mo_retirements(".")
+pre_commit_lst$MO_RETIRED_CODES <- data.frame(
+  old_mo = retired$mo,
+  mo = ifelse(is.na(current_mo), by_rank, current_mo),
+  fullname = retired$fullname,
+  # codes retired on purpose, because their taxon was another organism, never lead to a taxon
+  reason = mo_retirements$reason[match(retired$mo, mo_retirements$mo)],
+  stringsAsFactors = FALSE
+)
+pre_commit_lst$MO_RETIRED_CODES$mo[!is.na(pre_commit_lst$MO_RETIRED_CODES$reason)] <- NA_character_
+rm(mo_registry, mo_renames, mo_retirements, retired, renamed, current_mo, by_rank)
+
 # Export to package as internal data ----
 # usethis::use_data() must receive unquoted object names, which is not flexible at all.
 # we'll use good old base::save() instead
@@ -791,7 +847,7 @@ if (files_changed()) {
   # Function to extract URLs from a file
   extract_urls_from_file <- function(file_path) {
     lines <- readLines(file_path, warn = FALSE)
-    urls <- stringr::str_extract_all(lines, "https?://[^\\s)\"'>]+")
+    urls <- stringr::str_extract_all(lines, "https?://[^\\s)\"'>}]+")
     urls <- unlist(urls)
     if (length(urls) == 0) {
       return(NULL)

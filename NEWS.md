@@ -1,4 +1,4 @@
-# AMR 3.0.1.9092
+# AMR 3.0.1.9103
 
 Planned as v3.1.0, mid October 2026.
 
@@ -24,6 +24,7 @@ Planned as v3.1.0, mid October 2026.
   Thus, `mo_domain()` was previously an alias of `mo_kingdom()`; it is now a distinct function returning the domain. Output of `mo_domain()` is therefore unchanged, while `mo_kingdom()` now returns the formal, new kingdom.
 
 * Faster parallel computing via the `future` package for `as.sir()` and `wisca()`: a non-sequential plan (e.g. `future::plan(future::multisession)`) must be active before using `parallel = TRUE`.
+* `as.mo()` no longer guesses unknown MO codes (these become `NA` with a warning), and MO codes from versions before v2.0.0 are no longer supported
 
 ### New
 * `add_custom_antimicrobial_synonyms()` to add synonyms, such as local trade names, to existing antimicrobials (including custom ones). Synonyms may be written in any script: they are matched before `as.ab()` transliterates the input to ASCII, so no non-ASCII characters are stored in the package itself (#307)
@@ -42,8 +43,10 @@ Planned as v3.1.0, mid October 2026.
 * New `amr_course()` to download and unpack course or webinar materials from GitHub in one call
 * Typed missing value constants `NA_ab_` and `NA_mo_`, for use in pipelines that need missing values of a specific class
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
+* A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
 
 ### Fixed
+* EUCAST breakpoint rules for *Aerococcus* (v12 onwards) were never applied, and *Pasteurella* rules were partly filed under *Neisseria meningitidis* (#290)
 * Streptomycin breakpoints imported from WHONET were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)
 * Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified value no longer causes errors or silent wrong behaviour in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and SIR plotting/printing functions (#298)
 * `as.sir()`
@@ -63,6 +66,7 @@ Planned as v3.1.0, mid October 2026.
 * Translation fixes for Italian CoNS/CoPS names (#256), Dutch antimicrobials, and `sir_df()` foreign-language output (#272)
 * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 * Logical comparison (`==`, `!=`) of `sir` class with a `factor` is now possible on R >= 4.3
+* `mo_current()` and `as.mo()` could not find the current name of some synonyms with multiple sources (e.g. *Chaetomium abuense*)
 
 ### Updated
 * `top_n_microorganisms()`: new `property_for_each` argument for sub-grouping within top *n* groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed `property = NULL` not being accepted; inner filter now tracks original row indices to prevent cross-group contamination
