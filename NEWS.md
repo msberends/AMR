@@ -1,4 +1,4 @@
-# AMR 3.0.1.9100
+# AMR 3.0.1.9101
 
 Planned as v3.1.0, mid October 2026.
 
@@ -45,6 +45,7 @@ Planned as v3.1.0, mid October 2026.
 * A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
 
 ### Fixed
+* EUCAST breakpoint rules for *Aerococcus* (v12 onwards) were never applied, and *Pasteurella* rules were partly filed under *Neisseria meningitidis* (#290)
 * Streptomycin breakpoints imported from WHONET were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)
 * Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified value no longer causes errors or silent wrong behaviour in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and SIR plotting/printing functions (#298)
 * `as.sir()`
