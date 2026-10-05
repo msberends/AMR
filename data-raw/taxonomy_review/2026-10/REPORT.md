@@ -300,7 +300,7 @@ Other files:
 - [x] **Domain decided by the last release**, doubtful cases: *Copromonas* (a euglenoid, released as Bacteria, no
   authoritative source, stays Bacteria); *Aplanochytrium* (a labyrinthulid, Chromista in COL, stays Fungi as released).
   Kept as they are
-- [ ] **Microsporidia are Fungi** (your decision, script change 19): all microsporidia are now in the Fungi; 1,394 names
+- [x] **Microsporidia are Fungi** (decided, script change 19): all microsporidia are now in the Fungi; 1,394 names
   of v3.0.1 change from `P_` to `F_` (e.g. *Encephalitozoon intestinalis* `P_ENCPH_INTS` to `F_ENCPH_INTS`), the `P_`
   codes are translated by name, see [CSV](names_that_moved_to_another_domain.csv). *Enterocytozoon bieneusi* and
   *Encephalitozoon cuniculi* are the accepted names (script change 20)
@@ -310,7 +310,7 @@ Other files:
   '*W. anomala anomala*', while *Wickerhamomyces* is masculine (source data). Accepted for now
 - [x] **Empty families** of relevant genera that I did not fill as I am not certain: *Sappinia* (v3.0.1: Stenamoebidae)
   and *Fenollaria* (no family in LPSN). Left empty
-- [ ] **Relevant genera without species** (your decisions): `MO_RELEVANT_GENERA` listed the newer genera *Balantioides*
+- [x] **Relevant genera without species** (decided): `MO_RELEVANT_GENERA` listed the newer genera *Balantioides*
   and *Cystoisospora*, while COL has the species in *Balantidium* and *Isospora*, so these pathogens were missing and
   `as.mo()` returned *Campylobacter pinnipediorum caledonicus* for *Balantidium coli* and *Stenotrophomonas beteli* for
   *Isospora belli*. Now *Balantidium* and *Isospora* are in `MO_RELEVANT_GENERA`, and *Cystoisospora belli* (not in COL)
