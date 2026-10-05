@@ -131,7 +131,10 @@ Other files:
 - `data-raw/_pre_commit_checks.R`: *Staphylococcus dromedarii* (abstract: "a novel coagulase-negative
   *Staphylococcus* species", `doi:10.1099/ijsem.0.007230`) and *S. parequorum* (Baek *et al.*, J Microbiol 2025;
   coagulase-negative according to the abstract as shown in search results, full text not accessible) added to CoNS.
-- `tests/testthat/test-mo_property.R`: see the checklist items on the unit tests.
+- `data-raw/_pre_commit_checks.R`: `microorganisms.dta` is written with `strl_threshold = 255` (as
+  `clinical_breakpoints.dta` already was), as it otherwise grew to 130 MB, beyond the file size limit of GitHub (now
+  78 MiB, verified to read back identically).
+- `tests/testthat/test-mo_property.R` and `test-data-microorganisms.R`: see the checklist items on the unit tests.
 - `R/aa_globals.R`: accessed dates in `TAXONOMY_VERSION`; `NEWS.md`: the existing taxonomy bullet of this series updated.
 
 ## 4. Checklist
@@ -290,5 +293,8 @@ Other files:
   `main` and in v3.0.1; recommend a separate issue
 - [ ] **Stale file**: `data-raw/taxonomy_lpsn0.rds` dates from June 2026 and is no longer written by the script; left
   untouched
+- [ ] **One commit instead of five**: the pre-commit hook of the repository stages all changed files in `data-raw/` and
+  `man/`, so the first commit took everything; splitting would need `--no-verify`, which I did not use. As PRs are
+  squash-merged, this only affects the review per commit
 - [ ] **Scope decisions of 5 October 2026** (yours, implemented as script changes): COL XR names only if clinically
   relevant or released before (40,897 fewer COL records), and Protozoa with the relevance rules of the Fungi
