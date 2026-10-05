@@ -12,7 +12,7 @@
 "Anaeroglobus","Bacteria","Veillonellaceae","LPSN","516031",,"CSKKH"
 "Anguillospora","Fungi","Amniculicolaceae","MycoBank",,"511328",
 "Angulomicrobium","Bacteria","Xanthobacteraceae","LPSN","515134",,"VLR"
-"Anncaliia","Protozoa","Nosematidae","GBIF",,,
+"Anncaliia","Fungi","Nosematidae","GBIF",,,
 "Aschersonia","Fungi","Clavicipitaceae","MycoBank",,"2434",
 "Ascophora","Fungi","Mucoraceae","MycoBank",,"25484","5VHT"
 "Badhamiopsis","Protozoa","Physaraceae","manually added",,,"3214993"
@@ -40,7 +40,7 @@
 "Corollium","Fungi","Trichocomaceae","MycoBank",,"9196","6C76"
 "Craterium","Protozoa","Physaraceae","manually added",,,"3214341"
 "Creonectria","Fungi","Nectriaceae","MycoBank",,"3431",
-"Crepidulospora","Protozoa","Amblyosporidae","manually added",,,"3387531"
+"Crepidulospora","Fungi","Amblyosporidae","manually added",,,"3387531"
 "Crystallibacter","Bacteria","Micrococcaceae","LPSN","515179",,"CRKDF"
 "Cylindrocarpon","Fungi","Nectriaceae","MycoBank",,"3469",
 "Debaryozyma","Fungi","Saccharomycetaceae","MycoBank",,"1432","62Q7D"
@@ -82,7 +82,7 @@
 "Geniculosporium","Fungi","Xylariaceae","MycoBank",,"3437",
 "Gleocapsomorpha","Bacteria","","GBIF",,,
 "Gliocladium","Fungi","Hypocreaceae","MycoBank",,"5122",
-"Golbergia","Protozoa","Golbergiidae","manually added",,,"7787828"
+"Golbergia","Fungi","Golbergiidae","manually added",,,"7787828"
 "Guignardia","Fungi","Phyllostictaceae","MycoBank",,"9384",
 "Halarcobacter","Bacteria","Arcobacteraceae","LPSN","515168",,"62D5H"
 "Halorarum","Archaea","Haloferacaceae","LPSN","515752",,"63632"
@@ -133,7 +133,7 @@
 "Naumovia","Fungi","","MycoBank",,"4787",
 "Nectricladiella","Fungi","Nectriaceae","MycoBank",,"7869",
 "Neoluteolibacter","Bacteria","Verrucomicrobiaceae","LPSN","517781",,
-"Neoperezia","Protozoa","Thelohaniidae","manually added",,,"7640475"
+"Neoperezia","Fungi","Thelohaniidae","manually added",,,"7640475"
 "Nimbya","Fungi","Pleosporaceae","MycoBank",,"7106",
 "Nodulisporium","Fungi","Xylariaceae","MycoBank",,"2456",
 "Novacetimonas","Bacteria","Acetobacteraceae","LPSN","518205",,"CS9Q4"
@@ -143,7 +143,7 @@
 "Ochroconis","Fungi","Sympoventuriaceae","MycoBank",,"9840",
 "Octosporomyces","Fungi","Schizosaccharomycetaceae","MycoBank",,"4905","7DQ7"
 "Oidium","Fungi","Erysiphaceae","MycoBank",,"600",
-"Ovavesicula","Protozoa","Ovavesiculidae","manually added",,,"7258477"
+"Ovavesicula","Fungi","Ovavesiculidae","manually added",,,"7258477"
 "Ovularia","Fungi","Mycosphaerellaceae","MycoBank",,"9691",
 "Ovum","Protozoa","Lophophaenidae","manually added",,,"3236867"
 "Paracholeplasma","Bacteria","Acholeplasmataceae","LPSN","515002",,"CRNTS"
@@ -218,7 +218,7 @@
 "Thelactis","Fungi","Mucoraceae","MycoBank",,"25484",
 "Topospora","Fungi","Godroniaceae","MycoBank",,"2104",
 "Torulopsis","Fungi","","MycoBank",,"3147",
-"Toxoglugea","Protozoa","Thelohaniidae","manually added",,,"9421642"
+"Toxoglugea","Fungi","Thelohaniidae","manually added",,,"9421642"
 "Trachelomonas","Protozoa","Euglenaceae","manually added",,,"3208889"
 "Trepomonas","Protozoa","Hexamitidae","manually added",,,"3195662"
 "Trichlorobacter","Bacteria","Geobacteraceae","LPSN","517041",,"4MV9"

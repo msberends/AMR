@@ -219,6 +219,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Aureobasidium",
   "Babesia",
   "Balamuthia",
+  "Balantidium", # COL name of Balantioides coli (Balantidium coli)
   "Balantioides",
   "Basidiobolus",
   "Beauveria",
@@ -290,6 +291,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Hymenolepis",
   "Hypomyces",
   "Hysterothylacium",
+  "Isospora", # COL name of Cystoisospora belli (Isospora belli)
   "Kazachstania",
   "Kloeckera",
   "Kluyveromyces",

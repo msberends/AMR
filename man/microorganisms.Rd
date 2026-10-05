@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 107 126 Taxonomic Records of Microorganisms}
+\title{Data Set with 107 253 Taxonomic Records of Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 107 126 observations and 28 variables:
+A \link[tibble:tibble]{tibble} with 107 253 observations and 28 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package. \emph{\strong{This is a unique identifier.}}
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. \emph{\strong{This is a unique identifier.}}
@@ -47,8 +47,8 @@ For example, \emph{Staphylococcus pettenkoferi} was described for the first time
 Included taxonomic data from \href{https://lpsn.dsmz.de}{LPSN}, \href{https://www.mycobank.org}{MycoBank}, and \href{https://www.gbif.org}{GBIF} are:
 \itemize{
 \item All ~48 000 (sub)species from the domains of Archaea and Bacteria
-\item ~46 000 species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
-\item ~8 700 (sub)species from the kingdom of Protozoa
+\item ~47 000 species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
+\item ~7 000 (sub)species from the kingdom of Protozoa
 \item ~2 600 (sub)species from ~130 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
 \item All ~37 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
 \item The complete taxonomic tree of all included (sub)species: from domain to subspecies

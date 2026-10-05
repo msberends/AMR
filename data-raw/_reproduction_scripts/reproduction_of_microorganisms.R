@@ -185,13 +185,28 @@ ascii_names <- function(x) {
   gsub("[\"'`]", "", stringi::stri_trans_general(x, "Latin-ASCII"))
 }
 
+# Microsporidia are fungi (decision by Matthijs S. Berends, 5 October 2026), while COL places them in the Protozoa and
+# releases until v3.0.1 had most of them in the Protozoa as well; their codes of earlier releases are translated by name
+is_microsporidian <- function(phylum, class) {
+  phylum %in% c("Microsporidia", "Microspora", "Chytridiopsidomycota") | class %in% "Microsporea"
+}
+microsporidia_to_fungi <- function(df) {
+  fix <- is_microsporidian(df$phylum, df$class)
+  df$domain[fix] <- "Fungi"
+  df$kingdom[fix] <- "Fungi"
+  df
+}
+
 # all names in the sources with their domain, as "domain name" (for GBIF all accepted names, not only the ones
 # selected by this script), to check whether a name still exists in a domain
 names_in_sources <- function() {
   gbif_accepted <- is.na(taxonomy_gbif.bak$acceptedNameUsageID)
+  gbif_domain <- if_else(
+    is_microsporidian(taxonomy_gbif.bak$phylum, taxonomy_gbif.bak$class), "Fungi", taxonomy_gbif.bak$kingdom
+  )
   unique(c(
     # (the kingdom is the domain for all but the prokaryotes, which are covered by LPSN)
-    paste(taxonomy_gbif.bak$kingdom[gbif_accepted], taxonomy_gbif.bak$scientificName[gbif_accepted]),
+    paste(gbif_domain[gbif_accepted], taxonomy_gbif.bak$scientificName[gbif_accepted]),
     paste(taxonomy_gbif$domain, taxonomy_gbif$fullname),
     paste(taxonomy_mycobank$domain, taxonomy_mycobank$fullname),
     paste(taxonomy_lpsn$domain, trimws(gsub(" +", " ", paste(
@@ -1236,7 +1251,8 @@ taxonomy_gbif <- taxonomy_gbif0 %>%
       kingdom %in% na.omit(taxonomy_lpsn$kingdom[taxonomy_lpsn$domain == "Archaea"]) ~ "Archaea",
       TRUE ~ kingdom
     )
-  )
+  ) %>%
+  microsporidia_to_fungi()
 # add all synonyms of the included records (most synonyms in GBIF lack their higher taxonomy, so the
 # filter above does not catch them)
 taxonomy_gbif <- taxonomy_gbif %>%
@@ -1506,6 +1522,7 @@ taxonomy <- taxonomy_lpsn %>%
 source_names <- names_in_sources()
 source_names_any_domain <- sub("^[^ ]+ ", "", source_names)
 taxonomy.old <- microorganisms_old %>%
+  microsporidia_to_fungi() %>%
   select(any_of(colnames(taxonomy))) %>%
   filter(
     !fullname %in% taxonomy$fullname,
@@ -1589,6 +1606,7 @@ domain_priority <- c(
 )
 # the domain of every genus in the last release, if it was in only one domain there
 released_genus_domain <- microorganisms_old %>%
+  microsporidia_to_fungi() %>%
   filter(rank == "genus", domain %in% names(domain_priority)) %>%
   distinct(genus, domain) %>%
   group_by(genus) %>%
@@ -1867,6 +1885,7 @@ current_gbif <- taxonomy_gbif.bak %>%
     class = if_else(taxonRank == "class", canonical, class),
     phylum = if_else(taxonRank == "phylum", canonical, phylum)
   ) %>%
+  microsporidia_to_fungi() %>%
   select(-canonical)
 # @end-resume-block
 
@@ -1918,6 +1937,7 @@ saveRDS(taxonomy, "data-raw/taxonomy1.rds")
 homonyms_removed <- readRDS("data-raw/taxonomy_homonyms_removed.rds")
 source_names <- names_in_sources()
 manually_added <- microorganisms_old %>%
+  microsporidia_to_fungi() %>%
   filter(
     tolower(source) == "manually added",
     !paste(kingdom, fullname) %in% paste(taxonomy$kingdom, taxonomy$fullname),
@@ -2778,6 +2798,31 @@ if (nrow(brugia_genus) == 1) {
 }
 rm(brugia_genus)
 
+# MB 2026-10-05/ COL does not contain Cystoisospora belli at all, only Isospora belli, so add it as a synonym of
+# Isospora belli, so that as.mo() can find it (decision by Matthijs S. Berends, 5 October 2026)
+isospora_belli <- taxonomy %>% filter(fullname == "Isospora belli", rank == "species")
+if (nrow(isospora_belli) == 1 && !"Cystoisospora belli" %in% taxonomy$fullname) {
+  taxonomy <- taxonomy %>%
+    bind_rows(
+      isospora_belli %>%
+        mutate(
+          fullname = "Cystoisospora belli",
+          genus = "Cystoisospora",
+          status = "synonym",
+          source = "manually added",
+          ref = "",
+          across(any_of(c("lpsn", "lpsn_parent", "lpsn_renamed_to", "mycobank", "mycobank_parent", "mycobank_renamed_to",
+                          "gbif", "gbif_parent")), ~NA_character_),
+          gbif_renamed_to = isospora_belli$gbif
+        )
+    ) %>%
+    arrange(fullname)
+  message("Added Cystoisospora belli as synonym of Isospora belli")
+} else if (nrow(isospora_belli) != 1) {
+  warning("Isospora belli not found, check this!", call. = FALSE)
+}
+rm(isospora_belli)
+
 
 # Clean-up of nonsense names ----------------------------------------------------------------------
 
@@ -2923,9 +2968,19 @@ older_homonyms <- released_records %>%
   group_by(fullname, rank) %>%
   filter(n_distinct(domain) > 1) %>%
   arrange(desc(release_version), .by_group = TRUE) %>%
-  mutate(newer_domain = first(domain)) %>%
+  mutate(
+    newer_domain = first(domain),
+    # a microsporidian in both releases is the same organism, now in the Fungi (see is_microsporidian())
+    both_microsporidian = all(is_microsporidian(phylum, class))
+  ) %>%
   filter(domain != newer_domain) %>%
   ungroup()
+# the older records of the same microsporidia are not restored, their codes are translated by name
+released_records <- released_records %>%
+  filter(!mo %in% older_homonyms$mo[older_homonyms$both_microsporidian]) %>%
+  microsporidia_to_fungi()
+older_homonyms <- older_homonyms %>%
+  filter(!both_microsporidian)
 older_homonym_retirements <- older_homonyms %>%
   transmute(
     mo,
@@ -3126,11 +3181,22 @@ for (start in names(synonym_next)[!is.na(synonym_next)]) {
 # the direction cannot be determined automatically (in 2026, even the authors in `ref` of these GBIF records were
 # unreliable). Then ALL records in the cycle become accepted, so that no wrong current name is given, and they are
 # shown for a human decision.
+# Human decisions for such cycles: the genera that hold the current names (decision by Matthijs S. Berends, 5 October
+# 2026; Capillidium for the former Conidiobolus species, Scolecobasidium for the former Ochroconis and Pseudosigmoidea
+# species).
+synonym_cycle_current_genera <- c("Capillidium", "Scolecobasidium")
 cycle_fixes <- bind_rows(lapply(synonym_cycles, function(cycle_members) {
   # (not named `cycle`, since tibble() below would then use its own new column `cycle`)
   members <- taxonomy[match(cycle_members, taxonomy$fullname), , drop = FALSE]
   best <- members[source_prio(members$source) == min(source_prio(members$source)), , drop = FALSE]
-  if (nrow(best) == 1) {
+  decided <- members$fullname[members$genus %in% synonym_cycle_current_genera]
+  if (length(decided) == 1) {
+    tibble(
+      cycle = paste(cycle_members, collapse = " | "),
+      made_accepted = decided,
+      reason = "human decision in `synonym_cycle_current_genera`"
+    )
+  } else if (nrow(best) == 1) {
     tibble(
       cycle = paste(cycle_members, collapse = " | "),
       made_accepted = unname(synonym_next[best$fullname]),
@@ -3156,7 +3222,45 @@ if (nrow(cycle_fixes) > 0) {
     ) %>%
     select(-fix)
 }
-rm(synonym_next, synonym_cycles, cycle_fixes)
+rm(synonym_next, synonym_cycles, cycle_fixes, synonym_cycle_current_genera)
+
+# Current names that a source has the wrong way around, as accepted name = its synonym in the source. Only for flaws in
+# the source data that no rule can resolve, and explain each.
+accepted_name_override <- c(
+  # in 2026, COL had Enterocytozoon bieneusi as a synonym of 'Encephalitozoon bieneusi', while Enterocytozoon bieneusi
+  # is the accepted name of this human pathogen (decision by Matthijs S. Berends, 5 October 2026)
+  "Enterocytozoon bieneusi" = "Encephalitozoon bieneusi",
+  # the same for Encephalitozoon cuniculi, which COL had as a synonym of 'Nosema cuniculi' (same decision)
+  "Encephalitozoon cuniculi" = "Nosema cuniculi"
+)
+for (accepted_name in names(accepted_name_override)) {
+  i_acc <- which(taxonomy$fullname == accepted_name)
+  i_syn <- which(taxonomy$fullname == accepted_name_override[accepted_name])
+  if (length(i_acc) != 1 || length(i_syn) != 1) {
+    warning("accepted_name_override: ", accepted_name, " or its synonym not found, check this!", call. = FALSE)
+    next
+  }
+  taxonomy$status[i_acc] <- "accepted"
+  taxonomy[i_acc, c("lpsn_renamed_to", "mycobank_renamed_to", "gbif_renamed_to")] <- NA_character_
+  taxonomy$status[i_syn] <- "synonym"
+  taxonomy[i_syn, c("lpsn_renamed_to", "mycobank_renamed_to", "gbif_renamed_to")] <- NA_character_
+  # the synonym points to the accepted name by the identifier that the accepted name has
+  for (id in c("lpsn", "mycobank", "gbif")) {
+    if (!is.na(taxonomy[[id]][i_acc])) {
+      taxonomy[[paste0(id, "_renamed_to")]][i_syn] <- taxonomy[[id]][i_acc]
+      break
+    }
+  }
+  # the other synonyms of the former accepted name now point to the accepted name as well
+  for (id in c("lpsn", "mycobank", "gbif")) {
+    old_id <- taxonomy[[id]][i_syn]
+    if (!is.na(old_id)) {
+      repoint <- which(taxonomy[[paste0(id, "_renamed_to")]] %in% old_id)
+      taxonomy[[paste0(id, "_renamed_to")]][repoint] <- taxonomy[[paste0(id, "_renamed_to")]][i_syn]
+    }
+  }
+}
+rm(accepted_name_override, accepted_name, i_acc, i_syn, id, old_id, repoint)
 
 
 # Fix genera that are synonyms while they contain accepted species --------------------------------

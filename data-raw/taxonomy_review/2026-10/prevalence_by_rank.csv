@@ -1,27 +1,27 @@
 "rank","prevalence","new","v3.0.1"
 "(unknown rank)",2,9,9
-"class",2,317,284
+"class",2,318,284
 "domain",2,7,0
-"family",2,2089,1825
+"family",2,2093,1825
 "genus",1,32,32
 "genus",1.15,343,331
-"genus",1.25,1371,230
+"genus",1.25,1374,230
 "genus",1.5,346,1
-"genus",2,9184,8194
+"genus",2,9191,8194
 "kingdom",2,14,6
-"order",2,725,646
-"phylum",2,129,113
+"order",2,726,646
+"phylum",2,131,113
 "species",1,5101,4763
 "species",1.15,1256,1239
-"species",1.25,23641,17964
+"species",1.25,23732,17964
 "species",1.5,10942,9002
-"species",2,42904,28217
+"species",2,42919,28217
 "species group",1,32,32
 "species group",1.15,2,0
 "species group",1.25,1,0
 "species group",2,2,5
 "subspecies",1,2297,2179
 "subspecies",1.15,177,164
-"subspecies",1.25,1740,1410
+"subspecies",1.25,1743,1410
 "subspecies",1.5,335,277
 "subspecies",2,4130,1756

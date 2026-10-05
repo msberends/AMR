@@ -1,14 +1,9 @@
 "fullname","domain","kingdom","phylum","class","order","family","genus","species","subspecies","rank","status","ref","lpsn","lpsn_parent","lpsn_renamed_to","source","mycobank","mycobank_parent","mycobank_renamed_to","gbif","gbif_parent","gbif_renamed_to","prevalence"
 "Bigyra","Chromista","Fungi","Bigyra","","","","","","","phylum","accepted",,,,,"GBIF",,"90157",,"8158183",,,2
-"Chytridiopsidomycota","Fungi","Fungi","Chytridiopsidomycota","","","","","","","phylum","accepted","Doweld, 2001",,,,"MycoBank","801422","90157",,,,,2
 "Fungi","Fungi","Fungi","","","","","","","","kingdom","accepted","Bartling, 1830",,,,"MycoBank","90157","90157",,,,,2
 "Labyrinthulea","Fungi","Fungi","Bigyra","Labyrinthulea","","","","","","class","accepted","Olive et al., 1986",,,,"MycoBank","90598",,,,"8158183",,2
-"Microsporea","Protozoa","Fungi","Chytridiopsidomycota","Microsporea","","","","","","class","accepted",,,,,"GBIF",,"801422",,"62266",,,2
 "Thraustochytrida","Fungi","Fungi","Bigyra","Labyrinthulea","Thraustochytrida","","","","","order","accepted","Sparrow, 1973",,,,"MycoBank","90637","90598",,,,,2
 "Fungi","Chromista","Fungi","","","","","","","","kingdom","unknown",,,,,"inferred",,,,,,,
-"Fungi","Protozoa","Fungi","","","","","","","","kingdom","unknown",,,,,"inferred",,,,,,,
-"Chytridiopsidomycota","Protozoa","Protozoa","Chytridiopsidomycota","","","","","","","phylum","unknown",,,,,"inferred",,,,,,,
 "Bigyra","Fungi","Fungi","Bigyra","","","","","","","phylum","unknown",,,,,"inferred",,,,,,,
 "Labyrinthulea","Chromista","Chromista","Bigyra","Labyrinthulea","","","","","","class","accepted",,,,,"GBIF",,,,"DJ","SJ9LP",,
-"Microsporea","Fungi","Fungi","Chytridiopsidomycota","Microsporea","","","","","","class","unknown",,,,,"inferred",,,,,,,
 "Thraustochytrida","Chromista","Chromista","Bigyra","Labyrinthulea","Thraustochytrida","","","","","order","accepted","Sparrow, 1973",,,,"GBIF",,,,"488","DJ",,

@@ -407,7 +407,7 @@
 "F_AMESI","Amesia","genus","accepted","Fungi","Chaetomiaceae","GBIF",1.25
 "F_AMNCL","Amniculicola","genus","accepted","Fungi","Amniculicolaceae","MycoBank",1.25
 "F_AMRPHT","Amorphotheca","genus","accepted","Fungi","Amorphothecaceae","MycoBank",1.25
-"F_AMPHCH","Amphichorda","genus","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
+"F_AHRDA","Amphichorda","genus","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
 "F_AMPHL","Amphilogia","genus","accepted","Fungi","Cryphonectriaceae","MycoBank",1.25
 "F_AMPHT","Amphitrichum","genus","accepted","Fungi","","MycoBank",1.25
 "F_ANGLL","Anguillospora","genus","accepted","Fungi","Amniculicolaceae","MycoBank",1.25
@@ -447,6 +447,8 @@
 "F_BCHMN","Bachmanniomyces","genus","accepted","Fungi","","MycoBank",1.25
 "F_BCKSL","Backusella","genus","accepted","Fungi","Backusellaceae","MycoBank",1.25
 "P_BLMTH","Balamuthia","genus","accepted","Protozoa","Balamuthiidae","GBIF",1.25
+"C_BNTDM","Balantidium","genus","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDS","Balantioides","genus","accepted","Chromista","Balantidiidae","GBIF",1.25
 "F_BLLST","Ballistosporomyces","genus","accepted","Fungi","Chionosphaeraceae","MycoBank",1.25
 "F_BMBSM","Bambusiomyces","genus","accepted","Fungi","Ustilaginaceae","MycoBank",1.25
 "F_BANDN","Bandonia","genus","accepted","Fungi","Tetragoniomycetaceae","MycoBank",1.25
@@ -565,6 +567,7 @@
 "F_CLPHRA","Cyphellophora","genus","accepted","Fungi","Cyphellophoraceae","MycoBank",1.25
 "F_CYSTB","Cystobasidiopsis","genus","accepted","Fungi","Chionosphaeraceae","MycoBank",1.25
 "F_CYSTBS","Cystobasidium","genus","accepted","Fungi","Cystobasidiaceae","MycoBank",1.25
+"C_CSPRA","Cystoisospora","genus","synonym","Chromista","Eimeriidae","GBIF",1.25
 "F_DCTYL","Dactylaria","genus","accepted","Fungi","","MycoBank",1.25
 "F_DANIL","Danielia","genus","accepted","Fungi","Metschnikowiaceae","MycoBank",1.25
 "F_DARKR","Darkera","genus","accepted","Fungi","Phacidiaceae","MycoBank",1.25
@@ -596,7 +599,7 @@
 "F_DSCNL","Discinella","genus","accepted","Fungi","Discinellaceae","MycoBank",1.25
 "F_DSCMY","Discomyces","genus","accepted","Fungi","","MycoBank",1.25
 "F_DSCSPR","Discosporium","genus","accepted","Fungi","Gnomoniaceae","GBIF",1.25
-"F_DSPRT","Disporotrichum","genus","accepted","Fungi","","MycoBank",1.25
+"F_DSPRTR","Disporotrichum","genus","accepted","Fungi","","MycoBank",1.25
 "F_DSSPH","Dissophora","genus","accepted","Fungi","Mortierellaceae","MycoBank",1.25
 "F_DSTMY","Distomycovellosiella","genus","accepted","Fungi","Mycosphaerellaceae","MycoBank",1.25
 "F_DTNGM","Ditangium","genus","accepted","Fungi","Sebacinaceae","MycoBank",1.25
@@ -606,7 +609,7 @@
 "F_DTHCH","Dothichiza","genus","accepted","Fungi","Dothioraceae","GBIF",1.25
 "F_DTHDL","Dothidella","genus","accepted","Fungi","Polystomellaceae","MycoBank",1.25
 "F_DTHRL","Dothiorella","genus","accepted","Fungi","Botryosphaeriaceae","MycoBank",1.25
-"F_DRCHM","Drechmeria","genus","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
+"F_DRCHMR","Drechmeria","genus","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
 "F_DRCHS","Drechslera","genus","accepted","Fungi","Pleosporaceae","MycoBank",1.25
 "F_DCTFR","Ductifera","genus","accepted","Fungi","","GBIF",1.25
 "F_EBLLS","Eballistra","genus","accepted","Fungi","Eballistraceae","MycoBank",1.25
@@ -746,6 +749,7 @@
 "F_INFRF","Infrafungus","genus","accepted","Fungi","","MycoBank",1.25
 "F_INPNT","Inopinatum","genus","accepted","Fungi","Thelebolaceae","MycoBank",1.25
 "F_ISBLZ","Isabelozyma","genus","accepted","Fungi","Metschnikowiaceae","MycoBank",1.25
+"C_ISSPR","Isospora","genus","accepted","Chromista","Eimeriidae","GBIF",1.25
 "F_JMSDC","Jamesdicksonia","genus","accepted","Fungi","Georgefischeriaceae","MycoBank",1.25
 "F_JMSZY","Jamesozyma","genus","accepted","Fungi","Saccharomycetaceae","MycoBank",1.25
 "F_JHNLC","Johnalcornia","genus","accepted","Fungi","Pleosporaceae","MycoBank",1.25
@@ -875,7 +879,7 @@
 "F_NGRGR","Nigrograna","genus","accepted","Fungi","Nigrogranaceae","GBIF",1.25
 "F_NGRSP","Nigrospora","genus","accepted","Fungi","Apiosporaceae","GBIF",1.25
 "F_NIMBY","Nimbya","genus","accepted","Fungi","Pleosporaceae","MycoBank",1.25
-"F_NDLSPR","Nodulisporium","genus","accepted","Fungi","Xylariaceae","MycoBank",1.25
+"F_NDLSPRM","Nodulisporium","genus","accepted","Fungi","Xylariaceae","MycoBank",1.25
 "F_NTHCR","Nothoacremonium","genus","accepted","Fungi","Nothoacremoniaceae","MycoBank",1.25
 "F_NTHFS","Nothofusarium","genus","accepted","Fungi","Nectriaceae","MycoBank",1.25
 "F_NTHPS","Nothopassalora","genus","accepted","Fungi","Mycosphaerellaceae","MycoBank",1.25
@@ -973,7 +977,7 @@
 "F_PLDRM","Piloderma","genus","accepted","Fungi","Pilodermataceae","MycoBank",1.25
 "F_PILPHR","Pilophora","genus","unknown","Fungi","Mucoraceae","manually added",1.25
 "F_PNNTS","Pionnotes","genus","accepted","Fungi","Nectriaceae","MycoBank",1.25
-"F_PRSTM","Pirostoma","genus","accepted","Fungi","","MycoBank",1.25
+"F_PIRSTM","Pirostoma","genus","accepted","Fungi","","MycoBank",1.25
 "C_PSCCR","Piscicryptosporidium","genus","accepted","Chromista","Cryptosporidiidae","GBIF",1.25
 "F_PTHSC","Pithoascus","genus","accepted","Fungi","Microascaceae","MycoBank",1.25
 "P_PLSMD","Plasmodium","genus","accepted","Protozoa","Plasmodiidae","manually added",1.25
@@ -1404,7 +1408,7 @@
 "P_AMOEB_LNNG","Amoeba leningradensis","species","accepted","Protozoa","Amoebidae","GBIF",1.25
 "P_AMOEB_PLCH","Amoeba pulchra","species","synonym","Protozoa","Amoebidae","GBIF",1.25
 "F_AMRPHT_RESN","Amorphotheca resinae","species","accepted","Fungi","Amorphothecaceae","MycoBank",1.25
-"F_AMPHCH_FELN","Amphichorda felina","species","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
+"F_AHRDA_FELN","Amphichorda felina","species","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
 "F_AMPHL_GYRS","Amphilogia gyrosa","species","accepted","Fungi","Cryphonectriaceae","MycoBank",1.25
 "F_AMPHS_PTRC","Amphisphaeria petrucciana","species","accepted","Fungi","Amphisphaeriaceae","MycoBank",1.25
 "F_AMPHT_ARAL","Amphitrichum araliae","species","accepted","Fungi","","MycoBank",1.25
@@ -1733,6 +1737,81 @@
 "F_BCKSL_TBRC","Backusella tuberculispora","species","accepted","Fungi","Backusellaceae","MycoBank",1.25
 "F_BCKSL_VRBL","Backusella variabilis","species","accepted","Fungi","Backusellaceae","MycoBank",1.25
 "P_BLMTH_MNDR","Balamuthia mandrillaris","species","accepted","Protozoa","Balamuthiidae","GBIF",1.25
+"C_BNTDM_ACNT","Balantidium acanthuri","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_ALPH","Balantidium alpha","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_AMBL","Balantidium amblystomatis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_AMYG","Balantidium amygdalli","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_ARAG","Balantidium aragaoi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_BCTR","Balantidium bacteriophoros","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_BETA","Balantidium beta","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_BCVT","Balantidium bicavata","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_BLTT","Balantidium blattarum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_BOVS","Balantidium bovis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_CAML","Balantidium cameli","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_CAPR","Balantidium caprae","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_CAVI","Balantidium caviae","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_CHGS","Balantidium chagasi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_COLI","Balantidium coli","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_CTNP","Balantidium ctenopharyngodonis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_CNHM","Balantidium cunhamunizi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_CYNC","Balantidium cynocephale","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_DOGL","Balantidium dogieli","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_DUDN","Balantidium duodeni","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_ELNG","Balantidium elongatum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_ENTZ","Balantidium entozoon","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_FLCF","Balantidium falciformis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_FRGV","Balantidium frugivori","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_GALN","Balantidium galianoi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_GEGY","Balantidium geigyi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_GEMN","Balantidium geimani","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_GGNT","Balantidium giganteum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_GRCL","Balantidium gracile","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_RCLS","Balantidium gracilis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_GRNL","Balantidium granulosus","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_GRIM","Balantidium grimi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_GYRN","Balantidium gyrans","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_YRNS","Balantidium gyranus","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_HGHW","Balantidium haughwouti","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_HELN","Balantidium helenae","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_HYDR","Balantidium hydrae","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_INDC","Balantidium indicum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_KRBY","Balantidium kirbyi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_MAJR","Balantidium major","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_MRSP","Balantidium marsupialis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_MDSR","Balantidium medusarum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_MINR","Balantidium minor","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_MNTM","Balantidium minutum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_NCLS","Balantidium nucleus","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_ORCH","Balantidium orchestium","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_OSMN","Balantidium osmaniae","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_OVTM","Balantidium ovatum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_OVIS","Balantidium ovis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_PLLC","Balantidium pellucidum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_PHRT","Balantidium pheretima","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_PHLP","Balantidium philippiensis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_PSCC","Balantidium piscicola","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_PLYV","Balantidium polyvacuolum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_PRCL","Balantidium porcellae","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_PRNR","Balantidium prionurium","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_RADT","Balantidium radiata","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_RHSM","Balantidium rhesum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_RTND","Balantidium rotundum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_SGNN","Balantidium saigonensis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_SRPN","Balantidium serpentina","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_SIML","Balantidium simile","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_SNNS","Balantidium sinensis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_SNGP","Balantidium singaporensis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_SPNB","Balantidium spinibarbichthys","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_STEN","Balantidium steinae","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_STRL","Balantidium strelkovi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_STRT","Balantidium struthionis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_SUIS","Balantidium suis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_TAPR","Balantidium tapiri","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_TSTD","Balantidium testudinis","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_TRNG","Balantidium triangulatum","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_XENP","Balantidium xenopi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDM_ZBRS","Balantidium zebrascopi","species","accepted","Chromista","Balantidiidae","GBIF",1.25
+"C_BNTDS_COLI","Balantioides coli","species","synonym","Chromista","Balantidiidae","GBIF",1.25
 "F_BLLST_SSCL","Ballistosporomyces sasicola","species","accepted","Fungi","Chionosphaeraceae","MycoBank",1.25
 "F_BLLST_TPNS","Ballistosporomyces taupoensis","species","accepted","Fungi","Chionosphaeraceae","MycoBank",1.25
 "F_BLLST_XNTH","Ballistosporomyces xanthus","species","accepted","Fungi","Chionosphaeraceae","GBIF",1.25
@@ -2411,6 +2490,7 @@
 "F_CYSTBS_SLFF","Cystobasidium slooffiae","species","accepted","Fungi","Cystobasidiaceae","MycoBank",1.25
 "F_CYSTF_INFR","Cystofilobasidium infirmominiatum","species","accepted","Fungi","Cystofilobasidiaceae","GBIF",1.25
 "F_CYSTF_MCRN","Cystofilobasidium macerans","species","accepted","Fungi","Cystofilobasidiaceae","MycoBank",1.25
+"C_CSPRA_BELL","Cystoisospora belli","species","synonym","Chromista","Eimeriidae","manually added",1.25
 "F_CYTSP_ABNR","Cytospora abnormis","species","accepted","Fungi","Cytosporaceae","MycoBank",1.25
 "F_DCTYL_ACNT","Dactylaria acanthacearum","species","accepted","Fungi","","MycoBank",1.25
 "F_DCTYL_CRVS","Dactylaria curvispora","species","accepted","Fungi","","GBIF",1.25
@@ -2712,7 +2792,7 @@
 "F_DSCNL_PRPR","Discinella purpurascens","species","accepted","Fungi","Discinellaceae","MycoBank",1.25
 "F_DSCMY_ALGR","Discomyces algiris","species","accepted","Fungi","","MycoBank",1.25
 "F_DSCSPR_PPLM","Discosporium populeum","species","accepted","Fungi","Gnomoniaceae","GBIF",1.25
-"F_DSPRT_DMRP","Disporotrichum dimorphosporum","species","accepted","Fungi","","MycoBank",1.25
+"F_DSPRTR_DMRP","Disporotrichum dimorphosporum","species","accepted","Fungi","","MycoBank",1.25
 "F_DSSPH_GLBL","Dissophora globulifera","species","accepted","Fungi","Mortierellaceae","MycoBank",1.25
 "F_DSSPH_ORNT","Dissophora ornata","species","accepted","Fungi","Mortierellaceae","MycoBank",1.25
 "F_DSTMY_BRCH","Distomycovellosiella brachycarpa","species","accepted","Fungi","Mycosphaerellaceae","MycoBank",1.25
@@ -2747,13 +2827,13 @@
 "F_DTHRL_RNFR","Dothiorella reniformis","species","accepted","Fungi","Botryosphaeriaceae","MycoBank",1.25
 "F_DTHRL_RICN","Dothiorella ricini","species","accepted","Fungi","Botryosphaeriaceae","GBIF",1.25
 "F_DTHRL_SMLC","Dothiorella smilacina","species","accepted","Fungi","Botryosphaeriaceae","MycoBank",1.25
-"F_DRCHM_BCTR","Drechmeria bactrospora","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
-"F_DRCHM_BLND","Drechmeria balanoides","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
-"F_DRCHM_CMPN","Drechmeria campanulata","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
-"F_DRCHM_OBVT","Drechmeria obovata","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
-"F_DRCHM_SNNS","Drechmeria sinensis","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
-"F_DRCHM_SPHR","Drechmeria sphaerospora","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
-"F_DRCHM_ZSPR","Drechmeria zeospora","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
+"F_DRCHMR_BCTR","Drechmeria bactrospora","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
+"F_DRCHMR_BLND","Drechmeria balanoides","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
+"F_DRCHMR_CMPN","Drechmeria campanulata","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
+"F_DRCHMR_OBVT","Drechmeria obovata","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
+"F_DRCHMR_SNNS","Drechmeria sinensis","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
+"F_DRCHMR_SPHR","Drechmeria sphaerospora","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
+"F_DRCHMR_ZSPR","Drechmeria zeospora","species","accepted","Fungi","Ophiocordycipitaceae","MycoBank",1.25
 "F_DRCHS_ARZN","Drechslera arizonica","species","accepted","Fungi","Pleosporaceae","GBIF",1.25
 "F_DRCHS_ELLS","Drechslera ellisii","species","accepted","Fungi","Pleosporaceae","MycoBank",1.25
 "F_DRCHS_ERGR","Drechslera eragrostidis","species","accepted","Fungi","Pleosporaceae","GBIF",1.25
@@ -2830,8 +2910,8 @@
 "F_EMMNS_PARV","Emmonsia parva","species","synonym","Fungi","Ajellomycetaceae","MycoBank",1.25
 "F_EMMNS_PSTR","Emmonsia pasteuriana","species","synonym","Fungi","Ajellomycetaceae","MycoBank",1.25
 "F_EMMNS_SOLI","Emmonsia soli","species","accepted","Fungi","Ajellomycetaceae","MycoBank",1.25
-"P_ENCPH_CNCL","Encephalitozoon cuniculi","species","synonym","Protozoa","Encephalitozoonidae","GBIF",1.25
-"P_ENCPH_IXDS","Encephalitozoon ixodis","species","synonym","Protozoa","Encephalitozoonidae","GBIF",1.25
+"F_ENCPH_CNCL","Encephalitozoon cuniculi","species","accepted","Fungi","Encephalitozoonidae","GBIF",1.25
+"F_ENCPH_IXDS","Encephalitozoon ixodis","species","synonym","Fungi","Encephalitozoonidae","GBIF",1.25
 "F_ENDOGN_PSFR","Endogone pisiformis","species","accepted","Fungi","Endogonaceae","GBIF",1.25
 "F_ENDMY_CRTR","Endomyces crateriformis","species","accepted","Fungi","Dipodascaceae","MycoBank",1.25
 "F_ENDMY_NTDS","Endomyces nitidus","species","accepted","Fungi","Dipodascaceae","MycoBank",1.25
@@ -2857,8 +2937,8 @@
 "P_ENTMB_RNRM","Entamoeba ranarum","species","accepted","Protozoa","Entamoebidae","GBIF",1.25
 "P_ENTMB_STRT","Entamoeba struthionis","species","accepted","Protozoa","Entamoebidae","GBIF",1.25
 "P_ENTMB_SUIS","Entamoeba suis","species","accepted","Protozoa","Entamoebidae","GBIF",1.25
-"P_EYTZN_BINS","Enterocytozoon bieneusi","species","synonym","Protozoa","Enterocytozoonidae","GBIF",1.25
-"P_EYTZN_SLMN","Enterocytozoon salmonis","species","synonym","Protozoa","Enterocytozoonidae","GBIF",1.25
+"F_EYTZN_BINS","Enterocytozoon bieneusi","species","accepted","Fungi","Enterocytozoonidae","GBIF",1.25
+"F_EYTZN_SLMN","Enterocytozoon salmonis","species","synonym","Fungi","Enterocytozoonidae","GBIF",1.25
 "F_ENTMM_HYLN","Entimomentora hyalina","species","accepted","Fungi","Pleuroascaceae","MycoBank",1.25
 "F_ENTMP_BATK","Entomophaga batkoi","species","accepted","Fungi","Entomophthoraceae","MycoBank",1.25
 "F_ENTMP_CNGL","Entomophaga conglomerata","species","accepted","Fungi","Entomophthoraceae","MycoBank",1.25
@@ -3381,6 +3461,21 @@
 "F_ISARI_STNB","Isaria stenobothri","species","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
 "F_ISARI_TKMZ","Isaria takamizusanensis","species","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
 "F_ISARI_XYLR","Isaria xylariiformis","species","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
+"C_ISSPR_ANNT","Isospora annthomassonae","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_ATTL","Isospora attilae","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_BELL","Isospora belli","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_BRSL","Isospora brasilsatoae","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_BRRW","Isospora burrowsi","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_CANS","Isospora canis","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_CORB","Isospora coerebae","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_FELS","Isospora felis","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_OHNS","Isospora ohioensis","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_PTGR","Isospora pitiguari","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_RMPH","Isospora ramphoceli","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_RVLT","Isospora rivolta","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_SPTB","Isospora sepetibensis","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_SUIS","Isospora suis","species","accepted","Chromista","Eimeriidae","GBIF",1.25
+"C_ISSPR_THRP","Isospora thraupis","species","synonym","Chromista","Eimeriidae","GBIF",1.25
 "F_ISSTC_ORNT","Issatchenkia orientalis","species","synonym","Fungi","Saccharomycetaceae","MycoBank",1.25
 "F_JMSDC_BRNK","Jamesdicksonia brunkii","species","accepted","Fungi","Georgefischeriaceae","MycoBank",1.25
 "F_JMSDC_ELCH","Jamesdicksonia eleocharidis","species","accepted","Fungi","Georgefischeriaceae","GBIF",1.25
@@ -4332,9 +4427,9 @@
 "F_NGRSP_MYDS","Nigrospora maydis","species","accepted","Fungi","Apiosporaceae","GBIF",1.25
 "F_NIMBY_PMPR","Nimbya pimpriana","species","accepted","Fungi","Pleosporaceae","MycoBank",1.25
 "F_NTSCH_CPLR","Nitschkia cupularis","species","accepted","Fungi","Nitschkiaceae","MycoBank",1.25
-"F_NDLSPR_GCHR","Nodulisporium geochroum","species","accepted","Fungi","Xylariaceae","MycoBank",1.25
-"F_NDLSPR_HPTC","Nodulisporium hepaticum","species","accepted","Fungi","Xylariaceae","GBIF",1.25
-"F_NDLSPR_PNCM","Nodulisporium puniceum","species","accepted","Fungi","Xylariaceae","GBIF",1.25
+"F_NDLSPRM_GCHR","Nodulisporium geochroum","species","accepted","Fungi","Xylariaceae","MycoBank",1.25
+"F_NDLSPRM_HPTC","Nodulisporium hepaticum","species","accepted","Fungi","Xylariaceae","GBIF",1.25
+"F_NDLSPRM_PNCM","Nodulisporium puniceum","species","accepted","Fungi","Xylariaceae","GBIF",1.25
 "F_NTHCR_EXGM","Nothoacremonium exiguum","species","accepted","Fungi","Nothoacremoniaceae","MycoBank",1.25
 "F_NTHFS_DVNN","Nothofusarium devonianum","species","accepted","Fungi","Nectriaceae","MycoBank",1.25
 "F_NTHPS_PRSN","Nothopassalora personata","species","accepted","Fungi","Mycosphaerellaceae","MycoBank",1.25
@@ -5120,7 +5215,7 @@
 "F_PLDRM_FLLX","Piloderma fallax","species","accepted","Fungi","Pilodermataceae","MycoBank",1.25
 "F_PILPHR_AGRC","Pilophora agaricina","species","accepted","Fungi","Mucoraceae","MycoBank",1.25
 "F_PNNTS_CPTT","Pionnotes capitata","species","accepted","Fungi","Nectriaceae","MycoBank",1.25
-"F_PRSTM_VRDS","Pirostoma viridisporum","species","accepted","Fungi","","MycoBank",1.25
+"F_PIRSTM_VRDS","Pirostoma viridisporum","species","accepted","Fungi","","MycoBank",1.25
 "C_PSCCR_CCHL","Piscicryptosporidium cichlidis","species","synonym","Chromista","Cryptosporidiidae","GBIF",1.25
 "C_PSCCR_RCHN","Piscicryptosporidium reichenbachklinkei","species","synonym","Chromista","Cryptosporidiidae","GBIF",1.25
 "F_PSKRZ_CPSL","Piskurozyma capsuligena","species","accepted","Fungi","Piskurozymaceae","GBIF",1.25
@@ -5707,7 +5802,6 @@
 "F_SRWKS_SCCS","Sarawakus succisus","species","accepted","Fungi","Hypocreaceae","MycoBank",1.25
 "F_SRWKS_TRCH","Sarawakus trachycarpus","species","accepted","Fungi","Hypocreaceae","MycoBank",1.25
 "C_SRCCY_ALCS","Sarcocystis alces","species","accepted","Chromista","Sarcocystidae","GBIF",1.25
-"C_SRCCY_ANPH","Sarcocystis anophelis","species","synonym","Chromista","Sarcocystidae","GBIF",1.25
 "C_SRCCY_CPRL","Sarcocystis capreolicanis","species","accepted","Chromista","Sarcocystidae","GBIF",1.25
 "C_SRCCY_GGNT","Sarcocystis gigantea","species","accepted","Chromista","Sarcocystidae","GBIF",1.25
 "C_SRCCY_GRCL","Sarcocystis gracilis","species","accepted","Chromista","Sarcocystidae","GBIF",1.25
