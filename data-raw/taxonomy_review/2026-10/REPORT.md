@@ -23,7 +23,7 @@ git-ignored and not committed.
 
 ## 2. Summary
 
-**111,103 records** (v3.0.1: 78,679; development version on `main`: 96,982). Per domain, old (v3.0.1) vs new, see
+**107,126 records** (v3.0.1: 78,679; development version on `main`: 96,982). Per domain, old (v3.0.1) vs new, see
 also [CSV](comparison_per_domain_rank_status.csv) and [CSV](new_records_per_domain_and_kind.csv):
 
 | Domain | Total old | Total new | Accepted old | Accepted new | Synonym old | Synonym new | Unknown/other old / new | Change |
@@ -32,29 +32,30 @@ also [CSV](comparison_per_domain_rank_status.csv) and [CSV](new_records_per_doma
 | Archaea | 1,419 | 1,573 | 1,225 | 1,359 | 181 | 201 | 13 / 13 | +10.9% |
 | Bacteria | 39,249 | 48,239 | 29,853 | 38,689 | 7,076 | 8,777 | 2,320 / 773 | +22.9% |
 | Chromista | 178 | 300 | 157 | 236 | 17 | 57 | 4 / 7 | +68.5% |
-| Fungi | 28,137 | 49,716 | 14,385 | 21,877 | 8,746 | 22,585 | 5,006 / 5,254 | +76.7% |
+| Fungi | 28,137 | 45,739 | 14,385 | 21,527 | 8,746 | 18,990 | 5,006 / 5,222 | +62.6% |
 | Protozoa | 8,067 | 8,694 | 6,056 | 6,458 | 1,880 | 2,098 | 131 / 138 | +7.8% |
 
 Explanation of the changes of more than 5%:
 
 - **Bacteria (+22.9%)**: new validly published species in LPSN since 2024 (accepted +8,836), and v3.0.1 'not validly
   published' names now as accepted, synonym or unknown.
-- **Fungi (+76.7%)**: mostly synonyms (+13,839): old names of the kept fungal species, from MycoBank and COL, which
-  `as.mo()` uses to translate old names. Accepted +7,492: new species in relevant genera and current names of species of
-  relevant genera (script change 5). This also includes about 1,000 lichens, see "Needs a human".
+- **Fungi (+62.6%)**: mostly synonyms (+10,244): old names of the kept fungal species, from MycoBank and COL, which
+  `as.mo()` uses to translate old names (kept on purpose, decision of 5 October 2026). Accepted +7,142: new species in
+  relevant genera and current names of species of relevant genera (script change 5). Lichens are removed (script change
+  17), except the 84 that were released before.
 - **Animalia (+58.4%)**, **Chromista (+68.5%)**: helminths, vectors and protists of the relevant genera that COL now
   contains (and the COL records without authors, script change 3); small absolute numbers (+951 and +122).
 - **Archaea (+10.9%)**: new species in LPSN.
 - Protozoa (+7.8%) is below 5% after the decision to apply the Fungi relevance rules to Protozoa; most protozoa of
   v3.0.1 are restored as released taxa.
 
-Records by rank: species 85,841, subspecies 10,507, genus 11,417, family 2,097, order 728, class 317, phylum 129, and
+Records by rank: species 83,844, subspecies 8,679, genus 11,276, family 2,089, order 725, class 317, phylum 129, and
 37 species groups. MO codes of existing names (same name and domain) that changed: **0**
 ([CSV](changed_mo_codes_of_existing_names.csv)). Codes in the package's other data sets missing from `microorganisms`:
 **0**.
 
 Run time: the source chunks take about 15 minutes (LPSN scrape 10.5 minutes, ran once), each full rebuild from a
-checkpoint 15 to 25 minutes. 14 runs were needed because of the script changes below (logs available on request).
+checkpoint 15 to 25 minutes. 15 runs were needed because of the script changes below (logs available on request).
 
 ## 3. Script changes
 
@@ -125,6 +126,11 @@ All changes are in `data-raw/_reproduction_scripts/reproduction_of_microorganism
     programmatically (`clb:merged`) are only used if their genus is clinically relevant, they are a protected current
     name, or they were in the last release (40,897 fewer records in `taxonomy_gbif.rds`); Protozoa follow the relevance
     rules of the Fungi instead of being kept entirely (that rule dated from before the XR filled this domain).
+17. **No lichens** (decision of 5 October 2026): fungi in the lichen-forming classes (Arthoniomycetes, Candelariomycetes,
+    Lecanoromycetes, Lichinomycetes) and the order Verrucariales are removed unless their genus is clinically relevant,
+    with the synonyms that point to them: 4,155 records (528 accepted, 3,627 synonyms). They entered as current names of
+    kept synonyms. The 84 lichens of v3.0.1 are restored as released taxa. See
+    [CSV](lichens_and_their_synonyms_these_will_be_removed.csv).
 
 Other files:
 
@@ -177,8 +183,8 @@ Other files:
   *Octospora*, *Nolleria pulicis*), see
   [CSV](released_mo_codes_that_are_retired_since_a_more_recent_release_has_their_name_in_another_domain.csv)
 - [ ] **Released MO codes that are retired, since their genus is now only known in another domain**: 0 rows
-- [ ] **Released taxa that were missing and are restored**: 15,323 taxa of v3.0.1 that are not in the new selection (or
-  not in the sources anymore) are restored with their old code and status (README rule 4), of which 484 clinically
+- [ ] **Released taxa that were missing and are restored**: 15,635 taxa of v3.0.1 that are not in the new selection (or
+  not in the sources anymore) are restored with their old code and status (README rule 4), of which 492 clinically
   relevant (almost all bacterial species absent from current LPSN, e.g. *Neisseria bergeri*,
   *Streptococcus halitosis*), see [CSV](released_taxa_that_were_missing_and_are_restored_by_domain_rank_and_status.csv)
   and [CSV](restored_released_taxa_that_are_clinically_relevant.csv)
@@ -195,9 +201,11 @@ Other files:
   [CSV](synonym_genera_with_accepted_species_these_will_become_accepted.csv)
 - [ ] **Salmonella species synonyms that are serovars** (new): 3 rows removed (script change 13), see
   [CSV](salmonella_species_synonyms_that_are_serovars_in_this_data_set_these_will_be_removed.csv)
+- [ ] **Lichens and their synonyms, these will be removed** (new): 4,155 records (script change 17), see
+  [CSV](lichens_and_their_synonyms_these_will_be_removed.csv)
 - [ ] **Duplicate full names / duplicate MO codes / MO codes with repeated elements / records without a valid MO
   code**: all 0 rows
-- [ ] **New taxa** and **Removed taxa**: 32,953 and 500 rows, see [CSV](new_taxa.csv) and [CSV](removed_taxa.csv)
+- [ ] **New taxa** and **Removed taxa**: 29,008 and 500 rows, see [CSV](new_taxa.csv) and [CSV](removed_taxa.csv)
 - [ ] **Removed taxa that were clinically relevant**: 207 rows, all retired codes of other organisms with the same genus
   name (*Graphium* 164, *Capillaria* 11, *Nectria* 9, *Morganella* 8, *Cryptococcus* 6, *Necator* 5, and 4 others), no
   pathogen lost, see [CSV](removed_taxa_that_were_clinically_relevant_prevalence_2.csv)
@@ -211,7 +219,7 @@ Other files:
 - [ ] **Previously manually added taxa that are not in the new data set**: 13 rows: 11 *Graphium* butterflies
   (intended), *Microsphaera penicillata*, and the species group *Mycobacterium avium-intracellulare complex* (approved
   rename to *M. avium complex*), see [CSV](previously_manually_added_taxa_that_are_not_in_the_new_data_set.csv)
-- [ ] **Synonyms without a current name**: 3,878 rows (names that `as.mo()` cannot update), see
+- [ ] **Synonyms without a current name**: 3,908 rows (names that `as.mo()` cannot update), see
   [CSV](synonyms_without_a_current_name.csv)
 - [ ] **Codes without a match in the other data sets** (new): 0 for `clinical_breakpoints`, `example_isolates`,
   `microorganisms.codes`, `microorganisms.groups`; 69 for `intrinsic_resistant` (non-bacteria that the development
@@ -233,7 +241,7 @@ Other files:
 - [ ] **No new taxon received a registered code of another taxon**: only `B_MYCBC_AVIM-C`, the approved rename in
   `mo_code_renames.csv`, see [CSV](registered_codes_with_another_name.csv)
 - [ ] **Prevalence by rank**, old vs new, see [CSV](prevalence_by_rank.csv)
-- [ ] **Most relevant new and removed genera and species** (prevalence up to 1.25): 6,951 new, 207 removed (see above),
+- [ ] **Most relevant new and removed genera and species** (prevalence up to 1.25): 6,927 new, 207 removed (see above),
   see [CSV](most_relevant_new_taxa.csv) and [CSV](most_relevant_removed_taxa.csv)
 
 ### Integrity rules and MO code registry (3d)
@@ -259,9 +267,6 @@ Other files:
 
 ## 5. Needs a human
 
-- [ ] **Fungal synonyms and lichens**: Fungi grow by 13,839 synonyms (old names of kept species). Kept as they are,
-  following your decision (useful for `as.mo()`, no extra layer of assessment). About 1,000 lichen records (*Lecidea*
-  558, *Lecanora* 444) enter as current names of kept synonyms, with their own synonyms; recommend to accept for now
 - [ ] **Retired codes with `NEEDS REVIEW`** (275): 248 *Graphium* names that no current source has as a fungus (sample of
   40: all swallowtails), and 27 v2.x Protozoa codes of microsporidia whose name v3.0.x has in Fungi. Recommend to accept;
   for the microsporidia, the alternative is to keep them translated by name (`as.mo()` would then give the Fungi record)
@@ -269,7 +274,7 @@ Other files:
   v2.x Protozoa codes (now Fungi); *Thermus profundus* (`B_THERMS_PRFN`, no longer in LPSN, retired because of an
   Archaea namesake); *Hymenolepis leptocephala* (`AN_HYMNL_LPTC`, retired because of a plant namesake). Recommend to
   accept, low impact
-- [ ] **Released taxa restored with their status of v3.0.1** (15,323, of which 484 clinically relevant): names such as
+- [ ] **Released taxa restored with their status of v3.0.1** (15,635, of which 492 clinically relevant): names such as
   *Neisseria bergeri* and *Streptococcus halitosis* are in no current source but keep status 'accepted' (README rule 4).
   Decide whether names absent from all sources should become 'unknown'
 - [ ] **Domain decided by the last release**, doubtful cases: *Copromonas* (a euglenoid, released as Bacteria, no
@@ -292,5 +297,6 @@ Other files:
 - [ ] **One commit instead of five**: the pre-commit hook of the repository stages all changed files in `data-raw/` and
   `man/`, so the first commit took everything; splitting would need `--no-verify`, which I did not use. As PRs are
   squash-merged, this only affects the review per commit
-- [ ] **Scope decisions of 5 October 2026** (yours, implemented as script changes): COL XR names only if clinically
-  relevant or released before (40,897 fewer COL records), and Protozoa with the relevance rules of the Fungi
+- [ ] **Scope decisions of 5 October 2026** (yours, implemented as script changes 16 and 17): COL XR names only if
+  clinically relevant or released before (40,897 fewer COL records), Protozoa with the relevance rules of the Fungi,
+  fungal synonyms kept, lichens removed

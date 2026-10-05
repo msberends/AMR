@@ -140,6 +140,7 @@
 "Corynebacterium provencense","Bacteria","species","accepted",,1.5
 "Corynebacterium senegalense","Bacteria","species","accepted",,1.5
 "Coxiella mudrowiae","Bacteria","species","accepted",,1.5
+"Cryptococcus nigricans","Fungi","species","synonym","Rich et al., 1958",1
 "Cryptosporidium alticolis","Chromista","species","accepted","Horcickova et al., 2019",1.25
 "Cryptosporidium microti","Chromista","species","accepted","Horcickova et al., 2019",1.25
 "Cryptosporidium myocastoris","Chromista","species","accepted","Jezkova et al., 2021",1.25
@@ -265,6 +266,7 @@
 "Microbacterium gorillae","Bacteria","species","accepted",,1.5
 "Microbacterium stercoravium","Bacteria","species","accepted",,1.5
 "Microbacterium timonense","Bacteria","species","accepted",,1.5
+"Mucor furfuraceus","Fungi","species","synonym","Linnaeus, 1753",1.25
 "Murdochiella massiliensis","Bacteria","species","accepted","Vicino et al., 2016",1.5
 "Mycobacterium ahvazicum","Bacteria","species","accepted",,1
 "Mycobacterium canettii","Bacteria","species","synonym",,1
@@ -297,6 +299,7 @@
 "Mycoplasmopsis simbae","Bacteria","species","accepted",,1.5
 "Myroides ummariensis","Bacteria","species","accepted",,1.5
 "Necropsobacter massiliensis","Bacteria","species","accepted",,1.5
+"Nectria resinae","Fungi","species","synonym","Fries, 1849",1.25
 "Neisseria bergeri","Bacteria","species","accepted",,1
 "Neisseria brasiliensis","Bacteria","species","accepted",,1
 "Neisseria chenwenguii","Bacteria","species","accepted",,1
@@ -350,6 +353,8 @@
 "Phocaeicola gallistercoris","Bacteria","species","accepted",,1.5
 "Phocaeicola merdavium","Bacteria","species","accepted",,1.5
 "Phocaeicola merdigallinarum","Bacteria","species","accepted",,1.5
+"Phoma cytospora","Fungi","species","synonym","Hawksworth, 1976",1.25
+"Phoma dentariae","Fungi","species","synonym","Saccardo, 1884",1.25
 "Photobacterium marinum","Bacteria","species","accepted",,1.5
 "Pontibacter fetidus","Bacteria","species","accepted",,1.5
 "Pontibacter pudoricolor","Bacteria","species","accepted",,1.5
@@ -389,6 +394,9 @@
 "Sphingomonas elodea","Bacteria","species","accepted",,1.5
 "Sphingomonas excrementigallinarum","Bacteria","species","accepted",,1.5
 "Sphingomonas taxi","Bacteria","species","accepted",,1.5
+"Sporothrix sanguinea","Fungi","species","synonym","Taylor, 1977",1.25
+"Sporotrichum latebrarum","Fungi","species","synonym","Link, 1818",1.25
+"Sporotrichum sanguineum","Fungi","species","synonym","Ramirez et al., 1953",1.25
 "Stenotrophomonas cyclobalanopsidis","Bacteria","species","accepted",,1.5
 "Stenotrophomonas panacihumi","Bacteria","species","accepted","Yi et al., 2010",1.5
 "Streptococcus halitosis","Bacteria","species","accepted",,1

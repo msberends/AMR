@@ -430,7 +430,6 @@
 "F_ARXTR","Arxotrichum","genus","accepted","Fungi","Chaetomiaceae","MycoBank",1.25
 "AN_ASCRS","Ascaris","genus","accepted","Animalia","Ascarididae","GBIF",1.25
 "F_ASCHR","Aschersonia","genus","accepted","Fungi","Clavicipitaceae","MycoBank",1.25
-"F_ASCDM","Ascidium","genus","accepted","Fungi","Thelotremataceae","MycoBank",1.25
 "F_ACLYX","Ascocalyx","genus","accepted","Fungi","Godroniaceae","MycoBank",1.25
 "F_APHRA","Ascophora","genus","accepted","Fungi","Mucoraceae","MycoBank",1.25
 "F_ASCSPR","Ascospirella","genus","accepted","Fungi","Trichocomaceae","MycoBank",1.25
@@ -474,7 +473,6 @@
 "F_BRCHYS","Brachysporium","genus","accepted","Fungi","Trichosphaeriaceae","MycoBank",1.25
 "F_BRTTN","Brettanomyces","genus","accepted","Fungi","Pichiaceae","MycoBank",1.25
 "F_BRVST","Brevistachys","genus","accepted","Fungi","Stachybotryaceae","MycoBank",1.25
-"F_BRNCP","Briancoppinsia","genus","accepted","Fungi","Arthoniaceae","MycoBank",1.25
 "AN_BRUGI","Brugia","genus","accepted","Animalia","Onchocercidae","GBIF",1.25
 "F_BRNNC","Brunneochlamydosporium","genus","accepted","Fungi","Trichosphaeriaceae","MycoBank",1.25
 "F_BRNNMY","Brunneomyces","genus","accepted","Fungi","Trichosphaeriaceae","MycoBank",1.25
@@ -539,7 +537,6 @@
 "F_CNDSP","Conidiosporomyces","genus","accepted","Fungi","Tilletiaceae","MycoBank",1.25
 "F_CONLL","Coniella","genus","accepted","Fungi","Schizoparmaceae","MycoBank",1.25
 "F_CNCSS","Coniocessia","genus","accepted","Fungi","Coniocessiaceae","MycoBank",1.25
-"F_CONCYB","Coniocybe","genus","accepted","Fungi","Coniocybaceae","MycoBank",1.25
 "F_CNLRL","Coniolariella","genus","accepted","Fungi","Xylariaceae","MycoBank",1.25
 "F_CNSPR","Coniosporium","genus","accepted","Fungi","Coniosporiaceae","MycoBank",1.25
 "F_CNTHYR","Coniothyrium","genus","accepted","Fungi","Coniothyriaceae","MycoBank",1.25
@@ -764,7 +761,6 @@
 "F_LSNCTR","Lasionectria","genus","accepted","Fungi","Bionectriaceae","MycoBank",1.25
 "F_LTRLLA","Lasionectriella","genus","accepted","Fungi","Bionectriaceae","MycoBank",1.25
 "F_LPHRS","Lasiosphaeris","genus","accepted","Fungi","Lasiosphaeridaceae","GBIF",1.25
-"F_LCNCT","Lecanactis","genus","accepted","Fungi","Roccellaceae","GBIF",1.25
 "F_LCNCL","Lecanicillium","genus","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
 "F_LSPHR","Leiosphaerella","genus","accepted","Fungi","Pseudomassariaceae","MycoBank",1.25
 "F_LNTMY","Lentamyces","genus","accepted","Fungi","Lentamycetaceae","GBIF",1.25
@@ -951,7 +947,6 @@
 "F_PEZCL","Pezicula","genus","accepted","Fungi","Dermateaceae","MycoBank",1.25
 "F_PHCLL","Phacellium","genus","accepted","Fungi","Mycosphaerellaceae","MycoBank",1.25
 "F_PHCHL","Phaeochloridium","genus","accepted","Fungi","Plectosphaerellaceae","MycoBank",1.25
-"F_PHCCC","Phaeococcomyces","genus","accepted","Fungi","Phaeococcomycetaceae","MycoBank",1.25
 "F_PHASR","Phaeoisaria","genus","accepted","Fungi","Pleurotheciaceae","MycoBank",1.25
 "F_PHMYC","Phaeomycocentrospora","genus","accepted","Fungi","Didymellaceae","MycoBank",1.25
 "F_PHRML","Phaeoramularia","genus","accepted","Fungi","Mycosphaerellaceae","MycoBank",1.25
@@ -1066,7 +1061,6 @@
 "F_SMSNL","Samsoniella","genus","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
 "F_SRWKS","Sarawakus","genus","accepted","Fungi","Hypocreaceae","MycoBank",1.25
 "C_SRCCY","Sarcocystis","genus","accepted","Chromista","Sarcocystidae","GBIF",1.25
-"F_SAREA","Sarea","genus","accepted","Fungi","Sareaceae","GBIF",1.25
 "F_SRCLD","Sarocladium","genus","accepted","Fungi","Sarocladiaceae","MycoBank",1.25
 "F_SCHLB","Scheleobrachea","genus","accepted","Fungi","Pleosporaceae","MycoBank",1.25
 "F_SCHZPH","Schizophyllum","genus","accepted","Fungi","Schizophyllaceae","MycoBank",1.25
@@ -1145,7 +1139,6 @@
 "F_SNGLL","Sungouiella","genus","accepted","Fungi","Metschnikowiaceae","MycoBank",1.25
 "F_SNGZY","Sungouiozyma","genus","accepted","Fungi","Saccharomycetaceae","MycoBank",1.25
 "F_SYDOW","Sydowia","genus","accepted","Fungi","Dothioraceae","MycoBank",1.25
-"F_SYMBT","Symbiotaphrina","genus","accepted","Fungi","Symbiotaphrinaceae","MycoBank",1.25
 "F_SYMMT","Symmetrospora","genus","accepted","Fungi","Symmetrosporaceae","MycoBank",1.25
 "F_SYRNG","Syringospora","genus","accepted","Fungi","","MycoBank",1.25
 "F_SYZYG","Syzygites","genus","accepted","Fungi","Rhizopodaceae","MycoBank",1.25
@@ -1230,7 +1223,6 @@
 "F_ZLPCL","Zelopaecilomyces","genus","accepted","Fungi","","MycoBank",1.25
 "F_ZYGSCS","Zygoascus","genus","accepted","Fungi","Trichomonascaceae","MycoBank",1.25
 "F_ZYMNM","Zymonema","genus","accepted","Fungi","","MycoBank",1.25
-"F_ZYTHI","Zythia","genus","accepted","Fungi","Zythiaceae","MycoBank",1.25
 "F_ABRTH_LOBR","Abrothallus lobariae","species","accepted","Fungi","Abrothallaceae","MycoBank",1.25
 "F_ABRTH_PSRM","Abrothallus psoromatis","species","accepted","Fungi","Abrothallaceae","MycoBank",1.25
 "F_ABSID_ARRH","Absidia arrhiza","species","accepted","Fungi","Cunninghamellaceae","MycoBank",1.25
@@ -1612,7 +1604,6 @@
 "AN_ASCRS_VTLR","Ascaris vitulorum","species","synonym","Animalia","Ascarididae","GBIF",1.25
 "AN_ASCRS_VLPS","Ascaris vulpis","species","synonym","Animalia","Ascarididae","GBIF",1.25
 "F_ASCHR_HYPC","Aschersonia hypocreoidea","species","accepted","Fungi","Clavicipitaceae","MycoBank",1.25
-"F_ASCDM_OVTM","Ascidium ovatum","species","accepted","Fungi","Thelotremataceae","MycoBank",1.25
 "F_ASCBL_SCTG","Ascobolus scatigenus","species","accepted","Fungi","Ascobolaceae","GBIF",1.25
 "F_ACLYX_BRNC","Ascocalyx berenice","species","accepted","Fungi","Godroniaceae","MycoBank",1.25
 "F_AHYTA_BEGN","Ascochyta begoniae","species","accepted","Fungi","Didymellaceae","GBIF",1.25
@@ -1659,8 +1650,6 @@
 "F_APHRA_MUCD","Ascophora mucedo","species","synonym","Fungi","Mucoraceae","MycoBank",1.25
 "F_APHRA_NGRS","Ascophora nigrescens","species","accepted","Fungi","Mucoraceae","MycoBank",1.25
 "F_APHRA_NUCM","Ascophora nucuum","species","synonym","Fungi","Mucoraceae","MycoBank",1.25
-"F_APHRA_OVLS","Ascophora ovalis","species","synonym","Fungi","Mucoraceae","MycoBank",1.25
-"F_APHRA_PRNN","Ascophora perennis","species","synonym","Fungi","Mucoraceae","MycoBank",1.25
 "F_APHRA_PLCH","Ascophora pulchra","species","synonym","Fungi","Mucoraceae","MycoBank",1.25
 "F_APHRA_RHZP","Ascophora rhizopogonis","species","accepted","Fungi","Mucoraceae","MycoBank",1.25
 "F_APHRA_HZPS","Ascophora rhizopus","species","accepted","Fungi","Mucoraceae","MycoBank",1.25
@@ -1865,7 +1854,6 @@
 "F_BRCHYS_CPSC","Brachysporium capsici","species","accepted","Fungi","Trichosphaeriaceae","MycoBank",1.25
 "F_BRTTN_ANML","Brettanomyces anomalus","species","accepted","Fungi","Pichiaceae","MycoBank",1.25
 "F_BRVST_SBSM","Brevistachys subsimplex","species","accepted","Fungi","Stachybotryaceae","MycoBank",1.25
-"F_BRNCP_CYTS","Briancoppinsia cytospora","species","accepted","Fungi","Arthoniaceae","MycoBank",1.25
 "AN_BRUGI_MALY","Brugia malayi","species","accepted","Animalia","Onchocercidae","manually added",1.25
 "AN_BRUGI_TIMR","Brugia timori","species","accepted","Animalia","Onchocercidae","manually added",1.25
 "F_BRNNC_NPLN","Brunneochlamydosporium nepalense","species","accepted","Fungi","Trichosphaeriaceae","MycoBank",1.25
@@ -1975,7 +1963,6 @@
 "F_CAPRN_PLSL","Capronia pilosella","species","accepted","Fungi","Herpotrichiellaceae","MycoBank",1.25
 "F_CAPRN_SXDC","Capronia sexdecimspora","species","accepted","Fungi","Herpotrichiellaceae","MycoBank",1.25
 "F_CTNLF_RHDG","Catenulifera rhodogena","species","accepted","Fungi","Hyphodiscaceae","MycoBank",1.25
-"F_CTLLR_LBRC","Catillaria lobariicola","species","accepted","Fungi","Catillariaceae","GBIF",1.25
 "F_CLRRL_DURA","Celerioriella dura","species","accepted","Fungi","Celotheliaceae","MycoBank",1.25
 "F_CLRRL_PRNC","Celerioriella prunicola","species","accepted","Fungi","Celotheliaceae","MycoBank",1.25
 "F_CNNGM_CHLR","Cenangium chlorellum","species","accepted","Fungi","Cenangiaceae","MycoBank",1.25
@@ -1997,7 +1984,6 @@
 "F_CTHSP_ACNT","Ceuthospora acantholimonis","species","accepted","Fungi","Phacidiaceae","GBIF",1.25
 "F_CTHSP_ASTR","Ceuthospora astragalina","species","accepted","Fungi","Phacidiaceae","MycoBank",1.25
 "F_CTHSP_LRDN","Ceuthospora liriodendri","species","accepted","Fungi","Phacidiaceae","MycoBank",1.25
-"F_CHNTH_FRFR","Chaenotheca furfuracea","species","accepted","Fungi","Coniocybaceae","GBIF",1.25
 "F_CHTSB_EPTR","Chaetasbolisia eupatorii","species","accepted","Fungi","Didymellaceae","MycoBank",1.25
 "F_CHTML_RRPL","Chaetomella raripila","species","accepted","Fungi","Chaetomellaceae","MycoBank",1.25
 "F_CHTMD_FIMT","Chaetomidium fimeti","species","accepted","Fungi","Chaetomiaceae","GBIF",1.25
@@ -2183,7 +2169,6 @@
 "F_CNCHT_RSKL","Coniochaeta riskalishoyakubovii","species","accepted","Fungi","Coniochaetaceae","MycoBank",1.25
 "F_CNCHT_TTLB","Coniochaeta teitelbaumiae","species","accepted","Fungi","Coniochaetaceae","MycoBank",1.25
 "F_CNCHT_WEBR","Coniochaeta weberae","species","accepted","Fungi","Coniochaetaceae","MycoBank",1.25
-"F_CONCYB_FRFR","Coniocybe furfuracea","species","accepted","Fungi","Coniocybaceae","MycoBank",1.25
 "F_CNLRL_ERSH","Coniolariella ershadii","species","accepted","Fungi","Xylariaceae","GBIF",1.25
 "F_CNLRL_GAMS","Coniolariella gamsii","species","accepted","Fungi","Xylariaceae","MycoBank",1.25
 "F_CNLRL_LMNS","Coniolariella limonispora","species","accepted","Fungi","Xylariaceae","GBIF",1.25
@@ -2520,7 +2505,6 @@
 "AN_DEMDX_MDCR","Demodex mediocris","species","accepted","Animalia","Demodecidae","GBIF",1.25
 "AN_DEMDX_TENS","Demodex tenuis","species","accepted","Animalia","Demodecidae","GBIF",1.25
 "F_DDCHM_CNSP","Dendrodochium coniosporiicola","species","accepted","Fungi","Bionectriaceae","MycoBank",1.25
-"F_DNDRG_LTBR","Dendrographa latebrarum","species","accepted","Fungi","Roccellaceae","MycoBank",1.25
 "F_DNDRPH_CYTS","Dendrophoma cytisporoides","species","accepted","Fungi","Chaetosphaeriaceae","MycoBank",1.25
 "F_DNDRPH_MCRS","Dendrophoma microsperma","species","accepted","Fungi","Chaetosphaeriaceae","MycoBank",1.25
 "F_DNDRPH_RHDD","Dendrophoma rhododendri","species","accepted","Fungi","Chaetosphaeriaceae","MycoBank",1.25
@@ -3536,7 +3520,6 @@
 "F_LSNCT_PTRD","Lasionectriopsis pteridii","species","accepted","Fungi","Bionectriaceae","MycoBank",1.25
 "F_LSSPH_CALV","Lasiosphaeria calva","species","accepted","Fungi","Lasiosphaeriaceae","MycoBank",1.25
 "F_LPHRS_HSPD","Lasiosphaeris hispida","species","accepted","Fungi","Lasiosphaeridaceae","GBIF",1.25
-"F_LCNCT_ABTN","Lecanactis abietina","species","accepted","Fungi","Roccellaceae","GBIF",1.25
 "F_LCNCL_FSSP","Lecanicillium fusisporum","species","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
 "F_LCNCL_LECN","Lecanicillium lecanii","species","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
 "F_LCNCL_LNGS","Lecanicillium longisporum","species","accepted","Fungi","Cordycipitaceae","MycoBank",1.25
@@ -3991,7 +3974,6 @@
 "F_MUCOR_CRYP","Mucor cryophilus","species","accepted","Fungi","Mucoraceae","MycoBank",1.25
 "F_MUCOR_DLMR","Mucor delemar","species","synonym","Fungi","Mucoraceae","GBIF",1.25
 "F_MUCOR_FNCL","Mucor foenicola","species","accepted","Fungi","Mucoraceae","GBIF",1.25
-"F_MUCOR_FULVS","Mucor fulvus","species","synonym","Fungi","Mucoraceae","GBIF",1.25
 "F_MUCOR_GRMN","Mucor germinans","species","accepted","Fungi","Mucoraceae","MycoBank",1.25
 "F_MUCOR_HMSP","Mucor hemisphaericus","species","accepted","Fungi","Mucoraceae","GBIF",1.25
 "F_MUCOR_INDS","Mucor indicae-seudaticae","species","synonym","Fungi","Mucoraceae","GBIF",1.25
@@ -4781,7 +4763,6 @@
 "F_PHCRM_SCHS","Phaeoacremonium schisandrae","species","accepted","Fungi","Togniniaceae","MycoBank",1.25
 "F_PHCHL_GNCL","Phaeochloridium geniculatum","species","accepted","Fungi","Plectosphaerellaceae","MycoBank",1.25
 "F_PHCHL_TWNN","Phaeochloridium taiwanense","species","accepted","Fungi","Plectosphaerellaceae","MycoBank",1.25
-"F_PHCCC_NGRC","Phaeococcomyces nigricans","species","accepted","Fungi","Phaeococcomycetaceae","MycoBank",1.25
 "F_PHASR_BMBS","Phaeoisaria bambusae","species","accepted","Fungi","Pleurotheciaceae","GBIF",1.25
 "F_PHASR_CLVL","Phaeoisaria clavulata","species","accepted","Fungi","Pleurotheciaceae","MycoBank",1.25
 "F_PHSRP_PBSC","Phaeoisariopsis pubescens","species","accepted","Fungi","Mycosphaerellaceae","MycoBank",1.25
@@ -5103,7 +5084,6 @@
 "F_PHYLLZ_NVZL","Phyllozyma novozealandica","species","accepted","Fungi","Spiculogloeaceae","MycoBank",1.25
 "F_PHYLLZ_PRDC","Phyllozyma producta","species","accepted","Fungi","Spiculogloeaceae","MycoBank",1.25
 "F_PHYLLZ_SBBR","Phyllozyma subbrunnea","species","accepted","Fungi","Spiculogloeaceae","MycoBank",1.25
-"F_PSCNA_DSTR","Physconia distorta","species","accepted","Fungi","Physciaceae","GBIF",1.25
 "F_PHYSD_MNTH","Physoderma menthae","species","accepted","Fungi","Physodermataceae","GBIF",1.25
 "F_PHYSSP_FRRG","Physospora ferruginea","species","accepted","Fungi","Botryobasidiaceae","MycoBank",1.25
 "F_PICHI_ACTC","Pichia acetica","species","accepted","Fungi","Pichiaceae","MycoBank",1.25
@@ -5753,7 +5733,6 @@
 "F_SRCPD_RRPL","Sarcopodium raripilum","species","accepted","Fungi","Nectriaceae","MycoBank",1.25
 "F_SRCPD_TJBD","Sarcopodium tjibodense","species","accepted","Fungi","Nectriaceae","MycoBank",1.25
 "F_SRCPD_TRTS","Sarcopodium tortuosum","species","accepted","Fungi","Nectriaceae","MycoBank",1.25
-"F_SAREA_RESN","Sarea resinae","species","accepted","Fungi","Sareaceae","GBIF",1.25
 "F_SRCLD_BCLL","Sarocladium bacillisporum","species","accepted","Fungi","Sarocladiaceae","MycoBank",1.25
 "F_SRCLD_BCTR","Sarocladium bactrocephalum","species","accepted","Fungi","Sarocladiaceae","MycoBank",1.25
 "F_SRCLD_GLCM","Sarocladium glaucum","species","accepted","Fungi","Sarocladiaceae","MycoBank",1.25
@@ -6310,7 +6289,6 @@
 "F_SNGZY_ICHN","Sungouiozyma ichnusensis","species","accepted","Fungi","Saccharomycetaceae","MycoBank",1.25
 "F_SNGZY_INTS","Sungouiozyma intestinalis","species","accepted","Fungi","Saccharomycetaceae","MycoBank",1.25
 "F_SYDOW_PLYS","Sydowia polyspora","species","accepted","Fungi","Dothioraceae","MycoBank",1.25
-"F_SYMBT_SNGN","Symbiotaphrina sanguinea","species","accepted","Fungi","Symbiotaphrinaceae","MycoBank",1.25
 "F_SYMMT_CPRS","Symmetrospora coprosmae","species","accepted","Fungi","Symmetrosporaceae","MycoBank",1.25
 "F_SYMMT_FLCL","Symmetrospora foliicola","species","accepted","Fungi","Symmetrosporaceae","MycoBank",1.25
 "F_SYMMT_GRCL","Symmetrospora gracilis","species","accepted","Fungi","Symmetrosporaceae","MycoBank",1.25
@@ -6948,5 +6926,3 @@
 "F_ZYGTR_FLRN","Zygotorulaspora florentina","species","accepted","Fungi","Saccharomycetaceae","MycoBank",1.25
 "F_ZYGTR_MRAK","Zygotorulaspora mrakii","species","accepted","Fungi","Saccharomycetaceae","MycoBank",1.25
 "F_ZYMNM_PLMN","Zymonema pulmonalis","species","accepted","Fungi","","MycoBank",1.25
-"F_ZYTHI_DNTR","Zythia dentariae","species","accepted","Fungi","Zythiaceae","MycoBank",1.25
-"F_ZYTHI_RESN","Zythia resinae","species","accepted","Fungi","Zythiaceae","MycoBank",1.25

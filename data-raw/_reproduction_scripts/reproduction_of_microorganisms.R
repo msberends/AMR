@@ -2506,6 +2506,34 @@ taxonomy <- bind_rows(parts, accepted_targets) %>%
   distinct(fullname, .keep_all = TRUE) %>%
   select(-c(source_index, domain_index))
 
+# No lichens (decision by Matthijs S. Berends, 5 October 2026): these entered as current names of kept synonyms, with all
+# their own synonyms, and are not relevant for this package. Lichens are taken as the
+# lichen-forming classes and the order Verrucariales, unless their genus is clinically relevant. Synonyms that point to
+# a removed lichen are removed as well. Released lichens are restored below, as released taxa are never removed.
+lichens <- taxonomy %>%
+  filter(
+    domain == "Fungi",
+    class %in% c("Arthoniomycetes", "Candelariomycetes", "Lecanoromycetes", "Lichinomycetes") | order == "Verrucariales",
+    !genus %in% relevant_genera
+  )
+lichens <- bind_rows(
+  lichens,
+  taxonomy %>%
+    filter(
+      status == "synonym",
+      (!is.na(gbif_renamed_to) & gbif_renamed_to %in% na.omit(lichens$gbif)) |
+        (!is.na(mycobank_renamed_to) & mycobank_renamed_to %in% na.omit(lichens$mycobank))
+    )
+) %>%
+  distinct(fullname, .keep_all = TRUE)
+review(
+  lichens %>% count(class, order, status, name = "n_records"),
+  "Lichens and their synonyms, these will be removed"
+)
+taxonomy <- taxonomy %>%
+  filter(!fullname %in% lichens$fullname)
+rm(lichens)
+
 taxonomy <- taxonomy %>%
   mutate(
     lpsn_renamed_to = if_else(

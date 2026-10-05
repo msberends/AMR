@@ -75,21 +75,21 @@
 "Fungi","(unknown rank)","unknown",2,2,0
 "Fungi","class","accepted",59,64,5
 "Fungi","domain","unknown",0,1,1
-"Fungi","family","accepted",449,616,167
-"Fungi","family","synonym",25,25,0
+"Fungi","family","accepted",449,609,160
+"Fungi","family","synonym",25,24,-1
 "Fungi","family","unknown",4,2,-2
-"Fungi","genus","accepted",1257,2833,1576
-"Fungi","genus","synonym",80,41,-39
-"Fungi","genus","unknown",1081,1383,302
+"Fungi","genus","accepted",1257,2724,1467
+"Fungi","genus","synonym",80,56,-24
+"Fungi","genus","unknown",1081,1336,255
 "Fungi","kingdom","accepted",1,1,0
-"Fungi","order","accepted",168,200,32
+"Fungi","order","accepted",168,197,29
 "Fungi","phylum","accepted",13,16,3
-"Fungi","species","accepted",11859,17923,6064
-"Fungi","species","synonym",7377,17440,10063
-"Fungi","species","unknown",3919,3866,-53
+"Fungi","species","accepted",11859,17692,5833
+"Fungi","species","synonym",7377,15659,8282
+"Fungi","species","unknown",3919,3881,-38
 "Fungi","species group","accepted",5,5,0
 "Fungi","subspecies","accepted",574,219,-355
-"Fungi","subspecies","synonym",1264,5079,3815
+"Fungi","subspecies","synonym",1264,3251,1987
 "Plantae","domain","unknown",0,1,1
 "Protozoa","(unknown rank)","unknown",1,1,0
 "Protozoa","class","accepted",30,33,3
