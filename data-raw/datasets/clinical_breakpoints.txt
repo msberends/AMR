@@ -4621,14 +4621,14 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2026"	"human"	"human"	"DISK"		"B_STRPT_VIRI"	2.5	"VAN"	"Viridans group streptococci (file: Clinical Breakpoint Tables v. 16.1)"	"5 mcg"	15	15	FALSE	FALSE	"[B] Non-wild type isolates were not available when developing the disk diffusion method. | [1] Resistant isolates are rare or not yet reported. The identification and antimicrobial susceptibility test result on any such isolate must be confirmed and the isolate sent to a reference laboratory."
 "EUCAST 2026"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"VAN"	"Viridans group streptococci (file: Clinical Breakpoint Tables v. 16.1)"		2	2	FALSE	FALSE	"[1] Resistant isolates are rare or not yet reported. The identification and antimicrobial susceptibility test result on any such isolate must be confirmed and the isolate sent to a reference laboratory."
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_STTZR_STTZ"	2	"TZP"	"ECOFF"		4	4	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"AMO"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"TRB"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"AMO"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"TRB"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"VOR"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"AMO"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"TRB"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"AMO"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"TRB"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"VOR"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"DISK"		"B_VIBRI"	3	"AZM"	"Vibrio (file: Clinical Breakpoint Tables v. 16.1)"	"15 mcg"	16	16	FALSE	FALSE	"[A] Susceptibility to azithromycin (and erythromycin when azithromycin is not available) is inferred from the erythromycin disk diffusion test."
 "EUCAST 2026"	"human"	"human"	"MIC"		"B_VIBRI"	3	"AZM"	"Vibrio (file: Clinical Breakpoint Tables v. 16.1)"		4	4	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"DISK"		"B_VIBRI"	3	"CAZ"	"Vibrio (file: Clinical Breakpoint Tables v. 16.1)"	"10 mcg"	22	22	FALSE	FALSE	
@@ -9467,14 +9467,14 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2025"	"human"	"human"	"DISK"		"B_STRPT_VIRI"	2.5	"VAN"	"Viridans group streptococci (file: Clinical Breakpoint Tables v. 15.0)"	"5 mcg"	15	15	FALSE	FALSE	"[B] Non-wild type isolates were not available when developing the disk diffusion method. | [1] Resistant isolates are rare or not yet reported. The identification and antimicrobial susceptibility test result on any such isolate must be confirmed and the isolate sent to a reference laboratory."
 "EUCAST 2025"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"VAN"	"Viridans group streptococci (file: Clinical Breakpoint Tables v. 15.0)"		2	2	FALSE	FALSE	"[1] Resistant isolates are rare or not yet reported. The identification and antimicrobial susceptibility test result on any such isolate must be confirmed and the isolate sent to a reference laboratory."
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_STTZR_STTZ"	2	"TZP"	"ECOFF"		4	4	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"AMO"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"TRB"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"AMO"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"TRB"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"VOR"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"AMO"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"TRB"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"AMO"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"TRB"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"VOR"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2025"	"human"	"human"	"DISK"		"B_VIBRI"	3	"AZM"	"Vibrio (file: Clinical Breakpoint Tables v. 15.0)"	"15 mcg"	16	16	FALSE	FALSE	"[A] Susceptibility to azithromycin (and erythromycin when azithromycin is not available) is inferred from the erythromycin disk diffusion test."
 "EUCAST 2025"	"human"	"human"	"MIC"		"B_VIBRI"	3	"AZM"	"Vibrio (file: Clinical Breakpoint Tables v. 15.0)"		4	4	FALSE	FALSE	
 "EUCAST 2025"	"human"	"human"	"DISK"		"B_VIBRI"	3	"CAZ"	"Vibrio (file: Clinical Breakpoint Tables v. 15.0)"	"10 mcg"	22	22	FALSE	FALSE	
@@ -13039,14 +13039,14 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2024"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.6	"TZP"	"Viridans group streptococci (file: Clinical Breakpoint Tables v. 14.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [1] Benzylpenicillin (MIC or disk diffusion) can be used to screen for beta-lactam resistance in viridans group streptococci. Isolates categorised as screen negative can be reported susceptible to beta-lactam agents for which clinical breakpoints are listed (including those with \"Note\"). Isolates categorised as screen positive should be tested for susceptibility to individual agents or reported resistant. | [3] For benzylpenicillin screen negative isolates, susceptibility can be inferred from benzylpenicillin or ampicillin. For benzylpenicillin screen positive isolates, susceptibility is inferred from ampicillin. | [2] The addition of a beta-lactamase inhibitor does not add clinical benefit."
 "EUCAST 2024"	"human"	"human"	"DISK"		"B_STRPT_VIRI"	2.5	"VAN"	"Viridans group streptococci (file: Clinical Breakpoint Tables v. 14.0)"	"5 mcg"	15	15	FALSE	FALSE	"[B] Non-wild type isolates were not available when developing the disk diffusion method. | [1] Resistant isolates are rare or not yet reported. The identification and antimicrobial susceptibility test result on any such isolate must be confirmed and the isolate sent to a reference laboratory."
 "EUCAST 2024"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"VAN"	"Viridans group streptococci (file: Clinical Breakpoint Tables v. 14.0)"		2	2	FALSE	FALSE	"[1] Resistant isolates are rare or not yet reported. The identification and antimicrobial susceptibility test result on any such isolate must be confirmed and the isolate sent to a reference laboratory."
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"AMO"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"TRB"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"AMO"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"TRB"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"VOR"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"AMO"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"TRB"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"AMO"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"ITR"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"TRB"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"VOR"	"Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2024"	"human"	"human"	"DISK"		"B_VIBRI"	3	"AZM"	"Vibrio (file: Clinical Breakpoint Tables v. 14.0)"	"15 mcg"	16	16	FALSE	FALSE	"[A] Susceptibility to azithromycin (and erythromycin when azithromycin is not available) is inferred from the erythromycin disk diffusion test."
 "EUCAST 2024"	"human"	"human"	"MIC"		"B_VIBRI"	3	"AZM"	"Vibrio (file: Clinical Breakpoint Tables v. 14.0)"		4	4	FALSE	FALSE	
 "EUCAST 2024"	"human"	"human"	"DISK"		"B_VIBRI"	3	"CAZ"	"Vibrio (file: Clinical Breakpoint Tables v. 14.0)"	"10 mcg"	22	22	FALSE	FALSE	
@@ -38637,14 +38637,14 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2026"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"TZD"	"Table 2H-2"		0.25		FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"DISK"		"B_STRPT_VIRI"	2.5	"VAN"	"Table 2H-2"	"30 mcg"	17		FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"VAN"	"Table 2H-2"		1		FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_TSKMR"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_TSKMR"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_TSKMR"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE	
@@ -41264,14 +41264,14 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2025"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"TZD"	"Table 2H-2"		0.25		FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"DISK"		"B_STRPT_VIRI"	2.5	"VAN"	"Table 2H-2"	"30 mcg"	17		FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"VAN"	"Table 2H-2"		1		FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_TSKMR"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_TSKMR"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_TSKMR"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE	
@@ -43889,14 +43889,14 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2024"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"TZD"	"Table 2H-2"		0.25		FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"DISK"		"B_STRPT_VIRI"	2.5	"VAN"	"Table 2H-2"	"30 mcg"	17		FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_STRPT_VIRI"	2.5	"VAN"	"Table 2H-2"		1		FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_MNTG_INDT"	1	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_TRCHP_RBRM"	2	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	1	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"TRB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_RBRM"	2	"VOR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.125	0.125	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_TSKMR"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_TSKMR"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_TSKMR"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE	

@@ -1,0 +1,221 @@
+"genus","domain","n","sources","example","best_domain","in_override_list"
+"Absidia","Animalia",2,"GBIF","Absidia thailandica","Fungi",FALSE
+"Absidia","Fungi",150,"GBIF+MycoBank","Absidia abundans","Fungi",FALSE
+"Actinomycodium","Bacteria",1,"GBIF",,"Fungi",FALSE
+"Actinomycodium","Fungi",2,"MycoBank","Actinomycodium floccidum","Fungi",FALSE
+"Advenella","Bacteria",9,"LPSN","Advenella alkanexedens","Bacteria",FALSE
+"Advenella","Chromista",2,"GBIF","Advenella bifurcata","Bacteria",FALSE
+"Amoeba","Animalia",2,"GBIF","Amoeba miurai","Protozoa",FALSE
+"Amoeba","Protozoa",28,"GBIF","Amoeba agilis","Protozoa",FALSE
+"Ampullariella","Animalia",2,"GBIF","Ampullariella microscopica","Bacteria",FALSE
+"Ampullariella","Bacteria",5,"LPSN","Ampullariella campanulata","Bacteria",FALSE
+"Asanoa","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Asanoa","Bacteria",7,"LPSN","Asanoa endophytica","Bacteria",FALSE
+"Ascophora","Animalia",3,"GBIF","Ascophora elegantissima","Fungi",FALSE
+"Ascophora","Fungi",42,"GBIF+MycoBank","Ascophora agaricina","Fungi",FALSE
+"Babesia","Animalia",6,"GBIF","Babesia lohae","Chromista",FALSE
+"Babesia","Chromista",6,"GBIF","Babesia coryicola","Chromista",FALSE
+"Bacillus","Animalia",39,"GBIF","Bacillus amyloliquefaciens","Bacteria",FALSE
+"Bacillus","Bacteria",523,"GBIF+LPSN","Bacillus abyssalis","Bacteria",FALSE
+"Bergeriella","Bacteria",2,"LPSN","Bergeriella denitrificans","Bacteria",FALSE
+"Bergeriella","Chromista",2,"GBIF","Bergeriella ovata","Bacteria",FALSE
+"Bipolaris","Fungi",163,"GBIF+MycoBank","Bipolaris aberrans","Fungi",FALSE
+"Bipolaris","Plantae",2,"GBIF","Bipolaris sorokiniana","Fungi",FALSE
+"Blastocystis","Animalia",1,"GBIF",,"Chromista",FALSE
+"Blastocystis","Chromista",1,"GBIF",,"Chromista",FALSE
+"Bogoriella","Bacteria",2,"LPSN","Bogoriella caseilytica","Bacteria",FALSE
+"Bogoriella","Fungi",38,"MycoBank","Bogoriella alata","Bacteria",FALSE
+"Bowdenia","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Bowdenia","Bacteria",2,"LPSN","Bowdenia nasicola","Bacteria",FALSE
+"Brachycladium","Animalia",11,"GBIF","Brachycladium atlanticum","Fungi",FALSE
+"Brachycladium","Fungi",13,"GBIF+MycoBank","Brachycladium arbusculum","Fungi",FALSE
+"Brachyspira","Animalia",3,"GBIF","Brachyspira asperella","Bacteria",FALSE
+"Brachyspira","Bacteria",11,"GBIF+LPSN","Brachyspira aalborgi","Bacteria",FALSE
+"Bryantella","Animalia",3,"GBIF","Bryantella smaragda","Bacteria",FALSE
+"Bryantella","Bacteria",2,"LPSN","Bryantella formatexigens","Bacteria",FALSE
+"Buchnera","Bacteria",2,"LPSN","Buchnera aphidicola","Bacteria",FALSE
+"Buchnera","Plantae",223,"GBIF","Buchnera affinis","Bacteria",FALSE
+"Capillaria","Animalia",86,"GBIF","Capillaria acanthopagri","Animalia",TRUE
+"Capillaria","Fungi",16,"GBIF+MycoBank","Capillaria arundinis","Animalia",TRUE
+"Centipeda","Bacteria",10,"GBIF+LPSN","Centipeda artemidis","Bacteria",FALSE
+"Centipeda","Plantae",22,"GBIF","Centipeda aotearoana","Bacteria",FALSE
+"Chainia","Bacteria",14,"LPSN","Chainia antibiotica","Bacteria",FALSE
+"Chainia","Fungi",3,"MycoBank","Chainia antibiotica","Bacteria",FALSE
+"Circinella","Chromista",4,"GBIF","Circinella arenicola","Fungi",FALSE
+"Circinella","Fungi",32,"GBIF+MycoBank","Circinella angarensis","Fungi",FALSE
+"Coxiella","Animalia",13,"GBIF","Coxiella badgerensis","Bacteria",FALSE
+"Coxiella","Bacteria",4,"GBIF+LPSN","Coxiella burneti","Bacteria",FALSE
+"Cristispira","Animalia",5,"GBIF","Cristispira caballasensis","Bacteria",FALSE
+"Cristispira","Bacteria",3,"GBIF+LPSN","Cristispira pectinis","Bacteria",FALSE
+"Cryptococcus","Animalia",8,"GBIF","Cryptococcus aceris","Fungi",FALSE
+"Cryptococcus","Fungi",340,"GBIF+MycoBank","Cryptococcus aciditolerans","Fungi",FALSE
+"Curvularia","Fungi",281,"GBIF+MycoBank","Curvularia aeria","Fungi",FALSE
+"Curvularia","Plantae",2,"GBIF","Curvularia nanningensis","Fungi",FALSE
+"Dermatophilus","Animalia",2,"GBIF","Dermatophilus lagrangei","Bacteria",FALSE
+"Dermatophilus","Bacteria",3,"LPSN","Dermatophilus chelonae","Bacteria",FALSE
+"Dietzia","Animalia",2,"GBIF","Dietzia bifasciata","Bacteria",FALSE
+"Dietzia","Bacteria",20,"GBIF+LPSN","Dietzia aerolata","Bacteria",FALSE
+"Edwardsiella","Animalia",7,"GBIF","Edwardsiella andrillae","Bacteria",FALSE
+"Edwardsiella","Bacteria",7,"LPSN","Edwardsiella anguillarum","Bacteria",FALSE
+"Edwardsiella","Chromista",1,"GBIF",,"Bacteria",FALSE
+"Emmonsia","Animalia",2,"GBIF","Emmonsia alternans","Fungi",FALSE
+"Emmonsia","Fungi",8,"MycoBank","Emmonsia brasiliensis","Fungi",FALSE
+"Enterocytozoon","Fungi",1,"GBIF",,"Protozoa",FALSE
+"Enterocytozoon","Protozoa",4,"GBIF","Enterocytozoon bieneusi","Protozoa",FALSE
+"Eremococcus","Animalia",6,"GBIF","Eremococcus pirogallis","Bacteria",FALSE
+"Eremococcus","Bacteria",2,"LPSN","Eremococcus coleocola","Bacteria",FALSE
+"Escherichia","Bacteria",14,"GBIF+LPSN","Escherichia adecarboxylata","Bacteria",FALSE
+"Escherichia","Plantae",2,"GBIF","Escherichia coli","Bacteria",FALSE
+"Ewingella","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Ewingella","Bacteria",4,"GBIF+LPSN","Ewingella americana","Bacteria",FALSE
+"Ewingella","Chromista",1,"GBIF",,"Bacteria",FALSE
+"Fergusonia","Animalia",3,"GBIF","Fergusonia bituberculata","Animalia",FALSE
+"Fergusonia","Plantae",4,"GBIF","Fergusonia tetracocca","Animalia",FALSE
+"Frankia","Bacteria",21,"GBIF+LPSN","Frankia alni","Bacteria",FALSE
+"Frankia","Fungi",3,"MycoBank","Frankia brunchorstii","Bacteria",FALSE
+"Frondicola","Bacteria",2,"LPSN","Frondicola australicus","Bacteria",FALSE
+"Frondicola","Fungi",2,"MycoBank","Frondicola tunitricuspis","Bacteria",FALSE
+"Gardnerella","Animalia",2,"GBIF","Gardnerella cossmanni","Bacteria",FALSE
+"Gardnerella","Bacteria",11,"LPSN","Gardnerella bretellae","Bacteria",FALSE
+"Geochorda","Bacteria",2,"LPSN","Geochorda subterranea","Bacteria",FALSE
+"Geochorda","Plantae",4,"GBIF","Geochorda cuneata","Bacteria",FALSE
+"Giardia","Animalia",3,"GBIF","Giardia agilis","Protozoa",FALSE
+"Giardia","Protozoa",4,"GBIF","Giardia duodenalis","Protozoa",FALSE
+"Goodfellowia","Animalia",2,"GBIF","Goodfellowia miranda","Bacteria",FALSE
+"Goodfellowia","Bacteria",2,"LPSN","Goodfellowia coeruleoviolacea","Bacteria",FALSE
+"Gordonia","Animalia",2,"GBIF","Gordonia rossica","Bacteria",FALSE
+"Gordonia","Bacteria",68,"GBIF+LPSN","Gordonia abscondita","Bacteria",FALSE
+"Gordonia","Plantae",34,"GBIF","Gordonia acutifolia","Bacteria",FALSE
+"Graphium","Animalia",196,"GBIF","Graphium abri","Fungi",TRUE
+"Graphium","Fungi",174,"GBIF+MycoBank","Graphium adansoniae","Fungi",TRUE
+"Halocella","Bacteria",3,"LPSN","Halocella cellulolytica","Bacteria",FALSE
+"Halocella","Chromista",1,"GBIF",,"Bacteria",FALSE
+"Halococcus","Animalia",2,"GBIF","Halococcus formicarii","Archaea",FALSE
+"Halococcus","Archaea",12,"LPSN","Halococcus agarilyticus","Archaea",FALSE
+"Hendersonula","Animalia",3,"GBIF","Hendersonula collina","Fungi",FALSE
+"Hendersonula","Fungi",42,"GBIF+MycoBank","Hendersonula agathidis","Fungi",FALSE
+"Holzapfelia","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Holzapfelia","Bacteria",2,"LPSN","Holzapfelia floricola","Bacteria",FALSE
+"Hymenolepis","Animalia",94,"GBIF","Hymenolepis ackerti","Animalia",TRUE
+"Hymenolepis","Plantae",13,"GBIF","Hymenolepis calva","Animalia",TRUE
+"Johnsonella","Animalia",2,"GBIF","Johnsonella fausta","Bacteria",FALSE
+"Johnsonella","Bacteria",2,"LPSN","Johnsonella ignava","Bacteria",FALSE
+"Jonesia","Animalia",12,"GBIF","Jonesia acuminata","Bacteria",FALSE
+"Jonesia","Bacteria",3,"LPSN","Jonesia denitrificans","Bacteria",FALSE
+"Klebsiella","Bacteria",36,"GBIF+LPSN","Klebsiella aerogenes","Bacteria",FALSE
+"Klebsiella","Protozoa",1,"GBIF",,"Bacteria",FALSE
+"Lawsonia","Animalia",2,"GBIF","Lawsonia punita","Bacteria",FALSE
+"Lawsonia","Bacteria",2,"LPSN","Lawsonia intracellularis","Bacteria",FALSE
+"Lawsonia","Plantae",11,"GBIF","Lawsonia alba","Bacteria",FALSE
+"Leishmania","Animalia",5,"GBIF","Leishmania chagasi","Protozoa",FALSE
+"Leishmania","Protozoa",9,"GBIF","Leishmania amazonensis","Protozoa",FALSE
+"Levinea","Bacteria",3,"LPSN","Levinea amalonatica","Bacteria",FALSE
+"Levinea","Chromista",1,"GBIF",,"Bacteria",FALSE
+"Longispora","Bacteria",4,"LPSN","Longispora albida","Bacteria",FALSE
+"Longispora","Fungi",2,"MycoBank","Longispora clematidis","Bacteria",FALSE
+"Macrococcus","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Macrococcus","Bacteria",19,"LPSN","Macrococcus animalis","Bacteria",FALSE
+"Markus","Animalia",2,"GBIF","Markus karenae","Bacteria",FALSE
+"Markus","Bacteria",2,"LPSN","Markus hominis","Bacteria",FALSE
+"Megasphaera","Bacteria",19,"LPSN","Megasphaera butyrica","Bacteria",FALSE
+"Megasphaera","Protozoa",1,"GBIF",,"Bacteria",FALSE
+"Metschnikowia","Animalia",5,"GBIF","Metschnikowia flava","Fungi",FALSE
+"Metschnikowia","Fungi",93,"GBIF+MycoBank","Metschnikowia aberdeeniae","Fungi",FALSE
+"Micrococcus","Animalia",12,"GBIF","Micrococcus baeticae","Bacteria",FALSE
+"Micrococcus","Bacteria",24,"GBIF+LPSN","Micrococcus agilis","Bacteria",FALSE
+"Micrococcus","Fungi",5,"MycoBank","Micrococcus beigelii","Bacteria",FALSE
+"Micromonas","Bacteria",3,"LPSN","Micromonas micra","Bacteria",FALSE
+"Micromonas","Plantae",5,"GBIF","Micromonas bravo","Bacteria",FALSE
+"Microsphaera","Bacteria",2,"LPSN","Microsphaera multipartita","Bacteria",FALSE
+"Microsphaera","Fungi",238,"GBIF+MycoBank","Microsphaera abbreviata","Bacteria",FALSE
+"Microsporidium","Fungi",6,"GBIF+MycoBank","Microsporidium luciopercae","Fungi",FALSE
+"Microsporidium","Protozoa",123,"GBIF","Microsporidium acanthocephali","Fungi",FALSE
+"Moorella","Animalia",7,"GBIF","Moorella alini","Bacteria",FALSE
+"Moorella","Bacteria",14,"GBIF+LPSN","Moorella caeni","Bacteria",FALSE
+"Moorella","Fungi",6,"MycoBank","Moorella heterospora","Bacteria",FALSE
+"Morganella","Animalia",12,"GBIF","Morganella acaciae","Bacteria",FALSE
+"Morganella","Bacteria",6,"GBIF+LPSN","Morganella morganii","Bacteria",FALSE
+"Morganella","Fungi",27,"MycoBank","Morganella afra","Bacteria",FALSE
+"Mucor","Fungi",624,"GBIF+MycoBank","Mucor abortisporangium","Fungi",FALSE
+"Mucor","Protozoa",12,"GBIF","Mucor albus","Fungi",FALSE
+"Necator","Animalia",2,"GBIF","Necator americanus","Animalia",TRUE
+"Necator","Fungi",6,"GBIF+MycoBank","Necator salmonicolor","Animalia",TRUE
+"Nectria","Animalia",10,"GBIF","Nectria humilis","Fungi",FALSE
+"Nectria","Fungi",989,"GBIF+MycoBank","Nectria abnormis","Fungi",FALSE
+"Nicolia","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Nicolia","Bacteria",2,"LPSN","Nicolia spurrieriana","Bacteria",FALSE
+"Oligella","Animalia",7,"GBIF","Oligella clandestina","Bacteria",FALSE
+"Oligella","Bacteria",3,"LPSN","Oligella ureolytica","Bacteria",FALSE
+"Paludicola","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Paludicola","Bacteria",2,"LPSN","Paludicola psychrotolerans","Bacteria",FALSE
+"Paludicola","Plantae",3,"GBIF","Paludicola groenbladii","Bacteria",FALSE
+"Paracoccus","Animalia",97,"GBIF","Paracoccus abnormalis","Bacteria",FALSE
+"Paracoccus","Bacteria",110,"GBIF+LPSN","Paracoccus acridae","Bacteria",FALSE
+"Phytomonas","Bacteria",7,"GBIF","Phytomonas caryophylli","Protozoa",FALSE
+"Phytomonas","Protozoa",1,"GBIF",,"Protozoa",FALSE
+"Planococcus","Animalia",69,"GBIF","Planococcus aemulor","Bacteria",FALSE
+"Planococcus","Bacteria",39,"GBIF+LPSN","Planococcus alkanoclasticus","Bacteria",FALSE
+"Plasmodium","Chromista",13,"GBIF","Plasmodium alaudae","Chromista",FALSE
+"Plasmodium","Fungi",2,"MycoBank","Plasmodium slavinae","Chromista",FALSE
+"Prescottia","Animalia",6,"GBIF","Prescottia brichellia","Animalia",FALSE
+"Prescottia","Plantae",57,"GBIF","Prescottia auyantepuiensis","Animalia",FALSE
+"Proteus","Animalia",11,"GBIF","Proteus anguinus","Bacteria",FALSE
+"Proteus","Bacteria",20,"GBIF+LPSN","Proteus alimentorum","Bacteria",FALSE
+"Pseudospirillum","Bacteria",2,"LPSN","Pseudospirillum japonicum","Bacteria",FALSE
+"Pseudospirillum","Fungi",2,"MycoBank","Pseudospirillum coprocola","Bacteria",FALSE
+"Ramularia","Fungi",1045,"GBIF+MycoBank","Ramularia abscondita","Fungi",FALSE
+"Ramularia","Plantae",1,"GBIF",,"Fungi",FALSE
+"Rhodococcus","Animalia",13,"GBIF","Rhodococcus bulgariense","Bacteria",FALSE
+"Rhodococcus","Bacteria",94,"GBIF+LPSN","Rhodococcus aerolatus","Bacteria",FALSE
+"Robinsoniella","Animalia",2,"GBIF","Robinsoniella jamaicaensis","Bacteria",FALSE
+"Robinsoniella","Bacteria",2,"LPSN","Robinsoniella peoriensis","Bacteria",FALSE
+"Robinsoniella","Chromista",2,"GBIF","Robinsoniella jamaicaensis","Bacteria",FALSE
+"Rothia","Animalia",48,"GBIF","Rothia agrius","Bacteria",FALSE
+"Rothia","Bacteria",21,"GBIF+LPSN","Rothia aeria","Bacteria",FALSE
+"Rothia","Chromista",1,"GBIF",,"Bacteria",FALSE
+"Rothia","Plantae",6,"GBIF","Rothia hirsuta","Bacteria",FALSE
+"Salmonella","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Salmonella","Bacteria",28,"GBIF+LPSN","Salmonella arizonae","Bacteria",FALSE
+"Sarcocystis","Chromista",22,"GBIF","Sarcocystis alces","Chromista",FALSE
+"Sarcocystis","Fungi",2,"MycoBank","Sarcocystis anophelis","Chromista",FALSE
+"Sarcocystis","Protozoa",1,"GBIF","Sarcocystis anophelis","Chromista",FALSE
+"Schineria","Animalia",6,"GBIF","Schineria gobica","Bacteria",FALSE
+"Schineria","Bacteria",2,"LPSN","Schineria larvae","Bacteria",FALSE
+"Schizophyllum","Animalia",31,"GBIF","Schizophyllum ademinum","Fungi",TRUE
+"Schizophyllum","Fungi",29,"GBIF+MycoBank","Schizophyllum album","Fungi",TRUE
+"Serpula","Animalia",146,"GBIF","Serpula aduata","Bacteria",FALSE
+"Serpula","Bacteria",3,"LPSN","Serpula hyodysenteriae","Bacteria",FALSE
+"Serpula","Fungi",56,"GBIF+MycoBank","Serpula americana","Bacteria",FALSE
+"Serratia","Animalia",2,"GBIF","Serratia sibuyania","Bacteria",FALSE
+"Serratia","Bacteria",34,"GBIF+LPSN","Serratia aquatilis","Bacteria",FALSE
+"Sinococcus","Animalia",2,"GBIF","Sinococcus ulmi","Bacteria",FALSE
+"Sinococcus","Bacteria",2,"LPSN","Sinococcus qinghaiensis","Bacteria",FALSE
+"Sodalis","Animalia",8,"GBIF","Sodalis armatus","Bacteria",FALSE
+"Sodalis","Bacteria",6,"LPSN","Sodalis glossinidius","Bacteria",FALSE
+"Streptomyces","Bacteria",1218,"GBIF+LPSN","Streptomyces abietis","Bacteria",FALSE
+"Streptomyces","Fungi",1,"GBIF","Streptomyces cerebriformis","Bacteria",FALSE
+"Streptothrix","Bacteria",3,"GBIF","Streptothrix chalcea","Fungi",FALSE
+"Streptothrix","Fungi",22,"MycoBank","Streptothrix abietina","Fungi",FALSE
+"Tetrasphaera","Animalia",1,"GBIF",,"Bacteria",FALSE
+"Tetrasphaera","Bacteria",9,"LPSN","Tetrasphaera australiensis","Bacteria",FALSE
+"Tetrasphaera","Chromista",2,"GBIF","Tetrasphaera spongiosa","Bacteria",FALSE
+"Tieghemella","Fungi",15,"MycoBank","Tieghemella butleri","Fungi",FALSE
+"Tieghemella","Plantae",5,"GBIF","Tieghemella africana","Fungi",FALSE
+"Toxoplasma","Animalia",2,"GBIF","Toxoplasma gondii","Chromista",FALSE
+"Toxoplasma","Chromista",2,"GBIF","Toxoplasma gondii","Chromista",FALSE
+"Trichophyton","Bacteria",1,"GBIF",,"Fungi",TRUE
+"Trichophyton","Fungi",274,"GBIF+MycoBank","Trichophyton abissinicum","Fungi",TRUE
+"Trypanosoma","Animalia",33,"GBIF","Trypanosoma amamiense","Protozoa",FALSE
+"Trypanosoma","Protozoa",53,"GBIF","Trypanosoma aulopi","Protozoa",FALSE
+"Vibrio","Animalia",2,"GBIF","Vibrio sagitta","Bacteria",FALSE
+"Vibrio","Bacteria",225,"GBIF+LPSN","Vibrio aerogenes","Bacteria",FALSE
+"Vibrio","Chromista",2,"GBIF","Vibrio paxillifer","Bacteria",FALSE
+"Vibrio","Protozoa",1,"GBIF","Vibrio acus","Bacteria",FALSE
+"Wangiella","Chromista",2,"GBIF","Wangiella dicollaria","Fungi",TRUE
+"Wangiella","Fungi",4,"GBIF+MycoBank","Wangiella dermatitidis","Fungi",TRUE
+"Wolinella","Animalia",6,"GBIF","Wolinella baltica","Bacteria",FALSE
+"Wolinella","Bacteria",4,"LPSN","Wolinella curva","Bacteria",FALSE
+"Yania","Animalia",2,"GBIF","Yania flavolimbata","Bacteria",FALSE
+"Yania","Bacteria",3,"LPSN","Yania flava","Bacteria",FALSE
+"Yersinia","Animalia",3,"GBIF","Yersinia aztecus","Bacteria",FALSE
+"Yersinia","Bacteria",37,"LPSN","Yersinia aldovae","Bacteria",FALSE

@@ -1,0 +1,10 @@
+"domain","n_old","n_new","diff","pct"
+"(unknown kingdom)",1,0,-1,-100
+"Animalia",1628,2579,951,58.4
+"Archaea",1419,1573,154,10.9
+"Bacteria",39249,48239,8990,22.9
+"Chromista",178,300,122,68.5
+"Fungi",28137,49716,21579,76.7
+"Protozoa",8067,8694,627,7.8
+"(unknown domain)",0,1,1,Inf
+"Plantae",0,1,1,Inf

@@ -155,7 +155,8 @@ test_that("MO codes: every code of every release since v2.0.0 still means the sa
   result <- suppressWarnings(as.mo(registry$mo, keep_synonyms = TRUE, info = FALSE))
   result_name <- microorganisms$fullname[match(result, microorganisms$mo)]
   wrong <- !is.na(result) & mo_name_without_suffix(result_name) != mo_name_without_suffix(expected_name)
-  defects <- new_defects("registered_code_with_other_taxon", paste0(registry$mo[wrong], " (", result_name[wrong], ")"))
+  # (paste() of empty vectors would return one element, hence the use of sprintf())
+  defects <- new_defects("registered_code_with_other_taxon", sprintf("%s (%s)", registry$mo[wrong], result_name[wrong]))
   expect_true(length(defects) == 0,
     info = paste0("Registered codes leading to another taxon: ", paste(utils::head(defects, 25), collapse = ", "))
   )
@@ -182,8 +183,9 @@ test_that("MO codes: codes of earlier releases are translated, never guessed", {
   )
 
   # warnings are wrapped to the console width, so the patterns allow a line break between words
-  # regression: in October 2026, the code of Trichophyton (F_TRCHP, v3.0.1) was guessed as Talaromyces
-  expect_warning(x <- as.mo("F_TRCHP_RBRM", info = FALSE), "earlier AMR package\\s+version")
+  # regression: in October 2026, the code of Trichophyton (F_TRCHP, v3.0.1) was guessed as Talaromyces; since the
+  # taxonomy update of October 2026, F_TRCHP_RBRM is the current code of Trichophyton rubrum again
+  x <- suppressWarnings(as.mo("F_TRCHP_RBRM", info = FALSE))
   expect_identical(mo_name(x, language = NULL), "Trichophyton rubrum")
   expect_identical(suppressWarnings(mo_genus("F_TRCHP", language = NULL)), "Trichophyton")
 

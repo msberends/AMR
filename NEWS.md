@@ -69,7 +69,7 @@ Planned as v3.1.0, mid October 2026.
 
 ### Updated
 * `top_n_microorganisms()`: new `property_for_each` argument for sub-grouping within top *n* groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed `property = NULL` not being accepted; inner filter now tracks original row indices to prevent cross-group contamination
-* Taxonomic update for all microorganisms, now updated to June 2026
+* Taxonomic update for all microorganisms, now updated to COL 2026-04-18 XR, LPSN and BacDive of October 2026, and MycoBank of January 2026
 * `mo_kingdom()` now returns the formal taxonomic kingdom; a one-time note per session explains the change when querying bacterial or archaeal records.
 * `mo_taxonomy()` and `mo_info()` gained `domain` for the list output
 * `antibiogram()` and `wisca()` now also support parallel computing via the argument `parallel = TRUE` (#281)

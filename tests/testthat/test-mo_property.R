@@ -70,6 +70,7 @@ test_that("test-mo_property.R", {
     "Erysipelotrichia",
     "Ktedonobacteria",
     "Limnochordia",
+    "Limnocylindria",
     "Mollicutes",
     "Negativicutes",
     "Nitriliruptoria",
@@ -79,7 +80,8 @@ test_that("test-mo_property.R", {
     "Thermaerobacteria",
     "Thermoflexia",
     "Thermoleophilia",
-    "Thermolithobacteria"
+    "Thermolithobacteria",
+    "Tissierellia"
   )
   expect_identical(
     sort(unique(microorganisms[which(microorganisms$phylum %in% current_grampos_phyla), "class", drop = TRUE])),
@@ -115,7 +117,7 @@ test_that("test-mo_property.R", {
 
   expect_equal(
     as.character(table(mo_pathogenicity(example_isolates$mo))),
-    c("1915", "62", "1", "22")
+    c("1912", "71", "1", "16")
   )
 
   expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")

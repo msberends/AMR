@@ -124,7 +124,9 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
         "caledonicus", "canis",
         "durrellii", "lloydii",
         "ratti", "taiwanensis", "veratri", "urealyticus",
-        "americanisciuri", "marylandisciuri", "shinii", "brunensis"
+        "americanisciuri", "marylandisciuri", "shinii", "brunensis",
+        # Kuhnert et al. 2026 (doi:10.1099/ijsem.0.007230) and Baek et al. 2025 (J Microbiol, S. parequorum)
+        "dromedarii", "parequorum"
       ) |
         # old, now renamed to S. schleiferi (but still as synonym in our data of course):
         (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
@@ -725,7 +727,8 @@ if (changed_md5(microorganisms)) {
   mo$snomed <- max_50_snomed
   mo <- dplyr::mutate_if(mo, ~ !is.numeric(.), as.character)
   try(haven::write_sav(mo, "data-raw/datasets/microorganisms.sav"), silent = TRUE)
-  try(haven::write_dta(mo, "data-raw/datasets/microorganisms.dta"), silent = TRUE)
+  # (long strings as strL, as otherwise the file would exceed the file size limit of GitHub)
+  try(haven::write_dta(mo, "data-raw/datasets/microorganisms.dta", strl_threshold = 255), silent = TRUE)
   mo_all_snomed <- microorganisms %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
   try(write.table(mo_all_snomed, "data-raw/datasets/microorganisms.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
   try(openxlsx2::write_xlsx(mo_all_snomed, "data-raw/datasets/microorganisms.xlsx"), silent = TRUE)
