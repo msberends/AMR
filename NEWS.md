@@ -1,4 +1,4 @@
-# AMR 3.0.1.9103
+# AMR 3.0.1.9104
 
 Planned as v3.1.0, mid October 2026.
 
@@ -27,7 +27,6 @@ Planned as v3.1.0, mid October 2026.
 * `as.mo()` no longer guesses unknown MO codes (these become `NA` with a warning), and MO codes from versions before v2.0.0 are no longer supported
 
 ### New
-* `add_custom_antimicrobial_synonyms()` to add synonyms, such as local trade names, to existing antimicrobials (including custom ones). Synonyms may be written in any script: they are matched before `as.ab()` transliterates the input to ASCII, so no non-ASCII characters are stored in the package itself (#307)
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
 * Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
   * `clinical_breakpoints` now contains blocking rows (`NA` breakpoints, reason in `note`) where EUCAST gives no breakpoint for an organism, so `as.sir()` no longer falls back to the breakpoint of a broader taxon
@@ -44,6 +43,7 @@ Planned as v3.1.0, mid October 2026.
 * Typed missing value constants `NA_ab_` and `NA_mo_`, for use in pipelines that need missing values of a specific class
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
 * A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
+* `add_custom_antimicrobial_synonyms()` to add local names, such as trade names, to existing antimicrobials (#307)
 
 ### Fixed
 * EUCAST breakpoint rules for *Aerococcus* (v12 onwards) were never applied, and *Pasteurella* rules were partly filed under *Neisseria meningitidis* (#290)

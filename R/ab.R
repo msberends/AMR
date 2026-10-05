@@ -108,6 +108,19 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   already_regex <- isTRUE(list(...)$already_regex)
   fast_mode <- isTRUE(list(...)$fast_mode)
 
+  # text that is not valid UTF-8 (e.g. exported in a local encoding such as CP949) makes the string
+  # functions below fail in a UTF-8 locale, so such values are returned as NA with a warning
+  if (is.character(x)) {
+    invalid <- !is.na(x) & !custom_ab_valid_utf8(enc2utf8(x))
+    if (any(invalid)) {
+      warning_("in `as.ab()`: ", nr2char(sum(invalid)), " value", ifelse(sum(invalid) > 1, "s were", " was"), " not valid UTF-8 text and returned as `NA`. Convert such input first, e.g. with `iconv(x, from = \"CP949\", to = \"UTF-8\")`.")
+      x[invalid] <- NA_character_
+      if (all(is.na(x))) {
+        return(set_clean_class(rep(NA_character_, length(x)), new_class = c("ab", "character")))
+      }
+    }
+  }
+
   # user-added synonyms (add_custom_antimicrobial_synonyms()) are matched on the input as given,
   # before the input is transliterated to ASCII below, so that names in non-Latin scripts can be used
   if (NROW(AMR_env$custom_ab_synonyms) > 0 && already_regex == FALSE) {
