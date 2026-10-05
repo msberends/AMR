@@ -129,8 +129,12 @@ All changes are in `data-raw/_reproduction_scripts/reproduction_of_microorganism
 Other files:
 
 - `data-raw/_pre_commit_checks.R`: *Staphylococcus dromedarii* (abstract: "a novel coagulase-negative
-  *Staphylococcus* species", `doi:10.1099/ijsem.0.007230`) and *S. parequorum* (Baek *et al.*, J Microbiol 2025;
-  coagulase-negative according to the abstract as shown in search results, full text not accessible) added to CoNS.
+  *Staphylococcus* species", `doi:10.1099/ijsem.0.007230`), *S. parequorum* (Baek *et al.*, J Microbiol 2025) and
+  *S. xeri* (Belhout *et al.* 2026, `doi:10.1099/ijsem.0.007253`) added to CoNS; *S. parequorum* and *S. xeri*
+  confirmed as coagulase-negative by Matthijs S. Berends.
+- `R/mo.R` (on request): `as.mo()` now finds *Salmonella* serovars written with the species, such as
+  "Salmonella enterica (subsp. enterica) serovar Typhi", which returned *S. bongori* (also on `main` and in v3.0.1),
+  and no longer turns "Paratyphi A/B/C" into the serogroups A/B/C; with tests in `test-mo.R` and a `NEWS.md` bullet.
 - `data-raw/_pre_commit_checks.R`: `microorganisms.dta` is written with `strl_threshold = 255` (as
   `clinical_breakpoints.dta` already was), as it otherwise grew to 130 MB, beyond the file size limit of GitHub (now
   78 MiB, verified to read back identically).
@@ -241,8 +245,7 @@ Other files:
 
 ### Unit tests (3e)
 
-- [ ] **Unit tests**: `devtools::test()` gives 1 failure, *Staphylococcus xeri* not categorised as CoNS or CoPS (see
-  "Needs a human"); all other tests pass
+- [ ] **Unit tests**: `devtools::test()` passes completely (after adding the three new staphylococci to CoNS)
 - [ ] **Changed test**, `test-mo_property.R`: Gram-positive classes *Limnocylindria* (new class in Chloroflexota) and
   *Tissierellia* added
 - [ ] **Changed test**, `test-mo_property.R`: `mo_pathogenicity(example_isolates$mo)` counts from 1915/62/1/22 to
@@ -256,11 +259,6 @@ Other files:
 
 ## 5. Needs a human
 
-- [ ] ***Staphylococcus xeri*** (Belhout *et al.* 2026, `doi:10.1099/ijsem.0.007253`): coagulase result unknown to me
-  (full text not accessible), so not added to CoNS or CoPS in `data-raw/_pre_commit_checks.R`; the unit test fails until
-  this is decided
-- [ ] ***Staphylococcus parequorum*** added to CoNS on the basis of the abstract as shown in search results ("identified
-  as coagulase-negative", Baek *et al.*, J Microbiol 2025); please verify in the full text
 - [ ] **Fungal synonyms and lichens**: Fungi grow by 13,839 synonyms (old names of kept species). Kept as they are,
   following your decision (useful for `as.mo()`, no extra layer of assessment). About 1,000 lichen records (*Lecidea*
   558, *Lecanora* 444) enter as current names of kept synonyms, with their own synonyms; recommend to accept for now
@@ -289,8 +287,6 @@ Other files:
 - [ ] **`TAXONOMY_VERSION` dates**: MycoBank is set to the file date 2026-01-07 (probably the server date of
   `MBList.zip`, not the download date), GBIF/COL to the file date of `COL.zip` (2026-04-30); the COL citation is
   unchanged, as `main` already cited release 2026-04-18 XR
-- [ ] **Existing bug outside this update**: `as.mo("Salmonella enterica Typhi")` returns *Salmonella bongori*, also on
-  `main` and in v3.0.1; recommend a separate issue
 - [ ] **Stale file**: `data-raw/taxonomy_lpsn0.rds` dates from June 2026 and is no longer written by the script; left
   untouched
 - [ ] **One commit instead of five**: the pre-commit hook of the repository stages all changed files in `data-raw/` and

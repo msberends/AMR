@@ -125,8 +125,10 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
         "durrellii", "lloydii",
         "ratti", "taiwanensis", "veratri", "urealyticus",
         "americanisciuri", "marylandisciuri", "shinii", "brunensis",
-        # Kuhnert et al. 2026 (doi:10.1099/ijsem.0.007230) and Baek et al. 2025 (J Microbiol, S. parequorum)
-        "dromedarii", "parequorum"
+        # Kuhnert et al. 2026 (doi:10.1099/ijsem.0.007230), Baek et al. 2025 (J Microbiol, S. parequorum) and
+        # Belhout et al. 2026 (doi:10.1099/ijsem.0.007253, S. xeri); S. parequorum and S. xeri confirmed by
+        # Matthijs S. Berends
+        "dromedarii", "parequorum", "xeri"
       ) |
         # old, now renamed to S. schleiferi (but still as synonym in our data of course):
         (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
