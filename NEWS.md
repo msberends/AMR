@@ -67,6 +67,8 @@ Planned as v3.1.0, mid October 2026.
 * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 * Logical comparison (`==`, `!=`) of `sir` class with a `factor` is now possible on R >= 4.3
 * `mo_current()` and `as.mo()` could not find the current name of some synonyms with multiple sources (e.g. *Chaetomium abuense*)
+* `interpretive_rules()`: species named in a rule now also match all other names of the same accepted taxon (e.g. 'Clostridium ramosum' for *Thomasclavelia ramosa*), which also updates `intrinsic_resistant`
+* *Erysipelatoclostridium* and its species are now synonyms of *Thomasclavelia*; *E. merdavium* is retired
 
 ### Updated
 * `top_n_microorganisms()`: new `property_for_each` argument for sub-grouping within top *n* groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed `property = NULL` not being accepted; inner filter now tracks original row indices to prevent cross-group contamination

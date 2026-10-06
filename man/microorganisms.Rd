@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 107 253 Taxonomic Records of Microorganisms}
+\title{Data Set with 107 252 Taxonomic Records of Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 107 253 observations and 28 variables:
+A \link[tibble:tibble]{tibble} with 107 252 observations and 28 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package. \emph{\strong{This is a unique identifier.}}
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. \emph{\strong{This is a unique identifier.}}

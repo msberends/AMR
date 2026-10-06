@@ -22,6 +22,7 @@
 "AN_NCTRA_WLSN","Nectria wilsoni","another organism (Animalia) with the same genus name as Nectria (Fungi)","taxonomy build (automatic, homonym of a genus in another domain)","2026-10-05"
 "A_HLCCC_FRMC","Halococcus formicarii","another organism (Animalia) with the same genus name as Halococcus (Archaea)","taxonomy build (automatic, homonym of a genus in another domain)","2026-10-05"
 "B_COENN_DNTC","Coenonia denticulata","another organism (Protozoa) with the same genus name as Coenonia (Bacteria)","taxonomy build (automatic, homonym of a genus in another domain)","2026-10-05"
+"B_ERYSPL_MRDV","Erysipelatoclostridium merdavium","manually added without reference and in no current source; its genus Erysipelatoclostridium is a synonym of Thomasclavelia, which has no counterpart of this species","Matthijs S. Berends","2026-10-06"
 "B_MCRSPH_PNCL","Microsphaera penicillata","another organism (Fungi) with the same genus name as Microsphaera (Bacteria)","taxonomy build (automatic, homonym of a genus in another domain)","2026-10-05"
 "B_MRGNL_AFRA","Morganella afra","another organism (Fungi) with the same genus name as Morganella (Bacteria)","taxonomy build (automatic, homonym of a genus in another domain)","2026-10-05"
 "B_MRGNL_ASTR","Morganella austromontana","another organism (Fungi) with the same genus name as Morganella (Bacteria)","taxonomy build (automatic, homonym of a genus in another domain)","2026-10-05"

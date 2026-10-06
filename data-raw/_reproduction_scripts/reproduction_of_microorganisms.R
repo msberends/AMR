@@ -3231,7 +3231,15 @@ accepted_name_override <- c(
   # is the accepted name of this human pathogen (decision by Matthijs S. Berends, 5 October 2026)
   "Enterocytozoon bieneusi" = "Encephalitozoon bieneusi",
   # the same for Encephalitozoon cuniculi, which COL had as a synonym of 'Nosema cuniculi' (same decision)
-  "Encephalitozoon cuniculi" = "Nosema cuniculi"
+  "Encephalitozoon cuniculi" = "Nosema cuniculi",
+  # in 2026, the genus Erysipelatoclostridium (Yutin and Galperin 2013, not in LPSN) and its species were accepted in
+  # GBIF and earlier releases, next to the current Thomasclavelia (Lawson et al. 2023) with the same species, so they
+  # become synonyms (decision by Matthijs S. Berends, 6 October 2026; E. merdavium is retired, see the next block)
+  "Thomasclavelia" = "Erysipelatoclostridium",
+  "Thomasclavelia cocleata" = "Erysipelatoclostridium cocleatum",
+  "Thomasclavelia ramosa" = "Erysipelatoclostridium ramosum",
+  "Thomasclavelia saccharogumia" = "Erysipelatoclostridium saccharogumia",
+  "Thomasclavelia spiroformis" = "Erysipelatoclostridium spiroforme"
 )
 for (accepted_name in names(accepted_name_override)) {
   i_acc <- which(taxonomy$fullname == accepted_name)
@@ -3261,6 +3269,19 @@ for (accepted_name in names(accepted_name_override)) {
   }
 }
 rm(accepted_name_override, accepted_name, i_acc, i_syn, id, old_id, repoint)
+
+# Released taxa that are retired by a human decision in data-raw/microorganisms_files/mo_code_retirements.csv (the
+# automatic retirements of the taxonomy build are handled above). Released taxa are otherwise never removed, but these
+# can enter in other ways than the restoration above, e.g. as previously manually added entries.
+retired_by_decision <- read_mo_retirements(".") %>%
+  filter(decided_by %unlike% "^taxonomy build")
+review(
+  taxonomy %>% filter(fullname %in% retired_by_decision$fullname) %>% select(fullname, rank, status, source),
+  "Released taxa that are retired by a human decision, these will be removed"
+)
+taxonomy <- taxonomy %>%
+  filter(!fullname %in% retired_by_decision$fullname)
+rm(retired_by_decision)
 
 
 # Fix genera that are synonyms while they contain accepted species --------------------------------
