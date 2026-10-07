@@ -1038,34 +1038,53 @@ mo_validate <- function(x, property, language, keep_synonyms = keep_synonyms, ..
   }
   has_Becker_or_Lancefield <- Becker %in% c(TRUE, "all") || Lancefield %in% c(TRUE, "all")
 
-  if (isFALSE(has_Becker_or_Lancefield) && isTRUE(keep_synonyms) && all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
-    # fastest way to get properties
-    if (property == "snomed") {
-      x <- lapply(x, function(y) unlist(AMR_env$MO_lookup$snomed[match(y, AMR_env$MO_lookup$mo)]))
-    } else {
-      x <- AMR_env$MO_lookup[[property]][match(x, AMR_env$MO_lookup$mo)]
-    }
+  # properties are retrieved for unique values only, and expanded again at the end
+  x_full <- NULL
+  if (is.atomic(x) && is.null(dim(x)) && anyDuplicated(x) > 0) {
+    x_full <- x
+    x <- unique(x)
+  }
+  if (is.atomic(x) && is.null(dim(x))) {
+    x_index <- match(x, AMR_env$MO_lookup$mo)
+    is_valid_mo <- !is.na(x_index) | is.na(x)
   } else {
-    # get microorganisms data set, but remove synonyms if keep_synonyms is FALSE
-    mo_data_check <- AMR_env$MO_lookup[which(AMR_env$MO_lookup$status %in% if (isTRUE(keep_synonyms)) c("synonym", "accepted") else "accepted"), , drop = FALSE]
+    is_valid_mo <- FALSE
+  }
 
-    if (all(x %in% c(mo_data_check$mo, NA)) && !has_Becker_or_Lancefield) {
-      # do nothing, just don't run the other if-else's
-    } else if (all(x %in% c(unlist(mo_data_check[[property]]), NA)) && !has_Becker_or_Lancefield) {
-      # no need to do anything, just return it
-      return(x)
-    } else {
-      # we need to get MO codes now
-      x <- replace_old_mo_codes(x, property = property)
-      x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+  if (isFALSE(has_Becker_or_Lancefield) && all(is_valid_mo) &&
+    (isTRUE(keep_synonyms) || !any(AMR_env$MO_lookup$status[x_index] == "synonym", na.rm = TRUE))) {
+    # fastest way to get properties: valid MO codes that need no further coercion
+  } else {
+    if (isFALSE(has_Becker_or_Lancefield) && !all(is_valid_mo)) {
+      # input might already contain the property, such as a genus for mo_genus(), in which case just return it
+      # (synonyms only count if keep_synonyms is TRUE)
+      allowed_status <- if (isTRUE(keep_synonyms)) c("synonym", "accepted") else "accepted"
+      property_values <- AMR_env$MO_lookup[[property]][which(AMR_env$MO_lookup$status %in% allowed_status)]
+      if (is.list(property_values)) {
+        property_values <- unlist(property_values)
+      }
+      if (all(x %in% c(property_values, NA))) {
+        if (is.null(x_full)) {
+          return(x)
+        } else {
+          return(x_full)
+        }
+      }
     }
+    # we need to get MO codes now
+    x <- replace_old_mo_codes(x, property = property)
+    x <- as.mo(x, language = language, keep_synonyms = keep_synonyms, ...)
+    x_index <- match(x, AMR_env$MO_lookup$mo)
+  }
 
-    # get property reeaaally fast using match()
-    if (property == "snomed") {
-      x <- lapply(x, function(y) unlist(AMR_env$MO_lookup$snomed[match(y, AMR_env$MO_lookup$mo)]))
-    } else {
-      x <- AMR_env$MO_lookup[[property]][match(x, AMR_env$MO_lookup$mo)]
-    }
+  # get property reeaaally fast using match()
+  if (property == "snomed") {
+    x <- lapply(x_index, function(i) unlist(AMR_env$MO_lookup$snomed[i]))
+  } else {
+    x <- AMR_env$MO_lookup[[property]][x_index]
+  }
+  if (!is.null(x_full)) {
+    x <- x[match(x_full, unique(x_full))]
   }
 
   if (property == "mo") {

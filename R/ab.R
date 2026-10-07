@@ -48,6 +48,8 @@
 #'
 #' Use the [`ab_*`][ab_property()] functions to get properties based on the returned antibiotic ID, see *Examples*.
 #'
+#' Results of non-exact input are remembered during the session, so that the same input is not matched again. Use [ab_reset_session()] to forget these results. They are also forgotten after [add_custom_antimicrobials()] or [clear_custom_antimicrobials()].
+#'
 #' Note: the [as.ab()] and [`ab_*`][ab_property()] functions may use very long regular expression to match brand names of antimicrobial drugs. This may fail on some systems.
 #'
 #' You can add your own manual codes to be considered by [as.ab()] and all [`ab_*`][ab_property()] functions, see [add_custom_antimicrobials()].
@@ -160,40 +162,25 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   known_names <- x %in% AMR_env$AB_lookup$generalised_name
   x_new[known_names] <- AMR_env$AB_lookup$ab[match(x[known_names], AMR_env$AB_lookup$generalised_name)]
   known_codes_ab <- x %in% AMR_env$AB_lookup$ab
-  known_codes_atc <- vapply(FUN.VALUE = logical(1), gsub(" ", "", x), function(x_) x_ %in% unlist(AMR_env$AB_lookup$atc), USE.NAMES = FALSE)
-  known_codes_synonyms <- vapply(FUN.VALUE = logical(1), gsub(" ", "", tolower(x)), function(x_) x_ %in% tolower(unlist(AMR_env$AB_lookup$synonyms)), USE.NAMES = FALSE)
+  # ATC codes and synonyms are looked up in flat vectors that are built once per session
+  ab_index <- get_ab_index()
+  x_atc <- gsub(" ", "", x, fixed = TRUE)
+  x_synonym <- gsub(" ", "", tolower(x), fixed = TRUE)
+  known_codes_atc <- x_atc %in% ab_index$atc
+  known_codes_synonyms <- x_synonym %in% ab_index$synonyms
   known_codes_cid <- x %in% AMR_env$AB_lookup$cid
   x_new[known_codes_ab] <- AMR_env$AB_lookup$ab[match(x[known_codes_ab], AMR_env$AB_lookup$ab)]
-  x_new[known_codes_atc] <- AMR_env$AB_lookup$ab[vapply(
-    FUN.VALUE = integer(1),
-    gsub(" ", "", x[known_codes_atc]),
-    function(x_) {
-      which(vapply(
-        FUN.VALUE = logical(1),
-        AMR_env$AB_lookup$atc,
-        function(atc) x_ %in% atc
-      ))[1L]
-    },
-    USE.NAMES = FALSE
-  )]
-  x_new[known_codes_synonyms] <- AMR_env$AB_lookup$ab[vapply(
-    FUN.VALUE = integer(1),
-    gsub(" ", "", tolower(x[known_codes_synonyms])),
-    function(x_) {
-      which(vapply(
-        FUN.VALUE = logical(1),
-        AMR_env$AB_lookup$synonyms,
-        function(syns) x_ %in% tolower(syns)
-      ))[1L]
-    },
-    USE.NAMES = FALSE
-  )]
+  x_new[known_codes_atc] <- ab_index$atc_ab[match(x_atc[known_codes_atc], ab_index$atc)]
+  x_new[known_codes_synonyms] <- ab_index$synonyms_ab[match(x_synonym[known_codes_synonyms], ab_index$synonyms)]
   x_new[known_codes_cid] <- AMR_env$AB_lookup$ab[match(x[known_codes_cid], AMR_env$AB_lookup$cid)]
-  previously_coerced <- x %in% AMR_env$ab_previously_coerced$x
-  x_new[previously_coerced & is.na(x_new)] <- AMR_env$ab_previously_coerced$ab[match(x[is.na(x_new) & x %in% AMR_env$ab_previously_coerced$x], AMR_env$ab_previously_coerced$x)]
-  previously_coerced_mention <- !is.na(x) & x %in% AMR_env$ab_previously_coerced$x & !x %in% AMR_env$AB_lookup$ab & !x %in% AMR_env$AB_lookup$generalised_name
+  # From previous hits in this session ----
+  # the key contains all settings that can change the outcome, so that e.g. a `fast_mode` result is never reused otherwise
+  cache_keys <- coercion_cache_key(x, fast_mode, flag_multiple_results, language)
+  previously_coerced <- !is.na(x) & is.na(x_new) & coercion_cache_has("ab", cache_keys)
+  x_new[previously_coerced] <- coercion_cache_get("ab", cache_keys[previously_coerced])
+  previously_coerced_mention <- previously_coerced & !is.na(x_new)
   if (any(previously_coerced_mention) && isTRUE(info) && message_not_thrown_before("as.ab", entire_session = TRUE)) {
-    only_one <- length(unique(which(x[which(previously_coerced)] %in% x_bak_clean))) == 1
+    only_one <- sum(previously_coerced_mention) == 1
     message_(
       "Returning ", ifelse(only_one, "a ", ""), "previously coerced ",
       ifelse(only_one, "value for an antimicrobial", "values for various antimicrobials"),
@@ -431,16 +418,13 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   }
 
   # save to package env to save time for next time
-  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$x %in% x), , drop = FALSE]
-  AMR_env$ab_previously_coerced <- unique(rbind_AMR(
-    AMR_env$ab_previously_coerced,
-    data.frame(
-      x = x,
-      ab = x_new,
-      x_bak = x_bak[match(x, x_bak_clean)],
-      stringsAsFactors = FALSE
-    )
-  ))
+  coerced_now <- which(!already_known & !is.na(x))
+  coercion_cache_add(
+    "ab",
+    keys = cache_keys[coerced_now],
+    inputs = x_bak[match(x[coerced_now], x_bak_clean)],
+    values = x_new[coerced_now]
+  )
 
   # take failed ATC codes apart from rest
   if (length(x_unknown_ATCs) > 0 && fast_mode == FALSE) {
@@ -454,9 +438,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   x_unknown <- x_unknown[!x_unknown %in% x_unknown_ATCs]
   x_unknown <- c(
     x_unknown,
-    AMR_env$ab_previously_coerced$x_bak[which(AMR_env$ab_previously_coerced$x %in% x & is.na(AMR_env$ab_previously_coerced$ab))]
+    x_bak[match(x[previously_coerced & is.na(x_new)], x_bak_clean)]
   )
-  x_unknown <- x_unknown[!x_unknown %in% c("", NA)]
+  x_unknown <- unique(x_unknown[!x_unknown %in% c("", NA)])
   if (length(x_unknown) > 0 && fast_mode == FALSE) {
     warning_(
       "in {.help [{.fun as.ab}](AMR::as.ab)}: ", ifelse(length(unique(x_unknown)) == 1, "this value", "these values"), " could not be coerced to a valid antimicrobial ID: ",
@@ -466,16 +450,16 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
 
   # Throw note about uncertainties
   x_uncertain <- x_uncertain[!is.na(x_uncertain)]
-  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[!is.na(AMR_env$ab_previously_coerced$x), ]
   if (isTRUE(info) && length(x_uncertain) > 0 && fast_mode == FALSE) {
     x_uncertain <- unique(x_uncertain)
     if (message_not_thrown_before("as.ab", "uncertainties", x_bak)) {
       if (length(x_uncertain) <= 3) {
+        ab_uncertain <- x_new[match(x_bak_clean[match(x_uncertain, x_bak)], x)]
         examples <- vector_and(
           paste0(
             '"', x_uncertain, '" (assumed ',
-            ab_name(AMR_env$ab_previously_coerced$ab[which(AMR_env$ab_previously_coerced$x_bak %in% x_uncertain)], language = NULL, tolower = TRUE),
-            ", ", AMR_env$ab_previously_coerced$ab[which(AMR_env$ab_previously_coerced$x_bak %in% x_uncertain)], ")"
+            ab_name(ab_uncertain, language = NULL, tolower = TRUE),
+            ", ", ab_uncertain, ")"
           ),
           quotes = FALSE
         )
@@ -510,8 +494,7 @@ is.ab <- function(x) {
 ab_reset_session <- function() {
   if (NROW(AMR_env$ab_previously_coerced) > 0) {
     message_("Reset ", nr2char(NROW(AMR_env$ab_previously_coerced)), " previously matched input value", ifelse(NROW(AMR_env$ab_previously_coerced) > 1, "s", ""), ".")
-    AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[0, , drop = FALSE]
-    AMR_env$mo_uncertainties <- AMR_env$mo_uncertainties[0, , drop = FALSE]
+    AMR_env$ab_previously_coerced <- new_coercion_cache()
   } else {
     message_("No previously matched input values to reset.")
   }

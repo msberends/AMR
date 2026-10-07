@@ -132,6 +132,9 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   stop_ifnot(destination %like% "[.]rds$", "the {.arg destination} must be a file location with file extension .rds.")
   mo_source_destination <- path.expand(destination)
 
+  # earlier coercions might have been based on another mo_source
+  AMR_env$mo_previously_coerced <- new_coercion_cache()
+
   if (is.null(path) || path %in% c(FALSE, "")) {
     AMR_env$mo_source <- NULL
     if (file.exists(mo_source_destination)) {

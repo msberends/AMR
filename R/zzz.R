@@ -40,16 +40,9 @@ AMR_env$mo_uncertainties <- data.frame(
   stringsAsFactors = FALSE
 )
 AMR_env$mo_renamed <- list()
-AMR_env$mo_previously_coerced <- data.frame(
-  x = character(0),
-  mo = character(0),
-  stringsAsFactors = FALSE
-)
-AMR_env$ab_previously_coerced <- data.frame(
-  x = character(0),
-  ab = character(0),
-  stringsAsFactors = FALSE
-)
+# session caches of as.ab() and as.mo(), see R/aa_session_cache.R
+AMR_env$mo_previously_coerced <- new_coercion_cache()
+AMR_env$ab_previously_coerced <- new_coercion_cache()
 AMR_env$av_previously_coerced <- data.frame(
   x = character(0),
   av = character(0),
@@ -111,6 +104,7 @@ AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
   }
 
   AMR_env$AB_lookup <- cbind(AMR::antimicrobials, AB_LOOKUP)
+  reset_ab_cache()
   AMR_env$AV_lookup <- cbind(AMR::antivirals, AV_LOOKUP)
 }
 

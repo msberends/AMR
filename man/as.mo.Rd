@@ -113,6 +113,8 @@ There are three helper functions that can be run after using the \code{\link[=as
 \item Use \code{\link[=mo_failures]{mo_failures()}} to get a \link{character} \link{vector} with all values that could not be coerced to a valid value.
 \item Use \code{\link[=mo_renamed]{mo_renamed()}} to get a \link{data.frame} with all values that could be coerced based on outdated, previously accepted taxonomic names.
 }
+
+Results of non-exact input are remembered during the session, so that the same input is not matched again. This only applies to the same settings of \code{minimum_matching_score}, \code{only_fungi} and \code{cleaning_regex}. Use \code{\link[=mo_reset_session]{mo_reset_session()}} to forget these results. They are also forgotten when the taxonomy changes, e.g. after \code{\link[=add_custom_microorganisms]{add_custom_microorganisms()}}.
 }
 
 \subsection{For Mycologists}{
