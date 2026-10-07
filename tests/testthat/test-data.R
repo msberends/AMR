@@ -340,15 +340,6 @@ test_that("taxonomy: every subspecies has a species", {
 test_that("taxonomy: every genus has its family, and every family its order, with the same higher taxonomy", {
   skip_on_cran()
   df <- mo_df()
-  # PENDING A DECISION (October 2026): protist groups that the sources place in more than one domain, so that their
-  # higher taxa exist in another domain than (some of) their members; a policy for their domain is needed first
-  # (the labyrinthulids, the radiolarian Acantharia and the plasmodial slime moulds)
-  pending_classes <- c("Labyrinthulea", "Acantharia", "Myxomycetes")
-  pending <- c(
-    pending_classes, "Thraustochytrida", "Thraustochytriaceae", "Thraustochytriidae", "Amphifilidae",
-    "Diplophryidae", "Oblongichytriidae", "Sorodiplophryidae", "Dictydiaethaliaceae", "Arthracanthida"
-  )
-  df <- df[!df$fullname %in% pending & !df$class %in% pending_classes & !df$order %in% pending & !df$family %in% pending, , drop = FALSE]
   pairs <- list(c("genus", "family"), c("family", "order"), c("order", "class"), c("class", "phylum"))
   for (pr in pairs) {
     child <- which(df$rank == pr[1] & df[[pr[2]]] != "" & df$fullname %unlike% "unknown")
@@ -396,6 +387,7 @@ test_that("taxonomy: clinically important names are current names", {
     "Citrobacter freundii", "Serratia marcescens", "Proteus mirabilis", "Morganella morganii", "Salmonella enterica",
     "Shigella sonnei", "Yersinia enterocolitica", "Pseudomonas aeruginosa", "Acinetobacter baumannii",
     "Stenotrophomonas maltophilia", "Burkholderia cepacia", "Burkholderia pyrrocinia", "Haemophilus influenzae",
+    "Klebsiella quasivariicola",
     "Moraxella catarrhalis", "Neisseria gonorrhoeae", "Neisseria meningitidis", "Legionella pneumophila",
     "Campylobacter jejuni", "Helicobacter pylori", "Bordetella pertussis", "Brucella melitensis", "Brucella anthropi",
     "Budvicia aquatica", "Bacteroides fragilis", "Staphylococcus aureus", "Staphylococcus epidermidis",
@@ -435,10 +427,14 @@ test_that("taxonomy: clinically important names are current names", {
   actual <- microorganisms$domain[match(names(domains), microorganisms$fullname)]
   wrong <- names(domains)[!actual %in% domains]
   expect_true(length(wrong) == 0, info = paste("In the wrong domain:", paste(paste0(wrong, " (", actual[match(wrong, names(domains))], ")"), collapse = ", ")))
-  # these must exist, but LPSN has them as synonyms of M. tuberculosis (Riojas et al. 2018), so they can be either
-  must_exist <- c("Mycobacterium bovis", "Mycobacterium africanum", "Mycobacterium caprae", "Mycobacterium microti", "Mycobacterium pinnipedii")
-  missing <- must_exist[!must_exist %in% microorganisms$fullname]
-  expect_true(length(missing) == 0, info = paste("Missing:", paste(missing, collapse = ", ")))
+  # LPSN is followed (decision by Matthijs S. Berends, 7 October 2026): these are heterotypic synonyms of
+  # M. tuberculosis (Riojas et al. 2018, IJSEM 68:324-332)
+  mtb_synonyms <- c("Mycobacterium bovis", "Mycobacterium africanum", "Mycobacterium caprae", "Mycobacterium microti", "Mycobacterium pinnipedii")
+  expect_true(all(mtb_synonyms %in% microorganisms$fullname), info = paste("Missing:", paste(setdiff(mtb_synonyms, microorganisms$fullname), collapse = ", ")))
+  expect_identical(
+    suppressWarnings(suppressMessages(mo_name(mtb_synonyms, keep_synonyms = FALSE, language = NULL, info = FALSE))),
+    rep("Mycobacterium tuberculosis", length(mtb_synonyms))
+  )
 })
 
 test_that("taxonomy: outdated names lead to their current names", {

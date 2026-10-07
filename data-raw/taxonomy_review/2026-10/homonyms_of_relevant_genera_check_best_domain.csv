@@ -190,14 +190,10 @@
 "Tetrasphaera","Animalia",1,"GBIF",,"Bacteria",FALSE
 "Tetrasphaera","Bacteria",9,"LPSN","Tetrasphaera australiensis","Bacteria",FALSE
 "Tetrasphaera","Chromista",2,"GBIF","Tetrasphaera spongiosa","Bacteria",FALSE
-"Tieghemella","Fungi",15,"MycoBank","Tieghemella butleri","Fungi",FALSE
-"Tieghemella","Plantae",5,"GBIF","Tieghemella africana","Fungi",FALSE
 "Toxoplasma","Animalia",2,"GBIF","Toxoplasma gondii","Chromista",FALSE
 "Toxoplasma","Chromista",2,"GBIF","Toxoplasma gondii","Chromista",FALSE
 "Tremblaya","Animalia",5,"GBIF","Tremblaya ceroplastae","Bacteria",FALSE
 "Tremblaya","Bacteria",1,"GBIF","Tremblaya phenacola","Bacteria",FALSE
-"Trichocephalus","Animalia",34,"GBIF","Trichocephalus affinis","Animalia",FALSE
-"Trichocephalus","Plantae",3,"GBIF","Trichocephalus rhipophorus","Animalia",FALSE
 "Trichophyton","Bacteria",1,"GBIF",,"Fungi",TRUE
 "Trichophyton","Fungi",274,"GBIF+MycoBank","Trichophyton abissinicum","Fungi",TRUE
 "Trypanosoma","Animalia",33,"GBIF","Trypanosoma amamiense","Protozoa",FALSE

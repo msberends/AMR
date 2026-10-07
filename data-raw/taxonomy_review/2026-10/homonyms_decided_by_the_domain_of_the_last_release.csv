@@ -1,12 +1,10 @@
 "genus","domain_without_release","released","released_decides","override"
 "Amoebophilus","Fungi","Bacteria",TRUE,
-"Aplanochytrium","Chromista","Fungi",TRUE,
 "Bacterium","Archaea","Bacteria",TRUE,
 "Bogoriella","Fungi","Bacteria",TRUE,
 "Coleospora","Fungi","Protozoa",TRUE,
 "Copromonas","Protozoa","Bacteria",TRUE,
 "Copromorpha","Animalia","Bacteria",FALSE,
-"Dictydiaethalium","Protozoa","Fungi",FALSE,
 "Diplonema","Fungi","Protozoa",TRUE,
 "Diplophrys","Chromista","Fungi",FALSE,
 "Frondicola","Fungi","Bacteria",TRUE,

@@ -358,7 +358,6 @@
 "AN_DRFLR_CTVE","Dirofilaria conjunctivae","synonym","GBIF",1.25
 "AN_ECHNS_LNDNN","Echinostoma londonensis","synonym","GBIF",1.25
 "B_ESNBR_MSSL","Eisenbergiella massiliensis","synonym","GBIF",1.5
-"B_ENTRC_MSSL","Enterococcus massiliensis","synonym","GBIF",1
 "B_ERWIN_LVRS","Erwinia amylovorus","synonym","GBIF",1.5
 "B_ERWIN_RHPNT","Erwinia rhapontica","synonym","GBIF",1.5
 "B_ERYSPL_MRDV","Erysipelatoclostridium merdavium","accepted","GBIF",1.5
@@ -652,7 +651,6 @@
 "AN_HYSTR_OCHT","Hysterothylacium ochotense","synonym","GBIF",1.25
 "AN_HYSTR_OSHR","Hysterothylacium oshoroensis","synonym","GBIF",1.25
 "B_KSTLL_MNSQ","Kaistella manosquense","synonym","GBIF",1.5
-"B_KLBSL_QSVR","Klebsiella quasivariicola","synonym","GBIF",1
 "F_KLYVR_ASHB","Kluyveromyces ashbyii","synonym","GBIF",1.25
 "F_KLYVR_CASE","Kluyveromyces casei","synonym","GBIF",1.25
 "F_KLYVR_CVRN","Kluyveromyces cavernicola","synonym","GBIF",1.25
@@ -775,9 +773,7 @@
 "F_MUCOR_VLLM","Mucor vuilleminii","synonym","GBIF",1.25
 "F_MUCOR_VLGR","Mucor vulgaris","synonym","GBIF",1.25
 "B_MYCBC_ACPL","Mycobacterium acapulense","synonym","GBIF",1
-"B_MYCBC_LFLN","Mycobacterium liflandii","synonym","GBIF",1
 "B_MYCBC_NOVM","Mycobacterium novum","synonym","GBIF",1
-"B_MYCBC_NNSS","Mycobacterium sinensis","synonym","GBIF",1
 "F_MYCCN_ALNT","Mycocentrospora ailanthi","synonym","GBIF",1.25
 "F_MYCCN_ANMN","Mycocentrospora anemonis","synonym","GBIF",1.25
 "F_MYCCN_CLLS","Mycocentrospora callosa","synonym","GBIF",1.25
@@ -906,7 +902,6 @@
 "F_PSDLL_PSDM","Pseudallescheria ellipsoideum","synonym","GBIF",1.25
 "F_PSDLL_FSDM","Pseudallescheria fusoideum","synonym","GBIF",1.25
 "F_PSDLL_HMNS","Pseudallescheria hominis","synonym","GBIF",1.25
-"B_PSDMN_AESTS","Pseudomonas aestus","synonym","GBIF",1
 "B_PSDMN_PLYT","Pseudomonas polytricha","synonym","GBIF",1
 "B_PSDMN_SDRC","Pseudomonas siderocapsulatus","synonym","GBIF",1
 "B_PSDPRP_PRPN","Pseudopropionibacterium propionica","synonym","GBIF",1.5
@@ -1009,7 +1004,6 @@
 "F_STCHY_NVZL","Stachybotrys novae-zelandiae","synonym","GBIF",1.25
 "B_STPHY_VRTR","Staphylococcus veratri","synonym","GBIF",1
 "B_STNTR_RTRF","Stenotrophomonas retroflexus","synonym","GBIF",1.5
-"B_STRPT_PRDN","Streptococcus periodonticum","synonym","GBIF",1
 "B_SMYCS_ACDP","Streptomyces acidiphila","synonym","GBIF",1.5
 "B_SMYCS_ALBLNG","Streptomyces albolonga","synonym","GBIF",1.5
 "B_SMYCS_ALBV","Streptomyces alboverticillatum","synonym","GBIF",1.5

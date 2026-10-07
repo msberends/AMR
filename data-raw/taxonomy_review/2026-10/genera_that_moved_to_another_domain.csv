@@ -16,6 +16,7 @@
 "Protozoa","Fungi","Vairimorpha",14
 "Protozoa","Fungi","Encephalitozoon",13
 "Protozoa","Fungi","Duboscqia",11
+"Fungi","Chromista","Aplanochytrium",10
 "Protozoa","Fungi","Vavraia",9
 "Protozoa","Fungi","Dictyocoela",8
 "Protozoa","Fungi","Janacekia",8
@@ -44,6 +45,7 @@
 "Protozoa","Fungi","Paraepiseptum",5
 "Protozoa","Fungi","Telomyxa",5
 "Protozoa","Fungi","Tubulinosema",5
+"Fungi","Protozoa","Dictydiaethalium",4
 "Protozoa","Fungi","Agmasoma",4
 "Protozoa","Fungi","Antonospora",4
 "Protozoa","Fungi","Chapmanium",4
@@ -200,9 +202,13 @@
 "(unknown kingdom)","(unknown domain)","(unknown",1
 "Bacteria","Animalia","Copromorpha",1
 "Bacteria","Fungi","Tubercularia",1
+"Fungi","Chromista","Aplanochytriidae",1
 "Fungi","Chromista","Diplophryidae",1
+"Fungi","Chromista","Labyrinthulea",1
 "Fungi","Chromista","Oblongichytriidae",1
 "Fungi","Chromista","Sorodiplophryidae",1
+"Fungi","Chromista","Thraustochytrida",1
+"Fungi","Protozoa","Dictydiaethaliaceae",1
 "Protozoa","Fungi","Abelsporidae",1
 "Protozoa","Fungi","Amblyosporidae",1
 "Protozoa","Fungi","Amphiacanthidae",1

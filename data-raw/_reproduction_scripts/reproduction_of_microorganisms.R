@@ -695,6 +695,9 @@ message(
 # A report of all unresolved homonyms of relevant genera is shown below in 'Combine the datasets',
 # so extend this list there when needed.
 genus_domain_override <- c(
+  # the labyrinthulids are stramenopiles, not fungi, as all other labyrinthulids in COL (decision by Matthijs S.
+  # Berends, 7 October 2026; until v3.0.1, Aplanochytrium was in the Fungi)
+  "Aplanochytrium" = "Chromista",
   "Capillaria" = "Animalia",
   "Graphium" = "Fungi",
   "Hymenolepis" = "Animalia",
@@ -737,14 +740,10 @@ released_homonym_genera <- c(
 #   lpsn_total
 # }
 
-# The Mycobacterium tuberculosis complex is always protected, also its names that are not validly published under the
-# ICNP, such as M. canettii and M. orygis, which LPSN has as preferred names (decision by Matthijs S. Berends,
-# 7 October 2026)
-mtb_complex <- c(
-  "Mycobacterium africanum", "Mycobacterium bovis", "Mycobacterium canettii", "Mycobacterium caprae",
-  "Mycobacterium microti", "Mycobacterium mungi", "Mycobacterium orygis", "Mycobacterium pinnipedii",
-  "Mycobacterium suricattae", "Mycobacterium tuberculosis"
-)
+# All taxa in the genera of the WHO priority pathogen lists (AMR:::MO_WHO_PRIORITY_GENERA) are always protected, also
+# their names that are not validly published under the ICNP, such as Mycobacterium canettii, Mycobacterium orygis
+# and Klebsiella quasivariicola, which LPSN has as preferred names (decision by Matthijs S. Berends, 7 October 2026)
+is_who_priority_genus <- function(genus) genus %in% AMR:::MO_WHO_PRIORITY_GENERA
 
 
 # Read LPSN data ----------------------------------------------------------------------------------
@@ -2250,7 +2249,7 @@ taxonomy$source[taxonomy$source == "Manually added"] <- "manually added"
 # For prokaryotes, only the human pathogens of Bartlett et al. (and their genera) are protected, otherwise all
 # non-validly published species of e.g. Streptococcus would return.
 protected <- (taxonomy$domain %in% c("Bacteria", "Archaea") &
-  (paste(taxonomy$genus, taxonomy$species) %in% c(paste(pathogens$genus, pathogens$species), mtb_complex) |
+  (paste(taxonomy$genus, taxonomy$species) %in% paste(pathogens$genus, pathogens$species) | is_who_priority_genus(taxonomy$genus) |
     (taxonomy$rank == "genus" & taxonomy$genus %in% pathogens$genus))) |
   (!taxonomy$domain %in% c("Bacteria", "Archaea") &
     (taxonomy$genus %in% relevant_genera | taxonomy$fullname %in% relevant_current_species))
@@ -3159,9 +3158,11 @@ taxonomy <- taxonomy %>%
   bind_rows(restored) %>%
   add_missing_parents(current_gbif) %>%
   mutate(fullname = sub(" [{][a-z]+[}]$", "", fullname)) %>%
-  # a name at two ranks within a domain: keep the lowest rank as-is and append {rank} to the higher one, as in
-  # 'Deduplicate' above (the restored records can bring such a name back)
-  group_by(domain, fullname) %>%
+  # a name at two ranks: keep the lowest rank as-is and append {rank} to the higher one, as in 'Deduplicate' above
+  # (the restored records can bring such a name back); also between domains, as names must be unique (e.g. the
+  # fungal genus Acantharia and the radiolarian class 'Acantharia {class}', decision by Matthijs S. Berends, 7 October
+  # 2026)
+  group_by(fullname) %>%
   mutate(fullname = if_else(
     n_distinct(rank) > 1 & rank_order[rank] > min(rank_order[rank]),
     paste0(fullname, " {", rank, "}"),
@@ -3367,7 +3368,7 @@ rm(retired_by_decision)
 # a preferred name that is not validly published. Rules (decision by Matthijs S. Berends, 7 October 2026):
 # - prokaryotes are looked up in LPSN: a synonym there is linked to its correct name (if that is in the data set), a
 #   correct name becomes accepted, and a name that is not validly published is only kept if it is protected (see
-#   'Add parent identifiers'), as accepted;
+#   'Add parent identifiers', e.g. all taxa of the WHO priority genera), as accepted;
 # - all others are removed, and their released codes are retired with the reason in mo_code_retirements.csv, so that
 #   they are never given to another taxon and as.mo() translates them to NA with that reason;
 # - a record that still has children that are not removed gets the status 'unknown' instead, so that the hierarchy
@@ -3408,7 +3409,7 @@ for (i in prokaryotes) {
 save_lpsn_cache()
 # names that are not validly published, according to the policy in 'Add parent identifiers'
 not_valid <- intersect(prokaryotes, which(taxonomy$status == "not validly published"))
-protected_now <- (paste(taxonomy$genus, taxonomy$species) %in% c(paste(pathogens$genus, pathogens$species), mtb_complex) |
+protected_now <- (paste(taxonomy$genus, taxonomy$species) %in% paste(pathogens$genus, pathogens$species) | is_who_priority_genus(taxonomy$genus) |
   (taxonomy$rank == "genus" & taxonomy$genus %in% pathogens$genus))
 taxonomy$status[not_valid[protected_now[not_valid]]] <- "accepted"
 taxonomy$status[not_valid[!protected_now[not_valid]]] <- "synonym" # (without a current name, so removed below)
@@ -3556,6 +3557,20 @@ rm(gbif_genus_family, genus_family_override, family_fill)
 # Every phylum, class, order and family that a current record refers to must exist as a record in the same domain
 # (in October 2026 e.g. the family Plasmodiidae was only in the Chromista, as in COL, while Plasmodium is in the
 # Protozoa). A record of that name in another domain that is not used there is moved, otherwise a record is added.
+# Genera that are moved to another domain as a whole, as their only source has them in another domain than all
+# related taxa (`genus_domain_override` above only chooses between domains in which a genus occurs). Their parent
+# records follow below. Decision by Matthijs S. Berends, 7 October 2026:
+genus_domain_move <- c(
+  # a plasmodial slime mould (Myxomycetes) that is only in MycoBank, while all other Myxomycetes are in Protozoa
+  "Dictydiaethalium" = "Protozoa"
+)
+for (g in names(genus_domain_move)) {
+  i <- which(taxonomy$genus == g & taxonomy$rank %in% c("genus", "species", "subspecies"))
+  message("Moving ", length(i), " records of ", g, " to ", genus_domain_move[g])
+  taxonomy$domain[i] <- genus_domain_move[g]
+  taxonomy$kingdom[i] <- genus_domain_move[g]
+}
+
 parent_log <- tibble()
 for (r in c("family", "order", "class", "phylum")) {
   lower <- c("phylum", "class", "order", "family", "genus", "species", "subspecies")
@@ -3566,7 +3581,8 @@ for (r in c("family", "order", "class", "phylum")) {
     filter(status != "synonym", rank %in% lower, .data[[r]] != "", .data[[r]] %unlike% "^[(]")
   needed <- children %>% distinct(domain, name = .data[[r]])
   missing_parents <- needed %>%
-    filter(!paste(domain, name) %in% paste(taxonomy$domain[taxonomy$rank == r], taxonomy$fullname[taxonomy$rank == r]))
+    # (by the rank field, as a record can have a rank suffix, e.g. 'Acantharia {class}')
+    filter(!paste(domain, name) %in% paste(taxonomy$domain[taxonomy$rank == r], taxonomy[[r]][taxonomy$rank == r]))
   for (k in seq_len(nrow(missing_parents))) {
     dom <- missing_parents$domain[k]
     nm <- missing_parents$name[k]

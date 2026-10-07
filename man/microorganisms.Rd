@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 103 809 Taxonomic Records of Microorganisms}
+\title{Data Set with 103 246 Taxonomic Records of Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 103 809 observations and 28 variables:
+A \link[tibble:tibble]{tibble} with 103 246 observations and 28 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package. \emph{\strong{This is a unique identifier.}}
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. \emph{\strong{This is a unique identifier.}}
@@ -49,8 +49,8 @@ Included taxonomic data from \href{https://lpsn.dsmz.de}{LPSN}, \href{https://ww
 \item All ~48 000 (sub)species from the domains of Archaea and Bacteria
 \item ~46 000 species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
 \item ~5 300 (sub)species from the kingdom of Protozoa
-\item ~3 100 (sub)species from ~150 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
-\item All ~34 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
+\item ~2 600 (sub)species from ~130 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
+\item All ~33 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
 \item The complete taxonomic tree of all included (sub)species: from domain to subspecies
 \item The identifier of the parent taxons
 \item The year and first author of the related scientific publication

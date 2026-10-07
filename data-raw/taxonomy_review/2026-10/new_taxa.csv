@@ -56,6 +56,7 @@
 "P_ACNTH_QUIN","Acanthamoeba quina","Protozoa","Protozoa","Amoebozoa","Lobosa","Amoebida","Acanthamoebidae","Acanthamoeba","quina","","species","accepted",,,,,"GBIF",,,,"LVBG6","LYM",,1.25
 "P_ACNTH_STVN","Acanthamoeba stevensoni","Protozoa","Protozoa","Amoebozoa","Lobosa","Amoebida","Acanthamoebidae","Acanthamoeba","stevensoni","","species","accepted",,,,,"GBIF",,,,"LVF32","LYM",,1.25
 "P_ACNTH_TRNG","Acanthamoeba triangularis","Protozoa","Protozoa","Amoebozoa","Lobosa","Amoebida","Acanthamoebidae","Acanthamoeba","triangularis","","species","accepted",,,,,"GBIF",,,,"LVF44","LYM",,1.25
+"P_[CLS]_ACANTHAR","Acantharia {class}","Protozoa","Protozoa","","Acantharia","","","","","","class","accepted",,,,,"manually added",,,,,,,2
 "F_ATGMA_PLSL","Acanthostigma pilosella","Fungi","Fungi","Ascomycota","Dothideomycetes","Tubeufiales","Tubeufiaceae","Acanthostigma","pilosella","","species","synonym","Kirschst",,,,"GBIF",,,,"9XBGJ","627P5","QSWQ",2
 "AN_[FAM]_ACARIDAE","Acaridae","Animalia","Animalia","","","","Acaridae","","","","family","accepted","Latreille, 1802",,,,"GBIF",,,,"5VQ","1",,2
 "AN_ACARS","Acarus","Animalia","Animalia","","","","Acaridae","Acarus","","","genus","accepted","Linnaeus, 1758",,,,"GBIF",,,,"LYCS2","5VQ",,2
@@ -177,7 +178,6 @@
 "F_ACRMN_PRML","Acremonium paramultiramosum","Fungi","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Bionectriaceae","Acremonium","paramultiramosum","","species","accepted","Lin Zhao et al., 2025",,,,"MycoBank","856654","7028",,,"N93",,1.25
 "F_ACRMN_QRCV","Acremonium quercivorum","Fungi","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Bionectriaceae","Acremonium","quercivorum","","species","accepted","Berraf-Tebbal et al., 2025",,,,"MycoBank","858634","7028",,,"N93",,1.25
 "F_ACRMN_VNDR","Acremonium vanderkolkii","Fungi","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Bionectriaceae","Acremonium","vanderkolkii","","species","accepted","Boers et al., 2024",,,,"MycoBank","855945","7028",,"V7R84","N93",,1.25
-"AN_[FAM]_ACRIDIDA","Acrididae","Animalia","Animalia","","","","Acrididae","","","","family","accepted","MacLeay, 1821",,,,"GBIF",,,,"8NKGT","1",,2
 "F_ACRCN","Acroconidiella","Fungi","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Acroconidiella","","","genus","accepted","Lindq et al.",,,,"GBIF",,"816548",,"627RW","624BR",,2
 "F_ACRCN_GRCL","Acroconidiella gracilis","Fungi","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Acroconidiella","gracilis","","species","synonym","Alippi et al.",,,,"GBIF",,,,"9M2J","627RW","5YVV9",2
 "F_ACRCN_TRPL","Acroconidiella tropaeoli","Fungi","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Acroconidiella","tropaeoli","","species","synonym","Lindq et al.",,,,"GBIF",,,,"9M2N","627RW","B2S34",2
@@ -1257,79 +1257,6 @@
 "F_ANSGR_VPRS","Anisogramma vepris","Fungi","Fungi","Ascomycota","Sordariomycetes","Diaporthales","Gnomoniaceae","Anisogramma","vepris","","species","accepted","Merezhko",,,,"GBIF",,,,"5V3JH","WDY",,1.25
 "C_ANSMY","Anisomyxa","Chromista","Chromista","","","","","Anisomyxa","","","genus","unknown",,,,,"inferred",,,,,"4",,2
 "C_ANSMY_PLNT","Anisomyxa plantaginis","Chromista","Chromista","","","","","Anisomyxa","plantaginis","","species","synonym","Nemec",,,,"GBIF",,,,"5V3C4",,"6PXDP",2
-"AN_ANSPT","Anisoptera","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","","","genus","accepted","Berthold, 1827",,,,"GBIF",,,,"LD368","8NKR2",,2
-"AN_ANSPT_ABRR","Anisoptera aberrans","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","aberrans","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"6739T","LD368","XQ27",2
-"AN_ANSPT_ADST","Anisoptera adustum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","adustum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"9H3LL","LD368","XPXX",2
-"AN_ANSPT_AFFN","Anisoptera affine","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","affine","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5V2YZ","LD368","5ZSMY",2
-"AN_ANSPT_AFRC","Anisoptera africanum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","africanum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"66QYZ","LD368","XPYZ",2
-"AN_ANSPT_ALBS","Anisoptera albescens","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","albescens","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PWYY","LD368","XPZV",2
-"AN_ANSPT_AMBL","Anisoptera amabile","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","amabile","","species","synonym","Stal, 1861",,,,"GBIF",,,,"672YZ","LD368","8P8GX",2
-"AN_ANSPT_ANGS","Anisoptera angustifrons","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","angustifrons","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5V2Z9","LD368","KQZ7X",2
-"AN_ANSPT_ARMT","Anisoptera armatipes","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","armatipes","","species","synonym","Karsch, 1893",,,,"GBIF",,,,"8PWYZ","LD368","5ZSMB",2
-"AN_ANSPT_ATTN","Anisoptera attenuatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","attenuatum","","species","synonym","Scudder, 1869",,,,"GBIF",,,,"8P5F6","LD368","8PXTC",2
-"AN_ANSPT_BLNT","Anisoptera bilineatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","bilineatum","","species","synonym","Erichson, 1842",,,,"GBIF",,,,"5V2YY","LD368","XPY5",2
-"AN_ANSPT_BTBR","Anisoptera bituberculatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","bituberculatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"66QYY","LD368","XPZW",2
-"AN_ANSPT_BVTT","Anisoptera bivittatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","bivittatum","","species","synonym","Bolivar, 1900",,,,"GBIF",,,,"672YY","LD368","XPY6",2
-"AN_ANSPT_BRLL","Anisoptera borellii","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","borellii","","species","synonym","Giglio-Tos, 1897",,,,"GBIF",,,,"5V2ZC","LD368","XPY7",2
-"AN_ANSPT_BRNN","Anisoptera borneense","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","borneense","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"66QZC","LD368","XPY8",2
-"AN_ANSPT_BRVC","Anisoptera brevicorne","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","brevicorne","","species","synonym","Karsch, 1893",,,,"GBIF",,,,"CCQGL","LD368","XPY9",2
-"AN_ANSPT_BRVP","Anisoptera brevipennis","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","brevipennis","","species","synonym","Scudder, 1862",,,,"GBIF",,,,"8PWZ3","LD368","8PXTF",2
-"AN_ANSPT_CDLS","Anisoptera caudalis","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","caudalis","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PWZ4","LD368","8PXTG",2
-"AN_ANSPT_CHNN","Anisoptera chinense","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","chinense","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8PWZ5","LD368","XPXW",2
-"AN_ANSPT_CNRS","Anisoptera cinereus","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","cinereus","","species","synonym","Thunberg, 1815",,,,"GBIF",,,,"66QZB","LD368","5ZSMW",2
-"AN_ANSPT_CGNT","Anisoptera cognatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","cognatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5V2ZG","LD368","5ZSML",2
-"AN_ANSPT_CNCL","Anisoptera concolor","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","concolor","","species","synonym","Burmeister, 1838",,,,"GBIF",,,,"8PWZ6","LD368","BTDBC",2
-"AN_ANSPT_CNCP","Anisoptera conocephalus","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","conocephalus","","species","synonym","Linnaeus, 1767",,,,"GBIF",,,,"66QZG","LD368","XQ2V",2
-"AN_ANSPT_DRSL","Anisoptera dorsalis","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","dorsalis","","species","synonym","Latreille, 1804",,,,"GBIF",,,,"5V2ZF","LD368","XPYG",2
-"AN_ANSPT_DRSL_DRSL","Anisoptera dorsalis dorsalis","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","dorsalis","dorsalis","subspecies","synonym","Latreille, 1804",,,,"GBIF",,,,"BTJGS","5V2ZF","XPYG",2
-"AN_ANSPT_EQTR","Anisoptera equatoriale","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","equatoriale","","species","synonym","Giglio-Tos, 1898",,,,"GBIF",,,,"66QZF","LD368","XPYH",2
-"AN_ANSPT_EXMP","Anisoptera exemptum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","exemptum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PWZ8","LD368","XPYJ",2
-"AN_ANSPT_EXTS","Anisoptera exitiosum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","exitiosum","","species","synonym","McNeill, 1901",,,,"GBIF",,,,"8PWZ9","LD368","XQ33",2
-"AN_ANSPT_FSCT","Anisoptera fasciata","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","fasciata","","species","synonym","De Geer, 1773",,,,"GBIF",,,,"8PWZB","LD368","XPYL",2
-"AN_ANSPT_FLVM","Anisoptera flavum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","flavum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"672YJ","LD368","XPYM",2
-"AN_ANSPT_GRCL","Anisoptera gracillimum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","gracillimum","","species","synonym","Morse, 1901",,,,"GBIF",,,,"66QYH","LD368","XQ35",2
-"AN_ANSPT_HSTT","Anisoptera hastata","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","hastata","","species","synonym","Charpentier, 1825",,,,"GBIF",,,,"8PWZC","LD368","5GKTL",2
-"AN_ANSPT_HCTC","Anisoptera hecticum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","hecticum","","species","synonym","Gerstaecker, 1869",,,,"GBIF",,,,"8PWZD","LD368","8PXZS",2
-"AN_ANSPT_HONR","Anisoptera honorei","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","honorei","","species","synonym","Bolivar, 1900",,,,"GBIF",,,,"672YN","LD368","C9FWL",2
-"AN_ANSPT_HNGR","Anisoptera hungaricus","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","hungaricus","","species","synonym","Cziki, 1923",,,,"GBIF",,,,"5V2YL","LD368","XPYG",2
-"AN_ANSPT_ICTM","Anisoptera ictum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","ictum","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"66QYL","LD368","BVKTX",2
-"AN_ANSPT_INFM","Anisoptera infumatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","infumatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"672YL","LD368","XQ3C",2
-"AN_ANSPT_IRIS","Anisoptera iris","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","iris","","species","synonym","Serville, 1838",,,,"GBIF",,,,"8PWZF","LD368","XPYZ",2
-"AN_ANSPT_JPNC","Anisoptera japonicum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","japonicum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"9H3BG","LD368","5GKTM",2
-"AN_ANSPT_JVNC","Anisoptera javanicum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","javanicum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"66QYM","LD368","XPZY",2
-"AN_ANSPT_LATM","Anisoptera laetum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","laetum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5V2Z3","LD368","XPZZ",2
-"AN_ANSPT_LNGP","Anisoptera longipennis","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","longipennis","","species","synonym","Haan, 1843",,,,"GBIF",,,,"672YR","LD368","XPZ6",2
-"AN_ANSPT_NGPS","Anisoptera longipes","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","longipes","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"672Z3","LD368","XQ7X",2
-"AN_ANSPT_LGBR","Anisoptera lugubre","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","lugubre","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5V2YS","LD368","5ZSMN",2
-"AN_ANSPT_MCLT","Anisoptera maculatus","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","maculatus","","species","synonym","Le Guillou, 1841",,,,"GBIF",,,,"8PWZH","LD368","XPZ7",2
-"AN_ANSPT_MELN","Anisoptera melaena","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","melaena","","species","synonym","Haan, 1843",,,,"GBIF",,,,"5V2YP","LD368","XPZ9",2
-"AN_ANSPT_MXCN","Anisoptera mexicanum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","mexicanum","","species","synonym","Saussure, 1859",,,,"GBIF",,,,"672YP","LD368","BVKTX",2
-"AN_ANSPT_MDST","Anisoptera modestum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","modestum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5V2Z2","LD368","XQ24",2
-"AN_ANSPT_NTLN","Anisoptera natalense","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","natalense","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"66QYQ","LD368","8PXTG",2
-"AN_ANSPT_NMRL","Anisoptera nemorale","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","nemorale","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"8PWZJ","LD368","8PXV6",2
-"AN_ANSPT_NGRP","Anisoptera nigropleurum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","nigropleurum","","species","synonym","Bruner, 1891",,,,"GBIF",,,,"8P5FD","LD368","8PXV8",2
-"AN_ANSPT_OBTC","Anisoptera obtectum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","obtectum","","species","synonym","Karny, 1907",,,,"GBIF",,,,"5V2YV","LD368","XQ3K",2
-"AN_ANSPT_OCCD","Anisoptera occidentale","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","occidentale","","species","synonym","Morse, 1901",,,,"GBIF",,,,"5V2Z7","LD368","XQ3L",2
-"AN_ANSPT_OCNC","Anisoptera oceanicum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","oceanicum","","species","synonym","Le Guillou, 1841",,,,"GBIF",,,,"66QYV","LD368","5ZSMY",2
-"AN_ANSPT_PCTM","Anisoptera pictum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","pictum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"9H383","LD368","XPZD",2
-"AN_ANSPT_PSTC","Anisoptera posticum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","posticum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PWZK","LD368","8PY2K",2
-"AN_ANSPT_PNCT","Anisoptera punctipenne","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","punctipenne","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8P5FG","LD368","8PY2L",2
-"AN_ANSPT_RSNM","Anisoptera resinum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","resinum","","species","synonym","Saussure et al., 1898",,,,"GBIF",,,,"672Z8","LD368","5ZSMM",2
-"AN_ANSPT_SLTT","Anisoptera saltator","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","saltator","","species","synonym","Saussure, 1859",,,,"GBIF",,,,"66QZ5","LD368","KQ9MP",2
-"AN_ANSPT_SLTT_SPNS","Anisoptera saltator spinosum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","saltator","spinosum","subspecies","synonym","Morse, 1901",,,,"GBIF",,,,"CN9LM","66QZ5","KQZ7T",2
-"AN_ANSPT_SGNT","Anisoptera signatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","signatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"9H36N","LD368","XPZK",2
-"AN_ANSPT_SNNS","Anisoptera sinense","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","sinense","","species","synonym","Walker, 1871",,,,"GBIF",,,,"66QZ6","LD368","BSYJB",2
-"AN_ANSPT_SOML","Anisoptera somali","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","somali","","species","synonym","Burr, 1900",,,,"GBIF",,,,"8PWZL","LD368","XQ3W",2
-"AN_ANSPT_STRM","Anisoptera straminea","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","straminea","","species","synonym","Haan, 1843",,,,"GBIF",,,,"8P5FJ","LD368","XQ3Y",2
-"AN_ANSPT_STRC","Anisoptera strictum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","strictum","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"8PWZM","LD368","8PXXC",2
-"AN_ANSPT_TNLL","Anisoptera tenellum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","tenellum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PWZN","LD368","8PY2Q",2
-"AN_ANSPT_TENU","Anisoptera tenue","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","tenue","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PWZP","LD368","8PY2R",2
-"AN_ANSPT_TRFS","Anisoptera trifasciatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","trifasciatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"BV733","LD368","XPZN",2
-"AN_ANSPT_TRVT","Anisoptera trivittatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","trivittatum","","species","synonym","Stal, 1861",,,,"GBIF",,,,"8PWZQ","LD368","XQ45",2
-"AN_ANSPT_TRNC","Anisoptera truncatum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","truncatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"672ZY","LD368","XPZP",2
-"AN_ANSPT_VRSC","Anisoptera versicolor","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","versicolor","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5V2ZZ","LD368","XPZR",2
-"AN_ANSPT_VSTT","Anisoptera vestitum","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","vestitum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"66QZZ","LD368","XPZS",2
-"AN_ANSPT_VTTC","Anisoptera vitticollis","Animalia","Animalia","","","","Tettigoniidae","Anisoptera","vitticollis","","species","synonym","Blanchard, 1851",,,,"GBIF",,,,"8PWZR","LD368","CD54M",2
 "F_ANIXI","Anixia","Fungi","Fungi","Basidiomycota","Agaricomycetes","Agaricales","","Anixia","","","genus","accepted",,,,,"GBIF",,"90508",,"WHW","N8",,2
 "F_ANIXI_CYCL","Anixia cyclospora","Fungi","Fungi","Basidiomycota","Agaricomycetes","Agaricales","","Anixia","cyclospora","","species","synonym","Sacc",,,,"GBIF",,,,"66T9R","WHW","6SRFN",2
 "F_ANIXI_SPDC","Anixia spadicea","Fungi","Fungi","Basidiomycota","Agaricomycetes","Agaricales","","Anixia","spadicea","","species","synonym","Fuckel",,,,"GBIF",,,,"674Y3","WHW","6SRFN",2
@@ -5129,8 +5056,6 @@
 "B_CMPNL_FUTS_FUTS","Companilactobacillus futsaii futsaii","Bacteria","Bacillati","Bacillota","Bacilli","Lactobacillales","Lactobacillaceae","Companilactobacillus","futsaii","futsaii","subspecies","accepted","Jiang et al., 2026","41547","10828",,"LPSN",,,,,"CRV9M",,1.5
 "B_CMPNL_MINS","Companilactobacillus miaonis","Bacteria","Bacillati","Bacillota","Bacilli","Lactobacillales","Lactobacillaceae","Companilactobacillus","miaonis","","species","accepted","Wu et al., 2026","72662","10536",,"LPSN",,,,,"CRV9B",,2
 "B_CMPNL_MRVS","Companilactobacillus muriivasis","Bacteria","Bacillati","Bacillota","Bacilli","Lactobacillales","Lactobacillaceae","Companilactobacillus","muriivasis","","species","accepted","Zhang et al., 2024","49306","10536",,"LPSN",,,,"CRVB5","CRV9B",,2
-"AN_CNNLS","Conanalus","Animalia","Animalia","","","","Tettigoniidae","Conanalus","","","genus","accepted","Tinkham, 1943",,,,"GBIF",,,,"8NPXP","8NKR2",,2
-"AN_CNNLS_BRVV","Conanalus brevivalva","Animalia","Animalia","","","","Tettigoniidae","Conanalus","brevivalva","","species","synonym","Shi et al., 2005",,,,"GBIF",,,,"MVSHY","8NPXP","XQ2N",2
 "F_CNFRV","Conferva","Fungi","Fungi","","","","","Conferva","","","genus","accepted","Linnaeus, 1753",,,,"MycoBank","27859","90157",,,,,1.25
 "F_CNFRV_DNDR","Conferva dendritica","Fungi","Fungi","","","","","Conferva","dendritica","","species","accepted","Agardh, 1817",,,,"MycoBank","468834","27859",,,,,1.25
 "F_CNFRV_FNST","Conferva fenestralis","Fungi","Fungi","","","","","Conferva","fenestralis","","species","accepted","Roth, 1800",,,,"MycoBank","468835","27859",,"MWLV9",,"SYLZ3",1.25
@@ -5248,256 +5173,8 @@
 "F_CNTHYR_TRRC","Coniothyrium terricola","Fungi","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Coniothyriaceae","Coniothyrium","terricola","","species","synonym","Gilman et al.",,,,"GBIF",,"7765",,"XP2G","3T9C","4PDC3",2
 "F_CNTHYR_ULMC","Coniothyrium ulmicola","Fungi","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Coniothyriaceae","Coniothyrium","ulmicola","","species","synonym","Kuntze",,,,"GBIF",,"7765",,"XP2Z","3T9C","FVDR",2
 "F_CNTHYR_USNE","Coniothyrium usneae","Fungi","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Coniothyriaceae","Coniothyrium","usneae","","species","synonym","Vouaux",,,,"GBIF",,"7765",,"XP33","3T9C","6PVZW",2
-"AN_CHLDS","Conocephaloides","Animalia","Animalia","","","","","Conocephaloides","","","genus","unknown",,,,,"inferred",,,,,"1",,2
-"AN_CHLDS_AFFN","Conocephaloides affinis","Animalia","Animalia","","","","","Conocephaloides","affinis","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"XPTZ",,"5ZSNB",2
 "AN_CNCPH","Conocephalus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","","","genus","accepted","Schoenherr et al., 1838",,,,"GBIF",,,,"8HDY4","8HBQ9",,2
-"AN_CNCPH_ABRR","Conocephalus aberrans","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","aberrans","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XQ27","8HDY4",,2
-"AN_CNCPH_ABSP","Conocephalus abispinatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","abispinatus","","species","synonym","Xia et al., 1992",,,,"GBIF",,,,"8PXYW","8HDY4","XQ2G",2
-"AN_CNCPH_ACLT","Conocephalus aculeatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","aculeatus","","species","accepted","Piza, 1969",,,,"GBIF",,,,"9GPDD","8HDY4",,2
-"AN_CNCPH_ADST","Conocephalus adustus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","adustus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPXX","8HDY4",,2
-"AN_CNCPH_AETH","Conocephalus aethiopicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","aethiopicus","","species","synonym","Thunberg, 1789",,,,"GBIF",,,,"XQ9T","8HDY4","XQ2V",2
-"AN_CNCPH_AFFN","Conocephalus affinis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","affinis","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"5ZSNB","8HDY4",,2
-"AN_CNCPH_AGLS","Conocephalus aigialus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","aigialus","","species","accepted","Rehn et al., 1915",,,,"GBIF",,,,"8PXT8","8HDY4",,2
-"AN_CNCPH_ALBS","Conocephalus albescens","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","albescens","","species","accepted","Walker, 1869",,,,"GBIF",,,,"XPZV","8HDY4",,2
-"AN_CNCPH_ALGR","Conocephalus algerinorum","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","algerinorum","","species","accepted","Massa, 1999",,,,"GBIF",,,,"XPXY","8HDY4",,2
-"AN_CNCPH_ALLR","Conocephalus allardi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","allardi","","species","accepted","Caudell, 1910",,,,"GBIF",,,,"XQ4B","8HDY4",,2
-"AN_CNCPH_AMBL","Conocephalus amabilis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","amabilis","","species","accepted","Stal, 1861",,,,"GBIF",,,,"8P8GX","8HDY4",,2
-"AN_CNCPH_ANGS","Conocephalus angustifrons","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","angustifrons","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"KQZ7X","8HDY4",,2
-"AN_CNCPH_VRTX","Conocephalus angustivertex","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","angustivertex","","species","accepted","Pitkin, 1980",,,,"GBIF",,,,"XQ2C","8HDY4",,2
-"AN_CNCPH_ARBC","Conocephalus arabicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","arabicus","","species","synonym","Uvarov, 1933",,,,"GBIF",,,,"8PXYZ","8HDY4","XPZ7",2
-"AN_CNCPH_ARMT","Conocephalus armatipes","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","armatipes","","species","accepted","Karsch, 1893",,,,"GBIF",,,,"5ZSMB","8HDY4",,2
-"AN_CNCPH_ATTN","Conocephalus attenuatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","attenuatus","","species","accepted","Scudder, 1869",,,,"GBIF",,,,"8PXTC","8HDY4",,2
-"AN_CNCPH_BAKR","Conocephalus bakeri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bakeri","","species","accepted","Karny, 1920",,,,"GBIF",,,,"XPY2","8HDY4",,2
-"AN_CNCPH_BMBS","Conocephalus bambusanus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bambusanus","","species","accepted","Ingrisch, 1990",,,,"GBIF",,,,"XQ2G","8HDY4",,2
-"AN_CNCPH_BSTN","Conocephalus basutoanus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","basutoanus","","species","accepted","Chopard, 1955",,,,"GBIF",,,,"XQ2H","8HDY4",,2
-"AN_CNCPH_BCHN","Conocephalus bechuanensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bechuanensis","","species","accepted","Peringuey, 1916",,,,"GBIF",,,,"XPY3","8HDY4",,2
-"AN_CNCPH_BYBN","Conocephalus beybienkoi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","beybienkoi","","species","accepted","Storozhenko, 1981",,,,"GBIF",,,,"XPY4","8HDY4",,2
-"AN_CNCPH_BDNS","Conocephalus bidens","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bidens","","species","synonym","Uvarov, 1957",,,,"GBIF",,,,"5ZT27","8HDY4","XPZ7",2
-"AN_CNCPH_BDNT","Conocephalus bidentatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bidentatus","","species","accepted","Shi et al., 1994",,,,"GBIF",,,,"8PXTD","8HDY4",,2
-"AN_CNCPH_BLNT","Conocephalus bilineatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bilineatus","","species","accepted","Erichson, 1842",,,,"GBIF",,,,"XPY5","8HDY4",,2
-"AN_CNCPH_BSPN","Conocephalus bispinatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bispinatus","","species","accepted","Pitkin, 1980",,,,"GBIF",,,,"XQ2K","8HDY4",,2
-"AN_CNCPH_BTBR","Conocephalus bituberculatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bituberculatus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZW","8HDY4",,2
-"AN_CNCPH_BVTT","Conocephalus bivittatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bivittatus","","species","accepted","Bolivar, 1900",,,,"GBIF",,,,"XPY6","8HDY4",,2
-"AN_CNCPH_BDNH","Conocephalus bodenheimeri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","bodenheimeri","","species","synonym","Sternlicht, 1953",,,,"GBIF",,,,"8QKC4","8HDY4","5GKTK",2
-"AN_CNCPH_BRLL","Conocephalus borellii","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","borellii","","species","accepted","Giglio-Tos, 1897",,,,"GBIF",,,,"XPY7","8HDY4",,2
-"AN_CNCPH_BRNN","Conocephalus borneensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","borneensis","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPY8","8HDY4",,2
-"AN_CNCPH_BRVC","Conocephalus brevicercus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","brevicercus","","species","accepted","Karsch, 1893",,,,"GBIF",,,,"XPY9","8HDY4",,2
-"AN_CNCPH_BRVP","Conocephalus brevipennis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","brevipennis","","species","accepted","Scudder, 1862",,,,"GBIF",,,,"8PXTF","8HDY4",,2
-"AN_CNCPH_BRVP_BRVP","Conocephalus brevipennis brevipennis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","brevipennis","brevipennis","subspecies","synonym","Scudder, 1862",,,,"GBIF",,,,"BTJPZ","8PXTF","8PXTF",2
-"AN_CNCPH_VLVA","Conocephalus brevivalva","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","brevivalva","","species","synonym","Shi et al., 2005",,,,"GBIF",,,,"XQ2P","8HDY4","5ZSMH",2
-"AN_CNCPH_BRVV","Conocephalus brevivalvus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","brevivalvus","","species","accepted","Shi et al., 2005",,,,"GBIF",,,,"XQ2N","8HDY4",,2
-"AN_CNCPH_BRVX","Conocephalus brevixiphus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","brevixiphus","","species","synonym","Willemse, 1942",,,,"GBIF",,,,"XQB7","8HDY4","XQ24",2
-"AN_CNCPH_BRNC","Conocephalus brincki","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","brincki","","species","accepted","Chopard, 1955",,,,"GBIF",,,,"XQ2Q","8HDY4",,2
-"AN_CNCPH_BURR","Conocephalus burri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","burri","","species","synonym","Ebner, 1910",,,,"GBIF",,,,"CD54P","8HDY4","XPYG",2
-"AN_CNCPH_BXTN","Conocephalus buxtoni","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","buxtoni","","species","synonym","Chopard, 1921",,,,"GBIF",,,,"XQBB","8HDY4","5GKTD",2
-"AN_CNCPH_CRLN","Conocephalus carolinensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","carolinensis","","species","synonym","Willemse, 1942",,,,"GBIF",,,,"MY93Y","8HDY4","XPZ6",2
-"AN_CNCPH_CDLS","Conocephalus caudalis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","caudalis","","species","accepted","Walker, 1869",,,,"GBIF",,,,"8PXTG","8HDY4",,2
-"AN_CNCPH_CDTM","Conocephalus caudatum","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","caudatum","","species","synonym","Morse, 1901",,,,"GBIF",,,,"CRW75","8HDY4","XQ3L",2
-"AN_CNCPH_CDTS","Conocephalus caudatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","caudatus","","species","synonym","Bey-Bienko, 1954",,,,"GBIF",,,,"XQBL","8HDY4","XPZC",2
-"AN_CNCPH_CRCR","Conocephalus cercorum","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","cercorum","","species","accepted","Sjostedt, 1926",,,,"GBIF",,,,"8P8H6","8HDY4",,2
-"AN_CNCPH_CHVS","Conocephalus chavesi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","chavesi","","species","accepted","Bolivar, 1905",,,,"GBIF",,,,"8PXTH","8HDY4",,2
-"AN_CNCPH_CHNN","Conocephalus chinensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","chinensis","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPXW","8HDY4",,2
-"AN_CNCPH_CNRS","Conocephalus cinereus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","cinereus","","species","accepted","Thunberg, 1815",,,,"GBIF",,,,"5ZSMW","8HDY4",,2
-"AN_CNCPH_CNNM","Conocephalus cinnamonifrons","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","cinnamonifrons","","species","accepted","Braun, 2022",,,,"GBIF",,,,"BSYKW","8HDY4",,2
-"AN_CNCPH_CGNT","Conocephalus cognatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","cognatus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"5ZSML","8HDY4",,2
-"AN_CNCPH_CNCL","Conocephalus concolor","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","concolor","","species","accepted","Burmeister, 1838",,,,"GBIF",,,,"9GPDR","8HDY4",,2
-"AN_CNCPH_CNCL_BXTN","Conocephalus concolor buxtoni","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","concolor","buxtoni","subspecies","accepted","Chopard, 1921",,,,"GBIF",,,,"5GKTD","9GPDR",,2
-"AN_CNCPH_CNCL_CNCL","Conocephalus concolor concolor","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","concolor","concolor","subspecies","accepted","Burmeister, 1838",,,,"GBIF",,,,"BTDBC","9GPDR",,2
-"AN_CNCPH_CNCL_HSPN","Conocephalus concolor hispanicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","concolor","hispanicus","subspecies","accepted","Heller, 1988",,,,"GBIF",,,,"5GKTF","9GPDR",,2
-"AN_CNCPH_CNCL_IMPR","Conocephalus concolor imperatiphilus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","concolor","imperatiphilus","subspecies","accepted","Defaut et al., 2022",,,,"GBIF",,,,"BV6GR","9GPDR",,2
-"AN_CNCPH_CNCL_PENR","Conocephalus concolor peneri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","concolor","peneri","subspecies","accepted","Harz, 1970",,,,"GBIF",,,,"5GKTG","9GPDR",,2
-"AN_CNCPH_CNCP","Conocephalus conocephalus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","conocephalus","","species","accepted","Linnaeus, 1767",,,,"GBIF",,,,"XQ2V","8HDY4",,2
-"AN_CNCPH_CNCP_CNCP","Conocephalus conocephalus conocephalus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","conocephalus","conocephalus","subspecies","synonym","Linnaeus, 1767",,,,"GBIF",,,,"BTJQ3","XQ2V","XQ2V",2
-"AN_CNCPH_CNSL","Conocephalus consul","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","consul","","species","accepted","Karny, 1911",,,,"GBIF",,,,"8PXZ9","8HDY4",,2
-"AN_CNCPH_DCSP","Conocephalus decaspinosus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","decaspinosus","","species","accepted","Nagar et al., 2016",,,,"GBIF",,,,"XPYD","8HDY4",,2
-"AN_CNCPH_DNTC","Conocephalus denticercus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","denticercus","","species","accepted","Karny, 1907",,,,"GBIF",,,,"5ZSN8","8HDY4",,2
-"AN_CNCPH_DFFR","Conocephalus differentus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","differentus","","species","accepted","Shi et al., 1997",,,,"GBIF",,,,"XQ2W","8HDY4",,2
-"AN_CNCPH_DLTT","Conocephalus dilatatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","dilatatus","","species","synonym","Ramme, 1951",,,,"GBIF",,,,"9GPDT","8HDY4","BWMXC",2
-"AN_CNCPH_DMDT","Conocephalus dimidiatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","dimidiatus","","species","synonym","Matsumura et al., 1908",,,,"GBIF",,,,"BZ5TX","8HDY4","XPZ7",2
-"AN_CNCPH_DSCL","Conocephalus discolor","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","discolor","","species","synonym","Thunberg, 1815",,,,"GBIF",,,,"XQ8G","8HDY4","BWMXC",2
-"AN_CNCPH_DVRG","Conocephalus divergentus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","divergentus","","species","synonym","Matsumura et al., 1908",,,,"GBIF",,,,"BWMWS","8HDY4","5GKTM",2
-"AN_CNCPH_DRSL","Conocephalus dorsalidentatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","dorsalidentatus","","species","accepted","Li et al., 2019",,,,"GBIF",,,,"8PXTM","8HDY4",,2
-"AN_CNCPH_RSLS","Conocephalus dorsalis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","dorsalis","","species","accepted","Latreille, 1804",,,,"GBIF",,,,"XPYG","8HDY4",,2
-"AN_CNCPH_RSLS_BYBN","Conocephalus dorsalis beybienkoi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","dorsalis","beybienkoi","subspecies","synonym","Storozhenko, 1981",,,,"GBIF",,,,"5GKTW","XPYG","XPY4",2
-"AN_CNCPH_RSLS_BURR","Conocephalus dorsalis burri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","dorsalis","burri","subspecies","synonym","Ebner, 1910",,,,"GBIF",,,,"7JMG8","XPYG","XPYG",2
-"AN_CNCPH_RSLS_DRSL","Conocephalus dorsalis dorsalis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","dorsalis","dorsalis","subspecies","synonym","Latreille, 1804",,,,"GBIF",,,,"BTJQM","XPYG","XPYG",2
-"AN_CNCPH_DRYP","Conocephalus doryphorus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","doryphorus","","species","accepted","Karny, 1907",,,,"GBIF",,,,"XQ2X","8HDY4",,2
-"AN_CNCPH_DUBS","Conocephalus dubius","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","dubius","","species","accepted","Willemse, 1942",,,,"GBIF",,,,"XPZX","8HDY4",,2
-"AN_CNCPH_EBNR","Conocephalus ebneri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","ebneri","","species","accepted","Harz, 1966",,,,"GBIF",,,,"XQ2Y","8HDY4",,2
-"AN_CNCPH_EMNS","Conocephalus emeiensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","emeiensis","","species","accepted","Shi et al., 1999",,,,"GBIF",,,,"XQ2Z","8HDY4",,2
-"AN_CNCPH_ENSF","Conocephalus ensifer","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","ensifer","","species","synonym","Scudder, 1862",,,,"GBIF",,,,"C9FW9","8HDY4","8PXTF",2
-"AN_CNCPH_SFRS","Conocephalus ensiferus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","ensiferus","","species","synonym","Willemse, 1942",,,,"GBIF",,,,"8TP6K","8HDY4","XQ49",2
-"AN_CNCPH_EQTR","Conocephalus equatorialis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","equatorialis","","species","accepted","Giglio-Tos, 1898",,,,"GBIF",,,,"XPYH","8HDY4",,2
-"AN_CNCPH_EXMP","Conocephalus exemptus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","exemptus","","species","accepted","Walker, 1869",,,,"GBIF",,,,"XPYJ","8HDY4",,2
-"AN_CNCPH_EXTS","Conocephalus exitiosus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","exitiosus","","species","accepted","McNeill, 1901",,,,"GBIF",,,,"XQ33","8HDY4",,2
-"AN_CNCPH_XTSS","Conocephalus exitosus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","exitosus","","species","synonym","McNeill, 1901",,,,"GBIF",,,,"BZ5ZL","8HDY4","XQ33",2
-"AN_CNCPH_EXSL","Conocephalus exsul","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","exsul","","species","accepted","Karny, 1911",,,,"GBIF",,,,"XPYK","8HDY4",,2
-"AN_CNCPH_FSCT","Conocephalus fasciatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","fasciatus","","species","accepted","De Geer, 1773",,,,"GBIF",,,,"XPYL","8HDY4",,2
-"AN_CNCPH_FSCT_FSCT","Conocephalus fasciatus fasciatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","fasciatus","fasciatus","subspecies","synonym","De Geer, 1773",,,,"GBIF",,,,"BTDBH","XPYL","XPYL",2
-"AN_CNCPH_FSCT_VCNS","Conocephalus fasciatus vicinus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","fasciatus","vicinus","subspecies","synonym","Morse, 1901",,,,"GBIF",,,,"5GKTY","XPYL","XPYL",2
-"AN_CNCPH_FLVS","Conocephalus flavus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","flavus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPYM","8HDY4",,2
-"AN_CNCPH_MSNS","Conocephalus formosanus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","formosanus","","species","synonym","Matsumura et al., 1908",,,,"GBIF",,,,"XQ8K","8HDY4","5GKTM",2
-"AN_CNCPH_FRMS","Conocephalus formosus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","formosus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPYN","8HDY4",,2
-"AN_CNCPH_FLMK","Conocephalus fulmeki","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","fulmeki","","species","accepted","Ebner, 1927",,,,"GBIF",,,,"XQ34","8HDY4",,2
-"AN_CNCPH_FSCS","Conocephalus fuscus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","fuscus","","species","accepted","Fabricius, 1793",,,,"GBIF",,,,"BWMXC","8HDY4",,2
-"AN_CNCPH_FSCS_FSCS","Conocephalus fuscus fuscus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","fuscus","fuscus","subspecies","accepted","Fabricius, 1793",,,,"GBIF",,,,"5GKTJ","BWMXC",,2
-"AN_CNCPH_GNDR","Conocephalus ganderbali","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","ganderbali","","species","accepted","Shah, 2025",,,,"GBIF",,,,"V9QL9","8HDY4",,2
-"AN_CNCPH_GNCL","Conocephalus geniculare","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","geniculare","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8PXZP","8HDY4","5GKTR",2
-"AN_CNCPH_GGNT","Conocephalus gigantius","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","gigantius","","species","accepted","Matsumura et al., 1908",,,,"GBIF",,,,"8PXXZ","8HDY4",,2
-"AN_CNCPH_GLDT","Conocephalus gladiatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","gladiatus","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"CK37H","8HDY4","XPYJ",2
-"AN_CNCPH_GONS","Conocephalus goianus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","goianus","","species","accepted","Piza, 1977",,,,"GBIF",,,,"9GPDY","8HDY4",,2
-"AN_CNCPH_GSSY","Conocephalus gossypii","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","gossypii","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"C3BYZ","8HDY4","8PXTF",2
-"AN_CNCPH_RCLE","Conocephalus gracile","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","gracile","","species","synonym","Harris, 1841",,,,"GBIF",,,,"XQDQ","8HDY4","XPYL",2
-"AN_CNCPH_GRCL","Conocephalus gracilicercus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","gracilicercus","","species","accepted","Li et al., 2018",,,,"GBIF",,,,"8PXTS","8HDY4",,2
-"AN_CNCPH_LLMS","Conocephalus gracillimus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","gracillimus","","species","accepted","Morse, 1901",,,,"GBIF",,,,"XQ35","8HDY4",,2
-"AN_CNCPH_GRMN","Conocephalus graminifolius","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","graminifolius","","species","accepted","Fabricius, 1775",,,,"GBIF",,,,"8PXZQ","8HDY4",,2
-"AN_CNCPH_GRBN","Conocephalus grebenchikovi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","grebenchikovi","","species","accepted","Uvarov, 1942",,,,"GBIF",,,,"8P8HF","8HDY4",,2
-"AN_CNCPH_GNGD","Conocephalus guangdongensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","guangdongensis","","species","accepted","Shi et al., 1997",,,,"GBIF",,,,"MY786","8HDY4",,2
-"AN_CNCPH_GRTL","Conocephalus guartela","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","guartela","","species","accepted","Fianco, 2023",,,,"GBIF",,,,"BSYKY","8HDY4",,2
-"AN_CNCPH_GURN","Conocephalus guerini","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","guerini","","species","accepted","Schoenherr, 1838",,,,"GBIF",,,,"5ZSPC","8HDY4",,2
-"AN_CNCPH_GYLL","Conocephalus gyllenhalii","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","gyllenhalii","","species","accepted","Gyllenhal, 1838",,,,"GBIF",,,,"5ZSPD","8HDY4",,2
-"AN_CNCPH_HNNN","Conocephalus hainanensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hainanensis","","species","accepted","Shi et al., 2015",,,,"GBIF",,,,"XPYT","8HDY4",,2
-"AN_CNCPH_HLPH","Conocephalus halophilus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","halophilus","","species","accepted","Ishikawa, 2004",,,,"GBIF",,,,"5ZSPQ","8HDY4",,2
-"AN_CNCPH_HARZ","Conocephalus harzi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","harzi","","species","synonym","Willemse, 1971",,,,"GBIF",,,,"8QKH9","8HDY4","7JMHB",2
-"AN_CNCPH_HSTT","Conocephalus hastatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hastatus","","species","accepted","Charpentier, 1825",,,,"GBIF",,,,"5ZSMZ","8HDY4",,2
-"AN_CNCPH_HSTT_BDNH","Conocephalus hastatus bodenheimeri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hastatus","bodenheimeri","subspecies","accepted","Sternlicht, 1953",,,,"GBIF",,,,"5GKTK","5ZSMZ",,2
-"AN_CNCPH_HSTT_HSTT","Conocephalus hastatus hastatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hastatus","hastatus","subspecies","accepted","Charpentier, 1825",,,,"GBIF",,,,"5GKTL","5ZSMZ",,2
-"AN_CNCPH_HEBS","Conocephalus hebes","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hebes","","species","accepted","Erichson, 1848",,,,"GBIF",,,,"BSYGN","8HDY4",,2
-"AN_CNCPH_HCTC","Conocephalus hecticus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hecticus","","species","accepted","Gerstaecker, 1869",,,,"GBIF",,,,"8PXZS","8HDY4",,2
-"AN_CNCPH_HMPT","Conocephalus hemipterus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hemipterus","","species","synonym","Thunberg, 1815",,,,"GBIF",,,,"5ZSPK","8HDY4","XQ2V",2
-"AN_CNCPH_HILL","Conocephalus hilli","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hilli","","species","accepted","Farooqi et al., 2019",,,,"GBIF",,,,"8PXTV","8HDY4",,2
-"AN_CNCPH_HMLY","Conocephalus himalayicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","himalayicus","","species","accepted","Chandra et al., 2023",,,,"GBIF",,,,"BV6DK","8HDY4",,2
-"AN_CNCPH_HONR","Conocephalus honorei","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","honorei","","species","accepted","Bolivar, 1900",,,,"GBIF",,,,"C9FWL","8HDY4",,2
-"AN_CNCPH_HYGR","Conocephalus hygrophilus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","hygrophilus","","species","accepted","Rehn et al., 1915",,,,"GBIF",,,,"8PXTW","8HDY4",,2
-"AN_CNCPH_ICTS","Conocephalus ictus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","ictus","","species","accepted","Scudder, 1875",,,,"GBIF",,,,"BVKTX","8HDY4",,2
-"AN_CNCPH_INQL","Conocephalus inaequalis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","inaequalis","","species","synonym","Uvarov, 1928",,,,"GBIF",,,,"8PXZW","8HDY4","XPYZ",2
-"AN_CNCPH_INCN","Conocephalus inconspicuus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","inconspicuus","","species","accepted","Karny, 1920",,,,"GBIF",,,,"XQ3B","8HDY4",,2
-"AN_CNCPH_INFM","Conocephalus infumatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","infumatus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XQ3C","8HDY4",,2
-"AN_CNCPH_INSL","Conocephalus insularis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","insularis","","species","accepted","Morse, 1905",,,,"GBIF",,,,"XPYX","8HDY4",,2
-"AN_CNCPH_IRDS","Conocephalus iriodes","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","iriodes","","species","accepted","Rehn et al., 1915",,,,"GBIF",,,,"BWMY2","8HDY4",,2
-"AN_CNCPH_IRIS","Conocephalus iris","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","iris","","species","accepted","Serville, 1838",,,,"GBIF",,,,"XPYZ","8HDY4",,2
-"AN_CNCPH_JLSC","Conocephalus jaliscienses","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","jaliscienses","","species","accepted","Barrientos-Lozano et al., 2021",,,,"GBIF",,,,"9H2XT","8HDY4",,2
-"AN_CNCPH_JPNC","Conocephalus japonicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","japonicus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZ2","8HDY4",,2
-"AN_CNCPH_JPNC_JPNC","Conocephalus japonicus japonicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","japonicus","japonicus","subspecies","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"5GKTM","XPZ2",,2
-"AN_CNCPH_JPNC_MNTS","Conocephalus japonicus minutus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","japonicus","minutus","subspecies","accepted","Bey-Bienko, 1954",,,,"GBIF",,,,"5GKTN","XPZ2",,2
-"AN_CNCPH_JVNC","Conocephalus javanicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","javanicus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZY","8HDY4",,2
-"AN_CNCPH_KISI","Conocephalus kisi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","kisi","","species","accepted","Harz, 1967",,,,"GBIF",,,,"XQ3D","8HDY4",,2
-"AN_CNCPH_KISI_GKLR","Conocephalus kisi gaukleri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","kisi","gaukleri","subspecies","accepted","Harz, 1969",,,,"GBIF",,,,"5GKTT","XQ3D",,2
-"AN_CNCPH_KISI_KISI","Conocephalus kisi kisi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","kisi","kisi","subspecies","accepted","Harz, 1967",,,,"GBIF",,,,"7JMHB","XQ3D",,2
-"AN_CNCPH_KWSP","Conocephalus kwasiphaiensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","kwasiphaiensis","","species","accepted","Nagar et al., 2016",,,,"GBIF",,,,"XPZ3","8HDY4",,2
-"AN_CNCPH_LATS","Conocephalus laetus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","laetus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZZ","8HDY4",,2
-"AN_CNCPH_LPTP","Conocephalus leptopterus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","leptopterus","","species","accepted","Rehn et al., 1915",,,,"GBIF",,,,"5ZSMC","8HDY4",,2
-"AN_CNCPH_LING","Conocephalus liangi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","liangi","","species","accepted","Liu et al., 2007",,,,"GBIF",,,,"MY7CX","8HDY4",,2
-"AN_CNCPH_LBRM","Conocephalus liebermanni","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","liebermanni","","species","accepted","Ebner, 1953",,,,"GBIF",,,,"XPZ5","8HDY4",,2
-"AN_CNCPH_LMBT","Conocephalus limbatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","limbatus","","species","accepted","Schoenherr, 1838",,,,"GBIF",,,,"XQF8","8HDY4",,2
-"AN_CNCPH_LNGC","Conocephalus longiceps","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","longiceps","","species","accepted","Peringuey, 1916",,,,"GBIF",,,,"XQ5P","8HDY4",,2
-"AN_CNCPH_CRNE","Conocephalus longicorne","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","longicorne","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"XQ9J","8HDY4","XPZ6",2
-"AN_CNCPH_LNGP","Conocephalus longipennis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","longipennis","","species","accepted","Haan, 1843",,,,"GBIF",,,,"XPZ6","8HDY4",,2
-"AN_CNCPH_NGPS","Conocephalus longipes","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","longipes","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XQ7X","8HDY4",,2
-"AN_CNCPH_LGBR","Conocephalus lugubris","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","lugubris","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"5ZSMN","8HDY4",,2
-"AN_CNCPH_MCRP","Conocephalus macroptera","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","macroptera","","species","synonym","Willemse, 1942",,,,"GBIF",,,,"8P8HH","8HDY4","XPZ6",2
-"AN_CNCPH_CLTS","Conocephalus maculates","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","maculates","","species","synonym","Le Guillou, 1841",,,,"GBIF",,,,"BZ5Z3","8HDY4","XPZ7",2
-"AN_CNCPH_MCLT","Conocephalus maculatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","maculatus","","species","accepted","Le Guillou, 1841",,,,"GBIF",,,,"XPZ7","8HDY4",,2
-"AN_CNCPH_MGDL","Conocephalus magdalenae","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","magdalenae","","species","accepted","Naskrecki",,,,"GBIF",,,,"MY7DT","8HDY4",,2
-"AN_CNCPH_MRCS","Conocephalus maoricus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","maoricus","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8P8GQ","8HDY4","CNM5Z",2
-"AN_CNCPH_MPTN","Conocephalus maputensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","maputensis","","species","accepted","Massa, 2022",,,,"GBIF",,,,"9H2TQ","8HDY4",,2
-"AN_CNCPH_MRCL","Conocephalus marcelloi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","marcelloi","","species","accepted","Gorochov et al., 2004",,,,"GBIF",,,,"XQ5Q","8HDY4",,2
-"AN_CNCPH_MRTY","Conocephalus martyi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","martyi","","species","accepted","Piton, 1940",,,,"GBIF",,,,"XQFQ","8HDY4",,2
-"AN_CNCPH_MDWS","Conocephalus meadowsae","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","meadowsae","","species","accepted","Harz, 1970",,,,"GBIF",,,,"XQ3F","8HDY4",,2
-"AN_CNCPH_MLND","Conocephalus melaenoides","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","melaenoides","","species","accepted","Sanger et al., 1995",,,,"GBIF",,,,"XQFT","8HDY4",,2
-"AN_CNCPH_MELNS","Conocephalus melaenus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","melaenus","","species","accepted","Haan, 1843",,,,"GBIF",,,,"XPZ9","8HDY4",,2
-"AN_CNCPH_MLNM","Conocephalus melanum","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","melanum","","species","synonym","Haan, 1843",,,,"GBIF",,,,"CRW5S","8HDY4","XPZ9",2
-"AN_CNCPH_MLNUS","Conocephalus melanus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","melanus","","species","synonym","Haan, 1843",,,,"GBIF",,,,"BZ5Z4","8HDY4","XPZ9",2
-"AN_CNCPH_MELS","Conocephalus melas","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","melas","","species","synonym","Karny, 1912",,,,"GBIF",,,,"BZ5WG","8HDY4","XPZ9",2
-"AN_CNCPH_MXCN","Conocephalus mexicanus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","mexicanus","","species","synonym","Saussure, 1859",,,,"GBIF",,,,"XQFW","8HDY4","BVKTX",2
-"AN_CNCPH_MNTS","Conocephalus minutus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","minutus","","species","synonym","Bey-Bienko, 1954",,,,"GBIF",,,,"XQG2","8HDY4","5GKTN",2
-"AN_CNCPH_MDST","Conocephalus modestus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","modestus","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"C9FXV","8HDY4","XQ24",2
-"AN_CNCPH_MDST_MDST","Conocephalus modestus modestus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","modestus","modestus","subspecies","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7JMHD","C9FXV","XQ24",2
-"AN_CNCPH_MLLY","Conocephalus mollyae","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","mollyae","","species","accepted","Massa, 2025",,,,"GBIF",,,,"CW2M5","8HDY4",,2
-"AN_CNCPH_MNTN","Conocephalus montana","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","montana","","species","accepted","Uvarov, 1928",,,,"GBIF",,,,"XQ5R","8HDY4",,2
-"AN_CNCPH_NGRN","Conocephalus nagariensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","nagariensis","","species","accepted","Shah, 2025",,,,"GBIF",,,,"V9R5T","8HDY4",,2
-"AN_CNCPH_NMBS","Conocephalus namibius","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","namibius","","species","accepted","Gorochov, 2009",,,,"GBIF",,,,"XQ5S","8HDY4",,2
-"AN_CNCPH_NNLN","Conocephalus nanlingensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","nanlingensis","","species","accepted","Li et al., 2019",,,,"GBIF",,,,"8PXV5","8HDY4",,2
-"AN_CNCPH_NMRL","Conocephalus nemoralis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","nemoralis","","species","accepted","Scudder, 1875",,,,"GBIF",,,,"8PXV6","8HDY4",,2
-"AN_CNCPH_NGRF","Conocephalus nigrifrons","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","nigrifrons","","species","accepted","Chopard, 1952",,,,"GBIF",,,,"XQ5T","8HDY4",,2
-"AN_CNCPH_NGRP","Conocephalus nigropleuroides","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","nigropleuroides","","species","accepted","Fox, 1912",,,,"GBIF",,,,"XQ3H","8HDY4",,2
-"AN_CNCPH_PLRM","Conocephalus nigropleurum","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","nigropleurum","","species","accepted","Bruner, 1891",,,,"GBIF",,,,"8PXV8","8HDY4",,2
-"AN_CNCPH_OBTC","Conocephalus obtectus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","obtectus","","species","accepted","Karny, 1907",,,,"GBIF",,,,"XQ3K","8HDY4",,2
-"AN_CNCPH_OCCD","Conocephalus occidentalis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","occidentalis","","species","accepted","Morse, 1901",,,,"GBIF",,,,"XQ3L","8HDY4",,2
-"AN_CNCPH_OCCD_CMRM","Conocephalus occidentalis camurum","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","occidentalis","camurum","subspecies","synonym","Morse, 1901",,,,"GBIF",,,,"BTJQJ","XQ3L","XQ3L",2
-"AN_CNCPH_OCNC","Conocephalus oceanicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","oceanicus","","species","accepted","Le Guillou, 1841",,,,"GBIF",,,,"5ZSMY","8HDY4",,2
-"AN_CNCPH_OCHR","Conocephalus ochrotelus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","ochrotelus","","species","accepted","Rehn et al., 1915",,,,"GBIF",,,,"BWMYM","8HDY4",,2
-"AN_CNCPH_PRFF","Conocephalus paraffinis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","paraffinis","","species","synonym","Naskrecki et al., 1999",,,,"GBIF",,,,"8QJRG","8HDY4","5ZSMY",2
-"AN_CNCPH_PRVL","Conocephalus parvulus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","parvulus","","species","accepted","Peringuey, 1916",,,,"GBIF",,,,"5ZSNV","8HDY4",,2
-"AN_CNCPH_PRCD","Conocephalus percaudatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","percaudatus","","species","accepted","Bey-Bienko, 1955",,,,"GBIF",,,,"XPZC","8HDY4",,2
-"AN_CNCPH_PRNG","Conocephalus peringueyi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","peringueyi","","species","accepted","Uvarov, 1928",,,,"GBIF",,,,"XQ3N","8HDY4",,2
-"AN_CNCPH_PHSM","Conocephalus phasma","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","phasma","","species","accepted","Gorochov et al., 2004",,,,"GBIF",,,,"XQ5V","8HDY4",,2
-"AN_CNCPH_PCTS","Conocephalus pictus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","pictus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZD","8HDY4",,2
-"AN_CNCPH_PSTC","Conocephalus posticus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","posticus","","species","accepted","Walker, 1869",,,,"GBIF",,,,"8PY2K","8HDY4",,2
-"AN_CNCPH_PRPN","Conocephalus propinquus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","propinquus","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5ZT3C","8HDY4","KQ9MP",2
-"AN_CNCPH_PSDL","Conocephalus pseudalaetus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","pseudalaetus","","species","accepted","Farooqi et al., 2019",,,,"GBIF",,,,"8PXVP","8HDY4",,2
-"AN_CNCPH_PNCT","Conocephalus punctipennis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","punctipennis","","species","accepted","Walker, 1869",,,,"GBIF",,,,"8PY2L","8HDY4",,2
-"AN_CNCPH_RAGG","Conocephalus raggei","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","raggei","","species","synonym","Harz, 1970",,,,"GBIF",,,,"XQHQ","8HDY4","XPZZ",2
-"AN_CNCPH_RCTC","Conocephalus recticaudus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","recticaudus","","species","accepted","Bruner, 1915",,,,"GBIF",,,,"8PXVC","8HDY4",,2
-"AN_CNCPH_RDTN","Conocephalus redtenbacheri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","redtenbacheri","","species","accepted","Bolivar, 1905",,,,"GBIF",,,,"8PXVD","8HDY4",,2
-"AN_CNCPH_RNTZ","Conocephalus rentzi","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","rentzi","","species","accepted","Farooqi et al., 2018",,,,"GBIF",,,,"8PXVF","8HDY4",,2
-"AN_CNCPH_RSCN","Conocephalus resacensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","resacensis","","species","accepted","Rehn et al., 1915",,,,"GBIF",,,,"CFPB5","8HDY4",,2
-"AN_CNCPH_RSNS","Conocephalus resinus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","resinus","","species","accepted","Saussure et al., 1898",,,,"GBIF",,,,"5ZSMM","8HDY4",,2
-"AN_CNCPH_RHDS","Conocephalus rhodesianus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","rhodesianus","","species","accepted","Peringuey, 1916",,,,"GBIF",,,,"XPZF","8HDY4",,2
-"AN_CNCPH_RBRT","Conocephalus roberti","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","roberti","","species","accepted","Le Guillou, 1841",,,,"GBIF",,,,"XQHY","8HDY4",,2
-"AN_CNCPH_SLTN","Conocephalus saltans","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","saltans","","species","accepted","Scudder, 1872",,,,"GBIF",,,,"8PXT6","8HDY4",,2
-"AN_CNCPH_SLTT","Conocephalus saltator","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","saltator","","species","accepted","Saussure, 1859",,,,"GBIF",,,,"KQ9MP","8HDY4",,2
-"AN_CNCPH_SLTT_SPNS","Conocephalus saltator spinosus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","saltator","spinosus","subspecies","synonym","Morse, 1901",,,,"GBIF",,,,"BTJQK","KQ9MP","KQZ7T",2
-"AN_CNCPH_SANN","Conocephalus sannio","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","sannio","","species","synonym","Karny, 1920",,,,"GBIF",,,,"XQJ9","8HDY4","XPZS",2
-"AN_CNCPH_SMVT","Conocephalus semivittatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","semivittatus","","species","accepted","Walker, 1869",,,,"GBIF",,,,"B83L3","8HDY4",,2
-"AN_CNCPH_SMVT_SMVT","Conocephalus semivittatus semivittatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","semivittatus","semivittatus","subspecies","accepted","Walker, 1869",,,,"GBIF",,,,"CNM5Z","B83L3",,2
-"AN_CNCPH_SMVT_VTTT","Conocephalus semivittatus vittatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","semivittatus","vittatus","subspecies","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"5GKTR","B83L3",,2
-"AN_CNCPH_SMRN","Conocephalus semraensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","semraensis","","species","accepted","Farooqi et al., 2021",,,,"GBIF",,,,"8QHVH","8HDY4",,2
-"AN_CNCPH_SHNG","Conocephalus shanghaiensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","shanghaiensis","","species","accepted","Zhou et al., 2010",,,,"GBIF",,,,"XPZJ","8HDY4",,2
-"AN_CNCPH_SGNT","Conocephalus signatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","signatus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZK","8HDY4",,2
-"AN_CNCPH_SNNS","Conocephalus sinensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","sinensis","","species","accepted","Walker, 1871",,,,"GBIF",,,,"BSYJB","8HDY4",,2
-"AN_CNCPH_SJLN","Conocephalus sojolensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","sojolensis","","species","accepted","Sanger et al., 1995",,,,"GBIF",,,,"XQJK","8HDY4",,2
-"AN_CNCPH_SOML","Conocephalus somali","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","somali","","species","accepted","Burr, 1900",,,,"GBIF",,,,"XQ3W","8HDY4",,2
-"AN_CNCPH_SPRT","Conocephalus spartinae","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","spartinae","","species","accepted","Fox, 1912",,,,"GBIF",,,,"XQ3X","8HDY4",,2
-"AN_CNCPH_SPNS","Conocephalus spinosus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","spinosus","","species","accepted",,,,,"GBIF",,,,"KQZ7T","8HDY4",,2
-"AN_CNCPH_STRM","Conocephalus starmuehlneri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","starmuehlneri","","species","accepted","Kaltenbach, 1968",,,,"GBIF",,,,"XPZL","8HDY4",,2
-"AN_CNCPH_LNRI","Conocephalus starmuhlneri","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","starmuhlneri","","species","synonym","Kaltenbach, 1968",,,,"GBIF",,,,"C4CMM","8HDY4","XPZL",2
-"AN_CNCPH_STCT","Conocephalus stictomerus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","stictomerus","","species","accepted","Rehn et al., 1915",,,,"GBIF",,,,"CD54F","8HDY4",,2
-"AN_CNCPH_RMNS","Conocephalus stramineus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","stramineus","","species","accepted","Haan, 1843",,,,"GBIF",,,,"XQ3Y","8HDY4",,2
-"AN_CNCPH_STRT","Conocephalus striata","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","striata","","species","accepted","Willemse, 1942",,,,"GBIF",,,,"XQ23","8HDY4",,2
-"AN_CNCPH_STRC","Conocephalus strictoides","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","strictoides","","species","accepted","Caudell, 1906",,,,"GBIF",,,,"XQ82","8HDY4",,2
-"AN_CNCPH_RCTS","Conocephalus strictus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","strictus","","species","accepted","Scudder, 1875",,,,"GBIF",,,,"8PXXC","8HDY4",,2
-"AN_CNCPH_SLCF","Conocephalus sulcifrontis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","sulcifrontis","","species","accepted","Xia et al., 1992",,,,"GBIF",,,,"XQ3Z","8HDY4",,2
-"AN_CNCPH_TMPL","Conocephalus tempoalensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","tempoalensis","","species","accepted","Barrientos-Lozano et al., 2021",,,,"GBIF",,,,"9H2X8","8HDY4",,2
-"AN_CNCPH_TNLL","Conocephalus tenellus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","tenellus","","species","accepted","Walker, 1869",,,,"GBIF",,,,"8PY2Q","8HDY4",,2
-"AN_CNCPH_TENS","Conocephalus tenuis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","tenuis","","species","accepted","Walker, 1869",,,,"GBIF",,,,"8PY2R","8HDY4",,2
-"AN_CNCPH_TPMH","Conocephalus tepemeh","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","tepemeh","","species","accepted","Barrientos-Lozano et al., 2021",,,,"GBIF",,,,"9H3KZ","8HDY4",,2
-"AN_CNCPH_TRDN","Conocephalus tridens","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","tridens","","species","accepted","Hebard, 1933",,,,"GBIF",,,,"XQ44","8HDY4",,2
-"AN_CNCPH_TRFS","Conocephalus trifasciatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","trifasciatus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZN","8HDY4",,2
-"AN_CNCPH_TRVT","Conocephalus trivittatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","trivittatus","","species","accepted","Stal, 1861",,,,"GBIF",,,,"XQ45","8HDY4",,2
-"AN_CNCPH_TRNC","Conocephalus truncatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","truncatus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZP","8HDY4",,2
-"AN_CNCPH_TMDS","Conocephalus tumidus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","tumidus","","species","accepted","Pitkin, 1980",,,,"GBIF",,,,"XQ47","8HDY4",,2
-"AN_CNCPH_TMLT","Conocephalus tumultuosus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","tumultuosus","","species","accepted","Willemse, 1942",,,,"GBIF",,,,"8PXVM","8HDY4",,2
-"AN_CNCPH_TUYU","Conocephalus tuyu","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","tuyu","","species","accepted","Rubio et al., 2024",,,,"GBIF",,,,"C6T4V","8HDY4",,2
 "AN_CNCPH_TYPC","Conocephalus typicus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","typicus","","species","synonym","Diesing, 1860",,,,"GBIF",,,,"99GZ8","8HDY4","8G3C8",2
-"AN_CNCPH_UNCL","Conocephalus unicolor","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","unicolor","","species","accepted","Bruner, 1915",,,,"GBIF",,,,"CD543","8HDY4",,2
-"AN_CNCPH_UPLN","Conocephalus upoluensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","upoluensis","","species","accepted","Karny, 1907",,,,"GBIF",,,,"XQ24","8HDY4",,2
-"AN_CNCPH_UPLN_UPLN","Conocephalus upoluensis upoluensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","upoluensis","upoluensis","subspecies","synonym","Karny, 1907",,,,"GBIF",,,,"BTJQQ","XQ24","XQ24",2
-"AN_CNCPH_URCT","Conocephalus urcitanus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","urcitanus","","species","synonym","Barranco et al., 1996",,,,"GBIF",,,,"XQ9B","8HDY4","5GKTF",2
-"AN_CNCPH_USMN","Conocephalus usmanii","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","usmanii","","species","accepted","Shah, 2025",,,,"GBIF",,,,"V9RVN","8HDY4",,2
-"AN_CNCPH_VGNL","Conocephalus vaginalis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","vaginalis","","species","accepted","Karny, 1907",,,,"GBIF",,,,"XQ5W","8HDY4",,2
-"AN_CNCPH_VGNT","Conocephalus vaginatus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","vaginatus","","species","accepted","Willemse, 1942",,,,"GBIF",,,,"XQ25","8HDY4",,2
-"AN_CNCPH_VRSC","Conocephalus versicolor","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","versicolor","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZR","8HDY4",,2
-"AN_CNCPH_VSTT","Conocephalus vestitus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","vestitus","","species","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"XPZS","8HDY4",,2
-"AN_CNCPH_VCNS","Conocephalus vicinus","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","vicinus","","species","synonym","Morse, 1901",,,,"GBIF",,,,"BZ5Y6","8HDY4","XPYL",2
-"AN_CNCPH_VRDF","Conocephalus viridifrons","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","viridifrons","","species","synonym","Blatchley, 1920",,,,"GBIF",,,,"XQKZ","8HDY4","8PXT6",2
-"AN_CNCPH_VTCL","Conocephalus viticollis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","viticollis","","species","synonym","Blanchard, 1851",,,,"GBIF",,,,"C9FYC","8HDY4","CD54M",2
-"AN_CNCPH_VTTC","Conocephalus vitticollis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","vitticollis","","species","accepted","Blanchard, 1851",,,,"GBIF",,,,"CD54M","8HDY4",,2
-"AN_CNCPH_WLLM","Conocephalus willemsei","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","willemsei","","species","accepted","Pitkin, 1980",,,,"GBIF",,,,"XQ49","8HDY4",,2
-"AN_CNCPH_XIAI","Conocephalus xiai","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","xiai","","species","accepted","Liu et al., 2007",,,,"GBIF",,,,"5ZSMH","8HDY4",,2
-"AN_CNCPH_XPHD","Conocephalus xiphidioides","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","xiphidioides","","species","accepted","Karny, 1907",,,,"GBIF",,,,"XQ5X","8HDY4",,2
-"AN_CNCPH_YNNN","Conocephalus yunnanensis","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","yunnanensis","","species","accepted","Shi et al., 2009",,,,"GBIF",,,,"XPZT","8HDY4",,2
-"AN_CNCPH_ZLBN","Conocephalus zlobini","Animalia","Animalia","Arthropoda","Insecta","Coleoptera","Dryophthoridae","Conocephalus","zlobini","","species","accepted","Gorochov, 2009",,,,"GBIF",,,,"XQ5Y","8HDY4",,2
 "F_CONPL","Conoplea","Fungi","Fungi","Ascomycota","Pezizomycetes","Pezizales","Sarcosomataceae","Conoplea","","","genus","accepted","Persoon, 1797",,,,"MycoBank","7766","81257",,"62N8Q","FYM",,1.25
 "F_CONPL_ATRA","Conoplea atra","Fungi","Fungi","Ascomycota","Pezizomycetes","Pezizales","Sarcosomataceae","Conoplea","atra","","species","accepted","Persoon, 1801",,,,"MycoBank","494952","7766",,"C9GFZ","62N8Q","TCVH",1.25
 "F_CONPL_ERYN","Conoplea eryngii","Fungi","Fungi","Ascomycota","Pezizomycetes","Pezizales","Sarcosomataceae","Conoplea","eryngii","","species","synonym","Pers",,,,"GBIF",,"7766",,"XSDL","62N8Q","C9TS",2
@@ -5582,35 +5259,6 @@
 "B_CPRCC_INTST","Coprococcus intestinihominis","Bacteria","Bacillati","Bacillota","Clostridia","Eubacteriales","Lachnospiraceae","Coprococcus","intestinihominis","","species","accepted","Hitch et al., 2025","65245","517207",,"LPSN",,,,"VBM9Q","CRX9G",,2
 "B_CPRCC_MBLS","Coprococcus mobilis","Bacteria","Bacillati","Bacillota","Clostridia","Eubacteriales","Lachnospiraceae","Coprococcus","mobilis","","species","synonym","Huang et al., 2025","65773","517207","69697","LPSN",,,,"V4VPK","CRX9G",,2
 "B_CPRCC_PHCN","Coprococcus phoceensis","Bacteria","Bacillati","Bacillota","Clostridia","Eubacteriales","Lachnospiraceae","Coprococcus","phoceensis","","species","accepted","Bonnet et al., 2025","64706","517207",,"LPSN",,,,"N5YDR","CRX9G",,2
-"AN_CPRMR_AERG","Copromorpha aeruginea","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","aeruginea","","species","accepted","Meyrick, 1917",,,,"GBIF",,,,"5ZYHP","KZMKJ",,2
-"AN_CPRMR_ALXL","Copromorpha alixella","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","alixella","","species","synonym","Legrand, 1965",,,,"GBIF",,,,"9BS8T","KZMKJ","5GLKH",2
-"AN_CPRMR_BRYN","Copromorpha bryanthes","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","bryanthes","","species","accepted","Meyrick, 1926",,,,"GBIF",,,,"5ZYHS","KZMKJ",,2
-"AN_CPRMR_CRYP","Copromorpha cryptochlora","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","cryptochlora","","species","accepted","Meyrick, 1930",,,,"GBIF",,,,"5ZYHR","KZMKJ",,2
-"AN_CPRMR_CRYP_ALXL","Copromorpha cryptochlora alixella","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","cryptochlora","alixella","subspecies","accepted","Legrand, 1965",,,,"GBIF",,,,"5GLKH","5ZYHR",,2
-"AN_CPRMR_CRYP_CRYP","Copromorpha cryptochlora cryptochlora","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","cryptochlora","cryptochlora","subspecies","accepted","Meyrick, 1930",,,,"GBIF",,,,"N5ZG7","5ZYHR",,2
-"AN_CPRMR_DLTH","Copromorpha dialithoma","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","dialithoma","","species","accepted","Diakonoff, 1967",,,,"GBIF",,,,"5ZYHM","KZMKJ",,2
-"AN_CPRMR_EFFL","Copromorpha efflorescens","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","efflorescens","","species","accepted","Meyrick, 1906",,,,"GBIF",,,,"5ZYHL","KZMKJ",,2
-"AN_CPRMR_FSSL","Copromorpha fossilis","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","fossilis","","species","accepted","Jarzembowski, 1980",,,,"GBIF",,,,"5ZYHN","KZMKJ",,2
-"AN_CPRMR_GYPS","Copromorpha gypsota","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","gypsota","","species","accepted","Meyrick, 1886",,,,"GBIF",,,,"5ZYGX","KZMKJ",,2
-"AN_CPRMR_LCHN","Copromorpha lichenitis","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","lichenitis","","species","accepted","Turner, 1916",,,,"GBIF",,,,"5ZYGW","KZMKJ",,2
-"AN_CPRMR_LGNS","Copromorpha lignisquama","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","lignisquama","","species","accepted","Diakonoff, 1954",,,,"GBIF",,,,"5ZYH8","KZMKJ",,2
-"AN_CPRMR_MCRL","Copromorpha macrolepis","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","macrolepis","","species","accepted","Diakonoff, 1959",,,,"GBIF",,,,"5ZYGZ","KZMKJ",,2
-"AN_CPRMR_CTRA","Copromorpha mesobactra","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","mesobactra","","species","synonym","Meyrick, 1886",,,,"GBIF",,,,"N5ZJ8","KZMKJ","5ZYGY",2
-"AN_CPRMR_MSBC","Copromorpha mesobactris","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","mesobactris","","species","accepted","Meyrick, 1930",,,,"GBIF",,,,"5ZYGY","KZMKJ",,2
-"AN_CPRMR_MTLL","Copromorpha metallistis","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","metallistis","","species","accepted","Meyrick, 1906",,,,"GBIF",,,,"5ZYGT","KZMKJ",,2
-"AN_CPRMR_MSTH","Copromorpha mistharnis","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","mistharnis","","species","accepted","Diakonoff",,,,"GBIF",,,,"5ZYH5","KZMKJ",,2
-"AN_CPRMR_MYRM","Copromorpha myrmecias","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","myrmecias","","species","accepted","Meyrick, 1930",,,,"GBIF",,,,"5ZYGS","KZMKJ",,2
-"AN_CPRMR_NRCD","Copromorpha narcodes","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","narcodes","","species","accepted","Meyrick, 1916",,,,"GBIF",,,,"Y6B2","KZMKJ",,2
-"AN_CPRMR_NSGR","Copromorpha nesographa","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","nesographa","","species","accepted","Meyrick, 1926",,,,"GBIF",,,,"Y6B3","KZMKJ",,2
-"AN_CPRMR_ORTH","Copromorpha orthidias","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","orthidias","","species","accepted","Meyrick, 1927",,,,"GBIF",,,,"Y6B4","KZMKJ",,2
-"AN_CPRMR_PHST","Copromorpha phaeosticta","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","phaeosticta","","species","accepted","Turner, 1916",,,,"GBIF",,,,"Y6B5","KZMKJ",,2
-"AN_CPRMR_PHYT","Copromorpha phytochroa","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","phytochroa","","species","accepted","Diakonoff, 1953",,,,"GBIF",,,,"Y6B6","KZMKJ",,2
-"AN_CPRMR_PLRP","Copromorpha pleurophanes","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","pleurophanes","","species","accepted","Meyrick, 1905",,,,"GBIF",,,,"Y6B7","KZMKJ",,2
-"AN_CPRMR_PYRR","Copromorpha pyrrhoscia","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","pyrrhoscia","","species","accepted","Meyrick, 1935",,,,"GBIF",,,,"Y6B9","KZMKJ",,2
-"AN_CPRMR_ROPK","Copromorpha roepkei","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","roepkei","","species","accepted","Diakonoff, 1953",,,,"GBIF",,,,"5ZYH4","KZMKJ",,2
-"AN_CPRMR_SMRG","Copromorpha smaragdarcha","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","smaragdarcha","","species","accepted","Diakonoff, 1967",,,,"GBIF",,,,"Y6BB","KZMKJ",,2
-"AN_CPRMR_TTRR","Copromorpha tetrarcha","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","tetrarcha","","species","accepted","Meyrick, 1916",,,,"GBIF",,,,"Y6BC","KZMKJ",,2
-"AN_CPRMR_THRM","Copromorpha thrombota","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Copromorpha","thrombota","","species","accepted","Meyrick, 1916",,,,"GBIF",,,,"Y6BD","KZMKJ",,2
 "AN_[FAM]_CPRMRPHD","Copromorphidae","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","","","","family","accepted","Meyrick, 1905",,,,"GBIF",,,,"8JC","B6L67",,2
 "F_[FAM]_COPROTAC","Coprotaceae","Fungi","Fungi","Ascomycota","Pezizomycetes","Pezizales","Coprotaceae","","","","family","accepted","U.Lindem. & Van Vooren",,,,"GBIF",,"90494",,"V7R83","3SS",,2
 "F_CPRTR","Coprotrichum","Fungi","Fungi","","","","","Coprotrichum","","","genus","unknown",,,,,"inferred",,"90157",,,,,2
@@ -6613,8 +6261,6 @@
 "F_DBRYM_YAMD","Debaryomyces yamadae","Fungi","Fungi","Ascomycota","Pichiomycetes","Serinales","Debaryomycetaceae","Debaryomyces","yamadae","","species","synonym","Van der Walt et al., 1989",,,,"MycoBank","127112","1432","513483","34CHR","62Q7D","6Y8LC",2
 "F_DBRYM_YRRW","Debaryomyces yarrowii","Fungi","Fungi","Ascomycota","Pichiomycetes","Serinales","Debaryomycetaceae","Debaryomyces","yarrowii","","species","accepted","Santa Maria et al., 1971",,,,"MycoBank","312748","1432",,"34CHT","62Q7D","6XWLC",2
 "B_DCHLR_AQUA","Dechloromonas aquae","Bacteria","Pseudomonadati","Pseudomonadota","Betaproteobacteria","Rhodocyclales","Azonexaceae","Dechloromonas","aquae","","species","accepted","Wei et al., 2025","62531","515474",,"LPSN",,,,"V4WRH","42D3",,2
-"AN_DCTCS","Decticus","Animalia","Animalia","","","","Tettigoniidae","Decticus","","","genus","accepted","Serville, 1831",,,,"GBIF",,,,"8NQNF","8NKR2",,2
-"AN_DCTCS_SMVT","Decticus semivittatus","Animalia","Animalia","","","","Tettigoniidae","Decticus","semivittatus","","species","synonym","Walker, 1869",,,,"GBIF",,,,"6CH5Q","8NQNF","B83L3",2
 "B_[CLS]_DEFRRSMT","Deferrisomatia","Bacteria","Pseudomonadati","Thermodesulfobacteriota","Deferrisomatia","","","","","","class","accepted","Waite et al., 2020","17415","25893",,"LPSN",,,,"CRWQF","CT894",,2
 "B_DFLVM_SLNR","Defluviimonas salinarum","Bacteria","Pseudomonadati","Pseudomonadota","Alphaproteobacteria","Rhodobacterales","Paracoccaceae","Defluviimonas","salinarum","","species","accepted","Lee et al., 2025","67978","518202",,"LPSN",,,,,"CRWQT",,2
 "B_DHLGN_LFFL","Dehalogenimonas loeffleri","Bacteria","Bacillati","Chloroflexota","Dehalococcoidia","Dehalococcoidales","Dehalococcoidaceae","Dehalogenimonas","loeffleri","","species","accepted","Wang et al., 2026","71687","517915",,"LPSN",,,,,"42H4",,2
@@ -10171,9 +9817,6 @@
 "F_GRYGN","Gryganskiella","Fungi","Fungi","Mortierellomycota","Mortierellomycetes","Mortierellales","Mortierellaceae","Gryganskiella","","","genus","accepted","Vandepol et al., 2020",,,,"MycoBank","833857","81029",,"9YLTF","CY9",,1.25
 "F_GRYGN_CYST","Gryganskiella cystojenkinii","Fungi","Fungi","Mortierellomycota","Mortierellomycetes","Mortierellales","Mortierellaceae","Gryganskiella","cystojenkinii","","species","accepted","Vandepol et al., 2020",,,,"MycoBank","833858","833857",,"9Z7YY","9YLTF",,1.25
 "F_GRYGN_FMBR","Gryganskiella fimbricystis","Fungi","Fungi","Mortierellomycota","Mortierellomycetes","Mortierellales","Mortierellaceae","Gryganskiella","fimbricystis","","species","accepted","Vandepol et al., 2020",,,,"MycoBank","833859","833857",,"9Z7YZ","9YLTF",,1.25
-"AN_[FAM]_GRYLLIDA","Gryllidae","Animalia","Animalia","","","","Gryllidae","","","","family","accepted","Laicharting, 1781",,,,"GBIF",,,,"8NKKY","1",,2
-"AN_GRYLL","Gryllus","Animalia","Animalia","","","","Gryllidae","Gryllus","","","genus","accepted","Linnaeus, 1758",,,,"GBIF",,,,"8NQ2B","8NKKY",,2
-"AN_GRYLL_CNCP","Gryllus conocephalus","Animalia","Animalia","","","","Gryllidae","Gryllus","conocephalus","","species","synonym","Linnaeus, 1767",,,,"GBIF",,,,"3HGRG","8NQ2B","XQ2V",2
 "B_GRYLM","Grylomicrobium","Bacteria","Bacillati","Bacillota","Erysipelotrichia","Erysipelotrichales","Erysipelotrichaceae","Grylomicrobium","","","genus","accepted","Hitch et al., 2025","69391","492",,"LPSN",,,,,"9V6",,2
 "B_GRYLM_AQSG","Grylomicrobium aquisgranense","Bacteria","Bacillati","Bacillota","Erysipelotrichia","Erysipelotrichales","Erysipelotrichaceae","Grylomicrobium","aquisgranense","","species","accepted","Hitch et al., 2025","69474","69391",,"LPSN",,,,,,,2
 "B_GRYLM_NNSS","Grylomicrobium aquisgranensis","Bacteria","Bacillati","Bacillota","Erysipelotrichia","Erysipelotrichales","Erysipelotrichaceae","Grylomicrobium","aquisgranensis","","species","synonym","Hitch et al., 2025","69535","69391","69474","LPSN",,,,,,,2
@@ -12835,18 +12478,6 @@
 "F_LOBOA_LOBO","Loboa loboi","Fungi","Fungi","","","","Ajellomycetaceae","Loboa","loboi","","species","synonym","Cif et al.",,,,"GBIF",,,,"3VSYX","PZ35P","4CQP9",2
 "F_LBMYC","Lobomyces","Fungi","Fungi","","","","","Lobomyces","","","genus","unknown",,,,,"inferred",,"90157",,,,,2
 "F_LBMYC_LOBO","Lobomyces loboi","Fungi","Fungi","","","","","Lobomyces","loboi","","species","synonym","Borelli",,,,"GBIF",,,,"6QLWL",,"4CQP9",2
-"AN_LOCST","Locusta","Animalia","Animalia","","","","Acrididae","Locusta","","","genus","accepted","Linnaeus, 1758",,,,"GBIF",,,,"8NTNP","8NKGT",,2
-"AN_LOCST_AETH","Locusta aethiopica","Animalia","Animalia","","","","Acrididae","Locusta","aethiopica","","species","synonym","Thunberg, 1789",,,,"GBIF",,,,"6QLDZ","8NTNP","XQ2V",2
-"AN_LOCST_CNCP","Locusta conocephalus","Animalia","Animalia","","","","Acrididae","Locusta","conocephalus","","species","synonym","Linnaeus, 1767",,,,"GBIF",,,,"6QLFK","8NTNP","XQ2V",2
-"AN_LOCST_DRSL","Locusta dorsalis","Animalia","Animalia","","","","Acrididae","Locusta","dorsalis","","species","synonym","Latreille, 1804",,,,"GBIF",,,,"6QLFB","8NTNP","XPYG",2
-"AN_LOCST_FSCT","Locusta fasciata","Animalia","Animalia","","","","Acrididae","Locusta","fasciata","","species","synonym","De Geer, 1773",,,,"GBIF",,,,"6QLF5","8NTNP","XPYL",2
-"AN_LOCST_GRMN","Locusta graminifolia","Animalia","Animalia","","","","Acrididae","Locusta","graminifolia","","species","synonym","Fabricius, 1775",,,,"GBIF",,,,"8PZTT","8NTNP","8PXZQ",2
-"AN_LOCST_HSTT","Locusta hastata","Animalia","Animalia","","","","Acrididae","Locusta","hastata","","species","synonym","Charpentier, 1825",,,,"GBIF",,,,"6QLGS","8NTNP","5ZSMZ",2
-"AN_LOCST_LEPD","Locusta lepida","Animalia","Animalia","","","","Acrididae","Locusta","lepida","","species","synonym","Haan, 1843",,,,"GBIF",,,,"6QLF4","8NTNP","XPZ7",2
-"AN_LOCST_LNGP","Locusta longipennis","Animalia","Animalia","","","","Acrididae","Locusta","longipennis","","species","synonym","Haan, 1843",,,,"GBIF",,,,"72LF4","8NTNP","XPZ6",2
-"AN_LOCST_MELN","Locusta melaena","Animalia","Animalia","","","","Acrididae","Locusta","melaena","","species","synonym","Haan, 1843",,,,"GBIF",,,,"6QLF2","8NTNP","XPZ9",2
-"AN_LOCST_STRM","Locusta straminea","Animalia","Animalia","","","","Acrididae","Locusta","straminea","","species","synonym","Haan, 1843",,,,"GBIF",,,,"72LF2","8NTNP","XQ3Y",2
-"AN_LOCST_VTTC","Locusta vitticollis","Animalia","Animalia","","","","Acrididae","Locusta","vitticollis","","species","synonym","Blanchard, 1851",,,,"GBIF",,,,"6QLJ4","8NTNP","CD54M",2
 "F_LDDRM_OPNT","Lodderomyces opuntiae","Fungi","Fungi","Ascomycota","Pichiomycetes","Serinales","Debaryomycetaceae","Lodderomyces","opuntiae","","species","synonym","Starmer",,,,"GBIF",,"2916",,"3VV37","5G5L","VVYJ",1.25
 "B_LFGRN","Loefgrenia","Bacteria","Bacillati","Cyanobacteriota","Chroococcophyceae","Nostocales","Hapalosiphonaceae","Loefgrenia","","","genus","accepted","Gomont et al., 1896","6516","6095",,"LPSN",,,,"CNZ26","CNWFH",,2
 "B_LFGRN_ANML","Loefgrenia anomala","Bacteria","Bacillati","Cyanobacteriota","Chroococcophyceae","Nostocales","Hapalosiphonaceae","Loefgrenia","anomala","","species","accepted","Gomont",,"6516",,"GBIF",,,,"CNZ27","CNZ26",,2
@@ -12891,9 +12522,6 @@
 "B_LTPLD_STGN","Lotipaludicoccus stagni","Bacteria","Pseudomonadati","Verrucomicrobiota","Opitutia","Opitutales","Opitutaceae","Lotipaludicoccus","stagni","","species","accepted","Park et al., 2026","70669","70668",,"LPSN",,,,,,,2
 "AN_LXTRM","Loxotrema","Animalia","Animalia","Mollusca","Gastropoda","","Melanopsidae","Loxotrema","","","genus","accepted","Gabb, 1868",,,,"GBIF",,,,"7P7WR","7NJQP",,2
 "AN_LXTRM_OVTM","Loxotrema ovatum","Animalia","Animalia","Mollusca","Gastropoda","","Melanopsidae","Loxotrema","ovatum","","species","synonym","Kobayashi, 1912",,,,"GBIF",,,,"B7LFV","7P7WR","6RDGW",2
-"AN_LXTRM_TEXN","Loxotrema texana","Animalia","Animalia","Mollusca","Gastropoda","","Melanopsidae","Loxotrema","texana","","species","accepted","Garvie, 2013",,,,"GBIF",,,,"7RYDL","7P7WR",,2
-"AN_LXTRM_RRTA","Loxotrema turrita","Animalia","Animalia","Mollusca","Gastropoda","","Melanopsidae","Loxotrema","turrita","","species","synonym","Gabb, 1868",,,,"GBIF",,,,"6QNDV","7P7WR","72NDX",2
-"AN_LXTRM_TRRT","Loxotrema turritum","Animalia","Animalia","Mollusca","Gastropoda","","Melanopsidae","Loxotrema","turritum","","species","accepted","Gabb, 1868",,,,"GBIF",,,,"72NDX","7P7WR",,2
 "C_LUCTN","Lucetina","Chromista","Chromista","Miozoa","","Eucoccidiida","Eimeriidae","Lucetina","","","genus","synonym","Henry et al., 1925",,,,"GBIF",,,,"639S4","9LB","55MG",2
 "F_LDWGL","Ludwigiella","Fungi","Fungi","Ascomycota","Dothideomycetes","Dothideales","Saccotheciaceae","Ludwigiella","","","genus","accepted",,,,,"GBIF",,"81613",,"5H79","FVQ",,2
 "F_LDWGL_CNDL","Ludwigiella candollei","Fungi","Fungi","Ascomycota","Dothideomycetes","Dothideales","Saccotheciaceae","Ludwigiella","candollei","","species","synonym","Petr",,,,"GBIF",,,,"6R2CZ","5H79","3NXNN",2
@@ -13771,13 +13399,6 @@
 "F_MGLNC_PSDT","Megalonectria pseudotrichia","Fungi","Fungi","","","","Nectriaceae","Megalonectria","pseudotrichia","","species","synonym","Speg",,,,"GBIF",,,,"72W3X","5MTG","463HG",2
 "F_MGLNC_PSDT_ASTR","Megalonectria pseudotrichia australiensis","Fungi","Fungi","","","","Nectriaceae","Megalonectria","pseudotrichia","australiensis","subspecies","synonym","Henn",,,,"GBIF",,,,"5PZWC","72W3X","463HG",2
 "F_MGLNC_PSDT_OLGS","Megalonectria pseudotrichia oligospora","Fungi","Fungi","","","","Nectriaceae","Megalonectria","pseudotrichia","oligospora","subspecies","synonym","Sacc",,,,"GBIF",,,,"5PZWD","72W3X","463HG",2
-"AN_MGLTH","Megalotheca","Animalia","Animalia","","","","Tettigoniidae","Megalotheca","","","genus","accepted","Karny, 1907",,,,"GBIF",,,,"MY86K","8NKR2",,2
-"AN_MGLTH_LNGC","Megalotheca longiceps","Animalia","Animalia","","","","Tettigoniidae","Megalotheca","longiceps","","species","synonym","Peringuey, 1916",,,,"GBIF",,,,"3YVXW","MY86K","XQ5P",2
-"AN_MGLTH_MNTN","Megalotheca montana","Animalia","Animalia","","","","Tettigoniidae","Megalotheca","montana","","species","synonym","Uvarov, 1928",,,,"GBIF",,,,"3YVXX","MY86K","XQ5R",2
-"AN_MGLTH_NGRF","Megalotheca nigrifrons","Animalia","Animalia","","","","Tettigoniidae","Megalotheca","nigrifrons","","species","synonym","Chopard, 1952",,,,"GBIF",,,,"3YVXY","MY86K","XQ5T",2
-"AN_MGLTH_PRVL","Megalotheca parvulum","Animalia","Animalia","","","","Tettigoniidae","Megalotheca","parvulum","","species","synonym","Peringuey, 1916",,,,"GBIF",,,,"3YVXZ","MY86K","5ZSNV",2
-"AN_MGLTH_VGNL","Megalotheca vaginalis","Animalia","Animalia","","","","Tettigoniidae","Megalotheca","vaginalis","","species","synonym","Karny, 1907",,,,"GBIF",,,,"3YVY3","MY86K","XQ5W",2
-"AN_MGLTH_XPHD","Megalotheca xiphidioides","Animalia","Animalia","","","","Tettigoniidae","Megalotheca","xiphidioides","","species","synonym","Karny, 1907",,,,"GBIF",,,,"3YVY4","MY86K","XQ5X",2
 "B_MGSPH_COLI","Megasphaera coli","Bacteria","Bacillati","Bacillota","Negativicutes","Veillonellales","Veillonellaceae","Megasphaera","coli","","species","accepted","Heng et al., 2025","68478","516031",,"LPSN",,,,"VBN4P","CSKKH",,1.5
 "B_MGSPH_GMNT","Megasphaera geminata","Bacteria","Bacillati","Bacillota","Negativicutes","Veillonellales","Veillonellaceae","Megasphaera","geminata","","species","accepted","Heng et al., 2025","68479","516031",,"LPSN",,,,"VBMK3","CSKKH",,1.25
 "B_MGSPH_INTS","Megasphaera intestinihominis","Bacteria","Bacillati","Bacillota","Negativicutes","Veillonellales","Veillonellaceae","Megasphaera","intestinihominis","","species","synonym","Hitch et al., 2025","65256","516031","791969","LPSN",,,,"VBQHL","CSKKH","CSKKP",1.5
@@ -16904,10 +16525,6 @@
 "B_ORBUS_MOOR","Orbus mooreae","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Orbales","Orbaceae","Orbus","mooreae","","species","accepted","Phillips et al., 2024","53701","518030",,"LPSN",,,,"CTJF2","63FQ3",,2
 "B_ORBUS_STRT","Orbus sturtevantii","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Orbales","Orbaceae","Orbus","sturtevantii","","species","accepted","Phillips et al., 2024","53702","518030",,"LPSN",,,,"CTJGT","63FQ3",,2
 "B_ORBUS_WHLR","Orbus wheelerorum","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Orbales","Orbaceae","Orbus","wheelerorum","","species","accepted","Phillips et al., 2024","53703","518030",,"LPSN",,,,"CTJJ2","63FQ3",,2
-"AN_ORCHL","Orchelimum","Animalia","Animalia","","","","Tettigoniidae","Orchelimum","","","genus","accepted","Serville, 1838",,,,"GBIF",,,,"8NV22","8NKR2",,2
-"AN_ORCHL_BTBR","Orchelimum bituberculatum","Animalia","Animalia","","","","Tettigoniidae","Orchelimum","bituberculatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"6T5D4","8NV22","XPZW",2
-"AN_ORCHL_NGRP","Orchelimum nigropleurum","Animalia","Animalia","","","","Tettigoniidae","Orchelimum","nigropleurum","","species","synonym","Bruner, 1891",,,,"GBIF",,,,"8Q2MC","8NV22","8PXV8",2
-"AN_ORCHL_ORTN","Orchelimum ortoni","Animalia","Animalia","","","","Tettigoniidae","Orchelimum","ortoni","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"755CP","8NV22","5ZSMW",2
 "AN_ORNTB","Orientobilharzia","Animalia","Animalia","Platyhelminthes","Trematoda","Diplostomida","Schistosomatidae","Orientobilharzia","","","genus","synonym","Dutt et al., 1955",,,,"GBIF",,,,"CBJ7C","6387","7PYYQ",1.25
 "AN_ORNTB_BMFR","Orientobilharzia bomfordi","Animalia","Animalia","Platyhelminthes","Trematoda","Diplostomida","Schistosomatidae","Orientobilharzia","bomfordi","","species","synonym","Montgomery, 1906",,,,"GBIF",,,,"CDSS7","CBJ7C","CBZK9",1.25
 "AN_ORNTB_CHEN","Orientobilharzia cheni","Animalia","Animalia","Platyhelminthes","Trematoda","Diplostomida","Schistosomatidae","Orientobilharzia","cheni","","species","synonym","Hsu et al., 1957",,,,"GBIF",,,,"CBJ7D","CBJ7C","CBZL4",1.25
@@ -17635,8 +17252,6 @@
 "B_PLKLL_HNGR","Palikiella hungarica","Bacteria","Bacillati","Cyanobacteriota","Cyanophyceae","Nodosilineales","Cymatolegaceae","Palikiella","hungarica","","species","accepted","Claus",,"48470",,"GBIF",,,,"CP9X9","CP9X6",,2
 "B_PLMLL","Palmella","Bacteria","Bacillati","","","","","Palmella","","","genus","unknown",,,,,"inferred",,,,,,,2
 "B_PLMLL_RPST","Palmella rupestris","Bacteria","Bacillati","","","","","Palmella","rupestris","","species","synonym","Lyngbye",,,,"GBIF",,,,"CPB2N",,"3GC8X",2
-"AN_PALTT","Palotta","Animalia","Animalia","","","","","Palotta","","","genus","unknown",,,,,"inferred",,,,,"1",,2
-"AN_PALTT_INRN","Palotta inornata","Animalia","Animalia","","","","","Palotta","inornata","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8Q2R3",,"XPYZ",2
 "B_PLDBCL","Paludibacillus","Bacteria","Pseudomonadati","Pseudomonadota","Alphaproteobacteria","Rhodobacterales","Paracoccaceae","Paludibacillus","","","genus","accepted","He et al., 2025","57055","34881",,"LPSN",,,,"KTSPM","CSRSZ",,2
 "B_PLDBCL_LTRL","Paludibacillus litoralis","Bacteria","Pseudomonadati","Pseudomonadota","Alphaproteobacteria","Rhodobacterales","Paracoccaceae","Paludibacillus","litoralis","","species","accepted","He et al., 2025","57074","57055",,"LPSN",,,,"KTSPR","KTSPM",,2
 "B_PLDBC_FLXS","Paludibacterium flexuosum","Bacteria","Pseudomonadati","Pseudomonadota","Betaproteobacteria","Neisseriales","Chromobacteriaceae","Paludibacterium","flexuosum","","species","accepted","Nakamura et al., 2026","69967","517749",,"LPSN",,,,,"6CXH",,2
@@ -21245,6 +20860,7 @@
 "B_PSDMN_SPRD","Pseudomonas spirodelae","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Pseudomonadales","Pseudomonadaceae","Pseudomonas","spirodelae","","species","accepted","Vandeborne et al., 2025","56624","517405",,"LPSN",,,,"CTJV8","72PM",,1
 "B_PSDMN_SPUT","Pseudomonas sputi","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Pseudomonadales","Pseudomonadaceae","Pseudomonas","sputi","","species","accepted","Tohya et al., 2025","69427","517405",,"LPSN",,,,,"72PM",,1
 "B_PSDMN_STGN","Pseudomonas stagnisoli","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Pseudomonadales","Pseudomonadaceae","Pseudomonas","stagnisoli","","species","accepted","Hasan et al., 2026","70993","517405",,"LPSN",,,,,"72PM",,1
+"B_PSDMN_STWR","Pseudomonas stewarti","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Pseudomonadales","Pseudomonadaceae","Pseudomonas","stewarti","","species","accepted","Smith, 1898","4359","517405",,"LPSN",,,,"S5GKT","72PM",,1
 "B_PSDMN_SBFL","Pseudomonas subflava","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Pseudomonadales","Pseudomonadaceae","Pseudomonas","subflava","","species","accepted","Ling et al., 2024","51428","517405",,"LPSN",,,,"CSX8L","72PM",,1
 "B_PSDMN_SVLB","Pseudomonas svalbardensis","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Pseudomonadales","Pseudomonadaceae","Pseudomonas","svalbardensis","","species","accepted","Ge et al., 2024","51380","517405",,"LPSN",,,,"CSX8M","72PM",,1
 "B_PSDMN_TLSI","Pseudomonas tolaasi","Bacteria","Pseudomonadati","Pseudomonadota","Gammaproteobacteria","Pseudomonadales","Pseudomonadaceae","Pseudomonas","tolaasi","","species","synonym","Paine, 1919","73013","517405","780148","LPSN",,,,,"72PM",,1
@@ -26673,7 +26289,6 @@
 "F_TTRPS_BLTT","Tetrapisispora blattae","Fungi","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetaceae","Tetrapisispora","blattae","","species","accepted","Kurtzman",,,,"GBIF",,"28343",,"55RGY","646SJ",,1.25
 "F_TTRPS_PHFF","Tetrapisispora phaffii","Fungi","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetaceae","Tetrapisispora","phaffii","","species","accepted","Ueda-Nishimura et al., 1999",,,,"MycoBank","461013","28343",,"L2PZM","646SJ",,1.25
 "B_TTRRC_NVGR","Tetrarcus nuevae-geronae","Bacteria","Bacillati","Cyanobacteriota","Chroococcophyceae","Chroococcales","Chroococcaceae","Tetrarcus","nuevae-geronae","","species","accepted","Hindak",,"17865",,"GBIF",,,,"CPQPF","CPKWP",,2
-"AN_[FAM]_TETTIGND","Tettigoniidae","Animalia","Animalia","","","","Tettigoniidae","","","","family","accepted","Krauss, 1902",,,,"GBIF",,,,"8NKR2","1",,2
 "F_TEUNI","Teunia","Fungi","Fungi","Basidiomycota","Tremellomycetes","Tremellales","Cryptococcaceae","Teunia","","","genus","accepted","Wang et al., 2020",,,,"MycoBank","828751","81869",,"9YMCG","9YKZB",,1.25
 "F_TEUNI_CNCL","Teunia cuniculi","Fungi","Fungi","Basidiomycota","Tremellomycetes","Tremellales","Cryptococcaceae","Teunia","cuniculi","","species","accepted","Wang et al., 2020",,,,"MycoBank","828753","828751",,"9ZGHW","9YMCG",,1.25
 "F_TNMYC","Teunomyces","Fungi","Fungi","Ascomycota","Pichiomycetes","Serinales","Debaryomycetaceae","Teunomyces","","","genus","accepted","Kurtzman et al., 2016",,,,"MycoBank","815886","513454",,"63V89","92B",,1.25
@@ -27000,20 +26615,18 @@
 "F_TRSPR","Tiarosporella","Fungi","Fungi","Ascomycota","Dothideomycetes","Botryosphaeriales","Botryosphaeriaceae","Tiarosporella","","","genus","accepted","Hohn, 1919",,,,"GBIF",,,,"7WRT","7BX",,2
 "F_TRSPR_PARC","Tiarosporella parca","Fungi","Fungi","Ascomycota","Dothideomycetes","Botryosphaeriales","Botryosphaeriaceae","Tiarosporella","parca","","species","synonym","Whitney et al.",,,,"GBIF",,,,"7BZ79","7WRT","4YRQS",2
 "F_TGHML","Tieghemella","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","","","genus","accepted","Berlese et al., 1888",,,,"MycoBank","20576","81030",,"T63WG","CYN","LSM",1.25
-"F_TGHML_BTLR","Tieghemella butleri","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","butleri","","species","synonym","Naumov, 1935",,,,"MycoBank","251158","20576","282672","56VSD","T63WG","6KR4R",1.25
-"F_TGHML_CARL","Tieghemella caerulea","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","caerulea","","species","synonym","Naumov, 1935",,,,"MycoBank","351942","20576","351936","7BZNV","T63WG","8MK8",1.25
-"F_TGHML_CYLN","Tieghemella cylindrospora","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","cylindrospora","","species","accepted","Naumov, 1935",,,,"MycoBank","251728","20576",,"56VSF","T63WG","8MKF",1.25
-"F_TGHML_DUBI","Tieghemella dubia","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","dubia","","species","synonym","Vuillemin, 1903",,,,"MycoBank","101679","20576","221329","56VSG","T63WG","8MKG",1.25
-"F_TGHML_GLAC","Tieghemella glauca","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","glauca","","species","synonym","Naumov, 1915",,,,"MycoBank","433269","20576","221208","56VSH","T63WG","8MKK",1.25
-"F_TGHML_HYLS","Tieghemella hyalospora","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","hyalospora","","species","synonym","Saito, 1906",,,,"MycoBank","178452","20576","512830","56VSK","T63WG","729V7",1.25
-"F_TGHML_ITLN","Tieghemella italiana","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","italiana","","species","synonym","Naumov, 1935",,,,"MycoBank","433270","20576","416447","56VSL","T63WG","6PY77",1.25
-"F_TGHML_JPNC","Tieghemella japonica","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","japonica","","species","synonym","Saito, 1904",,,,"MycoBank","178693","20576","223578","56VSM","T63WG","64B84",1.25
+"F_TGHML_BTLR","Tieghemella butleri","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","butleri","","species","synonym","Naumov, 1935",,,,"MycoBank","251158","20576","282672","56VSD","T63WG","6KR4R",2
+"F_TGHML_CARL","Tieghemella caerulea","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","caerulea","","species","synonym","Naumov, 1935",,,,"MycoBank","351942","20576","351936","7BZNV","T63WG","8MK8",2
+"F_TGHML_DUBI","Tieghemella dubia","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","dubia","","species","synonym","Vuillemin, 1903",,,,"MycoBank","101679","20576","221329","56VSG","T63WG","8MKG",2
+"F_TGHML_GLAC","Tieghemella glauca","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","glauca","","species","synonym","Naumov, 1915",,,,"MycoBank","433269","20576","221208","56VSH","T63WG","8MKK",2
+"F_TGHML_HYLS","Tieghemella hyalospora","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","hyalospora","","species","synonym","Saito, 1906",,,,"MycoBank","178452","20576","512830","56VSK","T63WG","729V7",2
+"F_TGHML_ITLN","Tieghemella italiana","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","italiana","","species","synonym","Naumov, 1935",,,,"MycoBank","433270","20576","416447","56VSL","T63WG","6PY77",2
+"F_TGHML_JPNC","Tieghemella japonica","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","japonica","","species","synonym","Saito, 1904",,,,"MycoBank","178693","20576","223578","56VSM","T63WG","64B84",2
 "F_TGHML_MRPR","Tieghemella muriperda","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","muriperda","","species","accepted","Naumov, 1935",,,,"MycoBank","253463","20576",,"56VSP","T63WG","4SCQP",1.25
-"F_TGHML_ORCH","Tieghemella orchidis","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","orchidis","","species","synonym","Vuillemin, 1903",,,,"MycoBank","179106","20576","351936","56VSQ","T63WG","8MK8",1.25
-"F_TGHML_RPNS","Tieghemella repens","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","repens","","species","synonym","Berlese et al., 1888",,,,"MycoBank","157390","20576","223578","56VSR","T63WG","64B84",1.25
-"F_TGHML_SPNS","Tieghemella spinosa","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","spinosa","","species","accepted","Naumov, 1915",,,,"MycoBank","101770","20576",,"56VSS","T63WG","8MLC",1.25
-"F_TGHML_SBPC","Tieghemella subpoculata","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","subpoculata","","species","synonym","Naumov, 1935",,,,"MycoBank","254939","20576","282672","56VST","T63WG","6KR4R",1.25
-"F_TGHML_TGHM","Tieghemella tieghemii","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","tieghemii","","species","synonym","Naumov, 1935",,,,"MycoBank","255116","20576","433042","7BZNS","T63WG","8MK8",1.25
+"F_TGHML_ORCH","Tieghemella orchidis","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","orchidis","","species","synonym","Vuillemin, 1903",,,,"MycoBank","179106","20576","351936","56VSQ","T63WG","8MK8",2
+"F_TGHML_RPNS","Tieghemella repens","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","repens","","species","synonym","Berlese et al., 1888",,,,"MycoBank","157390","20576","223578","56VSR","T63WG","64B84",2
+"F_TGHML_SBPC","Tieghemella subpoculata","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","subpoculata","","species","synonym","Naumov, 1935",,,,"MycoBank","254939","20576","282672","56VST","T63WG","6KR4R",2
+"F_TGHML_TGHM","Tieghemella tieghemii","Fungi","Fungi","Mucoromycota","Mucoromycetes","Mucorales","Mucoraceae","Tieghemella","tieghemii","","species","synonym","Naumov, 1935",,,,"MycoBank","255116","20576","433042","7BZNS","T63WG","8MK8",2
 "B_TGHBC","Tigheibacillus","Bacteria","Bacillati","Bacillota","Bacilli","Caryophanales","Bacillaceae","Tigheibacillus","","","genus","accepted","Miliotis et al., 2024","45657","191",,"LPSN",,,,"CT6NT","CRR4J",,2
 "B_TGHBC_HLPH","Tigheibacillus halophilus","Bacteria","Bacillati","Bacillota","Bacilli","Caryophanales","Bacillaceae","Tigheibacillus","halophilus","","species","synonym","Miliotis et al., 2024","45662","45657","783042","LPSN",,,,"CT6NV","CT6NT","5BJPD",2
 "B_TGHBC_JEPL","Tigheibacillus jepli","Bacteria","Bacillati","Bacillota","Bacilli","Caryophanales","Bacillaceae","Tigheibacillus","jepli","","species","accepted","Miliotis et al., 2024","45663","45657",,"LPSN",,,,"CT6NW","CT6NT",,2
@@ -27791,7 +27404,6 @@
 "AN_TRCHC_CPLL","Trichocephalus capillaris","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","capillaris","","species","synonym","Zeder, 1800",,,,"GBIF",,,,"V7QXP","BXXWK","V7QXN",2
 "AN_TRCHC_CPRL","Trichocephalus capreoli","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","capreoli","","species","synonym","Artjuch, 1948",,,,"GBIF",,,,"C2GS6","BXXWK","C2GXR",2
 "AN_TRCHC_CRVC","Trichocephalus cervicaprae","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","cervicaprae","","species","synonym","Kreis, 1935",,,,"GBIF",,,,"C2XTM","BXXWK","C2GXS",2
-"AN_TRCHC_CNCL","Trichocephalus concolor","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","concolor","","species","accepted","Burdelev, 1951",,,,"GBIF",,,,"9X6GN","BXXWK",,2
 "AN_TRCHC_CRNT","Trichocephalus crenatus","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","crenatus","","species","synonym","Rudolphi, 1809",,,,"GBIF",,,,"V9DBD","BXXWK","C2GY3",2
 "AN_TRCHC_DSCL","Trichocephalus discolor","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","discolor","","species","synonym","Linstow, 1906",,,,"GBIF",,,,"C2GS7","BXXWK","BY736",2
 "AN_TRCHC_FELS","Trichocephalus felis","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","felis","","species","synonym","Diesing, 1851",,,,"GBIF",,,,"V9DBG","BXXWK","V9DBF",2
@@ -27802,7 +27414,6 @@
 "AN_TRCHC_INFN","Trichocephalus infundibulis","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","infundibulis","","species","synonym","Linstow, 1906",,,,"GBIF",,,,"C2GS8","BXXWK","C2GXW",2
 "AN_TRCHC_LANI","Trichocephalus lani","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","lani","","species","synonym","Artjuch, 1948",,,,"GBIF",,,,"9WYGW","BXXWK","C2GXX",2
 "AN_TRCHC_LPRS","Trichocephalus leporis","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","leporis","","species","synonym","Froelich, 1789",,,,"GBIF",,,,"C2GS9","BXXWK","C2GXY",2
-"AN_TRCHC_LNGS","Trichocephalus longispiculus","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","longispiculus","","species","accepted","Artjuch, 1948",,,,"GBIF",,,,"9X8PC","BXXWK",,2
 "AN_TRCHC_MNTS","Trichocephalus minutus","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","minutus","","species","synonym","Rudolphi, 1819",,,,"GBIF",,,,"V9DBJ","BXXWK","TKHPD",2
 "AN_TRCHC_MURS","Trichocephalus muris","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","muris","","species","synonym","Schrank, 1788",,,,"GBIF",,,,"C2GSB","BXXWK","BYK2W",2
 "AN_TRCHC_MYCS","Trichocephalus myocastoris","Animalia","Animalia","Nematoda","Enoplea","Trichinellida","Trichuridae","Trichocephalus","myocastoris","","species","synonym","Enigk, 1933",,,,"GBIF",,,,"C2XVR","BXXWK","BYZ3N",2
@@ -28114,8 +27725,6 @@
 "F_TRNCT","Truncatella","Fungi","Fungi","Ascomycota","Sordariomycetes","Amphisphaeriales","Sporocadaceae","Truncatella","","","genus","accepted","Steyaert, 1949",,,,"MycoBank","10328","81408",,"837H","GL4",,1.25
 "F_TRNCT_ANGS","Truncatella angustata","Fungi","Fungi","Ascomycota","Sordariomycetes","Amphisphaeriales","Sporocadaceae","Truncatella","angustata","","species","accepted","Hughes, 1958",,,,"MycoBank","307155","10328",,"59DZ4","837H",,1.25
 "AN_TRYCH","Trychnostola","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Trychnostola","","","genus","synonym","Turner, 1916",,,,"GBIF",,,,"94PRF","8JC","KZMKJ",2
-"AN_TRYCH_LCHN","Trychnostola lichenitis","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Trychnostola","lichenitis","","species","synonym","Turner, 1916",,,,"GBIF",,,,"98MM5","94PRF","5ZYGW",2
-"AN_TRYCH_PHST","Trychnostola phaeosticta","Animalia","Animalia","Arthropoda","Insecta","Lepidoptera","Copromorphidae","Trychnostola","phaeosticta","","species","synonym","Turner, 1916",,,,"GBIF",,,,"98MM6","94PRF","Y6B5",2
 "P_TRYPN_KAIW","Trypanosoma kaiowa","Protozoa","Protozoa","Euglenozoa","Kinetoplastea","Trypanosomatida","Trypanosomatidae","Trypanosoma","kaiowa","","species","accepted","Fermino et al., 2019",,,,"GBIF",,,,"TV88S","64874",,1.25
 "P_TRYPN_MADR","Trypanosoma madeirae","Protozoa","Protozoa","Euglenozoa","Kinetoplastea","Trypanosomatida","Trypanosomatidae","Trypanosoma","madeirae","","species","accepted","Barros et al., 2019",,,,"GBIF",,,,"TV8CJ","64874",,1.25
 "P_TRYPN_NDMN","Trypanosoma ndumoensis","Protozoa","Protozoa","Euglenozoa","Kinetoplastea","Trypanosomatida","Trypanosomatidae","Trypanosoma","ndumoensis","","species","accepted","Jordaan et al., 2023",,,,"GBIF",,,,"TV7LL","64874",,1.25
@@ -28911,181 +28520,6 @@
 "F_XRGMY_PLVR","Xerogeomyces pulvereus","Fungi","Fungi","Ascomycota","Leotiomycetes","Thelebolales","Pseudeurotiaceae","Xerogeomyces","pulvereus","","species","accepted","Minnis et al.",,,,"GBIF",,,,"CCCBZ","CCCBY",,2
 "B_XSHNG","Xiashengella","Bacteria","Pseudomonadati","Bacteroidota","Bacteroidia","Bacteroidales","Marinilabiliaceae","Xiashengella","","","genus","accepted","Huang et al., 2024","45034","1890",,"LPSN",,,,"CT9QS","624LH",,2
 "B_XSHNG_SCCN","Xiashengella succiniciproducens","Bacteria","Pseudomonadati","Bacteroidota","Bacteroidia","Bacteroidales","Marinilabiliaceae","Xiashengella","succiniciproducens","","species","accepted","Huang et al., 2024","45043","45034",,"LPSN",,,,"CT9QT","CT9QS",,2
-"AN_XPHDN","Xiphidion","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","","","genus","accepted","Audinet-Serville, 1831",,,,"GBIF",,,,"8PQH4","8NKR2",,2
-"AN_XPHDN_ADST","Xiphidion adustum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","adustum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8Q4VP","8PQH4","XPXX",2
-"AN_XPHDN_AETH","Xiphidion aethiopicum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","aethiopicum","","species","synonym","Thunberg, 1789",,,,"GBIF",,,,"7G9DQ","8PQH4","XQ2V",2
-"AN_XPHDN_AFFN","Xiphidion affine","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","affine","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7FXDR","8PQH4","5ZSMY",2
-"AN_XPHDN_AFRC","Xiphidion africanum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","africanum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8Q4VQ","8PQH4","XPYZ",2
-"AN_XPHDN_ALLR","Xiphidion allardi","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","allardi","","species","synonym","Caudell, 1910",,,,"GBIF",,,,"7G9DR","8PQH4","XQ4B",2
-"AN_XPHDN_AMBL","Xiphidion amabile","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","amabile","","species","synonym","Stal, 1861",,,,"GBIF",,,,"7FXGF","8PQH4","8P8GX",2
-"AN_XPHDN_BAKR","Xiphidion bakeri","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","bakeri","","species","synonym","Karny, 1920",,,,"GBIF",,,,"7G9GF","8PQH4","XPY2",2
-"AN_XPHDN_BCHN","Xiphidion bechuanense","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","bechuanense","","species","synonym","Peringuey, 1916",,,,"GBIF",,,,"7FXGG","8PQH4","XPY3",2
-"AN_XPHDN_BLNT","Xiphidion bilineatum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","bilineatum","","species","synonym","Erichson, 1842",,,,"GBIF",,,,"7G9GG","8PQH4","XPY5",2
-"AN_XPHDN_BRVC","Xiphidion brevicercus","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","brevicercus","","species","synonym","Karsch, 1893",,,,"GBIF",,,,"7FXGH","8PQH4","XPY9",2
-"AN_XPHDN_BRVP","Xiphidion brevipennis","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","brevipennis","","species","synonym","Scudder, 1862",,,,"GBIF",,,,"8Q4VR","8PQH4","8PXTF",2
-"AN_XPHDN_CNCP","Xiphidion conocephalus","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","conocephalus","","species","synonym","Linnaeus, 1767",,,,"GBIF",,,,"7G9GH","8PQH4","XQ2V",2
-"AN_XPHDN_CNSL","Xiphidion consul","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","consul","","species","synonym","Karny, 1911",,,,"GBIF",,,,"8Q4VS","8PQH4","8PXZ9",2
-"AN_XPHDN_CNTN","Xiphidion continuum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","continuum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"7FXGJ","8PQH4","XPZ7",2
-"AN_XPHDN_DRSL","Xiphidion dorsale","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","dorsale","","species","synonym","Latreille, 1804",,,,"GBIF",,,,"7FXGK","8PQH4","XPYG",2
-"AN_XPHDN_DRSL_BURR","Xiphidion dorsale burri","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","dorsale","burri","subspecies","synonym","Ebner, 1910",,,,"GBIF",,,,"CF9BW","7FXGK","XPYG",2
-"AN_XPHDN_DRSL_DRSL","Xiphidion dorsale dorsale","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","dorsale","dorsale","subspecies","synonym","Latreille, 1804",,,,"GBIF",,,,"BTL2Y","7FXGK","XPYG",2
-"AN_XPHDN_DRYP","Xiphidion doryphorum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","doryphorum","","species","synonym","Karny, 1907",,,,"GBIF",,,,"7G9GK","8PQH4","XQ2X",2
-"AN_XPHDN_EXSL","Xiphidion exsul","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","exsul","","species","synonym","Karny, 1911",,,,"GBIF",,,,"7FXGL","8PQH4","XPYK",2
-"AN_XPHDN_FSCT","Xiphidion fasciatum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","fasciatum","","species","synonym","De Geer, 1773",,,,"GBIF",,,,"7G9GL","8PQH4","XPYL",2
-"AN_XPHDN_FLVM","Xiphidion flavum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","flavum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7FXGM","8PQH4","XPYM",2
-"AN_XPHDN_FLMK","Xiphidion fulmeki","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","fulmeki","","species","synonym","Ebner, 1927",,,,"GBIF",,,,"7G9GM","8PQH4","XQ34",2
-"AN_XPHDN_GLDT","Xiphidion gladiatum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","gladiatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"CKY5N","8PQH4","XPYJ",2
-"AN_XPHDN_GRCL","Xiphidion gracillimum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","gracillimum","","species","synonym","Morse, 1901",,,,"GBIF",,,,"7G9GB","8PQH4","XQ35",2
-"AN_XPHDN_GNNS","Xiphidion guineense","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","guineense","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8Q4VV","8PQH4","XPYZ",2
-"AN_XPHDN_IMMC","Xiphidion immaculatum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","immaculatum","","species","synonym","Karny, 1911",,,,"GBIF",,,,"7FXGC","8PQH4","XPY5",2
-"AN_XPHDN_INCN","Xiphidion inconspicuum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","inconspicuum","","species","synonym","Karny, 1920",,,,"GBIF",,,,"7G9GC","8PQH4","XQ3B",2
-"AN_XPHDN_INFM","Xiphidion infumatum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","infumatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7FXGD","8PQH4","XQ3C",2
-"AN_XPHDN_INSL","Xiphidion insulare","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","insulare","","species","synonym","Morse, 1905",,,,"GBIF",,,,"7G9GD","8PQH4","XPYX",2
-"AN_XPHDN_IRIS","Xiphidion iris","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","iris","","species","synonym","Serville, 1838",,,,"GBIF",,,,"7FXGV","8PQH4","XPYZ",2
-"AN_XPHDN_JVNC","Xiphidion javanicum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","javanicum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7G9DP","8PQH4","XPZY",2
-"AN_XPHDN_LATM","Xiphidion laetum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","laetum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8Q4VX","8PQH4","XPZZ",2
-"AN_XPHDN_LNGC","Xiphidion longiceps","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","longiceps","","species","synonym","Peringuey, 1916",,,,"GBIF",,,,"7G9H7","8PQH4","XQ5P",2
-"AN_XPHDN_CRNE","Xiphidion longicorne","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","longicorne","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8QJK7","8PQH4","XPZ6",2
-"AN_XPHDN_LNGP","Xiphidion longipenne","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","longipenne","","species","synonym","Haan, 1843",,,,"GBIF",,,,"8Q4VY","8PQH4","XPZ6",2
-"AN_XPHDN_MCLT","Xiphidion maculatum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","maculatum","","species","synonym","Le Guillou, 1841",,,,"GBIF",,,,"7FXH8","8PQH4","XPZ7",2
-"AN_XPHDN_MRCM","Xiphidion maoricum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","maoricum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PLDF","8PQH4","CNM5Z",2
-"AN_XPHDN_MELN","Xiphidion melan","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","melan","","species","synonym","Karny, 1907",,,,"GBIF",,,,"BZX5N","8PQH4","XPZ9",2
-"AN_XPHDN_MLNM","Xiphidion melanum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","melanum","","species","synonym","Haan, 1843",,,,"GBIF",,,,"BZX5M","8PQH4","XPZ9",2
-"AN_XPHDN_MDST","Xiphidion modestum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","modestum","","species","synonym","Bruner, 1891",,,,"GBIF",,,,"8Q4W2","8PQH4","8PXT6",2
-"AN_XPHDN_NGLC","Xiphidion neglectum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","neglectum","","species","synonym","Bruner, 1920",,,,"GBIF",,,,"7G9GX","8PQH4","XPZ7",2
-"AN_XPHDN_NGRP","Xiphidion nigropleurum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","nigropleurum","","species","synonym","Bruner, 1891",,,,"GBIF",,,,"8PLDH","8PQH4","8PXV8",2
-"AN_XPHDN_OBTC","Xiphidion obtectum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","obtectum","","species","synonym","Karny, 1907",,,,"GBIF",,,,"7FXGY","8PQH4","XQ3K",2
-"AN_XPHDN_OCNC","Xiphidion oceanicum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","oceanicum","","species","synonym","Le Guillou, 1841",,,,"GBIF",,,,"7G9GY","8PQH4","5ZSMY",2
-"AN_XPHDN_PRVL","Xiphidion parvulum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","parvulum","","species","synonym","Peringuey, 1916",,,,"GBIF",,,,"7FXGZ","8PQH4","5ZSNV",2
-"AN_XPHDN_RSTR","Xiphidion restiorum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","restiorum","","species","synonym","Peringuey, 1916",,,,"GBIF",,,,"7G9GZ","8PQH4","XQ5W",2
-"AN_XPHDN_RHDS","Xiphidion rhodesianum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","rhodesianum","","species","synonym","Peringuey, 1916",,,,"GBIF",,,,"7FXGN","8PQH4","XPZF",2
-"AN_XPHDN_SLTN","Xiphidion saltans","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","saltans","","species","synonym","Scudder, 1872",,,,"GBIF",,,,"8Q4W3","8PQH4","8PXT6",2
-"AN_XPHDN_SPNP","Xiphidion spinipes","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","spinipes","","species","synonym","Stal, 1877",,,,"GBIF",,,,"7FXGP","8PQH4","XPZ6",2
-"AN_XPHDN_STRC","Xiphidion strictum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","strictum","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"8Q4W5","8PQH4","8PXXC",2
-"AN_XPHDN_VSTT","Xiphidion vestitum","Animalia","Animalia","","","","Tettigoniidae","Xiphidion","vestitum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7G9GP","8PQH4","XPZS",2
-"AN_XPHDP","Xiphidiopsis","Animalia","Animalia","","","","Tettigoniidae","Xiphidiopsis","","","genus","accepted","Redtenbacher, 1891",,,,"GBIF",,,,"8P2XH","8NKR2",,2
-"AN_XPHDP_EXMP","Xiphidiopsis exempta","Animalia","Animalia","","","","Tettigoniidae","Xiphidiopsis","exempta","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8Q4WX","8P2XH","XPYJ",2
-"AN_XPHDM","Xiphidium","Animalia","Animalia","","","","","Xiphidium","","","genus","unknown",,,,,"inferred",,,,,"1",,2
-"AN_XPHDM_ABRR","Xiphidium aberrans","Animalia","Animalia","","","","","Xiphidium","aberrans","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF8T",,"XQ27",2
-"AN_XPHDM_ADST","Xiphidium adustum","Animalia","Animalia","","","","","Xiphidium","adustum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7FXG6",,"XPXX",2
-"AN_XPHDM_AETH","Xiphidium aethiopicum","Animalia","Animalia","","","","","Xiphidium","aethiopicum","","species","synonym","Thunberg, 1789",,,,"GBIF",,,,"5CF9T",,"XQ2V",2
-"AN_XPHDM_AFFN","Xiphidium affine","Animalia","Animalia","","","","","Xiphidium","affine","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF8V",,"5ZSMY",2
-"AN_XPHDM_AFRC","Xiphidium africanum","Animalia","Animalia","","","","","Xiphidium","africanum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8QJ6C",,"XPYZ",2
-"AN_XPHDM_ALBS","Xiphidium albescens","Animalia","Animalia","","","","","Xiphidium","albescens","","species","synonym","Walker, 1869",,,,"GBIF",,,,"5CF9V",,"XPZV",2
-"AN_XPHDM_AMBL","Xiphidium amabile","Animalia","Animalia","","","","","Xiphidium","amabile","","species","synonym","Stal, 1861",,,,"GBIF",,,,"5CF9Y",,"8P8GX",2
-"AN_XPHDM_ANGS","Xiphidium angustifrons","Animalia","Animalia","","","","","Xiphidium","angustifrons","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7G9FV",,"KQZ7X",2
-"AN_XPHDM_ANTP","Xiphidium antipodum","Animalia","Animalia","","","","","Xiphidium","antipodum","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"7G9G7",,"CNM5Z",2
-"AN_XPHDM_ARMT","Xiphidium armatipes","Animalia","Animalia","","","","","Xiphidium","armatipes","","species","synonym","Karsch, 1893",,,,"GBIF",,,,"7FXFW",,"5ZSMB",2
-"AN_XPHDM_ATTN","Xiphidium attenuatum","Animalia","Animalia","","","","","Xiphidium","attenuatum","","species","synonym","Scudder, 1869",,,,"GBIF",,,,"8PLGG",,"8PXTC",2
-"AN_XPHDM_BLNT","Xiphidium bilineatum","Animalia","Animalia","","","","","Xiphidium","bilineatum","","species","synonym","Erichson, 1842",,,,"GBIF",,,,"7G9FW",,"XPY5",2
-"AN_XPHDM_BTBR","Xiphidium bituberculatum","Animalia","Animalia","","","","","Xiphidium","bituberculatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF8F",,"XPZW",2
-"AN_XPHDM_BVTT","Xiphidium bivittatum","Animalia","Animalia","","","","","Xiphidium","bivittatum","","species","synonym","Bolivar, 1900",,,,"GBIF",,,,"7G9G8",,"XPY6",2
-"AN_XPHDM_BRLL","Xiphidium borellii","Animalia","Animalia","","","","","Xiphidium","borellii","","species","synonym","Giglio-Tos, 1897",,,,"GBIF",,,,"7FXFX",,"XPY7",2
-"AN_XPHDM_BRNN","Xiphidium borneense","Animalia","Animalia","","","","","Xiphidium","borneense","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF8Y",,"XPY8",2
-"AN_XPHDM_BRCH","Xiphidium brachypterum","Animalia","Animalia","","","","","Xiphidium","brachypterum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7FXG9",,"KQ9MP",2
-"AN_XPHDM_BRVC","Xiphidium brevicaudatum","Animalia","Animalia","","","","","Xiphidium","brevicaudatum","","species","synonym","Uvarov, 1910",,,,"GBIF",,,,"7G9FX",,"XPYG",2
-"AN_XPHDM_CRCS","Xiphidium brevicercus","Animalia","Animalia","","","","","Xiphidium","brevicercus","","species","synonym","Karsch, 1893",,,,"GBIF",,,,"7G9G9",,"XPY9",2
-"AN_XPHDM_BRVP","Xiphidium brevipennis","Animalia","Animalia","","","","","Xiphidium","brevipennis","","species","synonym","Scudder, 1862",,,,"GBIF",,,,"8PLGH",,"8PXTF",2
-"AN_XPHDM_NNRI","Xiphidium brunneri","Animalia","Animalia","","","","","Xiphidium","brunneri","","species","synonym","Karny, 1907",,,,"GBIF",,,,"8QHMS",,"CNM5Z",2
-"AN_XPHDM_CDLS","Xiphidium caudalis","Animalia","Animalia","","","","","Xiphidium","caudalis","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PLGJ",,"8PXTG",2
-"AN_XPHDM_CHVS","Xiphidium chavesi","Animalia","Animalia","","","","","Xiphidium","chavesi","","species","synonym","Bolivar, 1905",,,,"GBIF",,,,"8PLGK",,"8PXTH",2
-"AN_XPHDM_CHNN","Xiphidium chinense","Animalia","Animalia","","","","","Xiphidium","chinense","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF8Z",,"XPXW",2
-"AN_XPHDM_CNRS","Xiphidium cinereus","Animalia","Animalia","","","","","Xiphidium","cinereus","","species","synonym","Thunberg, 1815",,,,"GBIF",,,,"7FXFN",,"5ZSMW",2
-"AN_XPHDM_CGNT","Xiphidium cognatum","Animalia","Animalia","","","","","Xiphidium","cognatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7G9FN",,"5ZSML",2
-"AN_XPHDM_CNCL","Xiphidium concolor","Animalia","Animalia","","","","","Xiphidium","concolor","","species","synonym","Burmeister, 1838",,,,"GBIF",,,,"8Q4XF",,"9GPDR",2
-"AN_XPHDM_CNTN","Xiphidium continuum","Animalia","Animalia","","","","","Xiphidium","continuum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"7FXFQ",,"XPZ7",2
-"AN_XPHDM_CRTP","Xiphidium curtipenne","Animalia","Animalia","","","","","Xiphidium","curtipenne","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8QHT6",,"8PXV6",2
-"AN_XPHDM_DNTC","Xiphidium denticercus","Animalia","Animalia","","","","","Xiphidium","denticercus","","species","synonym","Karny, 1907",,,,"GBIF",,,,"BTYNT",,"5ZSN8",2
-"AN_XPHDM_DMDT","Xiphidium dimidiatum","Animalia","Animalia","","","","","Xiphidium","dimidiatum","","species","synonym","Matsumura et al., 1908",,,,"GBIF",,,,"7G9FQ",,"XPZ7",2
-"AN_XPHDM_DVRG","Xiphidium divergentum","Animalia","Animalia","","","","","Xiphidium","divergentum","","species","synonym","Matsumura et al., 1908",,,,"GBIF",,,,"7G9G2",,"5GKTM",2
-"AN_XPHDM_DRSL","Xiphidium dorsale","Animalia","Animalia","","","","","Xiphidium","dorsale","","species","synonym","Latreille, 1804",,,,"GBIF",,,,"7FXFR",,"XPYG",2
-"AN_XPHDM_DRST","Xiphidium dorsata","Animalia","Animalia","","","","","Xiphidium","dorsata","","species","synonym","Latreille, 1804",,,,"GBIF",,,,"CF9D8",,"XPYG",2
-"AN_XPHDM_DRYP","Xiphidium doryphorum","Animalia","Animalia","","","","","Xiphidium","doryphorum","","species","synonym","Karny, 1907",,,,"GBIF",,,,"9H3CL",,"XQ2X",2
-"AN_XPHDM_ENSF","Xiphidium ensifer","Animalia","Animalia","","","","","Xiphidium","ensifer","","species","synonym","Scudder, 1862",,,,"GBIF",,,,"C8KW7",,"8PXTF",2
-"AN_XPHDM_SFRM","Xiphidium ensiferum","Animalia","Animalia","","","","","Xiphidium","ensiferum","","species","synonym","Scudder, 1862",,,,"GBIF",,,,"8PLGM",,"8PXTF",2
-"AN_XPHDM_EQTR","Xiphidium equatoriale","Animalia","Animalia","","","","","Xiphidium","equatoriale","","species","synonym","Giglio-Tos, 1898",,,,"GBIF",,,,"7G9G3",,"XPYH",2
-"AN_XPHDM_EXMP","Xiphidium exemptum","Animalia","Animalia","","","","","Xiphidium","exemptum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"7FXFS",,"XPYJ",2
-"AN_XPHDM_EXTS","Xiphidium exitiosum","Animalia","Animalia","","","","","Xiphidium","exitiosum","","species","synonym","McNeill, 1901",,,,"GBIF",,,,"7FXG4",,"XQ33",2
-"AN_XPHDM_FSCT","Xiphidium fasciatum","Animalia","Animalia","","","","","Xiphidium","fasciatum","","species","synonym","De Geer, 1773",,,,"GBIF",,,,"7G9FS",,"XPYL",2
-"AN_XPHDM_FSCT_SLTT","Xiphidium fasciatum saltator","Animalia","Animalia","","","","","Xiphidium","fasciatum","saltator","subspecies","synonym","Saussure, 1859",,,,"GBIF",,,,"BTWGN","7G9FS","KQ9MP",2
-"AN_XPHDM_FEST","Xiphidium festae","Animalia","Animalia","","","","","Xiphidium","festae","","species","synonym","Giglio-Tos, 1898",,,,"GBIF",,,,"7G9G4",,"XPZR",2
-"AN_XPHDM_FLVM","Xiphidium flavum","Animalia","Animalia","","","","","Xiphidium","flavum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF93",,"XPYM",2
-"AN_XPHDM_FRMS","Xiphidium formosanum","Animalia","Animalia","","","","","Xiphidium","formosanum","","species","synonym","Matsumura et al., 1908",,,,"GBIF",,,,"5CFB4",,"5GKTM",2
-"AN_XPHDM_RMSM","Xiphidium formosum","Animalia","Animalia","","","","","Xiphidium","formosum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF94",,"XPYN",2
-"AN_XPHDM_GNCL","Xiphidium geniculare","Animalia","Animalia","","","","","Xiphidium","geniculare","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8QJWH",,"5GKTR",2
-"AN_XPHDM_GGNT","Xiphidium gigantium","Animalia","Animalia","","","","","Xiphidium","gigantium","","species","synonym","Matsumura et al., 1908",,,,"GBIF",,,,"5CFB8",,"8PXXZ",2
-"AN_XPHDM_GLDT","Xiphidium gladiatum","Animalia","Animalia","","","","","Xiphidium","gladiatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7FXFT",,"XPYJ",2
-"AN_XPHDM_GSSY","Xiphidium gossypii","Animalia","Animalia","","","","","Xiphidium","gossypii","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"5CFBB",,"8PXTF",2
-"AN_XPHDM_GRCL","Xiphidium gracillimum","Animalia","Animalia","","","","","Xiphidium","gracillimum","","species","synonym","Morse, 1901",,,,"GBIF",,,,"9GV7V",,"XQ35",2
-"AN_XPHDM_GNNS","Xiphidium guineense","Animalia","Animalia","","","","","Xiphidium","guineense","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8Q4Y2",,"XPYZ",2
-"AN_XPHDM_HSTT","Xiphidium hastatum","Animalia","Animalia","","","","","Xiphidium","hastatum","","species","synonym","Charpentier, 1825",,,,"GBIF",,,,"7FXG5",,"5GKTL",2
-"AN_XPHDM_HCTC","Xiphidium hecticum","Animalia","Animalia","","","","","Xiphidium","hecticum","","species","synonym","Gerstaecker, 1869",,,,"GBIF",,,,"5CFBF",,"8PXZS",2
-"AN_XPHDM_HONR","Xiphidium honorei","Animalia","Animalia","","","","","Xiphidium","honorei","","species","synonym","Bolivar, 1900",,,,"GBIF",,,,"9GV7Y",,"C9FWL",2
-"AN_XPHDM_ICTM","Xiphidium ictum","Animalia","Animalia","","","","","Xiphidium","ictum","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"8Q4XM",,"BVKTX",2
-"AN_XPHDM_INFM","Xiphidium infumatum","Animalia","Animalia","","","","","Xiphidium","infumatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF97",,"XQ3C",2
-"AN_XPHDM_INSL","Xiphidium insulare","Animalia","Animalia","","","","","Xiphidium","insulare","","species","synonym","Morse, 1905",,,,"GBIF",,,,"5CFBK",,"XPYX",2
-"AN_XPHDM_IRIS","Xiphidium iris","Animalia","Animalia","","","","","Xiphidium","iris","","species","synonym","Serville, 1838",,,,"GBIF",,,,"5CFBL",,"XPYZ",2
-"AN_XPHDM_JPNC","Xiphidium japonicum","Animalia","Animalia","","","","","Xiphidium","japonicum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF98",,"5GKTM",2
-"AN_XPHDM_JVNC","Xiphidium javanicum","Animalia","Animalia","","","","","Xiphidium","javanicum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF99",,"XPZY",2
-"AN_XPHDM_LATM","Xiphidium laetum","Animalia","Animalia","","","","","Xiphidium","laetum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7G9G6",,"XPZZ",2
-"AN_XPHDM_LTFR","Xiphidium latifrons","Animalia","Animalia","","","","","Xiphidium","latifrons","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8QK3Y",,"XPZV",2
-"AN_XPHDM_LNGC","Xiphidium longicorne","Animalia","Animalia","","","","","Xiphidium","longicorne","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8QKHF",,"XPZ6",2
-"AN_XPHDM_LNGP","Xiphidium longipenne","Animalia","Animalia","","","","","Xiphidium","longipenne","","species","synonym","Haan, 1843",,,,"GBIF",,,,"5CF9D",,"XPZ6",2
-"AN_XPHDM_NGPS","Xiphidium longipes","Animalia","Animalia","","","","","Xiphidium","longipes","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CFBN",,"XQ7X",2
-"AN_XPHDM_LGBR","Xiphidium lugubre","Animalia","Animalia","","","","","Xiphidium","lugubre","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"7FXFV",,"5ZSMN",2
-"AN_XPHDM_MCLT","Xiphidium maculatum","Animalia","Animalia","","","","","Xiphidium","maculatum","","species","synonym","Le Guillou, 1841",,,,"GBIF",,,,"5CF9F",,"XPZ7",2
-"AN_XPHDM_MRCM","Xiphidium maoricum","Animalia","Animalia","","","","","Xiphidium","maoricum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PLGV",,"CNM5Z",2
-"AN_XPHDM_MELNM","Xiphidium melaenum","Animalia","Animalia","","","","","Xiphidium","melaenum","","species","synonym","Haan, 1843",,,,"GBIF",,,,"5CFBQ",,"XPZ9",2
-"AN_XPHDM_MELN","Xiphidium melan","Animalia","Animalia","","","","","Xiphidium","melan","","species","synonym","Karny, 1907",,,,"GBIF",,,,"BZX6P",,"XPZ9",2
-"AN_XPHDM_MLNUM","Xiphidium melanum","Animalia","Animalia","","","","","Xiphidium","melanum","","species","synonym","Haan, 1843",,,,"GBIF",,,,"CCCP5",,"XPZ9",2
-"AN_XPHDM_MRDN","Xiphidium meridionale","Animalia","Animalia","","","","","Xiphidium","meridionale","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"5CFBR",,"KQ9MP",2
-"AN_XPHDM_MXCN","Xiphidium mexicanum","Animalia","Animalia","","","","","Xiphidium","mexicanum","","species","synonym","Saussure, 1859",,,,"GBIF",,,,"5CFBS",,"BVKTX",2
-"AN_XPHDM_MDST","Xiphidium modestum","Animalia","Animalia","","","","","Xiphidium","modestum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF9G",,"XQ24",2
-"AN_XPHDM_MDST_UPLN","Xiphidium modestum upoluense","Animalia","Animalia","","","","","Xiphidium","modestum","upoluense","subspecies","synonym","Karny, 1907",,,,"GBIF",,,,"5LT4R","5CF9G","XQ24",2
-"AN_XPHDM_NTLN","Xiphidium natalense","Animalia","Animalia","","","","","Xiphidium","natalense","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8Q4Y7",,"8PXTG",2
-"AN_XPHDM_NMRL","Xiphidium nemorale","Animalia","Animalia","","","","","Xiphidium","nemorale","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"8PLGX",,"8PXV6",2
-"AN_XPHDM_NGRG","Xiphidium nigro-geniculatum","Animalia","Animalia","","","","","Xiphidium","nigro-geniculatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF9J",,"XPZ9",2
-"AN_XPHDM_NGRP","Xiphidium nigropleurum","Animalia","Animalia","","","","","Xiphidium","nigropleurum","","species","synonym","Bruner, 1891",,,,"GBIF",,,,"8PLGY",,"8PXV8",2
-"AN_XPHDM_OBTC","Xiphidium obtectum","Animalia","Animalia","","","","","Xiphidium","obtectum","","species","synonym","Karny, 1907",,,,"GBIF",,,,"9H39P",,"XQ3K",2
-"AN_XPHDM_OCCD","Xiphidium occidentale","Animalia","Animalia","","","","","Xiphidium","occidentale","","species","synonym","Morse, 1901",,,,"GBIF",,,,"5CFBX",,"XQ3L",2
-"AN_XPHDM_OCCD_CMRM","Xiphidium occidentale camurum","Animalia","Animalia","","","","","Xiphidium","occidentale","camurum","subspecies","synonym","Morse, 1901",,,,"GBIF",,,,"CT9SR","5CFBX","XQ3L",2
-"AN_XPHDM_OCCD_CDTM","Xiphidium occidentale caudatum","Animalia","Animalia","","","","","Xiphidium","occidentale","caudatum","subspecies","synonym","Morse, 1901",,,,"GBIF",,,,"CT9ST","5CFBX","XQ3L",2
-"AN_XPHDM_ORTN","Xiphidium ortoni","Animalia","Animalia","","","","","Xiphidium","ortoni","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"5CFBY",,"5ZSMW",2
-"AN_XPHDM_PCTM","Xiphidium pictum","Animalia","Animalia","","","","","Xiphidium","pictum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF9K",,"XPZD",2
-"AN_XPHDM_PSTC","Xiphidium posticum","Animalia","Animalia","","","","","Xiphidium","posticum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PLH2",,"8PY2K",2
-"AN_XPHDM_PRDC","Xiphidium productum","Animalia","Animalia","","","","","Xiphidium","productum","","species","synonym","Morse, 1901",,,,"GBIF",,,,"BTYNX",,"XPYL",2
-"AN_XPHDM_PRPN","Xiphidium propinquum","Animalia","Animalia","","","","","Xiphidium","propinquum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CFC3",,"KQ9MP",2
-"AN_XPHDM_PLCH","Xiphidium pulchrum","Animalia","Animalia","","","","","Xiphidium","pulchrum","","species","synonym","Karny, 1907",,,,"GBIF",,,,"BW96J",,"5GKTM",2
-"AN_XPHDM_PNCT","Xiphidium punctipenne","Animalia","Animalia","","","","","Xiphidium","punctipenne","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8Q4Y9",,"8PY2L",2
-"AN_XPHDM_RDTN","Xiphidium redtenbacheri","Animalia","Animalia","","","","","Xiphidium","redtenbacheri","","species","synonym","Bolivar, 1905",,,,"GBIF",,,,"8PLH4",,"8PXVD",2
-"AN_XPHDM_RSNM","Xiphidium resinum","Animalia","Animalia","","","","","Xiphidium","resinum","","species","synonym","Saussure et al., 1898",,,,"GBIF",,,,"5CFC6",,"5ZSMM",2
-"AN_XPHDM_SLTN","Xiphidium saltans","Animalia","Animalia","","","","","Xiphidium","saltans","","species","synonym","Scudder, 1872",,,,"GBIF",,,,"9GV8K",,"8PXT6",2
-"AN_XPHDM_SLTT","Xiphidium saltator","Animalia","Animalia","","","","","Xiphidium","saltator","","species","synonym","Saussure, 1859",,,,"GBIF",,,,"5CFC9",,"KQ9MP",2
-"AN_XPHDM_SSKR","Xiphidium sasakiri","Animalia","Animalia","","","","","Xiphidium","sasakiri","","species","synonym","Matsumura, 1904",,,,"GBIF",,,,"7G9G5",,"5GKTM",2
-"AN_XPHDM_SCDD","Xiphidium scudderi","Animalia","Animalia","","","","","Xiphidium","scudderi","","species","synonym","Blatchley, 1892",,,,"GBIF",,,,"5CFCB",,"8PXTC",2
-"AN_XPHDM_SMVT","Xiphidium semivittatus","Animalia","Animalia","","","","","Xiphidium","semivittatus","","species","synonym","Walker, 1869",,,,"GBIF",,,,"5CFCC",,"B83L3",2
-"AN_XPHDM_SGNT","Xiphidium signatum","Animalia","Animalia","","","","","Xiphidium","signatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF9L",,"XPZK",2
-"AN_XPHDM_SNNS","Xiphidium sinense","Animalia","Animalia","","","","","Xiphidium","sinense","","species","synonym","Walker, 1871",,,,"GBIF",,,,"5CFCD",,"BSYJB",2
-"AN_XPHDM_SOML","Xiphidium somali","Animalia","Animalia","","","","","Xiphidium","somali","","species","synonym","Burr, 1900",,,,"GBIF",,,,"7FWWW",,"XQ3W",2
-"AN_XPHDM_SPRT","Xiphidium spartinae","Animalia","Animalia","","","","","Xiphidium","spartinae","","species","synonym","Fox, 1912",,,,"GBIF",,,,"5CFCF",,"XQ3X",2
-"AN_XPHDM_SPNP","Xiphidium spinipes","Animalia","Animalia","","","","","Xiphidium","spinipes","","species","synonym","Stal, 1877",,,,"GBIF",,,,"5CFCG",,"XPZ6",2
-"AN_XPHDM_SPNS","Xiphidium spinosum","Animalia","Animalia","","","","","Xiphidium","spinosum","","species","synonym","Morse, 1901",,,,"GBIF",,,,"5CFCH",,"KQZ7T",2
-"AN_XPHDM_STRC","Xiphidium strictoides","Animalia","Animalia","","","","","Xiphidium","strictoides","","species","synonym","Caudell, 1906",,,,"GBIF",,,,"5CFCJ",,"XQ82",2
-"AN_XPHDM_RCTM","Xiphidium strictum","Animalia","Animalia","","","","","Xiphidium","strictum","","species","synonym","Scudder, 1875",,,,"GBIF",,,,"8Q4XS",,"8PXXC",2
-"AN_XPHDM_TNTM","Xiphidium taeniatum","Animalia","Animalia","","","","","Xiphidium","taeniatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"8Q4YC",,"8PXT6",2
-"AN_XPHDM_TNLL","Xiphidium tenellum","Animalia","Animalia","","","","","Xiphidium","tenellum","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8PLH9",,"8PY2Q",2
-"AN_XPHDM_TENU","Xiphidium tenue","Animalia","Animalia","","","","","Xiphidium","tenue","","species","synonym","Walker, 1869",,,,"GBIF",,,,"8Q4YD",,"8PY2R",2
-"AN_XPHDM_TRFS","Xiphidium trifasciatum","Animalia","Animalia","","","","","Xiphidium","trifasciatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF9N",,"XPZN",2
-"AN_XPHDM_TRVT","Xiphidium trivittatum","Animalia","Animalia","","","","","Xiphidium","trivittatum","","species","synonym","Stal, 1861",,,,"GBIF",,,,"5CFCP",,"XQ45",2
-"AN_XPHDM_TRNC","Xiphidium truncatum","Animalia","Animalia","","","","","Xiphidium","truncatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF9P",,"XPZP",2
-"AN_XPHDM_VRPN","Xiphidium varipenne","Animalia","Animalia","","","","","Xiphidium","varipenne","","species","synonym","Swezey, 1905",,,,"GBIF",,,,"5CFCS",,"KQ9MP",2
-"AN_XPHDM_VRSC","Xiphidium versicolor","Animalia","Animalia","","","","","Xiphidium","versicolor","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CFCT",,"XPZR",2
-"AN_XPHDM_VSTT","Xiphidium vestitum","Animalia","Animalia","","","","","Xiphidium","vestitum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF9Q",,"XPZS",2
-"AN_XPHDM_VCNM","Xiphidium vicinum","Animalia","Animalia","","","","","Xiphidium","vicinum","","species","synonym","Morse, 1901",,,,"GBIF",,,,"7FWX8",,"XPYL",2
-"AN_XPHDM_VTTT","Xiphidium vittatum","Animalia","Animalia","","","","","Xiphidium","vittatum","","species","synonym","Redtenbacher, 1891",,,,"GBIF",,,,"5CF9R",,"5GKTR",2
-"AN_XPHDM_VTTC","Xiphidium vitticolle","Animalia","Animalia","","","","","Xiphidium","vitticolle","","species","synonym","Blanchard, 1851",,,,"GBIF",,,,"8Q4XT",,"CD54M",2
-"AN_XPHLD","Xiphilidium","Animalia","Animalia","","","","","Xiphilidium","","","genus","unknown",,,,,"inferred",,,,,"1",,2
-"AN_XPHLD_IRIS","Xiphilidium iris","Animalia","Animalia","","","","","Xiphilidium","iris","","species","synonym","Serville, 1838",,,,"GBIF",,,,"8Q4YF",,"XPYZ",2
 "B_XBCTR_CCCL","Xylanibacter caecicola","Bacteria","Pseudomonadati","Bacteroidota","Bacteroidia","Bacteroidales","Prevotellaceae","Xylanibacter","caecicola","","species","accepted","Afrizal et al., 2025","64753","516940",,"LPSN",,,,,"649BB",,1.5
 "F_XYLAR","Xylaria","Fungi","Fungi","Ascomycota","Sordariomycetes","Xylariales","Xylariaceae","Xylaria","","","genus","accepted","Hill et al., 1789",,,,"GBIF",,"81528",,"63XB2","HYK",,2
 "F_XYLAR_ALTC","Xylaria alutacea","Fungi","Fungi","Ascomycota","Sordariomycetes","Xylariales","Xylariaceae","Xylaria","alutacea","","species","synonym","Gray",,,,"GBIF",,,,"5CGX8","63XB2","58BHS",2
@@ -29103,8 +28537,6 @@
 "F_XYLOM_SLGN","Xyloma salignum","Fungi","Fungi","","","","","Xyloma","salignum","","species","synonym","Ehrh et al.",,,,"GBIF",,,,"5CLGG",,"3V48R",2
 "F_XYNPH","Xynophila","Fungi","Fungi","Ascomycota","Eurotiomycetes","Onygenales","Onygenaceae","Xynophila","","","genus","accepted","Malloch et al., 1971",,,,"MycoBank","5854","90950",,,"DM3",,2
 "F_XYNPH_MPHT","Xynophila mephitalis","Fungi","Fungi","Ascomycota","Eurotiomycetes","Onygenales","Onygenaceae","Xynophila","mephitalis","","species","accepted","Malloch et al., 1971",,,,"MycoBank","325640","5854",,"5CP5N",,"FB7P",2
-"AN_XYPHD","Xyphidium","Animalia","Animalia","","","","","Xyphidium","","","genus","unknown",,,,,"inferred",,,,,"1",,2
-"AN_XYPHD_DRSL","Xyphidium dorsalis","Animalia","Animalia","","","","","Xyphidium","dorsalis","","species","synonym","Latreille, 1804",,,,"GBIF",,,,"5CP6P",,"XPYG",2
 "B_YABCH","Yabuuchia","Bacteria","Pseudomonadati","Pseudomonadota","Alphaproteobacteria","Sphingomonadales","Sphingomonadaceae","Yabuuchia","","","genus","synonym","Wang et al., 2025","65402","1302","516627","LPSN",,,,"V4VHJ","CT4S6","7KV3",2
 "B_YABCH_BOCK","Yabuuchia boeckii","Bacteria","Pseudomonadati","Pseudomonadota","Alphaproteobacteria","Sphingomonadales","Sphingomonadaceae","Yabuuchia","boeckii","","species","synonym","Wang et al., 2025","65574","65402","790551","LPSN",,,,"V4VGX","V4VHJ","CT4R3",2
 "B_YABCH_CVRN","Yabuuchia cavernae","Bacteria","Pseudomonadati","Pseudomonadota","Alphaproteobacteria","Sphingomonadales","Sphingomonadaceae","Yabuuchia","cavernae","","species","synonym","Wang et al., 2025","65575","65402","26793","LPSN",,,,"V4VC8","V4VHJ","CT4TQ",2

@@ -2,13 +2,6 @@
 "Achromobacter arsenitoxydans","Bacteria","species","accepted",,1.5
 "Acidaminococcus massiliensis","Bacteria","species","accepted",,1.5
 "Acidaminococcus timonensis","Bacteria","species","accepted",,1.5
-"Acinetobacter avistercoris","Bacteria","species","accepted",,1
-"Acinetobacter idrijaensis","Bacteria","species","accepted",,1
-"Acinetobacter kyonggiensis","Bacteria","species","accepted",,1
-"Acinetobacter marinus","Bacteria","species","accepted","Yoon et al., 2007",1
-"Acinetobacter pullicarnis","Bacteria","species","accepted",,1
-"Acinetobacter rongchengensis","Bacteria","species","accepted",,1
-"Acinetobacter tianfuensis","Bacteria","species","accepted",,1
 "Actinomyces glycerinitolerans","Bacteria","species","accepted",,1.5
 "Actinomyces succiniciruminis","Bacteria","species","accepted",,1.5
 "Actinotignum timonense","Bacteria","species","accepted",,1.5
@@ -110,7 +103,6 @@
 "Chryseobacterium massiliae","Bacteria","species","synonym",,1.25
 "Chryseobacterium nematophagum","Bacteria","species","accepted",,1.5
 "Chryseobacterium timonianum","Bacteria","species","accepted",,1.5
-"Citrobacter bitternis","Bacteria","species","accepted","Ko et al., 2015",1
 "Clostridium autoethanogenum","Bacteria","species","synonym",,1.5
 "Clostridium cellulofermentans","Bacteria","species","accepted","He et al., 1991",1.5
 "Clostridium cuniculi","Bacteria","species","accepted",,1.5
@@ -167,7 +159,6 @@
 "Enterocloster excrementigallinarum","Bacteria","species","accepted",,1.5
 "Enterocloster excrementipullorum","Bacteria","species","accepted",,1.5
 "Enterocloster faecavium","Bacteria","species","accepted",,1.5
-"Enterococcus massiliensis","Bacteria","species","synonym",,1
 "Erwinia beijingensis","Bacteria","species","accepted",,1.5
 "Erwinia dacicola","Bacteria","species","accepted",,1.5
 "Exiguobacterium arabatum","Bacteria","species","accepted","Jakubauskas et al., 2009",1.5
@@ -182,7 +173,6 @@
 "Gordonia jacobaea","Bacteria","species","accepted",,1.5
 "Gordonibacter avicola","Bacteria","species","accepted",,1.5
 "Gordonibacter massiliensis","Bacteria","species","accepted",,1.5
-"Haemophilus quentini","Bacteria","species","accepted",,1
 "Halomonas chromatireducens","Bacteria","species","accepted",,1.5
 "Halomonas humidisoli","Bacteria","species","synonym",,1.5
 "Halomonas profundus","Bacteria","species","accepted","Simon-Colin et al., 2008",1.5
@@ -192,7 +182,6 @@
 "Hungatella pullicola","Bacteria","species","accepted",,1.5
 "Ignatzschineria merdigallinarum","Bacteria","species","accepted",,1.5
 "Janibacter merdipullorum","Bacteria","species","accepted",,1.5
-"Klebsiella quasivariicola","Bacteria","species","synonym",,1
 "Kocuria sediminis","Bacteria","species","synonym",,1.5
 "Kocuria tytonicola","Bacteria","species","accepted",,1.5
 "Lachnoanaerobaculum gingivalis","Bacteria","species","accepted",,1.5
@@ -243,25 +232,10 @@
 "Microbacterium timonense","Bacteria","species","accepted",,1.5
 "Mucor furfuraceus","Fungi","species","synonym","Linnaeus, 1753",1.25
 "Murdochiella massiliensis","Bacteria","species","accepted","Vicino et al., 2016",1.5
-"Mycobacterium ahvazicum","Bacteria","species","accepted",,1
-"Mycobacterium dioxanotrophicus","Bacteria","species","accepted",,1
-"Mycobacterium gallinarum","Bacteria","species","accepted",,1
-"Mycobacterium icosiumassiliensis","Bacteria","species","accepted",,1
-"Mycobacterium liflandii","Bacteria","species","synonym",,1
-"Mycobacterium numidiamassiliense","Bacteria","species","accepted",,1
-"Mycobacterium rhizamassiliense","Bacteria","species","accepted",,1
-"Mycobacterium simulans","Bacteria","species","accepted",,1
-"Mycobacterium sinense","Bacteria","species","accepted",,1
-"Mycobacterium terramassiliense","Bacteria","species","accepted",,1
-"Mycobacterium tilburgii","Bacteria","species","accepted",,1
-"Mycobacterium uberis","Bacteria","species","accepted",,1
 "Mycoplasma capri","Bacteria","species","accepted",,1.5
 "Mycoplasma zalophi","Bacteria","species","accepted","Haulena et al., 2006",1.5
 "Necropsobacter massiliensis","Bacteria","species","accepted",,1.5
 "Nectria resinae","Fungi","species","synonym","Fries, 1849",1.25
-"Neisseria bergeri","Bacteria","species","accepted",,1
-"Neisseria brasiliensis","Bacteria","species","accepted",,1
-"Neisseria chenwenguii","Bacteria","species","accepted",,1
 "Neoehrlichia lotoris","Bacteria","species","accepted",,1.5
 "Nocardia atlantica","Bacteria","species","accepted","Waksman",1.5
 "Nocardia marina","Bacteria","species","accepted","Waksman",1.5
@@ -320,11 +294,6 @@
 "Prevotella koreensis","Bacteria","species","accepted",,1.5
 "Prevotella pectinovora","Bacteria","species","accepted",,1.5
 "Prevotella stercoripullorum","Bacteria","species","accepted",,1.5
-"Pseudomonas abikonensis","Bacteria","species","accepted","Yamada et al., 1968",1
-"Pseudomonas aestus","Bacteria","species","synonym",,1
-"Pseudomonas guezennei","Bacteria","species","accepted","Simon-Colin et al., 2008",1
-"Pseudomonas indoloxydans","Bacteria","species","accepted","Manickam et al., 2008",1
-"Pseudomonas songnenensis","Bacteria","species","accepted","Zhang et al., 2015",1
 "Pseudoramibacter fermentans","Bacteria","species","accepted",,1.5
 "Pseudoxanthomonas jiangsuensis","Bacteria","species","accepted",,1.5
 "Rhizobium helanshanense","Bacteria","species","accepted","Qin et al., 2012",1.5
@@ -338,7 +307,6 @@
 "Saccharomyces mandshuricus iii","Fungi","subspecies","synonym","Saito, 1914",1.25
 "Saccharomyces mandshuricus iv","Fungi","subspecies","synonym","Saito, 1914",1.25
 "Saccharopolyspora pathumthaniensis","Bacteria","species","accepted","Sinma et al., 2011",1.5
-"Serratia surfactantfaciens","Bacteria","species","accepted",,1
 "Shewanella bicestrii","Bacteria","species","accepted",,1.5
 "Sphingobacterium deserti","Bacteria","species","accepted",,1.5
 "Sphingobacterium paucimobilis","Bacteria","species","accepted",,1.5
@@ -351,12 +319,6 @@
 "Sporotrichum sanguineum","Fungi","species","synonym","Ramirez et al., 1953",1.25
 "Stenotrophomonas cyclobalanopsidis","Bacteria","species","accepted",,1.5
 "Stenotrophomonas panacihumi","Bacteria","species","accepted","Yi et al., 2010",1.5
-"Streptococcus halitosis","Bacteria","species","accepted",,1
-"Streptococcus koreensis","Bacteria","species","accepted",,1
-"Streptococcus periodonticum","Bacteria","species","synonym",,1
-"Streptococcus timonensis","Bacteria","species","accepted",,1
-"Streptococcus varani","Bacteria","species","accepted",,1
-"Streptococcus xiaochunlingii","Bacteria","species","accepted",,1
 "Streptomyces abyssomicinicus","Bacteria","species","accepted",,1.5
 "Streptomyces actuosus","Bacteria","species","accepted",,1.5
 "Streptomyces agglomeratus","Bacteria","species","accepted",,1.5

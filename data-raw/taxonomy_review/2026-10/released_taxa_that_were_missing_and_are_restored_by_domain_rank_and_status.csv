@@ -1,13 +1,13 @@
 "domain","rank","status","n"
 "Fungi","species","unknown",3812
 "Protozoa","species","accepted",3147
-"Bacteria","species","accepted",1303
+"Bacteria","species","accepted",1270
 "Fungi","genus","accepted",990
 "Fungi","genus","unknown",981
 "Protozoa","species","synonym",950
 "Protozoa","subspecies","synonym",748
 "Protozoa","genus","accepted",626
-"Fungi","species","accepted",596
+"Fungi","species","accepted",593
 "Protozoa","subspecies","accepted",488
 "Bacteria","genus","unknown",419
 "Fungi","family","accepted",237
@@ -18,9 +18,9 @@
 "Fungi","order","accepted",62
 "Protozoa","species","unknown",61
 "Fungi","genus","synonym",56
-"Bacteria","species","synonym",54
 "Bacteria","order","unknown",52
 "Protozoa","genus","unknown",52
+"Bacteria","species","synonym",49
 "Bacteria","order","accepted",48
 "Protozoa","order","accepted",48
 "Fungi","species","synonym",38

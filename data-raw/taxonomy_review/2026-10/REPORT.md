@@ -375,17 +375,22 @@ simplex* and *Enterobius vermicularis* as accepted), while this build had them a
 
 ### Needs a human
 
-- [ ] ***Klebsiella quasivariicola*** (*K. pneumoniae* species complex, LPSN: preferred name, not validly published) is
-  removed and its code retired, as it is not protected; protect it like the *M. tuberculosis* complex? The same holds
-  for *Enterococcus massiliensis*, *Mycobacterium liflandii*, *Pseudomonas aestus* and *Streptococcus periodonticum*
-- [ ] ***M. bovis*, *M. africanum*, *M. caprae*, *M. microti*, *M. pinnipedii*** are synonyms of *M. tuberculosis* in
-  LPSN (Riojas et al. 2018) and therefore no longer separate members of the *M. tuberculosis* complex group; as
-  `as.mo("M. bovis")` gives *M. tuberculosis*, properties of *M. bovis* (such as its intrinsic pyrazinamide resistance)
-  cannot be distinguished from *M. tuberculosis*. Override with `accepted_name_override`?
-- [ ] ***Giardia duodenalis* and *Giardia lamblia*** are both accepted (COL), one species under two names
-- [ ] **Protist groups in more than one domain** (labyrinthulids, the radiolarian Acantharia, *Myxomycetes*): their higher
-  taxa cannot be placed consistently; listed as pending in the hierarchy test
-- [ ] **Spelling chosen alphabetically** for 14 pairs with a shared identifier (e.g. *Phaeospirillum magnetica* over
-  *magneticum*, *Robertmurraya methanolica* over *methanolicus*), see the CSV
-- [ ] ***Ameson michaeli*** (released) is removed and retired, while *A. michaelis* exists: likely the same microsporidian
-- [ ] ***Macrococcus caseolyticus*** is no longer CoNS (also no EUCAST cefoxitin screening row), as it is no staphylococcus
+- [x] ***Klebsiella quasivariicola*** and other preferred names that are not validly published: decided, all taxa in the
+  genera of `MO_WHO_PRIORITY_GENERA` are protected (script change 33, replaces the hard-coded *M. tuberculosis*
+  complex); *K. quasivariicola*, *M. canettii*, *M. orygis*, *E. massiliensis*, *M. liflandii*, *P. aestus*, *P.
+  stewarti* and *S. periodonticum* are kept as accepted
+- [x] ***M. bovis*, *M. africanum*, *M. caprae*, *M. microti*, *M. pinnipedii***: decided, LPSN is followed, these are
+  heterotypic synonyms of *M. tuberculosis* (Riojas et al. 2018); a test enforces this. Considered and rejected: keeping
+  heterotypic synonyms in the WHO genera separate (98 names, e.g. *Citrobacter diversus*, *Salmonella enteritidis*,
+  which would then lose the breakpoints and rules of their current names)
+- [x] ***Giardia duodenalis* and *Giardia lamblia*** are both accepted (COL): kept as they are
+- [x] **Protist groups in more than one domain**: decided (script change 34): *Aplanochytrium* in the Chromista (with
+  the labyrinthulids), *Dictydiaethalium* in the Protozoa (with the *Myxomycetes*), and a name at two ranks gets the
+  rank suffix also between domains ('*Acantharia* {class}' next to the fungal genus *Acantharia*)
+- [x] **Spelling chosen alphabetically** for 14 pairs with a shared identifier: accepted (Latin rules would be better,
+  but the impact is small)
+- [x] ***Ameson michaeli*** (released) is removed and retired, while *A. michaelis* exists: accepted
+- [x] ***Macrococcus caseolyticus*** is no longer CoNS (also no EUCAST cefoxitin screening row): accepted
+- [ ] **Relevance drifts between builds**: the relevant genera include the genera of `intrinsic_resistant`, which lists
+  every code of the previous data set, so that a build partly keeps what the previous one had (569 never released COL
+  insects such as *Anisoptera* dropped out after `intrinsic_resistant` was regenerated)
