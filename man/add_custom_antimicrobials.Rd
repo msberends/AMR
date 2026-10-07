@@ -55,7 +55,7 @@ This file can also hold synonyms for antimicrobials that already exist, such as 
 }\if{html}{\out{</div>}}
 }
 
-Use \code{\link[=add_custom_antimicrobial_synonyms]{add_custom_antimicrobial_synonyms()}} to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}). These synonyms are recognised by \code{\link[=as.ab]{as.ab()}} and all \verb{ab_*()} functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before \code{\link[=as.ab]{as.ab()}} transliterates the input to ASCII. Matching ignores case and white space; there is no fuzzy matching for synonyms added this way.
+Use \code{\link[=add_custom_antimicrobial_synonyms]{add_custom_antimicrobial_synonyms()}} to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}). These synonyms are recognised by \code{\link[=as.ab]{as.ab()}} and all \verb{ab_*()} functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before \code{\link[=as.ab]{as.ab()}} transliterates the input to ASCII. Matching ignores case and all white space (including no-break and ideographic spaces). If the input does not match as given, a trailing strength, dosage form or part in parentheses (such as \verb{4.5g}, \verb{500 mg/vial}, \code{Inj} or \verb{(piperacillin, tazobactam)}) is removed and matching is tried once more; there is no other fuzzy matching for synonyms added this way. A synonym cannot be added if it already identifies another antimicrobial as its code, name, synonym, abbreviation, ATC code, CID or LOINC code.
 
 Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to clear the previously added antimicrobials and synonyms.
 }
@@ -107,12 +107,12 @@ x <- data.frame(
 x
 x[, betalactams()]
 
-# add local trade names as synonyms to existing antimicrobials
-add_custom_antimicrobial_synonyms("TZP", c("Tazocin", "Tazocin Inj"))
-as.ab("Tazocin Inj")
-# names in other scripts work as well, here a Korean trade name of piperacillin/tazobactam
+# add local trade names as synonyms to existing antimicrobials,
+# here a Korean trade name of piperacillin/tazobactam
 add_custom_antimicrobial_synonyms("TZP", "\uD0C0\uC870\uC2E0\uC8FC")
 ab_name("\uD0C0\uC870\uC2E0\uC8FC")
+# a trailing strength or dosage form, as in many hospital exports, is ignored
+as.ab("\uD0C0\uC870\uC2E0\uC8FC 4.5g")
 }
 }
 \seealso{

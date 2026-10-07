@@ -113,6 +113,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   # text that is not valid UTF-8 (e.g. exported in a local encoding such as CP949) makes the string
   # functions below fail in a UTF-8 locale, so such values are returned as NA with a warning
   # (checked on unique values only, as this runs on every call)
+  if (is.factor(x)) {
+    x <- as.character(x)
+  }
   if (is.character(x)) {
     x_unique <- unique(x[!is.na(x)])
     invalid <- x %in% x_unique[!custom_ab_valid_utf8(enc2utf8(x_unique))]
@@ -127,15 +130,23 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
 
   # user-added synonyms (add_custom_antimicrobial_synonyms()) are matched on the input as given,
   # before the input is transliterated to ASCII below, so that names in non-Latin scripts can be used
-  if (NROW(AMR_env$custom_ab_synonyms) > 0 && already_regex == FALSE) {
+  if (NROW(AMR_env$custom_ab_synonyms) > 0 && already_regex == FALSE && !isTRUE(list(...)$skip_custom_synonyms)) {
     x_unique <- unique(x)
-    hit <- match(custom_ab_synonym_key(x_unique), AMR_env$custom_ab_synonyms$key)[match(x, x_unique)]
+    keys_unique <- custom_ab_synonym_key(x_unique)
+    hit_unique <- match(keys_unique, AMR_env$custom_ab_synonyms$key)
+    # no exact match: try again without a trailing strength or dosage form, such as "4.5g" or "Inj",
+    # but not for input that already identifies an antimicrobial as given
+    retry <- is.na(hit_unique) & !is.na(x_unique) & !keys_unique %in% custom_ab_identifier_keys_cached()$key
+    if (any(retry)) {
+      hit_unique[retry] <- match(custom_ab_synonym_key(custom_ab_strip_strength_form(x_unique[retry])), AMR_env$custom_ab_synonyms$key)
+    }
+    hit <- hit_unique[match(x, x_unique)]
     if (any(!is.na(hit))) {
       out <- rep(NA_character_, length(x))
       out[!is.na(hit)] <- AMR_env$custom_ab_synonyms$ab[hit[!is.na(hit)]]
       rest <- is.na(hit) & !is.na(x)
       if (any(rest)) {
-        out[rest] <- as.character(as.ab(x[rest], flag_multiple_results = flag_multiple_results, language = language, info = info, ...))
+        out[rest] <- as.character(as.ab(x[rest], flag_multiple_results = flag_multiple_results, language = language, info = info, skip_custom_synonyms = TRUE, ...))
       }
       return(set_clean_class(out, new_class = c("ab", "character")))
     }

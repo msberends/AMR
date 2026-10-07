@@ -84,6 +84,43 @@ test_that("test-custom ab synonyms", {
   expect_error(add_custom_antimicrobial_synonyms("MEM", tazocin_ko))
   expect_error(add_custom_antimicrobial_synonyms("TZP", "MEM"))
   expect_error(add_custom_antimicrobial_synonyms("TZP", "Meropenem"))
+  # nor take over another antimicrobial's synonym, abbreviation, ATC code, CID or LOINC code
+  taken <- "already identify another antimicrobial"
+  expect_error(add_custom_antimicrobial_synonyms("MEM", "Zosyn"), taken)
+  expect_error(add_custom_antimicrobial_synonyms("MEM", "J01CR05"), taken)
+  expect_identical(as.character(as.ab(c("Zosyn", "J01CR05"))), c("TZP", "TZP"))
+  tzp_row <- AMR::antimicrobials[AMR::antimicrobials$ab == "TZP", , drop = FALSE]
+  tzp_ids <- c(
+    unlist(tzp_row$synonyms)[1], unlist(tzp_row$abbreviations)[1], unlist(tzp_row$atc)[1],
+    as.character(tzp_row$cid[1]), unlist(tzp_row$loinc)[1]
+  )
+  for (id in tzp_ids[!is.na(tzp_ids) & tzp_ids != ""]) {
+    expect_error(add_custom_antimicrobial_synonyms("MEM", id), taken, info = id)
+  }
+  # also not in the spelling variants that as.ab() already resolves to another antimicrobial
+  expect_error(add_custom_antimicrobial_synonyms("MEM", "Piperacillin-tazobactam"), taken)
+  expect_error(add_custom_antimicrobial_synonyms("MEM", "Z\u00F3syn"), taken)
+  # but an antimicrobial may get its own identifiers again
+  expect_message(add_custom_antimicrobial_synonyms("TZP", c("Zosyn", "J01CR05")))
+  # synonyms consisting of white space only are skipped
+  expect_message(add_custom_antimicrobial_synonyms("TZP", c("\u00A0", "\u3000")), "No synonyms")
+
+  # all Unicode white space is ignored (no-break space, ideographic space)
+  expect_identical(as.character(as.ab("\uD0C0\uC870\u3000\uC2E0\uC8FC")), "TZP")
+  expect_identical(as.character(as.ab("\uD0C0\uC870\u00A0\uC2E0\uC8FC")), "TZP")
+  expect_identical(as.character(as.ab("Tazocinum\u00A0Testname")), "TZP")
+
+  # a trailing strength, dosage form or part in parentheses is removed when there is no exact match
+  expect_identical(as.character(as.ab(paste0(tazocin_ko, " 4.5g"))), "TZP")
+  expect_identical(as.character(as.ab(paste0(tazocin_ko, "4.5g"))), "TZP")
+  expect_identical(as.character(as.ab(paste0(tazocin_ko, " 4.5g "))), "TZP")
+  expect_identical(as.character(as.ab(paste0(tazocin_ko, " 4.5\u00A0g"))), "TZP")
+  expect_identical(as.character(as.ab(paste0(tazocin_ko, " 4/0.5 g"))), "TZP")
+  expect_identical(as.character(as.ab(paste0(tazocin_ko, " 4.5 g/vial"))), "TZP")
+  expect_identical(as.character(as.ab(paste0(tazocin_ko, "4.5\uADF8\uB7A8(\uD53C\uD398\uB77C\uC2E4\uB9B0)"))), "TZP")
+  expect_identical(as.character(as.ab("Tazocinum Testname Inj 2.25 g")), "TZP")
+  # but nothing is matched on a strength alone
+  expect_false(identical(as.character(suppressWarnings(suppressMessages(as.ab("4.5g")))), "TZP"))
 
   # synonyms are listed by ab_synonyms(), but take no part in fuzzy matching
   expect_true("Tazocinum Testname" %in% ab_synonyms("TZP"))
@@ -151,4 +188,12 @@ test_that("test-custom ab synonyms via add_custom_antimicrobials()", {
   expect_error(add_custom_antimicrobials(data.frame(ab = c("TESTNEW", "MEM"), name = c("Test New", NA), synonyms = c(NA, "Tazocinum Testname"), stringsAsFactors = FALSE)))
   expect_identical(NROW(AMR:::AMR_env$AB_lookup), n_before)
   expect_false("TESTNEW" %in% AMR:::AMR_env$AB_lookup$ab)
+
+  # a new antimicrobial and a synonym of another one in the same call must not share a name
+  expect_error(add_custom_antimicrobials(data.frame(ab = c("TESTSAME", "TZP"), name = c("Foobarcillin", NA), synonyms = c(NA, "Foobarcillin"), stringsAsFactors = FALSE)), "already identify another antimicrobial")
+  expect_false("TESTSAME" %in% AMR:::AMR_env$AB_lookup$ab)
+  # and a new antimicrobial cannot take a name that is already a user-added synonym
+  suppressMessages(add_custom_antimicrobial_synonyms("TZP", "Foobarcillin"))
+  expect_error(add_custom_antimicrobials(data.frame(ab = "TESTLATER", name = "Foobarcillin")), "already in use as user-added synonyms")
+  expect_identical(as.character(as.ab("Foobarcillin")), "TZP")
 })

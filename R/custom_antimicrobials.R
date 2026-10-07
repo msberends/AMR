@@ -67,7 +67,7 @@
 #'        )
 #'       ```
 #'
-#' Use [add_custom_antimicrobial_synonyms()] to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with [add_custom_antimicrobials()]). These synonyms are recognised by [as.ab()] and all `ab_*()` functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before [as.ab()] transliterates the input to ASCII. Matching ignores case and white space; there is no fuzzy matching for synonyms added this way.
+#' Use [add_custom_antimicrobial_synonyms()] to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with [add_custom_antimicrobials()]). These synonyms are recognised by [as.ab()] and all `ab_*()` functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before [as.ab()] transliterates the input to ASCII. Matching ignores case and all white space (including no-break and ideographic spaces). If the input does not match as given, a trailing strength, dosage form or part in parentheses (such as `4.5g`, `500 mg/vial`, `Inj` or `(piperacillin, tazobactam)`) is removed and matching is tried once more; there is no other fuzzy matching for synonyms added this way. A synonym cannot be added if it already identifies another antimicrobial as its code, name, synonym, abbreviation, ATC code, CID or LOINC code.
 #'
 #' Use [clear_custom_antimicrobials()] to clear the previously added antimicrobials and synonyms.
 #' @seealso [add_custom_microorganisms()] to add custom microorganisms.
@@ -121,12 +121,12 @@
 #' x
 #' x[, betalactams()]
 #'
-#' # add local trade names as synonyms to existing antimicrobials
-#' add_custom_antimicrobial_synonyms("TZP", c("Tazocin", "Tazocin Inj"))
-#' as.ab("Tazocin Inj")
-#' # names in other scripts work as well, here a Korean trade name of piperacillin/tazobactam
+#' # add local trade names as synonyms to existing antimicrobials,
+#' # here a Korean trade name of piperacillin/tazobactam
 #' add_custom_antimicrobial_synonyms("TZP", "\uD0C0\uC870\uC2E0\uC8FC")
 #' ab_name("\uD0C0\uC870\uC2E0\uC8FC")
+#' # a trailing strength or dosage form, as in many hospital exports, is ignored
+#' as.ab("\uD0C0\uC870\uC2E0\uC8FC 4.5g")
 #' }
 add_custom_antimicrobials <- function(x) {
   meet_criteria(x, allow_class = "data.frame")
@@ -147,6 +147,16 @@ add_custom_antimicrobials <- function(x) {
     any(records$ab %in% AMR_env$AB_lookup$ab),
     "Antimicrobial drug code(s) ", vector_and(records$ab[records$ab %in% AMR_env$AB_lookup$ab]), " already exist in the internal `antimicrobials` data set."
   )
+  # names of new antimicrobials must not already be in use as user-added synonyms of other antimicrobials
+  if (NROW(records) > 0 && NROW(AMR_env$custom_ab_synonyms) > 0) {
+    rec_ids <- custom_ab_identifier_keys(records)
+    used <- AMR_env$custom_ab_synonyms[match(rec_ids$key, AMR_env$custom_ab_synonyms$key), , drop = FALSE]
+    clash <- !is.na(used$ab) & used$ab != rec_ids$ab
+    stop_if(
+      any(clash),
+      "The name or synonym(s) ", vector_and(unique(used$synonym[clash])), " of the new antimicrobial(s) are already in use as user-added synonyms of ", vector_and(unique(used$ab[clash])), "."
+    )
+  }
   # validate the synonyms before anything is added, so that an error leaves the session unchanged
   syn <- NULL
   if (any(synonym_rows)) {
@@ -156,7 +166,7 @@ add_custom_antimicrobials <- function(x) {
       syn_ab <- rep(syn_ab, vapply(FUN.VALUE = integer(1), syn_col, length))
       syn_col <- unlist(syn_col, use.names = FALSE)
     }
-    syn <- custom_ab_synonyms_prepare(ab = syn_ab, synonyms = syn_col, new_codes = as.character(records$ab))
+    syn <- custom_ab_synonyms_prepare(ab = syn_ab, synonyms = syn_col, new_records = records)
   }
   if (NROW(records) > 0) {
     add_custom_antimicrobials_records(records)
@@ -256,8 +266,8 @@ add_custom_antimicrobial_synonyms <- function(ab, synonyms = NULL) {
 }
 
 # checks synonyms and returns a data.frame(ab, synonym, key), or NULL if there is nothing to add;
-# `new_codes` are codes that are about to be added in the same call of add_custom_antimicrobials()
-custom_ab_synonyms_prepare <- function(ab, synonyms, new_codes = character(0)) {
+# `new_records` are antimicrobials that are about to be added in the same call of add_custom_antimicrobials()
+custom_ab_synonyms_prepare <- function(ab, synonyms, new_records = NULL) {
   ab <- as.character(ab)
   synonyms <- enc2utf8(as.character(synonyms))
   invalid <- !is.na(synonyms) & !custom_ab_valid_utf8(synonyms)
@@ -265,12 +275,14 @@ custom_ab_synonyms_prepare <- function(ab, synonyms, new_codes = character(0)) {
     any(invalid),
     "Synonym(s) must be valid UTF-8 text, which does not apply to the synonym(s) at position ", vector_and(which(invalid), quotes = FALSE), ". Convert them first, e.g. with `iconv(x, from = \"CP949\", to = \"UTF-8\")`."
   )
-  keep <- !is.na(ab) & !is.na(synonyms) & trimws(synonyms) != ""
+  synonyms <- trimws2(synonyms)
+  keep <- !is.na(ab) & !is.na(synonyms) & !is.na(custom_ab_synonym_key(synonyms))
   ab <- ab[keep]
-  synonyms <- trimws(synonyms[keep])
+  synonyms <- synonyms[keep]
   if (length(ab) == 0) {
     return(NULL)
   }
+  new_codes <- if (is.null(new_records)) character(0) else as.character(new_records$ab)
   known <- c(as.character(AMR_env$AB_lookup$ab), new_codes)
   unknown <- unique(ab[!ab %in% known])
   stop_if(
@@ -278,17 +290,25 @@ custom_ab_synonyms_prepare <- function(ab, synonyms, new_codes = character(0)) {
     "Antimicrobial drug code(s) ", vector_and(unknown), " do not exist. Use add_custom_antimicrobials() to add new antimicrobials first."
   )
   keys <- custom_ab_synonym_key(synonyms)
-  # a synonym must not be the code or the name of another antimicrobial
-  other <- data.frame(
-    ab = c(as.character(AMR_env$AB_lookup$ab), as.character(AMR_env$AB_lookup$ab)),
-    key = custom_ab_synonym_key(c(as.character(AMR_env$AB_lookup$ab), as.character(AMR_env$AB_lookup$name))),
-    stringsAsFactors = FALSE
-  )
-  taken <- other$ab[match(keys, other$key)]
-  taken <- !is.na(taken) & taken != ab
+  # a synonym must not already identify another antimicrobial - its code, name, synonyms, abbreviations,
+  # ATC codes, CID or LOINC codes - not even in the generalised form that as.ab() uses for its exact matches
+  ids <- custom_ab_identifier_keys_cached()
+  gen_ids <- custom_ab_generalised_ids()
+  if (!is.null(new_records) && NROW(new_records) > 0) {
+    ids <- rbind(ids, custom_ab_identifier_keys(new_records))
+    gen_ids <- rbind(gen_ids, data.frame(ab = as.character(new_records$ab), gen = generalise_antibiotic_name(as.character(new_records$name)), stringsAsFactors = FALSE))
+  }
+  gens <- custom_ab_generalised(synonyms)
+  owners <- lapply(seq_along(keys), function(i) {
+    o <- ids$ab[ids$key == keys[i]]
+    if (!is.na(gens[i])) o <- c(o, gen_ids$ab[gen_ids$gen == gens[i]])
+    setdiff(unique(o), ab[i])
+  })
+  taken <- lengths(owners) > 0
   stop_if(
     any(taken),
-    "Synonym(s) ", vector_and(unique(synonyms[taken])), " already serve as the code or name of another antimicrobial."
+    "Synonym(s) already identify another antimicrobial (as its code, name, synonym, abbreviation, ATC code, CID or LOINC code): ",
+    vector_and(unique(paste0(synonyms[taken], " (", vapply(FUN.VALUE = character(1), owners[taken], paste, collapse = ", "), ")")), quotes = FALSE), "."
   )
   existing <- AMR_env$custom_ab_synonyms
   clash <- keys %in% existing$key & ab != existing$ab[match(keys, existing$key)]
@@ -328,14 +348,102 @@ custom_ab_valid_utf8 <- function(x) {
   !is.na(iconv(x, from = "UTF-8", to = "UTF-8"))
 }
 
-# key for user-added synonyms: case and white space are ignored, characters are kept as given;
-# input that is not valid UTF-8 gets an NA key and thus never matches
+# white space for the user-added synonym functions: all Unicode white space, like trimws2()
+custom_ab_ws <- "[\\h\\v\\p{Z}\u200B\u200C\u200D\u2060\uFEFF]"
+
+# key for user-added synonyms: case and all white space are ignored, characters are kept as given;
+# input that is not valid UTF-8 or that consists of white space only gets an NA key and thus never matches
 custom_ab_synonym_key <- function(x) {
   x <- enc2utf8(as.character(x))
   out <- rep(NA_character_, length(x))
   valid <- !is.na(x) & custom_ab_valid_utf8(x)
-  out[valid] <- toupper(gsub("[[:space:]]+", "", x[valid], perl = TRUE))
+  out[valid] <- toupper(gsub(paste0(custom_ab_ws, "+"), "", x[valid], perl = TRUE))
+  out[!is.na(out) & out == ""] <- NA_character_
   out
+}
+
+# generalised form as used by the exact stage of as.ab(), or NA when the text cannot be transliterated to ASCII
+custom_ab_generalised <- function(x) {
+  out <- rep(NA_character_, length(x))
+  ascii <- suppressWarnings(iconv(toupper(enc2utf8(as.character(x))), from = "UTF-8", to = "ASCII//TRANSLIT"))
+  ok <- !is.na(ascii) & !grepl("?", ascii, fixed = TRUE)
+  if (any(ok)) {
+    # some iconv implementations transliterate diacritics to separate marks (e.g. "O" with acute to "'O")
+    gen <- generalise_antibiotic_name(gsub("['`^~\"]", "", ascii[ok]))
+    gen[!grepl("[A-Z0-9]", gen)] <- NA_character_
+    out[ok] <- gen
+  }
+  out
+}
+
+# removes a trailing strength, dosage form and/or part in parentheses from product names as exported
+# by hospital systems, e.g. "Tazocin Inj 4.5g" -> "Tazocin", "Tazocin 4/0.5 g" -> "Tazocin",
+# "X 4.5g (piperacillin, tazobactam)" -> "X"; dosage forms are only removed as separate words, so
+# names that end in a form (such as Korean names ending in "\uC8FC" for injection) are left intact;
+# only used as a second attempt in as.ab() when the input as given does not match a user-added synonym
+custom_ab_strip_strength_form <- function(x) {
+  x <- enc2utf8(as.character(x))
+  valid <- !is.na(x) & custom_ab_valid_utf8(x)
+  # all white space becomes a single space first
+  y <- trimws2(gsub(paste0(custom_ab_ws, "+"), " ", x[valid], perl = TRUE))
+  unit <- "(mg|g|gm|mcg|ug|\u00B5g|\u03BCg|ng|iu|miu|u|units?|ml|l|meq|mmol|%|\uBC00\uB9AC\uADF8\uB7A8|\uADF8\uB7A8|\uBC00\uB9AC\uB9AC\uD130)"
+  num <- "[0-9]+([.,][0-9]+)*"
+  per <- paste0("( ?/ ?(", num, ")? ?(mg|g|gm|ml|l|vial|v|amp|amps|tab|tabs|cap|caps|bag|btl|\uBCD1|\uBC14\uC774\uC54C|\uC815|\uCEA1\uC290)?)?")
+  combination <- paste0("(", num, " ?", unit, "? ?/ ?)?")
+  strength <- paste0("(?<![0-9.,]) ?", combination, num, " ?", unit, per, "$")
+  form <- paste0(
+    " (inj|inj\\.|injection|iv|i\\.v\\.|im|po|tab|tab\\.|tabs|tablets?|cap|cap\\.|caps|capsules?|",
+    "syr|syrup|susp|suspension|oral|powder|pwd|vial|amp|premix|",
+    "\uC8FC\uC0AC|\uC8FC\uC0AC\uC81C|\uC8FC\uC0AC\uC561|\uC815|\uCEA1\uC290|\uC2DC\uB7FD|\uD604\uD0C1\uC561|\uAC74\uC870\uC2DC\uB7FD)$"
+  )
+  parenthesised <- " ?[(\\[][^()\\[\\]]*[)\\]]$"
+  repeat {
+    y_new <- gsub(parenthesised, "", y, perl = TRUE)
+    y_new <- gsub(strength, "", y_new, perl = TRUE, ignore.case = TRUE)
+    y_new <- gsub(form, "", y_new, perl = TRUE, ignore.case = TRUE)
+    y_new <- trimws2(y_new)
+    if (identical(y_new, y)) break
+    y <- y_new
+  }
+  x[valid] <- y
+  x
+}
+
+# keys of everything that identifies an antimicrobial in `lkp` (by default the internal lookup table):
+# code, name, synonyms, abbreviations, ATC codes, CID and LOINC codes
+custom_ab_identifier_keys <- function(lkp = AMR_env$AB_lookup) {
+  ab <- as.character(lkp$ab)
+  as_list <- function(col) {
+    if (!col %in% colnames(lkp)) {
+      return(vector("list", length(ab)))
+    }
+    v <- lkp[[col]]
+    if (is.list(v)) v else as.list(v)
+  }
+  parts <- list(as.list(ab), as_list("name"), as_list("synonyms"), as_list("abbreviations"), as_list("atc"), as_list("cid"), as_list("loinc"))
+  ids <- lapply(seq_along(ab), function(i) {
+    vals <- as.character(unlist(lapply(parts, function(p) p[[i]]), use.names = FALSE))
+    vals[!is.na(vals) & vals != ""]
+  })
+  out <- data.frame(ab = rep(ab, lengths(ids)), key = custom_ab_synonym_key(unlist(ids, use.names = FALSE)), stringsAsFactors = FALSE)
+  out[!is.na(out$key), , drop = FALSE]
+}
+
+# the same for the internal lookup table, kept until the lookup table changes (see reset_ab_cache())
+custom_ab_identifier_keys_cached <- function() {
+  if (is.null(AMR_env$custom_ab_id_keys)) {
+    AMR_env$custom_ab_id_keys <- custom_ab_identifier_keys()
+  }
+  AMR_env$custom_ab_id_keys
+}
+
+# generalised names and synonyms of the internal lookup table, as used by the exact stage of as.ab()
+custom_ab_generalised_ids <- function() {
+  ab <- as.character(AMR_env$AB_lookup$ab)
+  g <- AMR_env$AB_lookup$generalised_all
+  if (!is.list(g)) g <- as.list(g)
+  out <- data.frame(ab = rep(ab, lengths(g)), gen = as.character(unlist(g, use.names = FALSE)), stringsAsFactors = FALSE)
+  out[!is.na(out$gen) & grepl("[A-Z0-9]", out$gen), , drop = FALSE]
 }
 
 #' @rdname add_custom_antimicrobials

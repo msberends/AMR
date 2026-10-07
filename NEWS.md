@@ -58,6 +58,7 @@ Planned as v3.1.0, mid October 2026.
 * `as.mic()`: values in scientific notation (e.g. `1e-3`) now handled correctly
 * `as.ab()`: codes containing "PH" or "TH" (e.g. `ETH`, `PHE`) no longer return `NA` when mixed with unrecognised input (#245)
 * `as.ab()`: results of `fast_mode` (used internally) were remembered and reused by later regular calls, which could return `NA` for valid input (#313)
+* `as.ab()`: input that is not valid UTF-8 (e.g. text exported in a local encoding such as CP949) now returns `NA` with a warning instead of an error
 * `as.mo()`: previously coerced input was often not recognised again, e.g. for an unknown species of a known genus, so it was matched again on every call (#313)
 * `ab_reset_session()` no longer clears the uncertainties of `as.mo()` (#313)
 * Combined MIC/SIR input values (e.g. `"<= 0.002; S"` or `"S; 0.002"`) now parsed correctly (#252)
