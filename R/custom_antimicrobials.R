@@ -153,8 +153,9 @@ add_custom_antimicrobials <- function(x) {
   }
   AMR_env$AB_lookup <- unique(rbind_AMR(AMR_env$AB_lookup, new_df))
 
-  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(!AMR_env$ab_previously_coerced$ab %in% c(x$ab, x$generalised_name) & !AMR_env$ab_previously_coerced$x %in% c(x$ab, x$generalised_name)), , drop = FALSE]
   class(AMR_env$AB_lookup$ab) <- c("ab", "character")
+  # the lookup table changed, so earlier coercions and lookup indices are no longer valid
+  reset_ab_cache()
   message_("Added ", nr2char(nrow(x)), " record", ifelse(nrow(x) > 1, "s", ""), " to the internal {.code antimicrobials} data set.")
 }
 
@@ -165,6 +166,6 @@ clear_custom_antimicrobials <- function() {
   AMR_env$AB_lookup <- cbind(AMR::antimicrobials, AB_LOOKUP)
   n2 <- nrow(AMR_env$AB_lookup)
   AMR_env$custom_ab_codes <- character(0)
-  AMR_env$ab_previously_coerced <- AMR_env$ab_previously_coerced[which(AMR_env$ab_previously_coerced$ab %in% AMR_env$AB_lookup$ab), , drop = FALSE]
+  reset_ab_cache()
   message_("Cleared ", nr2char(n - n2), " custom record", ifelse(n - n2 > 1, "s", ""), " from the internal {.help [antimicrobials](AMR::antimicrobials)} data set.")
 }

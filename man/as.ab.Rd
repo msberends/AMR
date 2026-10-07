@@ -52,6 +52,8 @@ All these properties will be searched for the user input. The \code{\link[=as.ab
 
 Use the \code{\link[=ab_property]{ab_*}} functions to get properties based on the returned antibiotic ID, see \emph{Examples}.
 
+Results of non-exact input are remembered during the session, so that the same input is not matched again. Use \code{\link[=ab_reset_session]{ab_reset_session()}} to forget these results. They are also forgotten after \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} or \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}}.
+
 Note: the \code{\link[=as.ab]{as.ab()}} and \code{\link[=ab_property]{ab_*}} functions may use very long regular expression to match brand names of antimicrobial drugs. This may fail on some systems.
 
 You can add your own manual codes to be considered by \code{\link[=as.ab]{as.ab()}} and all \code{\link[=ab_property]{ab_*}} functions, see \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}.

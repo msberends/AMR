@@ -278,11 +278,11 @@ add_custom_microorganisms <- function(x) {
     new_df[, col] <- x[, col, drop = TRUE]
   }
 
-  # clear previous coercions
-  suppressMessages(mo_reset_session())
-
   AMR_env$MO_lookup <- unique(rbind_AMR(AMR_env$MO_lookup, new_df))
   class(AMR_env$MO_lookup$mo) <- c("mo", "character")
+  # the lookup table changed, so earlier coercions and lookup indices are no longer valid
+  reset_mo_cache()
+  AMR_env$mo_uncertainties <- AMR_env$mo_uncertainties[0, , drop = FALSE]
   if (nrow(x) <= 3) {
     message_("Added ", vector_and(italicise(x$fullname), quotes = FALSE), " to the internal {.code microorganisms} data set.")
   } else {
@@ -295,16 +295,12 @@ add_custom_microorganisms <- function(x) {
 clear_custom_microorganisms <- function() {
   n <- nrow(AMR_env$MO_lookup)
 
-  # reset
+  # reset, which also invalidates earlier coercions and lookup indices
   AMR_env$MO_lookup <- NULL
   add_MO_lookup_to_AMR_env()
 
-  # clear previous coercions
-  suppressMessages(mo_reset_session())
-
   n2 <- nrow(AMR_env$MO_lookup)
   AMR_env$custom_mo_codes <- character(0)
-  AMR_env$mo_previously_coerced <- AMR_env$mo_previously_coerced[which(AMR_env$mo_previously_coerced$mo %in% AMR_env$MO_lookup$mo), , drop = FALSE]
   AMR_env$mo_uncertainties <- AMR_env$mo_uncertainties[0, , drop = FALSE]
   message_("Cleared ", nr2char(n - n2), " custom record", ifelse(n - n2 > 1, "s", ""), " from the internal {.code microorganisms} data set.")
 }
