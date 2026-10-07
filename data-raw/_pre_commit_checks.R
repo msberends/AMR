@@ -261,6 +261,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Cyberlindnera",
   "Cyclospora",
   "Cystoisospora",
+  "Debaryomyces",
   "Debaryozyma",
   "Demodex",
   "Dermatobia",

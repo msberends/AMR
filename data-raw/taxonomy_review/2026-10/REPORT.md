@@ -391,6 +391,12 @@ simplex* and *Enterobius vermicularis* as accepted), while this build had them a
   but the impact is small)
 - [x] ***Ameson michaeli*** (released) is removed and retired, while *A. michaelis* exists: accepted
 - [x] ***Macrococcus caseolyticus*** is no longer CoNS (also no EUCAST cefoxitin screening row): accepted
-- [ ] **Relevance drifts between builds**: the relevant genera include the genera of `intrinsic_resistant`, which lists
-  every code of the previous data set, so that a build partly keeps what the previous one had (569 never released COL
-  insects such as *Anisoptera* dropped out after `intrinsic_resistant` was regenerated)
+- [x] **Relevance drifted between builds**: decided and solved (script change 35). The relevant genera included the
+  genera of `intrinsic_resistant` (computed from this data set, 1,539 bacterial genera only through it) and the
+  non-bacterial genera that were relevant in the previous data set, so that every build partly depended on the
+  previous one (e.g. 569 never released COL insects such as *Anisoptera*). Now `intrinsic_resistant` is no input of
+  the build at all, the genera named in the interpretive rules are read from the rules, and the previous data set no
+  longer counts (its only non-bacterial genus that was not covered otherwise, *Debaryomyces*, is in
+  `MO_RELEVANT_GENERA` now). Effect: 24 never released, not relevant COL records less. The data sets that are computed
+  from this one are recreated in the right order by the new `run_after_microorganisms_build.R`, which the build runs
+  at its end; `reproduction_of_intrinsic_resistant.R` uses `devtools::load_all()` instead of the installed package

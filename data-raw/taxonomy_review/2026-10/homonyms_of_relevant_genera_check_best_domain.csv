@@ -5,10 +5,6 @@
 "Advenella","Chromista",2,"GBIF","Advenella bifurcata","Bacteria",FALSE
 "Amoeba","Animalia",2,"GBIF","Amoeba miurai","Protozoa",FALSE
 "Amoeba","Protozoa",28,"GBIF","Amoeba agilis","Protozoa",FALSE
-"Ampullariella","Animalia",2,"GBIF","Ampullariella microscopica","Bacteria",FALSE
-"Ampullariella","Bacteria",5,"LPSN","Ampullariella campanulata","Bacteria",FALSE
-"Asanoa","Animalia",1,"GBIF",,"Bacteria",FALSE
-"Asanoa","Bacteria",7,"LPSN","Asanoa endophytica","Bacteria",FALSE
 "Babesia","Animalia",6,"GBIF","Babesia lohae","Chromista",FALSE
 "Babesia","Chromista",6,"GBIF","Babesia coryicola","Chromista",FALSE
 "Bacillus","Animalia",39,"GBIF","Bacillus amyloliquefaciens","Bacteria",FALSE
@@ -21,14 +17,8 @@
 "Bipolaris","Plantae",2,"GBIF","Bipolaris sorokiniana","Fungi",FALSE
 "Blastocystis","Animalia",1,"GBIF",,"Chromista",FALSE
 "Blastocystis","Chromista",1,"GBIF",,"Chromista",FALSE
-"Bogoriella","Bacteria",2,"LPSN","Bogoriella caseilytica","Bacteria",FALSE
-"Bogoriella","Fungi",38,"MycoBank","Bogoriella alata","Bacteria",FALSE
-"Bowdenia","Animalia",1,"GBIF",,"Bacteria",FALSE
-"Bowdenia","Bacteria",2,"LPSN","Bowdenia nasicola","Bacteria",FALSE
 "Brachyspira","Animalia",3,"GBIF","Brachyspira asperella","Bacteria",FALSE
 "Brachyspira","Bacteria",11,"GBIF+LPSN","Brachyspira aalborgi","Bacteria",FALSE
-"Bryantella","Animalia",3,"GBIF","Bryantella smaragda","Bacteria",FALSE
-"Bryantella","Bacteria",2,"LPSN","Bryantella formatexigens","Bacteria",FALSE
 "Buchnera","Bacteria",2,"LPSN","Buchnera aphidicola","Bacteria",FALSE
 "Buchnera","Plantae",223,"GBIF","Buchnera affinis","Bacteria",FALSE
 "Capillaria","Animalia",86,"GBIF","Capillaria acanthopagri","Animalia",TRUE
@@ -39,8 +29,6 @@
 "Chainia","Fungi",3,"MycoBank","Chainia antibiotica","Bacteria",FALSE
 "Circinella","Chromista",4,"GBIF","Circinella arenicola","Fungi",FALSE
 "Circinella","Fungi",32,"GBIF+MycoBank","Circinella angarensis","Fungi",FALSE
-"Copromonas","Bacteria",2,"GBIF","Copromonas avistercoris","Bacteria",FALSE
-"Copromonas","Protozoa",1,"GBIF",,"Bacteria",FALSE
 "Coxiella","Animalia",13,"GBIF","Coxiella badgerensis","Bacteria",FALSE
 "Coxiella","Bacteria",4,"GBIF+LPSN","Coxiella burneti","Bacteria",FALSE
 "Cristispira","Animalia",5,"GBIF","Cristispira caballasensis","Bacteria",FALSE
@@ -58,40 +46,24 @@
 "Edwardsiella","Chromista",1,"GBIF",,"Bacteria",FALSE
 "Emmonsia","Animalia",2,"GBIF","Emmonsia alternans","Fungi",FALSE
 "Emmonsia","Fungi",8,"MycoBank","Emmonsia brasiliensis","Fungi",FALSE
-"Eremococcus","Animalia",6,"GBIF","Eremococcus pirogallis","Bacteria",FALSE
-"Eremococcus","Bacteria",2,"LPSN","Eremococcus coleocola","Bacteria",FALSE
 "Escherichia","Bacteria",14,"GBIF+LPSN","Escherichia adecarboxylata","Bacteria",FALSE
 "Escherichia","Plantae",2,"GBIF","Escherichia coli","Bacteria",FALSE
 "Ewingella","Animalia",1,"GBIF",,"Bacteria",FALSE
 "Ewingella","Bacteria",4,"GBIF+LPSN","Ewingella americana","Bacteria",FALSE
 "Ewingella","Chromista",1,"GBIF",,"Bacteria",FALSE
-"Frankia","Bacteria",21,"GBIF+LPSN","Frankia alni","Bacteria",FALSE
-"Frankia","Fungi",3,"MycoBank","Frankia brunchorstii","Bacteria",FALSE
-"Frondicola","Bacteria",2,"LPSN","Frondicola australicus","Bacteria",FALSE
-"Frondicola","Fungi",2,"MycoBank","Frondicola tunitricuspis","Bacteria",FALSE
 "Gardnerella","Animalia",2,"GBIF","Gardnerella cossmanni","Bacteria",FALSE
 "Gardnerella","Bacteria",11,"LPSN","Gardnerella bretellae","Bacteria",FALSE
-"Geochorda","Bacteria",2,"LPSN","Geochorda subterranea","Bacteria",FALSE
-"Geochorda","Plantae",4,"GBIF","Geochorda cuneata","Bacteria",FALSE
 "Giardia","Animalia",3,"GBIF","Giardia agilis","Protozoa",FALSE
 "Giardia","Protozoa",4,"GBIF","Giardia duodenalis","Protozoa",FALSE
-"Goodfellowia","Animalia",2,"GBIF","Goodfellowia miranda","Bacteria",FALSE
-"Goodfellowia","Bacteria",2,"LPSN","Goodfellowia coeruleoviolacea","Bacteria",FALSE
 "Gordonia","Animalia",2,"GBIF","Gordonia rossica","Bacteria",FALSE
 "Gordonia","Bacteria",68,"GBIF+LPSN","Gordonia abscondita","Bacteria",FALSE
 "Gordonia","Plantae",34,"GBIF","Gordonia acutifolia","Bacteria",FALSE
 "Graphium","Animalia",196,"GBIF","Graphium abri","Fungi",TRUE
 "Graphium","Fungi",174,"GBIF+MycoBank","Graphium adansoniae","Fungi",TRUE
-"Halocella","Bacteria",3,"LPSN","Halocella cellulolytica","Bacteria",FALSE
-"Halocella","Chromista",1,"GBIF",,"Bacteria",FALSE
 "Halococcus","Animalia",2,"GBIF","Halococcus formicarii","Archaea",FALSE
 "Halococcus","Archaea",12,"LPSN","Halococcus agarilyticus","Archaea",FALSE
-"Hamiltonella","Animalia",1,"GBIF",,"Bacteria",FALSE
-"Hamiltonella","Bacteria",1,"GBIF","Hamiltonella defensa","Bacteria",FALSE
 "Hendersonula","Animalia",3,"GBIF","Hendersonula collina","Fungi",FALSE
 "Hendersonula","Fungi",42,"GBIF+MycoBank","Hendersonula agathidis","Fungi",FALSE
-"Holzapfelia","Animalia",1,"GBIF",,"Bacteria",FALSE
-"Holzapfelia","Bacteria",2,"LPSN","Holzapfelia floricola","Bacteria",FALSE
 "Hymenolepis","Animalia",94,"GBIF","Hymenolepis ackerti","Animalia",TRUE
 "Hymenolepis","Plantae",13,"GBIF","Hymenolepis calva","Animalia",TRUE
 "Isospora","Animalia",7,"GBIF","Isospora annthomassonae","Chromista",FALSE
@@ -109,12 +81,8 @@
 "Leishmania","Protozoa",9,"GBIF","Leishmania amazonensis","Protozoa",FALSE
 "Levinea","Bacteria",3,"LPSN","Levinea amalonatica","Bacteria",FALSE
 "Levinea","Chromista",1,"GBIF",,"Bacteria",FALSE
-"Longispora","Bacteria",4,"LPSN","Longispora albida","Bacteria",FALSE
-"Longispora","Fungi",2,"MycoBank","Longispora clematidis","Bacteria",FALSE
 "Macrococcus","Animalia",1,"GBIF",,"Bacteria",FALSE
 "Macrococcus","Bacteria",19,"LPSN","Macrococcus animalis","Bacteria",FALSE
-"Markus","Animalia",2,"GBIF","Markus karenae","Bacteria",FALSE
-"Markus","Bacteria",2,"LPSN","Markus hominis","Bacteria",FALSE
 "Megasphaera","Bacteria",19,"LPSN","Megasphaera butyrica","Bacteria",FALSE
 "Megasphaera","Protozoa",1,"GBIF",,"Bacteria",FALSE
 "Metschnikowia","Animalia",5,"GBIF","Metschnikowia flava","Fungi",FALSE
@@ -124,8 +92,6 @@
 "Micrococcus","Fungi",5,"MycoBank","Micrococcus beigelii","Bacteria",FALSE
 "Micromonas","Bacteria",3,"LPSN","Micromonas micra","Bacteria",FALSE
 "Micromonas","Plantae",5,"GBIF","Micromonas bravo","Bacteria",FALSE
-"Microsphaera","Bacteria",2,"LPSN","Microsphaera multipartita","Bacteria",FALSE
-"Microsphaera","Fungi",238,"GBIF+MycoBank","Microsphaera abbreviata","Bacteria",FALSE
 "Moorella","Animalia",7,"GBIF","Moorella alini","Bacteria",FALSE
 "Moorella","Bacteria",14,"GBIF+LPSN","Moorella caeni","Bacteria",FALSE
 "Moorella","Fungi",6,"MycoBank","Moorella heterospora","Bacteria",FALSE
@@ -138,13 +104,8 @@
 "Necator","Fungi",6,"GBIF","Necator decretus","Animalia",TRUE
 "Nectria","Animalia",10,"GBIF","Nectria humilis","Fungi",FALSE
 "Nectria","Fungi",989,"GBIF+MycoBank","Nectria abnormis","Fungi",FALSE
-"Nicolia","Animalia",1,"GBIF",,"Bacteria",FALSE
-"Nicolia","Bacteria",2,"LPSN","Nicolia spurrieriana","Bacteria",FALSE
 "Oligella","Animalia",7,"GBIF","Oligella clandestina","Bacteria",FALSE
 "Oligella","Bacteria",3,"LPSN","Oligella ureolytica","Bacteria",FALSE
-"Paludicola","Animalia",1,"GBIF",,"Bacteria",FALSE
-"Paludicola","Bacteria",2,"LPSN","Paludicola psychrotolerans","Bacteria",FALSE
-"Paludicola","Plantae",3,"GBIF","Paludicola groenbladii","Bacteria",FALSE
 "Paracoccus","Animalia",97,"GBIF","Paracoccus abnormalis","Bacteria",FALSE
 "Paracoccus","Bacteria",110,"GBIF+LPSN","Paracoccus acridae","Bacteria",FALSE
 "Planococcus","Animalia",69,"GBIF","Planococcus aemulor","Bacteria",FALSE
@@ -181,19 +142,12 @@
 "Serpula","Fungi",56,"GBIF+MycoBank","Serpula americana","Bacteria",FALSE
 "Serratia","Animalia",2,"GBIF","Serratia sibuyania","Bacteria",FALSE
 "Serratia","Bacteria",34,"GBIF+LPSN","Serratia aquatilis","Bacteria",FALSE
-"Sinococcus","Animalia",2,"GBIF","Sinococcus ulmi","Bacteria",FALSE
-"Sinococcus","Bacteria",2,"LPSN","Sinococcus qinghaiensis","Bacteria",FALSE
 "Sodalis","Animalia",8,"GBIF","Sodalis armatus","Bacteria",FALSE
 "Sodalis","Bacteria",6,"LPSN","Sodalis glossinidius","Bacteria",FALSE
 "Streptomyces","Bacteria",1218,"GBIF+LPSN","Streptomyces abietis","Bacteria",FALSE
 "Streptomyces","Fungi",1,"GBIF","Streptomyces cerebriformis","Bacteria",FALSE
-"Tetrasphaera","Animalia",1,"GBIF",,"Bacteria",FALSE
-"Tetrasphaera","Bacteria",9,"LPSN","Tetrasphaera australiensis","Bacteria",FALSE
-"Tetrasphaera","Chromista",2,"GBIF","Tetrasphaera spongiosa","Bacteria",FALSE
 "Toxoplasma","Animalia",2,"GBIF","Toxoplasma gondii","Chromista",FALSE
 "Toxoplasma","Chromista",2,"GBIF","Toxoplasma gondii","Chromista",FALSE
-"Tremblaya","Animalia",5,"GBIF","Tremblaya ceroplastae","Bacteria",FALSE
-"Tremblaya","Bacteria",1,"GBIF","Tremblaya phenacola","Bacteria",FALSE
 "Trichophyton","Bacteria",1,"GBIF",,"Fungi",TRUE
 "Trichophyton","Fungi",274,"GBIF+MycoBank","Trichophyton abissinicum","Fungi",TRUE
 "Trypanosoma","Animalia",33,"GBIF","Trypanosoma amamiense","Protozoa",FALSE
@@ -206,7 +160,5 @@
 "Wangiella","Fungi",4,"GBIF+MycoBank","Wangiella dermatitidis","Fungi",TRUE
 "Wolinella","Animalia",6,"GBIF","Wolinella baltica","Bacteria",FALSE
 "Wolinella","Bacteria",4,"LPSN","Wolinella curva","Bacteria",FALSE
-"Yania","Animalia",2,"GBIF","Yania flavolimbata","Bacteria",FALSE
-"Yania","Bacteria",3,"LPSN","Yania flava","Bacteria",FALSE
 "Yersinia","Animalia",3,"GBIF","Yersinia aztecus","Bacteria",FALSE
 "Yersinia","Bacteria",37,"LPSN","Yersinia aldovae","Bacteria",FALSE

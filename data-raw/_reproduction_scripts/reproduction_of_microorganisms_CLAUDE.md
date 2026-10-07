@@ -189,7 +189,11 @@ explained or fixed:
 
 Also verify the most used organisms in the package's own data sets: every `mo` in
 `clinical_breakpoints`, `intrinsic_resistant`, `microorganisms.groups`, `microorganisms.codes` and
-`example_isolates` must exist in the new `microorganisms` (`anyNA()` checks at the end of the script).
+`example_isolates` must exist in the new `microorganisms`, and refer to a current name (except
+`intrinsic_resistant`, which lists synonyms on purpose); `tests/testthat/test-data.R` checks this.
+`microorganisms.groups`, the EUCAST breakpoints in `clinical_breakpoints` and `intrinsic_resistant` are recreated
+from the new data set by `run_after_microorganisms_build.R`, which the script runs at its end. `intrinsic_resistant`
+is never an input of the build, as it is computed from the `microorganisms` data set itself.
 
 ### 3c. Comparison with the previous release
 

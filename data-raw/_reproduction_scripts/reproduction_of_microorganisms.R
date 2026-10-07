@@ -639,8 +639,14 @@ add_missing_parents <- function(taxonomy, current_gbif) {
 # - our own curated list of non-bacterial genera (MO_RELEVANT_GENERA, see data-raw/_pre_commit_checks.R)
 # - the WHO priority genera
 # - all genera of the human pathogens in Bartlett et al. (2022)
-# - all genera that are used in the other data sets of this package (breakpoints, intrinsic resistance, etc.)
-# - all genera that were clinically relevant in the previous version of this data set
+# - all genera that are used in the other data sets of this package (breakpoints, species groups, codes, etc.), but
+#   not of intrinsic_resistant: that is computed from this data set afterwards, and as it lists nearly all bacterial
+#   genera, using it here made every build depend on the previous one (decision by Matthijs S. Berends, 7 October 2026)
+# - all genera that the interpretive rules name (EUCAST expected phenotypes and expert rules), read from the rules
+#   themselves, so that they stay in sync with them
+# (until October 2026, also all non-bacterial genera that were relevant in the previous version of this data set, but
+# that made every build depend on the previous one; their genera are in MO_RELEVANT_GENERA now, decision by Matthijs
+# S. Berends, 7 October 2026)
 # - and of all these: their current names and their synonyms (e.g. Candida -> Candidozyma, Nakaseomyces)
 pathogens <- read_excel(file_bartlett, sheet = "Tab 6 Full List")
 
@@ -648,17 +654,24 @@ genera_of_mo <- function(x) {
   # these data sets contain codes of the development version, which may not be in the last release
   unique(microorganisms_dev$genus[match(as.character(x), as.character(microorganisms_dev$mo))])
 }
+genera_in_interpretive_rules <- function() {
+  r <- AMR:::INTERPRETIVE_RULES_DF
+  r <- r[r$like.is.one_of %in% c("is", "one_of") & r$if_mo_property %in% c("genus", "genus_species", "fullname"), , drop = FALSE]
+  nms <- trimws(unlist(strsplit(r$this_value, ",", fixed = TRUE)))
+  # group names, such as 'Enterobacter cloacae complex', are taken by the genera of their members
+  in_groups <- AMR::microorganisms.groups$mo_name[AMR::microorganisms.groups$mo_group_name %in% nms]
+  unique(sub(" .*", "", c(nms[!nms %in% AMR::microorganisms.groups$mo_group_name], in_groups)))
+}
 relevant_genera <- c(
   AMR:::MO_RELEVANT_GENERA,
+  genera_in_interpretive_rules(),
   AMR:::MO_WHO_PRIORITY_GENERA,
   pathogens$genus,
   genera_of_mo(AMR::clinical_breakpoints$mo),
-  genera_of_mo(AMR::intrinsic_resistant$mo),
   genera_of_mo(AMR::microorganisms.groups$mo),
   genera_of_mo(AMR::microorganisms.groups$mo_group),
   genera_of_mo(AMR::microorganisms.codes$mo),
-  genera_of_mo(AMR::example_isolates$mo),
-  microorganisms_old$genus[microorganisms_old$prevalence < 2 & microorganisms_old$domain != "Bacteria"]
+  genera_of_mo(AMR::example_isolates$mo)
 )
 relevant_genera <- relevant_genera[!relevant_genera %in% c("", NA) & relevant_genera %unlike% "unknown"]
 relevant_genera <- c(
@@ -4917,10 +4930,8 @@ if (!identical(clinical_breakpoints, AMR::clinical_breakpoints)) save_df(clinica
 example_isolates <- fix_old_mos(AMR::example_isolates, taxonomy)
 if (!identical(example_isolates, AMR::example_isolates)) save_df(example_isolates); rm(example_isolates)
 
-# (codes without a match are organisms that the development version had as bacteria by mistake, such as the fungal
-# Bogoriella, Microsphaera and Morganella species, see the review above)
-intrinsic_resistant <- fix_old_mos(AMR::intrinsic_resistant, taxonomy, drop = TRUE, current = FALSE)
-if (!identical(intrinsic_resistant, AMR::intrinsic_resistant)) save_df(intrinsic_resistant); rm(intrinsic_resistant)
+# (intrinsic_resistant is not updated here: it is computed from the new data set afterwards, see
+# data-raw/_reproduction_scripts/reproduction_of_intrinsic_resistant.R)
 
 microorganisms.groups <- fix_old_mos(AMR::microorganisms.groups, taxonomy, col = "mo")
 microorganisms.groups <- fix_old_mos(microorganisms.groups, taxonomy, col = "mo_group")
@@ -4981,7 +4992,6 @@ devtools::load_all(".")
 
 anyNA(microorganisms$mo)
 anyNA(microorganisms.codes$mo)
-anyNA(intrinsic_resistant$mo)
 anyNA(clinical_breakpoints$mo)
 
 # load new data sets again
@@ -4989,6 +4999,11 @@ devtools::load_all(".")
 source("data-raw/_pre_commit_checks.R")
 devtools::load_all(".")
 
+
+# recreate the data sets that are computed from this one (species groups, EUCAST breakpoints, intrinsic resistance),
+# in the right order, see data-raw/_reproduction_scripts/run_after_microorganisms_build.R
+source("data-raw/_reproduction_scripts/run_after_microorganisms_build.R")
+devtools::load_all(".")
 
 # run the unit tests
 Sys.setenv(NOT_CRAN = "true")
