@@ -23,43 +23,48 @@ git-ignored and not committed.
 
 ## 2. Summary
 
-**107,253 records** (v3.0.1: 78,679; development version on `main`: 96,982). Per domain, old (v3.0.1) vs new, see
-also [CSV](comparison_per_domain_rank_status.csv) and [CSV](new_records_per_domain_and_kind.csv):
+**103,222 records** after the second round of 6 and 7 October 2026 (after the first round: 107,253; v3.0.1: 78,679;
+development version on `main`: 96,982). Per domain, old (v3.0.1) vs new, see also
+[CSV](comparison_per_domain_rank_status.csv) and [CSV](new_records_per_domain_and_kind.csv):
 
 | Domain | Total old | Total new | Accepted old | Accepted new | Synonym old | Synonym new | Unknown/other old / new | Change |
 |---|---|---|---|---|---|---|---|---|
-| Animalia | 1,628 | 2,579 | 1,379 | 1,754 | 244 | 810 | 5 / 15 | +58.4% |
-| Archaea | 1,419 | 1,573 | 1,225 | 1,359 | 181 | 201 | 13 / 13 | +10.9% |
-| Bacteria | 39,249 | 48,239 | 29,853 | 38,689 | 7,076 | 8,777 | 2,320 / 773 | +22.9% |
-| Chromista | 178 | 418 | 157 | 342 | 17 | 68 | 4 / 8 | +134.8% |
-| Fungi | 28,137 | 47,412 | 14,385 | 22,886 | 8,746 | 19,294 | 5,006 / 5,232 | +68.5% |
-| Protozoa | 8,067 | 7,030 | 6,056 | 5,097 | 1,880 | 1,805 | 131 / 128 | -12.9% |
+| Animalia | 1,628 | 2,529 | 1,379 | 1,793 | 244 | 721 | 5 / 15 | +55.3% |
+| Archaea | 1,419 | 1,561 | 1,225 | 1,359 | 181 | 189 | 13 / 13 | +10.0% |
+| Bacteria | 39,249 | 47,829 | 29,853 | 38,577 | 7,076 | 8,485 | 2,320 / 767 | +21.9% |
+| Chromista | 178 | 421 | 157 | 352 | 17 | 61 | 4 / 8 | +136.5% |
+| Fungi | 28,137 | 45,610 | 14,385 | 22,760 | 8,746 | 17,568 | 5,006 / 5,282 | +62.1% |
+| Protozoa | 8,067 | 5,270 | 6,056 | 5,074 | 1,880 | 18 | 131 / 178 | -34.7% |
 
 Explanation of the changes of more than 5%:
 
-- **Bacteria (+22.9%)**: new validly published species in LPSN since 2024 (accepted +8,836), and v3.0.1 'not validly
-  published' names now as accepted, synonym or unknown.
-- **Fungi (+68.5%)**: mostly synonyms (+10,548): old names of the kept fungal species, from MycoBank and COL, which
-  `as.mo()` uses to translate old names (kept on purpose, decision of 5 October 2026). Accepted +8,501: new species in
+- **Bacteria (+21.9%)**: new validly published species in LPSN since 2024 (accepted +8,724), and v3.0.1 'not validly
+  published' names now as accepted, synonym or unknown; all taxa of the WHO priority genera are kept (script change
+  33).
+- **Fungi (+62.1%)**: mostly synonyms (+8,822): old names of the kept fungal species, from MycoBank and COL, which
+  `as.mo()` uses to translate old names (kept on purpose, decision of 5 October 2026). Accepted +8,375: new species in
   relevant genera, current names of species of relevant genera (script change 5), and the microsporidia, now in the
   Fungi (1,394 names of v3.0.1 moved from the Protozoa, script change 19). Lichens are removed (script change 17), except
-  the 84 that were released before.
-- **Animalia (+58.4%)**, **Chromista (+134.8%)**: helminths, vectors and protists of the relevant genera that COL now
-  contains (and the COL records without authors, script change 3), for Chromista also *Balantidium* and *Isospora*;
-  small absolute numbers (+951 and +240).
-- **Archaea (+10.9%)**: new species in LPSN.
-- **Protozoa (-12.9%)**: the microsporidia moved to the Fungi (script change 19); the Protozoa follow the relevance
-  rules of the Fungi (script change 16), most protozoa of v3.0.1 are restored as released taxa.
+  the 84 that were released before. Synonyms without a current name are removed (1,307, script change 24).
+- **Animalia (+55.3%)**, **Chromista (+136.5%)**: helminths, vectors and protists of the relevant genera that COL now
+  contains (and the COL records without authors, script change 3), for Chromista also *Balantidium*, *Isospora* and
+  the labyrinthulids (script change 34); small absolute numbers (+901 and +243).
+- **Archaea (+10.0%)**: new species in LPSN.
+- **Protozoa (-34.7%)**: the microsporidia moved to the Fungi (script change 19), and almost all protozoal synonyms
+  of earlier releases had no current name and are removed, with their codes retired (1,767, script change 24); the
+  Protozoa follow the relevance rules of the Fungi (script change 16), most protozoa of v3.0.1 are restored as
+  released taxa.
 
-Records by rank: species 83,950, subspecies 8,682, genus 11,286, family 2,093, order 726, class 318, phylum 131, and
+Records by rank: species 81,510, subspecies 7,212, genus 11,171, family 2,089, order 724, class 318, phylum 131, and
 37 species groups. MO codes of existing names (same name and domain) that changed: **0**
 ([CSV](changed_mo_codes_of_existing_names.csv)); names that moved to another domain (and so got another code prefix):
-1,481, of which 1,394 microsporidia (Protozoa to Fungi), the others the corrections in the checklist
+1,475, of which 1,394 microsporidia (Protozoa to Fungi), the others the corrections in the checklist
 ([CSV](names_that_moved_to_another_domain.csv)). Codes in the package's other data sets missing from `microorganisms`:
 **0**.
 
-Run time: the source chunks take about 15 minutes (LPSN scrape 10.5 minutes, ran once), each full rebuild from a
-checkpoint 15 to 25 minutes. 18 runs were needed because of the script changes below (logs available on request).
+Run time: the source chunks take about 15 minutes (LPSN scrape 10.5 minutes, ran once per round), each full rebuild
+from a checkpoint 15 to 25 minutes. 18 runs were needed in the first round and 12 in the second because of the script
+changes below (logs available on request).
 
 ## 3. Script changes
 
