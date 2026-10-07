@@ -1,8 +1,8 @@
-# Data Set with 96 982 Taxonomic Records of Microorganisms
+# Data Set with 103 222 Taxonomic Records of Microorganisms
 
-A data set containing the full microbial taxonomy (**last updated: 7th
-of May, 2026**) of seven domains. This data set is the backbone of this
-`AMR` package. MO codes can be looked up using
+A data set containing the full microbial taxonomy (**last updated: 5th
+of October, 2026**) of seven domains. This data set is the backbone of
+this `AMR` package. MO codes can be looked up using
 [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) and microorganism
 properties can be looked up using any of the
 [`mo_*`](https://amr-for-r.org/reference/mo_property.md) functions.
@@ -22,8 +22,8 @@ microorganisms
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 96
-982 observations and 28 variables:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 103
+222 observations and 28 variables:
 
 - `mo`  
   ID of microorganism as used by this package. ***This is a unique
@@ -69,7 +69,7 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 96
   were retrieved from BacDive (see *Source*). Items that contain
   "likely" are missing from BacDive and were extrapolated from other
   species within the same genus to guess the oxygen tolerance. Currently
-  59.5% of all ~46 000 bacteria in the data set contain an oxygen
+  59.5% of all ~48 000 bacteria in the data set contain an oxygen
   tolerance.
 
 - `morphology`  
@@ -81,8 +81,8 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 96
   (the HACEK group and beyond, such as *Haemophilus* and
   *Acinetobacter*) are classified as such regardless of BacDive majority
   vote. Items that contain "likely" are missing from BacDive and were
-  extrapolated from other species within the same genus. Currently 57.1%
-  of all ~46 000 bacteria in the data set contain a morphology.
+  extrapolated from other species within the same genus. Currently 57.4%
+  of all ~48 000 bacteria in the data set contain a morphology.
 
 - `source`  
   Either `"GBIF"`, `"LPSN"`, `"MycoBank"`, or `"manually added"` (see
@@ -94,7 +94,7 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 96
   identifier to keep one identifier per row. For example, *Acetobacter
   ascendens* has LPSN Record number 7864 and 11011. Only the first is
   available in the `microorganisms` data set. ***This is a unique
-  identifier***, though available for only ~36 000 records.
+  identifier***, though available for only ~37 000 records.
 
 - `lpsn_parent`  
   LPSN identifier of the parent taxon
@@ -159,9 +159,9 @@ Included taxonomic data from [LPSN](https://lpsn.dsmz.de),
 [MycoBank](https://www.mycobank.org), and [GBIF](https://www.gbif.org)
 are:
 
-- All ~46 000 (sub)species from the domains of Archaea and Bacteria
+- All ~48 000 (sub)species from the domains of Archaea and Bacteria
 
-- ~36 000 species from the kingdom of Fungi. The kingdom of Fungi is a
+- ~46 000 species from the kingdom of Fungi. The kingdom of Fungi is a
   very large taxon with almost 300,000 different (sub)species, of which
   most are not microbial (but rather macroscopic, like mushrooms).
   Because of this, not all fungi fit the scope of this package. Only
@@ -169,12 +169,12 @@ are:
   *Candida*, *Cryptococcus*, *Histoplasma*, *Pneumocystis*,
   *Saccharomyces* and *Trichophyton*).
 
-- ~11 000 (sub)species from the kingdom of Protozoa
+- ~5 300 (sub)species from the kingdom of Protozoa
 
-- ~2 000 (sub)species from ~60 other relevant genera from the kingdom of
-  Animalia (such as *Strongyloides* and *Taenia*)
+- ~2 500 (sub)species from ~130 other relevant genera from the kingdom
+  of Animalia (such as *Strongyloides* and *Taenia*)
 
-- All ~31 000 previously accepted names of all included (sub)species
+- All ~33 000 previously accepted names of all included (sub)species
   (these were taxonomically renamed)
 
 - The complete taxonomic tree of all included (sub)species: from domain
@@ -235,14 +235,14 @@ Taxonomic entries were imported in this order of importance:
     prokaryotes within DSMZ Digital Diversity.** Nucleic Acids Research,
     54, D884–D891;
     [doi:10.1093/nar/gkaf1110](https://doi.org/10.1093/nar/gkaf1110) .
-    Accessed from <https://lpsn.dsmz.de> on 7th of May, 2026.
+    Accessed from <https://lpsn.dsmz.de> on 5th of October, 2026.
 
 2.  MycoBank:  
       
     Vincent, R *et al* (2013). **MycoBank gearing up for new horizons.**
     IMA Fungus, 4(2), 371-9;
     [doi:10.5598/imafungus.2013.04.02.16](https://doi.org/10.5598/imafungus.2013.04.02.16)
-    . Accessed from <https://www.mycobank.org> on 7th of May, 2026.
+    . Accessed from <https://www.mycobank.org> on 7th of January, 2026.
 
 3.  Global Biodiversity Information Facility (GBIF), via Catalogue of
     Life (COL):  
@@ -250,7 +250,7 @@ Taxonomic entries were imported in this order of importance:
     Banki, O. *et al.* (2026). Catalogue of Life (2026-04-18 XR).
     Catalogue of Life Foundation, Amsterdam, Netherlands.
     [doi:10.48580/dgxjw](https://doi.org/10.48580/dgxjw) . Accessed from
-    <https://www.gbif.org> on 7th of May, 2026.
+    <https://www.gbif.org> on 30th of April, 2026.
 
 Furthermore, these sources were used for additional details:
 
@@ -260,7 +260,7 @@ Furthermore, these sources were used for additional details:
   for standardized bacterial and archaeal data.** Nucleic Acids Res.,
   50(D1):D741-D74;
   [doi:10.1093/nar/gkab961](https://doi.org/10.1093/nar/gkab961) .
-  Accessed from <https://bacdive.dsmz.de> on 7th of May, 2026.
+  Accessed from <https://bacdive.dsmz.de> on 5th of October, 2026.
 
 - Systematized Nomenclature of Medicine - Clinical Terms (SNOMED-CT):  
     
@@ -290,24 +290,23 @@ Furthermore, these sources were used for additional details:
 
 ``` r
 microorganisms
-#> # A tibble: 96,982 × 28
-#>    mo               fullname     status domain kingdom phylum class order family
-#>    <mo>             <chr>        <chr>  <chr>  <chr>   <chr>  <chr> <chr> <chr> 
-#>  1 B_GRAMN          (unknown Gr… unkno… Bacte… (unkno… (unkn… (unk… (unk… (unkn…
-#>  2 B_GRAMP          (unknown Gr… unkno… Bacte… (unkno… (unkn… (unk… (unk… (unkn…
-#>  3 B_ANAER-NEG      (unknown an… unkno… Bacte… (unkno… (unkn… (unk… (unk… (unkn…
-#>  4 B_ANAER-POS      (unknown an… unkno… Bacte… (unkno… (unkn… (unk… (unk… (unkn…
-#>  5 B_ANAER          (unknown an… unkno… Bacte… (unkno… (unkn… (unk… (unk… (unkn…
-#>  6 F_FUNGUS         (unknown fu… unkno… Fungi  Fungi   (unkn… (unk… (unk… (unkn…
-#>  7   UNKNOWN        (unknown na… unkno… (unkn… (unkno… (unkn… (unk… (unk… (unkn…
-#>  8 P_PROTOZOAN      (unknown pr… unkno… Proto… Protoz… (unkn… (unk… (unk… (unkn…
-#>  9 F_YEAST          (unknown ye… unkno… Fungi  Fungi   (unkn… (unk… (unk… (unkn…
-#> 10 B_[FAM]_ABDTBCTR Abditibacte… accep… Bacte… Pseudo… Abdit… Abdi… Abdi… Abdit…
-#> # ℹ 96,972 more rows
-#> # ℹ 19 more variables: genus <chr>, species <chr>, subspecies <chr>,
-#> #   rank <chr>, ref <chr>, oxygen_tolerance <chr>, morphology <chr>,
-#> #   source <chr>, lpsn <chr>, lpsn_parent <chr>, lpsn_renamed_to <chr>,
-#> #   mycobank <chr>, mycobank_parent <chr>, mycobank_renamed_to <chr>,
-#> #   gbif <chr>, gbif_parent <chr>, gbif_renamed_to <chr>, prevalence <dbl>,
-#> #   snomed <list>
+#> # A tibble: 103,222 × 28
+#>    mo          fullname    status domain kingdom phylum class order family genus
+#>    <mo>        <chr>       <chr>  <chr>  <chr>   <chr>  <chr> <chr> <chr>  <chr>
+#>  1 B_GRAMN     (unknown G… unkno… Bacte… (unkno… (unkn… (unk… (unk… "(unk… (unk…
+#>  2 B_GRAMP     (unknown G… unkno… Bacte… (unkno… (unkn… (unk… (unk… "(unk… (unk…
+#>  3 B_ANAER-NEG (unknown a… unkno… Bacte… (unkno… (unkn… (unk… (unk… "(unk… (unk…
+#>  4 B_ANAER-POS (unknown a… unkno… Bacte… (unkno… (unkn… (unk… (unk… "(unk… (unk…
+#>  5 B_ANAER     (unknown a… unkno… Bacte… (unkno… (unkn… (unk… (unk… "(unk… (unk…
+#>  6 F_FUNGUS    (unknown f… unkno… Fungi  Fungi   (unkn… (unk… (unk… "(unk… (unk…
+#>  7   UNKNOWN   (unknown n… unkno… (unkn… (unkno… (unkn… (unk… (unk… "(unk… (unk…
+#>  8 P_PROTOZOAN (unknown p… unkno… Proto… Protoz… (unkn… (unk… (unk… "(unk… (unk…
+#>  9 F_YEAST     (unknown y… unkno… Fungi  Fungi   (unkn… (unk… (unk… "(unk… (unk…
+#> 10 F_AABRN     Aabaarnia   unkno… Fungi  Fungi   Ascom… Leca… Ostr… ""     Aaba…
+#> # ℹ 103,212 more rows
+#> # ℹ 18 more variables: species <chr>, subspecies <chr>, rank <chr>, ref <chr>,
+#> #   oxygen_tolerance <chr>, morphology <chr>, source <chr>, lpsn <chr>,
+#> #   lpsn_parent <chr>, lpsn_renamed_to <chr>, mycobank <chr>,
+#> #   mycobank_parent <chr>, mycobank_renamed_to <chr>, gbif <chr>,
+#> #   gbif_parent <chr>, gbif_renamed_to <chr>, prevalence <dbl>, snomed <list>
 ```

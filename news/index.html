@@ -131,7 +131,9 @@
 </ul></div>
 <div class="section level4">
 <h4 id="fixed-3-0-1-9103">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9103"></a></h4>
-<ul><li>EUCAST breakpoint rules for <em>Aerococcus</em> (v12 onwards) were never applied, and <em>Pasteurella</em> rules were partly filed under <em>Neisseria meningitidis</em> (<a href="https://github.com/msberends/AMR/issues/290" class="external-link">#290</a>)</li>
+<ul><li>
+<code><a href="../reference/as.mo.html">as.mo()</a></code> returned <em>Salmonella bongori</em> or another subspecies for <em>Salmonella</em> serovars written with the species, such as “Salmonella enterica serovar Typhi”</li>
+<li>EUCAST breakpoint rules for <em>Aerococcus</em> (v12 onwards) were never applied, and <em>Pasteurella</em> rules were partly filed under <em>Neisseria meningitidis</em> (<a href="https://github.com/msberends/AMR/issues/290" class="external-link">#290</a>)</li>
 <li>Streptomycin breakpoints imported from WHONET were coded as streptoduocin (<code>STR</code>) instead of streptomycin (<code>STR1</code>)</li>
 <li>Setting <code>options(AMR_guideline = "EUCAST 2012")</code> or any year-qualified value no longer causes errors or silent wrong behaviour in <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/proportion.html">resistance()</a></code>, <code><a href="../reference/proportion.html">susceptibility()</a></code>, <code><a href="../reference/count.html">count_resistant()</a></code>, <code><a href="../reference/count.html">count_susceptible()</a></code>, and SIR plotting/printing functions (<a href="https://github.com/msberends/AMR/issues/298" class="external-link">#298</a>)</li>
 <li>
@@ -162,12 +164,20 @@
 <li>Logical comparison (<code>==</code>, <code>!=</code>) of <code>sir</code> class with a <code>factor</code> is now possible on R &gt;= 4.3</li>
 <li>
 <code><a href="../reference/mo_property.html">mo_current()</a></code> and <code><a href="../reference/as.mo.html">as.mo()</a></code> could not find the current name of some synonyms with multiple sources (e.g. <em>Chaetomium abuense</em>)</li>
+<li>
+<code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>: species named in a rule now also match all other names of the same accepted taxon (e.g. ‘Clostridium ramosum’ for <em>Thomasclavelia ramosa</em>), which also updates <code>intrinsic_resistant</code>
+</li>
+<li>
+<em>Erysipelatoclostridium</em> and its species are now synonyms of <em>Thomasclavelia</em>; <em>E. merdavium</em> is retired</li>
+<li>Taxonomy: names that a source lists twice now take the correct record (e.g. <em>Eggerthella lenta</em>, <em>Gordonia amarae</em> and <em>Anisakis simplex</em> were synonyms without a current name)</li>
+<li>Taxonomy: synonyms without a current name are linked via LPSN or removed, with their codes retired; the <em>M. tuberculosis</em> complex is always kept</li>
+<li>Taxonomy: consistent higher taxonomy and parent records, and data sets refer only to current names (except <code>intrinsic_resistant</code>)</li>
 </ul></div>
 <div class="section level4">
 <h4 id="updated-3-0-1-9103">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9103"></a></h4>
 <ul><li>
 <code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>: new <code>property_for_each</code> argument for sub-grouping within top <em>n</em> groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed <code>property = NULL</code> not being accepted; inner filter now tracks original row indices to prevent cross-group contamination</li>
-<li>Taxonomic update for all microorganisms, now updated to June 2026</li>
+<li>Taxonomic update for all microorganisms, now updated to COL 2026-04-18 XR, LPSN and BacDive of October 2026, and MycoBank of January 2026</li>
 <li>
 <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal taxonomic kingdom; a one-time note per session explains the change when querying bacterial or archaeal records.</li>
 <li>

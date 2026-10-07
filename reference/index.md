@@ -393,7 +393,7 @@ our [How To’s](https://amr-for-r.org/articles/index.md) for more
 information about how to work with functions in this package.
 
 - [`microorganisms`](https://amr-for-r.org/reference/microorganisms.md)
-  : Data Set with 96 982 Taxonomic Records of Microorganisms
+  : Data Set with 103 222 Taxonomic Records of Microorganisms
 - [`antimicrobials`](https://amr-for-r.org/reference/antimicrobials.md)
   [`antibiotics`](https://amr-for-r.org/reference/antimicrobials.md)
   [`antivirals`](https://amr-for-r.org/reference/antimicrobials.md) :
@@ -405,9 +405,9 @@ information about how to work with functions in this package.
 - [`esbl_isolates`](https://amr-for-r.org/reference/esbl_isolates.md) :
   Data Set with 500 ESBL Isolates
 - [`microorganisms.codes`](https://amr-for-r.org/reference/microorganisms.codes.md)
-  : Data Set with 6 029 Common Microorganism Codes
+  : Data Set with 6 022 Common Microorganism Codes
 - [`microorganisms.groups`](https://amr-for-r.org/reference/microorganisms.groups.md)
-  : Data Set with 530 Microorganisms In Species Groups
+  : Data Set with 466 Microorganisms In Species Groups
 - [`intrinsic_resistant`](https://amr-for-r.org/reference/intrinsic_resistant.md)
   : Data Set Denoting Bacterial Intrinsic Resistance
 - [`dosage`](https://amr-for-r.org/reference/dosage.md) : Data Set with

@@ -121,6 +121,9 @@ Planned as v3.1.0, mid October 2026.
 
 #### Fixed
 
+- [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) returned
+  *Salmonella bongori* or another subspecies for *Salmonella* serovars
+  written with the species, such as “Salmonella enterica serovar Typhi”
 - EUCAST breakpoint rules for *Aerococcus* (v12 onwards) were never
   applied, and *Pasteurella* rules were partly filed under *Neisseria
   meningitidis* ([\#290](https://github.com/msberends/AMR/issues/290))
@@ -191,6 +194,20 @@ Planned as v3.1.0, mid October 2026.
   [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) could not find
   the current name of some synonyms with multiple sources
   (e.g. *Chaetomium abuense*)
+- [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md):
+  species named in a rule now also match all other names of the same
+  accepted taxon (e.g. ‘Clostridium ramosum’ for *Thomasclavelia
+  ramosa*), which also updates `intrinsic_resistant`
+- *Erysipelatoclostridium* and its species are now synonyms of
+  *Thomasclavelia*; *E. merdavium* is retired
+- Taxonomy: names that a source lists twice now take the correct record
+  (e.g. *Eggerthella lenta*, *Gordonia amarae* and *Anisakis simplex*
+  were synonyms without a current name)
+- Taxonomy: synonyms without a current name are linked via LPSN or
+  removed, with their codes retired; the *M. tuberculosis* complex is
+  always kept
+- Taxonomy: consistent higher taxonomy and parent records, and data sets
+  refer only to current names (except `intrinsic_resistant`)
 
 #### Updated
 
@@ -199,7 +216,8 @@ Planned as v3.1.0, mid October 2026.
   groups; rank ordering enforced (only lower taxonomic ranks allowed);
   fixed `property = NULL` not being accepted; inner filter now tracks
   original row indices to prevent cross-group contamination
-- Taxonomic update for all microorganisms, now updated to June 2026
+- Taxonomic update for all microorganisms, now updated to COL 2026-04-18
+  XR, LPSN and BacDive of October 2026, and MycoBank of January 2026
 - [`mo_kingdom()`](https://amr-for-r.org/reference/mo_property.md) now
   returns the formal taxonomic kingdom; a one-time note per session
   explains the change when querying bacterial or archaeal records.

@@ -219,7 +219,7 @@ The file containing all interpretive rules is located here:
 where applicable. For example, *Ochrobactrum anthropi* was renamed to
 *Brucella anthropi* in 2020; older interpretive rules may not yet
 contain this new taxonomic name. The `AMR` package contains the full
-microbial taxonomy updated until 7th of May, 2026, see
+microbial taxonomy updated until 5th of October, 2026, see
 [microorganisms](https://amr-for-r.org/reference/microorganisms.md).
 
 ### Custom Rules

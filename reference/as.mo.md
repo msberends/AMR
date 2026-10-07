@@ -269,17 +269,17 @@ their corresponding coagulase group:
   caeli*, *S. caledonicus*, *S. canis*, *S. capitis*, *S. capitis
   capitis*, *S. capitis urealyticus*, *S. capitis ureolyticus*, *S.
   caprae*, *S. carnosus*, *S. carnosus carnosus*, *S. carnosus utilis*,
-  *S. casei*, *S. caseolyticus*, *S. caseorum*, *S. chromogenes*, *S.
-  cohnii*, *S. cohnii cohnii*, *S. cohnii urealyticum*, *S. cohnii
-  urealyticus*, *S. cohnii ureilyticus*, *S. condimenti*, *S.
-  croceilyticus*, *S. debuckii*, *S. devriesei*, *S. durrellii*, *S.
-  edaphicus*, *S. epidermidis*, *S. equorum*, *S. equorum equorum*, *S.
-  equorum linens*, *S. felis*, *S. fleurettii*, *S. gallinarum*, *S.
-  haemolyticus*, *S. halotolerans*, *S. hominis*, *S. hominis hominis*,
-  *S. hominis novobiosepticus*, *S. hsinchuensis*, *S. jettensis*, *S.
-  kloosii*, *S. lentus*, *S. lloydii*, *S. lugdunensis*, *S.
-  marylandisciuri*, *S. massiliensis*, *S. microti*, *S. muscae*, *S.
-  nepalensis*, *S. pasteuri*, *S. petrasii*, *S. petrasii
+  *S. casei*, *S. caseorum*, *S. chromogenes*, *S. cohnii*, *S. cohnii
+  cohnii*, *S. cohnii urealyticum*, *S. cohnii urealyticus*, *S. cohnii
+  ureilyticus*, *S. condimenti*, *S. croceilyticus*, *S. debuckii*, *S.
+  devriesei*, *S. dromedarii*, *S. durrellii*, *S. edaphicus*, *S.
+  epidermidis*, *S. equorum*, *S. equorum equorum*, *S. equorum linens*,
+  *S. felis*, *S. fleurettii*, *S. gallinarum*, *S. haemolyticus*, *S.
+  halotolerans*, *S. hominis*, *S. hominis hominis*, *S. hominis
+  novobiosepticus*, *S. hsinchuensis*, *S. jettensis*, *S. kloosii*, *S.
+  lentus*, *S. lloydii*, *S. lugdunensis*, *S. marylandisciuri*, *S.
+  massiliensis*, *S. microti*, *S. muscae*, *S. nepalensis*, *S.
+  parequorum*, *S. pasteuri*, *S. petrasii*, *S. petrasii
   croceilyticus*, *S. petrasii jettensis*, *S. petrasii petrasii*, *S.
   petrasii pragensis*, *S. pettenkoferi*, *S. piscifermentans*, *S.
   pragensis*, *S. pseudoxylosus*, *S. pulvereri*, *S. ratti*, *S.
@@ -289,14 +289,14 @@ their corresponding coagulase group:
   sciuri lentus*, *S. sciuri rodentium*, *S. sciuri sciuri*, *S.
   shinii*, *S. simulans*, *S. stepanovicii*, *S. succinus*, *S. succinus
   casei*, *S. succinus succinus*, *S. taiwanensis*, *S. urealyticus*,
-  *S. ureilyticus*, *S. veratri*, *S. vitulinus*, *S. vitulus*, *S.
-  warneri*, and *S. xylosus*
+  *S. ureilyticus*, *S. vitulinus*, *S. vitulus*, *S. warneri*, *S.
+  xeri*, and *S. xylosus*
 
 - Coagulase-positive: *S. agnetis*, *S. argenteus*, *S. coagulans*, *S.
-  cornubiensis*, *S. delphini*, *S. hyicus*, *S. hyicus chromogenes*,
-  *S. hyicus hyicus*, *S. intermedius*, *S. lutrae*, *S.
-  pseudintermedius*, *S. roterodami*, *S. schleiferi coagulans*, *S.
-  schweitzeri*, *S. simiae*, *S. singaporensis*, and *S. ursi*
+  cornubiensis*, *S. delphini*, *S. hyicus*, *S. hyicus hyicus*, *S.
+  intermedius*, *S. lutrae*, *S. pseudintermedius*, *S. schleiferi
+  coagulans*, *S. schweitzeri*, *S. simiae*, *S. singaporensis*, and *S.
+  ursi*
 
 This is based on:
 
@@ -342,8 +342,7 @@ to their corresponding Lancefield group:
 
 - Streptococcus Group H: *S. sanguinis*
 
-- Streptococcus Group K: *S. salivarius*, *S. salivarius salivarius*,
-  and *S. salivarius thermophilus*
+- Streptococcus Group K: *S. salivarius*
 
 - Streptococcus Group L: *S. dysgalactiae*, *S. dysgalactiae
   dysgalactiae*, and *S. dysgalactiae equisimilis*
@@ -369,23 +368,23 @@ base R's [`NA_character_`](https://rdrr.io/r/base/NA.html).
   prokaryotes within DSMZ Digital Diversity.** Nucleic Acids Research,
   54, D884–D891;
   [doi:10.1093/nar/gkaf1110](https://doi.org/10.1093/nar/gkaf1110) .
-  Accessed from <https://lpsn.dsmz.de> on 7th of May, 2026.
+  Accessed from <https://lpsn.dsmz.de> on 5th of October, 2026.
 
 - Vincent, R *et al* (2013). **MycoBank gearing up for new horizons.**
   IMA Fungus, 4(2), 371-9;
   [doi:10.5598/imafungus.2013.04.02.16](https://doi.org/10.5598/imafungus.2013.04.02.16)
-  . Accessed from <https://www.mycobank.org> on 7th of May, 2026.
+  . Accessed from <https://www.mycobank.org> on 7th of January, 2026.
 
 - Banki, O. *et al.* (2026). Catalogue of Life (2026-04-18 XR).
   Catalogue of Life Foundation, Amsterdam, Netherlands.
   [doi:10.48580/dgxjw](https://doi.org/10.48580/dgxjw) . Accessed from
-  <https://www.gbif.org> on 7th of May, 2026.
+  <https://www.gbif.org> on 30th of April, 2026.
 
 - Reimer, LC *et al.* (2022). ***BacDive* in 2022: the knowledge base
   for standardized bacterial and archaeal data.** Nucleic Acids Res.,
   50(D1):D741-D74;
   [doi:10.1093/nar/gkab961](https://doi.org/10.1093/nar/gkab961) .
-  Accessed from <https://bacdive.dsmz.de> on 7th of May, 2026.
+  Accessed from <https://bacdive.dsmz.de> on 5th of October, 2026.
 
 - Public Health Information Network Vocabulary Access and Distribution
   System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020.
@@ -473,14 +472,15 @@ Furthermore,
   *Aedes*, *Alternaria*, *Amoeba*, *Ancylostoma*, *Angiostrongylus*,
   *Anisakis*, *Anopheles*, *Apiotrichum*, *Apophysomyces*,
   *Arthroderma*, *Ascaris*, *Aspergillus*, *Aureobasidium*, *Babesia*,
-  *Balamuthia*, *Balantioides*, *Basidiobolus*, *Beauveria*,
-  *Bipolaris*, *Blastobotrys*, *Blastocystis*, *Blastomyces*, *Brugia*,
-  *Candida*, *Candidozyma*, *Capillaria*, *Chaetomium*, *Chilomastix*,
-  *Chrysonilia*, *Chrysosporium*, *Cladophialophora*, *Cladosporium*,
-  *Clavispora*, *Clonorchis*, *Coccidioides*, *Cokeromyces*,
-  *Conidiobolus*, *Coniochaeta*, *Contracaecum*, *Cordylobia*,
-  *Cryptococcus*, *Cryptosporidium*, *Cunninghamella*, *Curvularia*,
-  *Cutaneotrichosporon*, *Cyberlindnera*, *Cyclospora*, *Cystoisospora*,
+  *Balamuthia*, *Balantidium*, *Balantioides*, *Basidiobolus*,
+  *Beauveria*, *Bipolaris*, *Blastobotrys*, *Blastocystis*,
+  *Blastomyces*, *Brugia*, *Candida*, *Candidozyma*, *Capillaria*,
+  *Chaetomium*, *Chilomastix*, *Chrysonilia*, *Chrysosporium*,
+  *Cladophialophora*, *Cladosporium*, *Clavispora*, *Clonorchis*,
+  *Coccidioides*, *Cokeromyces*, *Conidiobolus*, *Coniochaeta*,
+  *Contracaecum*, *Cordylobia*, *Cryptococcus*, *Cryptosporidium*,
+  *Cunninghamella*, *Curvularia*, *Cutaneotrichosporon*,
+  *Cyberlindnera*, *Cyclospora*, *Cystoisospora*, *Debaryomyces*,
   *Debaryozyma*, *Demodex*, *Dermatobia*, *Dientamoeba*,
   *Diphyllobothrium*, *Dirofilaria*, *Diutina*, *Echinococcus*,
   *Echinostoma*, *Emergomyces*, *Emmonsia*, *Encephalitozoon*,
@@ -489,13 +489,13 @@ Furthermore,
   *Fonsecaea*, *Fusarium*, *Geotrichum*, *Giardia*, *Graphium*,
   *Haloarcula*, *Halobacterium*, *Halococcus*, *Hansenula*,
   *Hendersonula*, *Heterophyes*, *Histomonas*, *Histoplasma*, *Hortaea*,
-  *Hymenolepis*, *Hypomyces*, *Hysterothylacium*, *Kazachstania*,
-  *Kloeckera*, *Kluyveromyces*, *Kodamaea*, *Lacazia*, *Leishmania*,
-  *Lichtheimia*, *Loa*, *Lodderomyces*, *Lomentospora*, *Madurella*,
-  *Magnusiomyces*, *Malassezia*, *Malbranchea*, *Mansonella*,
-  *Metagonimus*, *Meyerozyma*, *Microascus*, *Microsporidium*,
-  *Microsporum*, *Millerozyma*, *Mortierella*, *Mucor*,
-  *Mycocentrospora*, *Naegleria*, *Nakaseomyces*, *Nannizzia*,
+  *Hymenolepis*, *Hypomyces*, *Hysterothylacium*, *Isospora*,
+  *Kazachstania*, *Kloeckera*, *Kluyveromyces*, *Kodamaea*, *Lacazia*,
+  *Leishmania*, *Lichtheimia*, *Loa*, *Lodderomyces*, *Lomentospora*,
+  *Madurella*, *Magnusiomyces*, *Malassezia*, *Malbranchea*,
+  *Mansonella*, *Metagonimus*, *Meyerozyma*, *Microascus*,
+  *Microsporidium*, *Microsporum*, *Millerozyma*, *Mortierella*,
+  *Mucor*, *Mycocentrospora*, *Naegleria*, *Nakaseomyces*, *Nannizzia*,
   *Necator*, *Nectria*, *Neocosmospora*, *Ochroconis*,
   *Oesophagostomum*, *Oidiodendron*, *Onchocerca*, *Opisthorchis*,
   *Paecilomyces*, *Paracoccidioides*, *Paragonimus*, *Pediculus*,
@@ -510,12 +510,12 @@ Furthermore,
   *Scolecobasidium*, *Scopulariopsis*, *Scytalidium*, *Spirometra*,
   *Sporobolomyces*, *Sporopachydermia*, *Sporothrix*, *Sporotrichum*,
   *Stachybotrys*, *Strongyloides*, *Syncephalastrum*, *Syngamus*,
-  *Taenia*, *Talaromyces*, *Teleomorph*, *Toxocara*, *Toxoplasma*,
-  *Trichinella*, *Trichobilharzia*, *Trichoderma*, *Trichomonas*,
-  *Trichophyton*, *Trichosporon*, *Trichostrongylus*, *Trichuris*,
-  *Tritirachium*, *Trombicula*, *Trypanosoma*, *Tunga*, *Ulocladium*,
-  *Ustilago*, *Verticillium*, *Wallemia*, *Wangiella*,
-  *Wickerhamomyces*, *Wuchereria*, *Yarrowia*, or *Zygosaccharomyces*;
+  *Taenia*, *Talaromyces*, *Toxocara*, *Toxoplasma*, *Trichinella*,
+  *Trichobilharzia*, *Trichoderma*, *Trichomonas*, *Trichophyton*,
+  *Trichosporon*, *Trichostrongylus*, *Trichuris*, *Tritirachium*,
+  *Trombicula*, *Trypanosoma*, *Tunga*, *Ulocladium*, *Ustilago*,
+  *Verticillium*, *Wallemia*, *Wangiella*, *Wickerhamomyces*,
+  *Wuchereria*, *Yarrowia*, or *Zygosaccharomyces*;
 
 - All other records have `prevalence = 2.0` in the
   [microorganisms](https://amr-for-r.org/reference/microorganisms.md)

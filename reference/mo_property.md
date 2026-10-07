@@ -511,23 +511,23 @@ page](https://amr-for-r.org/reference/mo_matching_score.md).
   prokaryotes within DSMZ Digital Diversity.** Nucleic Acids Research,
   54, D884–D891;
   [doi:10.1093/nar/gkaf1110](https://doi.org/10.1093/nar/gkaf1110) .
-  Accessed from <https://lpsn.dsmz.de> on 7th of May, 2026.
+  Accessed from <https://lpsn.dsmz.de> on 5th of October, 2026.
 
 - Vincent, R *et al* (2013). **MycoBank gearing up for new horizons.**
   IMA Fungus, 4(2), 371-9;
   [doi:10.5598/imafungus.2013.04.02.16](https://doi.org/10.5598/imafungus.2013.04.02.16)
-  . Accessed from <https://www.mycobank.org> on 7th of May, 2026.
+  . Accessed from <https://www.mycobank.org> on 7th of January, 2026.
 
 - Banki, O. *et al.* (2026). Catalogue of Life (2026-04-18 XR).
   Catalogue of Life Foundation, Amsterdam, Netherlands.
   [doi:10.48580/dgxjw](https://doi.org/10.48580/dgxjw) . Accessed from
-  <https://www.gbif.org> on 7th of May, 2026.
+  <https://www.gbif.org> on 30th of April, 2026.
 
 - Reimer, LC *et al.* (2022). ***BacDive* in 2022: the knowledge base
   for standardized bacterial and archaeal data.** Nucleic Acids Res.,
   50(D1):D741-D74;
   [doi:10.1093/nar/gkab961](https://doi.org/10.1093/nar/gkab961) .
-  Accessed from <https://bacdive.dsmz.de> on 7th of May, 2026.
+  Accessed from <https://bacdive.dsmz.de> on 5th of October, 2026.
 
 - Public Health Information Network Vocabulary Access and Distribution
   System (PHIN VADS). US Edition of SNOMED CT from 1 September 2020.

@@ -15,7 +15,7 @@ laboratory information systems.
 
 ## `microorganisms`: Full Microbial Taxonomy
 
-A data set with 96 982 rows and 28 columns, containing the following
+A data set with 103 222 rows and 28 columns, containing the following
 column names:  
 *mo*, *fullname*, *status*, *domain*, *kingdom*, *phylum*, *class*,
 *order*, *family*, *genus*, *species*, *subspecies*, *rank*, *ref*,
@@ -26,7 +26,7 @@ column names:
 This data set is in R available as `microorganisms`, after you load the
 `AMR` package.
 
-It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
+It was last updated on 7 October 2026 10:55:12 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/microorganisms.html).
 
@@ -34,25 +34,25 @@ here](https://amr-for-r.org/reference/microorganisms.html).
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.rds)
-  (2.2 MB)  
+  (2.4 MB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.txt)
-  (23.1 MB)  
+  (24.5 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.xlsx)
-  (11.4 MB)  
+  (12.7 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.feather)
-  (11 MB)  
+  (11.6 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.parquet)
-  (4.6 MB)  
+  (4.9 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.sav)
-  (35.2 MB)  
+  (39.7 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.dta)
-  (96.6 MB)
+  (72.7 MB)
 
 **NOTE: The exported files for SPSS and Stata contain only the first 50
 SNOMED codes per record, as their file size would otherwise exceed 100
@@ -70,11 +70,11 @@ Included (sub)species per taxonomic kingdom:
 |      Kingdom      | Number of (sub)species |
 |:-----------------:|:----------------------:|
 |                   |           20           |
-| (unknown kingdom) |           8            |
-|     Animalia      |         2 015          |
-|      Archaea      |          150           |
-|     Bacillati     |         24 200         |
-|     Bacteria      |           2            |
+| (unknown kingdom) |          222           |
+|     Animalia      |         2 528          |
+|      Archaea      |          142           |
+|     Bacillati     |         24 122         |
+|     Bacteria      |          138           |
 
 First 6 rows when filtering on genus *Escherichia*:
 
@@ -84,8 +84,8 @@ First 6 rows when filtering on genus *Escherichia*:
 | B_ESCHR_ADCR | Escherichia adecarboxylata | synonym | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | adecarboxylata |  | species | Leclerc, 1962 | likely facultative anaerobe | rods | LPSN | 776052 | 515602 | 777447 |  |  |  | CS33J | CS33H | 3SVX6 | 1 |  |
 | B_ESCHR_ALBR | Escherichia albertii | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | albertii |  | species | Huys et al., 2003 | facultative anaerobe | rods | LPSN | 776053 | 515602 |  |  |  |  | 3BGTB | CS33H |  | 1 | 419388003 |
 | B_ESCHR_BLTT | Escherichia blattae | synonym | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | blattae |  | species | Burgess et al., 1973 | likely facultative anaerobe | rods | LPSN | 776056 | 515602 | 788468 |  |  |  | CS33K | CS33H | 4X4P7 | 1 |  |
-| B_ESCHR_COLI | Escherichia coli | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli |  | species | Castellani et al., 1919 | facultative anaerobe | rods | LPSN | 776057 | 515602 |  |  |  |  | NT3L7 | CS33H |  | 1 | 1095001000112106, 715307006, 737528008, … |
-| B_ESCHR_COLI_COLI | Escherichia coli coli | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli | coli | subspecies |  |  |  | GBIF |  | 776057 |  |  |  |  | 12233256 | NT3L7 |  | 1 |  |
+| B_ESCHR_COLI | Escherichia coli | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli |  | species | Castellani et al., 1919 | facultative anaerobe | rods | LPSN | 776057 | 515602 |  |  |  |  | CS33N | CS33H |  | 1 | 1095001000112106, 715307006, 737528008, … |
+| B_ESCHR_COLI_COLI | Escherichia coli coli | accepted | Bacteria | Pseudomonadati | Pseudomonadota | Gammaproteobacteria | Enterobacterales | Enterobacteriaceae | Escherichia | coli | coli | subspecies |  |  |  | GBIF |  | 776057 |  |  |  |  | 12233256 | CS33N |  | 1 |  |
 
 ------------------------------------------------------------------------
 
@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 60 173 rows and 15 columns, containing the following
+A data set with 60 234 rows and 15 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, *is_SDD*,
@@ -156,7 +156,7 @@ and *note*.
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 2 October 2026 04:01:58 UTC. Find more info about
+It was last updated on 7 October 2026 10:55:12 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -167,7 +167,7 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
   (0.2 MB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.txt)
-  (10.2 MB)  
+  (10.3 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.xlsx)
   (4.2 MB)  
@@ -179,7 +179,7 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
   (0.3 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav)
-  (25.7 MB)  
+  (25.8 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.dta)
   (19.1 MB)
@@ -199,14 +199,14 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
 ## `microorganisms.groups`: Species Groups and Microbiological Complexes
 
-A data set with 530 rows and 4 columns, containing the following column
+A data set with 466 rows and 4 columns, containing the following column
 names:  
 *mo_group*, *mo*, *mo_group_name*, and *mo_name*.
 
 This data set is in R available as `microorganisms.groups`, after you
 load the `AMR` package.
 
-It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
+It was last updated on 7 October 2026 10:55:12 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/microorganisms.groups.html).
 
@@ -214,25 +214,25 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.rds)
-  (6 kB)  
+  (5 kB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.txt)
-  (50 kB)  
+  (43 kB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.xlsx)
   (19 kB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.feather)
-  (19 kB)  
+  (17 kB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.parquet)
-  (13 kB)  
+  (12 kB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.sav)
-  (64 kB)  
+  (56 kB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.groups.dta)
-  (82 kB)
+  (71 kB)
 
 **Example content**
 
@@ -240,7 +240,7 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
 |:--:|:--:|:--:|:--:|
 | B_ACNTB_BMNN-C | B_ACNTB_BMNN | Acinetobacter baumannii complex | Acinetobacter baumannii |
 | B_ACNTB_BMNN-C | B_ACNTB_CLCC | Acinetobacter baumannii complex | Acinetobacter calcoaceticus |
-| B_ACNTB_BMNN-C | B_ACNTB_LCTC | Acinetobacter baumannii complex | Acinetobacter dijkshoorniae |
+| B_ACNTB_BMNN-C | B_ACNTB_LCTC | Acinetobacter baumannii complex | Acinetobacter lactucae |
 | B_ACNTB_BMNN-C | B_ACNTB_NSCM | Acinetobacter baumannii complex | Acinetobacter nosocomialis |
 | B_ACNTB_BMNN-C | B_ACNTB_PITT | Acinetobacter baumannii complex | Acinetobacter pittii |
 | B_ACNTB_BMNN-C | B_ACNTB_SFRT | Acinetobacter baumannii complex | Acinetobacter seifertii |
@@ -249,14 +249,14 @@ here](https://amr-for-r.org/reference/microorganisms.groups.html).
 
 ## `intrinsic_resistant`: Intrinsic Bacterial Resistance
 
-A data set with 294 079 rows and 3 columns, containing the following
+A data set with 307 684 rows and 3 columns, containing the following
 column names:  
 *mo*, *ab*, and *version*.
 
 This data set is in R available as `intrinsic_resistant`, after you load
 the `AMR` package.
 
-It was last updated on 1 October 2026 13:50:25 UTC. Find more info about
+It was last updated on 7 October 2026 10:55:12 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/intrinsic_resistant.html).
 
@@ -267,22 +267,22 @@ here](https://amr-for-r.org/reference/intrinsic_resistant.html).
   (0.1 MB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.txt)
-  (10.9 MB)  
+  (11.4 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.xlsx)
-  (3.1 MB)  
+  (3.6 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.feather)
-  (2.5 MB)  
+  (2.6 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.parquet)
-  (0.3 MB)  
+  (0.4 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.sav)
-  (16 MB)  
+  (16.7 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/intrinsic_resistant.dta)
-  (28.6 MB)
+  (32.9 MB)
 
 **Example content**
 
@@ -291,65 +291,126 @@ Example rows when filtering on *Enterobacter cloacae*:
 |    microorganism     |         antibiotic          |
 |:--------------------:|:---------------------------:|
 | Enterobacter cloacae |      Acetylmidecamycin      |
+| Enterobacter cloacae |      Acetylmidecamycin      |
+| Enterobacter cloacae |      Acetylspiramycin       |
 | Enterobacter cloacae |      Acetylspiramycin       |
 | Enterobacter cloacae |         Amoxicillin         |
+| Enterobacter cloacae |         Amoxicillin         |
+| Enterobacter cloacae | Amoxicillin/clavulanic acid |
 | Enterobacter cloacae | Amoxicillin/clavulanic acid |
 | Enterobacter cloacae |         Ampicillin          |
+| Enterobacter cloacae |         Ampicillin          |
+| Enterobacter cloacae |    Ampicillin/sulbactam     |
 | Enterobacter cloacae |    Ampicillin/sulbactam     |
 | Enterobacter cloacae |          Avoparcin          |
+| Enterobacter cloacae |          Avoparcin          |
+| Enterobacter cloacae |        Azithromycin         |
 | Enterobacter cloacae |        Azithromycin         |
 | Enterobacter cloacae |      Benzylpenicillin       |
+| Enterobacter cloacae |      Benzylpenicillin       |
+| Enterobacter cloacae |          Bleomycin          |
 | Enterobacter cloacae |          Bleomycin          |
 | Enterobacter cloacae |          Cadazolid          |
+| Enterobacter cloacae |          Cadazolid          |
+| Enterobacter cloacae |         Cefadroxil          |
 | Enterobacter cloacae |         Cefadroxil          |
 | Enterobacter cloacae |          Cefalexin          |
+| Enterobacter cloacae |          Cefalexin          |
+| Enterobacter cloacae |          Cefalotin          |
 | Enterobacter cloacae |          Cefalotin          |
 | Enterobacter cloacae |          Cefazolin          |
+| Enterobacter cloacae |          Cefazolin          |
+| Enterobacter cloacae |          Cefoxitin          |
 | Enterobacter cloacae |          Cefoxitin          |
 | Enterobacter cloacae |       Clarithromycin        |
+| Enterobacter cloacae |       Clarithromycin        |
+| Enterobacter cloacae |         Clindamycin         |
 | Enterobacter cloacae |         Clindamycin         |
 | Enterobacter cloacae |         Cycloserine         |
+| Enterobacter cloacae |         Cycloserine         |
+| Enterobacter cloacae |         Dalbavancin         |
 | Enterobacter cloacae |         Dalbavancin         |
 | Enterobacter cloacae |        Dirithromycin        |
+| Enterobacter cloacae |        Dirithromycin        |
+| Enterobacter cloacae |        Erythromycin         |
 | Enterobacter cloacae |        Erythromycin         |
 | Enterobacter cloacae |       Flurithromycin        |
+| Enterobacter cloacae |       Flurithromycin        |
+| Enterobacter cloacae |        Fusidic acid         |
 | Enterobacter cloacae |        Fusidic acid         |
 | Enterobacter cloacae |        Gamithromycin        |
+| Enterobacter cloacae |        Gamithromycin        |
+| Enterobacter cloacae |          Josamycin          |
 | Enterobacter cloacae |          Josamycin          |
 | Enterobacter cloacae |         Kitasamycin         |
+| Enterobacter cloacae |         Kitasamycin         |
+| Enterobacter cloacae |         Lincomycin          |
 | Enterobacter cloacae |         Lincomycin          |
 | Enterobacter cloacae |          Linezolid          |
+| Enterobacter cloacae |          Linezolid          |
+| Enterobacter cloacae |         Meleumycin          |
 | Enterobacter cloacae |         Meleumycin          |
 | Enterobacter cloacae |         Midecamycin         |
+| Enterobacter cloacae |         Midecamycin         |
+| Enterobacter cloacae |         Miocamycin          |
 | Enterobacter cloacae |         Miocamycin          |
 | Enterobacter cloacae |        Nafithromycin        |
+| Enterobacter cloacae |        Nafithromycin        |
+| Enterobacter cloacae |        Norvancomycin        |
 | Enterobacter cloacae |        Norvancomycin        |
 | Enterobacter cloacae |        Oleandomycin         |
+| Enterobacter cloacae |        Oleandomycin         |
+| Enterobacter cloacae |         Oritavancin         |
 | Enterobacter cloacae |         Oritavancin         |
 | Enterobacter cloacae |        Ostreogrycin         |
+| Enterobacter cloacae |        Ostreogrycin         |
+| Enterobacter cloacae |         Pirlimycin          |
 | Enterobacter cloacae |         Pirlimycin          |
 | Enterobacter cloacae |          Primycin           |
+| Enterobacter cloacae |          Primycin           |
+| Enterobacter cloacae |        Pristinamycin        |
 | Enterobacter cloacae |        Pristinamycin        |
 | Enterobacter cloacae |  Quinupristin/dalfopristin  |
+| Enterobacter cloacae |  Quinupristin/dalfopristin  |
+| Enterobacter cloacae |         Ramoplanin          |
 | Enterobacter cloacae |         Ramoplanin          |
 | Enterobacter cloacae |         Rifampicin          |
+| Enterobacter cloacae |         Rifampicin          |
+| Enterobacter cloacae |         Rokitamycin         |
 | Enterobacter cloacae |         Rokitamycin         |
 | Enterobacter cloacae |        Roxithromycin        |
+| Enterobacter cloacae |        Roxithromycin        |
+| Enterobacter cloacae |        Solithromycin        |
 | Enterobacter cloacae |        Solithromycin        |
 | Enterobacter cloacae |         Spiramycin          |
+| Enterobacter cloacae |         Spiramycin          |
+| Enterobacter cloacae |          Tedizolid          |
 | Enterobacter cloacae |          Tedizolid          |
 | Enterobacter cloacae |         Teicoplanin         |
+| Enterobacter cloacae |         Teicoplanin         |
+| Enterobacter cloacae |         Telavancin          |
 | Enterobacter cloacae |         Telavancin          |
 | Enterobacter cloacae |        Telithromycin        |
+| Enterobacter cloacae |        Telithromycin        |
+| Enterobacter cloacae |        Thiacetazone         |
 | Enterobacter cloacae |        Thiacetazone         |
 | Enterobacter cloacae |        Tildipirosin         |
+| Enterobacter cloacae |        Tildipirosin         |
+| Enterobacter cloacae |         Tilmicosin          |
 | Enterobacter cloacae |         Tilmicosin          |
 | Enterobacter cloacae |       Troleandomycin        |
+| Enterobacter cloacae |       Troleandomycin        |
+| Enterobacter cloacae |        Tulathromycin        |
 | Enterobacter cloacae |        Tulathromycin        |
 | Enterobacter cloacae |           Tylosin           |
+| Enterobacter cloacae |           Tylosin           |
+| Enterobacter cloacae |         Tylvalosin          |
 | Enterobacter cloacae |         Tylvalosin          |
 | Enterobacter cloacae |         Vancomycin          |
+| Enterobacter cloacae |         Vancomycin          |
 | Enterobacter cloacae |       Virginiamycine        |
+| Enterobacter cloacae |       Virginiamycine        |
+| Enterobacter cloacae |         Zorbamycin          |
 | Enterobacter cloacae |         Zorbamycin          |
 
 ------------------------------------------------------------------------
@@ -464,14 +525,14 @@ here](https://amr-for-r.org/reference/example_isolates_unclean.html).
 
 ## `microorganisms.codes`: Common Laboratory Codes
 
-A data set with 6 029 rows and 2 columns, containing the following
+A data set with 6 022 rows and 2 columns, containing the following
 column names:  
 *code* and *mo*.
 
 This data set is in R available as `microorganisms.codes`, after you
 load the `AMR` package.
 
-It was last updated on 22 June 2026 23:38:13 UTC. Find more info about
+It was last updated on 7 October 2026 10:55:12 UTC. Find more info about
 the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/microorganisms.codes.html).
 
@@ -485,13 +546,13 @@ here](https://amr-for-r.org/reference/microorganisms.codes.html).
   (0.1 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.xlsx)
-  (98 kB)  
+  (0.1 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.feather)
   (0.1 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.parquet)
-  (68 kB)  
+  (67 kB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.sav)
   (0.2 MB)  

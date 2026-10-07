@@ -6,7 +6,7 @@
   available in 28 languages
 - Generates **antibiograms** - WISCA for empiric coverage estimates, or
   traditional/syndromic for AMR surveillance
-- Provides the **full microbiological taxonomy** of ~97 000 distinct
+- Provides the **full microbiological taxonomy** of ~103 000 distinct
   species and extensive info of ~620 antimicrobial drugs
 - Applies **CLSI 2011-2026** and **EUCAST 2011-2026** clinical and
   veterinary breakpoints, and ECOFFs, for MIC and disk zone
@@ -48,9 +48,9 @@ already cited [over 100
 times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation_for_view=sAoHvIgAAAAJ:0EnyYjriUFMC)
 in scientific research.
 
-After installing this package, R knows [**~97 000 distinct microbial
+After installing this package, R knows [**~103 000 distinct microbial
 species**](https://amr-for-r.org/reference/microorganisms.md) (updated
-mei 2026) and all [**~620 antimicrobial and antiviral
+april 2026) and all [**~620 antimicrobial and antiviral
 drugs**](https://amr-for-r.org/reference/antimicrobials.md) by name and
 code (including ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED
 CT), and knows all about valid SIR and MIC values. The integral clinical
@@ -179,7 +179,7 @@ wisca(example_isolates,
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|
-| 70% (64.9-75.3%) | 93.6% (92.1-95%) | 89.9% (87.1-92.3%) |
+| 70% (64.7-75.3%) | 93.6% (92.1-95%) | 89.8% (86.7-92.4%) |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
@@ -195,9 +195,9 @@ wisca(example_isolates,
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|:---|
-| Clinical | 74.8% (69.1-80.2%) | 93.6% (92.1-95.1%) | 90.4% (87.2-93.1%) |
-| ICU | 57.2% (49.2-65.6%) | 86.7% (83.4-89.9%) | 82.9% (78.1-87.2%) |
-| Outpatient | 57.6% (46.3-69.2%) | 76.5% (70.5-82%) | 67.6% (57.3-77.1%) |
+| Clinical | 74.7% (68.7-80.4%) | 93.6% (91.9-95.2%) | 90.4% (86.9-93.1%) |
+| ICU | 56.9% (48.5-65.6%) | 86.7% (83.2-89.7%) | 83% (78.2-87.2%) |
+| Outpatient | 57.4% (46-68.9%) | 76.6% (70.7-82.3%) | 67.5% (57.2-77.3%) |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:

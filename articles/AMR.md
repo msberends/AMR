@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 04 October
+methodology remains unchanged. This page was generated on 07 October
 2026.
 
 ## Introduction
@@ -52,9 +52,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-10-04 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-10-04 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-10-04 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-10-07 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-10-07 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-10-07 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -113,7 +113,7 @@ SIR values as well.
 With [`as.mo()`](https://amr-for-r.org/reference/as.mo.md), users can
 transform arbitrary microorganism names or codes to current taxonomy.
 The `AMR` package contains up-to-date taxonomic data. To be specific,
-currently included data were retrieved on 07 May 2026.
+currently included data were retrieved on 05 Oct 2026.
 
 The codes of the AMR packages that come from
 [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) are short, but
@@ -200,18 +200,18 @@ mo_uncertainties()
 #> -------------------------------------------------------------------------------
 #> "S. aureus" -> Staphylococcus aureus (B_STPHY_AURS, 0.690)
 #> Also matched: Staphylococcus aureus aureus (0.643), Staphylococcus argenteus
-#> (0.625), Staphylococcus aureus anaerobius (0.625), Streptomyces aureus (0.618),
-#> Staphylococcus auricularis (0.615), Streptomyces azureus (0.609), Salmonella
-#> Aurelianis (0.595), Salmonella Aarhus (0.588), Salmonella Amounderness (0.587),
-#> and Staphylococcus argensis (0.587)
+#> (0.625), Staphylococcus aureus anaerobius (0.625), Staphylococcus auricularis
+#> (0.615), Salmonella Aurelianis (0.595), Salmonella Aarhus (0.588), Salmonella
+#> Amounderness (0.587), Staphylococcus argensis (0.587), Streptococcus australis
+#> (0.587), and Salmonella choleraesuis arizonae (0.562)
 #> -------------------------------------------------------------------------------
 #> "S. pneumoniae" -> Streptococcus pneumoniae (B_STRPT_PNMN, 0.750)
 #> Also matched: Streptococcus parapneumoniae (0.714), Streptococcus
 #> pseudopneumoniae (0.700), Serratia proteamaculans quinivorans (0.557),
 #> Streptococcus phocae salmonis (0.552), Serratia proteamaculans quinovora
-#> (0.545), Sphingomonas piscinae (0.538), Streptococcus pseudoporcinus (0.536),
-#> Staphylococcus piscifermentans (0.533), Staphylococcus pseudintermedius
-#> (0.532), and Serratia proteamaculans proteamaculans (0.526)
+#> (0.545), Streptococcus pseudoporcinus (0.536), Staphylococcus piscifermentans
+#> (0.533), Staphylococcus pseudintermedius (0.532), Serratia proteamaculans
+#> proteamaculans (0.526), and Streptococcus gallolyticus pasteurianus (0.526)
 #> ℹ Only the first 10 other matches of each record are shown. Run ``
 #>   `print(mo_uncertainties(), n = ...)` `` to view more entries, or save
 #>   `mo_uncertainties()` to an object.

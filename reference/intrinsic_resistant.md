@@ -14,8 +14,8 @@ intrinsic_resistant
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 294
-079 observations and 3 variables:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 307
+684 observations and 3 variables:
 
 - `mo`  
   Microorganism ID which occurs in
@@ -71,7 +71,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 intrinsic_resistant
-#> # A tibble: 294,079 × 3
+#> # A tibble: 307,684 × 3
 #>    mo          ab   version                                    
 #>    <mo>        <ab> <chr>                                      
 #>  1 B_GRAMP     ATM  'EUCAST Expected Resistant Phenotypes' v1.2
@@ -84,5 +84,5 @@ intrinsic_resistant
 #>  8 B_ANAER-POS NAL  'EUCAST Expected Resistant Phenotypes' v1.2
 #>  9 B_ANAER-POS PLB  'EUCAST Expected Resistant Phenotypes' v1.2
 #> 10 B_ANAER-POS TEM  'EUCAST Expected Resistant Phenotypes' v1.2
-#> # ℹ 294,069 more rows
+#> # ℹ 307,674 more rows
 ```
