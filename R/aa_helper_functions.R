@@ -1697,6 +1697,8 @@ add_MO_lookup_to_AMR_env <- function() {
     MO_lookup$species_first <- tolower(substr(MO_lookup$species, 1, 1)) # tolower for groups (Streptococcus, Salmonella)
     MO_lookup$subspecies_first <- tolower(substr(MO_lookup$subspecies, 1, 1)) # tolower for Salmonella serovars
     AMR_env$MO_lookup <- MO_lookup
+    # a new lookup table, so derived caches must be rebuilt
+    reset_mo_cache()
   }
 }
 

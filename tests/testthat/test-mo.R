@@ -354,4 +354,15 @@ test_that("test-mo.R", {
     mo_genus("S. apiospermum", keep_synonyms = TRUE, language = NULL),
     "Scedosporium"
   )
+
+  # Salmonella serovars written with the species (these returned S. bongori or S. enterica diarizonae until 2026)
+  expect_identical(
+    as.character(as.mo(c(
+      "Salmonella enterica Typhi", "Salmonella enterica serovar Typhi",
+      "Salmonella enterica subsp. enterica serovar Typhi", "Salmonella enterica Typhimurium",
+      "Salmonella enterica Paratyphi A", "Salmonella grupo B"
+    ), info = FALSE)),
+    c("B_SLMNL_TYPH", "B_SLMNL_TYPH", "B_SLMNL_TYPH", "B_SLMNL_HMRM", "B_SLMNL_PRTA", "B_SLMNL_GRPB")
+  )
+  expect_identical(as.character(as.mo("Salmonella enterica arizonae", info = FALSE)), "B_SLMNL_ENTR_ARZN")
 })

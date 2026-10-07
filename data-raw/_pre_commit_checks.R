@@ -124,7 +124,11 @@ create_species_cons_cops <- function(type = c("CoNS", "CoPS")) {
         "caledonicus", "canis",
         "durrellii", "lloydii",
         "ratti", "taiwanensis", "veratri", "urealyticus",
-        "americanisciuri", "marylandisciuri", "shinii", "brunensis"
+        "americanisciuri", "marylandisciuri", "shinii", "brunensis",
+        # Kuhnert et al. 2026 (doi:10.1099/ijsem.0.007230), Baek et al. 2025 (J Microbiol, S. parequorum) and
+        # Belhout et al. 2026 (doi:10.1099/ijsem.0.007253, S. xeri); S. parequorum and S. xeri confirmed by
+        # Matthijs S. Berends
+        "dromedarii", "parequorum", "xeri"
       ) |
         # old, now renamed to S. schleiferi (but still as synonym in our data of course):
         (MO_staph$species == "schleiferi" & MO_staph$subspecies %in% c("schleiferi", ""))),
@@ -160,6 +164,14 @@ pre_commit_lst$MO_STREP_ABCG <- microorganisms$mo[which(microorganisms$genus == 
     "group a", "group b", "group c", "group g"
   ))]
 pre_commit_lst$MO_LANCEFIELD <- microorganisms$mo[which(microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
+# a synonym only belongs to these lists if its current name does as well (decision by Matthijs S. Berends, 7 October
+# 2026), e.g. not Staphylococcus caseolyticus (now Macrococcus caseolyticus) in CoNS, nor Staphylococcus roterodami
+# (now Staphylococcus aureus) in CoPS
+for (lst in c("MO_CONS", "MO_COPS", "MO_STREP_ABCG", "MO_LANCEFIELD")) {
+  current <- AMR:::synonym_mo_to_accepted_mo(as.character(pre_commit_lst[[lst]]))
+  pre_commit_lst[[lst]] <- pre_commit_lst[[lst]][is.na(current) | current %in% as.character(pre_commit_lst[[lst]])]
+}
+rm(lst, current)
 pre_commit_lst$MO_WHO_PRIORITY_GENERA <- c(
   # World Health Organization's (WHO) Priority Pathogen List (some are from the group Enterobacteriaceae)
   "Acinetobacter",
@@ -215,6 +227,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Aureobasidium",
   "Babesia",
   "Balamuthia",
+  "Balantidium", # COL name of Balantioides coli (Balantidium coli)
   "Balantioides",
   "Basidiobolus",
   "Beauveria",
@@ -248,6 +261,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Cyberlindnera",
   "Cyclospora",
   "Cystoisospora",
+  "Debaryomyces",
   "Debaryozyma",
   "Demodex",
   "Dermatobia",
@@ -286,6 +300,7 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Hymenolepis",
   "Hypomyces",
   "Hysterothylacium",
+  "Isospora", # COL name of Cystoisospora belli (Isospora belli)
   "Kazachstania",
   "Kloeckera",
   "Kluyveromyces",
@@ -371,7 +386,6 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Syngamus",
   "Taenia",
   "Talaromyces",
-  "Teleomorph",
   "Toxocara",
   "Toxoplasma",
   "Trichinella",
@@ -725,7 +739,8 @@ if (changed_md5(microorganisms)) {
   mo$snomed <- max_50_snomed
   mo <- dplyr::mutate_if(mo, ~ !is.numeric(.), as.character)
   try(haven::write_sav(mo, "data-raw/datasets/microorganisms.sav"), silent = TRUE)
-  try(haven::write_dta(mo, "data-raw/datasets/microorganisms.dta"), silent = TRUE)
+  # (long strings as strL, as otherwise the file would exceed the file size limit of GitHub)
+  try(haven::write_dta(mo, "data-raw/datasets/microorganisms.dta", strl_threshold = 255), silent = TRUE)
   mo_all_snomed <- microorganisms %>% mutate_if(is.list, function(x) sapply(x, paste, collapse = ","))
   try(write.table(mo_all_snomed, "data-raw/datasets/microorganisms.txt", sep = "\t", na = "", row.names = FALSE), silent = TRUE)
   try(openxlsx2::write_xlsx(mo_all_snomed, "data-raw/datasets/microorganisms.xlsx"), silent = TRUE)

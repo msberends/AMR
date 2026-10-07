@@ -70,6 +70,7 @@ test_that("test-mo_property.R", {
     "Erysipelotrichia",
     "Ktedonobacteria",
     "Limnochordia",
+    "Limnocylindria",
     "Mollicutes",
     "Negativicutes",
     "Nitriliruptoria",
@@ -79,7 +80,8 @@ test_that("test-mo_property.R", {
     "Thermaerobacteria",
     "Thermoflexia",
     "Thermoleophilia",
-    "Thermolithobacteria"
+    "Thermolithobacteria",
+    "Tissierellia"
   )
   expect_identical(
     sort(unique(microorganisms[which(microorganisms$phylum %in% current_grampos_phyla), "class", drop = TRUE])),
@@ -95,7 +97,8 @@ test_that("test-mo_property.R", {
     "domain", "kingdom", "phylum", "class", "order",
     "family", "genus", "species", "subspecies"
   ))
-  expect_equal(mo_synonyms("Escherichia coli"), NULL)
+  # (since the taxonomy update of October 2026, LPSN's basionym Bacillus coli is linked to E. coli)
+  expect_true("Bacillus coli" %in% mo_synonyms("Escherichia coli"))
   expect_true(length(mo_synonyms("Candida albicans")) > 1)
   expect_inherits(mo_synonyms(c("Candida albicans", "Escherichia coli")), "list")
   expect_equal(names(mo_info("Escherichia coli")), c(
@@ -115,7 +118,7 @@ test_that("test-mo_property.R", {
 
   expect_equal(
     as.character(table(mo_pathogenicity(example_isolates$mo))),
-    c("1915", "62", "1", "22")
+    c("1912", "71", "1", "16")
   )
 
   expect_equal(mo_ref("Escherichia coli"), "Castellani et al., 1919")

@@ -1,0 +1,33 @@
+"name","present","mo","status","domain","kingdom","family","rank","prevalence","current_name","n_records","exp_domain","exp_family","exp_status","exp_prefix","exp_max_prev","problems","passed"
+"Escherichia coli",TRUE,"B_ESCHR_COLI","accepted","Bacteria","Pseudomonadati","Enterobacteriaceae","species",1,"Escherichia coli",1,"Bacteria","Enterobacteriaceae","accepted","B_",,"",TRUE
+"Klebsiella pneumoniae",TRUE,"B_KLBSL_PNMN","accepted","Bacteria","Pseudomonadati","Enterobacteriaceae","species",1,"Klebsiella pneumoniae",1,"Bacteria","Enterobacteriaceae","accepted","B_",,"",TRUE
+"Staphylococcus aureus",TRUE,"B_STPHY_AURS","accepted","Bacteria","Bacillati","Staphylococcaceae","species",1,"Staphylococcus aureus",1,"Bacteria","Staphylococcaceae","accepted",,,"",TRUE
+"Pseudomonas aeruginosa",TRUE,"B_PSDMN_AERG","accepted","Bacteria","Pseudomonadati","Pseudomonadaceae","species",1,"Pseudomonas aeruginosa",1,"Bacteria","Pseudomonadaceae",,,,"",TRUE
+"Acinetobacter baumannii",TRUE,"B_ACNTB_BMNN","accepted","Bacteria","Pseudomonadati","Moraxellaceae","species",1,"Acinetobacter baumannii",1,"Bacteria","Moraxellaceae",,,,"",TRUE
+"Enterococcus faecium",TRUE,"B_ENTRC_FACM","accepted","Bacteria","Bacillati","Enterococcaceae","species",1,"Enterococcus faecium",1,"Bacteria","Enterococcaceae",,,,"",TRUE
+"Streptococcus pneumoniae",TRUE,"B_STRPT_PNMN","accepted","Bacteria","Bacillati","Streptococcaceae","species",1,"Streptococcus pneumoniae",1,"Bacteria","Streptococcaceae",,,,"",TRUE
+"Mycobacterium tuberculosis",TRUE,"B_MYCBC_TBRC","accepted","Bacteria","Bacillati","Mycobacteriaceae","species",1,"Mycobacterium tuberculosis",1,"Bacteria","Mycobacteriaceae",,,,"",TRUE
+"Clostridioides difficile",TRUE,"B_CRDDS_DFFC","accepted","Bacteria","Bacillati","Peptostreptococcaceae","species",1,"Clostridioides difficile",1,"Bacteria","Peptostreptococcaceae",,,,"",TRUE
+"Tropheryma whipplei",TRUE,"B_TRPHR_WHPP","accepted","Bacteria","Bacillati","Microbacteriaceae","species",1.15,"Tropheryma whipplei",1,,,,,,"",TRUE
+"Candida albicans",TRUE,"F_CANDD_ALBC","accepted","Fungi","Fungi","Debaryomycetaceae","species",1,"Candida albicans",1,"Fungi",,"accepted",,,"",TRUE
+"Candida auris",TRUE,"F_CANDD_AURS","synonym","Fungi","Fungi","Debaryomycetaceae","species",1,"Candidozyma auris",1,,,"synonym",,,"",TRUE
+"Candidozyma auris",TRUE,"F_CNDDZ_AURS","accepted","Fungi","Fungi","Metschnikowiaceae","species",1.25,"Candidozyma auris",1,"Fungi",,"accepted",,1.99,"",TRUE
+"Nakaseomyces glabratus",TRUE,"F_NKSMY_BRTS","accepted","Fungi","Fungi","Saccharomycetaceae","species",1.25,"Nakaseomyces glabratus",1,"Fungi",,"accepted",,1.99,"",TRUE
+"Aspergillus fumigatus",TRUE,"F_ASPRG_MGTS","accepted","Fungi","Fungi","Aspergillaceae","species",1,"Aspergillus fumigatus",1,"Fungi","Aspergillaceae",,,,"",TRUE
+"Trichophyton rubrum",TRUE,"F_TRCHP_RBRM","accepted","Fungi","Fungi","Arthrodermataceae","species",1.25,"Trichophyton rubrum",1,"Fungi","Arthrodermataceae",,"F_",,"",TRUE
+"Mucor",TRUE,"F_MUCOR","accepted","Fungi","Fungi","Mucoraceae","genus",1.25,"Mucor",1,"Fungi","Mucoraceae",,,,"",TRUE
+"Blastomyces",TRUE,"F_BLSTM","accepted","Fungi","Fungi","Ajellomycetaceae","genus",1,"Blastomyces",1,"Fungi",,"accepted",,,"",TRUE
+"Blastomyces dermatitidis",TRUE,"F_BLSTM_DRMT","accepted","Fungi","Fungi","Ajellomycetaceae","species",1,"Blastomyces dermatitidis",1,"Fungi",,"accepted",,,"",TRUE
+"Cryptococcus neoformans",TRUE,"F_CRYPT_NFRM","accepted","Fungi","Fungi","Cryptococcaceae","species",1,"Cryptococcus neoformans",1,"Fungi",,,,,"",TRUE
+"Pneumocystis jirovecii",TRUE,"F_PNMCY_JRVC","accepted","Fungi","Fungi","Pneumocystidaceae","species",1,"Pneumocystis jirovecii",1,"Fungi",,,,,"",TRUE
+"Necator americanus",TRUE,"AN_NECTR_AMRC","accepted","Animalia","Animalia","Ancylostomatidae","species",1.25,"Necator americanus",1,"Animalia",,,,,"",TRUE
+"Capillaria",TRUE,"AN_CPLLR","accepted","Animalia","Animalia","Capillariidae","genus",1.25,"Capillaria",1,"Animalia",,,,,"",TRUE
+"Ascaris lumbricoides",TRUE,"AN_ASCRS_LMBR","accepted","Animalia","Animalia","Ascarididae","species",1.25,"Ascaris lumbricoides",1,"Animalia","Ascarididae",,,,"",TRUE
+"Echinococcus granulosus",TRUE,"AN_ECHNC_GRNL","accepted","Animalia","Animalia","Taeniidae","species",1.25,"Echinococcus granulosus",1,"Animalia","Taeniidae",,,,"",TRUE
+"Plasmodium falciparum",TRUE,"P_PLSMD_FLCP","accepted","Protozoa","Protozoa","Plasmodiidae","species",1.25,"Plasmodium falciparum",1,"Protozoa",,,"P_",,"",TRUE
+"Toxoplasma gondii",TRUE,"C_TXPL_GOND","accepted","Chromista","Chromista","Sarcocystidae","species",1.25,"Toxoplasma gondii",1,,,"accepted",,,"",TRUE
+"Leishmania donovani",TRUE,"P_LSHMN_DNVN","accepted","Protozoa","Protozoa","Trypanosomatidae","species",1.25,"Leishmania donovani",1,"Protozoa",,,,,"",TRUE
+"Trypanosoma cruzi",TRUE,"P_TRYPN_CRUZ","accepted","Protozoa","Protozoa","Trypanosomatidae","species",1.25,"Trypanosoma cruzi",1,"Protozoa",,,,,"",TRUE
+"Giardia",TRUE,"P_GIARD","accepted","Protozoa","Protozoa","Hexamitidae","genus",1.25,"Giardia",1,"Protozoa",,,,,"",TRUE
+"Graphium (only fungal species)",TRUE,,,"Fungi",,,,,,174,,,,,,"",TRUE
+"Microsporidium (> 100 species)",TRUE,,,"Fungi",,,,,,128,,,,,,"",TRUE

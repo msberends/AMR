@@ -1,0 +1,115 @@
+"domain","rank","status","n_old","n_new","diff"
+"(unknown domain)","(unknown rank)","unknown",0,1,1
+"(unknown kingdom)","(unknown rank)","unknown",1,0,-1
+"Animalia","class","accepted",6,9,3
+"Animalia","domain","unknown",0,1,1
+"Animalia","family","accepted",27,49,22
+"Animalia","family","unknown",3,0,-3
+"Animalia","genus","accepted",24,94,70
+"Animalia","genus","synonym",14,28,14
+"Animalia","genus","unknown",0,11,11
+"Animalia","kingdom","accepted",1,1,0
+"Animalia","order","accepted",12,17,5
+"Animalia","phylum","accepted",3,5,2
+"Animalia","species","accepted",1256,1518,262
+"Animalia","species","synonym",218,719,501
+"Animalia","species","unknown",2,3,1
+"Animalia","subspecies","accepted",50,61,11
+"Animalia","subspecies","synonym",12,63,51
+"Archaea","class","accepted",32,34,2
+"Archaea","class","unknown",5,5,0
+"Archaea","domain","accepted",0,1,1
+"Archaea","family","accepted",80,88,8
+"Archaea","family","unknown",4,4,0
+"Archaea","genus","accepted",233,245,12
+"Archaea","genus","synonym",11,13,2
+"Archaea","genus","unknown",3,3,0
+"Archaea","kingdom","accepted",1,5,4
+"Archaea","order","accepted",55,60,5
+"Archaea","order","unknown",1,1,0
+"Archaea","phylum","accepted",18,19,1
+"Archaea","phylum","synonym",0,2,2
+"Archaea","species","accepted",806,907,101
+"Archaea","species","synonym",170,186,16
+"Bacteria","(unknown rank)","unknown",5,5,0
+"Bacteria","class","accepted",110,127,17
+"Bacteria","class","not validly published",40,0,-40
+"Bacteria","class","unknown",0,41,41
+"Bacteria","domain","accepted",0,1,1
+"Bacteria","family","accepted",872,938,66
+"Bacteria","family","not validly published",110,0,-110
+"Bacteria","family","synonym",1,0,-1
+"Bacteria","family","unknown",3,107,104
+"Bacteria","genus","accepted",4103,4697,594
+"Bacteria","genus","not validly published",504,0,-504
+"Bacteria","genus","synonym",437,521,84
+"Bacteria","genus","unknown",4,483,479
+"Bacteria","kingdom","accepted",1,5,4
+"Bacteria","order","accepted",291,320,29
+"Bacteria","order","not validly published",62,0,-62
+"Bacteria","order","unknown",0,62,62
+"Bacteria","phylum","accepted",43,48,5
+"Bacteria","phylum","not validly published",24,0,-24
+"Bacteria","phylum","unknown",0,23,23
+"Bacteria","species","accepted",23805,29431,5626
+"Bacteria","species","synonym",6104,7510,1406
+"Bacteria","species","unknown",53,52,-1
+"Bacteria","species group","accepted",32,32,0
+"Bacteria","subspecies","accepted",596,3090,2494
+"Bacteria","subspecies","synonym",534,746,212
+"Bacteria","subspecies","unknown",1515,0,-1515
+"Chromista","class","accepted",2,4,2
+"Chromista","domain","unknown",0,1,1
+"Chromista","family","accepted",8,22,14
+"Chromista","genus","accepted",30,52,22
+"Chromista","genus","synonym",1,2,1
+"Chromista","genus","unknown",2,7,5
+"Chromista","kingdom","accepted",1,1,0
+"Chromista","order","accepted",1,7,6
+"Chromista","phylum","accepted",3,6,3
+"Chromista","species","accepted",112,246,134
+"Chromista","species","synonym",12,62,50
+"Chromista","species","unknown",2,0,-2
+"Chromista","subspecies","accepted",0,4,4
+"Chromista","subspecies","synonym",4,4,0
+"Fungi","(unknown rank)","unknown",2,2,0
+"Fungi","class","accepted",59,66,7
+"Fungi","domain","unknown",0,1,1
+"Fungi","family","accepted",449,653,204
+"Fungi","family","synonym",25,24,-1
+"Fungi","family","unknown",4,2,-2
+"Fungi","genus","accepted",1257,2918,1661
+"Fungi","genus","synonym",80,56,-24
+"Fungi","genus","unknown",1081,1346,265
+"Fungi","kingdom","accepted",1,1,0
+"Fungi","order","accepted",168,202,34
+"Fungi","phylum","accepted",13,17,4
+"Fungi","phylum","synonym",0,1,1
+"Fungi","species","accepted",11859,18805,6946
+"Fungi","species","synonym",7377,15962,8585
+"Fungi","species","unknown",3919,3881,-38
+"Fungi","species group","accepted",5,5,0
+"Fungi","subspecies","accepted",574,219,-355
+"Fungi","subspecies","synonym",1264,3251,1987
+"Plantae","domain","unknown",0,1,1
+"Protozoa","(unknown rank)","unknown",1,1,0
+"Protozoa","class","accepted",30,31,1
+"Protozoa","class","unknown",0,1,1
+"Protozoa","domain","unknown",0,1,1
+"Protozoa","family","accepted",222,190,-32
+"Protozoa","family","synonym",8,7,-1
+"Protozoa","family","unknown",9,9,0
+"Protozoa","genus","accepted",823,676,-147
+"Protozoa","genus","synonym",123,82,-41
+"Protozoa","genus","unknown",58,52,-6
+"Protozoa","kingdom","accepted",1,1,0
+"Protozoa","order","accepted",55,55,0
+"Protozoa","order","synonym",1,1,0
+"Protozoa","order","unknown",0,1,1
+"Protozoa","phylum","accepted",9,9,0
+"Protozoa","phylum","unknown",0,1,1
+"Protozoa","species","accepted",4428,3640,-788
+"Protozoa","species","synonym",999,966,-33
+"Protozoa","species","unknown",63,62,-1
+"Protozoa","subspecies","accepted",488,495,7
+"Protozoa","subspecies","synonym",749,749,0

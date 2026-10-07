@@ -1,4 +1,4 @@
-# AMR 3.0.1.9104
+# AMR 3.0.1.9107
 
 Planned as v3.1.0, mid October 2026.
 
@@ -46,6 +46,7 @@ Planned as v3.1.0, mid October 2026.
 * `add_custom_antimicrobial_synonyms()` to add local names, such as trade names, to existing antimicrobials (#307)
 
 ### Fixed
+* `as.mo()` returned *Salmonella bongori* or another subspecies for *Salmonella* serovars written with the species, such as "Salmonella enterica serovar Typhi"
 * EUCAST breakpoint rules for *Aerococcus* (v12 onwards) were never applied, and *Pasteurella* rules were partly filed under *Neisseria meningitidis* (#290)
 * Streptomycin breakpoints imported from WHONET were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)
 * Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified value no longer causes errors or silent wrong behaviour in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and SIR plotting/printing functions (#298)
@@ -56,6 +57,9 @@ Planned as v3.1.0, mid October 2026.
   * Assumption of disk zones are now preferred over MIC values when input is only whole numbers (#291)
 * `as.mic()`: values in scientific notation (e.g. `1e-3`) now handled correctly
 * `as.ab()`: codes containing "PH" or "TH" (e.g. `ETH`, `PHE`) no longer return `NA` when mixed with unrecognised input (#245)
+* `as.ab()`: results of `fast_mode` (used internally) were remembered and reused by later regular calls, which could return `NA` for valid input (#313)
+* `as.mo()`: previously coerced input was often not recognised again, e.g. for an unknown species of a known genus, so it was matched again on every call (#313)
+* `ab_reset_session()` no longer clears the uncertainties of `as.mo()` (#313)
 * Combined MIC/SIR input values (e.g. `"<= 0.002; S"` or `"S; 0.002"`) now parsed correctly (#252)
 * `as.mo()`: 
   * Input of the form `"X complex"` now falls back to `"X"` when the complex is not a distinct taxon in the database, preventing `NA` results for valid clinical descriptions such as `"Proteus vulgaris complex"` (#287)
@@ -67,10 +71,19 @@ Planned as v3.1.0, mid October 2026.
 * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 * Logical comparison (`==`, `!=`) of `sir` class with a `factor` is now possible on R >= 4.3
 * `mo_current()` and `as.mo()` could not find the current name of some synonyms with multiple sources (e.g. *Chaetomium abuense*)
+* `interpretive_rules()`: species named in a rule now also match all other names of the same accepted taxon (e.g. 'Clostridium ramosum' for *Thomasclavelia ramosa*), which also updates `intrinsic_resistant`
+* *Erysipelatoclostridium* and its species are now synonyms of *Thomasclavelia*; *E. merdavium* is retired
+* Taxonomy: names that a source lists twice now take the correct record (e.g. *Eggerthella lenta*, *Gordonia amarae* and *Anisakis simplex* were synonyms without a current name)
+* Taxonomy: synonyms without a current name are linked via LPSN or removed, with their codes retired; the *M. tuberculosis* complex is always kept
+* Taxonomy: consistent higher taxonomy and parent records, and data sets refer only to current names (except `intrinsic_resistant`)
 
 ### Updated
+* Faster `as.ab()`, `as.mo()` and all `mo_*()` functions through one consistent session cache design, which is cleared when lookup tables change, e.g. after `add_custom_microorganisms()` (#313)
+  * `mo_*()` functions retrieve properties of valid `<mo>` input directly, and only for unique values
+  * The mapping of outdated taxonomic names to their current names is remembered per code
+  * `mo_uncertainties()` now also lists uncertainties of previously coerced input
 * `top_n_microorganisms()`: new `property_for_each` argument for sub-grouping within top *n* groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed `property = NULL` not being accepted; inner filter now tracks original row indices to prevent cross-group contamination
-* Taxonomic update for all microorganisms, now updated to June 2026
+* Taxonomic update for all microorganisms, now updated to COL 2026-04-18 XR, LPSN and BacDive of October 2026, and MycoBank of January 2026
 * `mo_kingdom()` now returns the formal taxonomic kingdom; a one-time note per session explains the change when querying bacterial or archaeal records.
 * `mo_taxonomy()` and `mo_info()` gained `domain` for the list output
 * `antibiogram()` and `wisca()` now also support parallel computing via the argument `parallel = TRUE` (#281)

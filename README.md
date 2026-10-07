@@ -14,7 +14,7 @@ Overview:
   available in 28 languages
 - Generates **antibiograms** - WISCA for empiric coverage estimates, or
   traditional/syndromic for AMR surveillance
-- Provides the **full microbiological taxonomy** of ~97 000 distinct
+- Provides the **full microbiological taxonomy** of ~103 000 distinct
   species and extensive info of ~620 antimicrobial drugs
 - Applies **CLSI 2011-2026** and **EUCAST 2011-2026** clinical and
   veterinary breakpoints, and ECOFFs, for MIC and disk zone
