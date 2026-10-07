@@ -27,7 +27,9 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-library(AMR)
+# the package in this repository, so that the newest microorganisms data set is used (an installed version of the
+# package may be older)
+devtools::load_all()
 library(dplyr)
 int_resis <- data.frame(mo = microorganisms$mo, stringsAsFactors = FALSE)
 for (i in seq_len(nrow(antimicrobials))) {

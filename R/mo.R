@@ -331,6 +331,15 @@ as.mo <- function(x,
         }
       }
 
+      # Salmonella serovars are stored without species (e.g. 'Salmonella Typhi'), but are often written with it, as in
+      # 'Salmonella enterica (subsp. enterica) serovar Typhi', which otherwise matched e.g. S. bongori
+      if (x_out %like_case% "^salmonella enterica ") {
+        x_serovar <- paste("salmonella", sub("^salmonella enterica (subsp[.]? )?(enterica )?", "", x_out, perl = TRUE))
+        if (x_serovar %in% MO_lookup_current$fullname_lower) {
+          return(as.character(MO_lookup_current$mo[match(x_serovar, MO_lookup_current$fullname_lower)]))
+        }
+      }
+
       # input must not be too short
       if (nchar(x_out) < 3) {
         return("UNKNOWN")
@@ -1131,10 +1140,11 @@ convert_colloquial_input <- function(x) {
   out[x %like_case% "meningo[ck]o[ck](ken)?$"] <- "B_NESSR_MNNG"
   out[x %like_case% "pneumo[ck]o[ck](ken)?$"] <- "B_STRPT_PNMN"
 
-  # Salmonella in different languages, like "Salmonella grupo B"
-  out[x %like_case% "salmonella.* [abcdefgh]$"] <- gsub(".*salmonella.* ([abcdefgh])$",
+  # Salmonella in different languages, like "Salmonella grupo B" (but not the serovars Paratyphi A, B and C)
+  salmonella_group <- x %like_case% "salmonella.* [abcdefgh]$" & x %unlike_case% "paratyphi [abc]$"
+  out[salmonella_group] <- gsub(".*salmonella.* ([abcdefgh])$",
     "B_SLMNL_GRP\\U\\1",
-    x[x %like_case% "salmonella.* [abcdefgh]$"],
+    x[salmonella_group],
     perl = TRUE
   )
   out[x %like_case% "group [abcdefgh] salmonella"] <- gsub(".*group ([abcdefgh]) salmonella*",

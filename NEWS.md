@@ -45,6 +45,7 @@ Planned as v3.1.0, mid October 2026.
 * A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
 
 ### Fixed
+* `as.mo()` returned *Salmonella bongori* or another subspecies for *Salmonella* serovars written with the species, such as "Salmonella enterica serovar Typhi"
 * EUCAST breakpoint rules for *Aerococcus* (v12 onwards) were never applied, and *Pasteurella* rules were partly filed under *Neisseria meningitidis* (#290)
 * Streptomycin breakpoints imported from WHONET were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)
 * Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified value no longer causes errors or silent wrong behaviour in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and SIR plotting/printing functions (#298)
@@ -66,10 +67,15 @@ Planned as v3.1.0, mid October 2026.
 * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
 * Logical comparison (`==`, `!=`) of `sir` class with a `factor` is now possible on R >= 4.3
 * `mo_current()` and `as.mo()` could not find the current name of some synonyms with multiple sources (e.g. *Chaetomium abuense*)
+* `interpretive_rules()`: species named in a rule now also match all other names of the same accepted taxon (e.g. 'Clostridium ramosum' for *Thomasclavelia ramosa*), which also updates `intrinsic_resistant`
+* *Erysipelatoclostridium* and its species are now synonyms of *Thomasclavelia*; *E. merdavium* is retired
+* Taxonomy: names that a source lists twice now take the correct record (e.g. *Eggerthella lenta*, *Gordonia amarae* and *Anisakis simplex* were synonyms without a current name)
+* Taxonomy: synonyms without a current name are linked via LPSN or removed, with their codes retired; the *M. tuberculosis* complex is always kept
+* Taxonomy: consistent higher taxonomy and parent records, and data sets refer only to current names (except `intrinsic_resistant`)
 
 ### Updated
 * `top_n_microorganisms()`: new `property_for_each` argument for sub-grouping within top *n* groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed `property = NULL` not being accepted; inner filter now tracks original row indices to prevent cross-group contamination
-* Taxonomic update for all microorganisms, now updated to June 2026
+* Taxonomic update for all microorganisms, now updated to COL 2026-04-18 XR, LPSN and BacDive of October 2026, and MycoBank of January 2026
 * `mo_kingdom()` now returns the formal taxonomic kingdom; a one-time note per session explains the change when querying bacterial or archaeal records.
 * `mo_taxonomy()` and `mo_info()` gained `domain` for the list output
 * `antibiogram()` and `wisca()` now also support parallel computing via the argument `parallel = TRUE` (#281)

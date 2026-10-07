@@ -413,6 +413,13 @@ interpretive_rules <- function(x,
     result <- result[spaces < 3]
     return(paste0(unique(result), collapse = ", "))
   }
+  # the accepted taxa of literal organism names in a rule, e.g. Thomasclavelia ramosa for 'Clostridium ramosum'
+  add_MO_lookup_to_AMR_env()
+  fullnames_lower <- tolower(AMR_env$MO_lookup$fullname)
+  names_to_accepted_mo <- function(mo_names) {
+    mo <- AMR_env$MO_lookup$mo[which(fullnames_lower %in% tolower(mo_names))]
+    synonym_mo_to_accepted_mo(mo, fill_in_accepted = TRUE)
+  }
 
   # Preparing the data ------------------------------------------------------
 
@@ -461,6 +468,8 @@ interpretive_rules <- function(x,
   x <- left_join_microorganisms(x, by = col_mo, suffix = c("_oldcols", ""))
   x$gramstain <- mo_gramstain(x[, col_mo, drop = TRUE], language = NULL, info = FALSE)
   x$genus_species <- trimws(paste(x$genus, x$species))
+  # the accepted name of each organism, so that a rule can name it by any of its synonyms (see 'Get rule from file')
+  x$`.mo_accepted` <- synonym_mo_to_accepted_mo(as.character(x[, col_mo, drop = TRUE]), fill_in_accepted = TRUE)
   if (isTRUE(info) && NROW(x.bak) > 10000) {
     message_("OK.", as_note = FALSE)
   }
@@ -802,6 +811,16 @@ interpretive_rules <- function(x,
       mo_value <- expand_groups(mo_value)
     }
 
+    # Organisms match by the names in the data. Species-level rules with literal names also match by the accepted
+    # taxon, so that the rule and the data may use different names of it (e.g. 'Clostridium ramosum' in a rule, while
+    # its accepted name is Thomasclavelia ramosa). Not for genera, as a former genus also contains species that now
+    # belong to other genera (e.g. Pseudomonas maltophilia), and not for regular expressions, as these would then also
+    # match synonyms they were written to exclude (e.g. Klebsiella mobilis for '^Klebsiella(?! aerogenes)').
+    accepted_mo_of_rule <- NULL
+    if (like_is_one_of %in% c("is", "one_of") && if_mo_property %in% c("genus_species", "fullname")) {
+      accepted_mo_of_rule <- names_to_accepted_mo(trimws(strsplit(mo_value, ",", fixed = TRUE)[[1]]))
+    }
+
     if (like_is_one_of == "is") {
       # so e.g. 'Enterococcus' will turn into '^Enterococcus$'
       mo_value <- paste0("^", mo_value, "$")
@@ -818,10 +837,16 @@ interpretive_rules <- function(x,
       stop("invalid value for column {.field like.is.one_of}", call. = FALSE)
     }
 
+    mo_match <- tryCatch(
+      x[, if_mo_property, drop = TRUE] %like% mo_value | x$fullname %like% mo_value,
+      error = function(e) rep(FALSE, nrow(x))
+    )
+    if (!is.null(accepted_mo_of_rule)) {
+      mo_match <- mo_match | x$`.mo_accepted` %in% accepted_mo_of_rule
+    }
+
     if (is.na(source_antibiotics)) {
-      rows <- tryCatch(which(x[, if_mo_property, drop = TRUE] %like% mo_value | x$fullname %like% mo_value),
-        error = function(e) integer(0)
-      )
+      rows <- which(mo_match)
     } else {
       source_antibiotics <- get_ab_from_namespace(source_antibiotics, cols_ab)
       if (length(source_value) == 1 && length(source_antibiotics) > 1) {
@@ -831,13 +856,13 @@ interpretive_rules <- function(x,
         rows <- integer(0)
       } else if (length(source_antibiotics) == 1) {
         rows <- tryCatch(
-          which((x[, if_mo_property, drop = TRUE] %like% mo_value | x$fullname %like% mo_value) &
+          which(mo_match &
             as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
           error = function(e) integer(0)
         )
       } else if (length(source_antibiotics) == 2) {
         rows <- tryCatch(
-          which((x[, if_mo_property, drop = TRUE] %like% mo_value | x$fullname %like% mo_value) &
+          which(mo_match &
             as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L] &
             as.sir_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
           error = function(e) integer(0)
