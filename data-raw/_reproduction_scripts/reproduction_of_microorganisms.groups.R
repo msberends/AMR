@@ -36,6 +36,13 @@ library(readr)
 library(tidyr)
 devtools::load_all()
 
+# group members that are selected from the microorganisms data set (by genus, code or the internal lists below) are
+# only taken from the current names: a synonym record would otherwise bring in another organism once it is replaced
+# by its current name, e.g. 'Haemophilus vaginalis' (Gardnerella vaginalis) in HACEK, or 'Staphylococcus roterodami'
+# (Staphylococcus aureus) in CoPS (decision by Matthijs S. Berends, 7 October 2026: only current names)
+mo_current_only <- microorganisms %>% filter(status != "synonym")
+current_only <- function(mo) mo[as.character(mo) %in% as.character(mo_current_only$mo)]
+
 # BACTERIAL COMPLEXES
 # find all bacterial complex in the NCBI Taxonomy Browser here:
 # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Undef&id=2&lvl=6&lin=f&keep=1&srchmode=1&unlock
@@ -90,69 +97,73 @@ microorganisms.groups <- whonet_organisms %>%
   filter(!is.na(SPECIES_GROUP), SPECIES_GROUP != ORGANISM_CODE) %>%
   transmute(
     mo_group = as.mo(SPECIES_GROUP),
-    mo = ifelse(is.na(mo),
-      as.character(as.mo(ORGANISM, keep_synonyms = TRUE, minimum_matching_score = 0)),
-      mo
+    # (as <mo>, so that the rows below can be bound to it)
+    mo = as.mo(
+      ifelse(is.na(mo),
+        as.character(as.mo(ORGANISM, keep_synonyms = TRUE, minimum_matching_score = 0)),
+        mo
+      ),
+      keep_synonyms = TRUE
     )
   ) %>%
   # add our own CoNS and CoPS, WHONET does not strictly follow Becker et al. (2014, 2019, 2020)
   filter(mo_group != as.mo("CoNS")) %>%
-  bind_rows(tibble(mo_group = as.mo("CoNS"), mo = MO_CONS)) %>%
+  bind_rows(tibble(mo_group = as.mo("CoNS"), mo = current_only(MO_CONS))) %>%
   filter(mo_group != as.mo("CoPS")) %>%
-  bind_rows(tibble(mo_group = as.mo("CoPS"), mo = MO_COPS)) %>%
+  bind_rows(tibble(mo_group = as.mo("CoPS"), mo = current_only(MO_COPS))) %>%
   # at least all our Lancefield-grouped streptococci must be in the beta-haemolytic group:
   bind_rows(tibble(
     mo_group = as.mo("Beta-haemolytic streptococcus"),
     mo = c(
-      MO_LANCEFIELD,
-      microorganisms %>% filter(fullname %like% "^Streptococcus Group") %>% pull(mo)
+      current_only(MO_LANCEFIELD),
+      mo_current_only %>% filter(fullname %like% "^Streptococcus Group") %>% pull(mo)
     )
   )) %>%
   # and per Streptococcus group as well:
   # group A - S. pyogenes
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group A"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_PYGN(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_PYGN(_|$)")]
   )) %>%
   # group B - S. agalactiae
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group B"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_AGLC(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_AGLC(_|$)")]
   )) %>%
   # group C - all subspecies within S. dysgalactiae and S. equi (such as S. equi zooepidemicus)
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group C"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(DYSG|EQUI)(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_(DYSG|EQUI)(_|$)")]
   )) %>%
   # group F - Milleri group == S. anginosus group, which incl. S. anginosus, S. constellatus, S. intermedius
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group F"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(ANGN|CNST|INTR)(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_(ANGN|CNST|INTR)(_|$)")]
   )) %>%
   # group G - S. dysgalactiae and S. canis (though dysgalactiae is also group C and will be matched there)
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group G"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(DYSG|CANS)(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_(DYSG|CANS)(_|$)")]
   )) %>%
   # group H - S. sanguinis
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group H"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_SNGN(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_SNGN(_|$)")]
   )) %>%
   # group K - S. salivarius, incl. S. salivarius salivariuss and S. salivarius thermophilus
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group K"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_SLVR(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_SLVR(_|$)")]
   )) %>%
   # group L - only S. dysgalactiae
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group L"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_DYSG(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_DYSG(_|$)")]
   )) %>%
   # and for EUCAST: Strep group A, B, C, G
   bind_rows(tibble(
     mo_group = as.mo("Streptococcus Group A, B, C, G"),
-    mo = microorganisms$mo[which(microorganisms$mo %like% "^B_STRPT_(PYGN|AGLC|DYSG|EQUI|CANS|GRPA|GRPB|GRPC|GRPG)(_|$)")]
+    mo = mo_current_only$mo[which(mo_current_only$mo %like% "^B_STRPT_(PYGN|AGLC|DYSG|EQUI|CANS|GRPA|GRPB|GRPC|GRPG)(_|$)")]
   )) %>%
   # HACEK is:
   # - Haemophilus species
@@ -163,11 +174,11 @@ microorganisms.groups <- whonet_organisms %>%
   # - and previously Actinobacillus actinomycetemcomitans
   # see https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3656887/
   filter(mo_group != as.mo("HACEK")) %>%
-  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Haemophilus") %>% pull(mo))) %>%
-  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Aggregatibacter") %>% pull(mo))) %>%
+  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = mo_current_only %>% filter(genus == "Haemophilus") %>% pull(mo))) %>%
+  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = mo_current_only %>% filter(genus == "Aggregatibacter") %>% pull(mo))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = as.mo("Cardiobacterium hominis", keep_synonyms = TRUE))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = as.mo("Eikenella corrodens", keep_synonyms = TRUE))) %>%
-  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = microorganisms %>% filter(genus == "Kingella") %>% pull(mo))) %>%
+  bind_rows(tibble(mo_group = as.mo("HACEK"), mo = mo_current_only %>% filter(genus == "Kingella") %>% pull(mo))) %>%
   bind_rows(tibble(mo_group = as.mo("HACEK"), mo = as.mo("Actinobacillus actinomycetemcomitans", keep_synonyms = TRUE))) %>%
   # Citrobacter freundii complex in the NCBI Taxonomy Browser:
   # https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1344959
@@ -203,11 +214,22 @@ for (group in unique(microorganisms.groups$mo_group)) {
     pull(mo) %>%
     paste0(collapse = "|") %>%
     paste0("^(", ., ")")
-  mos <- microorganisms %>%
+  mos <- mo_current_only %>%
     filter(mo %like% spp & rank == "subspecies") %>%
     pull(mo)
   # add them
   microorganisms.groups <- microorganisms.groups %>% bind_rows(tibble(mo_group = as.mo(group), mo = mos))
+}
+
+# only current names (decision by Matthijs S. Berends, 7 October 2026): WHONET and the lists above can contain outdated
+# names, these are replaced by their current name (duplicates are removed below)
+microorganisms.groups <- microorganisms.groups %>%
+  mutate(
+    mo_group = synonym_mo_to_accepted_mo(as.character(mo_group), fill_in_accepted = TRUE),
+    mo = synonym_mo_to_accepted_mo(as.character(mo), fill_in_accepted = TRUE)
+  )
+if (anyNA(microorganisms.groups$mo) || anyNA(microorganisms.groups$mo_group)) {
+  stop("microorganisms.groups contains codes that are not in the microorganisms data set", call. = FALSE)
 }
 
 # add full names, arrange and clean

@@ -3,9 +3,9 @@
 \docType{data}
 \name{microorganisms}
 \alias{microorganisms}
-\title{Data Set with 107 252 Taxonomic Records of Microorganisms}
+\title{Data Set with 103 809 Taxonomic Records of Microorganisms}
 \format{
-A \link[tibble:tibble]{tibble} with 107 252 observations and 28 variables:
+A \link[tibble:tibble]{tibble} with 103 809 observations and 28 variables:
 \itemize{
 \item \code{mo}\cr ID of microorganism as used by this package. \emph{\strong{This is a unique identifier.}}
 \item \code{fullname}\cr Full name, like \code{"Escherichia coli"}. For the taxonomic ranks genus, species and subspecies, this is the 'pasted' text of genus, species, and subspecies. For all taxonomic ranks higher than genus, this is the name of the taxon. \emph{\strong{This is a unique identifier.}}
@@ -13,16 +13,16 @@ A \link[tibble:tibble]{tibble} with 107 252 observations and 28 variables:
 \item \code{domain}, \code{kingdom}, \code{phylum}, \code{class}, \code{order}, \code{family}, \code{genus}, \code{species}, \code{subspecies}\cr Taxonomic rank of the microorganism. Note that for fungi, \emph{phylum} is used for their taxonomic \emph{division}. Also, for fungi, \emph{subkingdom} and \emph{subdivision} were left out since they do not occur in the bacterial taxonomy. For all species outside the domains of Bacteria and Archaea, the \code{domain} and \code{kingdom} are identical.
 \item \code{rank}\cr Text of the taxonomic rank of the microorganism, such as \code{"species"} or \code{"genus"}
 \item \code{ref}\cr Abbreviated authority citation for the nomenclatural act that established the current name combination, following ICNP conventions. For species described in their current genus (\emph{sp. nov.}), this is the original description author(s) and year. For species transferred to a different genus (\emph{comb. nov.}), this is the reclassification author(s) and year. Emendations are excluded. For synonyms, this is the authority under which the synonym was originally published. This field is directly retrieved from the source specified in the column \code{source}. Diacritics were removed to comply with CRAN, that only allows ASCII characters.
-\item \code{oxygen_tolerance} \cr Oxygen tolerance, either \code{"aerobe"}, \code{"anaerobe"}, \code{"anaerobe/microaerophile"}, \code{"facultative anaerobe"}, \code{"likely facultative anaerobe"}, \code{"microaerophile"}, or NA. These data were retrieved from BacDive (see \emph{Source}). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 59.3\% of all ~48 000 bacteria in the data set contain an oxygen tolerance.
-\item \code{morphology} \cr Morphology (cell shape), either \code{"cocci"}, \code{"coccobacilli"}, \code{"filamentous"}, \code{"likely cocci"}, \code{"likely coccobacilli"}, \code{"likely filamentous"}, \code{"likely rods"}, \code{"likely spirilla"}, \code{"rods"}, \code{"spirilla"}, or NA. These data were retrieved from BacDive (see \emph{Source}). Genera that are clinically established as coccobacilli (the HACEK group and beyond, such as \emph{Haemophilus} and \emph{Acinetobacter}) are classified as such regardless of BacDive majority vote. Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus. Currently 57.2\% of all ~48 000 bacteria in the data set contain a morphology.
+\item \code{oxygen_tolerance} \cr Oxygen tolerance, either \code{"aerobe"}, \code{"anaerobe"}, \code{"anaerobe/microaerophile"}, \code{"facultative anaerobe"}, \code{"likely facultative anaerobe"}, \code{"microaerophile"}, or NA. These data were retrieved from BacDive (see \emph{Source}). Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. Currently 59.5\% of all ~48 000 bacteria in the data set contain an oxygen tolerance.
+\item \code{morphology} \cr Morphology (cell shape), either \code{"cocci"}, \code{"coccobacilli"}, \code{"filamentous"}, \code{"likely cocci"}, \code{"likely coccobacilli"}, \code{"likely filamentous"}, \code{"likely rods"}, \code{"likely spirilla"}, \code{"rods"}, \code{"spirilla"}, or NA. These data were retrieved from BacDive (see \emph{Source}). Genera that are clinically established as coccobacilli (the HACEK group and beyond, such as \emph{Haemophilus} and \emph{Acinetobacter}) are classified as such regardless of BacDive majority vote. Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus. Currently 57.4\% of all ~48 000 bacteria in the data set contain a morphology.
 \item \code{source}\cr Either \code{"GBIF"}, \code{"LPSN"}, \code{"MycoBank"}, or \code{"manually added"} (see \emph{Source})
-\item \code{lpsn}\cr Identifier ('Record number') of List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set. \emph{\strong{This is a unique identifier}}, though available for only ~36 000 records.
+\item \code{lpsn}\cr Identifier ('Record number') of List of Prokaryotic names with Standing in Nomenclature (LPSN). This will be the first/highest LPSN identifier to keep one identifier per row. For example, \emph{Acetobacter ascendens} has LPSN Record number 7864 and 11011. Only the first is available in the \code{microorganisms} data set. \emph{\strong{This is a unique identifier}}, though available for only ~37 000 records.
 \item \code{lpsn_parent}\cr LPSN identifier of the parent taxon
 \item \code{lpsn_renamed_to}\cr LPSN identifier of the currently valid taxon
 \item \code{mycobank}\cr Identifier ('MycoBank #') of MycoBank. \emph{\strong{This is a unique identifier}}, though available for only ~25 000 records.
 \item \code{mycobank_parent}\cr MycoBank identifier of the parent taxon
 \item \code{mycobank_renamed_to}\cr MycoBank identifier of the currently valid taxon
-\item \code{gbif}\cr Identifier ('taxonID') of Global Biodiversity Information Facility (GBIF), via Catalogue of Life (COL). \emph{\strong{This is a unique identifier}}, though available for only ~81 000 records.
+\item \code{gbif}\cr Identifier ('taxonID') of Global Biodiversity Information Facility (GBIF), via Catalogue of Life (COL). \emph{\strong{This is a unique identifier}}, though available for only ~79 000 records.
 \item \code{gbif_parent}\cr GBIF identifier of the parent taxon
 \item \code{gbif_renamed_to}\cr GBIF identifier of the currently valid taxon
 \item \code{prevalence}\cr Prevalence of the microorganism based on Bartlett \emph{et al.} (2022, \doi{10.1099/mic.0.001269}), see \code{\link[=mo_matching_score]{mo_matching_score()}} for the full explanation
@@ -47,10 +47,10 @@ For example, \emph{Staphylococcus pettenkoferi} was described for the first time
 Included taxonomic data from \href{https://lpsn.dsmz.de}{LPSN}, \href{https://www.mycobank.org}{MycoBank}, and \href{https://www.gbif.org}{GBIF} are:
 \itemize{
 \item All ~48 000 (sub)species from the domains of Archaea and Bacteria
-\item ~47 000 species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
-\item ~7 000 (sub)species from the kingdom of Protozoa
-\item ~2 600 (sub)species from ~130 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
-\item All ~37 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
+\item ~46 000 species from the kingdom of Fungi. The kingdom of Fungi is a very large taxon with almost 300,000 different (sub)species, of which most are not microbial (but rather macroscopic, like mushrooms). Because of this, not all fungi fit the scope of this package. Only relevant fungi are covered (such as all species of \emph{Aspergillus}, \emph{Candida}, \emph{Cryptococcus}, \emph{Histoplasma}, \emph{Pneumocystis}, \emph{Saccharomyces} and \emph{Trichophyton}).
+\item ~5 300 (sub)species from the kingdom of Protozoa
+\item ~3 100 (sub)species from ~150 other relevant genera from the kingdom of Animalia (such as \emph{Strongyloides} and \emph{Taenia})
+\item All ~34 000 previously accepted names of all included (sub)species (these were taxonomically renamed)
 \item The complete taxonomic tree of all included (sub)species: from domain to subspecies
 \item The identifier of the parent taxons
 \item The year and first author of the related scientific publication

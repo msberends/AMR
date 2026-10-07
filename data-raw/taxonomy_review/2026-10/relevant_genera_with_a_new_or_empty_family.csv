@@ -47,11 +47,11 @@
 "Discomyces","Fungi","","","","","MycoBank","accepted",
 "Disporotrichum","Fungi","Basidiomycota","Agaricomycetes","Agaricales","","MycoBank","accepted",
 "Ductifera","Fungi","Basidiomycota","Agaricomycetes","Auriculariales","","GBIF","accepted",
-"Emericella","Fungi","Ascomycota","Eurotiomycetes","Eurotiales","Trichocomaceae","MycoBank","accepted","Aspergillaceae"
 "Eutorula","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","","MycoBank","accepted",
 "Fenollaria","Bacteria","Bacillota","Clostridia","Eubacteriales","","LPSN","accepted",""
 "Foveostroma","Fungi","Ascomycota","","","","MycoBank","accepted",
 "Fumago","Fungi","Ascomycota","","","","MycoBank","accepted",
+"Fusaria","Animalia","Nematoda","Chromadorea","Rhabditida","","GBIF","synonym",
 "Geohypha","Fungi","Ascomycota","Ascomycetes","","","MycoBank","accepted",
 "Gerulajacta","Fungi","Ascomycota","","","","MycoBank","accepted",
 "Gibellulopsis","Fungi","Ascomycota","Sordariomycetes","Trichosphaeriales","Trichosphaeriaceae","MycoBank","accepted","Plectosphaerellaceae"
@@ -74,7 +74,8 @@
 "Inapertisporites","Fungi","Fossil Fungi","","","","MycoBank","accepted",
 "Indiella","Fungi","Ascomycota","Sordariomycetes","Sordariales","","MycoBank","accepted",
 "Infrafungus","Fungi","Ascomycota","","","","MycoBank","accepted",
-"Kabatana","Fungi","Chytridiopsidomycota","Microsporea","","","GBIF","accepted",""
+"Kabatana","Fungi","Microsporidia","Microsporea","","","GBIF","accepted",""
+"Kendrickiella","Fungi","Ascomycota","Eurotiomycetes","Eurotiales","","GBIF","accepted",
 "Komagataella","Fungi","Ascomycota","Pichiomycetes","Pichiales","Pichiaceae","MycoBank","accepted","Saccharomycetaceae"
 "Kregervanrija","Fungi","Ascomycota","Pichiomycetes","Pichiales","Pichiaceae","MycoBank","accepted","Saccharomycetaceae"
 "Kuraishia","Fungi","Ascomycota","Pichiomycetes","Pichiales","Pichiaceae","MycoBank","accepted","Saccharomycetaceae"
@@ -90,7 +91,7 @@
 "Marssonina","Fungi","Ascomycota","Leotiomycetes","Helotiales","Dermateaceae","MycoBank","accepted","Drepanopezizaceae"
 "Martiniozyma","Fungi","Ascomycota","Pichiomycetes","Pichiales","Pichiaceae","MycoBank","accepted","Saccharomycetaceae"
 "Microdiscus","Fungi","Ascomycota","Leotiomycetes","Helotiales","","GBIF","accepted",
-"Microsporidium","Fungi","Chytridiopsidomycota","Microsporea","","","GBIF","accepted",""
+"Microsporidium","Fungi","Microsporidia","Microsporea","","","GBIF","accepted",""
 "Microvirgula","Bacteria","Pseudomonadota","Betaproteobacteria","Neisseriales","Aquaspirillaceae","LPSN","accepted","Chromobacteriaceae"
 "Monosporium","Fungi","Ascomycota","","","","MycoBank","accepted",
 "Mrakiella","Fungi","Basidiomycota","Tremellomycetes","Cystofilobasidiales","","MycoBank","accepted",

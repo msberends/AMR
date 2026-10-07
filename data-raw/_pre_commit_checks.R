@@ -164,6 +164,14 @@ pre_commit_lst$MO_STREP_ABCG <- microorganisms$mo[which(microorganisms$genus == 
     "group a", "group b", "group c", "group g"
   ))]
 pre_commit_lst$MO_LANCEFIELD <- microorganisms$mo[which(microorganisms$mo %like% "^(B_STRPT_PYGN(_|$)|B_STRPT_AGLC(_|$)|B_STRPT_(DYSG|EQUI)(_|$)|B_STRPT_ANGN(_|$)|B_STRPT_(DYSG|CANS)(_|$)|B_STRPT_SNGN(_|$)|B_STRPT_SLVR(_|$))")]
+# a synonym only belongs to these lists if its current name does as well (decision by Matthijs S. Berends, 7 October
+# 2026), e.g. not Staphylococcus caseolyticus (now Macrococcus caseolyticus) in CoNS, nor Staphylococcus roterodami
+# (now Staphylococcus aureus) in CoPS
+for (lst in c("MO_CONS", "MO_COPS", "MO_STREP_ABCG", "MO_LANCEFIELD")) {
+  current <- AMR:::synonym_mo_to_accepted_mo(as.character(pre_commit_lst[[lst]]))
+  pre_commit_lst[[lst]] <- pre_commit_lst[[lst]][is.na(current) | current %in% as.character(pre_commit_lst[[lst]])]
+}
+rm(lst, current)
 pre_commit_lst$MO_WHO_PRIORITY_GENERA <- c(
   # World Health Organization's (WHO) Priority Pathogen List (some are from the group Enterobacteriaceae)
   "Acinetobacter",
@@ -377,7 +385,6 @@ pre_commit_lst$MO_RELEVANT_GENERA <- c(
   "Syngamus",
   "Taenia",
   "Talaromyces",
-  "Teleomorph",
   "Toxocara",
   "Toxoplasma",
   "Trichinella",

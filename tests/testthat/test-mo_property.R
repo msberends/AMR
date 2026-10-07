@@ -97,7 +97,8 @@ test_that("test-mo_property.R", {
     "domain", "kingdom", "phylum", "class", "order",
     "family", "genus", "species", "subspecies"
   ))
-  expect_equal(mo_synonyms("Escherichia coli"), NULL)
+  # (since the taxonomy update of October 2026, LPSN's basionym Bacillus coli is linked to E. coli)
+  expect_true("Bacillus coli" %in% mo_synonyms("Escherichia coli"))
   expect_true(length(mo_synonyms("Candida albicans")) > 1)
   expect_inherits(mo_synonyms(c("Candida albicans", "Escherichia coli")), "list")
   expect_equal(names(mo_info("Escherichia coli")), c(

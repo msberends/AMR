@@ -18,7 +18,7 @@
 "Morganella","Fungi","Bacteria","MycoBank",27
 "Centipeda","Plantae","Bacteria","GBIF",22
 "Lycoperdon","Protozoa","Fungi","GBIF",20
-"Capillaria","Fungi","Animalia","GBIF",15
+"Capillaria","Fungi","Animalia","GBIF",16
 "Coxiella","Animalia","Bacteria","GBIF",13
 "Hymenolepis","Plantae","Animalia","GBIF",13
 "Polycystis","Fungi","Bacteria","GBIF",13
@@ -27,7 +27,6 @@
 "Micrococcus","Animalia","Bacteria","GBIF",12
 "Morganella","Animalia","Bacteria","GBIF",12
 "Mucor","Protozoa","Fungi","GBIF",12
-"Brachycladium","Animalia","Fungi","GBIF",11
 "Lawsonia","Plantae","Bacteria","GBIF",11
 "Proteus","Animalia","Bacteria","GBIF",11
 "Nectria","Animalia","Fungi","GBIF",10
@@ -37,11 +36,11 @@
 "Edwardsiella","Animalia","Bacteria","GBIF",7
 "Moorella","Animalia","Bacteria","GBIF",7
 "Oligella","Animalia","Bacteria","GBIF",7
-"Phytomonas","Bacteria","Protozoa","GBIF",7
 "Amoebophilus","Fungi","Bacteria","GBIF",6
 "Eremococcus","Animalia","Bacteria","GBIF",6
 "Leptochaete","Fungi","Bacteria","GBIF",6
 "Moorella","Fungi","Bacteria","MycoBank",6
+"Necator","Fungi","Animalia","GBIF",6
 "Rothia","Plantae","Bacteria","GBIF",6
 "Schineria","Animalia","Bacteria","GBIF",6
 "Wolinella","Animalia","Bacteria","GBIF",6
@@ -49,13 +48,11 @@
 "Metschnikowia","Animalia","Fungi","GBIF",5
 "Micrococcus","Fungi","Bacteria","MycoBank",5
 "Micromonas","Plantae","Bacteria","GBIF",5
-"Necator","Fungi","Animalia","GBIF",5
 "Tieghemella","Plantae","Fungi","GBIF",5
+"Tremblaya","Animalia","Bacteria","GBIF",5
 "Circinella","Chromista","Fungi","GBIF",4
-"Fergusonia","Plantae","Animalia","GBIF",4
 "Geochorda","Plantae","Bacteria","GBIF",4
 "Polymorphum","Fungi","Bacteria","GBIF",4
-"Ascophora","Animalia","Fungi","GBIF",3
 "Brachyspira","Animalia","Bacteria","GBIF",3
 "Bryantella","Animalia","Bacteria","GBIF",3
 "Chainia","Fungi","Bacteria","MycoBank",3
@@ -69,14 +66,13 @@
 "Pirella","Fungi","Bacteria","MycoBank",3
 "Rozella","Protozoa","Fungi","GBIF",3
 "Stigmatella","Fungi","Bacteria","GBIF",3
-"Streptothrix","Bacteria","Fungi","GBIF",3
+"Trichocephalus","Plantae","Animalia","GBIF",3
 "Yersinia","Animalia","Bacteria","GBIF",3
 "Absidia","Animalia","Fungi","GBIF",2
 "Advenella","Chromista","Bacteria","GBIF",2
 "Ampullariella","Animalia","Bacteria","GBIF",2
 "Bergeriella","Chromista","Bacteria","GBIF",2
 "Bipolaris","Plantae","Fungi","GBIF",2
-"Byssus","Fungi","Protozoa","MycoBank",2
 "Clavaria","Protozoa","Fungi","GBIF",2
 "Coenonia","Protozoa","Bacteria","GBIF",2
 "Coleospora","Fungi","Protozoa","GBIF",2
@@ -111,7 +107,6 @@
 "Vibrio","Chromista","Bacteria","GBIF",2
 "Wangiella","Chromista","Fungi","GBIF",2
 "Yania","Animalia","Bacteria","GBIF",2
-"Actinomycodium","Bacteria","Fungi","GBIF",1
 "Amphitrite","Animalia","Fungi","GBIF",1
 "Angularia","Protozoa","Fungi","GBIF",1
 "Asanoa","Animalia","Bacteria","GBIF",1
@@ -119,7 +114,6 @@
 "Barnesiella","Protozoa","Bacteria","GBIF",1
 "Bowdenia","Animalia","Bacteria","GBIF",1
 "Brachymonas","Protozoa","Bacteria","GBIF",1
-"Capillaria","Fungi","Animalia","MycoBank",1
 "Catinella","Fungi","Bacteria","GBIF",1
 "Clathrus","Protozoa","Fungi","GBIF",1
 "Copromonas","Protozoa","Bacteria","GBIF",1
@@ -133,6 +127,7 @@
 "Ewingella","Animalia","Bacteria","GBIF",1
 "Ewingella","Chromista","Bacteria","GBIF",1
 "Halocella","Chromista","Bacteria","GBIF",1
+"Hamiltonella","Animalia","Bacteria","GBIF",1
 "Holzapfelia","Animalia","Bacteria","GBIF",1
 "Hymenobolus","Protozoa","Fungi","GBIF",1
 "Isaria","Protozoa","Fungi","GBIF",1
@@ -141,7 +136,6 @@
 "Macrococcus","Animalia","Bacteria","GBIF",1
 "Megasphaera","Protozoa","Bacteria","GBIF",1
 "Microcystis","Protozoa","Bacteria","GBIF",1
-"Necator","Fungi","Animalia","MycoBank",1
 "Nephridiophaga","Protozoa","Fungi","GBIF",1
 "Nicolia","Animalia","Bacteria","GBIF",1
 "Nidularia","Protozoa","Fungi","GBIF",1

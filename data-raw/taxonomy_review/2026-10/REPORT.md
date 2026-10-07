@@ -325,3 +325,67 @@ Other files:
 - [x] **Scope decisions of 5 October 2026** (implemented as script changes 16 to 21): COL XR names only if clinically
   relevant or released before (40,897 fewer COL records), Protozoa with the relevance rules of the Fungi, fungal synonyms
   kept, lichens removed, microsporidia in the Fungi
+
+## 6. Second round (6 and 7 October 2026)
+
+Reason: `synonyms_without_a_current_name.csv` was not empty while all tests passed. LPSN showed that e.g. *Eggerthella
+lenta*, *Gordonia amarae*, *Budvicia aquatica* and *Burkholderia pyrrocinia* are correct names (and COL has *Anisakis
+simplex* and *Enterobius vermicularis* as accepted), while this build had them as synonyms without a current name.
+
+### Script changes
+
+- [x] **Cause (22)**: a source can have the same name twice (LPSN: the correct name and an illegitimate homotypic
+  synonym with the same spelling; COL: an accepted name with a subgenus, e.g. *Enterobius (Enterobius) vermicularis*,
+  next to the synonym *Enterobius vermicularis*). The record with the lowest identifier was kept, now the accepted
+  one, and links to the dropped record move to the kept one (`one_record_per_name()`). LPSN: 34 dangling links to 0
+- [x] **LPSN lookup (23)**: `get_lpsn_and_author()` read only the nomenclatural status, so a validly published
+  synonym (e.g. *Eubacterium lentum*) became 'accepted'; it now also reads the taxonomic status and the correct name,
+  and `apply_lpsn_result()` links such a synonym. Subspecies URLs fixed. The LPSN cache was renewed for this
+- [x] **Synonyms without a current name (24, decision of 7 October)**: prokaryotes are looked up in LPSN (linked,
+  accepted, or not validly published and then only kept if protected); all others are removed and their released
+  codes retired with the reason. Records with children that are kept become 'unknown'. Outcome: 3,827 records, 3,691
+  removed, 123 'unknown', 13 kept; 3,668 codes retired, see [CSV](synonyms_without_a_current_name_and_their_outcome.csv)
+- [x] **_M. tuberculosis_ complex protected (25, decision of 7 October)**: also *M. canettii* and *M. orygis* (LPSN:
+  preferred names, not validly published) are kept, as accepted
+- [x] **Subspecies codes reserved (26)**: registered subspecies codes were not reserved, so a removed subspecies could
+  pass its code to another spelling (*Candida melibiosi membranaefaciens*); now as for genera and species
+- [x] **Childless genera (27)**: a genus that is the current name of a synonym is kept (*Monotosporella*)
+- [x] **Missing parent records (28)**: a referenced family, order, class or phylum is added or moved to the domain of
+  its members (*Plasmodiidae* from Chromista to Protozoa), see [CSV](missing_parent_records_that_were_added_or_moved.csv)
+- [x] **Higher taxonomy harmonised (29)**: every record takes its higher taxonomy from its parent record, outdated
+  parent names are replaced by their current name (5,287 records), see
+  [CSV](records_whose_higher_taxonomy_was_harmonised_with_the_record_of_their_parent.csv)
+- [x] **Shared identifiers (30)**: records of the same domain and rank with the same identifier become one taxon (the
+  name in a current source, else the spelling LPSN knows, else alphabetical: 14 marked NEEDS REVIEW); records of
+  another domain or rank only lose the identifier (GBIF 439 was both *Septobasidiales* and the nematode order
+  *Strongylida*), see [CSV](records_that_shared_a_source_identifier_one_kept_as_the_current_name.csv)
+- [x] **Pointers (31)**: only synonyms have a 'renamed to' identifier (1,734 MycoBank-accepted records kept a COL
+  pointer), parent identifiers to the record itself or to a lower rank are removed
+- [x] **Current names in data sets (32, decision of 7 October)**: `microorganisms.codes`, `clinical_breakpoints`,
+  `example_isolates` and `microorganisms.groups` refer only to current names (`intrinsic_resistant` lists synonyms on
+  purpose); the groups script takes group members only from current names (otherwise e.g. *Gardnerella vaginalis*
+  entered HACEK as 'Haemophilus vaginalis', and *S. aureus* entered CoPS as '*S. roterodami*'); `MO_CONS`, `MO_COPS`,
+  `MO_STREP_ABCG` and `MO_LANCEFIELD` keep a synonym only if its current name is in the list too; 'Teleomorph' removed
+  from `MO_RELEVANT_GENERA`
+- [x] **Tests**: 28 new blocks in `tests/testthat/test-data.R` (synonyms, pointers, identifiers, parents, hierarchy,
+  names, sources, clinically important names and higher taxa with their domain, outdated names, regressions, current
+  names in data sets, internal lists, `intrinsic_resistant`, interpretive rules, groups, codes, breakpoints,
+  antimicrobials). On the data before this round they fail on exactly these defects; now `devtools::test()`: 1,581
+  expectations, 0 failures
+
+### Needs a human
+
+- [ ] ***Klebsiella quasivariicola*** (*K. pneumoniae* species complex, LPSN: preferred name, not validly published) is
+  removed and its code retired, as it is not protected; protect it like the *M. tuberculosis* complex? The same holds
+  for *Enterococcus massiliensis*, *Mycobacterium liflandii*, *Pseudomonas aestus* and *Streptococcus periodonticum*
+- [ ] ***M. bovis*, *M. africanum*, *M. caprae*, *M. microti*, *M. pinnipedii*** are synonyms of *M. tuberculosis* in
+  LPSN (Riojas et al. 2018) and therefore no longer separate members of the *M. tuberculosis* complex group; as
+  `as.mo("M. bovis")` gives *M. tuberculosis*, properties of *M. bovis* (such as its intrinsic pyrazinamide resistance)
+  cannot be distinguished from *M. tuberculosis*. Override with `accepted_name_override`?
+- [ ] ***Giardia duodenalis* and *Giardia lamblia*** are both accepted (COL), one species under two names
+- [ ] **Protist groups in more than one domain** (labyrinthulids, the radiolarian Acantharia, *Myxomycetes*): their higher
+  taxa cannot be placed consistently; listed as pending in the hierarchy test
+- [ ] **Spelling chosen alphabetically** for 14 pairs with a shared identifier (e.g. *Phaeospirillum magnetica* over
+  *magneticum*, *Robertmurraya methanolica* over *methanolicus*), see the CSV
+- [ ] ***Ameson michaeli*** (released) is removed and retired, while *A. michaelis* exists: likely the same microsporidian
+- [ ] ***Macrococcus caseolyticus*** is no longer CoNS (also no EUCAST cefoxitin screening row), as it is no staphylococcus
