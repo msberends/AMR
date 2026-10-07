@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9103</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9106</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,7 +172,8 @@
 <p>There are three helper functions that can be run after using the <code>as.mo()</code> function:</p><ul><li><p>Use <code>mo_uncertainties()</code> to get a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> that prints in a pretty format with all taxonomic names that were guessed. The output contains the matching score for all matches (see <em>Matching Score for Microorganisms</em> below).</p></li>
 <li><p>Use <code>mo_failures()</code> to get a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> <a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> with all values that could not be coerced to a valid value.</p></li>
 <li><p>Use <code>mo_renamed()</code> to get a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with all values that could be coerced based on outdated, previously accepted taxonomic names.</p></li>
-</ul></div>
+</ul><p>Results of non-exact input are remembered during the session, so that the same input is not matched again. This only applies to the same settings of <code>minimum_matching_score</code>, <code>only_fungi</code> and <code>cleaning_regex</code>. Use <code>mo_reset_session()</code> to forget these results. They are also forgotten when the taxonomy changes, e.g. after <code><a href="add_custom_microorganisms.html">add_custom_microorganisms()</a></code>.</p>
+</div>
 
 <div class="section">
 <h3 id="for-mycologists">For Mycologists<a class="anchor" aria-label="anchor" href="#for-mycologists"></a></h3>

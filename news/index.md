@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9103
+## AMR 3.0.1.9106
 
 Planned as v3.1.0, mid October 2026.
 
@@ -154,6 +154,18 @@ Planned as v3.1.0, mid October 2026.
   containing “PH” or “TH” (e.g. `ETH`, `PHE`) no longer return `NA` when
   mixed with unrecognised input
   ([\#245](https://github.com/msberends/AMR/issues/245))
+- [`as.ab()`](https://amr-for-r.org/reference/as.ab.md): results of
+  `fast_mode` (used internally) were remembered and reused by later
+  regular calls, which could return `NA` for valid input
+  ([\#313](https://github.com/msberends/AMR/issues/313))
+- [`as.mo()`](https://amr-for-r.org/reference/as.mo.md): previously
+  coerced input was often not recognised again, e.g. for an unknown
+  species of a known genus, so it was matched again on every call
+  ([\#313](https://github.com/msberends/AMR/issues/313))
+- [`ab_reset_session()`](https://amr-for-r.org/reference/as.ab.md) no
+  longer clears the uncertainties of
+  [`as.mo()`](https://amr-for-r.org/reference/as.mo.md)
+  ([\#313](https://github.com/msberends/AMR/issues/313))
 - Combined MIC/SIR input values (e.g. `"<= 0.002; S"` or `"S; 0.002"`)
   now parsed correctly
   ([\#252](https://github.com/msberends/AMR/issues/252))
@@ -211,6 +223,18 @@ Planned as v3.1.0, mid October 2026.
 
 #### Updated
 
+- Faster [`as.ab()`](https://amr-for-r.org/reference/as.ab.md),
+  [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) and all `mo_*()`
+  functions through one consistent session cache design, which is
+  cleared when lookup tables change, e.g. after
+  [`add_custom_microorganisms()`](https://amr-for-r.org/reference/add_custom_microorganisms.md)
+  ([\#313](https://github.com/msberends/AMR/issues/313))
+  - `mo_*()` functions retrieve properties of valid `<mo>` input
+    directly, and only for unique values
+  - The mapping of outdated taxonomic names to their current names is
+    remembered per code
+  - [`mo_uncertainties()`](https://amr-for-r.org/reference/as.mo.md) now
+    also lists uncertainties of previously coerced input
 - [`top_n_microorganisms()`](https://amr-for-r.org/reference/top_n_microorganisms.md):
   new `property_for_each` argument for sub-grouping within top *n*
   groups; rank ordering enforced (only lower taxonomic ranks allowed);

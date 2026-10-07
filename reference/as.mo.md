@@ -245,6 +245,13 @@ There are three helper functions that can be run after using the
   that could be coerced based on outdated, previously accepted taxonomic
   names.
 
+Results of non-exact input are remembered during the session, so that
+the same input is not matched again. This only applies to the same
+settings of `minimum_matching_score`, `only_fungi` and `cleaning_regex`.
+Use `mo_reset_session()` to forget these results. They are also
+forgotten when the taxonomy changes, e.g. after
+[`add_custom_microorganisms()`](https://amr-for-r.org/reference/add_custom_microorganisms.md).
+
 ### For Mycologists
 
 The [matching score

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9103</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9106</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9103" id="amr-3019103">AMR 3.0.1.9103<a class="anchor" aria-label="anchor" href="#amr-3019103"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9106" id="amr-3019106">AMR 3.0.1.9106<a class="anchor" aria-label="anchor" href="#amr-3019106"></a></h2>
 <p>Planned as v3.1.0, mid October 2026.</p>
 <div class="section level4">
-<h4 id="breaking-changes-3-0-1-9103">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9103"></a></h4>
+<h4 id="breaking-changes-3-0-1-9106">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9106"></a></h4>
 <ul><li>
 <p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms with new top-level <em>domains</em> ‘Bacteria’ and ‘Archaea’ (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column in the <code>microorganisms</code> data set was added, and more importantly, <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g. <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
 <table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
@@ -106,7 +106,7 @@
 <li><p><code><a href="../reference/as.mo.html">as.mo()</a></code> no longer guesses unknown MO codes (these become <code>NA</code> with a warning), and MO codes from versions before v2.0.0 are no longer supported</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9103">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9103"></a></h4>
+<h4 id="new-3-0-1-9106">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9106"></a></h4>
 <ul><li>EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the <code>clinical_breakpoints</code> data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations</li>
 <li>Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
 <ul><li>
@@ -130,7 +130,7 @@
 <li>A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixed-3-0-1-9103">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9103"></a></h4>
+<h4 id="fixed-3-0-1-9106">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9106"></a></h4>
 <ul><li>
 <code><a href="../reference/as.mo.html">as.mo()</a></code> returned <em>Salmonella bongori</em> or another subspecies for <em>Salmonella</em> serovars written with the species, such as “Salmonella enterica serovar Typhi”</li>
 <li>EUCAST breakpoint rules for <em>Aerococcus</em> (v12 onwards) were never applied, and <em>Pasteurella</em> rules were partly filed under <em>Neisseria meningitidis</em> (<a href="https://github.com/msberends/AMR/issues/290" class="external-link">#290</a>)</li>
@@ -148,6 +148,12 @@
 <code><a href="../reference/as.mic.html">as.mic()</a></code>: values in scientific notation (e.g. <code>1e-3</code>) now handled correctly</li>
 <li>
 <code><a href="../reference/as.ab.html">as.ab()</a></code>: codes containing “PH” or “TH” (e.g. <code>ETH</code>, <code>PHE</code>) no longer return <code>NA</code> when mixed with unrecognised input (<a href="https://github.com/msberends/AMR/issues/245" class="external-link">#245</a>)</li>
+<li>
+<code><a href="../reference/as.ab.html">as.ab()</a></code>: results of <code>fast_mode</code> (used internally) were remembered and reused by later regular calls, which could return <code>NA</code> for valid input (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)</li>
+<li>
+<code><a href="../reference/as.mo.html">as.mo()</a></code>: previously coerced input was often not recognised again, e.g. for an unknown species of a known genus, so it was matched again on every call (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)</li>
+<li>
+<code><a href="../reference/as.ab.html">ab_reset_session()</a></code> no longer clears the uncertainties of <code><a href="../reference/as.mo.html">as.mo()</a></code> (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)</li>
 <li>Combined MIC/SIR input values (e.g. <code>"&lt;= 0.002; S"</code> or <code>"S; 0.002"</code>) now parsed correctly (<a href="https://github.com/msberends/AMR/issues/252" class="external-link">#252</a>)</li>
 <li>
 <code><a href="../reference/as.mo.html">as.mo()</a></code>:
@@ -174,8 +180,15 @@
 <li>Taxonomy: consistent higher taxonomy and parent records, and data sets refer only to current names (except <code>intrinsic_resistant</code>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="updated-3-0-1-9103">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9103"></a></h4>
+<h4 id="updated-3-0-1-9106">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9106"></a></h4>
+<ul><li>Faster <code><a href="../reference/as.ab.html">as.ab()</a></code>, <code><a href="../reference/as.mo.html">as.mo()</a></code> and all <code>mo_*()</code> functions through one consistent session cache design, which is cleared when lookup tables change, e.g. after <code><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms()</a></code> (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)
 <ul><li>
+<code>mo_*()</code> functions retrieve properties of valid <code>&lt;mo&gt;</code> input directly, and only for unique values</li>
+<li>The mapping of outdated taxonomic names to their current names is remembered per code</li>
+<li>
+<code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> now also lists uncertainties of previously coerced input</li>
+</ul></li>
+<li>
 <code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>: new <code>property_for_each</code> argument for sub-grouping within top <em>n</em> groups; rank ordering enforced (only lower taxonomic ranks allowed); fixed <code>property = NULL</code> not being accepted; inner filter now tracks original row indices to prevent cross-group contamination</li>
 <li>Taxonomic update for all microorganisms, now updated to COL 2026-04-18 XR, LPSN and BacDive of October 2026, and MycoBank of January 2026</li>
 <li>

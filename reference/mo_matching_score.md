@@ -193,7 +193,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 mo_reset_session()
-#> ℹ Reset 17 previously matched input values.
+#> ℹ Reset 18 previously matched input values.
 
 as.mo("E. coli")
 #> Class <mo>

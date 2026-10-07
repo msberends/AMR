@@ -89,6 +89,13 @@ Use the [`ab_*`](https://amr-for-r.org/reference/ab_property.md)
 functions to get properties based on the returned antibiotic ID, see
 *Examples*.
 
+Results of non-exact input are remembered during the session, so that
+the same input is not matched again. Use `ab_reset_session()` to forget
+these results. They are also forgotten after
+[`add_custom_antimicrobials()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md)
+or
+[`clear_custom_antimicrobials()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md).
+
 Note: the `as.ab()` and
 [`ab_*`](https://amr-for-r.org/reference/ab_property.md) functions may
 use very long regular expression to match brand names of antimicrobial
