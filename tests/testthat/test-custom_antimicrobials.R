@@ -100,6 +100,10 @@ test_that("test-custom ab synonyms", {
   # also not in the spelling variants that as.ab() already resolves to another antimicrobial
   expect_error(add_custom_antimicrobial_synonyms("MEM", "Piperacillin-tazobactam"), taken)
   expect_error(add_custom_antimicrobial_synonyms("MEM", "Z\u00F3syn"), taken)
+  # nor with other punctuation (including an invisible soft hyphen)
+  for (id in c("J01-CR05", "J01.CR05", "Zo-syn", "Zo\u00ADsyn")) {
+    expect_error(add_custom_antimicrobial_synonyms("MEM", id), taken, info = id)
+  }
   # but an antimicrobial may get its own identifiers again
   expect_message(add_custom_antimicrobial_synonyms("TZP", c("Zosyn", "J01CR05")))
   # synonyms consisting of white space only are skipped
@@ -119,8 +123,25 @@ test_that("test-custom ab synonyms", {
   expect_identical(as.character(as.ab(paste0(tazocin_ko, " 4.5 g/vial"))), "TZP")
   expect_identical(as.character(as.ab(paste0(tazocin_ko, "4.5\uADF8\uB7A8(\uD53C\uD398\uB77C\uC2E4\uB9B0)"))), "TZP")
   expect_identical(as.character(as.ab("Tazocinum Testname Inj 2.25 g")), "TZP")
+  # also Korean spellings of units, nested parentheses, pack quantities and full-width characters
+  tazocin_variants <- paste0(tazocin_ko, c(
+    "4.5\uADF8\uB78C", "500\uBC00\uB9AC\uADF8\uB78C", "4.5g(\uD53C\uD398\uB77C\uC2E4\uB9B0(4:1))",
+    " 4.5g 1\uBCD1", " 1 vial", " 4.5g x 1", "-4.5g", " 4.5g.", " 4.5\u338E", " \uFF14\uFF0E\uFF15\uFF47"
+  ))
+  expect_identical(as.character(as.ab(tazocin_variants)), rep("TZP", length(tazocin_variants)))
   # but nothing is matched on a strength alone
   expect_false(identical(as.character(suppressWarnings(suppressMessages(as.ab("4.5g")))), "TZP"))
+
+  # one trailing part is removed at a time, so the longest registered synonym wins
+  suppressMessages(add_custom_antimicrobial_synonyms("CXA", "Cefubrand Testname"))
+  suppressMessages(add_custom_antimicrobial_synonyms("CXM", "Cefubrand Testname Inj"))
+  expect_identical(
+    as.character(as.ab(c("Cefubrand Testname Inj 750mg", "Cefubrand Testname Inj. 750 mg", "Cefubrand Testname Inj (cefuroxime)", "Cefubrand Testname 250mg"))),
+    c("CXM", "CXM", "CXM", "CXA")
+  )
+  # and as the last step, a Korean dosage form written without a space is removed
+  suppressMessages(add_custom_antimicrobial_synonyms("TZP", "\uD0C0\uC870\uC2E0"))
+  expect_identical(as.character(as.ab("\uD0C0\uC870\uC2E0\uC8FC\uC0AC 2.25g")), "TZP")
 
   # synonyms are listed by ab_synonyms(), but take no part in fuzzy matching
   expect_true("Tazocinum Testname" %in% ab_synonyms("TZP"))
@@ -196,4 +217,14 @@ test_that("test-custom ab synonyms via add_custom_antimicrobials()", {
   suppressMessages(add_custom_antimicrobial_synonyms("TZP", "Foobarcillin"))
   expect_error(add_custom_antimicrobials(data.frame(ab = "TESTLATER", name = "Foobarcillin")), "already in use as user-added synonyms")
   expect_identical(as.character(as.ab("Foobarcillin")), "TZP")
+  # not with other punctuation either, so that the order of adding does not matter
+  suppressMessages(add_custom_antimicrobial_synonyms("TZP", "Foo-quxcillin"))
+  expect_error(add_custom_antimicrobials(data.frame(ab = "TESTORDER", name = "Foo quxcillin")), "already in use as user-added synonyms")
+
+  # a new record without a name does not block the synonyms in the same call
+  suppressMessages(add_custom_antimicrobials(data.frame(
+    ab = c("TESTNONAME", "MEM"), name = c(NA, NA), group = c("Test", NA), synonyms = c(NA, "Meropenemum Somebrand"),
+    stringsAsFactors = FALSE
+  )))
+  expect_identical(as.character(as.ab("Meropenemum Somebrand")), "MEM")
 })

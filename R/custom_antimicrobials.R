@@ -67,7 +67,7 @@
 #'        )
 #'       ```
 #'
-#' Use [add_custom_antimicrobial_synonyms()] to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with [add_custom_antimicrobials()]). These synonyms are recognised by [as.ab()] and all `ab_*()` functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before [as.ab()] transliterates the input to ASCII. Matching ignores case and all white space (including no-break and ideographic spaces). If the input does not match as given, a trailing strength, dosage form or part in parentheses (such as `4.5g`, `500 mg/vial`, `Inj` or `(piperacillin, tazobactam)`) is removed and matching is tried once more; there is no other fuzzy matching for synonyms added this way. A synonym cannot be added if it already identifies another antimicrobial as its code, name, synonym, abbreviation, ATC code, CID or LOINC code.
+#' Use [add_custom_antimicrobial_synonyms()] to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with [add_custom_antimicrobials()]). These synonyms are recognised by [as.ab()] and all `ab_*()` functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before [as.ab()] transliterates the input to ASCII. Matching ignores case, all white space (including no-break and ideographic spaces) and zero-width characters. If the input does not match as given, parts that hospital systems often add after a product name are removed one at a time, and matching is tried again after each removal, so that the longest registered synonym wins: a part in parentheses (such as `(piperacillin, tazobactam)`), a strength or pack quantity (such as `4.5g`, `500 mg/vial` or `1 vial`, also with Korean units), a dosage form written as a separate word (such as `Inj` or `IV`) and, as the last step, a Korean dosage form written without a space (such as the suffix for injection or tablet). Only user-added synonyms are matched this way, there is no other fuzzy matching for them, and a strength on its own is never matched to a user-added synonym. A synonym cannot be added if it already identifies another antimicrobial as its code, name, synonym, abbreviation, ATC code, CID or LOINC code, also when written with other punctuation (such as `J01-CR05`).
 #'
 #' Use [clear_custom_antimicrobials()] to clear the previously added antimicrobials and synonyms.
 #' @seealso [add_custom_microorganisms()] to add custom microorganisms.
@@ -147,14 +147,26 @@ add_custom_antimicrobials <- function(x) {
     any(records$ab %in% AMR_env$AB_lookup$ab),
     "Antimicrobial drug code(s) ", vector_and(records$ab[records$ab %in% AMR_env$AB_lookup$ab]), " already exist in the internal `antimicrobials` data set."
   )
-  # names of new antimicrobials must not already be in use as user-added synonyms of other antimicrobials
+  # names of new antimicrobials must not already be in use as user-added synonyms of other antimicrobials,
+  # compared in the same ways as custom_ab_synonyms_prepare() does, so that the order of adding does not matter
   if (NROW(records) > 0 && NROW(AMR_env$custom_ab_synonyms) > 0) {
+    syn_tab <- AMR_env$custom_ab_synonyms
     rec_ids <- custom_ab_identifier_keys(records)
-    used <- AMR_env$custom_ab_synonyms[match(rec_ids$key, AMR_env$custom_ab_synonyms$key), , drop = FALSE]
-    clash <- !is.na(used$ab) & used$ab != rec_ids$ab
+    rec_gen <- custom_ab_generalised_punct(generalise_antibiotic_name(as.character(records$name)))
+    hits <- data.frame(
+      rec = c(rec_ids$ab, rec_ids$ab, as.character(records$ab)),
+      s = c(
+        match(rec_ids$key, syn_tab$key, incomparables = NA),
+        match(rec_ids$pkey, custom_ab_punct_key(syn_tab$key), incomparables = NA),
+        match(rec_gen, custom_ab_generalised_punct(custom_ab_generalised(syn_tab$synonym)), incomparables = NA)
+      ),
+      stringsAsFactors = FALSE
+    )
+    hits <- hits[!is.na(hits$s), , drop = FALSE]
+    clash <- syn_tab$ab[hits$s] != hits$rec
     stop_if(
       any(clash),
-      "The name or synonym(s) ", vector_and(unique(used$synonym[clash])), " of the new antimicrobial(s) are already in use as user-added synonyms of ", vector_and(unique(used$ab[clash])), "."
+      "The name or synonym(s) ", vector_and(unique(syn_tab$synonym[hits$s[clash]])), " of the new antimicrobial(s) are already in use as user-added synonyms of ", vector_and(unique(syn_tab$ab[hits$s[clash]])), "."
     )
   }
   # validate the synonyms before anything is added, so that an error leaves the session unchanged
@@ -291,19 +303,24 @@ custom_ab_synonyms_prepare <- function(ab, synonyms, new_records = NULL) {
   )
   keys <- custom_ab_synonym_key(synonyms)
   # a synonym must not already identify another antimicrobial - its code, name, synonyms, abbreviations,
-  # ATC codes, CID or LOINC codes - not even in the generalised form that as.ab() uses for its exact matches
+  # ATC codes, CID or LOINC codes - not with other punctuation (e.g. "J01-CR05") and not in the
+  # generalised form that as.ab() uses for its exact matches either
   ids <- custom_ab_identifier_keys_cached()
   gen_ids <- custom_ab_generalised_ids()
   if (!is.null(new_records) && NROW(new_records) > 0) {
     ids <- rbind(ids, custom_ab_identifier_keys(new_records))
-    gen_ids <- rbind(gen_ids, data.frame(ab = as.character(new_records$ab), gen = generalise_antibiotic_name(as.character(new_records$name)), stringsAsFactors = FALSE))
+    new_gen <- data.frame(ab = as.character(new_records$ab), gen = generalise_antibiotic_name(as.character(new_records$name)), stringsAsFactors = FALSE)
+    new_gen$genp <- custom_ab_generalised_punct(new_gen$gen)
+    gen_ids <- rbind(gen_ids, new_gen[!is.na(new_gen$genp), , drop = FALSE])
   }
-  gens <- custom_ab_generalised(synonyms)
-  owners <- lapply(seq_along(keys), function(i) {
-    o <- ids$ab[ids$key == keys[i]]
-    if (!is.na(gens[i])) o <- c(o, gen_ids$ab[gen_ids$gen == gens[i]])
-    setdiff(unique(o), ab[i])
-  })
+  owners_of <- function(table_keys, table_ab, k) {
+    groups <- split(table_ab, table_keys)
+    lapply(match(k, names(groups), incomparables = NA), function(j) if (is.na(j)) character(0) else groups[[j]])
+  }
+  by_key <- owners_of(ids$key, ids$ab, keys)
+  by_pkey <- owners_of(ids$pkey, ids$ab, custom_ab_punct_key(keys))
+  by_gen <- owners_of(gen_ids$genp, gen_ids$ab, custom_ab_generalised_punct(custom_ab_generalised(synonyms)))
+  owners <- lapply(seq_along(keys), function(i) setdiff(unique(c(by_key[[i]], by_pkey[[i]], by_gen[[i]])), ab[i]))
   taken <- lengths(owners) > 0
   stop_if(
     any(taken),
@@ -376,37 +393,89 @@ custom_ab_generalised <- function(x) {
   out
 }
 
-# removes a trailing strength, dosage form and/or part in parentheses from product names as exported
-# by hospital systems, e.g. "Tazocin Inj 4.5g" -> "Tazocin", "Tazocin 4/0.5 g" -> "Tazocin",
-# "X 4.5g (piperacillin, tazobactam)" -> "X"; dosage forms are only removed as separate words, so
-# names that end in a form (such as Korean names ending in "\uC8FC" for injection) are left intact;
-# only used as a second attempt in as.ab() when the input as given does not match a user-added synonym
-custom_ab_strip_strength_form <- function(x) {
-  x <- enc2utf8(as.character(x))
-  valid <- !is.na(x) & custom_ab_valid_utf8(x)
-  # all white space becomes a single space first
-  y <- trimws2(gsub(paste0(custom_ab_ws, "+"), " ", x[valid], perl = TRUE))
-  unit <- "(mg|g|gm|mcg|ug|\u00B5g|\u03BCg|ng|iu|miu|u|units?|ml|l|meq|mmol|%|\uBC00\uB9AC\uADF8\uB7A8|\uADF8\uB7A8|\uBC00\uB9AC\uB9AC\uD130)"
+# key without punctuation (letters and digits only), so that a synonym cannot take over another
+# antimicrobial's identifier by adding punctuation, e.g. "J01-CR05" or "Zo-syn"
+custom_ab_punct_key <- function(key) {
+  out <- gsub("[^\\p{L}\\p{N}]+", "", key, perl = TRUE)
+  out[!is.na(out) & out == ""] <- NA_character_
+  out
+}
+
+# the same for generalised forms, which consist of A-Z, 0-9 and punctuation only
+custom_ab_generalised_punct <- function(gen) {
+  out <- gsub("[^A-Z0-9]+", "", gen)
+  out[!is.na(out) & out == ""] <- NA_character_
+  out
+}
+
+# parts that hospital systems add after a product name, as removed one at a time by custom_ab_strip_step():
+# trailing punctuation, a part in parentheses (also nested), a strength, a pack quantity, a dosage form written as a separate
+# word, and as the last resort a Korean dosage form written without a space (e.g. the suffix for injection)
+custom_ab_strip_patterns <- local({
   num <- "[0-9]+([.,][0-9]+)*"
-  per <- paste0("( ?/ ?(", num, ")? ?(mg|g|gm|ml|l|vial|v|amp|amps|tab|tabs|cap|caps|bag|btl|\uBCD1|\uBC14\uC774\uC54C|\uC815|\uCEA1\uC290)?)?")
-  combination <- paste0("(", num, " ?", unit, "? ?/ ?)?")
-  strength <- paste0("(?<![0-9.,]) ?", combination, num, " ?", unit, per, "$")
-  form <- paste0(
-    " (inj|inj\\.|injection|iv|i\\.v\\.|im|po|tab|tab\\.|tabs|tablets?|cap|cap\\.|caps|capsules?|",
-    "syr|syrup|susp|suspension|oral|powder|pwd|vial|amp|premix|",
-    "\uC8FC\uC0AC|\uC8FC\uC0AC\uC81C|\uC8FC\uC0AC\uC561|\uC815|\uCEA1\uC290|\uC2DC\uB7FD|\uD604\uD0C1\uC561|\uAC74\uC870\uC2DC\uB7FD)$"
+  unit <- paste0(
+    "(mg|g|gm|grams?|mcg|ug|\u00B5g|\u03BCg|ng|kg|iu|miu|mu|u|units?|ml|l|meq|mmol|%|\u338E|\u338D|\u338F|\u3396|\u2113|",
+    # Korean: milligram (three spellings), microgram, gram (two spellings), millilitre, litre, 10,000 units, units
+    "\uBC00\uB9AC\uADF8\uB7A8|\uBC00\uB9AC\uADF8\uB78C|\uBBF8\uB9AC\uADF8\uB78C|\uB9C8\uC774\uD06C\uB85C\uADF8\uB7A8|",
+    "\uADF8\uB7A8|\uADF8\uB78C|\uBC00\uB9AC\uB9AC\uD130|\uB9AC\uD130|\uB9CC\uB2E8\uC704|\uB2E8\uC704)"
   )
-  parenthesised <- " ?[(\\[][^()\\[\\]]*[)\\]]$"
-  repeat {
-    y_new <- gsub(parenthesised, "", y, perl = TRUE)
-    y_new <- gsub(strength, "", y_new, perl = TRUE, ignore.case = TRUE)
-    y_new <- gsub(form, "", y_new, perl = TRUE, ignore.case = TRUE)
-    y_new <- trimws2(y_new)
-    if (identical(y_new, y)) break
-    y <- y_new
+  pack <- paste0(
+    "(v|vials?|amps?|a|bags?|btl|bottles?|ea|t|tabs?|c|caps?|",
+    # Korean: bottle, vial, ampoule, piece, tablet, capsule, sachet
+    "\uBCD1|\uBC14\uC774\uC54C|\uC570\uD50C|\uAC1C|\uC815|\uCEA1\uC290|\uD3EC)"
+  )
+  sep <- "[ ,_*-]*"
+  per <- paste0("( ?/ ?(", num, ")? ?(", unit, "|", pack, ")?)?")
+  combination <- paste0("(", num, " ?", unit, "? ?[/:] ?)?")
+  korean_forms <- "\uC8FC\uC0AC\uC81C|\uC8FC\uC0AC\uC561|\uC8FC\uC0AC|\uC8FC|\uC815|\uCEA1\uC290|\uAC74\uC870\uC2DC\uB7FD|\uC2DC\uB7FD|\uD604\uD0C1\uC561"
+  c(
+    punctuation = "[.,;:]+$",
+    parenthesised = " ?(\\((?:[^()]++|(?1))*\\))$",
+    bracketed = " ?(\\[(?:[^][]++|(?1))*\\])$",
+    strength = paste0("(?<![0-9.,])", sep, combination, num, " ?", unit, per, "\\.?$"),
+    pack = paste0("(?<![0-9.,])", sep, "([x\u00D7*] ?)?", num, " ?", pack, "\\.?$"),
+    multiplier = paste0(" ?[x\u00D7*] ?", num, "$"),
+    form = paste0(
+      "[ _-](inj|inj\\.|injection|iv|i\\.v\\.|im|po|tab|tab\\.|tabs|tablets?|cap|cap\\.|caps|capsules?|",
+      "syr|syrup|susp|suspension|oral|powder|pwd|vial|amp|premix|(powder )?for (injection|infusion|solution|oral suspension)|",
+      korean_forms, ")$"
+    ),
+    glued_form = paste0("(?<=\\p{Hangul}{2})(", korean_forms, ")$")
+  )
+})
+
+# white space to single spaces and full-width ASCII characters (as in some East Asian exports) to ASCII
+custom_ab_strip_normalise <- function(x) {
+  x <- enc2utf8(as.character(x))
+  wide <- !is.na(x) & grepl("[\uFF01-\uFF5E]", x, perl = TRUE)
+  if (any(wide)) {
+    x[wide] <- vapply(FUN.VALUE = character(1), x[wide], function(s) {
+      cp <- utf8ToInt(s)
+      w <- cp >= 65281L & cp <= 65374L
+      cp[w] <- cp[w] - 65248L
+      intToUtf8(cp)
+    }, USE.NAMES = FALSE)
   }
-  x[valid] <- y
-  x
+  trimws2(gsub(paste0(custom_ab_ws, "+"), " ", x, perl = TRUE))
+}
+
+# removes one trailing part (see custom_ab_strip_patterns) from each value, e.g. "Tazocin Inj 4.5g" ->
+# "Tazocin Inj" -> "Tazocin"; values that cannot be shortened (or would become empty) are returned as is;
+# only used by as.ab() to look up user-added synonyms when the input as given does not match one
+custom_ab_strip_step <- function(x) {
+  out <- x
+  todo <- !is.na(x)
+  for (p in custom_ab_strip_patterns) {
+    if (!any(todo)) break
+    y <- trimws2(gsub(p, "", out[todo], perl = TRUE, ignore.case = TRUE))
+    changed <- y != out[todo] & y != ""
+    if (any(changed)) {
+      i <- which(todo)[changed]
+      out[i] <- y[changed]
+      todo[i] <- FALSE
+    }
+  }
+  out
 }
 
 # keys of everything that identifies an antimicrobial in `lkp` (by default the internal lookup table):
@@ -426,7 +495,9 @@ custom_ab_identifier_keys <- function(lkp = AMR_env$AB_lookup) {
     vals[!is.na(vals) & vals != ""]
   })
   out <- data.frame(ab = rep(ab, lengths(ids)), key = custom_ab_synonym_key(unlist(ids, use.names = FALSE)), stringsAsFactors = FALSE)
-  out[!is.na(out$key), , drop = FALSE]
+  out <- out[!is.na(out$key), , drop = FALSE]
+  out$pkey <- custom_ab_punct_key(out$key)
+  out
 }
 
 # the same for the internal lookup table, kept until the lookup table changes (see reset_ab_cache())
@@ -443,7 +514,8 @@ custom_ab_generalised_ids <- function() {
   g <- AMR_env$AB_lookup$generalised_all
   if (!is.list(g)) g <- as.list(g)
   out <- data.frame(ab = rep(ab, lengths(g)), gen = as.character(unlist(g, use.names = FALSE)), stringsAsFactors = FALSE)
-  out[!is.na(out$gen) & grepl("[A-Z0-9]", out$gen), , drop = FALSE]
+  out$genp <- custom_ab_generalised_punct(out$gen)
+  out[!is.na(out$genp), , drop = FALSE]
 }
 
 #' @rdname add_custom_antimicrobials
