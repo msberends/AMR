@@ -673,7 +673,23 @@ antimicrobials[which(antimicrobials$ab == "RFI"), "synonyms"][[1]] <- list(sort(
 old_sym <- antimicrobials[which(antimicrobials$ab == "SMX"), "synonyms"][[1]]
 old_sym <- old_sym[!old_sym %in% c("Cotrimoxazole", "Bactrimel")]
 antimicrobials[which(antimicrobials$ab == "SMX"), "synonyms"][[1]] <- list(old_sym)
-antimicrobials[which(antimicrobials$ab == "SXT"), "synonyms"][[1]] <- list(sort(unique(c(antimicrobials[which(antimicrobials$ab == "COL"), "synonyms"][[1]], "Cotrimoxazole", "Bactrimel", "Septra", "Bactrim", "Cotrimazole"))))
+antimicrobials[which(antimicrobials$ab == "SXT"), "synonyms"][[1]] <- list(sort(unique(c(antimicrobials[which(antimicrobials$ab == "SXT"), "synonyms"][[1]], "Cotrimoxazole", "Bactrimel", "Septra", "Bactrim", "Cotrimazole"))))
+# trade names of combinations must not be filed under a single agent (PubChem similarity also returns mixtures, and
+# components sort before their combinations), and names of screening libraries, suppliers and chemical fragments are
+# no synonyms; both found in October 2026, a structural solution is discussed in #315
+synonym_moves <- data.frame(
+  synonym = c("Tazocin", "Timentin", "Recarbrio", "Exblifep"),
+  from = c("PIP", "TIC", "IPM", "TAZ"),
+  to = c("TZP", "TCC", "IMR", "FPE"),
+  stringsAsFactors = FALSE
+)
+not_synonyms <- c("lopac", "nbleomycinamide", "pharmakon", "prestwick", "spectrum", "spiro", "tocris")
+for (i in seq_len(nrow(antimicrobials))) {
+  syn <- unlist(antimicrobials$synonyms[i])
+  syn <- syn[!is.na(syn) & !tolower(syn) %in% c(not_synonyms, tolower(synonym_moves$synonym[synonym_moves$from == antimicrobials$ab[i]]))]
+  syn <- c(syn, synonym_moves$synonym[synonym_moves$to == antimicrobials$ab[i]])
+  antimicrobials$synonyms[i] <- list(if (length(syn) == 0) NA_character_ else sort(unique(syn)))
+}
 
 # Fix penicillins
 antimicrobials[which(antimicrobials$ab == "PEN"), "abbreviations"][[1]] <- list(c("bepe", "pg", "pen", "peni", "peni g", "penicillin", "penicillin g"))
