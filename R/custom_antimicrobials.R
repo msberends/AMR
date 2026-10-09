@@ -67,7 +67,7 @@
 #'        )
 #'       ```
 #'
-#' Use [add_custom_antimicrobial_synonyms()] to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with [add_custom_antimicrobials()]). These synonyms are recognised by [as.ab()] and all `ab_*()` functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before [as.ab()] transliterates the input to ASCII. Matching ignores case, all white space (including no-break and ideographic spaces) and zero-width characters. If the input does not match as given, parts that hospital systems often add after a product name are removed one at a time, and matching is tried again after each removal, so that the longest registered synonym wins: a part in parentheses (such as `(piperacillin, tazobactam)`), a strength or pack quantity (such as `4.5g`, `500 mg/vial` or `1 vial`, also with Korean units), a dosage form written as a separate word (such as `Inj` or `IV`) and, as the last step, a Korean dosage form written without a space (such as the suffix for injection or tablet). Only user-added synonyms are matched this way, there is no other fuzzy matching for them, and a strength on its own is never matched to a user-added synonym. A synonym cannot be added if it already identifies another antimicrobial as its code, name, synonym, abbreviation, ATC code, CID or LOINC code, also when written with other punctuation (such as `J01-CR05`).
+#' Use [add_custom_antimicrobial_synonyms()] to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with [add_custom_antimicrobials()]). These synonyms are recognised by [as.ab()] and all `ab_*()` functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before [as.ab()] transliterates the input to ASCII. Matching ignores case, all white space (including no-break and ideographic spaces) and zero-width characters. If the input does not match as given, a trailing part in parentheses or brackets (such as `(piperacillin, tazobactam)`) and a trailing strength written as a number with a unit symbol (such as `4.5g`, `4/0.5 g` or `500 mg/mL`) are removed one at a time, and matching is tried again after each removal, so that the longest registered synonym wins. Full-width characters are read as their ASCII equivalents. No words are removed, in any language: to recognise a name with a dosage form (such as `Inj`), add that variant as a synonym as well. Only user-added synonyms are matched this way, there is no other fuzzy matching for them, and a strength on its own is never matched to a user-added synonym. A synonym cannot be added if it already identifies another antimicrobial as its code, name, synonym, abbreviation, ATC code, CID or LOINC code, also when written with other punctuation (such as `J01-CR05`).
 #'
 #' Use [clear_custom_antimicrobials()] to clear the previously added antimicrobials and synonyms.
 #' @seealso [add_custom_microorganisms()] to add custom microorganisms.
@@ -125,7 +125,7 @@
 #' # here a Korean trade name of piperacillin/tazobactam
 #' add_custom_antimicrobial_synonyms("TZP", "\uD0C0\uC870\uC2E0\uC8FC")
 #' ab_name("\uD0C0\uC870\uC2E0\uC8FC")
-#' # a trailing strength or dosage form, as in many hospital exports, is ignored
+#' # a trailing strength, as in many hospital exports, is ignored
 #' as.ab("\uD0C0\uC870\uC2E0\uC8FC 4.5g")
 #' }
 add_custom_antimicrobials <- function(x) {
@@ -368,13 +368,14 @@ custom_ab_valid_utf8 <- function(x) {
 # white space for the user-added synonym functions: all Unicode white space, like trimws2()
 custom_ab_ws <- "[\\h\\v\\p{Z}\u200B\u200C\u200D\u2060\uFEFF]"
 
-# key for user-added synonyms: case and all white space are ignored, characters are kept as given;
+# key for user-added synonyms: case and all white space are ignored, full-width characters are read as ASCII,
+# other characters are kept as given;
 # input that is not valid UTF-8 or that consists of white space only gets an NA key and thus never matches
 custom_ab_synonym_key <- function(x) {
   x <- enc2utf8(as.character(x))
   out <- rep(NA_character_, length(x))
   valid <- !is.na(x) & custom_ab_valid_utf8(x)
-  out[valid] <- toupper(gsub(paste0(custom_ab_ws, "+"), "", x[valid], perl = TRUE))
+  out[valid] <- toupper(gsub(paste0(custom_ab_ws, "+"), "", custom_ab_fullwidth_to_ascii(x[valid]), perl = TRUE))
   out[!is.na(out) & out == ""] <- NA_character_
   out
 }
@@ -408,45 +409,25 @@ custom_ab_generalised_punct <- function(gen) {
   out
 }
 
-# parts that hospital systems add after a product name, as removed one at a time by custom_ab_strip_step():
-# trailing punctuation, a part in parentheses (also nested), a strength, a pack quantity, a dosage form written as a separate
-# word, and as the last resort a Korean dosage form written without a space (e.g. the suffix for injection)
+# parts after a product name that are removed one at a time by custom_ab_strip_step(): trailing punctuation,
+# a part in parentheses or brackets (also nested) and a strength written as a number with a unit symbol;
+# this is deliberately language-independent, so no words (such as dosage forms) are removed
 custom_ab_strip_patterns <- local({
   num <- "[0-9]+([.,][0-9]+)*"
-  unit <- paste0(
-    "(mg|g|gm|grams?|mcg|ug|\u00B5g|\u03BCg|ng|kg|iu|miu|mu|u|units?|ml|l|meq|mmol|%|\u338E|\u338D|\u338F|\u3396|\u2113|",
-    # Korean: milligram (three spellings), microgram, gram (two spellings), millilitre, litre, 10,000 units, units
-    "\uBC00\uB9AC\uADF8\uB7A8|\uBC00\uB9AC\uADF8\uB78C|\uBBF8\uB9AC\uADF8\uB78C|\uB9C8\uC774\uD06C\uB85C\uADF8\uB7A8|",
-    "\uADF8\uB7A8|\uADF8\uB78C|\uBC00\uB9AC\uB9AC\uD130|\uB9AC\uD130|\uB9CC\uB2E8\uC704|\uB2E8\uC704)"
-  )
-  pack <- paste0(
-    "(v|vials?|amps?|a|bags?|btl|bottles?|ea|t|tabs?|c|caps?|",
-    # Korean: bottle, vial, ampoule, piece, tablet, capsule, sachet
-    "\uBCD1|\uBC14\uC774\uC54C|\uC570\uD50C|\uAC1C|\uC815|\uCEA1\uC290|\uD3EC)"
-  )
+  unit <- "(mg|g|mcg|ug|\u00B5g|\u03BCg|ng|kg|iu|miu|u|ml|l|meq|mmol|%|\u338E|\u338D|\u338F|\u3396|\u2113)"
   sep <- "[ ,_*-]*"
-  per <- paste0("( ?/ ?(", num, ")? ?(", unit, "|", pack, ")?)?")
+  per <- paste0("( ?/ ?(", num, ")? ?", unit, ")?")
   combination <- paste0("(", num, " ?", unit, "? ?[/:] ?)?")
-  korean_forms <- "\uC8FC\uC0AC\uC81C|\uC8FC\uC0AC\uC561|\uC8FC\uC0AC|\uC8FC|\uC815|\uCEA1\uC290|\uAC74\uC870\uC2DC\uB7FD|\uC2DC\uB7FD|\uD604\uD0C1\uC561"
   c(
     punctuation = "[.,;:]+$",
     parenthesised = " ?(\\((?:[^()]++|(?1))*\\))$",
     bracketed = " ?(\\[(?:[^][]++|(?1))*\\])$",
-    strength = paste0("(?<![0-9.,])", sep, combination, num, " ?", unit, per, "\\.?$"),
-    pack = paste0("(?<![0-9.,])", sep, "([x\u00D7*] ?)?", num, " ?", pack, "\\.?$"),
-    multiplier = paste0(" ?[x\u00D7*] ?", num, "$"),
-    form = paste0(
-      "[ _-](inj|inj\\.|injection|iv|i\\.v\\.|im|po|tab|tab\\.|tabs|tablets?|cap|cap\\.|caps|capsules?|",
-      "syr|syrup|susp|suspension|oral|powder|pwd|vial|amp|premix|(powder )?for (injection|infusion|solution|oral suspension)|",
-      korean_forms, ")$"
-    ),
-    glued_form = paste0("(?<=\\p{Hangul}{2})(", korean_forms, ")$")
+    strength = paste0("(?<![0-9.,])", sep, combination, num, " ?", unit, per, "\\.?$")
   )
 })
 
-# white space to single spaces and full-width ASCII characters (as in some East Asian exports) to ASCII
-custom_ab_strip_normalise <- function(x) {
-  x <- enc2utf8(as.character(x))
+# full-width ASCII characters to ASCII
+custom_ab_fullwidth_to_ascii <- function(x) {
   wide <- !is.na(x) & grepl("[\uFF01-\uFF5E]", x, perl = TRUE)
   if (any(wide)) {
     x[wide] <- vapply(FUN.VALUE = character(1), x[wide], function(s) {
@@ -456,11 +437,17 @@ custom_ab_strip_normalise <- function(x) {
       intToUtf8(cp)
     }, USE.NAMES = FALSE)
   }
+  x
+}
+
+# white space to single spaces and full-width ASCII characters to ASCII
+custom_ab_strip_normalise <- function(x) {
+  x <- custom_ab_fullwidth_to_ascii(enc2utf8(as.character(x)))
   trimws2(gsub(paste0(custom_ab_ws, "+"), " ", x, perl = TRUE))
 }
 
-# removes one trailing part (see custom_ab_strip_patterns) from each value, e.g. "Tazocin Inj 4.5g" ->
-# "Tazocin Inj" -> "Tazocin"; values that cannot be shortened (or would become empty) are returned as is;
+# removes one trailing part (see custom_ab_strip_patterns) from each value, e.g. "Brand (comment) 4.5g" ->
+# "Brand (comment)" -> "Brand"; values that cannot be shortened (or would become empty) are returned as is;
 # only used by as.ab() to look up user-added synonyms when the input as given does not match one
 custom_ab_strip_step <- function(x) {
   out <- x

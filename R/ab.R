@@ -134,9 +134,9 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     x_unique <- unique(x)
     keys_unique <- custom_ab_synonym_key(x_unique)
     hit_unique <- match(keys_unique, AMR_env$custom_ab_synonyms$key)
-    # no exact match: remove one trailing part at a time (part in parentheses, strength, dosage form, such
-    # as "4.5g" or "Inj") and look the rest up after each removal, so that e.g. "Tazocin Inj 4.5g" matches
-    # "Tazocin Inj" before "Tazocin"; not for input that already identifies an antimicrobial as given
+    # no exact match: remove one trailing part at a time (part in parentheses or a strength such as "4.5g")
+    # and look the rest up after each removal, so that e.g. "Brand (comment) 4.5g" matches "Brand (comment)"
+    # before "Brand"; no words are removed, in any language; not for input that already identifies an antimicrobial as given
     retry <- is.na(hit_unique) & !is.na(keys_unique) & !keys_unique %in% custom_ab_identifier_keys_cached()$key
     if (any(retry)) {
       idx <- which(retry)
