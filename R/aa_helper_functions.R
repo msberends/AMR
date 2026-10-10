@@ -469,53 +469,49 @@ cli_to_plain <- function(msg, envir = parent.frame()) {
   }
 
   # cli inline markup -> plain-text equivalents (one level of glue nesting allowed)
-  msg <- apply_sub(msg, "\\{\\.fun (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "()`"))
-  msg <- apply_sub(msg, "\\{\\.arg (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "`"))
-  msg <- apply_sub(msg, "\\{\\.code (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "`"))
-  msg <- apply_sub(msg, "\\{\\.val (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0('"', resolve(c), '"'))
-  msg <- apply_sub(msg, "\\{\\.field (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0('"', resolve(c), '"'))
-  msg <- apply_sub(msg, "\\{\\.cls (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("<", resolve(c), ">"))
-  msg <- apply_sub(msg, "\\{\\.pkg (\\{[^}]+\\}|[^}]+)\\}", function(c) resolve(c))
-  msg <- apply_sub(msg, "\\{\\.strong (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("*", resolve(c), "*"))
-  msg <- apply_sub(msg, "\\{\\.emph (\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("*", resolve(c), "*"))
-  msg <- apply_sub(msg, "\\{\\.help ([^}]+)\\}", function(c) {
+  msg <- apply_sub(msg, "\\{\\.fun[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "()`"))
+  msg <- apply_sub(msg, "\\{\\.arg[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "`"))
+  msg <- apply_sub(msg, "\\{\\.code[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("`", resolve(c), "`"))
+  msg <- apply_sub(msg, "\\{\\.val[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) paste0('"', resolve(c), '"'))
+  msg <- apply_sub(msg, "\\{\\.field[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) paste0('"', resolve(c), '"'))
+  msg <- apply_sub(msg, "\\{\\.cls[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("<", resolve(c), ">"))
+  msg <- apply_sub(msg, "\\{\\.pkg[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) resolve(c))
+  msg <- apply_sub(msg, "\\{\\.strong[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("*", resolve(c), "*"))
+  msg <- apply_sub(msg, "\\{\\.emph[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) paste0("*", resolve(c), "*"))
+  msg <- apply_sub(msg, "\\{\\.help[[:space:]]+([^}]+)\\}", function(c) {
     # Handle [display text](topic) markdown link format: extract just the display text
     m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c))[[1L]]
     if (length(m) >= 2L) m[2L] else paste0("`", resolve(c), "`")
   })
-  msg <- apply_sub(msg, "\\{\\.topic ([^}]+)\\}", function(c) {
+  msg <- apply_sub(msg, "\\{\\.topic[[:space:]]+([^}]+)\\}", function(c) {
     # Handle [display text](topic) markdown link format: extract just the display text
     m <- regmatches(c, regexec("^\\[(.*)\\]\\([^)]*\\)$", c))[[1L]]
     if (length(m) >= 2L) m[2L] else paste0("?", resolve(c))
   })
-  msg <- apply_sub(msg, "\\{\\.url (\\{[^}]+\\}|[^}]+)\\}", function(c) resolve(c))
-  msg <- apply_sub(msg, "\\{\\.href ([^}]+)\\}", function(c) {
+  msg <- apply_sub(msg, "\\{\\.url[[:space:]]+(\\{[^}]+\\}|[^}]+)\\}", function(c) resolve(c))
+  msg <- apply_sub(msg, "\\{\\.href[[:space:]]+([^}]+)\\}", function(c) {
     # Handle [display text](url) markdown link format: extract just the URL
     m <- regmatches(c, regexec("^\\[.*\\]\\(([^)]+)\\)$", c))[[1L]]
     if (length(m) >= 2L) m[2L] else resolve(c)
   })
 
-  # bare {variable} or {expression} -> evaluate in caller's environment
-  while (grepl("\\{[^{}]+\\}", msg)) {
-    m <- regexec("\\{([^{}]+)\\}", msg)
-    matches <- regmatches(msg, m)[[1]]
-    if (length(matches) < 2L) break
-    full_match <- matches[1L]
-    inner <- matches[2L]
+  # bare {variable} or {expression} -> evaluate in caller's environment;
+  # processed from left to right, so that an expression that cannot be evaluated is kept as is
+  out <- ""
+  repeat {
+    idx <- regexpr("\\{[^{}]+\\}", msg)
+    if (idx == -1L) break
+    full_match <- regmatches(msg, idx)
+    inner <- substr(full_match, 2L, nchar(full_match) - 1L)
     replacement <- tryCatch(
       paste0(as.character(eval(parse(text = inner), envir = envir)), collapse = ", "),
       error = function(e) full_match
     )
-    idx <- regexpr(full_match, msg, fixed = TRUE)
-    if (idx == -1L) break
-    msg <- paste0(
-      substr(msg, 1L, idx - 1L),
-      replacement,
-      substr(msg, idx + nchar(full_match), nchar(msg))
-    )
+    out <- paste0(out, substr(msg, 1L, idx - 1L), replacement)
+    msg <- substr(msg, idx + attr(idx, "match.length"), nchar(msg))
   }
 
-  msg
+  paste0(out, msg)
 }
 
 # this alternative wrapper to the message(), warning() and stop() functions:
@@ -677,7 +673,8 @@ stop_ <- function(...,
       }
       msg_call <- paste0("in ", call_name, "():")
     }
-    plain_msg <- cli_to_plain(trimws2(word_wrap(msg, as_note = FALSE)), envir = parent.frame())
+    # convert before wrapping, as wrapping could otherwise break the markup
+    plain_msg <- trimws2(word_wrap(cli_to_plain(msg, envir = parent.frame()), as_note = FALSE))
     stop(paste(msg_call, plain_msg), call. = FALSE)
   }
 }

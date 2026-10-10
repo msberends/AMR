@@ -98,3 +98,15 @@ test_that("test-misc.R", {
     expect_true(is_right, info = "the environmental data cannot be found for tidymodels/prep()")
   }
 })
+
+test_that("test-cli_to_plain", {
+  # plain-text fallback for when cli or rlang is unavailable: must always terminate, also when
+  # word wrapping breaks a line within markup, or for expressions that cannot be evaluated
+  expect_identical(AMR:::cli_to_plain("a {.code\nx()} b"), "a `x()` b")
+  expect_identical(AMR:::cli_to_plain("{.arg x} {not_an_object_in_AMR} {1 + 1}"), "`x` {not_an_object_in_AMR} 2")
+  msg <- "Setting {.code parallel = TRUE} requires a non-sequential {.help [{.fun future::plan}](future::plan)} to be active."
+  expect_identical(
+    gsub("[[:space:]]+", " ", AMR:::cli_to_plain(AMR:::word_wrap(msg, width = 40))),
+    "Setting `parallel = TRUE` requires a non-sequential `future::plan()` to be active."
+  )
+})
