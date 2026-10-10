@@ -53,7 +53,7 @@ jobs:
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo 'matrix={"config":[{"os":"ubuntu-latest","r":"release","allowfail":false}]}' >> "$GITHUB_OUTPUT"
           else
-            echo 'matrix={"config":[{"os":"windows-latest","r":"devel","allowfail":false},{"os":"ubuntu-latest","r":"devel","allowfail":false,"http-user-agent":"release"},{"os":"macOS-latest","r":"release","allowfail":true},{"os":"windows-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-1","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-2","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-3","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-4","allowfail":false}]}' >> "$GITHUB_OUTPUT"
+            echo 'matrix={"config":[{"os":"windows-latest","r":"devel","allowfail":false},{"os":"ubuntu-latest","r":"devel","allowfail":false,"http-user-agent":"release"},{"os":"macOS-latest","r":"release","allowfail":true},{"os":"windows-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-1","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-2","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-3","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-4","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-5","allowfail":false}]}' >> "$GITHUB_OUTPUT"
           fi
 
   R-code-check:

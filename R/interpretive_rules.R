@@ -663,8 +663,10 @@ interpretive_rules <- function(x,
     if (isTRUE(ampc_cephalosporin_resistance)) {
       ampc_cephalosporin_resistance <- "R"
     }
-    if (!is.null(interpretive_rules_df$reference.rule)) {
-      interpretive_rules_df[which(interpretive_rules_df$reference.rule %like% "ampc"), "to_value"] <- as.character(ampc_cephalosporin_resistance)
+    # old R versions (at least 3.0) give an error when assigning to no rows of a data.frame without rows
+    ampc_rows <- if (is.null(interpretive_rules_df$reference.rule)) integer(0) else which(interpretive_rules_df$reference.rule %like% "ampc")
+    if (length(ampc_rows) > 0) {
+      interpretive_rules_df[ampc_rows, "to_value"] <- as.character(ampc_cephalosporin_resistance)
     }
   }
 

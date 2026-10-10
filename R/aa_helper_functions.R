@@ -650,10 +650,10 @@ stop_ <- function(...,
   }
   # prevent errors with single opening curly brackets, we don't evaluate cli's/glue's {} in AMR anyway
   msg <- gsub("\\{(?!\\.)", "", msg, perl = TRUE)
-  if (!cli::ansi_has_hyperlink_support()) {
-    msg <- simplify_help_markup(msg)
-  }
   if (has_cli_rlang()) {
+    if (!cli::ansi_has_hyperlink_support()) {
+      msg <- simplify_help_markup(msg)
+    }
     if (isTRUE(call)) {
       call_obj <- sys.call(-1)
     } else if (!isFALSE(call)) {

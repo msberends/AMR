@@ -313,7 +313,9 @@ out <- wisca(example_isolates,
   syndromic_group = "ward"
 )
 out
-wisca_plot(out)
+if (requireNamespace("ggplot2")) {
+  wisca_plot(out)
+}
 
 # stratified using grouped tibbles (e.g. by age and gender)
 if (requireNamespace("dplyr")) {

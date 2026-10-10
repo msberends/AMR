@@ -98,7 +98,7 @@ mo_repository_root <- function() {
   NULL
 }
 skip_if_no_mo_repository <- function() {
-  testthat::skip_if(is.null(mo_repository_root()), "Source repository not available (data-raw/ does not ship with the package)")
+  skip_if(is.null(mo_repository_root()), "Source repository not available (data-raw/ does not ship with the package)")
 }
 
 # names without a rank suffix, e.g. "Kapabacteria {class}" and "Nitrospira (class)" are both the class

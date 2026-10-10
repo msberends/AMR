@@ -37,7 +37,7 @@ test_that("test-_deprecated.R", {
     # deprecated custom_interpretive_rules() still works and emits a warning
     expect_warning(
       x_old <- custom_eucast_rules(AMC == "R" ~ aminopenicillins == "R"),
-      regexp = "custom_eucast_rules"
+      "custom_eucast_rules"
     )
     expect_inherits(x_old, "custom_interpretive_rules")
   }

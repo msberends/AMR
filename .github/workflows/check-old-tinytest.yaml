@@ -48,7 +48,9 @@ jobs:
         config:
           # Test all old versions of R >= 3.0, we support them all!
           # For these old versions, dependencies and vignettes will not be checked.
-          # For recent R versions, see check-recent.yaml (r-lib and tidyverse support the latest 5 major R releases).
+          # For recent R versions, see check-current-testthat.yaml (r-lib and tidyverse support the latest 5 major R releases).
+          # R 4.0 (oldrel-6) is tested here, since current testthat and its dependencies cannot be installed on it.
+          - {os: ubuntu-latest, r: '4.0', allowfail: false}
           # - {os: ubuntu-latest, r: '3.6', allowfail: false}
           # - {os: windows-latest, r: '3.5', allowfail: false} # always fails, horrible with UTF-8
           # - {os: ubuntu-latest, r: '3.4', allowfail: false}  # 3.1-3.4 now always fails with Error in grep(warn_re, lines, invert = TRUE, value = TRUE) attempt to set index 46/46 in SET_STRING_ELT
@@ -76,15 +78,17 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install suggested pkgs (and tinytest) from CRAN
+      - name: Install tinytest from CRAN
+        # R < 3.2 cannot download over HTTPS, so install.packages() fails silently on CRAN;
+        # download the source with curl instead (suggested packages require much newer R versions anyway)
         run: |
-          desc_lines <- readLines('DESCRIPTION')
-          suggests <- readLines('DESCRIPTION')[grepl("^(Suggests:|  )", readLines('DESCRIPTION'))]
-          suggests <- suggests[(which(grepl("^Suggests", suggests)) + 1):length(suggests)]
-          suggests <- gsub("[ ,]", "", suggests)
-          pkgs <- unique(c(suggests, "tinytest"))
-          for (p in pkgs) try(install.packages(p, repos = "https://cran.r-project.org"), silent = TRUE)
-        shell: Rscript {0}
+          set -euo pipefail
+          mkdir -p "$R_LIBS_USER"
+          pkg=$(curl -sSL https://cran.r-project.org/src/contrib/ | grep -oE 'tinytest_[0-9.-]+\.tar\.gz' | head -1)
+          curl -sSLo "/tmp/$pkg" "https://cran.r-project.org/src/contrib/$pkg"
+          R CMD INSTALL -l "$R_LIBS_USER" "/tmp/$pkg"
+          Rscript -e "library(tinytest, lib.loc = Sys.getenv('R_LIBS_USER'))"
+        shell: bash
 
       - name: Show session info
         if: always()

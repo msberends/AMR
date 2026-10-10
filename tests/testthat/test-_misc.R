@@ -62,8 +62,10 @@ test_that("test-misc.R", {
   check_df <- function(check_element, return_val = 0) {
     is_right <<- FALSE
     for (env in sys.frames()) {
-      if (!is.null(env[[check_element]]) && is.data.frame(env[[check_element]])) {
-        is_right <<- all(colnames(example_isolates) %in% colnames(env[[check_element]]))
+      # in R < 4.2, reading a promise that is still being evaluated (such as `x` in tibble's `[`) gives an error
+      val <- tryCatch(env[[check_element]], error = function(e) NULL)
+      if (!is.null(val) && is.data.frame(val)) {
+        is_right <<- all(colnames(example_isolates) %in% colnames(val))
       }
     }
     return_val

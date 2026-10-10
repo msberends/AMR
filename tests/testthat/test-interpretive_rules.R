@@ -242,9 +242,10 @@ test_that("test-interpretive_rules.R", {
     tolerance = 0.5
   )
 
-  # clsi_rules() no longer errors (returns data unchanged until CLSI rows are added)
+  # clsi_rules() no longer errors (returns data unchanged until CLSI rows are added);
+  # without the tibble package, a plain data.frame is returned
   expect_identical(
     suppressWarnings(clsi_rules(example_isolates, info = FALSE)),
-    example_isolates
+    if (AMR:::pkg_is_available("tibble")) example_isolates else as.data.frame(example_isolates, stringsAsFactors = FALSE)
   )
 })

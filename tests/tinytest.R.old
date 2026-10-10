@@ -34,16 +34,30 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
   # env var 'R_LIBS_USER' gets overwritten during 'R CMD check' in GitHub Actions, so:
   .libPaths(c(Sys.getenv("R_LIBS_USER_GH_ACTIONS"), .libPaths()))
   
-  if (AMR:::pkg_is_available("tinytest", also_load = TRUE)) {
+  if (!AMR:::pkg_is_available("tinytest", also_load = TRUE)) {
+    stop("R_RUN_TINYTEST is 'true', but the tinytest package could not be loaded, so no unit tests were run")
+  } else {
     
     # load the package
     library(AMR)
     
+    # testthat equivalents; tinytest only records expectations that are called from the environment
+    # of a test file, so these call the expectations found there (via `env`) instead of tinytest::
     test_that <- function(desc, code) {
-      code
+      env <- parent.frame()
+      tryCatch(code,
+        skip_test = function(s) invisible(NULL),
+        error = function(e) get("expect_true", envir = env)(FALSE, info = paste0("Error in '", desc, "': ", conditionMessage(e)))
+      )
     }
-    expect_output <- tinytest::expect_stdout
+    skip_if <- function(condition, message = "") {
+      if (isTRUE(condition)) stop(structure(class = c("skip_test", "condition"), list(message = message, call = NULL)))
+    }
     skip_on_cran <- function() invisible(NULL)
+    expect_output <- function(...) get("expect_stdout", envir = parent.frame())(...)
+    expect_named <- function(object, expected, ...) get("expect_identical", envir = parent.frame())(names(object), expected, ...)
+    expect_setequal <- function(object, expected, ...) get("expect_true", envir = parent.frame())(setequal(object, expected), ...)
+    expect_lte <- function(object, expected, ...) get("expect_true", envir = parent.frame())(isTRUE(all(object <= expected)), ...)
     
     # set language
     set_AMR_locale("English")
@@ -75,17 +89,26 @@ if (identical(Sys.getenv("R_RUN_TINYTEST"), "true")) {
       `%||%` <- AMR:::`%||%`
     }
 
+    testdir <- ifelse(dir.exists("inst/testthat"), "inst/testthat", "testthat")
+    # helper files are sourced by testthat, but not by tinytest; helper-functions.R only contains expect_inherits(), which tinytest has itself
+    helpers <- list.files(system.file(testdir, package = "AMR"), pattern = "^helper.*[.]R$", full.names = TRUE)
+    for (helper in helpers[basename(helpers) != "helper-functions.R"]) {
+      source(helper)
+    }
+
     suppressMessages(
       out <- test_package("AMR",
-                          testdir = ifelse(dir.exists("inst/testthat"),
-                                           "inst/testthat",
-                                           "testthat"
-                          ),
+                          testdir = testdir,
                           verbose = FALSE,
                           color = FALSE
       )
     )
     cat("\n\nSUMMARY:\n")
     print(summary(out))
+    if (!all_pass(out)) {
+      cat("\n\nFAILURES:\n")
+      print(out, passes = FALSE, limit = 100)
+      stop("Unit tests failed, see above")
+    }
   }
 }
