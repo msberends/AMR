@@ -110,6 +110,62 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   already_regex <- isTRUE(list(...)$already_regex)
   fast_mode <- isTRUE(list(...)$fast_mode)
 
+  # text that is not valid UTF-8 (e.g. exported in a local encoding such as CP949) makes the string
+  # functions below fail in a UTF-8 locale, so such values are returned as NA with a warning
+  # (checked on unique values only, as this runs on every call)
+  if (is.factor(x)) {
+    x <- as.character(x)
+  }
+  if (is.character(x)) {
+    x_unique <- unique(x[!is.na(x)])
+    invalid <- x %in% x_unique[!custom_ab_valid_utf8(enc2utf8(x_unique))]
+    if (any(invalid)) {
+      warning_("in `as.ab()`: ", nr2char(sum(invalid)), " value", ifelse(sum(invalid) > 1, "s were", " was"), " not valid UTF-8 text and returned as `NA`. Convert such input first, e.g. with `iconv(x, from = \"CP949\", to = \"UTF-8\")`.")
+      x[invalid] <- NA_character_
+      if (all(is.na(x))) {
+        return(set_clean_class(rep(NA_character_, length(x)), new_class = c("ab", "character")))
+      }
+    }
+  }
+
+  # user-added synonyms (add_custom_antimicrobial_synonyms()) are matched on the input as given,
+  # before the input is transliterated to ASCII below, so that names in non-Latin scripts can be used
+  if (NROW(AMR_env$custom_ab_synonyms) > 0 && already_regex == FALSE && !isTRUE(list(...)$skip_custom_synonyms)) {
+    x_unique <- unique(x)
+    keys_unique <- custom_ab_synonym_key(x_unique)
+    hit_unique <- match(keys_unique, AMR_env$custom_ab_synonyms$key)
+    # no exact match: remove one trailing part at a time (part in parentheses or a strength such as "4.5g")
+    # and look the rest up after each removal, so that e.g. "Brand (comment) 4.5g" matches "Brand (comment)"
+    # before "Brand"; no words are removed, in any language; not for input that already identifies an antimicrobial as given
+    retry <- is.na(hit_unique) & !is.na(keys_unique) & !keys_unique %in% custom_ab_identifier_keys_cached()$key
+    if (any(retry)) {
+      idx <- which(retry)
+      cand <- custom_ab_strip_normalise(x_unique[idx])
+      repeat {
+        h <- match(custom_ab_synonym_key(cand), AMR_env$custom_ab_synonyms$key, incomparables = NA)
+        hit_unique[idx] <- h
+        left <- is.na(h)
+        if (!any(left)) break
+        idx <- idx[left]
+        stripped <- custom_ab_strip_step(cand[left])
+        moved <- stripped != cand[left]
+        if (!any(moved)) break
+        idx <- idx[moved]
+        cand <- stripped[moved]
+      }
+    }
+    hit <- hit_unique[match(x, x_unique)]
+    if (any(!is.na(hit))) {
+      out <- rep(NA_character_, length(x))
+      out[!is.na(hit)] <- AMR_env$custom_ab_synonyms$ab[hit[!is.na(hit)]]
+      rest <- is.na(hit) & !is.na(x)
+      if (any(rest)) {
+        out[rest] <- as.character(as.ab(x[rest], flag_multiple_results = flag_multiple_results, language = language, info = info, skip_custom_synonyms = TRUE, ...))
+      }
+      return(set_clean_class(out, new_class = c("ab", "character")))
+    }
+  }
+
   x_bak <- x
   x <- toupper(x)
 

@@ -92,6 +92,7 @@ coercion_cache_add <- function(type, keys, inputs, values) {
 
 reset_ab_cache <- function() {
   AMR_env$AB_index <- NULL
+  AMR_env$custom_ab_id_keys <- NULL
   AMR_env$ab_previously_coerced <- new_coercion_cache()
 }
 

@@ -2,15 +2,22 @@
 % Please edit documentation in R/custom_antimicrobials.R
 \name{add_custom_antimicrobials}
 \alias{add_custom_antimicrobials}
+\alias{add_custom_antimicrobial_synonyms}
 \alias{clear_custom_antimicrobials}
 \title{Add Custom Antimicrobials}
 \usage{
 add_custom_antimicrobials(x)
 
+add_custom_antimicrobial_synonyms(ab, synonyms = NULL)
+
 clear_custom_antimicrobials()
 }
 \arguments{
-\item{x}{A \link{data.frame} resembling the \link{antimicrobials} data set, at least containing columns "ab" and "name".}
+\item{x}{A \link{data.frame} resembling the \link{antimicrobials} data set, at least containing columns "ab" and "name". To add synonyms to existing antimicrobials, columns "ab" and "synonyms" suffice (see \emph{Details}).}
+
+\item{ab}{For \code{\link[=add_custom_antimicrobial_synonyms]{add_custom_antimicrobial_synonyms()}}: a \link{character} vector of existing antimicrobial codes (see \code{\link[=as.ab]{as.ab()}}), or a \link{data.frame} with columns "ab" and "synonyms" (one synonym per row).}
+
+\item{synonyms}{A \link{character} vector of synonyms. If \code{ab} has length 1, all \code{synonyms} are added to that antimicrobial; otherwise \code{ab} and \code{synonyms} must have the same length.}
 }
 \description{
 With \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} you can add your own custom antimicrobial drug names and codes.
@@ -22,7 +29,7 @@ There are two ways to circumvent this and automate the process of adding antimic
 
 \strong{Method 1:} Using the package option \code{\link[=AMR-options]{AMR_custom_ab}}, which is the preferred method. To use this method:
 \enumerate{
-\item Create a data set in the structure of the \link{antimicrobials} data set (containing at the very least columns "ab" and "name") and save it with \code{\link[=saveRDS]{saveRDS()}} to a location of choice, e.g. \code{"~/my_custom_ab.rds"}, or any remote location.
+\item Create a data set in the structure of the \link{antimicrobials} data set (containing at the very least columns "ab" and "name", or only columns "ab" and "synonyms" for synonyms of existing antimicrobials) and save it with \code{\link[=saveRDS]{saveRDS()}} to a location of choice, e.g. \code{"~/my_custom_ab.rds"}, or any remote location.
 \item Set the file location to the package option \code{\link[=AMR-options]{AMR_custom_ab}}: \code{options(AMR_custom_ab = "~/my_custom_ab.rds")}. This can even be a remote file location, such as an https URL. Since options are not saved between \R sessions, it is best to save this option to the \code{.Rprofile} file so that it will be loaded on start-up of \R. To do this, open the \code{.Rprofile} file using e.g. \code{utils::file.edit("~/.Rprofile")}, add this text and save the file:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Add custom antimicrobial codes:
@@ -30,6 +37,8 @@ options(AMR_custom_ab = "~/my_custom_ab.rds")
 }\if{html}{\out{</div>}}
 
 Upon package load, this file will be loaded and run through the \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}} function.
+
+This file can also hold synonyms for antimicrobials that already exist, such as local trade names: rows with an existing code in column "ab" and only column "synonyms" filled (one synonym per row, codes may repeat) are passed on to \code{\link[=add_custom_antimicrobial_synonyms]{add_custom_antimicrobial_synonyms()}}. Rows with an existing code that have any other column filled still give an error. Synonyms must be valid UTF-8 text; convert other encodings first, e.g. with \code{iconv(x, from = "CP949", to = "UTF-8")}.
 }
 
 \strong{Method 2:} Loading the antimicrobial additions directly from your \code{.Rprofile} file. Note that the definitions will be stored in a user-specific \R file, which is a suboptimal workflow. To use this method:
@@ -46,7 +55,9 @@ Upon package load, this file will be loaded and run through the \code{\link[=add
 }\if{html}{\out{</div>}}
 }
 
-Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to clear the previously added antimicrobials.
+Use \code{\link[=add_custom_antimicrobial_synonyms]{add_custom_antimicrobial_synonyms()}} to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with \code{\link[=add_custom_antimicrobials]{add_custom_antimicrobials()}}). These synonyms are recognised by \code{\link[=as.ab]{as.ab()}} and all \verb{ab_*()} functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before \code{\link[=as.ab]{as.ab()}} transliterates the input to ASCII. Matching ignores case, all white space (including no-break and ideographic spaces) and zero-width characters. If the input does not match as given, a trailing part in parentheses or brackets (such as \verb{(piperacillin, tazobactam)}) and a trailing strength written as a number with a unit symbol (such as \verb{4.5g}, \verb{4/0.5 g} or \verb{500 mg/mL}) are removed one at a time, and matching is tried again after each removal, so that the longest registered synonym wins. Full-width characters are read as their ASCII equivalents. No words are removed, in any language: to recognise a name with a dosage form (such as \code{Inj}), add that variant as a synonym as well. Only user-added synonyms are matched this way, there is no other fuzzy matching for them, and a strength on its own is never matched to a user-added synonym. A synonym cannot be added if it already identifies another antimicrobial as its code, name, synonym, abbreviation, ATC code, CID or LOINC code, also when written with other punctuation (such as \code{J01-CR05}).
+
+Use \code{\link[=clear_custom_antimicrobials]{clear_custom_antimicrobials()}} to clear the previously added antimicrobials and synonyms.
 }
 \examples{
 \donttest{
@@ -95,6 +106,13 @@ x <- data.frame(
 )
 x
 x[, betalactams()]
+
+# add local trade names as synonyms to existing antimicrobials,
+# here a Korean trade name of piperacillin/tazobactam
+add_custom_antimicrobial_synonyms("TZP", "\uD0C0\uC870\uC2E0\uC8FC")
+ab_name("\uD0C0\uC870\uC2E0\uC8FC")
+# a trailing strength, as in many hospital exports, is ignored
+as.ab("\uD0C0\uC870\uC2E0\uC8FC 4.5g")
 }
 }
 \seealso{
