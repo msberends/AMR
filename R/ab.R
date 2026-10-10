@@ -118,7 +118,7 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
   }
   if (is.character(x)) {
     x_unique <- unique(x[!is.na(x)])
-    invalid <- x %in% x_unique[!custom_ab_valid_utf8(enc2utf8(x_unique))]
+    invalid <- x %in% x_unique[!custom_ab_valid_utf8(x_unique)]
     if (any(invalid)) {
       warning_("in `as.ab()`: ", nr2char(sum(invalid)), " value", ifelse(sum(invalid) > 1, "s were", " was"), " not valid UTF-8 text and returned as `NA`. Convert such input first, e.g. with `iconv(x, from = \"CP949\", to = \"UTF-8\")`.")
       x[invalid] <- NA_character_

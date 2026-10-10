@@ -281,13 +281,13 @@ add_custom_antimicrobial_synonyms <- function(ab, synonyms = NULL) {
 # `new_records` are antimicrobials that are about to be added in the same call of add_custom_antimicrobials()
 custom_ab_synonyms_prepare <- function(ab, synonyms, new_records = NULL) {
   ab <- as.character(ab)
-  synonyms <- enc2utf8(as.character(synonyms))
+  synonyms <- as.character(synonyms)
   invalid <- !is.na(synonyms) & !custom_ab_valid_utf8(synonyms)
   stop_if(
     any(invalid),
     "Synonym(s) must be valid UTF-8 text, which does not apply to the synonym(s) at position ", vector_and(which(invalid), quotes = FALSE), ". Convert them first, e.g. with `iconv(x, from = \"CP949\", to = \"UTF-8\")`."
   )
-  synonyms <- trimws2(synonyms)
+  synonyms <- trimws2(enc2utf8(synonyms))
   keep <- !is.na(ab) & !is.na(synonyms) & !is.na(custom_ab_synonym_key(synonyms))
   ab <- ab[keep]
   synonyms <- synonyms[keep]
@@ -360,9 +360,15 @@ custom_ab_synonyms_commit <- function(syn) {
   )
 }
 
-# validUTF8() requires R >= 3.3.0, so use iconv(), which returns NA for invalid input
+# validUTF8() requires R >= 3.3.0, so use iconv(), which returns NA for invalid input;
+# x must be the input as given: unmarked text in a UTF-8 locale is checked before enc2utf8(), since older
+# R versions (e.g. 4.2) let enc2utf8() replace invalid bytes with "<xx>" escapes, which are valid UTF-8
 custom_ab_valid_utf8 <- function(x) {
-  !is.na(iconv(x, from = "UTF-8", to = "UTF-8"))
+  x <- as.character(x)
+  out <- !is.na(iconv(enc2utf8(x), from = "UTF-8", to = "UTF-8"))
+  unmarked <- which(Encoding(x) == "unknown" & isTRUE(l10n_info()[["UTF-8"]]))
+  out[unmarked] <- out[unmarked] & !is.na(iconv(x[unmarked], from = "UTF-8", to = "UTF-8"))
+  out
 }
 
 # white space for the user-added synonym functions: all Unicode white space, like trimws2()
@@ -372,9 +378,10 @@ custom_ab_ws <- "[\\h\\v\\p{Z}\u200B\u200C\u200D\u2060\uFEFF]"
 # other characters are kept as given;
 # input that is not valid UTF-8 or that consists of white space only gets an NA key and thus never matches
 custom_ab_synonym_key <- function(x) {
-  x <- enc2utf8(as.character(x))
-  out <- rep(NA_character_, length(x))
+  x <- as.character(x)
   valid <- !is.na(x) & custom_ab_valid_utf8(x)
+  x <- enc2utf8(x)
+  out <- rep(NA_character_, length(x))
   out[valid] <- toupper(gsub(paste0(custom_ab_ws, "+"), "", custom_ab_fullwidth_to_ascii(x[valid]), perl = TRUE))
   out[!is.na(out) & out == ""] <- NA_character_
   out
