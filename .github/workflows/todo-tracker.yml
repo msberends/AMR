@@ -43,6 +43,7 @@ jobs:
           fetch-depth: 0  # full history required for git blame
 
       - name: Generate TODO report
+        id: report
         env:
           GH_TOKEN: ${{ secrets.GH_REPO_SCOPE }}
         run: |
@@ -80,6 +81,7 @@ jobs:
 
           if [ ! -s /tmp/raw.txt ]; then
             echo -e "## \`TODO\` Report\n\n**Last Updated: ${LAST_UPDATED}**\n\nNo markers found." > todo.md
+            echo "unlinked=0" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -262,6 +264,8 @@ jobs:
 
           } > todo.md
 
+          echo "unlinked=$(awk -F'\t' '$5 == ""' /tmp/enriched.tsv | wc -l | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
       - name: Update GitHub issue
         uses: peter-evans/create-or-update-comment@v4
         with:
@@ -270,3 +274,11 @@ jobs:
           comment-id: 3253439219
           body-file: todo.md
           edit-mode: replace
+
+      # runs after the issue update, so that the overview in #231 is always current
+      - name: Fail on markers without issue reference
+        if: steps.report.outputs.unlinked != '0'
+        run: |
+          echo "::error::${{ steps.report.outputs.unlinked }} TODO/FIXME/HACK/XXX marker(s) without an issue reference (#NNN):"
+          awk -F'\t' '$5 == "" {print $1 ":" $2 ":" $6}' /tmp/enriched.tsv
+          exit 1
