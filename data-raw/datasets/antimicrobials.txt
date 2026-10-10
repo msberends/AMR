@@ -409,6 +409,7 @@
 "STH"		"Streptomycin-high"	"Aminoglycosides"	"NA"			"sthi,sthl,strepto high,streptomycin high"	"NA"					"18983-7,35841-6,6933-6,7049-0"
 "STI"		"Streptomycin/isoniazid"	"Antimycobacterials"	"J04AM01,QJ04AM01"	"Drugs for treatment of tuberculosis"	"Combinations of drugs for treatment of tuberculosis"	"NA"	"NA"					"NA"
 "SUL"	130313	"Sulbactam"	"Beta-lactamase inhibitors"	"J01CG01,QJ01CG01"	"Beta-lactam antibacterials, penicillins"	"Beta-lactamase inhibitors"	"sulbac"	"betamaze,sulbactamum"			1	"g"	"41716-2,41717-0,41718-8,41739-4"
+"SUD1"		"Sulbactam/durlobactam"	"Beta-lactamase inhibitors"	"J01CG30"	"Beta-lactam antibacterials, penicillins"	"Beta-lactamase inhibitors"	"NA"	"xacduro"					"NA"
 "SBC"	20055036	"Sulbenicillin"	"Penicillins,Beta-lactams"	"J01CA16,QJ01CA16"	"Beta-lactam antibacterials, penicillins"	"Penicillins with extended spectrum"	"sulben"	"kedacillin,kedacillina,sulbenicilina,sulbenicilline,sulbenicillinum,sulpelin"			15	"g"	"NA"
 "SUC"	5318	"Sulconazole"	"Antifungals"	"D01AC09,QD01AC09"			"NA"	"sulconazol,sulconazolum"					"NA"
 "SUP"	6634	"Sulfachlorpyridazine"	"Sulfonamides"	"QJ01EQ12"			"sulchl"	"cluricol,cosulid,cosumix,durasulf,nefrosul,nsulfanilamide,prinzone,solfaclorpiridazina,sonilyn,sulfacloropiridazina,sulfaclorpiridazina,vetisulid"					"NA"

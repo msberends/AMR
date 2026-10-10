@@ -1,4 +1,4 @@
-# AMR 3.0.1.9108
+# AMR 3.0.1.9109
 
 Planned as v3.1.0, mid October 2026.
 
@@ -44,11 +44,13 @@ Planned as v3.1.0, mid October 2026.
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
 * A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
 * `add_custom_antimicrobial_synonyms()` to add local names, such as trade names, to existing antimicrobials (#307)
+* Sulbactam/durlobactam (`SUD1`) added to the `antimicrobials` data set (#308)
 
 ### Fixed
 * `as.mo()` returned *Salmonella bongori* or another subspecies for *Salmonella* serovars written with the species, such as "Salmonella enterica serovar Typhi"
 * EUCAST breakpoint rules for *Aerococcus* (v12 onwards) were never applied, and *Pasteurella* rules were partly filed under *Neisseria meningitidis* (#290)
 * Streptomycin breakpoints imported from WHONET were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)
+* CLSI breakpoints for sulbactam/durlobactam were coded as sulfadimethoxine (`SUD`), and EUCAST 2011 breakpoints for roxithromycin were missing (#308)
 * Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified value no longer causes errors or silent wrong behaviour in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and SIR plotting/printing functions (#298)
 * `as.sir()`
   * On data frames: already-converted SIR columns no longer dropped on re-run (#278)

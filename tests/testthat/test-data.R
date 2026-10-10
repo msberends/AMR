@@ -633,3 +633,20 @@ test_that("antimicrobials: synonyms are unambiguous and filed under the right ag
   expect_false(any(c("lopac", "nbleomycinamide", "pharmakon", "prestwick", "spectrum", "spiro", "tocris") %in% syn$synonym))
   expect_false("AMA" %in% as.character(unlist(ab_from_text("Patient started on broad spectrum antibiotics"))))
 })
+
+test_that("clinical_breakpoints: WHONET codes that are another agent here are recoded (#308)", {
+  skip_on_cran()
+  cb <- AMR::clinical_breakpoints
+  # WHONET SUD is sulbactam/durlobactam (SUD1), not sulfadimethoxine (SUD)
+  expect_false("SUD" %in% cb$ab)
+  expect_identical(sort(unique(cb$guideline[cb$ab == "SUD1"])), c("CLSI 2024", "CLSI 2025", "CLSI 2026"))
+  expect_identical(as.character(as.ab(c("Sulbactam/durlobactam", "sulbactam-durlobactam", "Xacduro"))), rep("SUD1", 3))
+  expect_identical(as.character(as.sir(as.mic(4), mo = "Acinetobacter baumannii", ab = "SUD1", guideline = "CLSI 2026", info = FALSE)), "S")
+  # WHONET STR is streptomycin (STR1), not streptoduocin (STR)
+  expect_false("STR" %in% cb$ab)
+  # WHONET ROX (EUCAST 2011 only) is roxithromycin (RXT), not cefuroxime (CXM)
+  rxt_2011 <- cb[cb$guideline == "EUCAST 2011" & cb$ab == "RXT" & cb$method == "MIC", , drop = FALSE]
+  expect_true(all(as.mo(c("Haemophilus influenzae", "Moraxella catarrhalis")) %in% rxt_2011$mo))
+  cxm_2011 <- cb[cb$guideline == "EUCAST 2011" & cb$ab == "CXM" & cb$method == "MIC" & cb$mo %in% as.mo(c("Haemophilus influenzae", "Moraxella catarrhalis")), , drop = FALSE]
+  expect_true(all(cxm_2011$breakpoint_R == 2))
+})

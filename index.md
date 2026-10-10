@@ -10,7 +10,7 @@
 - Generates **antibiograms** - WISCA for empiric coverage estimates, or
   traditional/syndromic for AMR surveillance
 - Provides the **full microbiological taxonomy** of ~103 000 distinct
-  species and extensive info of ~620 antimicrobial drugs
+  species and extensive info of ~630 antimicrobial drugs
 - Applies **CLSI 2011-2026** and **EUCAST 2011-2026** clinical and
   veterinary breakpoints, and ECOFFs, for MIC and disk zone
   interpretation
@@ -60,7 +60,7 @@ in scientific research.
 
 After installing this package, R knows [**~103 000 distinct microbial
 species**](./reference/microorganisms.html) (updated april 2026) and all
-[**~620 antimicrobial and antiviral
+[**~630 antimicrobial and antiviral
 drugs**](./reference/antimicrobials.html) by name and code (including
 ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all
 about valid SIR and MIC values. The integral clinical breakpoint

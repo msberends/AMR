@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 60 234 observations and 15 variables:
+A \link[tibble:tibble]{tibble} with 60 237 observations and 15 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either \code{"ECOFF"}, \code{"animal"}, or \code{"human"}

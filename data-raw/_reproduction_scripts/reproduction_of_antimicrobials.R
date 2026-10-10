@@ -956,7 +956,9 @@ antimicrobials <- antimicrobials |>
       mutate(
         ab = "FTA",
         name = "Cefepime/taniborbactam",
-        cid = NA_real_
+        cid = NA_real_,
+        # the trade names of FPE do not apply
+        synonyms = list(NA_character_)
       ),
     antimicrobials |>
       filter(ab == "TBP") |>
@@ -966,6 +968,26 @@ antimicrobials <- antimicrobials |>
         name = "Taniborbactam",
         cid = 76902493,
         abbreviations = list("VNRX-5133")
+      )
+  )
+
+# add Sulbactam/durlobactam (WHONET code SUD, which is sulfadimethoxine in this package, see #308)
+antimicrobials <- antimicrobials |>
+  mutate(ab = as.character(ab)) |>
+  bind_rows(
+    antimicrobials |>
+      filter(ab == "SUL") |>
+      mutate(ab = as.character(ab)) |>
+      mutate(
+        ab = "SUD1",
+        name = "Sulbactam/durlobactam",
+        cid = NA_real_,
+        atc = list("J01CG30"),
+        abbreviations = list(NA_character_),
+        synonyms = list("Xacduro"),
+        iv_ddd = NA_real_,
+        iv_units = NA_character_,
+        loinc = list(NA_character_)
       )
   )
 

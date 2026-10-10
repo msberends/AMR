@@ -36044,6 +36044,7 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"PHN"	"Unknown"	"10 mcg"	15	15	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"RIF"	"Unknown"	"5 mcg"	18	18	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"RIF"	"Unknown"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"RXT"	"Unknown"		1	16	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"SAM"	"Unknown"		1	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"SXT"	"Unknown"	"1.25/23.75 mcg"	23	20	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"SXT"	"Unknown"		0.5	1	FALSE	FALSE	
@@ -36101,6 +36102,7 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"PHN"	"Unknown"	"10 mcg"	15	15	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"RIF"	"Unknown"	"5 mcg"	18	18	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"RIF"	"Unknown"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"RXT"	"Unknown"		1	16	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"SAM"	"Unknown"		1	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"SXT"	"Unknown"	"1.25/23.75 mcg"	23	20	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"SXT"	"Unknown"		0.5	1	FALSE	FALSE	
@@ -36136,6 +36138,7 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_MRXLL_CTRR"	2	"MNO"	"Unknown"		1	2	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_MRXLL_CTRR"	2	"OFX"	"Unknown"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_MRXLL_CTRR"	2	"RIF"	"Unknown"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"MIC"		"B_MRXLL_CTRR"	2	"RXT"	"Unknown"		0.5	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_MRXLL_CTRR"	2	"SAM"	"Unknown"		1	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_MRXLL_CTRR"	2	"SXT"	"Unknown"	"1.25/23.75 mcg"	18	15	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_MRXLL_CTRR"	2	"SXT"	"Unknown"		0.5	1	FALSE	FALSE	
@@ -36587,8 +36590,8 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2026"	"human"	"human"	"MIC"		"B_ACNTB"	3	"PIP"	"Table 2B-2"		16	128	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SAM"	"Table 2B-2"	"10 mcg"	22	16	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SAM"	"Table 2B-2"		8	32	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SUD"	"Table 2B-2"	"10/10 mcg"	17	13	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SUD"	"Table 2B-2"		4	16	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SUD1"	"Table 2B-2"	"10/10 mcg"	17	13	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SUD1"	"Table 2B-2"		4	16	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SXT"	"Table 2B-2"	"1.25/23.75 mcg"	16	10	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SXT"	"Table 2B-2"		2	4	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"DISK"		"B_ACNTB"	3	"TCC"	"Table 2B-2"	"75/10-15 mcg"	20	14	FALSE	FALSE	
@@ -39213,8 +39216,8 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2025"	"human"	"human"	"MIC"		"B_ACNTB"	3	"PIP"	"Table 2B-2"		16	128	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SAM"	"Table 2B-2"	"10 mcg"	22	16	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SAM"	"Table 2B-2"		8	32	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SUD"	"Table 2B-2"	"10/10 mcg"	17	13	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SUD"	"Table 2B-2"		4	16	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SUD1"	"Table 2B-2"	"10/10 mcg"	17	13	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SUD1"	"Table 2B-2"		4	16	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SXT"	"Table 2B-2"	"1.25/23.75 mcg"	16	10	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SXT"	"Table 2B-2"		2	4	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"DISK"		"B_ACNTB"	3	"TCC"	"Table 2B-2"	"75/10-15 mcg"	20	14	FALSE	FALSE	
@@ -41837,8 +41840,8 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2024"	"human"	"human"	"MIC"		"B_ACNTB"	3	"PIP"	"Table 2B-2"		16	128	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SAM"	"Table 2B-2"	"10 mcg"	15	11	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SAM"	"Table 2B-2"		8	32	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SUD"	"Table 2B-2"	"10/10 mcg"	17	13	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SUD"	"Table 2B-2"		4	16	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SUD1"	"Table 2B-2"	"10/10 mcg"	17	13	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SUD1"	"Table 2B-2"		4	16	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"DISK"		"B_ACNTB"	3	"SXT"	"Table 2B-2"	"1.25/23.75 mcg"	16	10	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_ACNTB"	3	"SXT"	"Table 2B-2"		2	4	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"DISK"		"B_ACNTB"	3	"TCC"	"Table 2B-2"	"75/10-15 mcg"	20	14	FALSE	FALSE	
