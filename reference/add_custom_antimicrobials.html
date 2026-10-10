@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9106</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9107</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,8 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_custom_antimicrobials</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">add_custom_antimicrobial_synonyms</span><span class="op">(</span><span class="va">ab</span>, synonyms <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">clear_custom_antimicrobials</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -65,18 +67,27 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> resembling the <a href="antimicrobials.html">antimicrobials</a> data set, at least containing columns "ab" and "name".</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> resembling the <a href="antimicrobials.html">antimicrobials</a> data set, at least containing columns "ab" and "name". To add synonyms to existing antimicrobials, columns "ab" and "synonyms" suffice (see <em>Details</em>).</p></dd>
+
+
+<dt id="arg-ab">ab<a class="anchor" aria-label="anchor" href="#arg-ab"></a></dt>
+<dd><p>For <code>add_custom_antimicrobial_synonyms()</code>: a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector of existing antimicrobial codes (see <code><a href="as.ab.html">as.ab()</a></code>), or a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with columns "ab" and "synonyms" (one synonym per row).</p></dd>
+
+
+<dt id="arg-synonyms">synonyms<a class="anchor" aria-label="anchor" href="#arg-synonyms"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector of synonyms. If <code>ab</code> has length 1, all <code>synonyms</code> are added to that antimicrobial; otherwise <code>ab</code> and <code>synonyms</code> must have the same length.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><strong>Important:</strong> Due to how <span style="R">R</span> works, the <code>add_custom_antimicrobials()</code> function has to be run in every <span style="R">R</span> session - added antimicrobials are not stored between sessions and are thus lost when <span style="R">R</span> is exited.</p>
 <p>There are two ways to circumvent this and automate the process of adding antimicrobials:</p>
-<p><strong>Method 1:</strong> Using the package option <code><a href="AMR-options.html">AMR_custom_ab</a></code>, which is the preferred method. To use this method:</p><ol><li><p>Create a data set in the structure of the <a href="antimicrobials.html">antimicrobials</a> data set (containing at the very least columns "ab" and "name") and save it with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> to a location of choice, e.g. <code>"~/my_custom_ab.rds"</code>, or any remote location.</p></li>
+<p><strong>Method 1:</strong> Using the package option <code><a href="AMR-options.html">AMR_custom_ab</a></code>, which is the preferred method. To use this method:</p><ol><li><p>Create a data set in the structure of the <a href="antimicrobials.html">antimicrobials</a> data set (containing at the very least columns "ab" and "name", or only columns "ab" and "synonyms" for synonyms of existing antimicrobials) and save it with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> to a location of choice, e.g. <code>"~/my_custom_ab.rds"</code>, or any remote location.</p></li>
 <li><p>Set the file location to the package option <code><a href="AMR-options.html">AMR_custom_ab</a></code>: <code>options(AMR_custom_ab = "~/my_custom_ab.rds")</code>. This can even be a remote file location, such as an https URL. Since options are not saved between <span style="R">R</span> sessions, it is best to save this option to the <code>.Rprofile</code> file so that it will be loaded on start-up of <span style="R">R</span>. To do this, open the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>, add this text and save the file:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># Add custom antimicrobial codes:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>AMR_custom_ab <span class="op">=</span> <span class="st">"~/my_custom_ab.rds"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p>Upon package load, this file will be loaded and run through the <code>add_custom_antimicrobials()</code> function.</p></li>
+<p>Upon package load, this file will be loaded and run through the <code>add_custom_antimicrobials()</code> function.</p>
+<p>This file can also hold synonyms for antimicrobials that already exist, such as local trade names: rows with an existing code in column "ab" and only column "synonyms" filled (one synonym per row, codes may repeat) are passed on to <code>add_custom_antimicrobial_synonyms()</code>. Rows with an existing code that have any other column filled still give an error. Synonyms must be valid UTF-8 text; convert other encodings first, e.g. with <code>iconv(x, from = "CP949", to = "UTF-8")</code>.</p></li>
 </ol><p><strong>Method 2:</strong> Loading the antimicrobial additions directly from your <code>.Rprofile</code> file. Note that the definitions will be stored in a user-specific <span style="R">R</span> file, which is a suboptimal workflow. To use this method:</p><ol><li><p>Edit the <code>.Rprofile</code> file using e.g. <code>utils::file.edit("~/.Rprofile")</code>.</p></li>
 <li><p>Add a text like below and save the file:</p>
 <p></p><div class="sourceCode r"><pre><code><span> <span class="co"># Add custom antibiotic drug codes:</span></span>
@@ -85,7 +96,8 @@
 <span>              name <span class="op">=</span> <span class="st">"Test Antibiotic"</span>,</span>
 <span>              group <span class="op">=</span> <span class="st">"Test Group"</span><span class="op">)</span></span>
 <span> <span class="op">)</span></span></code></pre><p></p></div></li>
-</ol><p>Use <code>clear_custom_antimicrobials()</code> to clear the previously added antimicrobials.</p>
+</ol><p>Use <code>add_custom_antimicrobial_synonyms()</code> to add extra names, such as local trade names, to antimicrobials that already exist (including antimicrobials added with <code>add_custom_antimicrobials()</code>). These synonyms are recognised by <code><a href="as.ab.html">as.ab()</a></code> and all <code>ab_*()</code> functions. Synonyms may contain non-ASCII characters (e.g. trade names in other scripts): they are matched against the input as given, before <code><a href="as.ab.html">as.ab()</a></code> transliterates the input to ASCII. Matching ignores case, all white space (including no-break and ideographic spaces) and zero-width characters. If the input does not match as given, a trailing part in parentheses or brackets (such as <code>(piperacillin, tazobactam)</code>) and a trailing strength written as a number with a unit symbol (such as <code>4.5g</code>, <code>4/0.5 g</code> or <code>500 mg/mL</code>) are removed one at a time, and matching is tried again after each removal, so that the longest registered synonym wins. Full-width characters are read as their ASCII equivalents. No words are removed, in any language: to recognise a name with a dosage form (such as <code>Inj</code>), add that variant as a synonym as well. Only user-added synonyms are matched this way, there is no other fuzzy matching for them, and a strength on its own is never matched to a user-added synonym. A synonym cannot be added if it already identifies another antimicrobial as its code, name, synonym, abbreviation, ATC code, CID or LOINC code, also when written with other punctuation (such as <code>J01-CR05</code>).</p>
+<p>Use <code>clear_custom_antimicrobials()</code> to clear the previously added antimicrobials and synonyms.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -200,6 +212,17 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `betalactams()` using columns <span style="color: #00BB00; font-weight: bold;">coflu</span> (co-fluampicil) and <span style="color: #00BB00; font-weight: bold;">ampicillin</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   coflu ampicillin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     S          R</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># add local trade names as synonyms to existing antimicrobials,</span></span></span>
+<span class="r-in"><span><span class="co"># here a Korean trade name of piperacillin/tazobactam</span></span></span>
+<span class="r-in"><span><span class="fu">add_custom_antimicrobial_synonyms</span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"\uD0C0\uC870\uC2E0\uC8FC"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Added one synonym to one antimicrobial.</span>
+<span class="r-in"><span><span class="fu"><a href="ab_property.html">ab_name</a></span><span class="op">(</span><span class="st">"\uD0C0\uC870\uC2E0\uC8FC"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Piperacillin/tazobactam"</span>
+<span class="r-in"><span><span class="co"># a trailing strength, as in many hospital exports, is ignored</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="as.ab.html">as.ab</a></span><span class="op">(</span><span class="st">"\uD0C0\uC870\uC2E0\uC8FC 4.5g"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;ab&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TZP</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9106
+## AMR 3.0.1.9107
 
 Planned as v3.1.0, mid October 2026.
 
@@ -118,6 +118,9 @@ Planned as v3.1.0, mid October 2026.
 - A registry of all microbial IDs (MO codes) since v2.0.0 now prevents
   existing IDs from being reused or mixed up; IDs of earlier releases
   are translated to the current ID of the same taxon
+- [`add_custom_antimicrobial_synonyms()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md)
+  to add local names, such as trade names, to existing antimicrobials
+  ([\#307](https://github.com/msberends/AMR/issues/307))
 
 #### Fixed
 
@@ -158,6 +161,9 @@ Planned as v3.1.0, mid October 2026.
   `fast_mode` (used internally) were remembered and reused by later
   regular calls, which could return `NA` for valid input
   ([\#313](https://github.com/msberends/AMR/issues/313))
+- [`as.ab()`](https://amr-for-r.org/reference/as.ab.md): input that is
+  not valid UTF-8 (e.g. text exported in a local encoding such as CP949)
+  now returns `NA` with a warning instead of an error
 - [`as.mo()`](https://amr-for-r.org/reference/as.mo.md): previously
   coerced input was often not recognised again, e.g. for an unknown
   species of a known genus, so it was matched again on every call

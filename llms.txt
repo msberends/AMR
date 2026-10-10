@@ -626,6 +626,7 @@ from clinical text records, using
   [`atc_online_ddd_units()`](https://amr-for-r.org/reference/atc_online.md)
   : Get ATC Properties from WHOCC Website
 - [`add_custom_antimicrobials()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md)
+  [`add_custom_antimicrobial_synonyms()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md)
   [`clear_custom_antimicrobials()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md)
   : Add Custom Antimicrobials
 
