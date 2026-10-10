@@ -220,6 +220,10 @@ Planned as v3.1.0, mid October 2026.
   always kept
 - Taxonomy: consistent higher taxonomy and parent records, and data sets
   refer only to current names (except `intrinsic_resistant`)
+- `antimicrobials`: trade names of combinations (Tazocin, Timentin,
+  Recarbrio, Exblifep) were listed under a single component, and names
+  of screening libraries and suppliers (e.g. Prestwick, Spectrum) as
+  synonyms ([\#315](https://github.com/msberends/AMR/issues/315))
 
 #### Updated
 
