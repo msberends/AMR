@@ -615,3 +615,21 @@ test_that("antimicrobials: unique and well-formed", {
   loinc <- loinc[!is.na(loinc) & loinc != ""]
   expect_true(all(loinc %like_case% "^[0-9]+-[0-9]$"), info = paste(utils::head(loinc[loinc %unlike_case% "^[0-9]+-[0-9]$"], 20), collapse = ", "))
 })
+
+test_that("antimicrobials: synonyms are unambiguous and filed under the right agent", {
+  skip_on_cran()
+  ab <- AMR::antimicrobials
+  syn <- data.frame(ab = rep(as.character(ab$ab), lengths(ab$synonyms)), synonym = unlist(ab$synonyms), stringsAsFactors = FALSE)
+  syn <- syn[!is.na(syn$synonym), , drop = FALSE]
+  # a synonym must not belong to more than one agent
+  dups <- unique(syn$synonym[duplicated(syn$synonym)])
+  expect_identical(length(dups), 0L, info = paste(dups, collapse = ", "))
+  # trade names of combinations belong to the combination, not to one of its components (#315)
+  expect_identical(
+    as.character(as.ab(c("Tazocin", "Zosyn", "Timentin", "Recarbrio", "Exblifep", "Augmentin", "Bactrim"))),
+    c("TZP", "TZP", "TCC", "IMR", "FPE", "AMC", "SXT")
+  )
+  # names of screening libraries, suppliers and chemical fragments are no synonyms (#315)
+  expect_false(any(c("lopac", "nbleomycinamide", "pharmakon", "prestwick", "spectrum", "spiro", "tocris") %in% syn$synonym))
+  expect_false("AMA" %in% as.character(unlist(ab_from_text("Patient started on broad spectrum antibiotics"))))
+})
