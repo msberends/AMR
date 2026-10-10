@@ -153,7 +153,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #'   options(AMR_breakpoint_type = "animal")
 #' ```
 #'
-###### TODO #187 When applying veterinary breakpoints (by setting `host` or by setting `breakpoint_type = "animal"`), the [CLSI VET09 guideline](https://clsi.org/standards/products/veterinary-medicine/documents/vet09/) will be applied to cope with missing animal species-specific breakpoints.
+###### TODO #317: When applying veterinary breakpoints (by setting `host` or by setting `breakpoint_type = "animal"`), the [CLSI VET09 guideline](https://clsi.org/standards/products/veterinary-medicine/documents/vet09/) will be applied to cope with missing animal species-specific breakpoints.
 #'
 #' ### After Interpretation
 #'
@@ -182,7 +182,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' - **CLSI M39: Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' - **CLSI M100: Performance Standard for Antimicrobial Susceptibility Testing**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type != "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type != "animal")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/shop/standards/m100/>.
 #' - **CLSI VET01: Performance Standards for Antimicrobial Disk and Dilution Susceptibility Tests for Bacteria Isolated From Animals**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/veterinary-medicine/documents/vet01/>.
-###### TODO  - **CLSI VET09: Understanding Susceptibility Test Data as a Component of Antimicrobial Stewardship in Veterinary Settings**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/veterinary-medicine/documents/vet09/>.
+###### TODO #317: - **CLSI VET09: Understanding Susceptibility Test Data as a Component of Antimicrobial Stewardship in Veterinary Settings**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI" & type == "animal")$guideline)))`, *Clinical and Laboratory Standards Institute* (CLSI). <https://clsi.org/standards/products/veterinary-medicine/documents/vet09/>.
 #' - **EUCAST Breakpoint tables for interpretation of MICs and zone diameters**, `r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`, *European Committee on Antimicrobial Susceptibility Testing* (EUCAST). <https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/>.
 #' - **WHONET** as a source for machine-reading the clinical breakpoints ([read more here](https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet)), 1989-`r max(as.integer(gsub("[^0-9]", "", AMR::clinical_breakpoints$guideline)))`, *WHO Collaborating Centre for Surveillance of Antimicrobial Resistance*. <https://whonet.org/>.
 #'
@@ -409,7 +409,7 @@ as_sir_structure <- function(x,
       levels = VALID_SIR_LEVELS,
       ordered = TRUE
     ),
-    # TODO for #170
+    # TODO #170: store interpretation details as attributes
     # guideline = guideline,
     # mo = mo,
     # ab = ab,
@@ -1320,7 +1320,7 @@ as_sir_method <- function(method_short,
     warning_("The following animal host(s) could not be coerced: ", vector_and(host.bak[is.na(host) & !is.na(host.bak)]), immediate = TRUE)
     message_(as_note = FALSE) # new line
   }
-  # TODO add a switch to turn this off? In interactive sessions perhaps ask the user. Default should be On.
+  # TODO #317: add a switch to turn this message off (in interactive sessions perhaps ask the user), default on
   # if (breakpoint_type == "animal" && isTRUE(info) && message_not_thrown_before("as.sir", "host_missing_breakpoints")) {
   #   if (guideline_coerced %like% "CLSI") {
   #     message_("Please note that in the absence of specific veterinary breakpoints for certain animal hosts, the CLSI guideline VET09 will be applied where possible.\n\n")
@@ -1404,7 +1404,7 @@ as_sir_method <- function(method_short,
       )
     }
   }
-  # TODO set uti to specimen column here
+  # TODO #318: derive uti from the specimen column here
 
 
   if (length(ab) == 1 && ab %like% paste0("as.", method_short)) {
@@ -1632,8 +1632,8 @@ as_sir_method <- function(method_short,
     new_sir <- rep(NA_sir_, length(rows))
 
     # find different mo properties, as fast as possible
-    # TODO in case of VET09, we need to keep E. coli, also when users have Proteus in their data set
-    # TODO look up which species, at least E. coli - also Staph or Strep?
+    # TODO #317: for VET09, keep E. coli, also when users have Proteus in their data set
+    # TODO #317: look up which species, at least E. coli, perhaps also Staph or Strep
     mo_current_genus <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$genus[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
     mo_current_family <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$family[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
     mo_current_order <- AMR_env$MO_lookup$mo[match(AMR_env$MO_lookup$order[match(mo_current, AMR_env$MO_lookup$mo)], AMR_env$MO_lookup$fullname)]
@@ -1671,7 +1671,7 @@ as_sir_method <- function(method_short,
     )
 
     # gather all available breakpoints for current MO
-    # TODO for VET09 do not filter out E. coli and such
+    # TODO #317: for VET09, do not filter out E. coli and such
     # For custom reference_data: skip guideline filter when guideline_current is not in the data (#239)
     guideline_filter_current <- if (custom_breakpoints_set &&
       !guideline_current %in% breakpoints$guideline) {
@@ -1700,12 +1700,12 @@ as_sir_method <- function(method_short,
     }
 
     ## fall-back methods for veterinary guidelines ----
-    ## TODO actually implement this well
+    ## TODO #317: properly implement this
     if (FALSE) {
       # if (breakpoint_type == "animal" && !host_current %in% breakpoints_current$host) {
       if (guideline_coerced %like% "CLSI") {
         # VET09 says that staph/strep/enterococcus BP can be extrapolated to all Gr+ cocci except for intrinsic resistance, so take all Gr+ cocci:
-        gram_plus_cocci_vet09 <- microorganisms$mo[microorganisms$genus %in% c("Staphylococcus", "Streptococcus", "Peptostreptococcus", "Aerococcus", "Micrococcus") & microorganisms$rank == "genus"] # TODO should probably include genera that were either of these before
+        gram_plus_cocci_vet09 <- microorganisms$mo[microorganisms$genus %in% c("Staphylococcus", "Streptococcus", "Peptostreptococcus", "Aerococcus", "Micrococcus") & microorganisms$rank == "genus"] # TODO #317: should probably include genera formerly part of these
 
         # HUMAN SUBSTITUTES
         if (ab_current == "AZM" && mo_current_genus %in% gram_plus_cocci_vet09 && host_current %in% c("dogs", "cats", "horse")) {
@@ -1754,7 +1754,7 @@ as_sir_method <- function(method_short,
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", ab_formatted, " based on CLSI VET09."))
         } else if (host_current %in% c("dogs", "cats") && (mo_current_genus %in% c("B_AMYCS", "B_NOCRD", "B_CMPYL", "B_CRYNB", "B_ENTRC", "B_MYCBC", "B_PSDMN", "B_AERMN") | mo_current_class == "B_[CLS]_BTPRTBCT" | mo_current == "B_LISTR_MNCY")) {
           # dog breakpoints if no canine/feline
-          # TODO do we still have dogs breakpoints at this point???
+          # TODO #317: check whether dog breakpoints are still available at this point
           breakpoints_current <- breakpoints_current %pm>% subset(host == "human") # WRONG
           notes_current <- c(notes_current, paste0("Using ", font_bold("human"), " breakpoints for ", mo_formatted, " based on CLSI VET09."))
         } else {
@@ -2186,7 +2186,7 @@ freq.sir <- function(x, ...) {
 # this prevents the requirement for putting the dependency in Imports:
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(skimr::get_skimmers, sir)
 get_skimmers.sir <- function(column) {
-  # TODO #170 add here in AMR 3.1.0 details about guideline
+  # TODO #170: add details about guideline here
   skimr::sfl(
     skim_type = "sir",
     # guideline = function(x) "EUCAST 2026", # or "Multiple"
@@ -2207,7 +2207,7 @@ get_skimmers.sir <- function(column) {
 print.sir <- function(x, ...) {
   x_name <- deparse(substitute(x))
   cat(format_inline_("Class {.cls sir}\n"))
-  # TODO for #170
+  # TODO #170: print interpretation details from attributes
   # if (!is.null(attributes(x)$guideline) && !all(is.na(attributes(x)$guideline))) {
   #   cat(font_blue(word_wrap("These values were interpreted using ",
   #                           font_bold(vector_and(attributes(x)$guideline, quotes = FALSE)),
@@ -2299,7 +2299,7 @@ summary.sir <- function(object, ...) {
 c.sir <- function(...) {
   lst <- list(...)
 
-  # TODO for #170
+  # TODO #170: retrieve attributes of all elements
   # guideline <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$guideline %||% NA_character_)
   # mo <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$mo %||% NA_character_)
   # ab <- vapply(FUN.VALUE = character(1), lst, function(x) attributes(x)$ab %||% NA_character_)
@@ -2309,7 +2309,7 @@ c.sir <- function(...) {
 
   out <- as.sir(unlist(lapply(list(...), as.character)))
 
-  # TODO for #170
+  # TODO #170: restore attributes on the combined result
   # if (!all(is.na(guideline))) {
   #   attributes(out)$guideline <- guideline
   #   attributes(out)$mo <- mo

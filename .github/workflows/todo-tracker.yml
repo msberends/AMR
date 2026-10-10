@@ -75,7 +75,8 @@ jobs:
             --include='*.yml' --include='*.md' --include='*.css' \
             --include='*.js' \
             --exclude='todo-tracker.yml' --exclude='todo.md' \
-            -E '\b(TODO|FIXME|HACK|XXX)\b' . > /tmp/raw.txt || true
+            -E '\b(TODO|FIXME|HACK|XXX)\b' . \
+            | grep -vE '"XXX"' > /tmp/raw.txt || true
 
           if [ ! -s /tmp/raw.txt ]; then
             echo -e "## \`TODO\` Report\n\n**Last Updated: ${LAST_UPDATED}**\n\nNo markers found." > todo.md

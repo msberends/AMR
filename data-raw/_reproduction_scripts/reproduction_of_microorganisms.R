@@ -1981,7 +1981,7 @@ current_gbif <- taxonomy_gbif.bak %>%
 
 taxonomy <- add_missing_parents(taxonomy, current_gbif)
 
-# TODO perhaps only for 2026: remove old kingdoms
+# remove the old kingdoms Bacteria and Archaea, these are domains
 taxonomy <- taxonomy %>%
   filter(!(rank == "kingdom" & fullname %in% c("Bacteria", "Archaea")))
 

@@ -161,7 +161,7 @@ organisms <- organisms |>
   arrange(code, group) |>
   select(-group) |>
   distinct()
-# no XXX
+# remove WHONET placeholder organism code
 organisms <- organisms |> filter(code != "XXX")
 
 # 2023-07-08 SGM is also Strep gamma in WHONET, must only be Slowly-growing Mycobacterium
