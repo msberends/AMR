@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9107</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9109</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9107" id="amr-3019107">AMR 3.0.1.9107<a class="anchor" aria-label="anchor" href="#amr-3019107"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9109" id="amr-3019109">AMR 3.0.1.9109<a class="anchor" aria-label="anchor" href="#amr-3019109"></a></h2>
 <p>Planned as v3.1.0, mid October 2026.</p>
 <div class="section level4">
-<h4 id="breaking-changes-3-0-1-9107">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9107"></a></h4>
+<h4 id="breaking-changes-3-0-1-9109">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9109"></a></h4>
 <ul><li>
 <p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms with new top-level <em>domains</em> ‘Bacteria’ and ‘Archaea’ (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column in the <code>microorganisms</code> data set was added, and more importantly, <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g. <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
 <table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
@@ -106,7 +106,7 @@
 <li><p><code><a href="../reference/as.mo.html">as.mo()</a></code> no longer guesses unknown MO codes (these become <code>NA</code> with a warning), and MO codes from versions before v2.0.0 are no longer supported</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9107">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9107"></a></h4>
+<h4 id="new-3-0-1-9109">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9109"></a></h4>
 <ul><li>EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the <code>clinical_breakpoints</code> data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations</li>
 <li>Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
 <ul><li>
@@ -130,13 +130,15 @@
 <li>A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon</li>
 <li>
 <code><a href="../reference/add_custom_antimicrobials.html">add_custom_antimicrobial_synonyms()</a></code> to add local names, such as trade names, to existing antimicrobials (<a href="https://github.com/msberends/AMR/issues/307" class="external-link">#307</a>)</li>
+<li>Sulbactam/durlobactam (<code>SUD1</code>) added to the <code>antimicrobials</code> data set (<a href="https://github.com/msberends/AMR/issues/308" class="external-link">#308</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixed-3-0-1-9107">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9107"></a></h4>
+<h4 id="fixed-3-0-1-9109">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9109"></a></h4>
 <ul><li>
 <code><a href="../reference/as.mo.html">as.mo()</a></code> returned <em>Salmonella bongori</em> or another subspecies for <em>Salmonella</em> serovars written with the species, such as “Salmonella enterica serovar Typhi”</li>
 <li>EUCAST breakpoint rules for <em>Aerococcus</em> (v12 onwards) were never applied, and <em>Pasteurella</em> rules were partly filed under <em>Neisseria meningitidis</em> (<a href="https://github.com/msberends/AMR/issues/290" class="external-link">#290</a>)</li>
 <li>Streptomycin breakpoints imported from WHONET were coded as streptoduocin (<code>STR</code>) instead of streptomycin (<code>STR1</code>)</li>
+<li>CLSI breakpoints for sulbactam/durlobactam were coded as sulfadimethoxine (<code>SUD</code>), and EUCAST 2011 breakpoints for roxithromycin were missing (<a href="https://github.com/msberends/AMR/issues/308" class="external-link">#308</a>)</li>
 <li>Setting <code>options(AMR_guideline = "EUCAST 2012")</code> or any year-qualified value no longer causes errors or silent wrong behaviour in <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/proportion.html">resistance()</a></code>, <code><a href="../reference/proportion.html">susceptibility()</a></code>, <code><a href="../reference/count.html">count_resistant()</a></code>, <code><a href="../reference/count.html">count_susceptible()</a></code>, and SIR plotting/printing functions (<a href="https://github.com/msberends/AMR/issues/298" class="external-link">#298</a>)</li>
 <li>
 <code><a href="../reference/as.sir.html">as.sir()</a></code>
@@ -186,7 +188,7 @@
 <code>antimicrobials</code>: trade names of combinations (Tazocin, Timentin, Recarbrio, Exblifep) were listed under a single component, and names of screening libraries and suppliers (e.g. Prestwick, Spectrum) as synonyms (<a href="https://github.com/msberends/AMR/issues/315" class="external-link">#315</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="updated-3-0-1-9107">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9107"></a></h4>
+<h4 id="updated-3-0-1-9109">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9109"></a></h4>
 <ul><li>Faster <code><a href="../reference/as.ab.html">as.ab()</a></code>, <code><a href="../reference/as.mo.html">as.mo()</a></code> and all <code>mo_*()</code> functions through one consistent session cache design, which is cleared when lookup tables change, e.g. after <code><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms()</a></code> (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)
 <ul><li>
 <code>mo_*()</code> functions retrieve properties of valid <code>&lt;mo&gt;</code> input directly, and only for unique values</li>

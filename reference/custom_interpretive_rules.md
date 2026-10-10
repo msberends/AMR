@@ -186,8 +186,8 @@ These 43 antimicrobial groups are allowed in the rules
   imipenem/relebactam, meropenem/nacubactam, meropenem/vaborbactam,
   mezlocillin/sulbactam, nacubactam, penicillin/sulbactam,
   piperacillin/sulbactam, piperacillin/tazobactam, sulbactam,
-  sultamicillin, taniborbactam, tazobactam, ticarcillin/clavulanic acid,
-  xeruborbactam, and zidebactam)
+  sulbactam/durlobactam, sultamicillin, taniborbactam, tazobactam,
+  ticarcillin/clavulanic acid, xeruborbactam, and zidebactam)
 
 - betalactams  
   (amoxicillin, amoxicillin/clavulanic acid, amoxicillin/sulbactam,

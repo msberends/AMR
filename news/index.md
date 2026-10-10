@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9107
+## AMR 3.0.1.9109
 
 Planned as v3.1.0, mid October 2026.
 
@@ -121,6 +121,8 @@ Planned as v3.1.0, mid October 2026.
 - [`add_custom_antimicrobial_synonyms()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md)
   to add local names, such as trade names, to existing antimicrobials
   ([\#307](https://github.com/msberends/AMR/issues/307))
+- Sulbactam/durlobactam (`SUD1`) added to the `antimicrobials` data set
+  ([\#308](https://github.com/msberends/AMR/issues/308))
 
 #### Fixed
 
@@ -132,6 +134,10 @@ Planned as v3.1.0, mid October 2026.
   meningitidis* ([\#290](https://github.com/msberends/AMR/issues/290))
 - Streptomycin breakpoints imported from WHONET were coded as
   streptoduocin (`STR`) instead of streptomycin (`STR1`)
+- CLSI breakpoints for sulbactam/durlobactam were coded as
+  sulfadimethoxine (`SUD`), and EUCAST 2011 breakpoints for
+  roxithromycin were missing
+  ([\#308](https://github.com/msberends/AMR/issues/308))
 - Setting `options(AMR_guideline = "EUCAST 2012")` or any year-qualified
   value no longer causes errors or silent wrong behaviour in
   [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),

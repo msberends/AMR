@@ -91,7 +91,7 @@ First 6 rows when filtering on genus *Escherichia*:
 
 ## `antimicrobials`: Antibiotic and Antifungal Drugs
 
-A data set with 505 rows and 14 columns, containing the following column
+A data set with 506 rows and 14 columns, containing the following column
 names:  
 *ab*, *cid*, *name*, *group*, *atc*, *atc_group1*, *atc_group2*,
 *abbreviations*, *synonyms*, *oral_ddd*, *oral_units*, *iv_ddd*,
@@ -100,8 +100,8 @@ names:
 This data set is in R available as `antimicrobials`, after you load the
 `AMR` package.
 
-It was last updated on 9 October 2026 20:25:44 UTC. Find more info about
-the contents, (scientific) source, and structure of this [data set
+It was last updated on 10 October 2026 07:42:25 UTC. Find more info
+about the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/antimicrobials.html).
 
 **Direct download links:**
@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 60 234 rows and 15 columns, containing the following
+A data set with 60 237 rows and 15 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, *is_SDD*,
@@ -156,8 +156,8 @@ and *note*.
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 7 October 2026 10:55:12 UTC. Find more info about
-the contents, (scientific) source, and structure of this [data set
+It was last updated on 10 October 2026 07:42:25 UTC. Find more info
+about the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
 **Direct download links:**
