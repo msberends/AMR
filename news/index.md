@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9114
+## AMR 3.0.1.9115
 
 Planned as v3.1.0, mid October 2026.
 
@@ -157,6 +157,14 @@ Planned as v3.1.0, mid October 2026.
   - Assumption of disk zones are now preferred over MIC values when
     input is only whole numbers
     ([\#291](https://github.com/msberends/AMR/issues/291))
+  - Capped MICs (e.g. `<=0.5`) are now `I` instead of `S` or `NI` if
+    there is no S category, i.e. an off-scale S breakpoint such as
+    EUCAST’s 0.001 mg/L
+    ([\#295](https://github.com/msberends/AMR/issues/295))
+  - Capped MICs are no longer forced to `S` or `R` if there is no
+    breakpoint for the drug-bug combination
+  - Documented default of `capped_mic_handling` corrected to
+    `"standard"`
 - [`as.mic()`](https://amr-for-r.org/reference/as.mic.md): values in
   scientific notation (e.g. `1e-3`) now handled correctly
 - [`as.ab()`](https://amr-for-r.org/reference/as.ab.md): codes

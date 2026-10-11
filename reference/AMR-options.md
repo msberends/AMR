@@ -24,7 +24,7 @@ the `AMR` package. Set them using the
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), to indicate
   how capped MIC values (`<`, `<=`, `>`, `>=`) should be interpreted.
   Must be one of `"none"`, `"conservative"`, `"standard"`, or
-  `"lenient"` - the default is `"conservative"`.
+  `"lenient"` - the default is `"standard"`.
 
 - `AMR_cleaning_regex`  
   A [regular expression](https://rdrr.io/r/base/regex.html)

@@ -209,14 +209,14 @@ sir_interpretation_history(clean = FALSE)
 
   - `<=`, `<`, `>` and `>=` are ignored.
 
-  `"conservative"` (default)
+  `"conservative"`
 
   - `<=`, `<`, `>` and `>=` return `"NI"` (non-interpretable) if the
     *true* MIC could be at either side of the breakpoint.
 
   - This is the only mode that preserves uncertainty for ECOFFs.
 
-  `"standard"`
+  `"standard"` (default)
 
   - `<=` and `>=` return `"NI"` (non-interpretable) if the *true* MIC
     could be at either side of the breakpoint.
@@ -231,7 +231,18 @@ sir_interpretation_history(clean = FALSE)
 
   - `>=` and `>` always return `"R"`, regardless of the breakpoint.
 
-  The default `"conservative"` setting ensures cautious handling of
+  In all modes except `"none"`, a capped value is never forced to a
+  category that the guideline does not provide for the drug-bug
+  combination: if a breakpoint is missing, the result is `NA` as for
+  uncapped values. EUCAST uses an off-scale S breakpoint of 0.001 mg/L
+  to indicate that there is no S category (stored as 0.0001 in
+  [clinical_breakpoints](https://amr-for-r.org/reference/clinical_breakpoints.md);
+  any S breakpoint of 0.001 or lower is treated as such). In that case,
+  `<` and `<=` values that cannot be `"R"` return `"I"` (or `"SDD"`),
+  and `"standard"` and `"lenient"` return `"I"` (or `"SDD"`) instead of
+  `"S"`.
+
+  The default `"standard"` setting ensures cautious handling of
   uncertain values while preserving interpretability. This option can
   also be set with the package option
   [`AMR_capped_mic_handling`](https://amr-for-r.org/reference/AMR-options.md).
@@ -432,7 +443,7 @@ The `as.sir()` function can work in four ways:
 
     - Operators like "\<=" will be considered according to the
       `capped_mic_handling` setting. At default, an MIC value of e.g.
-      "\>2" will return "NI" (non-interpretable) if the breakpoint is
+      "\>=2" will return "NI" (non-interpretable) if the breakpoint is
       4-8; the *true* MIC could be at either side of the breakpoint.
       This is to prevent that capped values from raw laboratory data
       would not be treated conservatively.
@@ -711,10 +722,10 @@ sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-10-11 08:09:55     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-10-11 08:09:55     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-10-11 08:09:56     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-10-11 08:09:56     1 DISK   genta       Escherich… human      18         
+#> 1 2026-10-11 13:46:14     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-10-11 13:46:14     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-10-11 13:46:14     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-10-11 13:46:14     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

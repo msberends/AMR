@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9114</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9115</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -202,14 +202,15 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <dt id="arg-capped-mic-handling">capped_mic_handling<a class="anchor" aria-label="anchor" href="#arg-capped-mic-handling"></a></dt>
 <dd><p>A <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> string that controls how MIC values with a cap (i.e., starting with <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, or <code>&gt;=</code>) are interpreted. Supports the following options:</p>
 <p><code>"none"</code></p><ul><li><p><code>&lt;=</code>, <code>&lt;</code>, <code>&gt;</code> and <code>&gt;=</code> are ignored.</p></li>
-</ul><p><code>"conservative"</code> (default)</p><ul><li><p><code>&lt;=</code>, <code>&lt;</code>, <code>&gt;</code> and <code>&gt;=</code> return <code>"NI"</code> (non-interpretable) if the <em>true</em> MIC could be at either side of the breakpoint.</p></li>
+</ul><p><code>"conservative"</code></p><ul><li><p><code>&lt;=</code>, <code>&lt;</code>, <code>&gt;</code> and <code>&gt;=</code> return <code>"NI"</code> (non-interpretable) if the <em>true</em> MIC could be at either side of the breakpoint.</p></li>
 <li><p>This is the only mode that preserves uncertainty for ECOFFs.</p></li>
-</ul><p><code>"standard"</code></p><ul><li><p><code>&lt;=</code> and <code>&gt;=</code> return <code>"NI"</code> (non-interpretable) if the <em>true</em> MIC could be at either side of the breakpoint.</p></li>
+</ul><p><code>"standard"</code> (default)</p><ul><li><p><code>&lt;=</code> and <code>&gt;=</code> return <code>"NI"</code> (non-interpretable) if the <em>true</em> MIC could be at either side of the breakpoint.</p></li>
 <li><p><code>&lt;</code> always returns <code>"S"</code>, regardless of the breakpoint.</p></li>
 <li><p><code>&gt;</code> always returns <code>"R"</code>, regardless of the breakpoint.</p></li>
 </ul><p><code>"lenient"</code></p><ul><li><p><code>&lt;=</code> and <code>&lt;</code> always return <code>"S"</code>, regardless of the breakpoint.</p></li>
 <li><p><code>&gt;=</code> and <code>&gt;</code> always return <code>"R"</code>, regardless of the breakpoint.</p></li>
-</ul><p>The default <code>"conservative"</code> setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option <code><a href="AMR-options.html">AMR_capped_mic_handling</a></code>.</p></dd>
+</ul><p>In all modes except <code>"none"</code>, a capped value is never forced to a category that the guideline does not provide for the drug-bug combination: if a breakpoint is missing, the result is <code>NA</code> as for uncapped values. EUCAST uses an off-scale S breakpoint of 0.001 mg/L to indicate that there is no S category (stored as 0.0001 in <a href="clinical_breakpoints.html">clinical_breakpoints</a>; any S breakpoint of 0.001 or lower is treated as such). In that case, <code>&lt;</code> and <code>&lt;=</code> values that cannot be <code>"R"</code> return <code>"I"</code> (or <code>"SDD"</code>), and <code>"standard"</code> and <code>"lenient"</code> return <code>"I"</code> (or <code>"SDD"</code>) instead of <code>"S"</code>.</p>
+<p>The default <code>"standard"</code> setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option <code><a href="AMR-options.html">AMR_capped_mic_handling</a></code>.</p></dd>
 
 
 <dt id="arg-as-wt-nwt">as_wt_nwt<a class="anchor" aria-label="anchor" href="#arg-as-wt-nwt"></a></dt>
@@ -290,7 +291,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span></span>
 <span><span class="co"># fast processing with parallel computing (requires future.apply):</span></span>
 <span><span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">your_data</span>, <span class="va">...</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div></li>
-<li><p>Operators like "&lt;=" will be considered according to the <code>capped_mic_handling</code> setting. At default, an MIC value of e.g. "&gt;2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the <em>true</em> MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.</p></li>
+<li><p>Operators like "&lt;=" will be considered according to the <code>capped_mic_handling</code> setting. At default, an MIC value of e.g. "&gt;=2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the <em>true</em> MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.</p></li>
 <li><p><strong>Note:</strong> When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.</p></li>
 </ul></li>
 <li><p>For <strong>interpreting disk diffusion diameters</strong> according to EUCAST or CLSI. You must clean your disk zones first using <code><a href="as.disk.html">as.disk()</a></code>, that also gives your columns the new data class <code><a href="as.disk.html">disk</a></code>. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the <code>mo</code> argument.</p><ul><li><p>Example to apply using <code>dplyr</code>:</p>
@@ -462,10 +463,10 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-10-11 <span style="color: #949494;">08:09:55</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-10-11 <span style="color: #949494;">08:09:55</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-10-11 <span style="color: #949494;">08:09:56</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-10-11 <span style="color: #949494;">08:09:56</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-10-11 <span style="color: #949494;">13:46:14</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-10-11 <span style="color: #949494;">13:46:14</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-10-11 <span style="color: #949494;">13:46:14</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-10-11 <span style="color: #949494;">13:46:14</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
