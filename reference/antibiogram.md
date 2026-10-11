@@ -707,7 +707,9 @@ out
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
 #> # and use `wisca_plot()` to assess the simulation outcomes.
 #> # Or, use it directly in R Markdown or Quarto, see `antibiogram()`.
-wisca_plot(out)
+if (requireNamespace("ggplot2")) {
+  wisca_plot(out)
+}
 
 
 # stratified using grouped tibbles (e.g. by age and gender)
