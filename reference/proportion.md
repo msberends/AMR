@@ -242,28 +242,18 @@ susceptible isolates.
 ## Combination Therapy
 
 A combination of antimicrobials is considered as good as its most active
-antimicrobial. Results are ranked as follows, from best to worst:
-
-1.  `"S"` and `"WT"`
-
-2.  `"SDD"`
-
-3.  `"I"`
-
-4.  `"R"`, `"NWT"`, and `"NS"`
-
-The result of the combination is the best result of the antimicrobials,
-i.e., the result keeps its original category instead of being reduced to
-only S or R. If antimicrobials have an equally ranked result, `"S"` is
-preferred over `"WT"`, and `"R"` over `"NWT"` and `"NS"`. The value
-`"NI"` (non-interpretable) is considered a missing result.
+antimicrobial: `"S"` is preferred over `"WT"`, and `"R"` over `"NWT"`
+and `"NS"`. The value `"NI"` (non-interpretable) is considered a missing
+result.
 
 A missing result can only be ignored if the result of the combination is
 susceptible regardless of the missing result, which depends on the
 `only_all_tested` argument and on the guideline: under EUCAST, the 'I'
 category is considered susceptible (*susceptible, increased exposure*),
-and under CLSI, it is not. This is an example for two antimicrobials,
-Drug A and Drug B (the order of the antimicrobials does not matter):
+and under CLSI, it is not.
+
+This is an example for two antimicrobials, Drug A and Drug B (the order
+of the antimicrobials does not matter):
 
     -------------------------------------------------------------------------
                                 Result of the combination

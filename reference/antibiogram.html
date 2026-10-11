@@ -13,7 +13,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9117</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9118</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -378,12 +378,9 @@ All antibiogram types adhere to previously described approaches (see Source), an
     <h2 id="combination-therapy">Combination Therapy<a class="anchor" aria-label="anchor" href="#combination-therapy"></a></h2>
 
 
-<p>A combination of antimicrobials is considered as good as its most active antimicrobial. Results are ranked as follows, from best to worst:</p><ol><li><p><code>"S"</code> and <code>"WT"</code></p></li>
-<li><p><code>"SDD"</code></p></li>
-<li><p><code>"I"</code></p></li>
-<li><p><code>"R"</code>, <code>"NWT"</code>, and <code>"NS"</code></p></li>
-</ol><p>The result of the combination is the best result of the antimicrobials, i.e., the result keeps its original category instead of being reduced to only S or R. If antimicrobials have an equally ranked result, <code>"S"</code> is preferred over <code>"WT"</code>, and <code>"R"</code> over <code>"NWT"</code> and <code>"NS"</code>. The value <code>"NI"</code> (non-interpretable) is considered a missing result.</p>
-<p>A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the <code>only_all_tested</code> argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (<em>susceptible, increased exposure</em>), and under CLSI, it is not. This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):</p>
+<p>A combination of antimicrobials is considered as good as its most active antimicrobial: <code>"S"</code> is preferred over <code>"WT"</code>, and <code>"R"</code> over <code>"NWT"</code> and <code>"NS"</code>. The value <code>"NI"</code> (non-interpretable) is considered a missing result.</p>
+<p>A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the <code>only_all_tested</code> argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (<em>susceptible, increased exposure</em>), and under CLSI, it is not.</p>
+<p>This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="sc">-------------------------------------------------------------------------</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>                            Result of the combination</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>                    <span class="sc">-----------------------------------------------------</span></span>

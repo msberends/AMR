@@ -1,11 +1,11 @@
 # Combine SIR Results of Multiple Antimicrobials
 
 Combine the SIR results of two or more antimicrobials into one SIR
-result per isolate, e.g. to create a variable `TZP_GEN` for the
-combination therapy of piperacillin/tazobactam with gentamicin. The
-result is the best result of the antimicrobials, as a combination
-therapy covers the isolate if any of its antimicrobials is active. See
-*Combination Therapy* below for the exact rules.
+result per isolate, e.g. to create a variable for the combination
+therapy of piperacillin/tazobactam with gentamicin. The result is the
+best result of the antimicrobials, as a combination therapy covers the
+isolate if any of its antimicrobials is active. See *Combination
+Therapy* below for the exact rules.
 
 The same rules are used by
 [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
@@ -61,28 +61,18 @@ same length as the input.
 ## Combination Therapy
 
 A combination of antimicrobials is considered as good as its most active
-antimicrobial. Results are ranked as follows, from best to worst:
-
-1.  `"S"` and `"WT"`
-
-2.  `"SDD"`
-
-3.  `"I"`
-
-4.  `"R"`, `"NWT"`, and `"NS"`
-
-The result of the combination is the best result of the antimicrobials,
-i.e., the result keeps its original category instead of being reduced to
-only S or R. If antimicrobials have an equally ranked result, `"S"` is
-preferred over `"WT"`, and `"R"` over `"NWT"` and `"NS"`. The value
-`"NI"` (non-interpretable) is considered a missing result.
+antimicrobial: `"S"` is preferred over `"WT"`, and `"R"` over `"NWT"`
+and `"NS"`. The value `"NI"` (non-interpretable) is considered a missing
+result.
 
 A missing result can only be ignored if the result of the combination is
 susceptible regardless of the missing result, which depends on the
 `only_all_tested` argument and on the guideline: under EUCAST, the 'I'
 category is considered susceptible (*susceptible, increased exposure*),
-and under CLSI, it is not. This is an example for two antimicrobials,
-Drug A and Drug B (the order of the antimicrobials does not matter):
+and under CLSI, it is not.
+
+This is an example for two antimicrobials, Drug A and Drug B (the order
+of the antimicrobials does not matter):
 
     -------------------------------------------------------------------------
                                 Result of the combination
@@ -157,23 +147,24 @@ susceptibility(sir_combine(drug_a, drug_b), minimum = 0)
 if (require("dplyr")) {
   # create a new variable for piperacillin/tazobactam + gentamicin
   example_isolates %>%
+    filter(!is.na(TZP)) %>%
     mutate(TZP_GEN = sir_combine(TZP, GEN)) %>%
     select(mo, TZP, GEN, TZP_GEN)
 }
-#> # A tibble: 2,000 × 4
+#> # A tibble: 1,001 × 4
 #>    mo           TZP   GEN   TZP_GEN
 #>    <mo>         <sir> <sir> <sir>  
-#>  1 B_ESCHR_COLI   NA    NA    NA   
-#>  2 B_ESCHR_COLI   NA    NA    NA   
-#>  3 B_STPHY_EPDR   NA    NA    NA   
-#>  4 B_STPHY_EPDR   NA    NA    NA   
-#>  5 B_STPHY_EPDR   NA    NA    NA   
-#>  6 B_STPHY_EPDR   NA    NA    NA   
-#>  7 B_STPHY_AURS   NA    NA    NA   
-#>  8 B_STPHY_AURS   NA    NA    NA   
-#>  9 B_STPHY_EPDR   NA    NA    NA   
-#> 10 B_STPHY_EPDR   NA    NA    NA   
-#> # ℹ 1,990 more rows
+#>  1 B_STRPT_SNGN   S     R     S    
+#>  2 B_STRPT_GRPB   S     R     S    
+#>  3 B_ESCHR_COLI   R     S     S    
+#>  4 B_ESCHR_COLI   R     S     S    
+#>  5 B_STRPT_PNMN   S     R     S    
+#>  6 B_STRPT_PNMN   S     R     S    
+#>  7 B_STRPT_ANGN   S     R     S    
+#>  8 B_STRPT_ANGN   S     R     S    
+#>  9 B_STRPT_PNMN   S     R     S    
+#> 10 B_STRPT_SLVR   S     R     S    
+#> # ℹ 991 more rows
 if (require("dplyr")) {
   # combine any number of antimicrobials
   example_isolates %>%
@@ -194,14 +185,16 @@ if (require("dplyr")) {
     group_by(ward) %>%
     summarise(
       TZP = susceptibility(TZP),
-      TZP_GEN = susceptibility(TZP_GEN)
+      GEN = susceptibility(GEN),
+      TZP_GEN = susceptibility(TZP_GEN),
+      # or directly, without combining first:
+      TZP_GEN2 = susceptibility(TZP, GEN)
     )
 }
-#> # A tibble: 3 × 3
-#>   ward         TZP TZP_GEN
-#>   <chr>      <dbl>   <dbl>
-#> 1 Clinical   0.898   0.986
-#> 2 ICU        0.819   0.962
-#> 3 Outpatient 0.894   0.991
+#> Error in summarise(., TZP = susceptibility(TZP), GEN = susceptibility(GEN),     TZP_GEN = susceptibility(TZP_GEN), TZP_GEN2 = susceptibility(TZP,         GEN)): ℹ In argument: `TZP_GEN2 = susceptibility(TZP, GEN)`.
+#> ℹ In group 1: `ward = "Clinical"`.
+#> Caused by error in `susceptibility()`:
+#> ! No unambiguous name was supplied about the antibiotic (argument `ab`).
+#>   See `as.sir()`.
 # }
 ```
