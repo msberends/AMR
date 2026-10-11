@@ -224,7 +224,7 @@ test_that("test-zzz.R", {
 test_that("test-zzz.R: no installation-time dependency on suggested packages", {
   skip_on_cran()
   # code outside functions runs when the package is installed, not when it is loaded: anything it takes from a suggested package is then decided by the machine that built the package (e.g., the CRAN binary builders, which have all suggested packages), and fails for users who do not have that package, see .onLoad() in R/zzz.R
-  r_dir <- file.path(testthat::test_path(), "..", "..", "R")
+  r_dir <- file.path("..", "..", "R")
   skip_if(!dir.exists(r_dir), "R source files not available")
   suggests <- trimws(gsub("[(].*", "", strsplit(read.dcf(file.path(r_dir, "..", "DESCRIPTION"), fields = "Suggests")[1, 1], ",")[[1]]))
   runtime_calls <- c("import_fn", "requireNamespace", "loadNamespace", "pkg_is_available", "l10n_info", "require", "library")
