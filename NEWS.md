@@ -1,4 +1,4 @@
-# AMR 3.0.1.9115
+# AMR 3.0.1.9116
 
 Planned as v3.1.0, mid October 2026.
 
@@ -25,6 +25,7 @@ Planned as v3.1.0, mid October 2026.
 
 * Faster parallel computing via the `future` package for `as.sir()` and `wisca()`: a non-sequential plan (e.g. `future::plan(future::multisession)`) must be active before using `parallel = TRUE`.
 * `as.mo()` no longer guesses unknown MO codes (these become `NA` with a warning), and MO codes from versions before v2.0.0 are no longer supported
+* With multiple antimicrobials, `count_*()` and `proportion_*()` now follow the documented combination therapy rules: `resistance()` returns the proportion of failing combinations instead of resistance to any of the antimicrobials, and `count_all()` excludes isolates of which the combination result is unknown (#321)
 
 ### New
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
@@ -45,6 +46,7 @@ Planned as v3.1.0, mid October 2026.
 * A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
 * `add_custom_antimicrobial_synonyms()` to add local names, such as trade names, to existing antimicrobials (#307)
 * Sulbactam/durlobactam (`SUD1`) added to the `antimicrobials` data set (#308)
+* `sir_combine()` to combine SIR results of multiple antimicrobials into one variable for combination therapy, using the same rules as `antibiogram()` (#321)
 
 ### Fixed
 * `as.mo()` returned *Salmonella bongori* or another subspecies for *Salmonella* serovars written with the species, such as "Salmonella enterica serovar Typhi"
@@ -83,6 +85,10 @@ Planned as v3.1.0, mid October 2026.
 * Taxonomy: synonyms without a current name are linked via LPSN or removed, with their codes retired; the *M. tuberculosis* complex is always kept
 * Taxonomy: consistent higher taxonomy and parent records, and data sets refer only to current names (except `intrinsic_resistant`)
 * `antimicrobials`: trade names of combinations (Tazocin, Timentin, Recarbrio, Exblifep) were listed under a single component, and names of screening libraries and suppliers (e.g. Prestwick, Spectrum) as synonyms (#315)
+* WT, NWT, NS and NI results were handled incorrectly in `count_*()` and `proportion_*()` with multiple antimicrobials (#321)
+* `g.test()` returned the degrees of freedom as `argument` instead of `parameter`, so they were not printed
+* `antibiogram()` and `wisca()` failed without the `antimicrobials` argument if tidyselect was not available, e.g. for binary installations without dplyr
+* R could crash after unloading data.table, and suggested packages available on the machine that built the package were used even if not available to the user
 
 ### Updated
 * Faster `as.ab()`, `as.mo()` and all `mo_*()` functions through one consistent session cache design, which is cleared when lookup tables change, e.g. after `add_custom_microorganisms()` (#313)

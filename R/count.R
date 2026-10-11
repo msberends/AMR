@@ -42,10 +42,10 @@
 #' @inheritSection as.sir Interpretation of SIR
 #' @details These functions are meant to count isolates. Use the [resistance()]/[susceptibility()] functions to calculate microbial resistance/susceptibility.
 #'
-#' The function [n_sir()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where all input antimicrobials have an available result (S, I or R). Their use is equal to `dplyr`'s `n_distinct()`. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
+#' The function [n_sir()] is an alias of [count_all()]. They can be used to count all available isolates, i.e. where the input antimicrobial has an available result (S, I or R), or for multiple antimicrobials, where the result of the combination is available (see *Combination Therapy* below). Their use is equal to `dplyr`'s `n_distinct()`. Their function is equal to `count_susceptible(...) + count_resistant(...)`.
 #'
 #' The function [count_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and counts the number of S's, I's and R's. It also supports grouped variables. The function [sir_df()] works exactly like [count_df()], but adds the percentage of S, I and R.
-#' @inheritSection proportion Combination Therapy
+#' @inheritSection sir_combine Combination Therapy
 #' @seealso [`proportion_*`][proportion] to calculate microbial resistance and susceptibility.
 #' @return An [integer]
 #' @rdname count
@@ -143,6 +143,7 @@ count_resistant <- function(...,
         if (identical(guideline, "CLSI")) "I"
       ),
       only_all_tested = only_all_tested,
+      guideline = guideline,
       only_count = TRUE
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
@@ -172,6 +173,7 @@ count_susceptible <- function(...,
         if (identical(guideline, "EUCAST")) "I"
       ),
       only_all_tested = only_all_tested,
+      guideline = guideline,
       only_count = TRUE
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)

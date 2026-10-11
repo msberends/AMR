@@ -56,6 +56,19 @@ test_that("test-misc.R", {
   }
 
 
+  # test where() ----
+  # where() must be AMR's own function, decided at runtime: a copy of tidyselect::where() made at installation fails without tidyselect at runtime
+  expect_identical(environment(AMR:::where), asNamespace("AMR"))
+  expect_identical(colnames(example_isolates[, AMR:::where(is.sir), drop = FALSE]), colnames(example_isolates)[vapply(FUN.VALUE = logical(1), example_isolates, is.sir)])
+  expect_identical(colnames(example_isolates[, c(1:2, AMR:::where(is.mo)), drop = FALSE]), c("date", "patient", "mo"))
+  expect_error(AMR:::where("is.sir"))
+  # default argument where(is.sir) of antibiogram() works with and without tidyselect
+  expect_inherits(antibiogram(example_isolates), "antibiogram")
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+    expect_identical(colnames(example_isolates %>% select(AMR:::where(is.sir))), colnames(example_isolates[, AMR:::where(is.sir), drop = FALSE]))
+    expect_identical(colnames(example_isolates %>% select(mo, AMR:::where(is.sir))), c("mo", colnames(example_isolates[, AMR:::where(is.sir), drop = FALSE])))
+  }
+
   # test get_current_data() ----
 
   is_right <- FALSE

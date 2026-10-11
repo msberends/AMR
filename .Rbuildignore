@@ -10,6 +10,7 @@
 ^appveyor\.yml$
 ^codecov\.yml$
 ^CLAUDE\.md$
+^\.claude$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^\.github$

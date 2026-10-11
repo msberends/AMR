@@ -137,26 +137,7 @@
 #'
 #' ### Inclusion in Combination Antibiograms
 #'
-#' Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the `only_all_tested` argument (default is `FALSE`). See this example for two antimicrobials, Drug A and Drug B, about how [antibiogram()] works to calculate the %SI:
-#'
-#' ```
-#' --------------------------------------------------------------------
-#'                     only_all_tested = FALSE  only_all_tested = TRUE
-#'                     -----------------------  -----------------------
-#'  Drug A    Drug B   considered   considered  considered   considered
-#'                     susceptible    tested    susceptible    tested
-#' --------  --------  -----------  ----------  -----------  ----------
-#'  S or I    S or I        X            X           X            X
-#'    R       S or I        X            X           X            X
-#'   <NA>     S or I        X            X           -            -
-#'  S or I      R           X            X           X            X
-#'    R         R           -            X           -            X
-#'   <NA>       R           -            -           -            -
-#'  S or I     <NA>         X            X           -            -
-#'    R        <NA>         -            -           -            -
-#'   <NA>      <NA>         -            -           -            -
-#' --------------------------------------------------------------------
-#' ```
+#' For combination antibiograms, the results of the antimicrobials are combined using the same rules as [sir_combine()], see the section *Combination Therapy* below. Whether isolates must be tested for all antimicrobials can be set with the `only_all_tested` argument (default is `FALSE`). The 'I' and 'SDD' categories are considered susceptible if `combine_SI = TRUE` (default), which also determines whether a missing result can be ignored. To use a combination in other analyses as well, create a new variable with [sir_combine()].
 #'
 #' ### Plotting
 #'
@@ -177,6 +158,7 @@
 #' **Interpreting the output:** Overlapping credible intervals between regimens indicate no significant difference in coverage; if a narrower-spectrum regimen overlaps with a broader one, the narrower-spectrum option may be preferred on stewardship grounds. Non-overlapping intervals indicate a clinically meaningful difference. For small sample sizes, consider pooling data from multiple sites to improve precision, provided pathogen distributions are sufficiently similar (Bielicki *et al.*, 2016).
 #'
 #' For the full mathematical derivation and worked examples, see the [WISCA vignette](https://amr-for-r.org/articles/WISCA.html).
+#' @inheritSection sir_combine Combination Therapy
 #' @references
 #' * Hebert C *et al.* (2012). **Demonstration of the weighted-incidence syndromic combination antibiogram: an empiric prescribing decision aid.** *Infection Control & Hospital Epidemiology* 33(4):381-388; \doi{10.1086/664768}
 #' * Bielicki JA *et al.* (2016). **Selecting appropriate empirical antibiotic regimens for paediatric bloodstream infections: application of a Bayesian decision model to local and pooled antimicrobial resistance surveillance data.** *Journal of Antimicrobial Chemotherapy* 71(3):794-802; \doi{10.1093/jac/dkv397}
@@ -625,16 +607,10 @@ antibiogram.default <- function(x,
         if (isTRUE(combine_SI)) {
           S_values <- c(S_values, "SDD", "I")
         }
-        other_values <- setdiff(c("S", "SDD", "I", "R", "WT", "NWT", "NS"), S_values)
-        x_transposed <- as.list(as.data.frame(t(x[, abx, drop = FALSE]), stringsAsFactors = FALSE))
-        if (isTRUE(only_all_tested)) {
-          x[new_colname] <- as.sir(vapply(FUN.VALUE = character(1), x_transposed, function(x) ifelse(anyNA(x), NA_character_, ifelse(any(x %in% S_values), "S", "R")), USE.NAMES = FALSE))
-        } else {
-          x[new_colname] <- as.sir(vapply(
-            FUN.VALUE = character(1), x_transposed, function(x) ifelse(any(x %in% S_values, na.rm = TRUE), "S", ifelse(anyNA(x), NA_character_, "R")),
-            USE.NAMES = FALSE
-          ))
-        }
+        # same rules as sir_combine(), after which the result is reduced to S or R
+        combined <- as.character(sir_combine_engine(as.list(x[, abx, drop = FALSE]), S_values = S_values, only_all_tested = only_all_tested))
+        combined[!is.na(combined)] <- ifelse(combined[!is.na(combined)] %in% S_values, "S", "R")
+        x[new_colname] <- as_sir_structure(combined)
       }
       antimicrobials[[i]] <- new_colname
     }

@@ -180,6 +180,7 @@ reference:
     - "`antibiogram`"
     - "`proportion`"
     - "`count`"
+    - "`sir_combine`"
     - "`is_new_episode`"
     - "`first_isolate`"
     - "`key_antimicrobials`"

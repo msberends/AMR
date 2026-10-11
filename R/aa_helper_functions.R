@@ -1715,40 +1715,41 @@ readRDS_AMR <- function(file, refhook = NULL) {
   readRDS(con, refhook = refhook)
 }
 
-# Support `where()` if tidyselect not installed ----
-if (!is.null(import_fn("where", "tidyselect", error_on_fail = FALSE))) {
-  # tidyselect::where() exists, retrieve from their namespace to make `where()`s work across the package in default arguments
-  where <- tidyselect::where
-} else {
-  where <- function(fn) {
-    # based on https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
-    if (!is.function(fn)) {
-      stop_("{.fun ", deparse(substitute(fn)), "} is not a valid predicate function.")
-    }
-    df <- pm_select_env$.data
-    cols <- pm_select_env$get_colnames()
-    if (is.null(df)) {
-      df <- get_current_data("where", call = FALSE)
-      cols <- colnames(df)
-    }
-    preds <- unlist(lapply(
-      df,
-      function(x, fn) {
-        do.call("fn", list(x))
-      },
-      fn
-    ))
-    if (!is.logical(preds)) stop_("{.fun where} must be used with functions that return {.code TRUE} or {.code FALSE}.")
-    data_cols <- cols
-    cols <- data_cols[preds]
-    which(data_cols %in% cols)
+# Support `where()`, also if tidyselect not installed ----
+# this must be decided at runtime, not at installation: a copy of tidyselect::where() made during installation fails if tidyselect is not available at runtime, e.g. for binary packages built on a machine with tidyselect
+where <- function(fn) {
+  if (pkg_is_available("tidyselect") && !is.null(tryCatch(tidyselect::peek_vars(fn = "where"), error = function(e) NULL))) {
+    # called inside a tidyselect selection, such as dplyr::select(), so let tidyselect handle it
+    return(tidyselect::where(fn))
   }
+  # based on https://github.com/nathaneastwood/poorman/blob/52eb6947e0b4430cd588976ed8820013eddf955f/R/where.R#L17-L32
+  if (!is.function(fn)) {
+    stop_("{.fun ", deparse(substitute(fn)), "} is not a valid predicate function.")
+  }
+  df <- pm_select_env$.data
+  cols <- pm_select_env$get_colnames()
+  if (is.null(df)) {
+    df <- get_current_data("where", call = FALSE)
+    cols <- colnames(df)
+  }
+  preds <- unlist(lapply(
+    df,
+    function(x, fn) {
+      do.call("fn", list(x))
+    },
+    fn
+  ))
+  if (!is.logical(preds)) stop_("{.fun where} must be used with functions that return {.code TRUE} or {.code FALSE}.")
+  data_cols <- cols
+  cols <- data_cols[preds]
+  which(data_cols %in% cols)
 }
 
 # Faster data.table implementations ----
 
 match <- function(x, table, ...) {
-  if (!is.null(AMR_env$chmatch) && inherits(x, "character") && inherits(table, "character")) {
+  # data.table must still be loaded: calling its compiled code after it was unloaded (e.g., using detach("package:data.table", unload = TRUE)) crashes R
+  if (!is.null(AMR_env$chmatch) && inherits(x, "character") && inherits(table, "character") && isNamespaceLoaded("data.table")) {
     # data.table::chmatch() is much faster than base::match() for character
     tryCatch(AMR_env$chmatch(x, table, ...), error = function(e) base::match(x, table, ...))
   } else {
@@ -1756,7 +1757,7 @@ match <- function(x, table, ...) {
   }
 }
 `%in%` <- function(x, table) {
-  if (!is.null(AMR_env$chin) && inherits(x, "character") && inherits(table, "character")) {
+  if (!is.null(AMR_env$chin) && inherits(x, "character") && inherits(table, "character") && isNamespaceLoaded("data.table")) {
     # data.table::`%chin%`() is much faster than base::`%in%`() for character
     tryCatch(AMR_env$chin(x, table), error = function(e) base::`%in%`(x, table))
   } else {

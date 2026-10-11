@@ -220,3 +220,43 @@ test_that("test-zzz.R", {
     expect_true(is.function(ggplot2::scale_fill_discrete()$transform))
   }
 })
+
+test_that("test-zzz.R: no installation-time dependency on suggested packages", {
+  skip_on_cran()
+  # code outside functions runs when the package is installed, not when it is loaded: anything it takes from a suggested package is then decided by the machine that built the package (e.g., the CRAN binary builders, which have all suggested packages), and fails for users who do not have that package, see .onLoad() in R/zzz.R
+  r_dir <- file.path(testthat::test_path(), "..", "..", "R")
+  skip_if(!dir.exists(r_dir), "R source files not available")
+  suggests <- trimws(gsub("[(].*", "", strsplit(read.dcf(file.path(r_dir, "..", "DESCRIPTION"), fields = "Suggests")[1, 1], ",")[[1]]))
+  runtime_calls <- c("import_fn", "requireNamespace", "loadNamespace", "pkg_is_available", "l10n_info", "require", "library")
+  find_offending <- function(expr) {
+    if (!is.call(expr)) {
+      return(character(0))
+    }
+    fn <- expr[[1]]
+    if (identical(fn, as.name("function"))) {
+      # function bodies run at runtime, so these are fine
+      return(character(0))
+    }
+    found <- character(0)
+    fn_name <- if (is.name(fn)) as.character(fn) else if (is.call(fn) && (identical(fn[[1]], as.name("::")) || identical(fn[[1]], as.name(":::")))) as.character(fn[[3]]) else ""
+    if (fn_name %in% runtime_calls) {
+      found <- paste0(fn_name, "()")
+    }
+    if ((identical(fn, as.name("::")) || identical(fn, as.name(":::"))) && as.character(expr[[2]]) %in% suggests) {
+      found <- paste0(as.character(expr[[2]]), "::", as.character(expr[[3]]))
+    }
+    c(found, unlist(lapply(as.list(expr)[-1], find_offending)))
+  }
+  offending <- character(0)
+  for (f in list.files(r_dir, pattern = "[.]R$", full.names = TRUE)) {
+    exprs <- parse(f, keep.source = TRUE)
+    lines <- vapply(FUN.VALUE = integer(1), attr(exprs, "srcref"), function(x) x[1])
+    for (i in seq_along(exprs)) {
+      found <- find_offending(exprs[[i]])
+      if (length(found) > 0) {
+        offending <- c(offending, paste0(basename(f), ":", lines[i], ": ", paste(unique(found), collapse = ", ")))
+      }
+    }
+  }
+  expect_identical(offending, character(0), info = paste(offending, collapse = "\n"))
+})

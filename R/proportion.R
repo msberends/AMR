@@ -35,7 +35,7 @@
 #' @param ... One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed. Use multiple columns to calculate (the lack of) co-resistance: the probability where one of two drugs have a resistant or susceptible result. See *Examples*.
 #' @param minimum The minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
 #' @param as_percent A [logical] to indicate whether the output must be returned as a hundred fold with % sign (a character). A value of `0.123456` will then be returned as `"12.3%"`.
-#' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a [logical] to indicate that isolates must be tested for all antimicrobials, see section *Combination Therapy* below.
+#' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a [logical] to indicate that isolates must be tested for all antimicrobials, see section *Combination Therapy* below. Use [sir_combine()] to create a new variable for a combination therapy.
 #' @param data A [data.frame] containing columns with class [`sir`] (see [as.sir()]).
 #' @param translate_ab A column name of the [antimicrobials] data set to translate the antibiotic abbreviations to, using [ab_property()].
 #' @param guideline Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category will be considered as susceptible (see [EUCAST website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)), but with with CLSI, it will be considered resistant. Therefore:
@@ -62,44 +62,7 @@
 #' These functions are not meant to count isolates, but to calculate the proportion of resistance/susceptibility. Use the [`count_*()`][AMR::count()] functions to count isolates. The function [susceptibility()] is essentially equal to [count_susceptible()]` / `[count_all()]. *Low counts can influence the outcome - the `proportion_*()` functions may camouflage this, since they only return the proportion (albeit dependent on the `minimum` argument).*
 #'
 #' The function [proportion_df()] takes any variable from `data` that has an [`sir`] class (created with [as.sir()]) and calculates the proportions S, I, and R. It also supports grouped variables. The function [sir_df()] works exactly like [proportion_df()], but adds the number of isolates.
-#' @section Combination Therapy:
-#' When using more than one variable for `...` (= combination therapy), use `only_all_tested` to only count isolates that are tested for all antimicrobials/variables that you test them for. See this example for two antimicrobials, Drug A and Drug B, about how [susceptibility()] works to calculate the %SI:
-#'
-#'
-#' ```
-#' --------------------------------------------------------------------
-#'                     only_all_tested = FALSE  only_all_tested = TRUE
-#'                     -----------------------  -----------------------
-#'  Drug A    Drug B   considered   considered  considered   considered
-#'                     susceptible    tested    susceptible    tested
-#' --------  --------  -----------  ----------  -----------  ----------
-#'  S or I    S or I        X            X           X            X
-#'    R       S or I        X            X           X            X
-#'   <NA>     S or I        X            X           -            -
-#'  S or I      R           X            X           X            X
-#'    R         R           -            X           -            X
-#'   <NA>       R           -            -           -            -
-#'  S or I     <NA>         X            X           -            -
-#'    R        <NA>         -            -           -            -
-#'   <NA>      <NA>         -            -           -            -
-#' --------------------------------------------------------------------
-#' ```
-#'
-#' Please note that, in combination therapies, for `only_all_tested = TRUE` applies that:
-#'
-#' ```
-#'     count_S()    +   count_I()    +   count_R()    = count_all()
-#'   proportion_S() + proportion_I() + proportion_R() = 1
-#' ```
-#'
-#' and that, in combination therapies, for `only_all_tested = FALSE` applies that:
-#'
-#' ```
-#'     count_S()    +   count_I()    +   count_R()    >= count_all()
-#'   proportion_S() + proportion_I() + proportion_R() >= 1
-#' ```
-#'
-#' Using `only_all_tested` has no impact when only using one antibiotic as input.
+#' @inheritSection sir_combine Combination Therapy
 #' @references **M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition**, 2022, *Clinical and Laboratory Standards Institute (CLSI)*. <https://clsi.org/standards/products/microbiology/documents/m39/>.
 #' @seealso [AMR::count()] to count resistant and susceptible isolates.
 #' @return A [double] or, when `as_percent = TRUE`, a [character].
@@ -255,6 +218,7 @@ resistance <- function(...,
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
+      guideline = guideline,
       only_count = FALSE
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
@@ -288,6 +252,7 @@ susceptibility <- function(...,
       minimum = minimum,
       as_percent = as_percent,
       only_all_tested = only_all_tested,
+      guideline = guideline,
       only_count = FALSE
     ),
     error = function(e) stop_(gsub("in sir_calc(): ", "", conditionMessage(e), fixed = TRUE), call = -5)

@@ -76,18 +76,18 @@ AMR_env$custom_ab_synonyms <- data.frame(ab = character(0), synonym = character(
 AMR_env$custom_mo_codes <- character(0)
 AMR_env$is_dark_theme <- NULL
 AMR_env$supports_colour <- NULL
-AMR_env$chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
-AMR_env$chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
-
-# take cli symbols and error function if available
-AMR_env$bullet_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$bullet %||% "*"
-AMR_env$ellipsis_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$ellipsis %||% "..."
-AMR_env$info_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$info %||% "i"
-AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %||% "*"
-AMR_env$cli_abort <- import_fn("cli_abort", "cli", error_on_fail = FALSE)
-AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
 
 .onLoad <- function(libname, pkgname) {
+  # functions and symbols from suggested packages must be retrieved here, at runtime: code outside functions runs at installation, so it would store what was available on the machine that built the package (e.g., CRAN), which fails if these packages are not available to the user
+  AMR_env$chmatch <- import_fn("chmatch", "data.table", error_on_fail = FALSE)
+  AMR_env$chin <- import_fn("%chin%", "data.table", error_on_fail = FALSE)
+  # take cli symbols and error function if available
+  AMR_env$bullet_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$bullet %||% "*"
+  AMR_env$ellipsis_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$ellipsis %||% "..."
+  AMR_env$info_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$info %||% "i"
+  AMR_env$sup_1_icon <- import_fn("symbol", "cli", error_on_fail = FALSE)$sup_1 %||% "*"
+  AMR_env$cross_icon <- if (isTRUE(base::l10n_info()$`UTF-8`)) "\u00d7" else "x"
+
   # if mo source exists, fire it up (see mo_source())
   if (tryCatch(file.exists(getOption("AMR_mo_source", "~/mo_source.rds")), error = function(e) FALSE)) {
     try(invisible(get_mo_source()), silent = TRUE)

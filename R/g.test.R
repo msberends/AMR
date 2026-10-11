@@ -30,7 +30,17 @@
 #' *G*-test for Count Data
 #'
 #' [g.test()] performs chi-squared contingency table tests and goodness-of-fit tests, just like [chisq.test()] but is more reliable (1). A *G*-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a ***G*-test of goodness-of-fit**), or to see whether the proportions of one variable are different for different values of the other variable (called a ***G*-test of independence**).
-#' @inherit stats::chisq.test params return
+#' @inherit stats::chisq.test params
+#' @return A [list] with class `"htest"` containing the following components:
+#' * `statistic`: the value of the test statistic
+#' * `parameter`: the degrees of freedom of the approximate chi-squared distribution of the test statistic, `NA` if the p-value is computed by Monte Carlo simulation
+#' * `p.value`: the p-value for the test
+#' * `method`: a character string indicating the type of test performed, and whether Monte Carlo simulation was used
+#' * `data.name`: a character string giving the name(s) of the data
+#' * `observed`: the observed counts
+#' * `expected`: the expected counts under the null hypothesis
+#' * `residuals`: the Pearson residuals, `(observed - expected) / sqrt(expected)`
+#' * `stdres`: standardised residuals, `(observed - expected) / sqrt(V)`, where `V` is the residual cell variance (Agresti 2007, section 2.4.5) for the case where `x` is a matrix, `n * p * (1 - p)` otherwise
 #' @details If `x` is a [matrix] with one row or column, or if `x` is a vector and `y` is not given, then a *goodness-of-fit test* is performed (`x` is treated as a one-dimensional contingency table). The entries of `x` must be non-negative integers. In this case, the hypothesis tested is whether the population probabilities equal those in `p`, or are all equal if `p` is not given.
 #'
 #' If `x` is a [matrix] with at least two rows and columns, it is taken as a two-dimensional contingency table: the entries of `x` must be non-negative integers.  Otherwise, `x` and `y` must be vectors or factors of the same length; cases with missing values are removed, the objects are coerced to factors, and the contingency table is computed from these.  Then Pearson's chi-squared test is performed of the null hypothesis that the joint distribution of the cell counts in a 2-dimensional contingency table is the product of the row and column marginals.
@@ -73,6 +83,8 @@
 #' If there are more than two categories and you want to find out which ones are significantly different from their null expectation, you can use the same method of testing each category vs. the sum of all categories, with the Bonferroni correction. You use *G*-tests for each category, of course.
 #' @seealso [chisq.test()]
 #' @references 1. McDonald, J.H. 2014. **Handbook of Biological Statistics (3rd ed.)**. Sparky House Publishing, Baltimore, Maryland.
+#'
+#' 2. Agresti, A. 2007. **An Introduction to Categorical Data Analysis (2nd ed.)**. Wiley, New York.
 #' @source The code for this function is identical to that of [chisq.test()], except that:
 #' - The calculation of the statistic was changed to \eqn{2 * sum(x * log(x / E))}
 #' - Yates' continuity correction was removed as it does not apply to a *G*-test
@@ -218,7 +230,7 @@ g.test <- function(x,
   }
 
   structure(list(
-    statistic = STATISTIC, argument = PARAMETER,
+    statistic = STATISTIC, parameter = PARAMETER,
     p.value = PVAL, method = METHOD, data.name = DNAME,
     observed = x, expected = E, residuals = (x - E) / sqrt(E),
     stdres = (x - E) / sqrt(V)

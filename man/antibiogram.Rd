@@ -243,25 +243,7 @@ your_data \%>\%
 
 \subsection{Inclusion in Combination Antibiograms}{
 
-Note that for combination antibiograms, it is important to realise that susceptibility can be calculated in two ways, which can be set with the \code{only_all_tested} argument (default is \code{FALSE}). See this example for two antimicrobials, Drug A and Drug B, about how \code{\link[=antibiogram]{antibiogram()}} works to calculate the \%SI:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{--------------------------------------------------------------------
-                    only_all_tested = FALSE  only_all_tested = TRUE
-                    -----------------------  -----------------------
- Drug A    Drug B   considered   considered  considered   considered
-                    susceptible    tested    susceptible    tested
---------  --------  -----------  ----------  -----------  ----------
- S or I    S or I        X            X           X            X
-   R       S or I        X            X           X            X
-  <NA>     S or I        X            X           -            -
- S or I      R           X            X           X            X
-   R         R           -            X           -            X
-  <NA>       R           -            -           -            -
- S or I     <NA>         X            X           -            -
-   R        <NA>         -            -           -            -
-  <NA>      <NA>         -            -           -            -
---------------------------------------------------------------------
-}\if{html}{\out{</div>}}
+For combination antibiograms, the results of the antimicrobials are combined using the same rules as \code{\link[=sir_combine]{sir_combine()}}, see the section \emph{Combination Therapy} below. Whether isolates must be tested for all antimicrobials can be set with the \code{only_all_tested} argument (default is \code{FALSE}). The 'I' and 'SDD' categories are considered susceptible if \code{combine_SI = TRUE} (default), which also determines whether a missing result can be ignored. To use a combination in other analyses as well, create a new variable with \code{\link[=sir_combine]{sir_combine()}}.
 }
 
 \subsection{Plotting}{
@@ -285,6 +267,40 @@ It does so by combining two quantities: the relative incidence of each pathogen 
 \strong{Interpreting the output:} Overlapping credible intervals between regimens indicate no significant difference in coverage; if a narrower-spectrum regimen overlaps with a broader one, the narrower-spectrum option may be preferred on stewardship grounds. Non-overlapping intervals indicate a clinically meaningful difference. For small sample sizes, consider pooling data from multiple sites to improve precision, provided pathogen distributions are sufficiently similar (Bielicki \emph{et al.}, 2016).
 
 For the full mathematical derivation and worked examples, see the \href{https://amr-for-r.org/articles/WISCA.html}{WISCA vignette}.
+}
+
+\section{Combination Therapy}{
+
+A combination of antimicrobials is considered as good as its most active antimicrobial. Results are ranked as follows, from best to worst:
+\enumerate{
+\item \code{"S"} and \code{"WT"}
+\item \code{"SDD"}
+\item \code{"I"}
+\item \code{"R"}, \code{"NWT"}, and \code{"NS"}
+}
+
+The result of the combination is the best result of the antimicrobials, i.e., the result keeps its original category instead of being reduced to only S or R. If antimicrobials have an equally ranked result, \code{"S"} is preferred over \code{"WT"}, and \code{"R"} over \code{"NWT"} and \code{"NS"}. The value \code{"NI"} (non-interpretable) is considered a missing result.
+
+A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the \code{only_all_tested} argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not. This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{-------------------------------------------------------------------------
+                            Result of the combination
+                    -----------------------------------------------------
+ Drug A    Drug B   only_all_tested = FALSE       only_all_tested = TRUE
+--------  --------  ----------------------------  ----------------------
+    S     S, I, R   S                             S
+    I       I, R    I                             I
+    R         R     R                             R
+    S       <NA>    S                             <NA>
+    I       <NA>    I (EUCAST), <NA> (CLSI)       <NA>
+    R       <NA>    <NA>                          <NA>
+  <NA>      <NA>    <NA>                          <NA>
+-------------------------------------------------------------------------
+}\if{html}{\out{</div>}}
+
+The \code{\link[=count]{count_*()}} and \code{\link[=proportion]{proportion_*()}} functions, such as \code{\link[=susceptibility]{susceptibility()}} and \code{\link[=resistance]{resistance()}}, apply exactly these rules when more than one variable is used: an isolate is considered tested if the result of the combination is not \code{NA}, and is then counted by the result of the combination. Consequently, \code{\link[=count_susceptible]{count_susceptible()}} \code{+} \code{\link[=count_resistant]{count_resistant()}} \code{=} \code{\link[=count_all]{count_all()}}, and \code{\link[=susceptibility]{susceptibility()}} \code{+} \code{\link[=resistance]{resistance()}} \verb{= 1}, for both values of \code{only_all_tested}. The guideline is taken from their \code{guideline} argument if they have one, and otherwise from the \code{AMR_guideline} option.
+
+In \code{\link[=antibiogram]{antibiogram()}} and \code{\link[=wisca]{wisca()}}, the 'I' and 'SDD' categories are considered susceptible if \code{combine_SI = TRUE} (default), and the result of the combination is then reduced to S or R.
 }
 
 \examples{

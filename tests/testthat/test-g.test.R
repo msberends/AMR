@@ -45,6 +45,10 @@ test_that("test-g.test.R", {
     0.017873,
     tolerance = 0.0001
   )
+  # degrees of freedom are returned as the standard 'htest' component, so print() shows them
+  expect_identical(g.test(x)$parameter, c(df = 1))
+  expect_identical(names(g.test(matrix(c(762, 327, 468, 484, 239, 477), nrow = 2))$parameter), "df")
+  expect_equal(unname(g.test(matrix(c(762, 327, 468, 484, 239, 477), nrow = 2))$parameter), 2)
 
   expect_error(g.test(0))
   expect_error(g.test(c(0, 1), 0))

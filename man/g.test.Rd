@@ -29,25 +29,18 @@ g.test(x, y = NULL, p = rep(1/length(x), length(x)), rescale.p = FALSE)
     \code{p} does not sum to 1, an error is given.}
 }
 \value{
-A list with class \code{"htest"} containing the following
-  components:
-  \item{statistic}{the value the chi-squared test statistic.}
-  \item{parameter}{the degrees of freedom of the approximate
-    chi-squared distribution of the test statistic, \code{NA} if the
-    p-value is computed by Monte Carlo simulation.}
-  \item{p.value}{the p-value for the test.}
-  \item{method}{a character string indicating the type of test
-    performed, and whether Monte Carlo simulation or continuity
-    correction was used.}
-  \item{data.name}{a character string giving the name(s) of the data.}
-  \item{observed}{the observed counts.}
-  \item{expected}{the expected counts under the null hypothesis.}
-  \item{residuals}{the Pearson residuals,
-    \code{(observed - expected) / sqrt(expected)}.}
-  \item{stdres}{standardized residuals,
-    \code{(observed - expected) / sqrt(V)}, where \code{V} is the
-    residual cell variance {(\if{html}{\out{<a href="#reference+chisq.test.Rd+R+3AAgresti+3A2007" class="citation">}}Agresti 2007\if{html}{\out{</a>}}, section 2.4.5)}
-    for the case where \code{x} is a matrix, \code{n * p * (1 - p)} otherwise).}
+A \link{list} with class \code{"htest"} containing the following components:
+\itemize{
+\item \code{statistic}: the value of the test statistic
+\item \code{parameter}: the degrees of freedom of the approximate chi-squared distribution of the test statistic, \code{NA} if the p-value is computed by Monte Carlo simulation
+\item \code{p.value}: the p-value for the test
+\item \code{method}: a character string indicating the type of test performed, and whether Monte Carlo simulation was used
+\item \code{data.name}: a character string giving the name(s) of the data
+\item \code{observed}: the observed counts
+\item \code{expected}: the expected counts under the null hypothesis
+\item \code{residuals}: the Pearson residuals, \code{(observed - expected) / sqrt(expected)}
+\item \code{stdres}: standardised residuals, \code{(observed - expected) / sqrt(V)}, where \code{V} is the residual cell variance (Agresti 2007, section 2.4.5) for the case where \code{x} is a matrix, \code{n * p * (1 - p)} otherwise
+}
 }
 \description{
 \code{\link[=g.test]{g.test()}} performs chi-squared contingency table tests and goodness-of-fit tests, just like \code{\link[=chisq.test]{chisq.test()}} but is more reliable (1). A \emph{G}-test can be used to see whether the number of observations in each category fits a theoretical expectation (called a \strong{\emph{G}-test of goodness-of-fit}), or to see whether the proportions of one variable are different for different values of the other variable (called a \strong{\emph{G}-test of independence}).
@@ -134,6 +127,7 @@ g.test(x)
 \references{
 \enumerate{
 \item McDonald, J.H. 2014. \strong{Handbook of Biological Statistics (3rd ed.)}. Sparky House Publishing, Baltimore, Maryland.
+\item Agresti, A. 2007. \strong{An Introduction to Categorical Data Analysis (2nd ed.)}. Wiley, New York.
 }
 }
 \seealso{

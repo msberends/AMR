@@ -40,7 +40,8 @@ sir_calc <- function(...,
                      minimum = 0,
                      as_percent = FALSE,
                      only_all_tested = FALSE,
-                     only_count = FALSE) {
+                     only_count = FALSE,
+                     guideline = getOption("AMR_guideline", "EUCAST")) {
   meet_criteria(ab_result, allow_class = c("character", "sir"), has_length = seq_along(VALID_SIR_LEVELS), is_in = VALID_SIR_LEVELS)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
@@ -129,41 +130,22 @@ sir_calc <- function(...,
       # this will give a warning for invalid results, of all input columns (so only 1 warning)
       sir_integrity_check <- as.sir(sir_integrity_check)
     }
-
-    x_transposed <- as.list(as.data.frame(t(x), stringsAsFactors = FALSE))
-    if (isTRUE(only_all_tested)) {
-      # no NAs in any column
-      y <- apply(
-        X = as.data.frame(lapply(x, as.double), stringsAsFactors = FALSE),
-        MARGIN = 1,
-        FUN = min
-      )
-      if ("SDD" %in% ab_result && "SDD" %in% y && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
-        message_("Note that {.fun ", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "} will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
-      }
-      numerator <- sum(!is.na(y) & y %in% as.double(ab_result), na.rm = TRUE)
-      denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(anyNA(y))))
+    if (ncol(x) == 1) {
+      x <- x[, 1, drop = TRUE]
     } else {
-      # may contain NAs in any column
-      other_values <- setdiff(c(NA, denominator_vals), ab_result)
-      if ("SDD" %in% ab_result && "SDD" %in% unlist(x_transposed) && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
-        message_("Note that {.fun ", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "} will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
-      }
-      numerator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) any(y %in% ab_result, na.rm = TRUE)))
-      denominator <- sum(vapply(FUN.VALUE = logical(1), x_transposed, function(y) !(all(y %in% other_values) & anyNA(y))))
+      # combination therapy: determine the result of the combination for every isolate, see ?sir_combine
+      x <- sir_combine_engine(as.list(x), S_values = get_susceptible_values(guideline), only_all_tested = only_all_tested)
     }
-  } else {
-    # x is not a data.frame
-    if (!is.sir(x)) {
-      x <- as.sir(x)
-      print_warning <- TRUE
-    }
-    if ("SDD" %in% ab_result && "SDD" %in% x && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
-      message_("Note that `", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "()` will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
-    }
-    numerator <- sum(x %in% ab_result, na.rm = TRUE)
-    denominator <- sum(x %in% denominator_vals, na.rm = TRUE)
+  } else if (!is.sir(x)) {
+    x <- as.sir(x)
+    print_warning <- TRUE
   }
+
+  if ("SDD" %in% ab_result && "SDD" %in% x && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
+    message_("Note that {.fun ", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "} will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
+  }
+  numerator <- sum(x %in% ab_result, na.rm = TRUE)
+  denominator <- sum(x %in% denominator_vals, na.rm = TRUE)
 
   if (print_warning == TRUE) {
     if (message_not_thrown_before("sir_calc")) {

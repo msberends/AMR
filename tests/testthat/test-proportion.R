@@ -95,7 +95,7 @@ test_that("test-proportion.R", {
           combination_n = n_sir(CIP, GEN)
         ) %>%
         pull(combination_n),
-      c(1181, 577, 116)
+      c(979, 462, 101)
     )
 
     # proportion_df
