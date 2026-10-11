@@ -81,12 +81,13 @@ if (require("dplyr")) {
 }
 if (require("dplyr")) {
   # use the new variable in further analyses
+  # THOUGH CONSIDER wisca() FOR RELIABLE ESTIMATES
   example_isolates \%>\%
     mutate(TZP_GEN = sir_combine(TZP, GEN)) \%>\%
     group_by(ward) \%>\%
     summarise(
-      TZP = susceptibility(TZP),
-      GEN = susceptibility(GEN),
+      TZP_mono = susceptibility(TZP),
+      GEN_mono = susceptibility(GEN),
       TZP_GEN = susceptibility(TZP_GEN),
       # or directly, without combining first:
       TZP_GEN2 = susceptibility(TZP, GEN)
