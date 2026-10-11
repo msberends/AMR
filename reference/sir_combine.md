@@ -180,21 +180,23 @@ if (require("dplyr")) {
 #> 4   NA                 166
 if (require("dplyr")) {
   # use the new variable in further analyses
+  # THOUGH CONSIDER wisca() FOR RELIABLE ESTIMATES
   example_isolates %>%
     mutate(TZP_GEN = sir_combine(TZP, GEN)) %>%
     group_by(ward) %>%
     summarise(
-      TZP = susceptibility(TZP),
-      GEN = susceptibility(GEN),
+      TZP_mono = susceptibility(TZP),
+      GEN_mono = susceptibility(GEN),
       TZP_GEN = susceptibility(TZP_GEN),
       # or directly, without combining first:
       TZP_GEN2 = susceptibility(TZP, GEN)
     )
 }
-#> Error in summarise(., TZP = susceptibility(TZP), GEN = susceptibility(GEN),     TZP_GEN = susceptibility(TZP_GEN), TZP_GEN2 = susceptibility(TZP,         GEN)): ℹ In argument: `TZP_GEN2 = susceptibility(TZP, GEN)`.
-#> ℹ In group 1: `ward = "Clinical"`.
-#> Caused by error in `susceptibility()`:
-#> ! No unambiguous name was supplied about the antibiotic (argument `ab`).
-#>   See `as.sir()`.
+#> # A tibble: 3 × 5
+#>   ward       TZP_mono GEN_mono TZP_GEN TZP_GEN2
+#>   <chr>         <dbl>    <dbl>   <dbl>    <dbl>
+#> 1 Clinical      0.898    0.771   0.986    0.986
+#> 2 ICU           0.819    0.710   0.962    0.962
+#> 3 Outpatient    0.894    0.8     0.991    0.991
 # }
 ```

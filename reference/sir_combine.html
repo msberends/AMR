@@ -9,7 +9,7 @@ The same rules are used by antibiogram() and wisca() for combination antibiogram
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9118</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9119</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,22 +173,24 @@ The same rules are used by antibiogram() and wisca() for combination antibiogram
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">  NA</span>                 166</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># use the new variable in further analyses</span></span></span>
+<span class="r-in"><span>  <span class="co"># THOUGH CONSIDER wisca() FOR RELIABLE ESTIMATES</span></span></span>
 <span class="r-in"><span>  <span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>TZP_GEN <span class="op">=</span> <span class="fu">sir_combine</span><span class="op">(</span><span class="va">TZP</span>, <span class="va">GEN</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      TZP <span class="op">=</span> <span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">TZP</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>      GEN <span class="op">=</span> <span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      TZP_mono <span class="op">=</span> <span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">TZP</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      GEN_mono <span class="op">=</span> <span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">GEN</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      TZP_GEN <span class="op">=</span> <span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">TZP_GEN</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      <span class="co"># or directly, without combining first:</span></span></span>
 <span class="r-in"><span>      TZP_GEN2 <span class="op">=</span> <span class="fu"><a href="proportion.html">susceptibility</a></span><span class="op">(</span><span class="va">TZP</span>, <span class="va">GEN</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in summarise(., TZP = susceptibility(TZP), GEN = susceptibility(GEN),     TZP_GEN = susceptibility(TZP_GEN), TZP_GEN2 = susceptibility(TZP,         GEN)):</span> <span style="color: #00BBBB;">ℹ</span> In argument: `TZP_GEN2 = susceptibility(TZP, GEN)`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 1: `ward = "Clinical"`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `susceptibility()`:</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No unambiguous name was supplied about the antibiotic (argument `ab`).</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   See `as.sir()`.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ward       TZP_mono GEN_mono TZP_GEN TZP_GEN2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical      0.898    0.771   0.986    0.986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU           0.819    0.710   0.962    0.962</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient    0.894    0.8     0.991    0.991</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
