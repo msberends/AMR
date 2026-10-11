@@ -724,6 +724,9 @@ or determine multi-drug resistant microorganisms (MDRO,
   [`count_df()`](https://amr-for-r.org/reference/count.md) : Count
   Available Isolates
 
+- [`sir_combine()`](https://amr-for-r.org/reference/sir_combine.md) :
+  Combine SIR Results of Multiple Antimicrobials
+
 - [`get_episode()`](https://amr-for-r.org/reference/get_episode.md)
   [`is_new_episode()`](https://amr-for-r.org/reference/get_episode.md) :
   Determine Clinical or Epidemic Episodes

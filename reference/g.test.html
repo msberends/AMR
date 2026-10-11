@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9115</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9116</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,44 +91,16 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with class <code>"htest"</code> containing the following
-  components:</p>
-<dl><dt>statistic</dt>
-<dd><p>the value the chi-squared test statistic.</p></dd>
-
-  <dt>parameter</dt>
-<dd><p>the degrees of freedom of the approximate
-    chi-squared distribution of the test statistic, <code>NA</code> if the
-    p-value is computed by Monte Carlo simulation.</p></dd>
-
-  <dt>p.value</dt>
-<dd><p>the p-value for the test.</p></dd>
-
-  <dt>method</dt>
-<dd><p>a character string indicating the type of test
-    performed, and whether Monte Carlo simulation or continuity
-    correction was used.</p></dd>
-
-  <dt>data.name</dt>
-<dd><p>a character string giving the name(s) of the data.</p></dd>
-
-  <dt>observed</dt>
-<dd><p>the observed counts.</p></dd>
-
-  <dt>expected</dt>
-<dd><p>the expected counts under the null hypothesis.</p></dd>
-
-  <dt>residuals</dt>
-<dd><p>the Pearson residuals,
-    <code>(observed - expected) / sqrt(expected)</code>.</p></dd>
-
-  <dt>stdres</dt>
-<dd><p>standardized residuals,
-    <code>(observed - expected) / sqrt(V)</code>, where <code>V</code> is the
-    residual cell variance (<a href="#reference+chisq.test.Rd+R+3AAgresti+3A2007" class="citation">Agresti 2007</a>, section 2.4.5)
-    for the case where <code>x</code> is a matrix, <code>n * p * (1 - p)</code> otherwise).</p></dd>
-
-</dl></div>
+    <p>A <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> with class <code>"htest"</code> containing the following components:</p><ul><li><p><code>statistic</code>: the value of the test statistic</p></li>
+<li><p><code>parameter</code>: the degrees of freedom of the approximate chi-squared distribution of the test statistic, <code>NA</code> if the p-value is computed by Monte Carlo simulation</p></li>
+<li><p><code>p.value</code>: the p-value for the test</p></li>
+<li><p><code>method</code>: a character string indicating the type of test performed, and whether Monte Carlo simulation was used</p></li>
+<li><p><code>data.name</code>: a character string giving the name(s) of the data</p></li>
+<li><p><code>observed</code>: the observed counts</p></li>
+<li><p><code>expected</code>: the expected counts under the null hypothesis</p></li>
+<li><p><code>residuals</code>: the Pearson residuals, <code>(observed - expected) / sqrt(expected)</code></p></li>
+<li><p><code>stdres</code>: standardised residuals, <code>(observed - expected) / sqrt(V)</code>, where <code>V</code> is the residual cell variance (Agresti 2007, section 2.4.5) for the case where <code>x</code> is a matrix, <code>n * p * (1 - p)</code> otherwise</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>If <code>x</code> is a <a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a> with one row or column, or if <code>x</code> is a vector and <code>y</code> is not given, then a <em>goodness-of-fit test</em> is performed (<code>x</code> is treated as a one-dimensional contingency table). The entries of <code>x</code> must be non-negative integers. In this case, the hypothesis tested is whether the population probabilities equal those in <code>p</code>, or are all equal if <code>p</code> is not given.</p>
@@ -172,6 +144,7 @@
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
 
 <ol><li><p>McDonald, J.H. 2014. <strong>Handbook of Biological Statistics (3rd ed.)</strong>. Sparky House Publishing, Baltimore, Maryland.</p></li>
+<li><p>Agresti, A. 2007. <strong>An Introduction to Categorical Data Analysis (2nd ed.)</strong>. Wiley, New York.</p></li>
 </ol></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -195,7 +168,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	G-test of goodness-of-fit (likelihood ratio test)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> data:  x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X-squared = 4.1471, p-value = 0.1257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X-squared = 4.1471, df = 2, p-value = 0.1257</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># There is no significant difference from a 1:2:1 ratio.</span></span></span>
@@ -216,7 +189,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	G-test of goodness-of-fit (likelihood ratio test)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> data:  x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X-squared = 5.6085, p-value = 0.01787</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X-squared = 5.6085, df = 1, p-value = 0.01787</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># There is a significant difference from a 1:1 ratio.</span></span></span>

@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9115
+## AMR 3.0.1.9116
 
 Planned as v3.1.0, mid October 2026.
 
@@ -52,6 +52,15 @@ Planned as v3.1.0, mid October 2026.
 - [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) no longer
   guesses unknown MO codes (these become `NA` with a warning), and MO
   codes from versions before v2.0.0 are no longer supported
+
+- With multiple antimicrobials, `count_*()` and `proportion_*()` now
+  follow the documented combination therapy rules:
+  [`resistance()`](https://amr-for-r.org/reference/proportion.md)
+  returns the proportion of failing combinations instead of resistance
+  to any of the antimicrobials, and
+  [`count_all()`](https://amr-for-r.org/reference/count.md) excludes
+  isolates of which the combination result is unknown
+  ([\#321](https://github.com/msberends/AMR/issues/321))
 
 #### New
 
@@ -123,6 +132,11 @@ Planned as v3.1.0, mid October 2026.
   ([\#307](https://github.com/msberends/AMR/issues/307))
 - Sulbactam/durlobactam (`SUD1`) added to the `antimicrobials` data set
   ([\#308](https://github.com/msberends/AMR/issues/308))
+- [`sir_combine()`](https://amr-for-r.org/reference/sir_combine.md) to
+  combine SIR results of multiple antimicrobials into one variable for
+  combination therapy, using the same rules as
+  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
+  ([\#321](https://github.com/msberends/AMR/issues/321))
 
 #### Fixed
 
@@ -244,6 +258,19 @@ Planned as v3.1.0, mid October 2026.
   Recarbrio, Exblifep) were listed under a single component, and names
   of screening libraries and suppliers (e.g. Prestwick, Spectrum) as
   synonyms ([\#315](https://github.com/msberends/AMR/issues/315))
+- WT, NWT, NS and NI results were handled incorrectly in `count_*()` and
+  `proportion_*()` with multiple antimicrobials
+  ([\#321](https://github.com/msberends/AMR/issues/321))
+- [`g.test()`](https://amr-for-r.org/reference/g.test.md) returned the
+  degrees of freedom as `argument` instead of `parameter`, so they were
+  not printed
+- [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
+  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) failed
+  without the `antimicrobials` argument if tidyselect was not available,
+  e.g. for binary installations without dplyr
+- R could crash after unloading data.table, and suggested packages
+  available on the machine that built the package were used even if not
+  available to the user
 
 #### Updated
 

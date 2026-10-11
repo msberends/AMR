@@ -85,12 +85,11 @@ the changes made based on the source code were:
 
 - pc.biplot:
 
-  If true, use what [Gabriel
-  (1971)](#reference+biplot.princomp.Rd+R+3AGabriel+3A1971) refers to as
-  a “principal component biplot”, with `lambda = 1` and observations
-  scaled up by sqrt(n) and variables scaled down by sqrt(n). Then inner
-  products between variables approximate covariances and distances
-  between observations approximate Mahalanobis distance.
+  If `TRUE`, use what Gabriel (1971) refers to as a 'principal component
+  biplot', with `lambda = 1` and observations scaled up by `sqrt(n)` and
+  variables scaled down by `sqrt(n)`. Then inner products between
+  variables approximate covariances and distances between observations
+  approximate Mahalanobis distance.
 
 - labels:
 
@@ -187,6 +186,13 @@ layer for colour, such as
 [`scale_colour_viridis_d()`](https://ggplot2.tidyverse.org/reference/scale_viridis.html)
 and
 [`scale_colour_brewer()`](https://ggplot2.tidyverse.org/reference/scale_brewer.html).
+
+## References
+
+Gabriel, K.R. 1971. **The biplot graphical display of matrices with
+application to principal component analysis**. *Biometrika*
+58(3):453-467.
+[doi:10.1093/biomet/58.3.453](https://doi.org/10.1093/biomet/58.3.453)
 
 ## Examples
 

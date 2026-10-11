@@ -53,49 +53,32 @@ The code for this function is identical to that of
 
 ## Value
 
-A list with class `"htest"` containing the following components:
+A [list](https://rdrr.io/r/base/list.html) with class `"htest"`
+containing the following components:
 
-- statistic:
+- `statistic`: the value of the test statistic
 
-  the value the chi-squared test statistic.
+- `parameter`: the degrees of freedom of the approximate chi-squared
+  distribution of the test statistic, `NA` if the p-value is computed by
+  Monte Carlo simulation
 
-- parameter:
+- `p.value`: the p-value for the test
 
-  the degrees of freedom of the approximate chi-squared distribution of
-  the test statistic, `NA` if the p-value is computed by Monte Carlo
-  simulation.
+- `method`: a character string indicating the type of test performed,
+  and whether Monte Carlo simulation was used
 
-- p.value:
+- `data.name`: a character string giving the name(s) of the data
 
-  the p-value for the test.
+- `observed`: the observed counts
 
-- method:
+- `expected`: the expected counts under the null hypothesis
 
-  a character string indicating the type of test performed, and whether
-  Monte Carlo simulation or continuity correction was used.
+- `residuals`: the Pearson residuals,
+  `(observed - expected) / sqrt(expected)`
 
-- data.name:
-
-  a character string giving the name(s) of the data.
-
-- observed:
-
-  the observed counts.
-
-- expected:
-
-  the expected counts under the null hypothesis.
-
-- residuals:
-
-  the Pearson residuals, `(observed - expected) / sqrt(expected)`.
-
-- stdres:
-
-  standardized residuals, `(observed - expected) / sqrt(V)`, where `V`
-  is the residual cell variance ([Agresti
-  2007](#reference+chisq.test.Rd+R+3AAgresti+3A2007), section 2.4.5) for
-  the case where `x` is a matrix, `n * p * (1 - p)` otherwise).
+- `stdres`: standardised residuals, `(observed - expected) / sqrt(V)`,
+  where `V` is the residual cell variance (Agresti 2007, section 2.4.5)
+  for the case where `x` is a matrix, `n * p * (1 - p)` otherwise
 
 ## Details
 
@@ -207,6 +190,9 @@ category, of course.
 1.  McDonald, J.H. 2014. **Handbook of Biological Statistics (3rd
     ed.)**. Sparky House Publishing, Baltimore, Maryland.
 
+2.  Agresti, A. 2007. **An Introduction to Categorical Data Analysis
+    (2nd ed.)**. Wiley, New York.
+
 ## See also
 
 [`chisq.test()`](https://rdrr.io/r/stats/chisq.test.html)
@@ -229,7 +215,7 @@ g.test(x, p = c(1, 2, 1) / 4)
 #>  G-test of goodness-of-fit (likelihood ratio test)
 #> 
 #> data:  x
-#> X-squared = 4.1471, p-value = 0.1257
+#> X-squared = 4.1471, df = 2, p-value = 0.1257
 #> 
 
 # There is no significant difference from a 1:2:1 ratio.
@@ -250,7 +236,7 @@ g.test(x)
 #>  G-test of goodness-of-fit (likelihood ratio test)
 #> 
 #> data:  x
-#> X-squared = 5.6085, p-value = 0.01787
+#> X-squared = 5.6085, df = 1, p-value = 0.01787
 #> 
 
 # There is a significant difference from a 1:1 ratio.

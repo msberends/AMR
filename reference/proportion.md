@@ -100,7 +100,9 @@ sir_df(
   (for combination therapies, i.e. using more than one variable for
   `...`): a [logical](https://rdrr.io/r/base/logical.html) to indicate
   that isolates must be tested for all antimicrobials, see section
-  *Combination Therapy* below.
+  *Combination Therapy* below. Use
+  [`sir_combine()`](https://amr-for-r.org/reference/sir_combine.md) to
+  create a new variable for a combination therapy.
 
 - guideline:
 
@@ -224,46 +226,6 @@ calculates the proportions S, I, and R. It also supports grouped
 variables. The function `sir_df()` works exactly like `proportion_df()`,
 but adds the number of isolates.
 
-## Combination Therapy
-
-When using more than one variable for `...` (= combination therapy), use
-`only_all_tested` to only count isolates that are tested for all
-antimicrobials/variables that you test them for. See this example for
-two antimicrobials, Drug A and Drug B, about how `susceptibility()`
-works to calculate the %SI:
-
-    --------------------------------------------------------------------
-                        only_all_tested = FALSE  only_all_tested = TRUE
-                        -----------------------  -----------------------
-     Drug A    Drug B   considered   considered  considered   considered
-                        susceptible    tested    susceptible    tested
-    --------  --------  -----------  ----------  -----------  ----------
-     S or I    S or I        X            X           X            X
-       R       S or I        X            X           X            X
-      <NA>     S or I        X            X           -            -
-     S or I      R           X            X           X            X
-       R         R           -            X           -            X
-      <NA>       R           -            -           -            -
-     S or I     <NA>         X            X           -            -
-       R        <NA>         -            -           -            -
-      <NA>      <NA>         -            -           -            -
-    --------------------------------------------------------------------
-
-Please note that, in combination therapies, for `only_all_tested = TRUE`
-applies that:
-
-        count_S()    +   count_I()    +   count_R()    = count_all()
-      proportion_S() + proportion_I() + proportion_R() = 1
-
-and that, in combination therapies, for `only_all_tested = FALSE`
-applies that:
-
-        count_S()    +   count_I()    +   count_R()    >= count_all()
-      proportion_S() + proportion_I() + proportion_R() >= 1
-
-Using `only_all_tested` has no impact when only using one antibiotic as
-input.
-
 ## Interpretation of SIR
 
 In 2019, the European Committee on Antimicrobial Susceptibility Testing
@@ -276,6 +238,65 @@ This AMR package follows insight; use `susceptibility()` (equal to
 [`count_susceptible()`](https://amr-for-r.org/reference/count.md) (equal
 to [`count_SI()`](https://amr-for-r.org/reference/count.md)) to count
 susceptible isolates.
+
+## Combination Therapy
+
+A combination of antimicrobials is considered as good as its most active
+antimicrobial. Results are ranked as follows, from best to worst:
+
+1.  `"S"` and `"WT"`
+
+2.  `"SDD"`
+
+3.  `"I"`
+
+4.  `"R"`, `"NWT"`, and `"NS"`
+
+The result of the combination is the best result of the antimicrobials,
+i.e., the result keeps its original category instead of being reduced to
+only S or R. If antimicrobials have an equally ranked result, `"S"` is
+preferred over `"WT"`, and `"R"` over `"NWT"` and `"NS"`. The value
+`"NI"` (non-interpretable) is considered a missing result.
+
+A missing result can only be ignored if the result of the combination is
+susceptible regardless of the missing result, which depends on the
+`only_all_tested` argument and on the guideline: under EUCAST, the 'I'
+category is considered susceptible (*susceptible, increased exposure*),
+and under CLSI, it is not. This is an example for two antimicrobials,
+Drug A and Drug B (the order of the antimicrobials does not matter):
+
+    -------------------------------------------------------------------------
+                                Result of the combination
+                        -----------------------------------------------------
+     Drug A    Drug B   only_all_tested = FALSE       only_all_tested = TRUE
+    --------  --------  ----------------------------  ----------------------
+        S     S, I, R   S                             S
+        I       I, R    I                             I
+        R         R     R                             R
+        S       <NA>    S                             <NA>
+        I       <NA>    I (EUCAST), <NA> (CLSI)       <NA>
+        R       <NA>    <NA>                          <NA>
+      <NA>      <NA>    <NA>                          <NA>
+    -------------------------------------------------------------------------
+
+The [`count_*()`](https://amr-for-r.org/reference/count.md) and
+`proportion_*()` functions, such as `susceptibility()` and
+`resistance()`, apply exactly these rules when more than one variable is
+used: an isolate is considered tested if the result of the combination
+is not `NA`, and is then counted by the result of the combination.
+Consequently,
+[`count_susceptible()`](https://amr-for-r.org/reference/count.md) `+`
+[`count_resistant()`](https://amr-for-r.org/reference/count.md) `=`
+[`count_all()`](https://amr-for-r.org/reference/count.md), and
+`susceptibility()` `+` `resistance()` `= 1`, for both values of
+`only_all_tested`. The guideline is taken from their `guideline`
+argument if they have one, and otherwise from the `AMR_guideline`
+option.
+
+In [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
+[`wisca()`](https://amr-for-r.org/reference/antibiogram.md), the 'I' and
+'SDD' categories are considered susceptible if `combine_SI = TRUE`
+(default), and the result of the combination is then reduced to S or R.
 
 ## References
 
