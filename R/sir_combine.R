@@ -27,26 +27,20 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-
 #' Combine SIR Results of Multiple Antimicrobials
 #'
-#' @description Combine the SIR results of two or more antimicrobials into one SIR result per isolate, e.g. to create a variable `TZP_GEN` for the combination therapy of piperacillin/tazobactam with gentamicin. The result is the best result of the antimicrobials, as a combination therapy covers the isolate if any of its antimicrobials is active. See *Combination Therapy* below for the exact rules.
+#' @description Combine the SIR results of two or more antimicrobials into one SIR result per isolate, e.g. to create a variable for the combination therapy of piperacillin/tazobactam with gentamicin. The result is the best result of the antimicrobials, as a combination therapy covers the isolate if any of its antimicrobials is active. See *Combination Therapy* below for the exact rules.
 #'
 #' The same rules are used by [antibiogram()] and [wisca()] for combination antibiograms, and by the [`count_*()`][count()] and [`proportion_*()`][proportion()] functions when more than one variable is used, so the result of [sir_combine()] can be used in any further analysis.
 #' @param ... Two or more vectors (or columns) with antimicrobial interpretations, or a data frame with such columns. They will be transformed internally with [as.sir()] if needed. All vectors must be of the same length.
 #' @param only_all_tested A [logical] to indicate that isolates must be tested for all antimicrobials. If `TRUE`, the result is `NA` for isolates with a missing result for any of the antimicrobials. If `FALSE` (default), a missing result only leads to `NA` if a result for the missing antimicrobial could have changed the result of the combination, see *Combination Therapy* below.
 #' @param guideline Either `"EUCAST"` (default) or `"CLSI"`, to determine whether the 'I' category is considered susceptible. This only affects isolates with a missing result for any of the antimicrobials when `only_all_tested = FALSE`, see *Combination Therapy* below. The default can be changed with the `AMR_guideline` option, see [AMR-options].
 #' @section Combination Therapy:
-#' A combination of antimicrobials is considered as good as its most active antimicrobial. Results are ranked as follows, from best to worst:
+#' A combination of antimicrobials is considered as good as its most active antimicrobial: `"S"` is preferred over `"WT"`, and `"R"` over `"NWT"` and `"NS"`. The value `"NI"` (non-interpretable) is considered a missing result.
 #'
-#' 1. `"S"` and `"WT"`
-#' 2. `"SDD"`
-#' 3. `"I"`
-#' 4. `"R"`, `"NWT"`, and `"NS"`
+#' A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the `only_all_tested` argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (*susceptible, increased exposure*), and under CLSI, it is not.
 #'
-#' The result of the combination is the best result of the antimicrobials, i.e., the result keeps its original category instead of being reduced to only S or R. If antimicrobials have an equally ranked result, `"S"` is preferred over `"WT"`, and `"R"` over `"NWT"` and `"NS"`. The value `"NI"` (non-interpretable) is considered a missing result.
-#'
-#' A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the `only_all_tested` argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (*susceptible, increased exposure*), and under CLSI, it is not. This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
+#' This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
 #'
 #' ```
 #' -------------------------------------------------------------------------
@@ -86,6 +80,7 @@
 #' if (require("dplyr")) {
 #'   # create a new variable for piperacillin/tazobactam + gentamicin
 #'   example_isolates %>%
+#'     filter(!is.na(TZP)) %>%
 #'     mutate(TZP_GEN = sir_combine(TZP, GEN)) %>%
 #'     select(mo, TZP, GEN, TZP_GEN)
 #' }
@@ -102,7 +97,10 @@
 #'     group_by(ward) %>%
 #'     summarise(
 #'       TZP = susceptibility(TZP),
-#'       TZP_GEN = susceptibility(TZP_GEN)
+#'       GEN = susceptibility(GEN),
+#'       TZP_GEN = susceptibility(TZP_GEN),
+#'       # or directly, without combining first:
+#'       TZP_GEN2 = susceptibility(TZP, GEN)
 #'     )
 #' }
 #' }

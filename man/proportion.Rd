@@ -135,17 +135,11 @@ This AMR package follows insight; use \code{\link[=susceptibility]{susceptibilit
 
 \section{Combination Therapy}{
 
-A combination of antimicrobials is considered as good as its most active antimicrobial. Results are ranked as follows, from best to worst:
-\enumerate{
-\item \code{"S"} and \code{"WT"}
-\item \code{"SDD"}
-\item \code{"I"}
-\item \code{"R"}, \code{"NWT"}, and \code{"NS"}
-}
+A combination of antimicrobials is considered as good as its most active antimicrobial: \code{"S"} is preferred over \code{"WT"}, and \code{"R"} over \code{"NWT"} and \code{"NS"}. The value \code{"NI"} (non-interpretable) is considered a missing result.
 
-The result of the combination is the best result of the antimicrobials, i.e., the result keeps its original category instead of being reduced to only S or R. If antimicrobials have an equally ranked result, \code{"S"} is preferred over \code{"WT"}, and \code{"R"} over \code{"NWT"} and \code{"NS"}. The value \code{"NI"} (non-interpretable) is considered a missing result.
+A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the \code{only_all_tested} argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not.
 
-A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the \code{only_all_tested} argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not. This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
+This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{-------------------------------------------------------------------------
                             Result of the combination

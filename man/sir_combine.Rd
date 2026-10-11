@@ -21,23 +21,17 @@ sir_combine(
 A \code{\link{sir}} vector with the same length as the input.
 }
 \description{
-Combine the SIR results of two or more antimicrobials into one SIR result per isolate, e.g. to create a variable \code{TZP_GEN} for the combination therapy of piperacillin/tazobactam with gentamicin. The result is the best result of the antimicrobials, as a combination therapy covers the isolate if any of its antimicrobials is active. See \emph{Combination Therapy} below for the exact rules.
+Combine the SIR results of two or more antimicrobials into one SIR result per isolate, e.g. to create a variable for the combination therapy of piperacillin/tazobactam with gentamicin. The result is the best result of the antimicrobials, as a combination therapy covers the isolate if any of its antimicrobials is active. See \emph{Combination Therapy} below for the exact rules.
 
 The same rules are used by \code{\link[=antibiogram]{antibiogram()}} and \code{\link[=wisca]{wisca()}} for combination antibiograms, and by the \code{\link[=count]{count_*()}} and \code{\link[=proportion]{proportion_*()}} functions when more than one variable is used, so the result of \code{\link[=sir_combine]{sir_combine()}} can be used in any further analysis.
 }
 \section{Combination Therapy}{
 
-A combination of antimicrobials is considered as good as its most active antimicrobial. Results are ranked as follows, from best to worst:
-\enumerate{
-\item \code{"S"} and \code{"WT"}
-\item \code{"SDD"}
-\item \code{"I"}
-\item \code{"R"}, \code{"NWT"}, and \code{"NS"}
-}
+A combination of antimicrobials is considered as good as its most active antimicrobial: \code{"S"} is preferred over \code{"WT"}, and \code{"R"} over \code{"NWT"} and \code{"NS"}. The value \code{"NI"} (non-interpretable) is considered a missing result.
 
-The result of the combination is the best result of the antimicrobials, i.e., the result keeps its original category instead of being reduced to only S or R. If antimicrobials have an equally ranked result, \code{"S"} is preferred over \code{"WT"}, and \code{"R"} over \code{"NWT"} and \code{"NS"}. The value \code{"NI"} (non-interpretable) is considered a missing result.
+A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the \code{only_all_tested} argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not.
 
-A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the \code{only_all_tested} argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not. This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
+This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{-------------------------------------------------------------------------
                             Result of the combination
@@ -75,6 +69,7 @@ susceptibility(sir_combine(drug_a, drug_b), minimum = 0)
 if (require("dplyr")) {
   # create a new variable for piperacillin/tazobactam + gentamicin
   example_isolates \%>\%
+    filter(!is.na(TZP)) \%>\%
     mutate(TZP_GEN = sir_combine(TZP, GEN)) \%>\%
     select(mo, TZP, GEN, TZP_GEN)
 }
@@ -91,7 +86,10 @@ if (require("dplyr")) {
     group_by(ward) \%>\%
     summarise(
       TZP = susceptibility(TZP),
-      TZP_GEN = susceptibility(TZP_GEN)
+      GEN = susceptibility(GEN),
+      TZP_GEN = susceptibility(TZP_GEN),
+      # or directly, without combining first:
+      TZP_GEN2 = susceptibility(TZP, GEN)
     )
 }
 }
