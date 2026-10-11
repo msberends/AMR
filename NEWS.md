@@ -1,4 +1,4 @@
-# AMR 3.0.1.9114
+# AMR 3.0.1.9115
 
 Planned as v3.1.0, mid October 2026.
 
@@ -57,6 +57,9 @@ Planned as v3.1.0, mid October 2026.
   * Metadata columns (e.g. `patient`, `ward`) no longer misidentified as antibiotic columns
   * `info = FALSE` now suppresses all messages, including for columns without breakpoints
   * Assumption of disk zones are now preferred over MIC values when input is only whole numbers (#291)
+  * Capped MICs (e.g. `<=0.5`) are now `I` instead of `S` or `NI` if there is no S category, i.e. an off-scale S breakpoint such as EUCAST's 0.001 mg/L (#295)
+  * Capped MICs are no longer forced to `S` or `R` if there is no breakpoint for the drug-bug combination
+  * Documented default of `capped_mic_handling` corrected to `"standard"`
 * `as.mic()`: values in scientific notation (e.g. `1e-3`) now handled correctly
 * `as.ab()`: codes containing "PH" or "TH" (e.g. `ETH`, `PHE`) no longer return `NA` when mixed with unrecognised input (#245)
 * `as.ab()`: results of `fast_mode` (used internally) were remembered and reused by later regular calls, which could return `NA` for valid input (#313)

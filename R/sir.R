@@ -46,11 +46,11 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' `"none"`
 #'   * `<=`, `<`, `>` and `>=` are ignored.
 #'
-#' `"conservative"` (default)
+#' `"conservative"`
 #'   * `<=`, `<`, `>` and `>=` return `"NI"` (non-interpretable) if the *true* MIC could be at either side of the breakpoint.
 #'   * This is the only mode that preserves uncertainty for ECOFFs.
 #'
-#' `"standard"`
+#' `"standard"` (default)
 #'   * `<=` and `>=` return `"NI"` (non-interpretable) if the *true* MIC could be at either side of the breakpoint.
 #'   * `<` always returns `"S"`, regardless of the breakpoint.
 #'   * `>` always returns `"R"`, regardless of the breakpoint.
@@ -59,7 +59,9 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #'   * `<=` and `<` always return `"S"`, regardless of the breakpoint.
 #'   * `>=` and `>` always return `"R"`, regardless of the breakpoint.
 #'
-#' The default `"conservative"` setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option [`AMR_capped_mic_handling`][AMR-options].
+#' In all modes except `"none"`, a capped value is never forced to a category that the guideline does not provide for the drug-bug combination: if a breakpoint is missing, the result is `NA` as for uncapped values. EUCAST uses an off-scale S breakpoint of 0.001 mg/L to indicate that there is no S category (stored as 0.0001 in [clinical_breakpoints]; any S breakpoint of 0.001 or lower is treated as such). In that case, `<` and `<=` values that cannot be `"R"` return `"I"` (or `"SDD"`), and `"standard"` and `"lenient"` return `"I"` (or `"SDD"`) instead of `"S"`.
+#'
+#' The default `"standard"` setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option [`AMR_capped_mic_handling`][AMR-options].
 #' @param as_wt_nwt A [logical] to return `"WT"`/`"NWT"` instead of `"S"`/`"R"`. Defaults to `TRUE` when using ECOFFs, i.e., when `breakpoint_type` is set to `"ECOFF"`.
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param substitute_missing_r_breakpoint A [logical] to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is `FALSE`. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s in these cases to `"R"`. Can also be set with the package option [`AMR_substitute_missing_r_breakpoint`][AMR-options].
@@ -99,7 +101,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #'      # fast processing with parallel computing (requires future.apply):
 #'      as.sir(your_data, ..., parallel = TRUE)
 #'      ```
-#'    * Operators like "<=" will be considered according to the `capped_mic_handling` setting. At default, an MIC value of e.g. ">2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the *true* MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.
+#'    * Operators like "<=" will be considered according to the `capped_mic_handling` setting. At default, an MIC value of e.g. ">=2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the *true* MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.
 #'    * **Note:** When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.
 #'
 #' 3. For **interpreting disk diffusion diameters** according to EUCAST or CLSI. You must clean your disk zones first using [as.disk()], that also gives your columns the new data class [`disk`]. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the `mo` argument.
@@ -1860,6 +1862,31 @@ as_sir_method <- function(method_short,
         )
       }
 
+      if (isTRUE(substitute_missing_r_breakpoint) && !is.na(breakpoints_current$breakpoint_S) && is.na(breakpoints_current$breakpoint_R)) {
+        # breakpoints_current only has 1 row at this moment
+        breakpoints_current$breakpoint_R <- breakpoints_current$breakpoint_S
+        notes_current <- paste0(
+          notes_current, "\n",
+          ifelse(!is.na(breakpoints_current$breakpoint_S) & is.na(breakpoints_current$breakpoint_R),
+            "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE.",
+            ""
+          )
+        )
+      }
+
+      # EUCAST indicates that there is no S category with an off-scale S breakpoint of 0.001 mg/L (stored as 0.0001 in
+      # clinical_breakpoints), so that wild-type isolates are I; capped MICs such as "<=0.5" must then not be S or NI (#295)
+      no_S_category <- method == "mic" & isTRUE(breakpoints_current$breakpoint_S <= 0.001)
+      middle_sir <- if (isTRUE(breakpoints_current$is_SDD)) as.sir("SDD") else as.sir("I")
+      clsi_closed_R <- !custom_breakpoints_set & guideline_current %like% "CLSI"
+      capped_low_not_R <- (as.character(input_original) %like% "^<[0-9]" & as.double(input_clean) <= breakpoints_current$breakpoint_R) |
+        (as.character(input_original) %like% "^<=[0-9]" & (as.double(input_clean) < breakpoints_current$breakpoint_R |
+          (!clsi_closed_R & as.double(input_clean) == breakpoints_current$breakpoint_R)))
+      capped_low_middle <- capped_mic_handling != "none" & no_S_category & capped_low_not_R %in% TRUE
+      # capped values only get a forced S or R if the guideline has such a category for this drug-bug combination
+      has_S_category <- !is.na(breakpoints_current$breakpoint_S) & !no_S_category
+      has_R_category <- !is.na(breakpoints_current$breakpoint_R)
+
       notes_current <- paste0(
         notes_current, "\n",
         ifelse(breakpoints_current$mo == "UNKNOWN" | breakpoints_current$ref_tbl %like% "PK.*PD",
@@ -1879,34 +1906,40 @@ as_sir_method <- function(method_short,
         ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling == "standard" & as.character(input_original) %like% "^[<][0-9]",
+        ifelse(capped_low_middle | (method == "mic" & capped_mic_handling %in% c("standard", "lenient") & no_S_category & has_R_category &
+          as.character(input_original) %like% ifelse(capped_mic_handling == "lenient", "^[<]=?[0-9]", "^[<][0-9]")),
+        paste0("MIC values with the operator '<' or '<=' are considered '", middle_sir, "', not 'S' or 'NI', since the guideline has no S category for this drug-bug combination (off-scale S breakpoint)."),
+        ""
+        ),
+        "\n",
+        ifelse(method == "mic" & capped_mic_handling == "standard" & has_S_category & as.character(input_original) %like% "^[<][0-9]",
           paste0("MIC values with the operator '<' are considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling == "standard" & as.character(input_original) %like% "^[>][0-9]",
+        ifelse(method == "mic" & capped_mic_handling == "standard" & has_R_category & as.character(input_original) %like% "^[>][0-9]",
           paste0("MIC values with the operator '>' are considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling == "lenient" & as.character(input_original) %like% "^[<]=?[0-9]",
+        ifelse(method == "mic" & capped_mic_handling == "lenient" & has_S_category & as.character(input_original) %like% "^[<]=?[0-9]",
           paste0("MIC values with the operator '<' or '<=' are considered 'S' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling == "lenient" & as.character(input_original) %like% "^[>]=?[0-9]",
+        ifelse(method == "mic" & capped_mic_handling == "lenient" & has_R_category & as.character(input_original) %like% "^[>]=?[0-9]",
           paste0("MIC values with the operator '>' or '>=' are considered 'R' since capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling == "conservative" & as.character(input_original) %like% "^[<>][0-9]" &
+        ifelse(method == "mic" & capped_mic_handling == "conservative" & !capped_low_middle & as.character(input_original) %like% "^[<>][0-9]" &
           ((as.character(input_original) %like% "^<" & as.double(input_clean) > breakpoints_current$breakpoint_S) |
             (as.character(input_original) %like% "^>" & as.double(input_clean) < breakpoints_current$breakpoint_R)),
         paste0("MIC values are considered 'NI' (non-interpretable) if the true MIC could be at either side of the breakpoint and capped_mic_handling = \"", capped_mic_handling, "\"."),
         ""
         ),
         "\n",
-        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & as.character(input_original) %like% "^<=[0-9]" & as.double(input_clean) > breakpoints_current$breakpoint_S,
+        ifelse(method == "mic" & capped_mic_handling %in% c("conservative", "standard") & !capped_low_middle & as.character(input_original) %like% "^<=[0-9]" & as.double(input_clean) > breakpoints_current$breakpoint_S,
           paste0("MIC values are considered 'NI' (non-interpretable) if the true MIC could be at either side of the breakpoint and capped_mic_handling = \"", capped_mic_handling, "\"."),
           ""
         ),
@@ -1917,37 +1950,40 @@ as_sir_method <- function(method_short,
         )
       )
 
-      if (isTRUE(substitute_missing_r_breakpoint) && !is.na(breakpoints_current$breakpoint_S) && is.na(breakpoints_current$breakpoint_R)) {
-        # breakpoints_current only has 1 row at this moment
-        breakpoints_current$breakpoint_R <- breakpoints_current$breakpoint_S
-        notes_current <- paste0(
-          notes_current, "\n",
-          ifelse(!is.na(breakpoints_current$breakpoint_S) & is.na(breakpoints_current$breakpoint_R),
-            "NAs because of missing R breakpoints were substituted with R since substitute_missing_r_breakpoint = TRUE.",
-            ""
-          )
-        )
-      }
-
       ## actual interpretation ----
       if (method == "mic") {
         new_sir <- case_when_AMR(
           is.na(input_clean) ~ NA_sir_,
 
-          # "lenient" for any cap: force S/R
+          # no S category: capped values that cannot be R are I (or SDD), regardless of capped_mic_handling (#295)
+          capped_low_middle ~ middle_sir,
+
+          # "lenient" for any cap: force S/R, or I/SDD if there is no S category
           capped_mic_handling == "lenient" &
-            as.character(input_original) %like% "^[<]=?[0-9]"
+            as.character(input_original) %like% "^[<]=?[0-9]" &
+            no_S_category & has_R_category
+          ~ middle_sir,
+          capped_mic_handling == "lenient" &
+            as.character(input_original) %like% "^[<]=?[0-9]" &
+            has_S_category
           ~ as.sir("S"),
           capped_mic_handling == "lenient" &
-            as.character(input_original) %like% "^[>]=?[0-9]"
+            as.character(input_original) %like% "^[>]=?[0-9]" &
+            has_R_category
           ~ as.sir("R"),
 
-          # "standard" for < and >: force S/R
+          # "standard" for < and >: force S/R, or I/SDD if there is no S category
           capped_mic_handling == "standard" &
-            as.character(input_original) %like% "^[<][0-9]"
+            as.character(input_original) %like% "^[<][0-9]" &
+            no_S_category & has_R_category
+          ~ middle_sir,
+          capped_mic_handling == "standard" &
+            as.character(input_original) %like% "^[<][0-9]" &
+            has_S_category
           ~ as.sir("S"),
           capped_mic_handling == "standard" &
-            as.character(input_original) %like% "^[>][0-9]"
+            as.character(input_original) %like% "^[>][0-9]" &
+            has_R_category
           ~ as.sir("R"),
 
           # "conservative" for < and >: NI if the true MIC could be on either side of a breakpoint

@@ -134,13 +134,13 @@ Otherwise: arguments passed on to methods.}
 \item \code{<=}, \code{<}, \code{>} and \code{>=} are ignored.
 }
 
-\code{"conservative"} (default)
+\code{"conservative"}
 \itemize{
 \item \code{<=}, \code{<}, \code{>} and \code{>=} return \code{"NI"} (non-interpretable) if the \emph{true} MIC could be at either side of the breakpoint.
 \item This is the only mode that preserves uncertainty for ECOFFs.
 }
 
-\code{"standard"}
+\code{"standard"} (default)
 \itemize{
 \item \code{<=} and \code{>=} return \code{"NI"} (non-interpretable) if the \emph{true} MIC could be at either side of the breakpoint.
 \item \code{<} always returns \code{"S"}, regardless of the breakpoint.
@@ -153,7 +153,9 @@ Otherwise: arguments passed on to methods.}
 \item \code{>=} and \code{>} always return \code{"R"}, regardless of the breakpoint.
 }
 
-The default \code{"conservative"} setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option \code{\link[=AMR-options]{AMR_capped_mic_handling}}.}
+In all modes except \code{"none"}, a capped value is never forced to a category that the guideline does not provide for the drug-bug combination: if a breakpoint is missing, the result is \code{NA} as for uncapped values. EUCAST uses an off-scale S breakpoint of 0.001 mg/L to indicate that there is no S category (stored as 0.0001 in \link{clinical_breakpoints}; any S breakpoint of 0.001 or lower is treated as such). In that case, \code{<} and \code{<=} values that cannot be \code{"R"} return \code{"I"} (or \code{"SDD"}), and \code{"standard"} and \code{"lenient"} return \code{"I"} (or \code{"SDD"}) instead of \code{"S"}.
+
+The default \code{"standard"} setting ensures cautious handling of uncertain values while preserving interpretability. This option can also be set with the package option \code{\link[=AMR-options]{AMR_capped_mic_handling}}.}
 
 \item{as_wt_nwt}{A \link{logical} to return \code{"WT"}/\code{"NWT"} instead of \code{"S"}/\code{"R"}. Defaults to \code{TRUE} when using ECOFFs, i.e., when \code{breakpoint_type} is set to \code{"ECOFF"}.}
 
@@ -213,7 +215,7 @@ your_data \%>\% mutate_if(is.mic, as.sir, host = "column_with_animal_species", g
 # fast processing with parallel computing (requires future.apply):
 as.sir(your_data, ..., parallel = TRUE)
 }\if{html}{\out{</div>}}
-\item Operators like "<=" will be considered according to the \code{capped_mic_handling} setting. At default, an MIC value of e.g. ">2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the \emph{true} MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.
+\item Operators like "<=" will be considered according to the \code{capped_mic_handling} setting. At default, an MIC value of e.g. ">=2" will return "NI" (non-interpretable) if the breakpoint is 4-8; the \emph{true} MIC could be at either side of the breakpoint. This is to prevent that capped values from raw laboratory data would not be treated conservatively.
 \item \strong{Note:} When using CLSI as the guideline, MIC values must be log2-based doubling dilutions. Values not in this format, will be automatically rounded up to the nearest log2 level as CLSI instructs, and a warning will be thrown.
 }
 \item For \strong{interpreting disk diffusion diameters} according to EUCAST or CLSI. You must clean your disk zones first using \code{\link[=as.disk]{as.disk()}}, that also gives your columns the new data class \code{\link{disk}}. Also, be sure to have a column with microorganism names or codes. It will be found automatically, but can be set manually using the \code{mo} argument.

@@ -406,6 +406,41 @@ test_that("test-sir.R", {
   expect_equal(out3, as.sir(c("NWT", "WT", "NWT")))
   expect_equal(out4, as.sir(c("NWT", "WT", "NWT")))
 
+  # Issue #295: no S category (off-scale S breakpoint), e.g. EUCAST CIP in P. aeruginosa (S <= 0.001, R > 0.5)
+  capped_psa <- as.mic(c("<=0.5", "<0.5", "<=0.25", "<0.25", "<=0.001", "<=1", "<1", ">=0.5", ">0.5", "0.25"))
+  capped_psa_sir <- function(handling) {
+    suppressMessages(as.sir(capped_psa, mo = "Pseudomonas aeruginosa", ab = "CIP", guideline = "EUCAST 2026", capped_mic_handling = handling))
+  }
+  expect_equal(capped_psa_sir("none"), as.sir(c("I", "I", "I", "I", "I", "R", "R", "I", "R", "I")))
+  expect_equal(capped_psa_sir("conservative"), as.sir(c("I", "I", "I", "I", "I", "NI", "NI", "NI", "R", "I")))
+  expect_equal(capped_psa_sir("standard"), as.sir(c("I", "I", "I", "I", "I", "NI", "I", "NI", "R", "I")))
+  expect_equal(capped_psa_sir("lenient"), as.sir(c("I", "I", "I", "I", "I", "I", "I", "R", "R", "I")))
+  # the same with custom reference data that uses the off-scale value as printed by EUCAST (S <= 0.001, R > 2)
+  ref_staph <- subset(clinical_breakpoints, guideline == "EUCAST 2026" & ab == "CIP" & mo == "B_PSDMN" & method == "MIC" & type == "human")[1, , drop = FALSE]
+  ref_staph$mo <- as.mo("B_STPHY_AURS")
+  ref_staph$breakpoint_S <- 0.001
+  ref_staph$breakpoint_R <- 2
+  for (handling in c("conservative", "standard", "lenient")) {
+    expect_equal(
+      suppressMessages(as.sir(as.mic(c("<=0.5", "<0.5", "<=2", "<0.001")), mo = "Staphylococcus aureus", ab = "CIP", reference_data = ref_staph, capped_mic_handling = handling)),
+      as.sir(c("I", "I", "I", "I"))
+    )
+  }
+  # SDD as middle category, e.g. CLSI DAP in E. faecium (SDD <= 4, R >= 8)
+  expect_equal(
+    suppressMessages(as.sir(as.mic(c("<=4", "<=2", "<=0.5")), mo = "Enterococcus faecium", ab = "DAP", guideline = "CLSI 2026", capped_mic_handling = "lenient")),
+    as.sir(c("SDD", "SDD", "SDD"))
+  )
+  # an S category remains unaffected, e.g. EUCAST CIP in E. coli (S <= 0.25, R > 0.5)
+  expect_equal(
+    suppressMessages(as.sir(as.mic(c("<=0.5", "<0.5", "<=0.25")), mo = "Escherichia coli", ab = "CIP", guideline = "EUCAST 2026", capped_mic_handling = "standard")),
+    as.sir(c("NI", "S", "S"))
+  )
+  # capped values must not be forced to S or R if there is no breakpoint (blocking row, here: EUCAST CIP in S. aureus in brackets only)
+  for (handling in c("none", "conservative", "standard", "lenient")) {
+    expect_true(all(is.na(suppressMessages(as.sir(as.mic(c("<0.5", "<=0.5", ">2", ">=2", "1")), mo = "Staphylococcus aureus", ab = "CIP", guideline = "EUCAST 2026", capped_mic_handling = handling)))))
+  }
+
   # Issue #278: re-running as.sir() on already-<sir> data must preserve columns
   df_already_sir <- data.frame(
     mo = "B_ESCHR_COLI",
