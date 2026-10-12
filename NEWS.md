@@ -1,4 +1,4 @@
-# AMR 3.0.1.9122
+# AMR 3.0.1.9123
 
 Planned as v3.1.0, mid October 2026.
 
@@ -25,7 +25,6 @@ Planned as v3.1.0, mid October 2026.
 
 * Faster parallel computing via the `future` package for `as.sir()` and `wisca()`: a non-sequential plan (e.g. `future::plan(future::multisession)`) must be active before using `parallel = TRUE`.
 * `as.mo()` no longer guesses unknown MO codes (these become `NA` with a warning), and MO codes from versions before v2.0.0 are no longer supported
-* With multiple antimicrobials, `count_*()` and `proportion_*()` now follow the documented combination therapy rules: `resistance()` returns the proportion of failing combinations instead of resistance to any of the antimicrobials, and `count_all()` excludes isolates of which the combination result is unknown (#321)
 
 ### New
 * EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the `clinical_breakpoints` data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations
@@ -45,7 +44,7 @@ Planned as v3.1.0, mid October 2026.
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
 * A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
 * `add_custom_antimicrobial_synonyms()` to add local names, such as trade names, to existing antimicrobials (#307)
-* `sir_combine()` to combine SIR results of multiple antimicrobials into one variable for combination therapy, using the same rules as `antibiogram()` (#321)
+* `sir_combine()` to combine SIR results of multiple antimicrobials into one variable, for combination therapy (`method = "most_susceptible"`) or resistance within a group (`method = "most_resistant"`) (#321)
 
 ### Fixed
 * `as.mo()` returned *Salmonella bongori* or another subspecies for *Salmonella* serovars written with the species, such as "Salmonella enterica serovar Typhi"

@@ -6,6 +6,7 @@
 \usage{
 sir_combine(
   ...,
+  method = c("most_susceptible", "most_resistant"),
   only_all_tested = FALSE,
   guideline = getOption("AMR_guideline", "EUCAST")
 )
@@ -13,7 +14,9 @@ sir_combine(
 \arguments{
 \item{...}{Two or more vectors (or columns) with antimicrobial interpretations, or a data frame with such columns. They will be transformed internally with \code{\link[=as.sir]{as.sir()}} if needed. All vectors must be of the same length.}
 
-\item{only_all_tested}{A \link{logical} to indicate that isolates must be tested for all antimicrobials. If \code{TRUE}, the result is \code{NA} for isolates with a missing result for any of the antimicrobials. If \code{FALSE} (default), a missing result only leads to \code{NA} if a result for the missing antimicrobial could have changed the result of the combination, see \emph{Combination Therapy} below.}
+\item{method}{Either \code{"most_susceptible"} (default) to return the most susceptible result, as for combination therapy, or \code{"most_resistant"} to return the most resistant result, as for resistance within a group of antimicrobials. See \emph{Combination Therapy} below.}
+
+\item{only_all_tested}{A \link{logical} to indicate that isolates must be tested for all antimicrobials. If \code{TRUE}, the result is \code{NA} for isolates with a missing result for any of the antimicrobials. If \code{FALSE} (default), a missing result only leads to \code{NA} if a result for the missing antimicrobial could have changed the result, see \emph{Combination Therapy} below.}
 
 \item{guideline}{Either \code{"EUCAST"} (default) or \code{"CLSI"}, to determine whether the 'I' category is considered susceptible. This only affects isolates with a missing result for any of the antimicrobials when \code{only_all_tested = FALSE}, see \emph{Combination Therapy} below. The default can be changed with the \code{AMR_guideline} option, see \link{AMR-options}.}
 }
@@ -21,49 +24,75 @@ sir_combine(
 A \code{\link{sir}} vector with the same length as the input.
 }
 \description{
-Combine the SIR results of two or more antimicrobials into one SIR result per isolate, e.g. to create a variable for the combination therapy of piperacillin/tazobactam with gentamicin. The result is the best result of the antimicrobials, as a combination therapy covers the isolate if any of its antimicrobials is active. See \emph{Combination Therapy} below for the exact rules.
+Combine the SIR results of two or more antimicrobials into one SIR result per isolate. This can answer two different questions, set with the \code{method} argument:
+\itemize{
+\item \code{"most_susceptible"} (default): \emph{Is at least one of these antimicrobials expected to work?} This is the result of a combination therapy, e.g. piperacillin/tazobactam with gentamicin, which covers the isolate if any of its antimicrobials is active.
+\item \code{"most_resistant"}: \emph{Is resistance demonstrated to any of these antimicrobials?} This is the result for a group of antimicrobials, e.g. resistance to third-generation cephalosporins if an isolate is resistant to ceftazidime or ceftriaxone, as used in surveillance reports.
+}
 
-The same rules are used by \code{\link[=antibiogram]{antibiogram()}} and \code{\link[=wisca]{wisca()}} for combination antibiograms, and by the \code{\link[=count]{count_*()}} and \code{\link[=proportion]{proportion_*()}} functions when more than one variable is used, so the result of \code{\link[=sir_combine]{sir_combine()}} can be used in any further analysis.
+See \emph{Combination Therapy} below for the exact rules. The same rules are used by \code{\link[=antibiogram]{antibiogram()}} and \code{\link[=wisca]{wisca()}} for combination antibiograms, and by the \code{\link[=count]{count_*()}} and \code{\link[=proportion]{proportion_*()}} functions when more than one variable is used.
 }
 \section{Combination Therapy}{
 
-A combination of antimicrobials is considered as good as its most active antimicrobial: \code{"S"} is preferred over \code{"WT"}, and \code{"R"} over \code{"NWT"} and \code{"NS"}. The value \code{"NI"} (non-interpretable) is considered a missing result.
+Results are ordered from susceptible to resistant: S (and WT), SDD, I, R (and NWT, NS). With \code{method = "most_susceptible"} (in \code{\link[=sir_combine]{sir_combine()}}), the most susceptible result of the antimicrobials is returned, and with \code{method = "most_resistant"}, the most resistant result. The value \code{"NI"} (non-interpretable) is considered a missing result.
 
-A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the \code{only_all_tested} argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not.
+A missing result can only be ignored if it cannot change the conclusion: a susceptible result for \code{"most_susceptible"}, and a non-susceptible result for \code{"most_resistant"}. Under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not. With \code{only_all_tested = TRUE}, any missing result leads to \code{NA}.
 
-This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
+This is an example for two antimicrobials, Drug A and Drug B, under EUCAST (the order of the antimicrobials does not matter):
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{-------------------------------------------------------------------------
-                            Result of the combination
-                    -----------------------------------------------------
- Drug A    Drug B   only_all_tested = FALSE       only_all_tested = TRUE
---------  --------  ----------------------------  ----------------------
-    S     S, I, R   S                             S
-    I       I, R    I                             I
-    R         R     R                             R
-    S       <NA>    S                             <NA>
-    I       <NA>    I (EUCAST), <NA> (CLSI)       <NA>
-    R       <NA>    <NA>                          <NA>
-  <NA>      <NA>    <NA>                          <NA>
+                      Result of method =            Result of method =
+                     "most_susceptible"              "most_resistant"
+                   -----------------------  -----------------------------
+                    only_all_tested =        only_all_tested =
+ Drug A    Drug B     FALSE      TRUE          FALSE         TRUE
+--------  --------  ---------  ---------    -----------  -------------
+    S        S          S          S             S             S
+    S        I          S          S             I             I
+    S        R          S          S             R             R
+    I        R          I          I             R             R
+    R        R          R          R             R             R
+    S      <NA>         S        <NA>          <NA>          <NA>
+    I      <NA>         I        <NA>          <NA>          <NA>
+    R      <NA>       <NA>       <NA>            R           <NA>
+  <NA>     <NA>       <NA>       <NA>          <NA>          <NA>
 -------------------------------------------------------------------------
 }\if{html}{\out{</div>}}
 
-The \code{\link[=count]{count_*()}} and \code{\link[=proportion]{proportion_*()}} functions, such as \code{\link[=susceptibility]{susceptibility()}} and \code{\link[=resistance]{resistance()}}, apply exactly these rules when more than one variable is used: an isolate is considered tested if the result of the combination is not \code{NA}, and is then counted by the result of the combination. Consequently, \code{\link[=count_susceptible]{count_susceptible()}} \code{+} \code{\link[=count_resistant]{count_resistant()}} \code{=} \code{\link[=count_all]{count_all()}}, and \code{\link[=susceptibility]{susceptibility()}} \code{+} \code{\link[=resistance]{resistance()}} \verb{= 1}, for both values of \code{only_all_tested}. The guideline is taken from their \code{guideline} argument if they have one, and otherwise from the \code{AMR_guideline} option.
+Under CLSI, the combination of I with a missing result is \verb{<NA>} for \code{"most_susceptible"} and I for \code{"most_resistant"}.
 
-In \code{\link[=antibiogram]{antibiogram()}} and \code{\link[=wisca]{wisca()}}, the 'I' and 'SDD' categories are considered susceptible if \code{combine_SI = TRUE} (default), and the result of the combination is then reduced to S or R.
+The \code{\link[=count]{count_*()}} and \code{\link[=proportion]{proportion_*()}} functions apply these rules when more than one variable is used. With \code{only_all_tested = FALSE} (default), the functions for susceptibility, such as \code{\link[=susceptibility]{susceptibility()}} and \code{\link[=count_susceptible]{count_susceptible()}}, count an isolate as susceptible if any of the antimicrobials is susceptible (\code{"most_susceptible"}), and the functions for resistance, such as \code{\link[=resistance]{resistance()}} and \code{\link[=count_resistant]{count_resistant()}}, count an isolate as resistant if any of the antimicrobials is resistant (\code{"most_resistant"}). An isolate is considered tested if it has such a result, or if it was tested for all antimicrobials. Therefore, for combinations with \code{only_all_tested = FALSE}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    count_S()    +   count_I()    +   count_R()    >= count_all()
+  proportion_S() + proportion_I() + proportion_R() >= 1
+}\if{html}{\out{</div>}}
+
+With \code{only_all_tested = TRUE}, all these functions count the result of the combination therapy (\code{"most_susceptible"}) of isolates tested for all antimicrobials, so that:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    count_S()    +   count_I()    +   count_R()    = count_all()
+  proportion_S() + proportion_I() + proportion_R() = 1
+}\if{html}{\out{</div>}}
+
+In \code{\link[=antibiogram]{antibiogram()}} and \code{\link[=wisca]{wisca()}}, the result of the combination therapy (\code{"most_susceptible"}) is used, the 'I' and 'SDD' categories are considered susceptible if \code{combine_SI = TRUE} (default), and the result is then reduced to S or R.
 }
 
 \examples{
 drug_a <- as.sir(c("S", "R", "R", "I", "I", NA, "R", "SDD"))
 drug_b <- as.sir(c("R", "S", "R", "R", NA, NA, NA, "I"))
 
+# combination therapy: is at least one of them expected to work?
 sir_combine(drug_a, drug_b)
 sir_combine(drug_a, drug_b, guideline = "CLSI")
 sir_combine(drug_a, drug_b, only_all_tested = TRUE)
 
+# resistance within a group: is resistance demonstrated to any of them?
+sir_combine(drug_a, drug_b, method = "most_resistant")
+
 # the count and proportion functions use the same rules
 susceptibility(drug_a, drug_b, minimum = 0)
 susceptibility(sir_combine(drug_a, drug_b), minimum = 0)
+resistance(drug_a, drug_b, minimum = 0)
+resistance(sir_combine(drug_a, drug_b, method = "most_resistant"), minimum = 0)
 
 \donttest{
 if (require("dplyr")) {
@@ -72,6 +101,12 @@ if (require("dplyr")) {
     filter(!is.na(TZP)) \%>\%
     mutate(TZP_GEN = sir_combine(TZP, GEN)) \%>\%
     select(mo, TZP, GEN, TZP_GEN)
+}
+if (require("dplyr")) {
+  # resistance to third-generation cephalosporins
+  example_isolates \%>\%
+    mutate(cephalosporins_3rd = sir_combine(CAZ, CRO, method = "most_resistant")) \%>\%
+    count(cephalosporins_3rd)
 }
 if (require("dplyr")) {
   # combine any number of antimicrobials

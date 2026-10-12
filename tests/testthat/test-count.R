@@ -68,16 +68,11 @@ test_that("test-count.R", {
     expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE), 1687)
     expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE), 1764)
     expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = TRUE), 1798)
-    expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = FALSE), 1875)
+    expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = FALSE), 1936)
     expect_identical(
       example_isolates %>% count_all(AMC, GEN, only_all_tested = TRUE),
       example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE) +
         example_isolates %>% count_resistant(AMC, GEN, only_all_tested = TRUE)
-    )
-    expect_identical(
-      example_isolates %>% count_all(AMC, GEN, only_all_tested = FALSE),
-      example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE) +
-        example_isolates %>% count_resistant(AMC, GEN, only_all_tested = FALSE)
     )
 
     # count of cases

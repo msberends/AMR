@@ -79,7 +79,7 @@ These functions can be used to count resistant/susceptible microbial isolates. A
 \details{
 These functions are meant to count isolates. Use the \code{\link[=resistance]{resistance()}}/\code{\link[=susceptibility]{susceptibility()}} functions to calculate microbial resistance/susceptibility.
 
-The function \code{\link[=n_sir]{n_sir()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where the input antimicrobial has an available result (S, I or R), or for multiple antimicrobials, where the result of the combination is available (see \emph{Combination Therapy} below). Their use is equal to \code{dplyr}'s \code{n_distinct()}. Their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
+The function \code{\link[=n_sir]{n_sir()}} is an alias of \code{\link[=count_all]{count_all()}}. They can be used to count all available isolates, i.e. where the input antimicrobial has an available result (S, I or R). For multiple antimicrobials, these are isolates with a result for any of the antimicrobials, or with \code{only_all_tested = TRUE}, for all of the antimicrobials (see \emph{Combination Therapy} below). Their use is equal to \code{dplyr}'s \code{n_distinct()}. For one antimicrobial, their function is equal to \code{count_susceptible(...) + count_resistant(...)}.
 
 The function \code{\link[=count_df]{count_df()}} takes any variable from \code{data} that has an \code{\link{sir}} class (created with \code{\link[=as.sir]{as.sir()}}) and counts the number of S's, I's and R's. It also supports grouped variables. The function \code{\link[=sir_df]{sir_df()}} works exactly like \code{\link[=count_df]{count_df()}}, but adds the percentage of S, I and R.
 }
@@ -92,30 +92,46 @@ This AMR package follows insight; use \code{\link[=susceptibility]{susceptibilit
 
 \section{Combination Therapy}{
 
-A combination of antimicrobials is considered as good as its most active antimicrobial: \code{"S"} is preferred over \code{"WT"}, and \code{"R"} over \code{"NWT"} and \code{"NS"}. The value \code{"NI"} (non-interpretable) is considered a missing result.
+Results are ordered from susceptible to resistant: S (and WT), SDD, I, R (and NWT, NS). With \code{method = "most_susceptible"} (in \code{\link[=sir_combine]{sir_combine()}}), the most susceptible result of the antimicrobials is returned, and with \code{method = "most_resistant"}, the most resistant result. The value \code{"NI"} (non-interpretable) is considered a missing result.
 
-A missing result can only be ignored if the result of the combination is susceptible regardless of the missing result, which depends on the \code{only_all_tested} argument and on the guideline: under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not.
+A missing result can only be ignored if it cannot change the conclusion: a susceptible result for \code{"most_susceptible"}, and a non-susceptible result for \code{"most_resistant"}. Under EUCAST, the 'I' category is considered susceptible (\emph{susceptible, increased exposure}), and under CLSI, it is not. With \code{only_all_tested = TRUE}, any missing result leads to \code{NA}.
 
-This is an example for two antimicrobials, Drug A and Drug B (the order of the antimicrobials does not matter):
+This is an example for two antimicrobials, Drug A and Drug B, under EUCAST (the order of the antimicrobials does not matter):
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{-------------------------------------------------------------------------
-                            Result of the combination
-                    -----------------------------------------------------
- Drug A    Drug B   only_all_tested = FALSE       only_all_tested = TRUE
---------  --------  ----------------------------  ----------------------
-    S     S, I, R   S                             S
-    I       I, R    I                             I
-    R         R     R                             R
-    S       <NA>    S                             <NA>
-    I       <NA>    I (EUCAST), <NA> (CLSI)       <NA>
-    R       <NA>    <NA>                          <NA>
-  <NA>      <NA>    <NA>                          <NA>
+                      Result of method =            Result of method =
+                     "most_susceptible"              "most_resistant"
+                   -----------------------  -----------------------------
+                    only_all_tested =        only_all_tested =
+ Drug A    Drug B     FALSE      TRUE          FALSE         TRUE
+--------  --------  ---------  ---------    -----------  -------------
+    S        S          S          S             S             S
+    S        I          S          S             I             I
+    S        R          S          S             R             R
+    I        R          I          I             R             R
+    R        R          R          R             R             R
+    S      <NA>         S        <NA>          <NA>          <NA>
+    I      <NA>         I        <NA>          <NA>          <NA>
+    R      <NA>       <NA>       <NA>            R           <NA>
+  <NA>     <NA>       <NA>       <NA>          <NA>          <NA>
 -------------------------------------------------------------------------
 }\if{html}{\out{</div>}}
 
-The \code{\link[=count]{count_*()}} and \code{\link[=proportion]{proportion_*()}} functions, such as \code{\link[=susceptibility]{susceptibility()}} and \code{\link[=resistance]{resistance()}}, apply exactly these rules when more than one variable is used: an isolate is considered tested if the result of the combination is not \code{NA}, and is then counted by the result of the combination. Consequently, \code{\link[=count_susceptible]{count_susceptible()}} \code{+} \code{\link[=count_resistant]{count_resistant()}} \code{=} \code{\link[=count_all]{count_all()}}, and \code{\link[=susceptibility]{susceptibility()}} \code{+} \code{\link[=resistance]{resistance()}} \verb{= 1}, for both values of \code{only_all_tested}. The guideline is taken from their \code{guideline} argument if they have one, and otherwise from the \code{AMR_guideline} option.
+Under CLSI, the combination of I with a missing result is \verb{<NA>} for \code{"most_susceptible"} and I for \code{"most_resistant"}.
 
-In \code{\link[=antibiogram]{antibiogram()}} and \code{\link[=wisca]{wisca()}}, the 'I' and 'SDD' categories are considered susceptible if \code{combine_SI = TRUE} (default), and the result of the combination is then reduced to S or R.
+The \code{\link[=count]{count_*()}} and \code{\link[=proportion]{proportion_*()}} functions apply these rules when more than one variable is used. With \code{only_all_tested = FALSE} (default), the functions for susceptibility, such as \code{\link[=susceptibility]{susceptibility()}} and \code{\link[=count_susceptible]{count_susceptible()}}, count an isolate as susceptible if any of the antimicrobials is susceptible (\code{"most_susceptible"}), and the functions for resistance, such as \code{\link[=resistance]{resistance()}} and \code{\link[=count_resistant]{count_resistant()}}, count an isolate as resistant if any of the antimicrobials is resistant (\code{"most_resistant"}). An isolate is considered tested if it has such a result, or if it was tested for all antimicrobials. Therefore, for combinations with \code{only_all_tested = FALSE}:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    count_S()    +   count_I()    +   count_R()    >= count_all()
+  proportion_S() + proportion_I() + proportion_R() >= 1
+}\if{html}{\out{</div>}}
+
+With \code{only_all_tested = TRUE}, all these functions count the result of the combination therapy (\code{"most_susceptible"}) of isolates tested for all antimicrobials, so that:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{    count_S()    +   count_I()    +   count_R()    = count_all()
+  proportion_S() + proportion_I() + proportion_R() = 1
+}\if{html}{\out{</div>}}
+
+In \code{\link[=antibiogram]{antibiogram()}} and \code{\link[=wisca]{wisca()}}, the result of the combination therapy (\code{"most_susceptible"}) is used, the 'I' and 'SDD' categories are considered susceptible if \code{combine_SI = TRUE} (default), and the result is then reduced to S or R.
 }
 
 \examples{

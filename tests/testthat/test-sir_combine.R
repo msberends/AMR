@@ -69,6 +69,36 @@ test_that("test-sir_combine.R", {
     expect_identical(sir_combine(a, b, guideline = "CLSI"), sir_combine(b, a, guideline = "CLSI"))
   }
 
+  # most resistant result of two non-missing values, written by hand
+  worst <- matrix(
+    c(
+      "S", "SDD", "I", "R", "S", "NWT", "NS",
+      "SDD", "SDD", "I", "R", "SDD", "NWT", "NS",
+      "I", "I", "I", "R", "I", "NWT", "NS",
+      "R", "R", "R", "R", "R", "R", "R",
+      "S", "SDD", "I", "R", "WT", "NWT", "NS",
+      "NWT", "NWT", "NWT", "R", "NWT", "NWT", "NWT",
+      "NS", "NS", "NS", "R", "NS", "NWT", "NS"
+    ),
+    nrow = 7, byrow = TRUE, dimnames = list(vals, vals)
+  )
+  expect_identical(worst, t(worst))
+  worst_missing_eucast <- c(S = NA, SDD = NA, I = NA, R = "R", WT = NA, NWT = "NWT", NS = "NS")
+  worst_missing_clsi <- c(S = NA, SDD = NA, I = "I", R = "R", WT = NA, NWT = "NWT", NS = "NS")
+  for (missing_val in c(NA, "NI")) {
+    a <- c(rep(vals, each = length(vals)), vals, rep(missing_val, length(vals)), missing_val)
+    b <- c(rep(vals, times = length(vals)), rep(missing_val, length(vals)), vals, missing_val)
+    expected_complete <- worst[cbind(rep(vals, each = length(vals)), rep(vals, times = length(vals)))]
+    a <- as.sir(a)
+    b <- as.sir(b)
+    expect_identical(sir_combine(a, b, method = "most_resistant", guideline = "EUCAST"), as.sir(unname(c(expected_complete, worst_missing_eucast[vals], worst_missing_eucast[vals], NA))))
+    expect_identical(sir_combine(a, b, method = "most_resistant", guideline = "CLSI"), as.sir(unname(c(expected_complete, worst_missing_clsi[vals], worst_missing_clsi[vals], NA))))
+    expect_identical(sir_combine(a, b, method = "most_resistant", only_all_tested = TRUE), as.sir(unname(c(expected_complete, rep(NA, 2 * length(vals) + 1)))))
+    expect_identical(sir_combine(a, b, method = "most_resistant"), sir_combine(b, a, method = "most_resistant"))
+  }
+  expect_identical(sir_combine(as.sir("S"), as.sir("R"), method = "most_r"), as.sir("R"))
+  expect_error(sir_combine(as.sir("S"), as.sir("R"), method = "worst"))
+
   # three or more antimicrobials
   x1 <- as.sir(c("R", "R", "R", NA, "I", "R", "NI"))
   x2 <- as.sir(c("R", "I", "R", "R", "R", NA, "R"))
@@ -101,25 +131,41 @@ test_that("test-sir_combine.R", {
   r1 <- random_sir_values()
   r2 <- random_sir_values()
   r3 <- random_sir_values()
-  for (oat in c(FALSE, TRUE)) {
-    for (gl in c("EUCAST", "CLSI")) {
-      combined <- sir_combine(r1, r2, r3, only_all_tested = oat, guideline = gl)
-      expect_identical(count_all(r1, r2, r3, only_all_tested = oat), sum(!is.na(sir_combine(r1, r2, r3, only_all_tested = oat, guideline = "EUCAST"))))
-      expect_identical(count_susceptible(r1, r2, r3, only_all_tested = oat, guideline = gl), count_susceptible(combined, guideline = gl))
-      expect_identical(count_resistant(r1, r2, r3, only_all_tested = oat, guideline = gl), count_resistant(combined, guideline = gl))
-      expect_equal(susceptibility(r1, r2, r3, only_all_tested = oat, guideline = gl, minimum = 0), susceptibility(combined, guideline = gl, minimum = 0))
-      expect_equal(resistance(r1, r2, r3, only_all_tested = oat, guideline = gl, minimum = 0), resistance(combined, guideline = gl, minimum = 0))
-      expect_equal(susceptibility(r1, r2, r3, only_all_tested = oat, guideline = gl, minimum = 0) + resistance(r1, r2, r3, only_all_tested = oat, guideline = gl, minimum = 0), 1)
-      expect_identical(count_susceptible(combined, guideline = gl) + count_resistant(combined, guideline = gl), sum(!is.na(combined)))
-    }
-    combined <- sir_combine(r1, r2, only_all_tested = oat, guideline = "EUCAST")
-    expect_identical(count_SI(r1, r2, only_all_tested = oat) + count_R(r1, r2, only_all_tested = oat), count_all(r1, r2, only_all_tested = oat))
-    expect_identical(count_S(r1, r2, only_all_tested = oat), sum(combined %in% "S"))
-    expect_identical(count_I(r1, r2, only_all_tested = oat), sum(combined %in% c("I", "SDD")))
-    expect_identical(count_all(r1, r2, only_all_tested = oat), sum(!is.na(combined)))
-    expect_identical(count_R(r1, r2, only_all_tested = oat), sum(combined %in% c("R", "NWT", "NS")))
-    expect_equal(proportion_SI(r1, r2, only_all_tested = oat, minimum = 0) + proportion_R(r1, r2, only_all_tested = oat, minimum = 0), 1)
+  for (gl in c("EUCAST", "CLSI")) {
+    # only_all_tested = FALSE: susceptibility follows "most_susceptible" and resistance follows "most_resistant", as in AMR 3.0.1
+    most_s <- sir_combine(r1, r2, r3, guideline = gl)
+    most_r <- sir_combine(r1, r2, r3, method = "most_resistant", guideline = gl)
+    expect_identical(count_susceptible(r1, r2, r3, guideline = gl), count_susceptible(most_s, guideline = gl))
+    expect_identical(count_resistant(r1, r2, r3, guideline = gl), count_resistant(most_r, guideline = gl))
+    expect_equal(susceptibility(r1, r2, r3, guideline = gl, minimum = 0), susceptibility(most_s, guideline = gl, minimum = 0))
+    expect_equal(resistance(r1, r2, r3, guideline = gl, minimum = 0), resistance(most_r, guideline = gl, minimum = 0))
+    expect_true(susceptibility(r1, r2, r3, guideline = gl, minimum = 0) + resistance(r1, r2, r3, guideline = gl, minimum = 0) >= 1)
+    # only_all_tested = TRUE: all functions follow "most_susceptible" of isolates tested for all antimicrobials
+    combined <- sir_combine(r1, r2, r3, only_all_tested = TRUE, guideline = gl)
+    expect_identical(count_all(r1, r2, r3, only_all_tested = TRUE), sum(!is.na(combined)))
+    expect_identical(count_susceptible(r1, r2, r3, only_all_tested = TRUE, guideline = gl), count_susceptible(combined, guideline = gl))
+    expect_identical(count_resistant(r1, r2, r3, only_all_tested = TRUE, guideline = gl), count_resistant(combined, guideline = gl))
+    expect_equal(susceptibility(r1, r2, r3, only_all_tested = TRUE, guideline = gl, minimum = 0) + resistance(r1, r2, r3, only_all_tested = TRUE, guideline = gl, minimum = 0), 1)
   }
+  # count_all() with only_all_tested = FALSE counts isolates with any result, 'NI' is a missing result
+  is_tested <- function(x) !is.na(x) & x != "NI"
+  expect_identical(count_all(r1, r2, r3), sum(is_tested(r1) | is_tested(r2) | is_tested(r3)))
+  combined <- sir_combine(r1, r2, only_all_tested = TRUE)
+  expect_identical(count_S(r1, r2, only_all_tested = TRUE), sum(combined %in% "S"))
+  expect_identical(count_I(r1, r2, only_all_tested = TRUE), sum(combined %in% c("I", "SDD")))
+  expect_identical(count_R(r1, r2, only_all_tested = TRUE), sum(combined %in% c("R", "NWT", "NS")))
+  expect_identical(count_SI(r1, r2, only_all_tested = TRUE) + count_R(r1, r2, only_all_tested = TRUE), count_all(r1, r2, only_all_tested = TRUE))
+  # behaviour of AMR 3.0.1 for all nine combinations of S, R and NA
+  a <- as.sir(c("S", "R", NA, "S", "R", NA, "S", "R", NA))
+  b <- as.sir(c("S", "S", "S", "R", "R", "R", NA, NA, NA))
+  expect_identical(count_all(a, b), 8L)
+  expect_identical(count_susceptible(a, b), 5L)
+  expect_identical(count_resistant(a, b), 5L)
+  expect_equal(susceptibility(a, b, minimum = 0), 5 / 6)
+  expect_equal(resistance(a, b, minimum = 0), 5 / 6)
+  expect_identical(count_all(a, b, only_all_tested = TRUE), 4L)
+  expect_identical(count_susceptible(a, b, only_all_tested = TRUE), 3L)
+  expect_identical(count_resistant(a, b, only_all_tested = TRUE), 1L)
 
   # antibiogram() gives the same result as the frozen implementation from before sir_combine() existed
   old_combination <- function(df, S_values, only_all_tested) {

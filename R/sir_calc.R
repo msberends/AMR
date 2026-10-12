@@ -132,20 +132,31 @@ sir_calc <- function(...,
     }
     if (ncol(x) == 1) {
       x <- x[, 1, drop = TRUE]
-    } else {
-      # combination therapy: determine the result of the combination for every isolate, see ?sir_combine
-      x <- sir_combine_engine(as.list(x), S_values = get_susceptible_values(guideline), only_all_tested = only_all_tested)
+    } else if (isTRUE(only_all_tested)) {
+      # combination therapy of isolates tested for all antimicrobials, see ?sir_combine
+      x <- sir_combine_engine(as.list(x), S_values = get_susceptible_values(guideline), only_all_tested = TRUE)
     }
   } else if (!is.sir(x)) {
     x <- as.sir(x)
     print_warning <- TRUE
   }
 
-  if ("SDD" %in% ab_result && "SDD" %in% x && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
+  if ("SDD" %in% ab_result && "SDD" %in% unlist(lapply(as.list(x), as.character)) && message_not_thrown_before("sir_calc", only_count, ab_result, entire_session = TRUE)) {
     message_("Note that {.fun ", ifelse(only_count, "count", "proportion"), "_", ifelse("S" %in% ab_result, "S", ""), "I", ifelse("R" %in% ab_result, "R", ""), "} will also include dose-dependent susceptibility, {.val SDD}. This note will be shown once for this session.", as_note = FALSE)
   }
-  numerator <- sum(x %in% ab_result, na.rm = TRUE)
-  denominator <- sum(x %in% denominator_vals, na.rm = TRUE)
+  if (is.data.frame(x)) {
+    # multiple antimicrobials with only_all_tested = FALSE: an isolate counts if any antimicrobial has a result in `ab_result`, and is considered tested if it has such a result or was tested for all antimicrobials, see ?sir_combine
+    # this equals sir_combine(method = "most_susceptible") for susceptibility and sir_combine(method = "most_resistant") for resistance
+    # 'NI' is a missing result
+    numerator_vals <- intersect(as.character(ab_result), denominator_vals)
+    is_counted <- Reduce(`|`, lapply(x, function(col) as.character(col) %in% numerator_vals))
+    is_complete <- Reduce(`&`, lapply(x, function(col) as.character(col) %in% denominator_vals))
+    numerator <- sum(is_counted)
+    denominator <- sum(is_counted | is_complete)
+  } else {
+    numerator <- sum(x %in% ab_result, na.rm = TRUE)
+    denominator <- sum(x %in% denominator_vals, na.rm = TRUE)
+  }
 
   if (print_warning == TRUE) {
     if (message_not_thrown_before("sir_calc")) {
