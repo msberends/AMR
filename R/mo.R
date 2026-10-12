@@ -247,6 +247,12 @@ as.mo <- function(x,
   out[is.na(out) & x_lower %in% AMR_env$MO_lookup$fullname_lower] <- AMR_env$MO_lookup$mo[match(x_lower[is.na(out) & x_lower %in% AMR_env$MO_lookup$fullname_lower], AMR_env$MO_lookup$fullname_lower)]
   # one exception: "Fungi" matches the domain, but instead it should return the 'unknown' code for fungi
   out[out == "F_[KNG]_FUNGI"] <- "F_FUNGUS"
+  # From translated names, such as the output of mo_name() in the set language ----
+  if (language != "en" && any(is.na(out) & !is.na(x))) {
+    mo_translated <- get_mo_translated_index(language)
+    ind <- is.na(out) & x_lower %in% mo_translated$name
+    out[ind] <- mo_translated$mo[match(x_lower[ind], mo_translated$name)]
+  }
   # From known codes ----
   ind <- is.na(out) & toupper(x) %in% AMR::microorganisms.codes$code
   out[ind] <- AMR::microorganisms.codes$mo[match(toupper(x)[ind], AMR::microorganisms.codes$code)]
@@ -1167,6 +1173,8 @@ convert_colloquial_input <- function(x) {
     perl = TRUE
   )
   out[x %like_case% "ha?emoly.*strep"] <- "B_STRPT_HAEM"
+  # also in other word orders, like "streptocoque beta-hemolytique"
+  out[x %like_case% "strep.*(beta|b\u00eata|\u03b2).?h(a?e|\u00e9)moly"] <- "B_STRPT_HAEM"
   out[x %like_case% "(strepto.* [abcg, ]{2,4}$)"] <- "B_STRPT_ABCG"
   out[x %like_case% "(strepto.* mil+er+i|^mgs[^a-z]*$)"] <- "B_STRPT_MILL"
   out[x %like_case% "mil+er+i gr"] <- "B_STRPT_MILL"
@@ -1188,8 +1196,8 @@ convert_colloquial_input <- function(x) {
     perl = TRUE
   )
 
-  # CoNS/CoPS in different languages (support for German, Dutch, Spanish, Portuguese)
-  out[x %like_case% "([ck]oagulas[ea].negatie?[vf]|^[ck]o?ns[^a-z]*$)"] <- "B_STPHY_CONS"
+  # CoNS/CoPS in different languages (support for German, Dutch, French, Spanish, Portuguese)
+  out[x %like_case% "([ck]oagulas[ea].n[e\u00e9]gatie?[vf]|^[ck]o?ns[^a-z]*$)"] <- "B_STPHY_CONS"
   out[x %like_case% "([ck]oagulas[ea].positie?[vf]|^[ck]o?ps[^a-z]*$)"] <- "B_STPHY_COPS"
 
   # Gram stains

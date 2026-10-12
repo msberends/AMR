@@ -98,6 +98,7 @@ reset_ab_cache <- function() {
 
 reset_mo_cache <- function() {
   AMR_env$MO_index <- NULL
+  AMR_env$MO_translated <- NULL
   AMR_env$mo_accepted <- NULL
   AMR_env$mo_previously_coerced <- new_coercion_cache()
   AMR_env$mo_previously_uncertain <- NULL
@@ -131,4 +132,30 @@ get_mo_index <- function() {
     )
   }
   AMR_env$MO_index
+}
+
+get_mo_translated_index <- function(language) {
+  # translated names of microorganisms, such as "Staphylocoque à coagulase négative (CoNS)", so that as.mo() recognises the output of mo_name() in that language
+  # this is built once per language and only contains the few names that change by translation
+  add_MO_lookup_to_AMR_env()
+  if (is.null(AMR_env$MO_translated[[language]])) {
+    trns <- TRANSLATIONS[which(TRANSLATIONS$affect_mo_name == TRUE), , drop = FALSE]
+    fullname <- AMR_env$MO_lookup$fullname
+    is_translatable <- grepl(paste0("(", paste(trns$pattern, collapse = "|"), ")"), fullname, perl = TRUE)
+    fullname <- fullname[is_translatable]
+    mo <- as.character(AMR_env$MO_lookup$mo[is_translatable])
+    translated <- translate_into_language(fullname, language = language, only_affect_mo_names = TRUE)
+    is_changed <- translated != fullname
+    translated <- translated[is_changed]
+    mo <- mo[is_changed]
+    # also without the abbreviation, such as "(CoNS)"
+    translated_short <- gsub(" +\\([^()]+\\)$", "", translated, perl = TRUE)
+    name <- tolower(c(translated, translated_short))
+    mo <- c(mo, mo)
+    AMR_env$MO_translated[[language]] <- list(
+      name = name[!duplicated(name)],
+      mo = mo[!duplicated(name)]
+    )
+  }
+  AMR_env$MO_translated[[language]]
 }

@@ -1,4 +1,4 @@
-# AMR 3.0.1.9124
+# AMR 3.0.1.9125
 
 Planned as v3.1.0, mid October 2026.
 
@@ -84,6 +84,8 @@ Planned as v3.1.0, mid October 2026.
 * Taxonomy: consistent higher taxonomy and parent records, and data sets refer only to current names (except `intrinsic_resistant`)
 * `antimicrobials`: trade names of combinations (Tazocin, Timentin, Recarbrio, Exblifep) were listed under a single component, and names of screening libraries and suppliers (e.g. Prestwick, Spectrum) as synonyms (#315)
 * WT, NWT, NS and NI results were handled incorrectly in `count_*()` and `proportion_*()` with multiple antimicrobials (#321)
+* Translations were translated again, e.g. "Ticarcillinee" in Dutch and "groupee" in French, and parts of combination names were left untranslated
+* `as.mo()` now recognises translated names in the set language, such as the output of `mo_name(x, language = "fr")`
 * `g.test()` returned the degrees of freedom as `argument` instead of `parameter`, so they were not printed
 * `antibiogram()` and `wisca()` failed without the `antimicrobials` argument if tidyselect was not available, e.g. for binary installations without dplyr
 * R could crash after unloading the `data.table` package, and suggested packages available on the machine that built the package were used even if not available to the user

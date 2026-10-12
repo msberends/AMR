@@ -365,4 +365,14 @@ test_that("test-mo.R", {
     c("B_SLMNL_TYPH", "B_SLMNL_TYPH", "B_SLMNL_TYPH", "B_SLMNL_HMRM", "B_SLMNL_PRTA", "B_SLMNL_GRPB")
   )
   expect_identical(as.character(as.mo("Salmonella enterica arizonae", info = FALSE)), "B_SLMNL_ENTR_ARZN")
+
+  # translated names, such as the output of mo_name() in the set language
+  translated_mos <- c("B_STPHY_CONS", "B_STPHY_COPS", "B_STRPT_HAEM", "B_STRPT_GRPA", "B_STRPT_GRPB", "B_STRPT_ABCG", "B_STRPT_MILL", "B_STRPT_VIRI", "B_SLMNL_GRPB", "B_GRAMN", "B_GRAMP", "F_YEAST", "F_FUNGUS", "P_PROTOZOAN", "UNKNOWN")
+  for (lang in setdiff(AMR:::LANGUAGES_SUPPORTED, "en")) {
+    expect_identical(as.character(as.mo(mo_name(translated_mos, language = lang), language = lang, info = FALSE)), translated_mos, info = lang)
+  }
+  expect_identical(
+    as.character(as.mo(c("Staphylocoque à coagulase négative", "Streptocoque Bêta-hémolytique", "streptocoque beta-hemolytique", "Streptococcus groupe A"), language = "fr", info = FALSE)),
+    c("B_STPHY_CONS", "B_STRPT_HAEM", "B_STRPT_HAEM", "B_STRPT_GRPA")
+  )
 })

@@ -203,26 +203,6 @@ translate_into_language <- function(from,
   df_trans <- TRANSLATIONS # internal data file
   from.bak <- from
   from_unique <- unique(from)
-  from_split_combined <- function(vec) {
-    sapply(vec, function(x) {
-      if (grepl("/", x, fixed = TRUE)) {
-        parts <- strsplit(x, "/", fixed = TRUE)[[1]]
-        # Translate each part separately
-        translated_parts <- translate_into_language(
-          parts,
-          language = lang,
-          only_unknown = only_unknown,
-          only_affect_ab_names = only_affect_ab_names,
-          only_affect_mo_names = only_affect_mo_names
-        )
-        paste(translated_parts, collapse = "/")
-      } else {
-        x
-      }
-    }, USE.NAMES = FALSE)
-  }
-  from_unique_translated <- from_split_combined(from_unique)
-
   # only keep lines where translation is available for this language
   df_trans <- df_trans[which(!is.na(df_trans[, lang, drop = TRUE])), , drop = FALSE]
   # and where the original string is not equal to the string in the target language
@@ -263,26 +243,50 @@ translate_into_language <- function(from,
     df_trans$pattern[df_trans$regular_expr == TRUE] <- gsub("$$", "$", df_trans$pattern[df_trans$regular_expr == TRUE], fixed = TRUE)
   }
 
-  # non-regex part
+  # sort trans file on length of pattern, so that the longest pattern is replaced first (word boundaries of regular expressions do not count)
+  trns <- df_trans[order(nchar(gsub("\\b", "", df_trans$pattern, fixed = TRUE)), decreasing = TRUE), , drop = FALSE]
+  # every translation is first replaced by a placeholder, so that a translation is never translated again, e.g. "Ticarcillin" to "Ticarcilline" and then to "Ticarcillinee"
+  # placeholders consist of ASCII control characters only, so that no pattern can match them
+  control_chars <- vapply(FUN.VALUE = character(1), 3:31, function(i) rawToChar(as.raw(i)))
+  placeholders <- paste0("\001", control_chars[(seq_len(nrow(trns)) - 1) %/% length(control_chars) %/% length(control_chars) + 1], control_chars[(seq_len(nrow(trns)) - 1) %/% length(control_chars) %% length(control_chars) + 1], control_chars[(seq_len(nrow(trns)) - 1) %% length(control_chars) + 1], "\002")
+  replacements <- trns[, lang, drop = TRUE]
+  # keep backreferences like "\\1" of regular expressions outside the placeholder
+  literals <- gsub("\\\\[0-9]", "", replacements)
+  replacements_placeholder <- ifelse(
+    literals == "",
+    replacements,
+    vapply(FUN.VALUE = character(1), seq_along(replacements), function(i) sub(literals[i], placeholders[i], replacements[i], fixed = TRUE))
+  )
   translate_exec <- function(term) {
-    # sort trans file on length of pattern
-    trns <- df_trans[order(nchar(df_trans$pattern), decreasing = TRUE), ]
     for (i in seq_len(nrow(trns))) {
       term <- gsub(
         pattern = trns$pattern[i],
-        replacement = trns[i, lang, drop = TRUE],
+        replacement = replacements_placeholder[i],
         x = term,
         ignore.case = !trns$case_sensitive[i] & trns$regular_expr[i],
         fixed = !trns$regular_expr[i],
-        perl = trns$regular_expr[i],
+        perl = trns$regular_expr[i]
       )
+    }
+    for (i in which(vapply(FUN.VALUE = logical(1), placeholders, grepl, x = term, fixed = TRUE))) {
+      term <- gsub(placeholders[i], literals[i], term, fixed = TRUE)
     }
     term
   }
-  from_unique_translated[order(nchar(from_unique_translated), decreasing = TRUE)] <- vapply(
+
+  from_unique_translated <- from_unique
+  # combinations like "Ticarcillin/clavulanic acid" are translated per part, unless the combination itself is in the translations
+  is_combination <- grepl("/", from_unique, fixed = TRUE) & !from_unique %in% df_trans$pattern
+  from_unique_translated[is_combination] <- vapply(
     FUN.VALUE = character(1),
     USE.NAMES = FALSE,
-    from_unique_translated[order(nchar(from_unique_translated), decreasing = TRUE)],
+    strsplit(from_unique[is_combination], "/", fixed = TRUE),
+    function(parts) paste(translate_into_language(parts, language = lang, only_unknown = only_unknown, only_affect_ab_names = only_affect_ab_names, only_affect_mo_names = only_affect_mo_names), collapse = "/")
+  )
+  from_unique_translated[!is_combination] <- vapply(
+    FUN.VALUE = character(1),
+    USE.NAMES = FALSE,
+    from_unique[!is_combination],
     translate_exec
   )
 

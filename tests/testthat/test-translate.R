@@ -54,4 +54,16 @@ test_that("test-translate.R", {
   expect_identical(mo_fullname("CoNS", "zh"), "凝固酶阴性葡萄球菌 (CoNS)")
 
   expect_error(mo_fullname("CoNS", "aa"))
+
+  # a translation is never translated again, such as "Ticarcillin" to "Ticarcilline" and then to "Ticarcillinee"
+  expect_identical(ab_name("TCC", language = "nl"), "Ticarcilline/clavulaanzuur")
+  expect_identical(ab_name("TCC", language = "fr"), "Ticarcilline/acide clavulanique")
+  expect_identical(ab_name(c("RIF", "PEN"), language = "it"), c("Rifampicina", "Benzilpenicillina"))
+  expect_identical(ab_name("AKF", language = "nl"), "Amikacine/fosfomycin")
+  expect_identical(AMR:::translate_into_language(c("Syndromic Group", "Streptococcus Group A", "Salmonella group B", "biogroup 1"), language = "fr"), c("Groupe syndromique", "Streptococcus Groupe A", "Salmonella groupe B", "biogroupe 1"))
+  expect_identical(mo_name(c("B_STRPT_GRPA", "B_SLMNL_GRPB"), language = "fr"), c("Streptococcus groupe A", "Salmonella groupe B"))
+  for (lang in setdiff(AMR:::LANGUAGES_SUPPORTED, "en")) {
+    translated <- AMR:::translate_into_language(AMR::antimicrobials$name, language = lang, only_affect_ab_names = TRUE)
+    expect_false(any(translated %like_case% "(cillinee|mycinee|cinaa|cillinaa)"), info = lang)
+  }
 })
