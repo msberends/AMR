@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9123
+## AMR 3.0.1.9126
 
 Planned as v3.1.0, mid October 2026.
 
@@ -251,6 +251,12 @@ Planned as v3.1.0, mid October 2026.
 - WT, NWT, NS and NI results were handled incorrectly in `count_*()` and
   `proportion_*()` with multiple antimicrobials
   ([\#321](https://github.com/msberends/AMR/issues/321))
+- Translations were translated again, e.g. “Ticarcillinee” in Dutch and
+  “groupee” in French, and parts of combination names were left
+  untranslated
+- [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) now recognises
+  translated names in the set language, such as the output of
+  `mo_name(x, language = "fr")`
 - [`g.test()`](https://amr-for-r.org/reference/g.test.md) returned the
   degrees of freedom as `argument` instead of `parameter`, so they were
   not printed
