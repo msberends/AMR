@@ -1,26 +1,35 @@
 # Combine SIR Results of Multiple Antimicrobials
 
 Combine the SIR results of two or more antimicrobials into one SIR
-result per isolate, e.g. to create a variable for the combination
-therapy of piperacillin/tazobactam with gentamicin. The result is the
-best result of the antimicrobials, as a combination therapy covers the
-isolate if any of its antimicrobials is active. See *Combination
-Therapy* below for the exact rules.
+result per isolate. This can answer two different questions, set with
+the `method` argument:
 
-The same rules are used by
+- `"most_susceptible"` (default): *Is at least one of these
+  antimicrobials expected to work?* This is the result of a combination
+  therapy, e.g. piperacillin/tazobactam with gentamicin, which covers
+  the isolate if any of its antimicrobials is active.
+
+- `"most_resistant"`: *Is resistance demonstrated to any of these
+  antimicrobials?* This is the result for a group of antimicrobials,
+  e.g. resistance to third-generation cephalosporins if an isolate is
+  resistant to ceftazidime or ceftriaxone, as used in surveillance
+  reports.
+
+See *Combination Therapy* below for the exact rules. The same rules are
+used by
 [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
 [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) for
 combination antibiograms, and by the
 [`count_*()`](https://amr-for-r.org/reference/count.md) and
 [`proportion_*()`](https://amr-for-r.org/reference/proportion.md)
-functions when more than one variable is used, so the result of
-`sir_combine()` can be used in any further analysis.
+functions when more than one variable is used.
 
 ## Usage
 
 ``` r
 sir_combine(
   ...,
+  method = c("most_susceptible", "most_resistant"),
   only_all_tested = FALSE,
   guideline = getOption("AMR_guideline", "EUCAST")
 )
@@ -35,6 +44,13 @@ sir_combine(
   with [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) if
   needed. All vectors must be of the same length.
 
+- method:
+
+  Either `"most_susceptible"` (default) to return the most susceptible
+  result, as for combination therapy, or `"most_resistant"` to return
+  the most resistant result, as for resistance within a group of
+  antimicrobials. See *Combination Therapy* below.
+
 - only_all_tested:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate that
@@ -42,7 +58,7 @@ sir_combine(
   is `NA` for isolates with a missing result for any of the
   antimicrobials. If `FALSE` (default), a missing result only leads to
   `NA` if a result for the missing antimicrobial could have changed the
-  result of the combination, see *Combination Therapy* below.
+  result, see *Combination Therapy* below.
 
 - guideline:
 
@@ -60,55 +76,74 @@ same length as the input.
 
 ## Combination Therapy
 
-A combination of antimicrobials is considered as good as its most active
-antimicrobial: `"S"` is preferred over `"WT"`, and `"R"` over `"NWT"`
-and `"NS"`. The value `"NI"` (non-interpretable) is considered a missing
-result.
+Results are ordered from susceptible to resistant: S (and WT), SDD, I, R
+(and NWT, NS). With `method = "most_susceptible"` (in `sir_combine()`),
+the most susceptible result of the antimicrobials is returned, and with
+`method = "most_resistant"`, the most resistant result. The value `"NI"`
+(non-interpretable) is considered a missing result.
 
-A missing result can only be ignored if the result of the combination is
-susceptible regardless of the missing result, which depends on the
-`only_all_tested` argument and on the guideline: under EUCAST, the 'I'
-category is considered susceptible (*susceptible, increased exposure*),
-and under CLSI, it is not.
+A missing result can only be ignored if it cannot change the conclusion:
+a susceptible result for `"most_susceptible"`, and a non-susceptible
+result for `"most_resistant"`. Under EUCAST, the 'I' category is
+considered susceptible (*susceptible, increased exposure*), and under
+CLSI, it is not. With `only_all_tested = TRUE`, any missing result leads
+to `NA`.
 
-This is an example for two antimicrobials, Drug A and Drug B (the order
-of the antimicrobials does not matter):
+This is an example for two antimicrobials, Drug A and Drug B, under
+EUCAST (the order of the antimicrobials does not matter):
 
     -------------------------------------------------------------------------
-                                Result of the combination
-                        -----------------------------------------------------
-     Drug A    Drug B   only_all_tested = FALSE       only_all_tested = TRUE
-    --------  --------  ----------------------------  ----------------------
-        S     S, I, R   S                             S
-        I       I, R    I                             I
-        R         R     R                             R
-        S       <NA>    S                             <NA>
-        I       <NA>    I (EUCAST), <NA> (CLSI)       <NA>
-        R       <NA>    <NA>                          <NA>
-      <NA>      <NA>    <NA>                          <NA>
+                          Result of method =            Result of method =
+                         "most_susceptible"              "most_resistant"
+                       -----------------------  -----------------------------
+                        only_all_tested =        only_all_tested =
+     Drug A    Drug B     FALSE      TRUE          FALSE         TRUE
+    --------  --------  ---------  ---------    -----------  -------------
+        S        S          S          S             S             S
+        S        I          S          S             I             I
+        S        R          S          S             R             R
+        I        R          I          I             R             R
+        R        R          R          R             R             R
+        S      <NA>         S        <NA>          <NA>          <NA>
+        I      <NA>         I        <NA>          <NA>          <NA>
+        R      <NA>       <NA>       <NA>            R           <NA>
+      <NA>     <NA>       <NA>       <NA>          <NA>          <NA>
     -------------------------------------------------------------------------
+
+Under CLSI, the combination of I with a missing result is `<NA>` for
+`"most_susceptible"` and I for `"most_resistant"`.
 
 The [`count_*()`](https://amr-for-r.org/reference/count.md) and
 [`proportion_*()`](https://amr-for-r.org/reference/proportion.md)
-functions, such as
+functions apply these rules when more than one variable is used. With
+`only_all_tested = FALSE` (default), the functions for susceptibility,
+such as
 [`susceptibility()`](https://amr-for-r.org/reference/proportion.md) and
-[`resistance()`](https://amr-for-r.org/reference/proportion.md), apply
-exactly these rules when more than one variable is used: an isolate is
-considered tested if the result of the combination is not `NA`, and is
-then counted by the result of the combination. Consequently,
-[`count_susceptible()`](https://amr-for-r.org/reference/count.md) `+`
-[`count_resistant()`](https://amr-for-r.org/reference/count.md) `=`
-[`count_all()`](https://amr-for-r.org/reference/count.md), and
-[`susceptibility()`](https://amr-for-r.org/reference/proportion.md) `+`
-[`resistance()`](https://amr-for-r.org/reference/proportion.md) `= 1`,
-for both values of `only_all_tested`. The guideline is taken from their
-`guideline` argument if they have one, and otherwise from the
-`AMR_guideline` option.
+[`count_susceptible()`](https://amr-for-r.org/reference/count.md), count
+an isolate as susceptible if any of the antimicrobials is susceptible
+(`"most_susceptible"`), and the functions for resistance, such as
+[`resistance()`](https://amr-for-r.org/reference/proportion.md) and
+[`count_resistant()`](https://amr-for-r.org/reference/count.md), count
+an isolate as resistant if any of the antimicrobials is resistant
+(`"most_resistant"`). An isolate is considered tested if it has such a
+result, or if it was tested for all antimicrobials. Therefore, for
+combinations with `only_all_tested = FALSE`:
+
+        count_S()    +   count_I()    +   count_R()    >= count_all()
+      proportion_S() + proportion_I() + proportion_R() >= 1
+
+With `only_all_tested = TRUE`, all these functions count the result of
+the combination therapy (`"most_susceptible"`) of isolates tested for
+all antimicrobials, so that:
+
+        count_S()    +   count_I()    +   count_R()    = count_all()
+      proportion_S() + proportion_I() + proportion_R() = 1
 
 In [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
-[`wisca()`](https://amr-for-r.org/reference/antibiogram.md), the 'I' and
+[`wisca()`](https://amr-for-r.org/reference/antibiogram.md), the result
+of the combination therapy (`"most_susceptible"`) is used, the 'I' and
 'SDD' categories are considered susceptible if `combine_SI = TRUE`
-(default), and the result of the combination is then reduced to S or R.
+(default), and the result is then reduced to S or R.
 
 ## See also
 
@@ -125,6 +160,7 @@ combination antibiograms.
 drug_a <- as.sir(c("S", "R", "R", "I", "I", NA, "R", "SDD"))
 drug_b <- as.sir(c("R", "S", "R", "R", NA, NA, NA, "I"))
 
+# combination therapy: is at least one of them expected to work?
 sir_combine(drug_a, drug_b)
 #> Class <sir>
 #> [1] S    S    R    I    I    <NA> <NA> SDD 
@@ -135,12 +171,21 @@ sir_combine(drug_a, drug_b, only_all_tested = TRUE)
 #> Class <sir>
 #> [1] S    S    R    I    <NA> <NA> <NA> SDD 
 
+# resistance within a group: is resistance demonstrated to any of them?
+sir_combine(drug_a, drug_b, method = "most_resistant")
+#> Class <sir>
+#> [1] R    R    R    R    <NA> <NA> R    I   
+
 # the count and proportion functions use the same rules
 susceptibility(drug_a, drug_b, minimum = 0)
 #> Note that `proportion_SI()` will also include dose-dependent susceptibility,
 #> "SDD". This note will be shown once for this session.
 #> [1] 0.8333333
 susceptibility(sir_combine(drug_a, drug_b), minimum = 0)
+#> [1] 0.8333333
+resistance(drug_a, drug_b, minimum = 0)
+#> [1] 0.8333333
+resistance(sir_combine(drug_a, drug_b, method = "most_resistant"), minimum = 0)
 #> [1] 0.8333333
 
 # \donttest{
@@ -165,6 +210,19 @@ if (require("dplyr")) {
 #>  9 B_STRPT_PNMN   S     R     S    
 #> 10 B_STRPT_SLVR   S     R     S    
 #> # ℹ 991 more rows
+if (require("dplyr")) {
+  # resistance to third-generation cephalosporins
+  example_isolates %>%
+    mutate(cephalosporins_3rd = sir_combine(CAZ, CRO, method = "most_resistant")) %>%
+    count(cephalosporins_3rd)
+}
+#> # A tibble: 4 × 2
+#>   cephalosporins_3rd     n
+#>   <sir>              <int>
+#> 1   S                  573
+#> 2   I                    1
+#> 3   R                 1236
+#> 4   NA                 190
 if (require("dplyr")) {
   # combine any number of antimicrobials
   example_isolates %>%

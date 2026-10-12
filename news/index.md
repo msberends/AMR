@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9122
+## AMR 3.0.1.9123
 
 Planned as v3.1.0, mid October 2026.
 
@@ -52,15 +52,6 @@ Planned as v3.1.0, mid October 2026.
 - [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) no longer
   guesses unknown MO codes (these become `NA` with a warning), and MO
   codes from versions before v2.0.0 are no longer supported
-
-- With multiple antimicrobials, `count_*()` and `proportion_*()` now
-  follow the documented combination therapy rules:
-  [`resistance()`](https://amr-for-r.org/reference/proportion.md)
-  returns the proportion of failing combinations instead of resistance
-  to any of the antimicrobials, and
-  [`count_all()`](https://amr-for-r.org/reference/count.md) excludes
-  isolates of which the combination result is unknown
-  ([\#321](https://github.com/msberends/AMR/issues/321))
 
 #### New
 
@@ -133,9 +124,9 @@ Planned as v3.1.0, mid October 2026.
   to add local names, such as trade names, to existing antimicrobials
   ([\#307](https://github.com/msberends/AMR/issues/307))
 - [`sir_combine()`](https://amr-for-r.org/reference/sir_combine.md) to
-  combine SIR results of multiple antimicrobials into one variable for
-  combination therapy, using the same rules as
-  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
+  combine SIR results of multiple antimicrobials into one variable, for
+  combination therapy (`method = "most_susceptible"`) or resistance
+  within a group (`method = "most_resistant"`)
   ([\#321](https://github.com/msberends/AMR/issues/321))
 
 #### Fixed

@@ -116,8 +116,10 @@ example_isolates %>%
 #> ℹ Using column mo as input for `mo_fullname()`
 #> ℹ Using column mo as input for `mo_is_gram_negative()`
 #> ℹ Using column mo as input for `mo_is_intrinsic_resistant()`
-#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023). This note will be shown once per session.
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK (amikacin), and KAN (kanamycin)
+#> ℹ Determining intrinsic resistance based on 'EUCAST Expected Resistant Phenotypes' v1.2 (2023).
+#>   This note will be shown once per session.
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK (amikacin), and KAN
+#>   (kanamycin)
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 #> # A tibble: 35 × 7
 #>    bacteria                     GEN   TOB   AMK   KAN   IPM   MEM  
@@ -326,13 +328,15 @@ out <- example_isolates %>%
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
-#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK (amikacin), and KAN (kanamycin)
+#> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK (amikacin), and KAN
+#>   (kanamycin)
 #> ℹ For `polymyxins()` using column COL (colistin)
 #> Warning: There was 1 warning in `summarise()`.
 #> ℹ In argument: `across(c(aminoglycosides(), polymyxins()), resistance)`.
 #> ℹ In group 3: `ward = "Outpatient"`.
 #> Caused by warning:
-#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" (whilst `minimum = 30`).
+#> ! Introducing NA: only 23 results available for KAN in group: ward = "Outpatient" (whilst `minimum =
+#> 30`).
 out
 #> # A tibble: 3 × 6
 #>   ward         GEN   TOB   AMK   KAN   COL

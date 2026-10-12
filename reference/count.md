@@ -120,11 +120,12 @@ functions to calculate microbial resistance/susceptibility.
 
 The function `n_sir()` is an alias of `count_all()`. They can be used to
 count all available isolates, i.e. where the input antimicrobial has an
-available result (S, I or R), or for multiple antimicrobials, where the
-result of the combination is available (see *Combination Therapy*
-below). Their use is equal to `dplyr`'s
+available result (S, I or R). For multiple antimicrobials, these are
+isolates with a result for any of the antimicrobials, or with
+`only_all_tested = TRUE`, for all of the antimicrobials (see
+*Combination Therapy* below). Their use is equal to `dplyr`'s
 [`n_distinct()`](https://dplyr.tidyverse.org/reference/n_distinct.html).
-Their function is equal to
+For one antimicrobial, their function is equal to
 `count_susceptible(...) + count_resistant(...)`.
 
 The function `count_df()` takes any variable from `data` that has an
@@ -150,53 +151,75 @@ to `count_SI()`) to count susceptible isolates.
 
 ## Combination Therapy
 
-A combination of antimicrobials is considered as good as its most active
-antimicrobial: `"S"` is preferred over `"WT"`, and `"R"` over `"NWT"`
-and `"NS"`. The value `"NI"` (non-interpretable) is considered a missing
-result.
+Results are ordered from susceptible to resistant: S (and WT), SDD, I, R
+(and NWT, NS). With `method = "most_susceptible"` (in
+[`sir_combine()`](https://amr-for-r.org/reference/sir_combine.md)), the
+most susceptible result of the antimicrobials is returned, and with
+`method = "most_resistant"`, the most resistant result. The value `"NI"`
+(non-interpretable) is considered a missing result.
 
-A missing result can only be ignored if the result of the combination is
-susceptible regardless of the missing result, which depends on the
-`only_all_tested` argument and on the guideline: under EUCAST, the 'I'
-category is considered susceptible (*susceptible, increased exposure*),
-and under CLSI, it is not.
+A missing result can only be ignored if it cannot change the conclusion:
+a susceptible result for `"most_susceptible"`, and a non-susceptible
+result for `"most_resistant"`. Under EUCAST, the 'I' category is
+considered susceptible (*susceptible, increased exposure*), and under
+CLSI, it is not. With `only_all_tested = TRUE`, any missing result leads
+to `NA`.
 
-This is an example for two antimicrobials, Drug A and Drug B (the order
-of the antimicrobials does not matter):
+This is an example for two antimicrobials, Drug A and Drug B, under
+EUCAST (the order of the antimicrobials does not matter):
 
     -------------------------------------------------------------------------
-                                Result of the combination
-                        -----------------------------------------------------
-     Drug A    Drug B   only_all_tested = FALSE       only_all_tested = TRUE
-    --------  --------  ----------------------------  ----------------------
-        S     S, I, R   S                             S
-        I       I, R    I                             I
-        R         R     R                             R
-        S       <NA>    S                             <NA>
-        I       <NA>    I (EUCAST), <NA> (CLSI)       <NA>
-        R       <NA>    <NA>                          <NA>
-      <NA>      <NA>    <NA>                          <NA>
+                          Result of method =            Result of method =
+                         "most_susceptible"              "most_resistant"
+                       -----------------------  -----------------------------
+                        only_all_tested =        only_all_tested =
+     Drug A    Drug B     FALSE      TRUE          FALSE         TRUE
+    --------  --------  ---------  ---------    -----------  -------------
+        S        S          S          S             S             S
+        S        I          S          S             I             I
+        S        R          S          S             R             R
+        I        R          I          I             R             R
+        R        R          R          R             R             R
+        S      <NA>         S        <NA>          <NA>          <NA>
+        I      <NA>         I        <NA>          <NA>          <NA>
+        R      <NA>       <NA>       <NA>            R           <NA>
+      <NA>     <NA>       <NA>       <NA>          <NA>          <NA>
     -------------------------------------------------------------------------
+
+Under CLSI, the combination of I with a missing result is `<NA>` for
+`"most_susceptible"` and I for `"most_resistant"`.
 
 The `count_*()` and
 [`proportion_*()`](https://amr-for-r.org/reference/proportion.md)
-functions, such as
+functions apply these rules when more than one variable is used. With
+`only_all_tested = FALSE` (default), the functions for susceptibility,
+such as
 [`susceptibility()`](https://amr-for-r.org/reference/proportion.md) and
-[`resistance()`](https://amr-for-r.org/reference/proportion.md), apply
-exactly these rules when more than one variable is used: an isolate is
-considered tested if the result of the combination is not `NA`, and is
-then counted by the result of the combination. Consequently,
-`count_susceptible()` `+` `count_resistant()` `=` `count_all()`, and
-[`susceptibility()`](https://amr-for-r.org/reference/proportion.md) `+`
-[`resistance()`](https://amr-for-r.org/reference/proportion.md) `= 1`,
-for both values of `only_all_tested`. The guideline is taken from their
-`guideline` argument if they have one, and otherwise from the
-`AMR_guideline` option.
+`count_susceptible()`, count an isolate as susceptible if any of the
+antimicrobials is susceptible (`"most_susceptible"`), and the functions
+for resistance, such as
+[`resistance()`](https://amr-for-r.org/reference/proportion.md) and
+`count_resistant()`, count an isolate as resistant if any of the
+antimicrobials is resistant (`"most_resistant"`). An isolate is
+considered tested if it has such a result, or if it was tested for all
+antimicrobials. Therefore, for combinations with
+`only_all_tested = FALSE`:
+
+        count_S()    +   count_I()    +   count_R()    >= count_all()
+      proportion_S() + proportion_I() + proportion_R() >= 1
+
+With `only_all_tested = TRUE`, all these functions count the result of
+the combination therapy (`"most_susceptible"`) of isolates tested for
+all antimicrobials, so that:
+
+        count_S()    +   count_I()    +   count_R()    = count_all()
+      proportion_S() + proportion_I() + proportion_R() = 1
 
 In [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
-[`wisca()`](https://amr-for-r.org/reference/antibiogram.md), the 'I' and
+[`wisca()`](https://amr-for-r.org/reference/antibiogram.md), the result
+of the combination therapy (`"most_susceptible"`) is used, the 'I' and
 'SDD' categories are considered susceptible if `combine_SI = TRUE`
-(default), and the result of the combination is then reduced to S or R.
+(default), and the result is then reduced to S or R.
 
 ## See also
 
