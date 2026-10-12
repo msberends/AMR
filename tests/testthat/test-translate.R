@@ -39,7 +39,7 @@ test_that("test-translate.R", {
   expect_identical(mo_fullname("CoNS", "en"), "Coagulase-negative Staphylococcus (CoNS)")
   expect_identical(mo_fullname("CoNS", "es"), "Staphylococcus coagulasa negativo (SCN)")
   expect_identical(mo_fullname("CoNS", "fi"), "Koagulaasinegatiivinen stafylokokki (KNS)")
-  expect_identical(mo_fullname("CoNS", "fr"), "Staphylococcus à coagulase négative (CoNS)")
+  expect_identical(mo_fullname("CoNS", "fr"), "Staphylocoque à coagulase négative (CoNS)")
   expect_identical(mo_fullname("CoNS", "it"), "Stafilococco coagulasi-negativo (CoNS)")
   expect_identical(mo_fullname("CoNS", "ja"), "コアグラーゼ陰性ブドウ球菌 (グラム陰性)")
   expect_identical(mo_fullname("CoNS", "nl"), "Coagulase-negatieve Staphylococcus (CNS)")
