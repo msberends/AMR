@@ -56,12 +56,12 @@ step("microorganisms.groups", "data-raw/_reproduction_scripts/reproduction_of_mi
 # 2. EUCAST breakpoints, merged into clinical_breakpoints (as at the end of reproduction_of_clinical_breakpoints.R)
 merge_script <- tempfile(fileext = ".R")
 writeLines(c(
-  'devtools::load_all()',
-  'library(dplyr, warn.conflicts = FALSE)',
+  "devtools::load_all()",
+  "library(dplyr, warn.conflicts = FALSE)",
   'source("data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R")',
-  '# the rank of an organism can have changed with the new data set',
-  'breakpoints_now <- clinical_breakpoints %>%',
-  '  mutate(rank_index = case_when(',
+  "# the rank of an organism can have changed with the new data set",
+  "breakpoints_now <- clinical_breakpoints %>%",
+  "  mutate(rank_index = case_when(",
   '    mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,',
   '    mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,',
   '    mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,',
@@ -69,9 +69,9 @@ writeLines(c(
   '    mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,',
   '    mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,',
   '    mo != "UNKNOWN" ~ 6,',
-  '    TRUE ~ 7',
+  "    TRUE ~ 7",
   '  ) + if_else(is.na(breakpoint_S) & is.na(breakpoint_R) & guideline %like% "EUCAST", 0.1, 0))',
-  'clinical_breakpoints <- merge_eucast_breakpoints(breakpoints_now, breakpoints_eucast, eucast_coverage)',
+  "clinical_breakpoints <- merge_eucast_breakpoints(breakpoints_now, breakpoints_eucast, eucast_coverage)",
   'usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = "xz", version = 2)'
 ), merge_script)
 step("clinical_breakpoints (EUCAST)", merge_script)

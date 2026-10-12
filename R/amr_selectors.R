@@ -73,7 +73,6 @@
 #' # Though they are primarily intended to use for selections and filters.
 #' # Examples sections below are split into 'dplyr', 'base R', and 'data.table':
 #'
-#' \donttest{
 #' \dontrun{
 #' # dplyr -------------------------------------------------------------------
 #'
@@ -94,8 +93,10 @@
 #' # get AMR for all aminoglycosides e.g., per ward:
 #' example_isolates %>%
 #'   group_by(ward) %>%
-#'   summarise(across(aminoglycosides(),
-#'                    resistance))
+#'   summarise(across(
+#'     aminoglycosides(),
+#'     resistance
+#'   ))
 #'
 #' # You can combine selectors with '&' to be more specific:
 #' example_isolates %>%
@@ -105,8 +106,10 @@
 #' example_isolates %>%
 #'   filter(mo_genus() %in% c("Escherichia", "Klebsiella")) %>%
 #'   group_by(ward) %>%
-#'   summarise_at(not_intrinsic_resistant(),
-#'                resistance)
+#'   summarise_at(
+#'     not_intrinsic_resistant(),
+#'     resistance
+#'   )
 #'
 #' # get susceptibility for antimicrobials whose name contains "trim":
 #' example_isolates %>%
@@ -159,8 +162,9 @@
 #' y <- example_isolates %>% filter(carbapenems() == "R")
 #' z <- example_isolates %>% filter(if_all(carbapenems(), ~ .x == "R"))
 #' identical(x, y) && identical(y, z)
-#'
 #' }
+#'
+#' \donttest{
 #' # base R ------------------------------------------------------------------
 #'
 #' # select columns 'IPM' (imipenem) and 'MEM' (meropenem)

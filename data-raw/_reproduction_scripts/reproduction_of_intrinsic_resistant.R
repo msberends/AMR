@@ -38,12 +38,12 @@ for (i in seq_len(nrow(antimicrobials))) {
 }
 
 int_resis <- interpretive_rules(int_resis,
-                                interpretive_rules_df = subset(
-                                  AMR:::INTERPRETIVE_RULES_DF,
-                                  reference.rule_group %like% "Expected.* Phenotypes"
-                                ),
-                                overwrite = TRUE,
-                                info = FALSE
+  interpretive_rules_df = subset(
+    AMR:::INTERPRETIVE_RULES_DF,
+    reference.rule_group %like% "Expected.* Phenotypes"
+  ),
+  overwrite = TRUE,
+  info = FALSE
 )
 
 int_resis2 <- int_resis[, sapply(int_resis, function(x) any(!is.sir(x) | x == "R")), drop = FALSE] %>%
@@ -63,8 +63,10 @@ all(int_resis3$ab %in% antimicrobials$ab)
 
 intrinsic_resistant <- int_resis3
 
-intrinsic_resistant$version <- paste(EUCAST_VERSION_EXPECTED_PHENOTYPES$`1.2`$title,
-                                     EUCAST_VERSION_EXPECTED_PHENOTYPES$`1.2`$version_txt)
+intrinsic_resistant$version <- paste(
+  EUCAST_VERSION_EXPECTED_PHENOTYPES$`1.2`$title,
+  EUCAST_VERSION_EXPECTED_PHENOTYPES$`1.2`$version_txt
+)
 
 usethis::use_data(intrinsic_resistant, internal = FALSE, overwrite = TRUE, version = 2, compress = "xz")
 rm(intrinsic_resistant)
