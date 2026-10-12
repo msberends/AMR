@@ -1,4 +1,4 @@
-# AMR 3.0.1.9121
+# AMR 3.0.1.9122
 
 Planned as v3.1.0, mid October 2026.
 
@@ -37,7 +37,7 @@ Planned as v3.1.0, mid October 2026.
 * *tidymodels* integration for using SIR, MIC and disk data in modelling pipelines: `step_mic_log2()`, `step_sir_numeric()`, and new column selectors `all_sir()`, `all_mic()`, `all_disk()`
 * New `esbl_isolates` data set for practising AMR modelling
 * New antimicrobial selectors: `ionophores()`, `peptides()`, `phosphonics()`, `spiropyrimidinetriones()`
-* New antimicrobials: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
+* New antimicrobials: cefepime/taniborbactam (`FTA`), ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin (`KAS`), ostreogrycin (`OST`), Sulbactam/durlobactam (`SUD1`, #308), taniborbactam (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
 * New `interpretive_rules()`, a unified function for EUCAST and CLSI interpretive rules; `eucast_rules()` is now a wrapper around it (#235, #259)
 * New `morphology` column in the `microorganisms` data set and corresponding `mo_morphology()` function, returning the cell shape of bacteria. Data sourced from BacDive; values prefixed with "likely" are extrapolated from genus-level consensus. New `add_morphology` argument was added to `mo_gramstain()` to return combined results such as `"Gram-negative rods"`.
 * New `amr_course()` to download and unpack course or webinar materials from GitHub in one call
@@ -45,7 +45,6 @@ Planned as v3.1.0, mid October 2026.
 * New `wisca_plot()` to assess the susceptibility and incidence distributions from the Monte Carlo simulations
 * A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon
 * `add_custom_antimicrobial_synonyms()` to add local names, such as trade names, to existing antimicrobials (#307)
-* Sulbactam/durlobactam (`SUD1`) added to the `antimicrobials` data set (#308)
 * `sir_combine()` to combine SIR results of multiple antimicrobials into one variable for combination therapy, using the same rules as `antibiogram()` (#321)
 
 ### Fixed
@@ -73,7 +72,7 @@ Planned as v3.1.0, mid October 2026.
   * Input of the form `"X complex"` now falls back to `"X"` when the complex is not a distinct taxon in the database, preventing `NA` results for valid clinical descriptions such as `"Proteus vulgaris complex"` (#287)
   * Abbreviated-genus input (e.g. `"S. apiospermum"`) now correctly ranks candidates whose species epithet exactly matches the input above more-prevalent organisms whose species does not match; fixes `"S. apiospermum"` resolving to *Staphylococcus* instead of *Scedosporium apiospermum* (#288)
   * Abbreviated-genus input for species that have subspecies (e.g. `"P. ovale"`) now collapses to the species-rank record instead of incorrectly matching a more-prevalent organism; explicit subspecies queries (e.g. `"P. ovale curtisi"`) are preserved (#288)
-* `get_author_year()` in the microorganism reproduction script now strips `emend.` and everything after it, so `ref` reflects the combination authority rather than the emendation author (e.g. *Rhodococcus equi* now returns "Goodfellow et al., 1977" instead of "Nouioui et al., 2018")
+* Author references in the `microorganisms` dataset now strips `emend.` and everything after it, so `ref` reflects the combination authority rather than the emendation author (e.g. *Rhodococcus equi* now returns "Goodfellow et al., 1977" instead of "Nouioui et al., 2018")
 * BRMO classification now includes bacterial complexes (#275)
 * Translation fixes for Italian CoNS/CoPS names (#256), Dutch antimicrobials, and `sir_df()` foreign-language output (#272)
 * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
@@ -88,7 +87,7 @@ Planned as v3.1.0, mid October 2026.
 * WT, NWT, NS and NI results were handled incorrectly in `count_*()` and `proportion_*()` with multiple antimicrobials (#321)
 * `g.test()` returned the degrees of freedom as `argument` instead of `parameter`, so they were not printed
 * `antibiogram()` and `wisca()` failed without the `antimicrobials` argument if tidyselect was not available, e.g. for binary installations without dplyr
-* R could crash after unloading data.table, and suggested packages available on the machine that built the package were used even if not available to the user
+* R could crash after unloading the `data.table` package, and suggested packages available on the machine that built the package were used even if not available to the user
 
 ### Updated
 * Faster `as.ab()`, `as.mo()` and all `mo_*()` functions through one consistent session cache design, which is cleared when lookup tables change, e.g. after `add_custom_microorganisms()` (#313)
@@ -112,6 +111,7 @@ Planned as v3.1.0, mid October 2026.
 * `as.sir()` gains an `enforce_method` argument (`"auto"`, `"mic"`, or `"disk"`) to force the interpretation method when S3 class information is lost, e.g. when called from Python (#291)
 * `AMR for Python` vignette: added sections on installation channels (stable CRAN vs. development GitHub via `AMR.beta`) and on using `enforce_method` in `as_sir()` from Python
 * Improved French translations, kindly provided by Mathilde Garé (#322)
+
 
 # AMR 3.0.1
 
