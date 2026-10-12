@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9119
+## AMR 3.0.1.9120
 
 Planned as v3.1.0, mid October 2026.
 
@@ -350,6 +350,8 @@ Planned as v3.1.0, mid October 2026.
 - `AMR for Python` vignette: added sections on installation channels
   (stable CRAN vs. development GitHub via `AMR.beta`) and on using
   `enforce_method` in `as_sir()` from Python
+- Improved French translations, kindly provided by Mathilde Garé
+  ([\#322](https://github.com/msberends/AMR/issues/322))
 
 ## AMR 3.0.1
 
