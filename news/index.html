@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9121</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9122</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9121" id="amr-3019121">AMR 3.0.1.9121<a class="anchor" aria-label="anchor" href="#amr-3019121"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9122" id="amr-3019122">AMR 3.0.1.9122<a class="anchor" aria-label="anchor" href="#amr-3019122"></a></h2>
 <p>Planned as v3.1.0, mid October 2026.</p>
 <div class="section level4">
-<h4 id="breaking-changes-3-0-1-9121">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9121"></a></h4>
+<h4 id="breaking-changes-3-0-1-9122">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-3-0-1-9122"></a></h4>
 <ul><li>
 <p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms with new top-level <em>domains</em> ‘Bacteria’ and ‘Archaea’ (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column in the <code>microorganisms</code> data set was added, and more importantly, <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g. <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
 <table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
@@ -107,7 +107,7 @@
 <li><p>With multiple antimicrobials, <code>count_*()</code> and <code>proportion_*()</code> now follow the documented combination therapy rules: <code><a href="../reference/proportion.html">resistance()</a></code> returns the proportion of failing combinations instead of resistance to any of the antimicrobials, and <code><a href="../reference/count.html">count_all()</a></code> excludes isolates of which the combination result is unknown (<a href="https://github.com/msberends/AMR/issues/321" class="external-link">#321</a>)</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9121">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9121"></a></h4>
+<h4 id="new-3-0-1-9122">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9122"></a></h4>
 <ul><li>EUCAST 2026 and CLSI 2026 breakpoints: over 5,700 new breakpoints added to the <code>clinical_breakpoints</code> data set; EUCAST 2026 is now the default for all MIC and disk diffusion interpretations</li>
 <li>Human EUCAST breakpoints from 2019 (v9.0) on, are now retrieved directly from EUCAST Excel files instead of relying on the WHONET repository.
 <ul><li>
@@ -122,7 +122,7 @@
 <li>New <code>esbl_isolates</code> data set for practising AMR modelling</li>
 <li>New antimicrobial selectors: <code><a href="../reference/antimicrobial_selectors.html">ionophores()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">peptides()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">phosphonics()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">spiropyrimidinetriones()</a></code>
 </li>
-<li>New antimicrobials: cefepime/taniborbactam (<code>FTA</code>), ceftibuten/avibactam (<code>CTA</code>), clorobiocin (<code>CLB</code>), kasugamycin (<code>KAS</code>), ostreogrycin (<code>OST</code>), taniborbactam (<code>TAN</code>), thiostrepton (<code>THS</code>), xeruborbactam (<code>XER</code>), zorbamycin (<code>ZOR</code>)</li>
+<li>New antimicrobials: cefepime/taniborbactam (<code>FTA</code>), ceftibuten/avibactam (<code>CTA</code>), clorobiocin (<code>CLB</code>), kasugamycin (<code>KAS</code>), ostreogrycin (<code>OST</code>), Sulbactam/durlobactam (<code>SUD1</code>, <a href="https://github.com/msberends/AMR/issues/308" class="external-link">#308</a>), taniborbactam (<code>TAN</code>), thiostrepton (<code>THS</code>), xeruborbactam (<code>XER</code>), zorbamycin (<code>ZOR</code>)</li>
 <li>New <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, a unified function for EUCAST and CLSI interpretive rules; <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code> is now a wrapper around it (<a href="https://github.com/msberends/AMR/issues/235" class="external-link">#235</a>, <a href="https://github.com/msberends/AMR/issues/259" class="external-link">#259</a>)</li>
 <li>New <code>morphology</code> column in the <code>microorganisms</code> data set and corresponding <code><a href="../reference/mo_property.html">mo_morphology()</a></code> function, returning the cell shape of bacteria. Data sourced from BacDive; values prefixed with “likely” are extrapolated from genus-level consensus. New <code>add_morphology</code> argument was added to <code><a href="../reference/mo_property.html">mo_gramstain()</a></code> to return combined results such as <code>"Gram-negative rods"</code>.</li>
 <li>New <code><a href="../reference/amr_course.html">amr_course()</a></code> to download and unpack course or webinar materials from GitHub in one call</li>
@@ -131,12 +131,11 @@
 <li>A registry of all microbial IDs (MO codes) since v2.0.0 now prevents existing IDs from being reused or mixed up; IDs of earlier releases are translated to the current ID of the same taxon</li>
 <li>
 <code><a href="../reference/add_custom_antimicrobials.html">add_custom_antimicrobial_synonyms()</a></code> to add local names, such as trade names, to existing antimicrobials (<a href="https://github.com/msberends/AMR/issues/307" class="external-link">#307</a>)</li>
-<li>Sulbactam/durlobactam (<code>SUD1</code>) added to the <code>antimicrobials</code> data set (<a href="https://github.com/msberends/AMR/issues/308" class="external-link">#308</a>)</li>
 <li>
 <code><a href="../reference/sir_combine.html">sir_combine()</a></code> to combine SIR results of multiple antimicrobials into one variable for combination therapy, using the same rules as <code><a href="../reference/antibiogram.html">antibiogram()</a></code> (<a href="https://github.com/msberends/AMR/issues/321" class="external-link">#321</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="fixed-3-0-1-9121">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9121"></a></h4>
+<h4 id="fixed-3-0-1-9122">Fixed<a class="anchor" aria-label="anchor" href="#fixed-3-0-1-9122"></a></h4>
 <ul><li>
 <code><a href="../reference/as.mo.html">as.mo()</a></code> returned <em>Salmonella bongori</em> or another subspecies for <em>Salmonella</em> serovars written with the species, such as “Salmonella enterica serovar Typhi”</li>
 <li>EUCAST breakpoint rules for <em>Aerococcus</em> (v12 onwards) were never applied, and <em>Pasteurella</em> rules were partly filed under <em>Neisseria meningitidis</em> (<a href="https://github.com/msberends/AMR/issues/290" class="external-link">#290</a>)</li>
@@ -174,8 +173,7 @@
 <li>Abbreviated-genus input (e.g. <code>"S. apiospermum"</code>) now correctly ranks candidates whose species epithet exactly matches the input above more-prevalent organisms whose species does not match; fixes <code>"S. apiospermum"</code> resolving to <em>Staphylococcus</em> instead of <em>Scedosporium apiospermum</em> (<a href="https://github.com/msberends/AMR/issues/288" class="external-link">#288</a>)</li>
 <li>Abbreviated-genus input for species that have subspecies (e.g. <code>"P. ovale"</code>) now collapses to the species-rank record instead of incorrectly matching a more-prevalent organism; explicit subspecies queries (e.g. <code>"P. ovale curtisi"</code>) are preserved (<a href="https://github.com/msberends/AMR/issues/288" class="external-link">#288</a>)</li>
 </ul></li>
-<li>
-<code>get_author_year()</code> in the microorganism reproduction script now strips <code>emend.</code> and everything after it, so <code>ref</code> reflects the combination authority rather than the emendation author (e.g. <em>Rhodococcus equi</em> now returns “Goodfellow et al., 1977” instead of “Nouioui et al., 2018”)</li>
+<li>Author references in the <code>microorganisms</code> dataset now strips <code>emend.</code> and everything after it, so <code>ref</code> reflects the combination authority rather than the emendation author (e.g. <em>Rhodococcus equi</em> now returns “Goodfellow et al., 1977” instead of “Nouioui et al., 2018”)</li>
 <li>BRMO classification now includes bacterial complexes (<a href="https://github.com/msberends/AMR/issues/275" class="external-link">#275</a>)</li>
 <li>Translation fixes for Italian CoNS/CoPS names (<a href="https://github.com/msberends/AMR/issues/256" class="external-link">#256</a>), Dutch antimicrobials, and <code><a href="../reference/proportion.html">sir_df()</a></code> foreign-language output (<a href="https://github.com/msberends/AMR/issues/272" class="external-link">#272</a>)</li>
 <li>Fixed some EUCAST Expert Rules, mostly on <em>S. pneumoniae</em>
@@ -198,10 +196,10 @@
 <code><a href="../reference/g.test.html">g.test()</a></code> returned the degrees of freedom as <code>argument</code> instead of <code>parameter</code>, so they were not printed</li>
 <li>
 <code><a href="../reference/antibiogram.html">antibiogram()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code> failed without the <code>antimicrobials</code> argument if tidyselect was not available, e.g. for binary installations without dplyr</li>
-<li>R could crash after unloading data.table, and suggested packages available on the machine that built the package were used even if not available to the user</li>
+<li>R could crash after unloading the <code>data.table</code> package, and suggested packages available on the machine that built the package were used even if not available to the user</li>
 </ul></div>
 <div class="section level4">
-<h4 id="updated-3-0-1-9121">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9121"></a></h4>
+<h4 id="updated-3-0-1-9122">Updated<a class="anchor" aria-label="anchor" href="#updated-3-0-1-9122"></a></h4>
 <ul><li>Faster <code><a href="../reference/as.ab.html">as.ab()</a></code>, <code><a href="../reference/as.mo.html">as.mo()</a></code> and all <code>mo_*()</code> functions through one consistent session cache design, which is cleared when lookup tables change, e.g. after <code><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms()</a></code> (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)
 <ul><li>
 <code>mo_*()</code> functions retrieve properties of valid <code>&lt;mo&gt;</code> input directly, and only for unique values</li>

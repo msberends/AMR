@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9121
+## AMR 3.0.1.9122
 
 Planned as v3.1.0, mid October 2026.
 
@@ -99,8 +99,10 @@ Planned as v3.1.0, mid October 2026.
   [`spiropyrimidinetriones()`](https://amr-for-r.org/reference/antimicrobial_selectors.md)
 - New antimicrobials: cefepime/taniborbactam (`FTA`),
   ceftibuten/avibactam (`CTA`), clorobiocin (`CLB`), kasugamycin
-  (`KAS`), ostreogrycin (`OST`), taniborbactam (`TAN`), thiostrepton
-  (`THS`), xeruborbactam (`XER`), zorbamycin (`ZOR`)
+  (`KAS`), ostreogrycin (`OST`), Sulbactam/durlobactam (`SUD1`,
+  [\#308](https://github.com/msberends/AMR/issues/308)), taniborbactam
+  (`TAN`), thiostrepton (`THS`), xeruborbactam (`XER`), zorbamycin
+  (`ZOR`)
 - New
   [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
   a unified function for EUCAST and CLSI interpretive rules;
@@ -130,8 +132,6 @@ Planned as v3.1.0, mid October 2026.
 - [`add_custom_antimicrobial_synonyms()`](https://amr-for-r.org/reference/add_custom_antimicrobials.md)
   to add local names, such as trade names, to existing antimicrobials
   ([\#307](https://github.com/msberends/AMR/issues/307))
-- Sulbactam/durlobactam (`SUD1`) added to the `antimicrobials` data set
-  ([\#308](https://github.com/msberends/AMR/issues/308))
 - [`sir_combine()`](https://amr-for-r.org/reference/sir_combine.md) to
   combine SIR results of multiple antimicrobials into one variable for
   combination therapy, using the same rules as
@@ -220,11 +220,10 @@ Planned as v3.1.0, mid October 2026.
     of incorrectly matching a more-prevalent organism; explicit
     subspecies queries (e.g. `"P. ovale curtisi"`) are preserved
     ([\#288](https://github.com/msberends/AMR/issues/288))
-- `get_author_year()` in the microorganism reproduction script now
-  strips `emend.` and everything after it, so `ref` reflects the
-  combination authority rather than the emendation author
-  (e.g. *Rhodococcus equi* now returns “Goodfellow et al., 1977” instead
-  of “Nouioui et al., 2018”)
+- Author references in the `microorganisms` dataset now strips `emend.`
+  and everything after it, so `ref` reflects the combination authority
+  rather than the emendation author (e.g. *Rhodococcus equi* now returns
+  “Goodfellow et al., 1977” instead of “Nouioui et al., 2018”)
 - BRMO classification now includes bacterial complexes
   ([\#275](https://github.com/msberends/AMR/issues/275))
 - Translation fixes for Italian CoNS/CoPS names
@@ -268,9 +267,9 @@ Planned as v3.1.0, mid October 2026.
   [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) failed
   without the `antimicrobials` argument if tidyselect was not available,
   e.g. for binary installations without dplyr
-- R could crash after unloading data.table, and suggested packages
-  available on the machine that built the package were used even if not
-  available to the user
+- R could crash after unloading the `data.table` package, and suggested
+  packages available on the machine that built the package were used
+  even if not available to the user
 
 #### Updated
 
