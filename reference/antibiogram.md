@@ -758,7 +758,8 @@ if (requireNamespace("dplyr")) {
     top_n_microorganisms(n = 10) %>%
     group_by(
       age_group = age_groups(age, c(25, 50, 75)),
-      gender) %>%
+      gender
+    ) %>%
     wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 }
 #> ℹ Using column mo as input for `col_mo`.
