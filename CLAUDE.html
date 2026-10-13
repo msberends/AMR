@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9126</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9127</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -235,8 +235,30 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <ul><li>Development versions use a <code>.9xxx</code> suffix</li>
 <li>Stable CRAN releases drop the dev suffix (e.g., <code>3.0.1</code>)</li>
 <li>
-<code>NEWS.md</code> uses sections <strong>New</strong>, <strong>Fixes</strong>, <strong>Updates</strong> with GitHub issue references (<code>#NNN</code>)</li>
+<code>NEWS.md</code> follows the style of the v3.0.0 section; see <em>NEWS.md style</em> below</li>
 </ul><div class="section level3">
+<h3 id="newsmd-style">NEWS.md style<a class="anchor" aria-label="anchor" href="#newsmd-style"></a></h3>
+<p>Each version section follows the v3.0.0 section of <code>NEWS.md</code>:</p>
+<ul><li>After the <code># AMR &lt;version&gt;</code> heading, an optional line on the planned release, then a short intro paragraph summarising the main changes in plain prose</li>
+<li>Sub-headings, in this order and only when they have content: <code>### Breaking</code>, <code>### New</code>, <code>### Changed</code>, <code>### Other</code>
+</li>
+<li>
+<strong>Breaking</strong>: changes that can alter results or break existing code (renamed or removed arguments, options or values, changed return values, new requirements); explain what changed and how to get the old behaviour</li>
+<li>
+<strong>New</strong>: new functions, arguments, data sets, columns, selectors, antimicrobials and breakpoints, grouped under bold thematic bullets (e.g. <code>* **Updated clinical breakpoints**</code>) with nested bullets beneath; end with a <code>* **Other**</code> group for items that fit no theme</li>
+<li>
+<strong>Changed</strong>: improvements and bug fixes together (there is no separate fixes section), grouped by function or data set as a plain parent bullet (e.g. <code>* SIR interpretation (`as.sir()`)</code>, <code>* `microorganisms` data set</code>) with nested bullets beneath; items that fit no group are single top-level bullets at the end</li>
+<li>
+<strong>Other</strong>: documentation, vignettes, website, contributors and console output</li>
+<li>Each function or data set gets exactly one group; never scatter entries for the same function (e.g. <code><a href="reference/as.mo.html">as.mo()</a></code>) across the section</li>
+<li>Bug fixes start with “Fixed …” or state the corrected behaviour (e.g. “now returns <code>NA</code> with a warning instead of an error”)</li>
+<li>Write descriptive, complete sentences, in British English; a single-sentence bullet has no final full stop, a bullet of several sentences ends with one</li>
+<li>Use “e.g.,” and “i.e.,”, backticks for code, functions with <code>()</code>, and italics for taxonomic names</li>
+<li>Add GitHub issue references at the end of the item, as <code>(#NNN)</code> or <code>(#NNN, #NNN)</code>
+</li>
+<li>Never use em dashes</li>
+</ul></div>
+<div class="section level3">
 <h3 id="local-commits-on-main-never-touch-the-version-number">Local commits on <code>main</code>: never touch the version number<a class="anchor" aria-label="anchor" href="#local-commits-on-main-never-touch-the-version-number"></a></h3>
 <p>When committing directly on <code>main</code> in a local clone, <strong>never</strong> edit the <code>Version:</code> or <code>Date:</code> field in <code>DESCRIPTION</code>, nor line 1 of <code>NEWS.md</code>, and do not add a version prefix to the commit message. The git hooks in <code>.github/prehooks/</code> do this on every commit to <code>main</code>: <code>pre-commit</code> sets the version (commit count since the last tag + 9001) and date in <code>DESCRIPTION</code> and line 1 of <code>NEWS.md</code>, and <code>commit-msg</code> prepends <code>(vX.Y.Z.9NNN)</code> to the commit message. Adding NEWS bullets is still allowed. The section below applies only to PRs.</p>
 </div>
@@ -259,14 +281,10 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="va">currentversion</span><span class="op">=</span><span class="st">"</span><span class="va">${currenttag}</span><span class="st">.</span><span class="va">$((currentcommit</span> <span class="op">+</span> <span class="dv">9001</span> <span class="op">+</span> <span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$currentversion</span><span class="st">"</span></span></code></pre></div>
 <p>The <code>+ 1</code> accounts for the fact that this PR’s squash commit is not yet on the default branch. Set <strong>both</strong> of these files to the resulting version string (and only once per PR, even across multiple commits):</p>
-<ol style="list-style-type: decimal"><li><p><strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field</p></li>
+<ol style="list-style-type: decimal"><li>
+<strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field</li>
 <li>
-<p><strong><code>NEWS.md</code></strong> — <strong>only replace line 1</strong> (the <code># AMR &lt;version&gt;</code> heading) with the new version number; do <strong>not</strong> create a new section. <code>NEWS.md</code> is a <strong>continuous log</strong> for the entire current <code>x.y.z.9nnn</code> development series: all changes since the last stable release accumulate under that single heading. After updating line 1, append the new change as a bullet under the appropriate sub-heading (<code>### New</code>, <code>### Fixes</code>, or <code>### Updates</code>).</p>
-<p>Style rules for <code>NEWS.md</code> entries:</p>
-<ul><li>Be <strong>extremely concise</strong> — one short line per item</li>
-<li>Do <strong>not</strong> end with a full stop (period)</li>
-<li>No verbose explanations; just the essential fact</li>
-</ul></li>
+<strong><code>NEWS.md</code></strong> — <strong>only replace line 1</strong> (the <code># AMR &lt;version&gt;</code> heading) with the new version number; do <strong>not</strong> create a new section. <code>NEWS.md</code> is a <strong>continuous log</strong> for the entire current <code>x.y.z.9nnn</code> development series: all changes since the last stable release accumulate under that single heading. After updating line 1, add the new change to the appropriate sub-heading and group, following <em>NEWS.md style</em> above. If the change belongs to an existing group (e.g. <code><a href="reference/as.mo.html">as.mo()</a></code>), add it there or amend the existing bullet instead of adding a new top-level bullet.</li>
 </ol><p>If <code>git describe</code> fails (e.g. no tags exist in the environment), fall back to reading the current version from <code>DESCRIPTION</code> and adding 1 to the last numeric component — but only if no bump has already been made in this PR.</p>
 </div>
 <div class="section level4">
