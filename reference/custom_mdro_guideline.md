@@ -473,8 +473,8 @@ x <- custom_mdro_guideline(
 )
 x
 #> A set of custom MDRO rules:
-#>   1. If CIP is  R  and age is higher than 60 then: Elderly Type A
-#>   2. If ERY is  R  and age is higher than 60 then: Elderly Type B
+#>   1. If CIP is  R  and age is higher than 60 then: Elderly Type A
+#>   2. If ERY is  R  and age is higher than 60 then: Elderly Type B
 #>   3. Otherwise: Negative
 #> 
 #> Unmatched rows will return NA.
@@ -518,8 +518,8 @@ my_guideline <- custom_mdro_guideline(
 )
 my_guideline
 #> A set of custom MDRO rules:
-#>   1. If AMX is  R  then: Custom MDRO 1
-#>   2. If all of cephalosporins_2nd() is  R  then: Custom MDRO 2
+#>   1. If AMX is  R  then: Custom MDRO 1
+#>   2. If all of cephalosporins_2nd() is  R  then: Custom MDRO 2
 #>   3. Otherwise: Negative
 #> 
 #> Unmatched rows will return NA.

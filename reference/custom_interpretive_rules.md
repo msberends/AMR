@@ -507,10 +507,10 @@ x <- custom_interpretive_rules(
 x
 #> A set of custom interpretive rules:
 #> 
-#>   1. If AMC is  R  and genus is "Klebsiella" then set to  R :
+#>   1. If AMC is  R  and genus is "Klebsiella" then set to  R :
 #>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 #> 
-#>   2. If AMC is  I  and genus is "Klebsiella" then set to  I :
+#>   2. If AMC is  I  and genus is "Klebsiella" then set to  I :
 #>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 
 # run the custom rule set (verbose = TRUE will return a logbook instead of the data set):
@@ -541,12 +541,12 @@ x2 <- c(
 x2
 #> A set of custom interpretive rules:
 #> 
-#>   1. If AMC is  R  and genus is "Klebsiella" then set to  R :
+#>   1. If AMC is  R  and genus is "Klebsiella" then set to  R :
 #>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 #> 
-#>   2. If AMC is  I  and genus is "Klebsiella" then set to  I :
+#>   2. If AMC is  I  and genus is "Klebsiella" then set to  I :
 #>      amoxicillin (AMX), amoxicillin/clavulanic acid (AMC), ampicillin (AMP)
 #> 
-#>   3. If TZP is  R  then set to  R :
+#>   3. If TZP is  R  then set to  R :
 #>      biapenem (BIA), doripenem (DOR), ertapenem (ETP), imipenem (IPM), imipenem/EDTA (IPE), imipenem/relebactam (IMR), meropenem (MEM), meropenem/nacubactam (MNC), meropenem/vaborbactam (MEV), panipenem (PAN), razupenem (RZM), ritipenem (RIT), ritipenem acoxil (RIA), taniborbactam (TAN), tebipenem (TBP)
 ```

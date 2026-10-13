@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9127</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9128</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9127" id="amr-3019127">AMR 3.0.1.9127<a class="anchor" aria-label="anchor" href="#amr-3019127"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9128" id="amr-3019128">AMR 3.0.1.9128<a class="anchor" aria-label="anchor" href="#amr-3019128"></a></h2>
 <p>Planned as v3.1.0, mid October 2026.</p>
 <div class="section level4">
-<h4 id="breaking-3-0-1-9127">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9127"></a></h4>
+<h4 id="breaking-3-0-1-9128">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9128"></a></h4>
 <ul><li>
 <p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms, with new top-level <em>domains</em> Bacteria and Archaea (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column was added to the <code>microorganisms</code> data set, and <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g., <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
 <table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
@@ -106,7 +106,7 @@
 <li><p>The options of <code>capped_mic_handling</code> in <code><a href="../reference/as.sir.html">as.sir()</a></code> have been redefined as <code>"none"</code>, <code>"conservative"</code>, <code>"standard"</code> (default), and <code>"lenient"</code>. The option <code>"inverse"</code> is no longer available (<a href="https://github.com/msberends/AMR/issues/243" class="external-link">#243</a>).</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9127">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9127"></a></h4>
+<h4 id="new-3-0-1-9128">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9128"></a></h4>
 <ul><li>
 <strong>Updated clinical breakpoints</strong>
 <ul><li>EUCAST 2026 and CLSI 2026 are now supported, by adding over 5,700 new breakpoints to the <code>clinical_breakpoints</code> data set. EUCAST 2026 is now the default guideline for all MIC and disk diffusion interpretations.</li>
@@ -157,7 +157,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-0-1-9127">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9127"></a></h4>
+<h4 id="changed-3-0-1-9128">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9128"></a></h4>
 <ul><li>SIR interpretation (<code><a href="../reference/as.sir.html">as.sir()</a></code>)
 <ul><li>New argument <code>enforce_method</code> (<code>"auto"</code>, <code>"mic"</code>, or <code>"disk"</code>) to force the interpretation method when S3 class information is lost, e.g., when called from Python (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
 <li>When input consists of whole numbers only, disk zones are now assumed rather than MIC values (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
@@ -255,6 +255,12 @@
 <li>Translations are no longer translated again (e.g., “Ticarcillinee” in Dutch and “groupee” in French), and parts of combination names are no longer left untranslated</li>
 <li>Fixed Italian names of CoNS and CoPS (<a href="https://github.com/msberends/AMR/issues/256" class="external-link">#256</a>), Dutch names of antimicrobials, and output of <code><a href="../reference/proportion.html">sir_df()</a></code> in other languages (<a href="https://github.com/msberends/AMR/issues/272" class="external-link">#272</a>)</li>
 </ul></li>
+<li>Interpretive rules (<code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code>, and <code><a href="../reference/interpretive_rules.html">clsi_rules()</a></code>)
+<ul><li>Considerably faster, around 11 to 18 times, with identical results</li>
+<li>The number of added and changed values now only counts values that were actually written, so that values left untouched due to <code>overwrite = FALSE</code> or <code>add_if_missing = FALSE</code> are no longer reported as changes or additions, also not in the output of <code>verbose = TRUE</code> (<a href="https://github.com/msberends/AMR/issues/259" class="external-link">#259</a>)</li>
+<li>The changes of custom rules are now also printed when no other rules were applied</li>
+<li>The <code>rule</code> column of the output of <code>verbose = TRUE</code> no longer contains formatting markup (e.g., <code>{.field AMC}</code>) for the inhibitor-inheritance rules</li>
+</ul></li>
 <li>
 <code><a href="../reference/AMR-deprecated.html">custom_eucast_rules()</a></code> has been renamed to <code><a href="../reference/custom_interpretive_rules.html">custom_interpretive_rules()</a></code>. The old name is now deprecated but still works (<a href="https://github.com/msberends/AMR/issues/268" class="external-link">#268</a>).</li>
 <li>Logical comparison (<code>==</code>, <code>!=</code>) of the <code>sir</code> class with a <code>factor</code> is now possible on R &gt;= 4.3</li>
@@ -262,8 +268,10 @@
 <li>Fixed a bug where R could crash after unloading the <code>data.table</code> package, and where suggested packages available on the machine that built the package were used even if they were not available to the user</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-0-1-9127">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9127"></a></h4>
+<h4 id="other-3-0-1-9128">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9128"></a></h4>
 <ul><li>Improved console messages with clickable links throughout the package, powered by <code>cli</code> if it is installed (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
+<li>Revamped console output of <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, with section headers, S/I/R values styled as in the printing of <code>sir</code> columns in tibbles, and the summary of edits sorted by SIR level, using <code>cli</code> if it is installed (<a href="https://github.com/msberends/AMR/issues/259" class="external-link">#259</a>)</li>
+<li>The printing of <code><a href="../reference/custom_interpretive_rules.html">custom_interpretive_rules()</a></code> and <code><a href="../reference/custom_mdro_guideline.html">custom_mdro_guideline()</a></code> now styles SIR values as in tibbles, i.e., the colour of <code>I</code> depends on the guideline. <code>WT</code>, <code>NWT</code>, and <code>NS</code> were previously shown as <code>SDD</code>, <code>I</code>, and <code>R</code>, and values other than <code>S</code> and <code>R</code> as <code>I</code>.</li>
 <li>The ‘AMR for Python’ vignette now contains sections on installation channels (stable from CRAN, or development from GitHub via <code>AMR.beta</code>) and on using <code>enforce_method</code> in <code>as_sir()</code> from Python</li>
 </ul></div>
 </div>

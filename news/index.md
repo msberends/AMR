@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9127
+## AMR 3.0.1.9128
 
 Planned as v3.1.0, mid October 2026.
 
@@ -350,6 +350,23 @@ Planned as v3.1.0, mid October 2026.
     of antimicrobials, and output of
     [`sir_df()`](https://amr-for-r.org/reference/proportion.md) in other
     languages ([\#272](https://github.com/msberends/AMR/issues/272))
+- Interpretive rules
+  ([`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  and
+  [`clsi_rules()`](https://amr-for-r.org/reference/interpretive_rules.md))
+  - Considerably faster, around 11 to 18 times, with identical results
+  - The number of added and changed values now only counts values that
+    were actually written, so that values left untouched due to
+    `overwrite = FALSE` or `add_if_missing = FALSE` are no longer
+    reported as changes or additions, also not in the output of
+    `verbose = TRUE`
+    ([\#259](https://github.com/msberends/AMR/issues/259))
+  - The changes of custom rules are now also printed when no other rules
+    were applied
+  - The `rule` column of the output of `verbose = TRUE` no longer
+    contains formatting markup (e.g., `{.field AMC}`) for the
+    inhibitor-inheritance rules
 - [`custom_eucast_rules()`](https://amr-for-r.org/reference/AMR-deprecated.md)
   has been renamed to
   [`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md).
@@ -371,6 +388,19 @@ Planned as v3.1.0, mid October 2026.
   powered by `cli` if it is installed
   ([\#191](https://github.com/msberends/AMR/issues/191),
   [\#265](https://github.com/msberends/AMR/issues/265))
+- Revamped console output of
+  [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  with section headers, S/I/R values styled as in the printing of `sir`
+  columns in tibbles, and the summary of edits sorted by SIR level,
+  using `cli` if it is installed
+  ([\#259](https://github.com/msberends/AMR/issues/259))
+- The printing of
+  [`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md)
+  and
+  [`custom_mdro_guideline()`](https://amr-for-r.org/reference/custom_mdro_guideline.md)
+  now styles SIR values as in tibbles, i.e., the colour of `I` depends
+  on the guideline. `WT`, `NWT`, and `NS` were previously shown as
+  `SDD`, `I`, and `R`, and values other than `S` and `R` as `I`.
 - The ‘AMR for Python’ vignette now contains sections on installation
   channels (stable from CRAN, or development from GitHub via `AMR.beta`)
   and on using `enforce_method` in `as_sir()` from Python
