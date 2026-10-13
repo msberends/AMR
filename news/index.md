@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9129
+## AMR 3.0.1.9131
 
 Planned as v3.1.0, mid October 2026.
 
@@ -57,6 +57,12 @@ Planned as v3.1.0, mid October 2026.
   `"lenient"`. The option `"inverse"` is no longer available
   ([\#243](https://github.com/msberends/AMR/issues/243)).
 
+- [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) now returns
+  WT/NWT (Wildtype/Non-wildtype) instead of S/R when using ECOFF-based
+  interpretation with `breakpoint_type = "ECOFF"`. WT/NWT results are
+  fully supported in all resistance and susceptibility functions and in
+  all plots ([\#254](https://github.com/msberends/AMR/issues/254)).
+
 #### New
 
 - **Updated clinical breakpoints**
@@ -76,12 +82,6 @@ Planned as v3.1.0, mid October 2026.
       breakpoints for *E. coli* only
     - EUCAST PK-PD (non-species related) breakpoints of 2019-2023 and
       *H. parainfluenzae* MIC breakpoints are now included
-- **Wildtype/Non-wildtype interpretation**
-  - [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) now returns
-    WT/NWT (Wildtype/Non-wildtype) when using ECOFF-based interpretation
-    with `breakpoint_type = "ECOFF"`. WT/NWT results are fully supported
-    in all resistance and susceptibility functions and in all plots
-    ([\#254](https://github.com/msberends/AMR/issues/254)).
 - **Unified interpretive rules**
   - New function
     [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
