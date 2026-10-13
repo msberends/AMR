@@ -340,14 +340,13 @@ get_ab_from_namespace <- function(x, cols_ab) {
 
   x <- trimws2(unique(toupper(unlist(strsplit(x, ",", fixed = TRUE)))))
   x_new <- character()
+  ns <- asNamespace("AMR")
   for (val in x) {
-    if (paste0("AB_", val) %in% ls(envir = asNamespace("AMR"))) {
+    if (exists(paste0("AB_", val), envir = ns, inherits = FALSE)) {
       # antibiotic group names, as defined in data-raw/_pre_commit_checks.R, such as `AB_CARBAPENEMS`
-      val <- eval(parse(text = paste0("AB_", val)), envir = asNamespace("AMR"))
-    } else if (val %in% AMR_env$AB_lookup$ab) {
-      # separate drugs, such as `AMX`
-      val <- as.ab(val)
-    } else {
+      val <- get(paste0("AB_", val), envir = ns, inherits = FALSE)
+    } else if (!val %in% AMR_env$AB_lookup$ab) {
+      # anything else must be a separate drug, such as `AMX`, which is then already a valid code
       stop_("unknown antimicrobial drug (group): ", val, call = FALSE)
     }
     x_new <- c(x_new, val)

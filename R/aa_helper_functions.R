@@ -1196,7 +1196,43 @@ get_group_names <- function(x) {
   }
 }
 
-format_custom_query_rule <- function(query, colours = has_colour()) {
+format_sir_badge <- function(x, guideline = getOption("AMR_guideline", "EUCAST")[1]) {
+  # same styling as in pillar_shaft.sir(), so 'I' depends on the guideline
+  vapply(
+    FUN.VALUE = character(1),
+    as.character(x),
+    function(val) {
+      if (is.na(val)) {
+        font_red("NA")
+      } else if (!has_colour()) {
+        val
+      } else {
+        # non-breaking spaces, so that line wrapping cannot split a badge
+        val_padded <- paste0("\u00a0", val, "\u00a0")
+        if (val %in% c("S", "WT")) {
+          font_green_bg(val_padded)
+        } else if (val == "SDD") {
+          font_green_lighter_bg(val_padded)
+        } else if (val == "I") {
+          if (guideline %like% "EUCAST") {
+            font_green_lighter_bg(val_padded)
+          } else {
+            font_orange_bg(val_padded)
+          }
+        } else if (val %in% c("R", "NS", "NWT")) {
+          font_rose_bg(val_padded)
+        } else if (val == "NI") {
+          font_grey_bg(font_black(val_padded, adapt = FALSE))
+        } else {
+          val
+        }
+      }
+    },
+    USE.NAMES = FALSE
+  )
+}
+
+format_custom_query_rule <- function(query, colours = has_colour(), guideline = getOption("AMR_guideline", "EUCAST")[1]) {
   # this is used by custom EUCAST and custom MDRO rules
 
   # font_black() is a bit expensive so do it once:
@@ -1218,14 +1254,9 @@ format_custom_query_rule <- function(query, colours = has_colour()) {
   query <- gsub("any\\((.*)\\)$", paste0(font_black("any of "), "\\1"), query)
   query <- gsub("all\\((.*)\\)$", paste0(font_black("all of "), "\\1"), query)
   if (colours == TRUE) {
-    query <- gsub("[\"']S[\"']", font_green_bg(" S "), query)
-    query <- gsub("[\"']SDD[\"']", font_orange_bg(" SDD "), query)
-    query <- gsub("[\"']I[\"']", font_orange_bg(" I "), query)
-    query <- gsub("[\"']R[\"']", font_rose_bg(" R "), query)
-    query <- gsub("[\"']NI[\"']", font_grey_bg(font_black(" NI ")), query)
-    query <- gsub("[\"']WT[\"']", font_green_bg(" SDD "), query)
-    query <- gsub("[\"']NWT[\"']", font_rose_bg(" I "), query)
-    query <- gsub("[\"']NS[\"']", font_rose_bg(" R "), query)
+    for (sir_level in VALID_SIR_LEVELS) {
+      query <- gsub(paste0("[\"']", sir_level, "[\"']"), format_sir_badge(sir_level, guideline = guideline), query)
+    }
   }
   # replace the black colour 'stops' with blue colour 'starts'
   query <- gsub("\033[39m", "\033[34m", as.character(query), fixed = TRUE)

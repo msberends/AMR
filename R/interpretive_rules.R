@@ -255,47 +255,20 @@ interpretive_rules <- function(x,
 
   warned <- FALSE
   warn_lacking_sir_class <- character(0)
+  overwrite_skipped <- FALSE
   txt_ok <- function(n_added, n_changed, warned = FALSE) {
     if (warned == FALSE) {
       if (n_added + n_changed == 0) {
-        cat(font_subtle(" (no changes)\n"))
+        cat(" ", font_subtle("(no changes)"), "\n", sep = "")
       } else {
-        # opening
-        if (n_added > 0 && n_changed == 0) {
-          cat(font_bold(font_green(" (")))
-        } else if (n_added == 0 && n_changed > 0) {
-          cat(font_bold(font_blue(" (")))
-        } else {
-          cat(font_grey(" ("))
-        }
-        # additions
+        status <- character(0)
         if (n_added > 0) {
-          if (n_added == 1) {
-            cat(font_bold(font_green("1 value added")))
-          } else {
-            cat(font_bold(font_green(formatnr(n_added), "values added")))
-          }
+          status <- c(status, font_bold(font_green(formatnr(n_added), ifelse(n_added == 1, "value added", "values added"))))
         }
-        # separator
-        if (n_added > 0 && n_changed > 0) {
-          cat(font_grey(", "))
-        }
-        # changes
         if (n_changed > 0) {
-          if (n_changed == 1) {
-            cat(font_bold(font_blue("1 value changed")))
-          } else {
-            cat(font_bold(font_blue(formatnr(n_changed), "values changed")))
-          }
+          status <- c(status, font_bold(font_blue(formatnr(n_changed), ifelse(n_changed == 1, "value changed", "values changed"))))
         }
-        # closing
-        if (n_added > 0 && n_changed == 0) {
-          cat(font_bold(font_green(")\n")))
-        } else if (n_added == 0 && n_changed > 0) {
-          cat(font_bold(font_blue(")\n")))
-        } else {
-          cat(font_grey(")\n"))
-        }
+        cat(" ", font_subtle("("), paste0(status, collapse = font_subtle(", ")), font_subtle(")"), "\n", sep = "")
       }
       warned <<- FALSE
     }
@@ -389,11 +362,18 @@ interpretive_rules <- function(x,
       }
     }
   }
-  as.sir_no_warning <- function(x) {
-    if (is.sir(x)) {
-      return(x)
+  like_unique <- function(vals, pattern) {
+    # %like% on the unique values only, as organism columns contain many duplicates
+    vals_unique <- unique(vals)
+    (vals_unique %like% pattern)[match(vals, vals_unique)]
+  }
+  sir_values <- function(col) {
+    # SIR values of a column of the current data as character, to compare without the overhead of Ops.sir()
+    vals <- x[[col]]
+    if (!is.sir(vals)) {
+      vals <- suppressWarnings(as.sir(vals))
     }
-    suppressWarnings(as.sir(x))
+    as.character(vals)
   }
   expand_groups <- function(entry) {
     parts <- trimws(strsplit(entry, ",")[[1]])
@@ -441,16 +421,15 @@ interpretive_rules <- function(x,
   x <- as.data.frame(x, stringsAsFactors = FALSE) # no tibbles, data.tables, etc.
   rownames(x) <- NULL # will later be restored with old_attributes
   # create unique row IDs - combination of the MO and all ABx columns (so they will only run once per unique combination)
-  x$`.rowid` <- vapply(
-    FUN.VALUE = character(1),
-    as.list(as.data.frame(t(x[, c(col_mo, cols_ab), drop = FALSE]),
-      stringsAsFactors = FALSE
-    )),
-    function(x) {
-      x[is.na(x)] <- "."
-      paste0(x, collapse = "")
-    }
-  )
+  # (with a separator, so that e.g. "S" + "IR" and "SI" + "R" cannot get the same ID)
+  x$`.rowid` <- do.call(paste, c(
+    lapply(c(col_mo, cols_ab), function(col) {
+      vals <- as.character(x[[col]])
+      vals[is.na(vals)] <- "."
+      vals
+    }),
+    sep = "\r"
+  ))
 
   # save original table, with the new .rowid column
   x.bak <- x
@@ -487,15 +466,13 @@ interpretive_rules <- function(x,
   # >>> Apply Other rules: enzyme inhibitors <<< ------------------------------------------
   if (any(c("all", "other") %in% rules)) {
     if (isTRUE(info)) {
-      cat(paste0("\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
-      message_(
-        "Rules by the ",
-        font_bold(paste0("AMR package v", utils::packageDescription("AMR")$Version)),
-        " (", format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"),
-        "), see {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}",
-        as_note = FALSE
+      cat_rules_header(
+        title = paste0(
+          "Rules by the ", font_bold(paste0("AMR package v", utils::packageDescription("AMR")$Version)),
+          " (", format(as.Date(utils::packageDescription("AMR")$Date), format = "%Y"), ")"
+        ),
+        subtitle = format_inline_("See {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}")
       )
-      cat("\n\n")
     }
     ab_enzyme <- subset(AMR::antimicrobials, name %like% "/")[, c("ab", "name"), drop = FALSE]
     colnames(ab_enzyme) <- c("enzyme_ab", "enzyme_name")
@@ -521,15 +498,14 @@ interpretive_rules <- function(x,
 
         ## Set base to R where base + enzyme inhibitor is R ----
         rule_current <- paste0(
-          ab_enzyme$base_name[i], " ({.field ", font_bold(col_base), "}) = R if ",
-          tolower(ab_enzyme$enzyme_name[i]), " ({.field ", font_bold(col_enzyme), "}) = R"
+          ab_enzyme$base_name[i], " (", col_base, ") = R if ",
+          tolower(ab_enzyme$enzyme_name[i]), " (", col_enzyme, ") = R"
         )
         if (isTRUE(info)) {
-          message_(rule_current,
-            as_note = FALSE,
-            appendLF = FALSE,
-            extra_indent = 6
-          )
+          cat_rule_name(paste0(
+            ab_enzyme$base_name[i], " (", format_field(col_base), ") = ", format_sir_badge("R", guideline = guideline), " if ",
+            tolower(ab_enzyme$enzyme_name[i]), " (", format_field(col_enzyme), ") = ", format_sir_badge("R", guideline = guideline)
+          ))
         }
         run_changes <- edit_sir(
           x = x,
@@ -538,7 +514,7 @@ interpretive_rules <- function(x,
             rule_current, "Other rules", "",
             paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)
           ),
-          rows = which(as.sir_no_warning(x[, col_enzyme, drop = TRUE]) == "R"),
+          rows = which(sir_values(col_enzyme) == "R"),
           cols = col_base,
           last_verbose_info = verbose_info,
           original_data = x.bak,
@@ -553,6 +529,7 @@ interpretive_rules <- function(x,
         verbose_info <- run_changes$verbose_info
         x <- run_changes$output
         warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
+        overwrite_skipped <- overwrite_skipped || isTRUE(run_changes$overwrite_skipped)
         # Print number of new changes
         if (isTRUE(info)) {
           # print only on last one of rules in this group
@@ -564,14 +541,13 @@ interpretive_rules <- function(x,
 
         ## Set base + enzyme inhibitor to S where base is S ----
         rule_current <- paste0(
-          ab_enzyme$enzyme_name[i], " ({.field ", font_bold(col_enzyme), "}) = S if ",
-          tolower(ab_enzyme$base_name[i]), " ({.field ", font_bold(col_base), "}) = S"
+          ab_enzyme$enzyme_name[i], " (", col_enzyme, ") = S if ",
+          tolower(ab_enzyme$base_name[i]), " (", col_base, ") = S"
         )
-
         if (isTRUE(info)) {
-          cat(word_wrap(rule_current,
-            width = getOption("width") - 30,
-            extra_indent = 6
+          cat_rule_name(paste0(
+            ab_enzyme$enzyme_name[i], " (", format_field(col_enzyme), ") = ", format_sir_badge("S", guideline = guideline), " if ",
+            tolower(ab_enzyme$base_name[i]), " (", format_field(col_base), ") = ", format_sir_badge("S", guideline = guideline)
           ))
         }
         run_changes <- edit_sir(
@@ -581,7 +557,7 @@ interpretive_rules <- function(x,
             rule_current, "Other rules", "",
             paste0("Non-EUCAST: AMR package v", utils::packageDescription("AMR")$Version)
           ),
-          rows = which(as.sir_no_warning(x[, col_base, drop = TRUE]) == "S"),
+          rows = which(sir_values(col_base) == "S"),
           cols = col_enzyme,
           last_verbose_info = verbose_info,
           original_data = x.bak,
@@ -596,6 +572,7 @@ interpretive_rules <- function(x,
         verbose_info <- run_changes$verbose_info
         x <- run_changes$output
         warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
+        overwrite_skipped <- overwrite_skipped || isTRUE(run_changes$overwrite_skipped)
         # Print number of new changes
         if (isTRUE(info)) {
           # print only on last one of rules in this group
@@ -674,9 +651,6 @@ interpretive_rules <- function(x,
   # we only hints on remaining rows in `interpretive_rules_df`
   screening_abx <- as.character(AMR::antimicrobials$ab[which(AMR::antimicrobials$ab %like% "-S$")])
   screening_abx <- screening_abx[screening_abx %in% unique(unlist(strsplit(interpretive_rules_df_total$and_these_antibiotics[!is.na(interpretive_rules_df_total$and_these_antibiotics)], ", *")))]
-  if (isTRUE(info)) {
-    cat("\n")
-  }
   for (ab_s in screening_abx) {
     ab <- gsub("-S$", "", ab_s)
     if (ab %in% names(cols_ab) && !ab_s %in% names(cols_ab)) {
@@ -692,6 +666,14 @@ interpretive_rules <- function(x,
   }
 
   ## Go over all rules and apply them ----
+  mo_match_cache <- new.env(parent = emptyenv())
+  # the type of each rule group, determined once instead of for every rule
+  rule_groups <- as.character(interpretive_rules_df$reference.rule_group)
+  rule_group_types <- rep("", length(rule_groups))
+  rule_group_types[rule_groups %like% "expert"] <- "expert"
+  rule_group_types[rule_groups %like% "expected"] <- "expected"
+  rule_group_types[rule_groups %like% "breakpoint"] <- "breakpoint"
+  rule_group_is_other <- rule_groups %like% "other"
   for (i in seq_len(nrow(interpretive_rules_df))) {
     rule_previous <- interpretive_rules_df[max(1, i - 1), "reference.rule", drop = TRUE]
     rule_current <- interpretive_rules_df[i, "reference.rule", drop = TRUE]
@@ -699,13 +681,13 @@ interpretive_rules <- function(x,
     rule_group_previous <- interpretive_rules_df[max(1, i - 1), "reference.rule_group", drop = TRUE]
     rule_group_current <- interpretive_rules_df[i, "reference.rule_group", drop = TRUE]
     # don't apply rules if user doesn't want to apply them
-    if (rule_group_current %like% "breakpoint" && !any(c("all", "breakpoints") %in% rules)) {
+    if (rule_group_types[i] == "breakpoint" && !any(c("all", "breakpoints") %in% rules)) {
       next
     }
-    if (rule_group_current %like% "expected" && !any(c("all", "expected_phenotypes") %in% rules)) {
+    if (rule_group_types[i] == "expected" && !any(c("all", "expected_phenotypes") %in% rules)) {
       next
     }
-    if (rule_group_current %like% "expert" && !any(c("all", "expert") %in% rules)) {
+    if (rule_group_types[i] == "expert" && !any(c("all", "expert") %in% rules)) {
       next
     }
 
@@ -736,64 +718,35 @@ interpretive_rules <- function(x,
 
     if (isTRUE(info)) {
       ## Print EUCAST intro ------------------------------------------------------
-      if (rule_group_current %unlike% "other" && eucast_notification_shown == FALSE) {
-        cat(
-          paste0(
-            "\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n",
-            word_wrap("Rules by the ", font_bold("European Committee on Antimicrobial Susceptibility Testing (EUCAST)")), "\n",
-            font_blue(font_url("https://eucast.org/")), "\n"
-          )
+      if (!rule_group_is_other[i] && eucast_notification_shown == FALSE) {
+        cat_rules_header(
+          title = paste0("Rules by ", font_bold("EUCAST")),
+          subtitle = format_inline_("European Committee on Antimicrobial Susceptibility Testing, {.url https://eucast.org/}")
         )
         eucast_notification_shown <- TRUE
       }
 
       ## Print rule (group) ------------------------------------------------------
       if (rule_group_current != rule_group_previous) {
-        # is new rule group, one of Breakpoints, Expert Rules and Other
-        cat(font_bold(
-          ifelse(
-            rule_group_current %like% "breakpoint",
-            paste0(
-              "\n",
-              word_wrap(
-                breakpoints_info$title, " (",
-                font_red(paste0(breakpoints_info$version_txt, ", ", breakpoints_info$year)), ")\n"
-              )
-            ),
-            ifelse(
-              rule_group_current %like% "expected",
-              paste0(
-                "\n",
-                word_wrap(
-                  expected_phenotypes_info$title, " (",
-                  font_red(paste0(expected_phenotypes_info$version_txt, ", ", expected_phenotypes_info$year)), ")\n"
-                )
-              ),
-              ifelse(
-                rule_group_current %like% "expert",
-                paste0(
-                  "\n",
-                  word_wrap(
-                    expertrules_info$title, " (",
-                    font_red(paste0(expertrules_info$version_txt, ", ", expertrules_info$year)), ")\n"
-                  )
-                ),
-                "" # Default empty string if none of the conditions are met
-              )
-            )
-          )
-        ), "\n")
+        # is new rule group, one of Breakpoints, Expected Phenotypes and Expert Rules
+        if (rule_group_types[i] == "breakpoint") {
+          group_info <- breakpoints_info
+        } else if (rule_group_types[i] == "expected") {
+          group_info <- expected_phenotypes_info
+        } else if (rule_group_types[i] == "expert") {
+          group_info <- expertrules_info
+        } else {
+          group_info <- NULL
+        }
+        if (!is.null(group_info)) {
+          # the first group directly follows the EUCAST header, which already ends with an empty line
+          cat(if (i > 1) "\n", wrap_rules_text(paste0(font_bold(group_info$title), " ", font_red(paste0("(", group_info$version_txt, ", ", group_info$year, ")")))), "\n", sep = "")
+        }
       }
       ## Print rule  -------------------------------------------------------------
       if (rule_current != rule_previous) {
         # is new rule within group, print its name
-        cat(italicise_taxonomy(
-          word_wrap(rule_current,
-            width = getOption("width") - 30,
-            extra_indent = 6
-          ),
-          type = "ansi"
-        ))
+        cat_rule_name(italicise_taxonomy(rule_current, type = "ansi"))
         warned <- FALSE
       }
     }
@@ -807,44 +760,50 @@ interpretive_rules <- function(x,
     target_antibiotics <- interpretive_rules_df[i, "then_change_these_antibiotics", drop = TRUE]
     target_value <- interpretive_rules_df[i, "to_value", drop = TRUE]
 
-    # if amo_value contains a group name, expand that name with all species in it
-    if (any(trimws(strsplit(mo_value, ",")[[1]]) %in% AMR::microorganisms.groups$mo_group_name, na.rm = TRUE)) {
-      like_is_one_of <- "one_of"
-      mo_value <- expand_groups(mo_value)
-    }
+    # the organism columns do not change while applying rules, so rules for the same organisms can reuse the matches
+    mo_key <- paste(if_mo_property, like_is_one_of, mo_value, sep = "\r")
+    mo_match <- mo_match_cache[[mo_key]]
+    if (is.null(mo_match)) {
+      # if amo_value contains a group name, expand that name with all species in it
+      if (any(trimws(strsplit(mo_value, ",")[[1]]) %in% AMR::microorganisms.groups$mo_group_name, na.rm = TRUE)) {
+        like_is_one_of <- "one_of"
+        mo_value <- expand_groups(mo_value)
+      }
 
-    # Organisms match by the names in the data. Species-level rules with literal names also match by the accepted
-    # taxon, so that the rule and the data may use different names of it (e.g. 'Clostridium ramosum' in a rule, while
-    # its accepted name is Thomasclavelia ramosa). Not for genera, as a former genus also contains species that now
-    # belong to other genera (e.g. Pseudomonas maltophilia), and not for regular expressions, as these would then also
-    # match synonyms they were written to exclude (e.g. Klebsiella mobilis for '^Klebsiella(?! aerogenes)').
-    accepted_mo_of_rule <- NULL
-    if (like_is_one_of %in% c("is", "one_of") && if_mo_property %in% c("genus_species", "fullname")) {
-      accepted_mo_of_rule <- names_to_accepted_mo(trimws(strsplit(mo_value, ",", fixed = TRUE)[[1]]))
-    }
+      # Organisms match by the names in the data. Species-level rules with literal names also match by the accepted
+      # taxon, so that the rule and the data may use different names of it (e.g. 'Clostridium ramosum' in a rule, while
+      # its accepted name is Thomasclavelia ramosa). Not for genera, as a former genus also contains species that now
+      # belong to other genera (e.g. Pseudomonas maltophilia), and not for regular expressions, as these would then also
+      # match synonyms they were written to exclude (e.g. Klebsiella mobilis for '^Klebsiella(?! aerogenes)').
+      accepted_mo_of_rule <- NULL
+      if (like_is_one_of %in% c("is", "one_of") && if_mo_property %in% c("genus_species", "fullname")) {
+        accepted_mo_of_rule <- names_to_accepted_mo(trimws(strsplit(mo_value, ",", fixed = TRUE)[[1]]))
+      }
 
-    if (like_is_one_of == "is") {
-      # so e.g. 'Enterococcus' will turn into '^Enterococcus$'
-      mo_value <- paste0("^", mo_value, "$")
-    } else if (like_is_one_of == "one_of") {
-      # so 'Clostridium, Actinomyces, ...' will turn into '^(Clostridium|Actinomyces|...)$'
-      mo_value <- paste0(
-        "^(",
-        paste(trimws(unlist(strsplit(mo_value, ",", fixed = TRUE))),
-          collapse = "|"
-        ),
-        ")$"
+      if (like_is_one_of == "is") {
+        # so e.g. 'Enterococcus' will turn into '^Enterococcus$'
+        mo_value <- paste0("^", mo_value, "$")
+      } else if (like_is_one_of == "one_of") {
+        # so 'Clostridium, Actinomyces, ...' will turn into '^(Clostridium|Actinomyces|...)$'
+        mo_value <- paste0(
+          "^(",
+          paste(trimws(unlist(strsplit(mo_value, ",", fixed = TRUE))),
+            collapse = "|"
+          ),
+          ")$"
+        )
+      } else if (like_is_one_of != "like") {
+        stop("invalid value for column {.field like.is.one_of}", call. = FALSE)
+      }
+
+      mo_match <- tryCatch(
+        like_unique(x[, if_mo_property, drop = TRUE], mo_value) | like_unique(x$fullname, mo_value),
+        error = function(e) rep(FALSE, nrow(x))
       )
-    } else if (like_is_one_of != "like") {
-      stop("invalid value for column {.field like.is.one_of}", call. = FALSE)
-    }
-
-    mo_match <- tryCatch(
-      x[, if_mo_property, drop = TRUE] %like% mo_value | x$fullname %like% mo_value,
-      error = function(e) rep(FALSE, nrow(x))
-    )
-    if (!is.null(accepted_mo_of_rule)) {
-      mo_match <- mo_match | x$`.mo_accepted` %in% accepted_mo_of_rule
+      if (!is.null(accepted_mo_of_rule)) {
+        mo_match <- mo_match | x$`.mo_accepted` %in% accepted_mo_of_rule
+      }
+      mo_match_cache[[mo_key]] <- mo_match
     }
 
     if (is.na(source_antibiotics)) {
@@ -859,14 +818,14 @@ interpretive_rules <- function(x,
       } else if (length(source_antibiotics) == 1) {
         rows <- tryCatch(
           which(mo_match &
-            as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L]),
+            sir_values(source_antibiotics[1L]) == source_value[1L]),
           error = function(e) integer(0)
         )
       } else if (length(source_antibiotics) == 2) {
         rows <- tryCatch(
           which(mo_match &
-            as.sir_no_warning(x[, source_antibiotics[1L]]) == source_value[1L] &
-            as.sir_no_warning(x[, source_antibiotics[2L]]) == source_value[2L]),
+            sir_values(source_antibiotics[1L]) == source_value[1L] &
+            sir_values(source_antibiotics[2L]) == source_value[2L]),
           error = function(e) integer(0)
         )
       } else {
@@ -883,9 +842,9 @@ interpretive_rules <- function(x,
       to = target_value,
       rule = c(
         rule_text, rule_group_current, rule_current,
-        ifelse(rule_group_current %like% "breakpoint",
+        ifelse(rule_group_types[i] == "breakpoint",
           paste0(breakpoints_info$title, " ", breakpoints_info$version_txt, ", ", breakpoints_info$year),
-          ifelse(rule_group_current %like% "expected",
+          ifelse(rule_group_types[i] == "expected",
             paste0(expected_phenotypes_info$title, " ", expected_phenotypes_info$version_txt, ", ", expected_phenotypes_info$year),
             paste0(expertrules_info$title, " ", expertrules_info$version_txt, ", ", expertrules_info$year)
           )
@@ -906,6 +865,7 @@ interpretive_rules <- function(x,
     verbose_info <- run_changes$verbose_info
     x <- run_changes$output
     warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
+    overwrite_skipped <- overwrite_skipped || isTRUE(run_changes$overwrite_skipped)
     ## Print number of new changes ---------------------------------------------
     if (isTRUE(info) && rule_next != rule_current) {
       # print only on last one of rules in this group
@@ -919,8 +879,7 @@ interpretive_rules <- function(x,
   # >>> Apply custom rules <<< ----
   if (!is.null(custom_rules)) {
     if (isTRUE(info)) {
-      cat("\n")
-      cat(font_bold("Custom interpretive rules, set by user"), "\n")
+      cat_rules_header(title = paste0(font_bold("Custom interpretive rules"), ", set by user"))
     }
     for (i in seq_len(length(custom_rules))) {
       rule <- custom_rules[[i]]
@@ -940,14 +899,12 @@ interpretive_rules <- function(x,
         get_antibiotic_names(cols)
       )
       if (isTRUE(info)) {
-        cat(italicise_taxonomy(
-          word_wrap(rule_text,
-            width = getOption("width") - 30,
-            extra_indent = 6
-          ),
-          type = "ansi"
+        # formatted like print.custom_interpretive_rules()
+        cat_rule_name(paste0(
+          font_bold("If "), font_blue(format_custom_query_rule(rule$query, guideline = guideline)),
+          font_bold(" then "), "set to ", format_sir_badge(target_value, guideline = guideline), ": ",
+          italicise_taxonomy(get_antibiotic_names(cols), type = "ansi")
         ))
-        cat("\n")
         warned <- FALSE
       }
       run_changes <- edit_sir(
@@ -977,9 +934,10 @@ interpretive_rules <- function(x,
       verbose_info <- run_changes$verbose_info
       x <- run_changes$output
       warn_lacking_sir_class <- c(warn_lacking_sir_class, run_changes$sir_warn)
+      overwrite_skipped <- overwrite_skipped || isTRUE(run_changes$overwrite_skipped)
       ## Print number of new changes ---------------------------------------------
-      if (isTRUE(info) && rule_next != rule_current) {
-        # print only on last one of rules in this group
+      if (isTRUE(info)) {
+        # every custom rule is its own group
         txt_ok(n_added = n_added, n_changed = n_changed, warned = warned)
         # and reset counters
         n_added <- 0
@@ -1014,85 +972,95 @@ interpretive_rules <- function(x,
       wouldve <- ""
     }
 
-    cat(paste0("\n", font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
-    cat(word_wrap(paste0(
-      "The rules ", paste0(wouldve, "affected "),
-      font_bold(
-        formatnr(pm_n_distinct(verbose_info$row)),
-        "out of", formatnr(nrow(x.bak)),
-        "rows"
-      ),
+    cat_rules_header(title = font_bold("Summary"))
+    cat(wrap_rules_text(paste0(
+      "The rules ", wouldve, "affected ",
+      font_bold(formatnr(pm_n_distinct(verbose_info$row)), "out of", formatnr(nrow(x.bak)), "rows"),
       ", making a total of ",
-      font_bold(formatnr(nrow(verbose_info)), "edits\n")
-    )))
+      font_bold(formatnr(nrow(verbose_info)), ifelse(nrow(verbose_info) == 1, "edit", "edits"))
+    )), "\n", sep = "")
 
-    total_n_added <- verbose_info %pm>% pm_filter(is.na(old)) %pm>% nrow()
-    total_n_changed <- verbose_info %pm>% pm_filter(!is.na(old)) %pm>% nrow()
+    added_rows <- verbose_info[which(is.na(verbose_info$old)), , drop = FALSE]
+    changed_rows <- verbose_info[which(!is.na(verbose_info$old)), , drop = FALSE]
+    total_n_added <- nrow(added_rows)
+    total_n_changed <- nrow(changed_rows)
+    arrow <- if (has_cli_rlang()) cli::symbol$arrow_right else "=>"
+    test_results <- function(n) paste(formatnr(n), ifelse(n == 1, "test result", "test results"))
+    count_old_new <- function(df) {
+      # count combinations of old and new values, keeping NA as a value (pm_count() does not support NA)
+      old <- as.character(df$old)
+      new <- as.character(df$new)
+      key <- paste(ifelse(is.na(old), "\001", old), ifelse(is.na(new), "\001", new), sep = "\002")
+      tbl <- table(key)
+      parts <- strsplit(names(tbl), "\002", fixed = TRUE)
+      out <- data.frame(
+        old = vapply(FUN.VALUE = character(1), parts, function(p) p[1]),
+        new = vapply(FUN.VALUE = character(1), parts, function(p) p[2]),
+        n = as.integer(tbl),
+        stringsAsFactors = FALSE
+      )
+      out$old[out$old == "\001"] <- NA_character_
+      out$new[out$new == "\001"] <- NA_character_
+      # sort on the order of SIR levels, with NA and other values last
+      out[order(match(out$old, VALID_SIR_LEVELS), match(out$new, VALID_SIR_LEVELS), out$old, out$new), , drop = FALSE]
+    }
 
     # print added values
-    if (total_n_added == 0) {
-      colour <- cat # is function
-    } else {
-      colour <- font_green # is function
-    }
-    cat(colour(paste0(
-      "=> ", wouldve, "added ",
-      font_bold(formatnr(verbose_info %pm>%
-        pm_filter(is.na(old)) %pm>%
-        nrow()), "test results"),
-      "\n"
-    )))
+    cat(
+      if (total_n_added == 0) arrow else font_green(arrow),
+      " ", wouldve, "added ",
+      if (total_n_added == 0) font_bold(test_results(0)) else font_bold(font_green(test_results(total_n_added))),
+      "\n",
+      sep = ""
+    )
     if (total_n_added > 0) {
-      added_summary <- verbose_info %pm>%
-        pm_filter(is.na(old)) %pm>%
-        pm_count(new, name = "n")
-      cat(paste("   -",
+      added_summary <- count_old_new(added_rows)
+      cat(
         paste0(
+          "  ", AMR_env$bullet_icon, " ",
           formatnr(added_summary$n), " test result", ifelse(added_summary$n > 1, "s", ""),
-          " added as ", paste0('"', added_summary$new, '"')
+          " ", wouldve, "added as ", format_sir_badge(added_summary$new, guideline = guideline),
+          "\n"
         ),
-        collapse = "\n"
-      ))
+        sep = ""
+      )
     }
 
     # print changed values
-    if (total_n_changed == 0) {
-      colour <- cat # is function
-    } else {
-      colour <- font_blue # is function
-    }
-    if (total_n_added + total_n_changed > 0) {
-      cat("\n")
-    }
-    cat(colour(paste0(
-      "=> ", wouldve, "changed ",
-      font_bold(formatnr(verbose_info %pm>%
-        pm_filter(!is.na(old)) %pm>%
-        nrow()), "test results"),
-      "\n"
-    )))
+    cat(
+      if (total_n_changed == 0) arrow else font_blue(arrow),
+      " ", wouldve, "changed ",
+      if (total_n_changed == 0) font_bold(test_results(0)) else font_bold(font_blue(test_results(total_n_changed))),
+      "\n",
+      sep = ""
+    )
     if (total_n_changed > 0) {
-      changed_summary <- verbose_info %pm>%
-        pm_filter(!is.na(old)) %pm>%
-        pm_mutate(new = ifelse(is.na(new), "NA", new)) %pm>%
-        pm_count(old, new, name = "n")
-      cat(paste("   -",
+      changed_summary <- count_old_new(changed_rows)
+      cat(
         paste0(
-          formatnr(changed_summary$n), " test result", ifelse(changed_summary$n > 1, "s", ""), " changed from ",
-          paste0('"', changed_summary$old, '"'), " to ", paste0('"', changed_summary$new, '"')
+          "  ", AMR_env$bullet_icon, " ",
+          formatnr(changed_summary$n), " test result", ifelse(changed_summary$n > 1, "s", ""),
+          " ", wouldve, "changed from ", format_sir_badge(changed_summary$old, guideline = guideline),
+          " to ", format_sir_badge(changed_summary$new, guideline = guideline),
+          "\n"
         ),
-        collapse = "\n"
-      ))
-      cat("\n")
+        sep = ""
+      )
     }
-
-    cat(paste0(font_grey(strrep("-", 0.95 * getOption("width", 100))), "\n"))
 
     if (isFALSE(verbose) && total_n_added + total_n_changed > 0) {
-      cat("\n", word_wrap("Use ", highlight_code("eucast_rules(..., verbose = TRUE)"), " (on your original data) to get a data.frame with all specified edits instead."), "\n\n", sep = "")
+      cat("\n", wrap_rules_text(format_inline_(
+        "Use {.code interpretive_rules(..., verbose = TRUE)} (on your original data) to get a data.frame with all specified edits instead."
+      )), "\n\n", sep = "")
     } else if (isTRUE(verbose)) {
-      cat("\n", word_wrap("Used 'Verbose mode' ({.code verbose = TRUE}), which returns a data.frame with all specified edits.\nUse {.code verbose = FALSE} to apply the rules on your data."), "\n\n", sep = "")
+      cat("\n", wrap_rules_text(format_inline_(
+        "Used 'Verbose mode' ({.code verbose = TRUE}), which returns a data.frame with all specified edits. Use {.code verbose = FALSE} to apply the rules on your data."
+      )), "\n\n", sep = "")
     }
+  }
+
+  if (isTRUE(overwrite_skipped) && message_not_thrown_before("edit_sir.warning_overwrite")) {
+    warning_("in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: some columns had SIR values which were not overwritten, since {.code overwrite = FALSE}.")
   }
 
   if (length(warn_lacking_sir_class) > 0) {
@@ -1173,7 +1141,8 @@ edit_sir <- function(x,
     changed = 0,
     output = x,
     verbose_info = last_verbose_info,
-    sir_warn = character(0)
+    sir_warn = character(0),
+    overwrite_skipped = FALSE
   )
 
   txt_error <- function() {
@@ -1191,20 +1160,14 @@ edit_sir <- function(x,
     if (any(!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir), na.rm = TRUE)) {
       track_changes$sir_warn <- cols[!vapply(FUN.VALUE = logical(1), x[, cols, drop = FALSE], is.sir)]
     }
-    isNA <- is.na(new_edits[rows, cols])
-    isSIR <- !isNA &
-      (new_edits[rows, cols] == "S" |
-        new_edits[rows, cols] == "I" |
-        new_edits[rows, cols] == "R" |
-        new_edits[rows, cols] == "SDD" |
-        new_edits[rows, cols] == "NI" |
-        new_edits[rows, cols] == "WT" |
-        new_edits[rows, cols] == "NWT" |
-        new_edits[rows, cols] == "NS")
-    non_SIR <- !isSIR
-    if (isFALSE(overwrite) && any(isSIR) && message_not_thrown_before("edit_sir.warning_overwrite")) {
-      warning_("in {.help [{.fun interpretive_rules}](AMR::interpretive_rules)}: some columns had SIR values which were not overwritten, since {.code overwrite = FALSE}.")
-    }
+    # current values as a character matrix (rows x cols), to compare without the overhead of Ops.sir()
+    current <- matrix(
+      unlist(lapply(cols, function(col) as.character(new_edits[[col]][rows])), use.names = FALSE),
+      nrow = length(rows)
+    )
+    isSIR <- !is.na(current) & current %in% VALID_SIR_LEVELS
+    # the warning about this is thrown once by interpretive_rules(), as message_not_thrown_before() is too slow to call for every rule
+    track_changes$overwrite_skipped <- isFALSE(overwrite) && any(isSIR)
     # determine which cells to modify based on overwrite and add_if_missing
     if (isTRUE(overwrite)) {
       if (isTRUE(add_if_missing)) {
@@ -1215,6 +1178,15 @@ edit_sir <- function(x,
     } else {
       # overwrite = FALSE, add_if_missing = TRUE: fill missing and placeholder cells only
       apply_mask <- !isSIR
+    }
+    # most rules leave the data as they are, so skip writing (and tracking) if no value would change
+    if (is.na(to)) {
+      will_change <- apply_mask & !is.na(current)
+    } else {
+      will_change <- apply_mask & (is.na(current) | current != to)
+    }
+    if (!any(will_change)) {
+      return(track_changes)
     }
 
     do_assign <- function() {
@@ -1265,9 +1237,10 @@ edit_sir <- function(x,
     )
 
     track_changes$output <- new_edits
-    if ((isTRUE(info) || isTRUE(verbose)) && !isTRUE(all.equal(x, track_changes$output))) {
-      get_original_rows <- function(rowids) {
-        as.integer(rownames(original_data[which(original_data$.rowid %in% rowids), , drop = FALSE]))
+    if (isTRUE(info) || isTRUE(verbose)) {
+      # the number of rows in the original data that the (unique) row IDs stand for
+      n_original_rows <- function(rowids) {
+        sum(original_data$.rowid %in% rowids)
       }
       for (i in seq_len(length(cols))) {
         verbose_new <- data.frame(
@@ -1275,7 +1248,8 @@ edit_sir <- function(x,
           col = cols[i],
           mo_fullname = new_edits[rows, "fullname", drop = TRUE],
           old = x[rows, cols[i], drop = TRUE],
-          new = to,
+          # the value after the edit, so that cells left as they were (due to `overwrite` or `add_if_missing`) are not counted
+          new = as.character(new_edits[rows, cols[i], drop = TRUE]),
           rule = font_stripstyle(rule[1]),
           rule_group = font_stripstyle(rule[2]),
           rule_name = font_stripstyle(rule[3]),
@@ -1286,27 +1260,90 @@ edit_sir <- function(x,
           "rowid", "col", "mo_fullname", "old", "new",
           "rule", "rule_group", "rule_name", "rule_source"
         )
-        verbose_new <- verbose_new %pm>% pm_filter(old != new | is.na(old) | is.na(new) & !is.na(old))
+        is_edited <- ifelse(
+          is.na(verbose_new$old) | is.na(verbose_new$new),
+          xor(is.na(verbose_new$old), is.na(verbose_new$new)),
+          as.character(verbose_new$old) != verbose_new$new
+        )
+        verbose_new <- verbose_new[which(is_edited), , drop = FALSE]
         # save changes to data set 'verbose_info'
         track_changes$verbose_info <- rbind_AMR(
           track_changes$verbose_info,
           verbose_new
         )
         # count adds and changes
-        track_changes$added <- track_changes$added + verbose_new %pm>%
-          pm_filter(is.na(old)) %pm>%
-          pm_pull(rowid) %pm>%
-          get_original_rows() %pm>%
-          length()
-        track_changes$changed <- track_changes$changed + verbose_new %pm>%
-          pm_filter(!is.na(old)) %pm>%
-          pm_pull(rowid) %pm>%
-          get_original_rows() %pm>%
-          length()
+        track_changes$added <- track_changes$added + n_original_rows(verbose_new$rowid[is.na(verbose_new$old)])
+        track_changes$changed <- track_changes$changed + n_original_rows(verbose_new$rowid[!is.na(verbose_new$old)])
       }
     }
   }
   return(track_changes)
+}
+
+# helper functions for printing ----
+# The output of interpretive_rules() is printed to stdout with cat(). It is styled with cli where available (see has_cli_rlang()), with a plain-text fallback for old R versions or when cli is not installed.
+
+rules_console_width <- function() {
+  if (has_cli_rlang()) {
+    cli::console_width()
+  } else {
+    getOption("width", 80)
+  }
+}
+
+wrap_rules_text <- function(x, width = rules_console_width(), indent = 0, exdent = 0) {
+  if (has_cli_rlang()) {
+    out <- cli::ansi_strwrap(x, width = width, indent = indent, exdent = exdent)
+  } else {
+    # strwrap() would count ANSI styling as characters, so wrap on visible width
+    words <- strsplit(x, " ", fixed = TRUE)[[1]]
+    words <- words[words != ""]
+    out <- character(0)
+    line <- strrep(" ", indent)
+    line_has_words <- FALSE
+    for (word in words) {
+      if (line_has_words && nchar(font_stripstyle(line)) + 1 + nchar(font_stripstyle(word)) > width) {
+        out <- c(out, line)
+        line <- paste0(strrep(" ", exdent), word)
+      } else {
+        line <- paste0(line, if (line_has_words) " ", word)
+      }
+      line_has_words <- TRUE
+    }
+    out <- c(out, line)
+  }
+  paste0(out, collapse = "\n")
+}
+
+cat_rules_header <- function(title, subtitle = NULL) {
+  if (has_cli_rlang()) {
+    header <- as.character(cli::rule(left = title))
+  } else {
+    header <- paste0(font_grey("--"), " ", title, " ")
+    header <- paste0(header, font_grey(strrep("-", max(3, rules_console_width() - nchar(font_stripstyle(header))))))
+  }
+  cat("\n", header, "\n", sep = "")
+  if (!is.null(subtitle)) {
+    cat(wrap_rules_text(subtitle), "\n", sep = "")
+  }
+  cat("\n")
+}
+
+cat_rule_name <- function(x) {
+  # printed without line ending, since edit_sir() and txt_ok() will print on the same line
+  cat(wrap_rules_text(
+    paste0(AMR_env$bullet_icon, " ", x),
+    indent = 2,
+    exdent = 4
+  ))
+}
+
+format_field <- function(x) {
+  if (has_cli_rlang()) {
+    cli::format_inline("{.field {x}}")
+  } else {
+    x
+  }
 }
 
 #' @rdname interpretive_rules

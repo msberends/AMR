@@ -263,15 +263,7 @@ print.custom_interpretive_rules <- function(x, ...) {
   for (i in seq_len(length(x))) {
     rule <- x[[i]]
     rule$query <- format_custom_query_rule(rule$query)
-    if (is.na(rule$result_value)) {
-      val <- font_red("<NA>")
-    } else if (rule$result_value == "R") {
-      val <- font_rose_bg(" R ")
-    } else if (rule$result_value == "S") {
-      val <- font_green_bg(" S ")
-    } else {
-      val <- font_orange_bg(" I ")
-    }
+    val <- format_sir_badge(rule$result_value)
     agents <- paste0(
       font_blue(ab_name(rule$result_group, language = NULL, tolower = TRUE),
         collapse = NULL

@@ -1,4 +1,4 @@
-# AMR 3.0.1.9127
+# AMR 3.0.1.9128
 
 Planned as v3.1.0, mid October 2026.
 
@@ -122,6 +122,11 @@ Planned as v3.1.0, mid October 2026.
   * Improved translations of combination names and antimicrobial groups in 20 languages
   * Translations are no longer translated again (e.g., "Ticarcillinee" in Dutch and "groupee" in French), and parts of combination names are no longer left untranslated
   * Fixed Italian names of CoNS and CoPS (#256), Dutch names of antimicrobials, and output of `sir_df()` in other languages (#272)
+* Interpretive rules (`interpretive_rules()`, `eucast_rules()`, and `clsi_rules()`)
+  * Considerably faster, around 11 to 18 times, with identical results
+  * The number of added and changed values now only counts values that were actually written, so that values left untouched due to `overwrite = FALSE` or `add_if_missing = FALSE` are no longer reported as changes or additions, also not in the output of `verbose = TRUE` (#259)
+  * The changes of custom rules are now also printed when no other rules were applied
+  * The `rule` column of the output of `verbose = TRUE` no longer contains formatting markup (e.g., `{.field AMC}`) for the inhibitor-inheritance rules
 * `custom_eucast_rules()` has been renamed to `custom_interpretive_rules()`. The old name is now deprecated but still works (#268).
 * Logical comparison (`==`, `!=`) of the `sir` class with a `factor` is now possible on R >= 4.3
 * Fixed a bug in `g.test()` that returned the degrees of freedom as `argument` instead of `parameter`, so that they were not printed
@@ -129,6 +134,8 @@ Planned as v3.1.0, mid October 2026.
 
 ### Other
 * Improved console messages with clickable links throughout the package, powered by `cli` if it is installed (#191, #265)
+* Revamped console output of `interpretive_rules()`, with section headers, S/I/R values styled as in the printing of `sir` columns in tibbles, and the summary of edits sorted by SIR level, using `cli` if it is installed (#259)
+* The printing of `custom_interpretive_rules()` and `custom_mdro_guideline()` now styles SIR values as in tibbles, i.e., the colour of `I` depends on the guideline. `WT`, `NWT`, and `NS` were previously shown as `SDD`, `I`, and `R`, and values other than `S` and `R` as `I`.
 * The 'AMR for Python' vignette now contains sections on installation channels (stable from CRAN, or development from GitHub via `AMR.beta`) and on using `enforce_method` in `as_sir()` from Python
 
 
