@@ -165,7 +165,24 @@ Version format: `major.minor.patch.dev` (e.g., `3.0.1.9021`)
 
 - Development versions use a `.9xxx` suffix
 - Stable CRAN releases drop the dev suffix (e.g., `3.0.1`)
-- `NEWS.md` uses sections **New**, **Fixes**, **Updates** with GitHub issue references (`#NNN`)
+- `NEWS.md` follows the style of the v3.0.0 section; see *NEWS.md style* below
+
+### NEWS.md style
+
+Each version section follows the v3.0.0 section of `NEWS.md`:
+
+- After the `# AMR <version>` heading, an optional line on the planned release, then a short intro paragraph summarising the main changes in plain prose
+- Sub-headings, in this order and only when they have content: `### Breaking`, `### New`, `### Changed`, `### Other`
+- **Breaking**: changes that can alter results or break existing code (renamed or removed arguments, options or values, changed return values, new requirements); explain what changed and how to get the old behaviour
+- **New**: new functions, arguments, data sets, columns, selectors, antimicrobials and breakpoints, grouped under bold thematic bullets (e.g. `* **Updated clinical breakpoints**`) with nested bullets beneath; end with a `* **Other**` group for items that fit no theme
+- **Changed**: improvements and bug fixes together (there is no separate fixes section), grouped by function or data set as a plain parent bullet (e.g. ``* SIR interpretation (`as.sir()`)``, ``* `microorganisms` data set``) with nested bullets beneath; items that fit no group are single top-level bullets at the end
+- **Other**: documentation, vignettes, website, contributors and console output
+- Each function or data set gets exactly one group; never scatter entries for the same function (e.g. `as.mo()`) across the section
+- Bug fixes start with "Fixed ..." or state the corrected behaviour (e.g. "now returns `NA` with a warning instead of an error")
+- Write descriptive, complete sentences, in British English; a single-sentence bullet has no final full stop, a bullet of several sentences ends with one
+- Use "e.g.," and "i.e.,", backticks for code, functions with `()`, and italics for taxonomic names
+- Add GitHub issue references at the end of the item, as `(#NNN)` or `(#NNN, #NNN)`
+- Never use em dashes
 
 ### Local commits on `main`: never touch the version number
 
@@ -201,12 +218,7 @@ echo "$currentversion"
 The `+ 1` accounts for the fact that this PR's squash commit is not yet on the default branch. Set **both** of these files to the resulting version string (and only once per PR, even across multiple commits):
 
 1. **`DESCRIPTION`** — the `Version:` field
-2. **`NEWS.md`** — **only replace line 1** (the `# AMR <version>` heading) with the new version number; do **not** create a new section. `NEWS.md` is a **continuous log** for the entire current `x.y.z.9nnn` development series: all changes since the last stable release accumulate under that single heading. After updating line 1, append the new change as a bullet under the appropriate sub-heading (`### New`, `### Fixes`, or `### Updates`).
-
-   Style rules for `NEWS.md` entries:
-   - Be **extremely concise** — one short line per item
-   - Do **not** end with a full stop (period)
-   - No verbose explanations; just the essential fact
+2. **`NEWS.md`** — **only replace line 1** (the `# AMR <version>` heading) with the new version number; do **not** create a new section. `NEWS.md` is a **continuous log** for the entire current `x.y.z.9nnn` development series: all changes since the last stable release accumulate under that single heading. After updating line 1, add the new change to the appropriate sub-heading and group, following *NEWS.md style* above. If the change belongs to an existing group (e.g. `as.mo()`), add it there or amend the existing bullet instead of adding a new top-level bullet.
 
 If `git describe` fails (e.g. no tags exist in the environment), fall back to reading the current version from `DESCRIPTION` and adding 1 to the last numeric component — but only if no bump has already been made in this PR.
 
