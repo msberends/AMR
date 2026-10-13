@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9128</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9129</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1344,7 +1344,7 @@ values for <em>Klebsiella pneumoniae</em> and ciprofloxacin:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">mic_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random.html">random_mic</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">sir_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span><span class="op">)</span></span>
+<span><span class="va">sir_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>MIC <span class="op">=</span> <span class="va">mic_values</span>, SIR <span class="op">=</span> <span class="va">sir_values</span><span class="op">)</span></span>
 <span><span class="va">my_data</span></span>
@@ -1353,13 +1353,13 @@ values for <em>Klebsiella pneumoniae</em> and ciprofloxacin:</p>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;mic&gt;</span> <span style="color: #949494; font-style: italic;">&lt;sir&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">&lt;=</span>0.0001 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>   0.016<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">&gt;=</span>8<span style="color: #949494;">.0000</span> <span style="color: #080808; background-color: #FF5F5F;">  R  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>   0.032<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>   0.008<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  64<span style="color: #949494;">.0000</span> <span style="color: #080808; background-color: #FF5F5F;">  R  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>   0.008<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>   0.125<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>   0.032<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>   4<span style="color: #949494;">.0000</span> <span style="color: #080808; background-color: #FF5F5F;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>   0.016<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>   0.004<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  16<span style="color: #949494;">.0000</span> <span style="color: #080808; background-color: #FF5F5F;">  R  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>   0.004<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>   0.064<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>   0.016<span style="color: #949494;">0</span> <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>   0.0002 <span style="color: #080808; background-color: #5FD7AF;">  S  </span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 90 more rows</span></span></span></code></pre></div>
 <p>This allows direct interpretation according to EUCAST or CLSI
@@ -1402,7 +1402,7 @@ values:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># by providing `mo` and `ab`, colours will indicate the SIR interpretation:</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mic_values</span>, mo <span class="op">=</span> <span class="st">"K. pneumoniae"</span>, ab <span class="op">=</span> <span class="st">"cipro"</span>, guideline <span class="op">=</span> <span class="st">"EUCAST"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AMR_files/figure-html/autoplot-2.png" class="r-plt" alt="" width="720"></p>
 <hr>
 <p><em>Author: Dr. Matthijs Berends, 23rd June 2026</em></p>

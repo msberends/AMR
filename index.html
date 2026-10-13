@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9128</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9129</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -354,7 +354,7 @@
 <span><span class="va">some_mic_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/random.html">random_mic</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">some_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="fl">20</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">interpretation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/as.sir.html">as.sir</a></span><span class="op">(</span><span class="va">some_mic_values</span>,</span>
-<span>                         guideline <span class="op">=</span> <span class="st">"EUCAST 2024"</span>,</span>
+<span>                         guideline <span class="op">=</span> <span class="st">"EUCAST"</span>,</span>
 <span>                         mo <span class="op">=</span> <span class="st">"E. coli"</span>, <span class="co"># or any code or name resembling a known species</span></span>
 <span>                         ab <span class="op">=</span> <span class="st">"Cipro"</span><span class="op">)</span>   <span class="co"># or any code or name resembling an antibiotic</span></span>
 <span></span>
@@ -460,7 +460,7 @@
 <li>Applying EUCAST expert rules (<a href="./reference/eucast_rules.html">manual</a>)</li>
 <li>Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code (<a href="./reference/mo_property.html">manual</a>)</li>
 <li>Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code (<a href="./reference/ab_property.html">manual</a>)</li>
-<li>Machine reading the EUCAST and CLSI guidelines from 2011-2021 to translate MIC values and disk diffusion diameters to SIR (<a href="./articles/datasets.html">link</a>)</li>
+<li>Machine reading the EUCAST and CLSI guidelines from 2011-2026 to translate MIC values and disk diffusion diameters to SIR (<a href="./articles/datasets.html">link</a>)</li>
 <li>Principal component analysis for AMR (<a href="./articles/PCA.html">tutorial</a>)</li>
 </ul>
 </div>

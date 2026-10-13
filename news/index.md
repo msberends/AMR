@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9128
+## AMR 3.0.1.9129
 
 Planned as v3.1.0, mid October 2026.
 
@@ -306,9 +306,9 @@ Planned as v3.1.0, mid October 2026.
     [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
     and [`resistance()`](https://amr-for-r.org/reference/proportion.md)
     to interpret the ‘I’ category correctly per guideline
-  - `count_*()` and `proportion_*()` with multiple antimicrobials behave
-    as in AMR 3.0.1 again, and now handle WT, NWT, NS, and NI results
-    correctly ([\#321](https://github.com/msberends/AMR/issues/321))
+  - `count_*()` and `proportion_*()` now handle WT, NWT, NS, and NI
+    results correctly
+    ([\#321](https://github.com/msberends/AMR/issues/321))
 - MICs and disk diffusion
   - New argument `round_to_next_log2` in
     [`as.mic()`](https://amr-for-r.org/reference/as.mic.md) and
@@ -374,6 +374,12 @@ Planned as v3.1.0, mid October 2026.
   ([\#268](https://github.com/msberends/AMR/issues/268)).
 - Logical comparison (`==`, `!=`) of the `sir` class with a `factor` is
   now possible on R \>= 4.3
+- New argument `guideline` in
+  [`random_mic()`](https://amr-for-r.org/reference/random.md) and
+  [`random_disk()`](https://amr-for-r.org/reference/random.md),
+  defaulting to the `AMR_guideline` option (otherwise EUCAST), so that
+  generated values are based on the latest breakpoints of one guideline
+  instead of those of all guidelines and years combined
 - Fixed a bug in [`g.test()`](https://amr-for-r.org/reference/g.test.md)
   that returned the degrees of freedom as `argument` instead of
   `parameter`, so that they were not printed

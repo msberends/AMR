@@ -941,7 +941,7 @@ and ciprofloxacin:
 
 set.seed(123)
 mic_values <- random_mic(100)
-sir_values <- as.sir(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
+sir_values <- as.sir(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST")
 
 my_data <- tibble(MIC = mic_values, SIR = sir_values)
 my_data
@@ -950,13 +950,13 @@ my_data
 #>       <mic> <sir>
 #>  1 <=0.0001   S  
 #>  2   0.0160   S  
-#>  3 >=8.0000   R  
-#>  4   0.0320   S  
-#>  5   0.0080   S  
-#>  6  64.0000   R  
-#>  7   0.0080   S  
-#>  8   0.1250   S  
-#>  9   0.0320   S  
+#>  3   4.0000   R  
+#>  4   0.0160   S  
+#>  5   0.0040   S  
+#>  6  16.0000   R  
+#>  7   0.0040   S  
+#>  8   0.0640   S  
+#>  9   0.0160   S  
 #> 10   0.0002   S  
 #> # ℹ 90 more rows
 ```
@@ -1015,7 +1015,7 @@ autoplot(mic_values)
 
 
 # by providing `mo` and `ab`, colours will indicate the SIR interpretation:
-autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
+autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST")
 ```
 
 ![](AMR_files/figure-html/autoplot-2.png)

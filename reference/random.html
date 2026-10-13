@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9128</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9129</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,7 @@
 <span>  ab <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skew <span class="op">=</span> <span class="st">"right"</span>,</span>
 <span>  severity <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -70,6 +71,7 @@
 <span>  ab <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skew <span class="op">=</span> <span class="st">"left"</span>,</span>
 <span>  severity <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -100,6 +102,10 @@
 <dd><p>Skew severity; higher values will increase the skewedness. Default is <code>2</code>; use <code>0</code> to prevent skewedness.</p></dd>
 
 
+<dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
+<dd><p>A guideline name to base the generated values on, either <code>"EUCAST"</code> (default) or <code>"CLSI"</code> for the latest implemented version, or a guideline including a year (e.g., <code>"CLSI 2019"</code>). The default can be changed with the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, see <code><a href="as.sir.html">as.sir()</a></code>.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Ignored, only in place to allow future extensions.</p></dd>
 
@@ -114,7 +120,7 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Internally, MIC and disk zone values are sampled based on clinical breakpoints defined in the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set. To create specific generated values per bug or drug, set the <code>mo</code> and/or <code>ab</code> argument. The MICs are sampled on a log2 scale and disks linearly, using weighted probabilities. The weights are based on the <code>skew</code> and <code>severity</code> arguments:</p><ul><li><p><code>skew = "right"</code> places more emphasis on lower MIC or higher disk values.</p></li>
+    <p>Internally, MIC and disk zone values are sampled based on the human clinical breakpoints of <code>guideline</code> in the <a href="clinical_breakpoints.html">clinical_breakpoints</a> data set. To create specific generated values per bug or drug, set the <code>mo</code> and/or <code>ab</code> argument. The MICs are sampled on a log2 scale and disks linearly, using weighted probabilities. The weights are based on the <code>skew</code> and <code>severity</code> arguments:</p><ul><li><p><code>skew = "right"</code> places more emphasis on lower MIC or higher disk values.</p></li>
 <li><p><code>skew = "left"</code> places more emphasis on higher MIC or lower disk values.</p></li>
 <li><p><code>severity</code> controls the exponential bias applied.</p></li>
 </ul></div>
@@ -123,9 +129,9 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">random_mic</span><span class="op">(</span><span class="fl">25</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;mic&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.25   0.064  0.5    0.004  0.0001 0.032  0.008  16     0.016  0.125 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] 0.0002 0.001  0.008  0.004  0.064  256    0.5    32     512    0.0002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] 0.004  1      0.002  0.0005 0.064 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.125  0.032  0.25   0.004  0.0001 0.016  0.004  8      0.008  0.125 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] 0.0002 0.001  0.004  0.002  0.032  64     0.25   16     128    0.0002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] 0.004  0.5    0.002  0.0005 0.064 </span>
 <span class="r-in"><span><span class="fu">random_disk</span><span class="op">(</span><span class="fl">25</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;disk&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 49 44 31 11 27 33 39 24 19 43 30 44 33 31 22 13 37 19 26 29 44 12 46 18 27</span>
@@ -138,19 +144,19 @@
 <span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">disks</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="random-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># `plot()` and `ggplot2::autoplot()` allow for coloured bars if `mo` and `ab` are set</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">disks</span>, mo <span class="op">=</span> <span class="st">"Escherichia coli"</span>, ab <span class="op">=</span> <span class="st">"CIP"</span>, guideline <span class="op">=</span> <span class="st">"CLSI 2025"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">disks</span>, mo <span class="op">=</span> <span class="st">"Escherichia coli"</span>, ab <span class="op">=</span> <span class="st">"CIP"</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="random-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">random_mic</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span> <span class="co"># range 0.0625-64</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;mic&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.004  0.0002 0.008  0.25   0.0005 0.0002 8      0.032  0.0005 0.016 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] 0.032  32     1      0.0005 0.016  0.002  0.016  0.0005 0.004  0.25  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] 0.0005 0.016  0.001  0.25   0.032 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.002  0.0002 0.004  0.064  0.0005 0.0002 1      0.016  0.0005 0.008 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] 0.008  2      0.125  0.0005 0.008  0.002  0.008  0.0005 0.002  0.064 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] 0.0002 0.004  0.0005 0.064  0.016 </span>
 <span class="r-in"><span><span class="fu">random_mic</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Klebsiella pneumoniae"</span>, <span class="st">"meropenem"</span><span class="op">)</span> <span class="co"># range 0.0625-16</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;mic&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5 &gt;=1 0.5 0.5 0.5 0.5 &gt;=1 0.5 0.5 0.5 0.5 0.5 0.5 0.5 &gt;=1 0.5 &gt;=1 0.5 0.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20] 0.5 0.5 &gt;=1 &gt;=1 &gt;=1 &gt;=1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1   &gt;=2 1   1   1   1   &gt;=2 1   1   1   1   1   1   1   &gt;=2 1   &gt;=2 1   1  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20] 1   1   &gt;=2 &gt;=2 &gt;=2 &gt;=2</span>
 <span class="r-in"><span><span class="fu">random_mic</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Streptococcus pneumoniae"</span>, <span class="st">"meropenem"</span><span class="op">)</span> <span class="co"># range 0.0625-4</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;mic&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.25    &lt;=0.125 &lt;=0.125 0.25    0.25    &lt;=0.125 0.25    0.25    0.25   </span>
@@ -159,13 +165,13 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">random_disk</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Klebsiella pneumoniae"</span><span class="op">)</span> <span class="co"># range 8-50</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;disk&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 10 32 34 18 17 31 31 21 18 19 27 18 20 11 34 30 28 20 29  9 21 33 34 25 17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 13 32 34 19 19 32 31 22 19 21 27 20 21 14 34 31 29 21 29 11 23 33 34 26 19</span>
 <span class="r-in"><span><span class="fu">random_disk</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Klebsiella pneumoniae"</span>, <span class="st">"ampicillin"</span><span class="op">)</span> <span class="co"># range 11-17</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;disk&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 17 17 20 22 13 21 21 14 11 18 18 18 21 18 14 22 19 20 18 16 17 12 22 21 19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 15 15 17 18 13 17 18 13 11 15 16 16 17 16 13 18 16 17 16 15 15 12 18 18 16</span>
 <span class="r-in"><span><span class="fu">random_disk</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"Streptococcus pneumoniae"</span>, <span class="st">"ampicillin"</span><span class="op">)</span> <span class="co"># range 12-27</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;disk&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 24 31 26 26 33 16 29 17 28 27 27 35 33 33 29 32 18 33 33 29 28 32 25 17 31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 21 26 23 23 27 17 24 17 24 23 23 28 27 27 24 27 18 27 27 25 24 26 22 17 26</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
