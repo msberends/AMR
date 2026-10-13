@@ -1,0 +1,74 @@
+# ==================================================================== #
+# TITLE:                                                               #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
+#                                                                      #
+# SOURCE CODE:                                                         #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
+# https://doi.org/10.18637/jss.v104.i03                                #
+#                                                                      #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in the Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                  #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR data analysis: https://amr-for-r.org              #
+# ==================================================================== #
+
+# Run R CMD check on all CRAN packages that depend on AMR, against the development version of AMR installed from this repository.
+# This is informative only: it is not a required check, so a failure does not block anything, but it shows which reverse dependencies break before a CRAN release.
+
+on:
+  push:
+    # only on main
+    branches: [main]
+  # allow manual runs from the Actions tab
+  workflow_dispatch:
+
+name: check-revdeps
+
+jobs:
+  check-revdeps:
+    runs-on: ubuntu-latest
+
+    name: Reverse dependencies (R-release)
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          # use RStudio Package Manager to quickly install packages
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          # AMR has no hard dependencies; pak is used to install the dependencies of the reverse dependencies
+          dependencies: '"hard"'
+          extra-packages: any::pak
+
+      - name: Install AMR from this repository
+        shell: bash
+        run: R CMD INSTALL .
+
+      - name: Check reverse dependencies against the installed AMR
+        shell: bash
+        run: Rscript .github/scripts/check_revdeps.R

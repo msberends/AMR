@@ -1,4 +1,4 @@
-# AMR 3.0.1.9129
+# AMR 3.0.1.9130
 
 Planned as v3.1.0, mid October 2026.
 
@@ -24,6 +24,7 @@ Planned as v3.1.0, mid October 2026.
   Previously, `mo_domain()` was an alias of `mo_kingdom()`; it is now a distinct function. Its output is therefore unchanged, while `mo_kingdom()` now returns the new formal kingdom. A one-time note per session explains this change when bacterial or archaeal records are queried.
 * Parallel computing in `as.sir()`, `antibiogram()`, and `wisca()` now uses the `future` and `future.apply` packages, which is faster. A non-sequential plan (e.g., `future::plan(future::multisession)`) must be active before using `parallel = TRUE` (#281).
 * The options of `capped_mic_handling` in `as.sir()` have been redefined as `"none"`, `"conservative"`, `"standard"` (default), and `"lenient"`. The option `"inverse"` is no longer available (#243).
+* `as.sir()` now returns WT/NWT (Wildtype/Non-wildtype) instead of S/R when using ECOFF-based interpretation with `breakpoint_type = "ECOFF"`. WT/NWT results are fully supported in all resistance and susceptibility functions and in all plots (#254).
 
 ### New
 * **Updated clinical breakpoints**
@@ -32,8 +33,6 @@ Planned as v3.1.0, mid October 2026.
     * `clinical_breakpoints` now contains blocking rows (`NA` breakpoints, with the reason in `note`) where EUCAST gives no breakpoint for an organism, so that `as.sir()` no longer falls back to the breakpoint of a broader taxon
     * Restrictions in EUCAST notes are applied, e.g., zone diameter breakpoints for *E. coli* only
     * EUCAST PK-PD (non-species related) breakpoints of 2019-2023 and *H. parainfluenzae* MIC breakpoints are now included
-* **Wildtype/Non-wildtype interpretation**
-  * `as.sir()` now returns WT/NWT (Wildtype/Non-wildtype) when using ECOFF-based interpretation with `breakpoint_type = "ECOFF"`. WT/NWT results are fully supported in all resistance and susceptibility functions and in all plots (#254).
 * **Unified interpretive rules**
   * New function `interpretive_rules()` applies the interpretive rules of both EUCAST and CLSI. `eucast_rules()` is now a wrapper around this function (#235, #259).
   * Species named in a rule now also match all other names of the same accepted taxon (e.g., 'Clostridium ramosum' for *Thomasclavelia ramosa*). This also updated the `intrinsic_resistant` data set.
