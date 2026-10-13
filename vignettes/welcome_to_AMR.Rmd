@@ -50,7 +50,7 @@ This package was intended as a comprehensive toolbox for integrated AMR data ana
   * Applying EUCAST expert rules ([manual](https://amr-for-r.org/reference/eucast_rules.html))
   * Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code ([manual](https://amr-for-r.org/reference/mo_property.html))
   * Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code ([manual](https://amr-for-r.org/reference/ab_property.html))
-  * Machine reading the EUCAST and CLSI guidelines from 2011-2021 to translate MIC values and disk diffusion diameters to SIR ([link](https://amr-for-r.org/articles/datasets.html))
+  * Machine reading the EUCAST and CLSI guidelines from `r min(as.integer(gsub("[^0-9]", "", AMR::clinical_breakpoints$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", AMR::clinical_breakpoints$guideline)))` to translate MIC values and disk diffusion diameters to SIR ([link](https://amr-for-r.org/articles/datasets.html))
   * Principal component analysis for AMR ([tutorial](https://amr-for-r.org/articles/PCA.html))
   
 All reference data sets in the AMR package - including information on microorganisms, antimicrobials, and clinical breakpoints - are freely available for download in multiple formats: R, MS Excel, Apache Feather, Apache Parquet, SPSS, and Stata.

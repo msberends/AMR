@@ -36,9 +36,10 @@
 #' @param prob_SIR A vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value).
 #' @param skew Direction of skew for MIC or disk values, either `"right"` or `"left"`. A left-skewed distribution has the majority of the data on the right.
 #' @param severity Skew severity; higher values will increase the skewedness. Default is `2`; use `0` to prevent skewedness.
+#' @param guideline A guideline name to base the generated values on, either `"EUCAST"` (default) or `"CLSI"` for the latest implemented version, or a guideline including a year (e.g., `"CLSI 2019"`). The default can be changed with the package option [`AMR_guideline`][AMR-options], see [as.sir()].
 #' @param ... Ignored, only in place to allow future extensions.
 #' @details
-#' Internally, MIC and disk zone values are sampled based on clinical breakpoints defined in the [clinical_breakpoints] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument. The MICs are sampled on a log2 scale and disks linearly, using weighted probabilities. The weights are based on the `skew` and `severity` arguments:
+#' Internally, MIC and disk zone values are sampled based on the human clinical breakpoints of `guideline` in the [clinical_breakpoints] data set. To create specific generated values per bug or drug, set the `mo` and/or `ab` argument. The MICs are sampled on a log2 scale and disks linearly, using weighted probabilities. The weights are based on the `skew` and `severity` arguments:
 #' * `skew = "right"` places more emphasis on lower MIC or higher disk values.
 #' * `skew = "left"` places more emphasis on higher MIC or lower disk values.
 #' * `severity` controls the exponential bias applied.
@@ -55,7 +56,7 @@
 #' disks <- random_disk(100, severity = 2, mo = "Escherichia coli", ab = "CIP")
 #' plot(disks)
 #' # `plot()` and `ggplot2::autoplot()` allow for coloured bars if `mo` and `ab` are set
-#' plot(disks, mo = "Escherichia coli", ab = "CIP", guideline = "CLSI 2025")
+#' plot(disks, mo = "Escherichia coli", ab = "CIP", guideline = "CLSI")
 #'
 #' \donttest{
 #' random_mic(25, "Klebsiella pneumoniae") # range 0.0625-64
@@ -66,12 +67,14 @@
 #' random_disk(25, "Klebsiella pneumoniae", "ampicillin") # range 11-17
 #' random_disk(25, "Streptococcus pneumoniae", "ampicillin") # range 12-27
 #' }
-random_mic <- function(size = NULL, mo = NULL, ab = NULL, skew = "right", severity = 1, ...) {
+random_mic <- function(size = NULL, mo = NULL, ab = NULL, skew = "right", severity = 1, guideline = getOption("AMR_guideline", "EUCAST"), ...) {
   meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE, allow_NULL = TRUE)
   meet_criteria(mo, allow_class = "character", has_length = c(1, size), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(skew, allow_class = "character", is_in = c("right", "left"), has_length = 1)
   meet_criteria(severity, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
+  guideline <- get_guideline(guideline, AMR::clinical_breakpoints)
 
   if (is.null(size)) {
     size <- NROW(get_current_data(arg_name = "size", call = -3))
@@ -81,7 +84,7 @@ random_mic <- function(size = NULL, mo = NULL, ab = NULL, skew = "right", severi
     p <- progress_ticker(n = length(unique(mo)), n_min = 10, title = "Generating random MIC values")
     for (mo_ in unique(mo)) {
       p$tick()
-      out[which(mo == mo_)] <- random_exec("MIC", size = sum(mo == mo_), mo = mo_, ab = ab, skew = skew, severity = severity)
+      out[which(mo == mo_)] <- random_exec("MIC", size = sum(mo == mo_), mo = mo_, ab = ab, skew = skew, severity = severity, guideline = guideline)
     }
     out <- as.mic(out, keep_operators = "none")
     if (stats::runif(1) > 0.5 && length(unique(out)) > 1) {
@@ -93,33 +96,35 @@ random_mic <- function(size = NULL, mo = NULL, ab = NULL, skew = "right", severi
 
     return(out)
   } else {
-    random_exec("MIC", size = size, mo = mo, ab = ab, skew = skew, severity = severity)
+    random_exec("MIC", size = size, mo = mo, ab = ab, skew = skew, severity = severity, guideline = guideline)
   }
 }
 
 #' @rdname random
 #' @export
-random_disk <- function(size = NULL, mo = NULL, ab = NULL, skew = "left", severity = 1, ...) {
+random_disk <- function(size = NULL, mo = NULL, ab = NULL, skew = "left", severity = 1, guideline = getOption("AMR_guideline", "EUCAST"), ...) {
   meet_criteria(size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE, allow_NULL = TRUE)
   meet_criteria(mo, allow_class = "character", has_length = c(1, size), allow_NULL = TRUE)
   meet_criteria(ab, allow_class = "character", has_length = 1, allow_NULL = TRUE)
   meet_criteria(skew, allow_class = "character", is_in = c("right", "left"), has_length = 1)
   meet_criteria(severity, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
+  guideline <- get_guideline(guideline, AMR::clinical_breakpoints)
 
   if (is.null(size)) {
     size <- NROW(get_current_data(arg_name = "size", call = -3))
   }
   if (length(mo) > 1) {
     out <- rep(NA_mic_, length(size))
-    p <- progress_ticker(n = length(unique(mo)), n_min = 10, title = "Generating random MIC values")
+    p <- progress_ticker(n = length(unique(mo)), n_min = 10, title = "Generating random disk zones")
     for (mo_ in unique(mo)) {
       p$tick()
-      out[which(mo == mo_)] <- random_exec("DISK", size = sum(mo == mo_), mo = mo_, ab = ab, skew = skew, severity = severity)
+      out[which(mo == mo_)] <- random_exec("DISK", size = sum(mo == mo_), mo = mo_, ab = ab, skew = skew, severity = severity, guideline = guideline)
     }
     out <- as.disk(out)
     return(out)
   } else {
-    random_exec("DISK", size = size, mo = mo, ab = ab, skew = skew, severity = severity)
+    random_exec("DISK", size = size, mo = mo, ab = ab, skew = skew, severity = severity, guideline = guideline)
   }
 }
 
@@ -135,8 +140,12 @@ random_sir <- function(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...) {
 }
 
 
-random_exec <- function(method_type, size, mo = NULL, ab = NULL, skew = "right", severity = 1) {
+random_exec <- function(method_type, size, mo = NULL, ab = NULL, skew = "right", severity = 1, guideline = NULL) {
   df <- AMR::clinical_breakpoints %pm>% subset(method == method_type & type == "human")
+  # leave out blocking rows (`NA` breakpoints), so that min() and max() below always have values
+  df <- df[which(!is.na(df$breakpoint_S) & !is.na(df$breakpoint_R)), , drop = FALSE]
+  df_new <- df[which(df$guideline %in% guideline), , drop = FALSE]
+  if (nrow(df_new) > 0) df <- df_new
 
   if (!is.null(mo)) {
     mo_coerced <- as.mo(mo, info = FALSE)

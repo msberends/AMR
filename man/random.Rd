@@ -13,6 +13,7 @@ random_mic(
   ab = NULL,
   skew = "right",
   severity = 1,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   ...
 )
 
@@ -22,6 +23,7 @@ random_disk(
   ab = NULL,
   skew = "left",
   severity = 1,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   ...
 )
 
@@ -38,6 +40,8 @@ random_sir(size = NULL, prob_SIR = c(0.33, 0.33, 0.33), ...)
 
 \item{severity}{Skew severity; higher values will increase the skewedness. Default is \code{2}; use \code{0} to prevent skewedness.}
 
+\item{guideline}{A guideline name to base the generated values on, either \code{"EUCAST"} (default) or \code{"CLSI"} for the latest implemented version, or a guideline including a year (e.g., \code{"CLSI 2019"}). The default can be changed with the package option \code{\link[=AMR-options]{AMR_guideline}}, see \code{\link[=as.sir]{as.sir()}}.}
+
 \item{...}{Ignored, only in place to allow future extensions.}
 
 \item{prob_SIR}{A vector of length 3: the probabilities for "S" (1st value), "I" (2nd value) and "R" (3rd value).}
@@ -49,7 +53,7 @@ class \code{mic} for \code{\link[=random_mic]{random_mic()}} (see \code{\link[=a
 These functions can be used for generating random MIC values and disk diffusion diameters, for AMR data analysis practice. By providing a microorganism and antimicrobial drug, the generated results will reflect reality as much as possible.
 }
 \details{
-Internally, MIC and disk zone values are sampled based on clinical breakpoints defined in the \link{clinical_breakpoints} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument. The MICs are sampled on a log2 scale and disks linearly, using weighted probabilities. The weights are based on the \code{skew} and \code{severity} arguments:
+Internally, MIC and disk zone values are sampled based on the human clinical breakpoints of \code{guideline} in the \link{clinical_breakpoints} data set. To create specific generated values per bug or drug, set the \code{mo} and/or \code{ab} argument. The MICs are sampled on a log2 scale and disks linearly, using weighted probabilities. The weights are based on the \code{skew} and \code{severity} arguments:
 \itemize{
 \item \code{skew = "right"} places more emphasis on lower MIC or higher disk values.
 \item \code{skew = "left"} places more emphasis on higher MIC or lower disk values.
@@ -65,7 +69,7 @@ random_sir(25)
 disks <- random_disk(100, severity = 2, mo = "Escherichia coli", ab = "CIP")
 plot(disks)
 # `plot()` and `ggplot2::autoplot()` allow for coloured bars if `mo` and `ab` are set
-plot(disks, mo = "Escherichia coli", ab = "CIP", guideline = "CLSI 2025")
+plot(disks, mo = "Escherichia coli", ab = "CIP", guideline = "CLSI")
 
 \donttest{
 random_mic(25, "Klebsiella pneumoniae") # range 0.0625-64

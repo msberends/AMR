@@ -305,7 +305,7 @@ library(AMR)
 some_mic_values <- random_mic(size = 100)
 some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
 interpretation <- as.sir(some_mic_values,
-                         guideline = "EUCAST 2024",
+                         guideline = "EUCAST",
                          mo = "E. coli", # or any code or name resembling a known species
                          ab = "Cipro")   # or any code or name resembling an antibiotic
 
@@ -444,7 +444,7 @@ data analysis. This package can be used for:
 - Getting LOINC codes of an antibiotic, or getting properties of an
   antibiotic based on a LOINC code
   ([manual](./reference/ab_property.html))
-- Machine reading the EUCAST and CLSI guidelines from 2011-2021 to
+- Machine reading the EUCAST and CLSI guidelines from 2011-2026 to
   translate MIC values and disk diffusion diameters to SIR
   ([link](./articles/datasets.html))
 - Principal component analysis for AMR ([tutorial](./articles/PCA.html))

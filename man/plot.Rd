@@ -281,7 +281,7 @@ if (require("ggplot2")) {
   # support for 27 languages, various guidelines, and many options
   autoplot(some_disk_values,
     mo = "Escherichia coli", ab = "cipro",
-    guideline = "CLSI 2024", language = "no",
+    guideline = "CLSI", language = "no",
     title = "Disk diffusion from the North"
   )
 }

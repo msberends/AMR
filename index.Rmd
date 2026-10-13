@@ -146,7 +146,7 @@ library(AMR)
 some_mic_values <- random_mic(size = 100)
 some_groups <- sample(LETTERS[1:5], 20, replace = TRUE)
 interpretation <- as.sir(some_mic_values,
-                         guideline = "EUCAST 2024",
+                         guideline = "EUCAST",
                          mo = "E. coli", # or any code or name resembling a known species
                          ab = "Cipro")   # or any code or name resembling an antibiotic
 
@@ -229,7 +229,7 @@ This package was intended as a comprehensive toolbox for integrated AMR data ana
   * Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
   * Getting SNOMED codes of a microorganism, or getting properties of a microorganism based on a SNOMED code ([manual](./reference/mo_property.html))
   * Getting LOINC codes of an antibiotic, or getting properties of an antibiotic based on a LOINC code ([manual](./reference/ab_property.html))
-  * Machine reading the EUCAST and CLSI guidelines from 2011-2021 to translate MIC values and disk diffusion diameters to SIR ([link](./articles/datasets.html))
+  * Machine reading the EUCAST and CLSI guidelines from `r min(as.integer(gsub("[^0-9]", "", AMR::clinical_breakpoints$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", AMR::clinical_breakpoints$guideline)))` to translate MIC values and disk diffusion diameters to SIR ([link](./articles/datasets.html))
   * Principal component analysis for AMR ([tutorial](./articles/PCA.html))
 
 ## Get this package

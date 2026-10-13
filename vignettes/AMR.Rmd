@@ -390,7 +390,7 @@ Minimal inhibitory concentration (MIC) values and disk diffusion diameters can b
 ```{r mic_interpretation}
 set.seed(123)
 mic_values <- random_mic(100)
-sir_values <- as.sir(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
+sir_values <- as.sir(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST")
 
 my_data <- tibble(MIC = mic_values, SIR = sir_values)
 my_data
@@ -429,7 +429,7 @@ For a more straightforward and less manual approach, `ggplot2`'s function `autop
 autoplot(mic_values)
 
 # by providing `mo` and `ab`, colours will indicate the SIR interpretation:
-autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST 2024")
+autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST")
 ```
 
 ----
