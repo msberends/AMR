@@ -86,7 +86,8 @@ inserted text will be iterated over `%like%` -\> `%unlike%` -\>
 ## Examples
 
 ``` r
-# data.table has a more limited version of %like%, so detach it (without unloading it, as data.table does not support being unloaded):
+# data.table has a more limited version of %like%, so detach it
+# (without unloading it, as data.table does not support being unloaded):
 try(detach("package:data.table"), silent = TRUE)
 
 a <- "This is a test"

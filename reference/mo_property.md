@@ -427,20 +427,20 @@ function returns a
 
 Determination of the Gram stain (`mo_gramstain()` is based on the
 taxonomic domain and phylum. Originally, Cavalier-Smith defined the
-so-called subkingdoms Negibacteria and Posibacteria (2002, [PMID
-11837318](https://pubmed.ncbi.nlm.nih.gov/11837318/)), and only
-considered these phyla as Posibacteria: Actinobacteria, Chloroflexi,
-Firmicutes, and Tenericutes. These phyla were later renamed to
-Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021,
-[PMID 34694987](https://pubmed.ncbi.nlm.nih.gov/34694987/)). Bacteria in
-these phyla are considered Gram-positive in this `AMR` package, except
-for members of the class Negativicutes (within phylum Bacillota) which
-are Gram-negative. All other bacteria are considered Gram-negative.
-Species outside the kingdom of Bacteria will return a value `NA`.
-Functions `mo_is_gram_negative()` and `mo_is_gram_positive()` always
-return `TRUE` or `FALSE` (or `NA` when the input is `NA` or the MO code
-is `UNKNOWN`), thus always return `FALSE` for species outside the
-taxonomic kingdom of Bacteria.
+so-called subkingdoms Negibacteria and Posibacteria (2002,
+[doi:10.1099/00207713-52-1-7](https://doi.org/10.1099/00207713-52-1-7)
+), and only considered these phyla as Posibacteria: Actinobacteria,
+Chloroflexi, Firmicutes, and Tenericutes. These phyla were later renamed
+to Actinomycetota, Chloroflexota, Bacillota, and Mycoplasmatota (2021,
+[doi:10.1099/ijsem.0.005056](https://doi.org/10.1099/ijsem.0.005056) ).
+Bacteria in these phyla are considered Gram-positive in this `AMR`
+package, except for members of the class Negativicutes (within phylum
+Bacillota) which are Gram-negative. All other bacteria are considered
+Gram-negative. Species outside the kingdom of Bacteria will return a
+value `NA`. Functions `mo_is_gram_negative()` and
+`mo_is_gram_positive()` always return `TRUE` or `FALSE` (or `NA` when
+the input is `NA` or the MO code is `UNKNOWN`), thus always return
+`FALSE` for species outside the taxonomic kingdom of Bacteria.
 
 Determination of yeasts (`mo_is_yeast()`) is based on the taxonomic
 domain and class. *Budding yeasts* are yeasts that reproduce asexually

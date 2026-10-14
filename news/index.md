@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9131
+## AMR 3.0.1.9132
 
 Planned as v3.1.0, mid October 2026.
 
@@ -267,6 +267,10 @@ Planned as v3.1.0, mid October 2026.
   - Considerably faster through the same session cache design as
     [`as.mo()`](https://amr-for-r.org/reference/as.mo.md)
     ([\#313](https://github.com/msberends/AMR/issues/313))
+  - Input that is not a known name or code is now coerced up to 70 times
+    faster, with identical results, as LOINC codes, synonyms, and
+    abbreviations are looked up in one step instead of per
+    antimicrobial, and translated names are built once per language
   - Fixed a bug where results of `fast_mode` (used internally) were
     remembered and reused by later regular calls, which could return
     `NA` for valid input
@@ -342,6 +346,11 @@ Planned as v3.1.0, mid October 2026.
     ([\#322](https://github.com/msberends/AMR/issues/322))
   - Improved translations of combination names and antimicrobial groups
     in 20 languages
+  - Translating is now around 50 times faster, with identical results,
+    as the translations are prepared once per language and applied to
+    all values at once. This also makes
+    [`ab_group()`](https://amr-for-r.org/reference/ab_property.md)
+    faster in other languages.
   - Translations are no longer translated again (e.g., “Ticarcillinee”
     in Dutch and “groupee” in French), and parts of combination names
     are no longer left untranslated
