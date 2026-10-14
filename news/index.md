@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9134
+## AMR 3.0.1.9135
 
 Planned as v3.1.0, mid October 2026.
 
@@ -244,6 +244,25 @@ Planned as v3.1.0, mid October 2026.
   - [`mo_taxonomy()`](https://amr-for-r.org/reference/mo_property.md)
     and [`mo_info()`](https://amr-for-r.org/reference/mo_property.md)
     now contain an extra element `domain`
+- Own microorganism codes
+  ([`set_mo_source()`](https://amr-for-r.org/reference/mo_source.md) and
+  [`get_mo_source()`](https://amr-for-r.org/reference/mo_source.md))
+  - Fixed
+    [`get_mo_source()`](https://amr-for-r.org/reference/mo_source.md)
+    removing the `mo_source` file at the default location in interactive
+    sessions, when called with a `destination` that does not exist
+  - Fixed
+    [`get_mo_source()`](https://amr-for-r.org/reference/mo_source.md)
+    returning the `mo_source` already loaded instead of the one at the
+    requested `destination`
+  - Fixed
+    [`get_mo_source()`](https://amr-for-r.org/reference/mo_source.md),
+    and therefore [`as.mo()`](https://amr-for-r.org/reference/as.mo.md)
+    and all `mo_*()` functions, throwing an error in interactive
+    sessions after the original file of the `mo_source` was moved or
+    deleted. The `mo_source` file is now removed, as documented.
+  - An updated original file now updates the `mo_source` file at its own
+    `destination` instead of at the default location
 - `microorganisms` data set
   - Taxonomic update of all microorganisms, now based on COL 2026-04-18
     XR, LPSN and BacDive of October 2026, and MycoBank of January 2026
