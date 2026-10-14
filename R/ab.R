@@ -299,34 +299,25 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     }
 
     # exact LOINC code
-    loinc_found <- unlist(lapply(
-      AMR_env$AB_lookup$generalised_loinc,
-      function(s) x[i] %in% s
-    ))
-    found <- AMR_env$AB_lookup$ab[loinc_found == TRUE]
+    idx <- get_ab_index()$generalised_loinc
+    found <- AMR_env$AB_lookup$ab[sort(unique(idx$row[idx$value %in% x[i]]))]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
 
     # exact synonym
-    synonym_found <- unlist(lapply(
-      AMR_env$AB_lookup$generalised_synonyms,
-      function(s) x[i] %in% s
-    ))
-    found <- AMR_env$AB_lookup$ab[synonym_found == TRUE]
+    idx <- get_ab_index()$generalised_synonyms
+    found <- AMR_env$AB_lookup$ab[sort(unique(idx$row[idx$value %in% x[i]]))]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
     }
 
     # exact abbreviation
-    abbr_found <- unlist(lapply(
-      AMR_env$AB_lookup$generalised_abbreviations,
-      # require at least 2 characters for abbreviations
-      function(s) x[i] %in% s && nchar(x[i]) >= 2
-    ))
-    found <- AMR_env$AB_lookup$ab[abbr_found == TRUE]
+    idx <- get_ab_index()$generalised_abbreviations
+    # require at least 2 characters for abbreviations
+    found <- AMR_env$AB_lookup$ab[sort(unique(idx$row[idx$value %in% x[i] & nchar(x[i]) >= 2]))]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -392,11 +383,8 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
     }
 
     # and try if any synonym starts with it
-    synonym_found <- unlist(lapply(
-      AMR_env$AB_lookup$generalised_synonyms,
-      function(s) any(s %like% paste0("^", x_spelling))
-    ))
-    found <- AMR_env$AB_lookup$ab[synonym_found == TRUE]
+    idx <- get_ab_index()$generalised_synonyms
+    found <- AMR_env$AB_lookup$ab[sort(unique(idx$row[idx$value %like% paste0("^", x_spelling)]))]
     if (length(found) > 0) {
       x_new[i] <- note_if_more_than_one_found(found, i, from_text)
       next
@@ -413,24 +401,19 @@ as.ab <- function(x, flag_multiple_results = TRUE, language = get_AMR_locale(), 
         costs = c(insertions = 1, deletions = 1, substitutions = 2),
         counts = FALSE
       ))
-      ab_df$lev_syn <- vapply(
-        FUN.VALUE = double(1),
-        ab_df$generalised_synonyms,
-        function(y) {
-          ifelse(all(is.na(y)) || length(y[nchar(y) >= 5]) == 0,
-            999,
-            min(as.double(utils::adist(x[i], y[nchar(y) >= 5],
-              ignore.case = FALSE,
-              fixed = TRUE,
-              costs = c(insertions = 1, deletions = 1, substitutions = 2),
-              counts = FALSE
-            )), na.rm = TRUE)
-          )
-        },
-        USE.NAMES = FALSE
-      )
+      # lowest distance to the synonyms of at least 5 characters, 999 if there are none
+      idx <- get_ab_index()$generalised_synonyms_long
+      lev_syn <- as.double(utils::adist(x[i], idx$value,
+        ignore.case = FALSE,
+        fixed = TRUE,
+        costs = c(insertions = 1, deletions = 1, substitutions = 2),
+        counts = FALSE
+      ))
+      ab_df$lev_syn <- 999
+      lev_syn_min <- vapply(FUN.VALUE = double(1), split(lev_syn, idx$row), min)
+      ab_df$lev_syn[as.integer(names(lev_syn_min))] <- lev_syn_min
       if (!is.null(language) && language != "en") {
-        ab_df$trans <- generalise_antibiotic_name(translate_AMR(ab_df$name, language = language))
+        ab_df$trans <- get_ab_translated_index(language)
         ab_df$lev_trans <- as.double(utils::adist(x[i], ab_df$trans,
           ignore.case = FALSE,
           fixed = TRUE,

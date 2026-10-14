@@ -180,9 +180,11 @@ ab_group <- function(x, language = get_AMR_locale(), all_groups = FALSE, ...) {
       # take the first match based on ABX_PRIORITY_LIST
       grps[[i]] <- grps[[i]][1]
     }
-    if (language != "en") {
-      grps[[i]] <- translate_into_language(grps[[i]], language = language, only_affect_ab_names = TRUE)
-    }
+  }
+  if (language != "en" && length(grps) > 0) {
+    # translate all groups at once
+    grps_translated <- translate_into_language(unlist(grps, use.names = FALSE), language = language, only_affect_ab_names = TRUE)
+    grps[] <- split(grps_translated, factor(rep(seq_along(grps), lengths(grps)), levels = seq_along(grps)))
   }
   names(grps) <- x
   if (length(grps) == 1 || all_groups == FALSE) {

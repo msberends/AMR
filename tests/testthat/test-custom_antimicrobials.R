@@ -227,4 +227,10 @@ test_that("test-custom ab synonyms via add_custom_antimicrobials()", {
     stringsAsFactors = FALSE
   )))
   expect_identical(as.character(as.ab("Meropenemum Somebrand")), "MEM")
+
+  # the translated names used by as.ab() are rebuilt after adding antimicrobials
+  invisible(AMR:::get_ab_translated_index("de"))
+  suppressMessages(add_custom_antimicrobials(data.frame(ab = "TESTTRANS", name = "Testtransicillin", group = "Test")))
+  expect_identical(length(AMR:::get_ab_translated_index("de")), NROW(AMR:::AMR_env$AB_lookup))
+  expect_identical(AMR:::get_ab_translated_index("de")[AMR:::AMR_env$AB_lookup$ab == "TESTTRANS"], "TESTTRANSICILLIN")
 })

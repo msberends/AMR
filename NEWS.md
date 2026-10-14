@@ -1,4 +1,4 @@
-# AMR 3.0.1.9131
+# AMR 3.0.1.9132
 
 Planned as v3.1.0, mid October 2026.
 
@@ -93,6 +93,7 @@ Planned as v3.1.0, mid October 2026.
   * Author references now strip `emend.` and everything after it, so that `ref` reflects the combination authority rather than the emendation author (e.g., *Rhodococcus equi* now returns "Goodfellow et al., 1977" instead of "Nouioui et al., 2018")
 * Antimicrobial coercion (`as.ab()`) and `antimicrobials` data set
   * Considerably faster through the same session cache design as `as.mo()` (#313)
+  * Input that is not a known name or code is now coerced up to 70 times faster, with identical results, as LOINC codes, synonyms, and abbreviations are looked up in one step instead of per antimicrobial, and translated names are built once per language
   * Fixed a bug where results of `fast_mode` (used internally) were remembered and reused by later regular calls, which could return `NA` for valid input (#313)
   * Codes containing "PH" or "TH" (e.g., `ETH`, `PHE`) no longer return `NA` when mixed with unrecognised input (#245)
   * Input that is not valid UTF-8 (e.g., text exported in a local encoding such as CP949) now returns `NA` with a warning instead of an error
@@ -119,6 +120,7 @@ Planned as v3.1.0, mid October 2026.
 * Translations
   * Improved French translations, kindly provided by Mathilde Garé (#322)
   * Improved translations of combination names and antimicrobial groups in 20 languages
+  * Translating is now around 50 times faster, with identical results, as the translations are prepared once per language and applied to all values at once. This also makes `ab_group()` faster in other languages.
   * Translations are no longer translated again (e.g., "Ticarcillinee" in Dutch and "groupee" in French), and parts of combination names are no longer left untranslated
   * Fixed Italian names of CoNS and CoPS (#256), Dutch names of antimicrobials, and output of `sir_df()` in other languages (#272)
 * Interpretive rules (`interpretive_rules()`, `eucast_rules()`, and `clsi_rules()`)

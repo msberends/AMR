@@ -200,9 +200,86 @@ translate_into_language <- function(from,
     return(from)
   }
 
-  df_trans <- TRANSLATIONS # internal data file
+  trns <- get_translation_table(lang, only_unknown = only_unknown, only_affect_ab_names = only_affect_ab_names, only_affect_mo_names = only_affect_mo_names)
+  if (is.null(trns)) {
+    return(from)
+  }
   from.bak <- from
   from_unique <- unique(from)
+
+  # check if text to look for is in one of the patterns
+  any_form_in_patterns <- tryCatch(
+    # the same as `from_unique %like% trns$any_pattern`, but without validating the long pattern on every call
+    any(grepl(trns$any_pattern, tolower(from_unique), fixed = trns$any_pattern_fixed, perl = !trns$any_pattern_fixed)),
+    error = function(e) {
+      warning_("Translation not possible. Please create an issue at {.url https://github.com/msberends/AMR/issues}. Many thanks!")
+      return(FALSE)
+    }
+  )
+  if (!any_form_in_patterns) {
+    return(from)
+  }
+
+  from_unique_translated <- from_unique
+  # combinations like "Ticarcillin/clavulanic acid" are translated per part, unless the combination itself is in the translations
+  is_combination <- grepl("/", from_unique, fixed = TRUE) & !from_unique %in% trns$pattern_all
+  if (any(is_combination)) {
+    # all parts of all combinations are translated at once
+    parts <- strsplit(from_unique[is_combination], "/", fixed = TRUE)
+    parts_translated <- translate_into_language(unlist(parts, use.names = FALSE), language = lang, only_unknown = only_unknown, only_affect_ab_names = only_affect_ab_names, only_affect_mo_names = only_affect_mo_names)
+    parts_translated <- split(parts_translated, factor(rep(seq_along(parts), lengths(parts)), levels = seq_along(parts)))
+    from_unique_translated[is_combination] <- vapply(FUN.VALUE = character(1), parts_translated, paste, collapse = "/", USE.NAMES = FALSE)
+  }
+  if (any(!is_combination)) {
+    # every pattern is applied to all strings at once, in order of the translation table
+    terms <- from_unique[!is_combination]
+    for (i in seq_along(trns$pattern)) {
+      terms <- gsub(
+        pattern = trns$pattern[i],
+        replacement = trns$replacement[i],
+        x = terms,
+        ignore.case = trns$ignore_case[i],
+        fixed = trns$fixed[i],
+        perl = !trns$fixed[i]
+      )
+    }
+    # replace the placeholders by their translations
+    has_placeholder <- grepl("\001", terms, fixed = TRUE)
+    if (any(has_placeholder)) {
+      found <- gregexpr("\001[^\001\002]{3}\002", terms[has_placeholder], perl = TRUE)
+      regmatches(terms[has_placeholder], found) <- lapply(regmatches(terms[has_placeholder], found), function(p) trns$literal[match(p, trns$placeholder)])
+    }
+    from_unique_translated[!is_combination] <- terms
+  }
+
+  # force UTF-8 for diacritics
+  from_unique_translated <- enc2utf8(from_unique_translated)
+
+  # a kind of left join to get all results back
+  out <- from_unique_translated[match(from.bak, from_unique)]
+
+  if (!identical(from.bak, out) && get_AMR_locale() == lang && is.null(getOption("AMR_locale", default = NULL)) && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
+    message(font_blue(word_wrap(
+      "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym, " language (",
+      LANGUAGES_SUPPORTED_NAMES[[lang]]$endonym, ") for the AMR package. See `set_AMR_locale()` to change this or to silence this once-per-session note.",
+      as_note = TRUE
+    )))
+  }
+
+  out
+}
+
+# the translation table for a language and the settings of translate_into_language(), built once per session as TRANSLATIONS is fixed
+get_translation_table <- function(lang, only_unknown = FALSE, only_affect_ab_names = FALSE, only_affect_mo_names = FALSE) {
+  key <- paste(lang, only_unknown, only_affect_ab_names, only_affect_mo_names, sep = "|")
+  if (!key %in% names(AMR_env$translation_tables)) {
+    AMR_env$translation_tables[key] <- list(build_translation_table(lang, only_unknown, only_affect_ab_names, only_affect_mo_names))
+  }
+  AMR_env$translation_tables[[key]]
+}
+
+build_translation_table <- function(lang, only_unknown, only_affect_ab_names, only_affect_mo_names) {
+  df_trans <- TRANSLATIONS # internal data file
   # only keep lines where translation is available for this language
   df_trans <- df_trans[which(!is.na(df_trans[, lang, drop = TRUE])), , drop = FALSE]
   # and where the original string is not equal to the string in the target language
@@ -217,7 +294,7 @@ translate_into_language <- function(from,
     df_trans <- subset(df_trans, affect_mo_name == TRUE)
   }
   if (NROW(df_trans) == 0) {
-    return(from)
+    return(NULL)
   }
 
   # default: case sensitive if value if 'case_sensitive' is missing:
@@ -225,18 +302,8 @@ translate_into_language <- function(from,
   # default: not using regular expressions if 'regular_expr' is missing:
   df_trans$regular_expr[is.na(df_trans$regular_expr)] <- FALSE
 
-  # check if text to look for is in one of the patterns
-  any_form_in_patterns <- tryCatch(
-    any(from_unique %like% paste0("(", paste(gsub(" +\\(.*", "", df_trans$pattern), collapse = "|"), ")")),
-    error = function(e) {
-      warning_("Translation not possible. Please create an issue at {.url https://github.com/msberends/AMR/issues}. Many thanks!")
-      return(FALSE)
-    }
-  )
-
-  if (NROW(df_trans) == 0 | !any_form_in_patterns) {
-    return(from)
-  }
+  # to check if text to look for is in one of the patterns
+  any_pattern <- paste0("(", paste(gsub(" +\\(.*", "", df_trans$pattern), collapse = "|"), ")")
 
   if (only_affect_ab_names == TRUE) {
     df_trans$pattern[df_trans$regular_expr == TRUE] <- paste0(df_trans$pattern[df_trans$regular_expr == TRUE], "$")
@@ -257,52 +324,16 @@ translate_into_language <- function(from,
     replacements,
     vapply(FUN.VALUE = character(1), seq_along(replacements), function(i) sub(literals[i], placeholders[i], replacements[i], fixed = TRUE))
   )
-  translate_exec <- function(term) {
-    for (i in seq_len(nrow(trns))) {
-      term <- gsub(
-        pattern = trns$pattern[i],
-        replacement = replacements_placeholder[i],
-        x = term,
-        ignore.case = !trns$case_sensitive[i] & trns$regular_expr[i],
-        fixed = !trns$regular_expr[i],
-        perl = trns$regular_expr[i]
-      )
-    }
-    for (i in which(vapply(FUN.VALUE = logical(1), placeholders, grepl, x = term, fixed = TRUE))) {
-      term <- gsub(placeholders[i], literals[i], term, fixed = TRUE)
-    }
-    term
-  }
-
-  from_unique_translated <- from_unique
-  # combinations like "Ticarcillin/clavulanic acid" are translated per part, unless the combination itself is in the translations
-  is_combination <- grepl("/", from_unique, fixed = TRUE) & !from_unique %in% df_trans$pattern
-  from_unique_translated[is_combination] <- vapply(
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    strsplit(from_unique[is_combination], "/", fixed = TRUE),
-    function(parts) paste(translate_into_language(parts, language = lang, only_unknown = only_unknown, only_affect_ab_names = only_affect_ab_names, only_affect_mo_names = only_affect_mo_names), collapse = "/")
+  list(
+    # all patterns, including combinations, to check whether a combination is translated as a whole
+    pattern_all = df_trans$pattern,
+    any_pattern = tolower(any_pattern),
+    any_pattern_fixed = !is_valid_regex(any_pattern),
+    pattern = trns$pattern,
+    replacement = replacements_placeholder,
+    ignore_case = !trns$case_sensitive & trns$regular_expr,
+    fixed = !trns$regular_expr,
+    placeholder = placeholders,
+    literal = literals
   )
-  from_unique_translated[!is_combination] <- vapply(
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    from_unique[!is_combination],
-    translate_exec
-  )
-
-  # force UTF-8 for diacritics
-  from_unique_translated <- enc2utf8(from_unique_translated)
-
-  # a kind of left join to get all results back
-  out <- from_unique_translated[match(from.bak, from_unique)]
-
-  if (!identical(from.bak, out) && get_AMR_locale() == lang && is.null(getOption("AMR_locale", default = NULL)) && message_not_thrown_before("translation", entire_session = TRUE) && interactive()) {
-    message(font_blue(word_wrap(
-      "Assuming the ", LANGUAGES_SUPPORTED_NAMES[[lang]]$exonym, " language (",
-      LANGUAGES_SUPPORTED_NAMES[[lang]]$endonym, ") for the AMR package. See `set_AMR_locale()` to change this or to silence this once-per-session note.",
-      as_note = TRUE
-    )))
-  }
-
-  out
 }

@@ -37,11 +37,15 @@
 # 2. Coercion caches, `AMR_env$ab_previously_coerced` and `AMR_env$mo_previously_coerced`, that remember the
 #    outcome of earlier coercions. Both have the same structure: a `key` (the cleaned input together with the
 #    settings that affect the outcome), the original `input`, and the resulting code as `value`.
-# 3. For microorganisms, the mapping from (outdated) codes to codes of currently accepted names, which is
+# 3. Translated names of antimicrobials and microorganisms, built once per language, see get_ab_translated_index() and
+#    get_mo_translated_index().
+# 4. For microorganisms, the mapping from (outdated) codes to codes of currently accepted names, which is
 #    memoised per unique code, see synonym_mo_to_accepted_mo().
 #
 # All of these are invalidated with reset_ab_cache() or reset_mo_cache(), which must be called whenever the
 # lookup tables change, e.g. in add_custom_antimicrobials() and add_custom_microorganisms().
+# The prepared translation tables of translate_into_language(), see get_translation_table(), are kept for the whole
+# session, as the internal translations never change.
 
 new_coercion_cache <- function() {
   data.frame(
@@ -92,6 +96,7 @@ coercion_cache_add <- function(type, keys, inputs, values) {
 
 reset_ab_cache <- function() {
   AMR_env$AB_index <- NULL
+  AMR_env$AB_translated <- NULL
   AMR_env$custom_ab_id_keys <- NULL
   AMR_env$ab_previously_coerced <- new_coercion_cache()
 }
@@ -111,14 +116,35 @@ get_ab_index <- function() {
     atc_ab <- rep(ab, lengths(AMR_env$AB_lookup$atc))
     synonyms <- tolower(unlist(AMR_env$AB_lookup$synonyms, use.names = FALSE))
     synonyms_ab <- rep(ab, lengths(AMR_env$AB_lookup$synonyms))
+    # generalised LOINC codes, synonyms, and abbreviations as flat vectors, with the row number in `AMR_env$AB_lookup`
+    flat <- function(col) {
+      vals <- AMR_env$AB_lookup[[col]]
+      list(value = unlist(vals, use.names = FALSE), row = rep(seq_along(vals), lengths(vals)))
+    }
+    gen_syn <- flat("generalised_synonyms")
+    # synonyms of at least 5 characters, for the Levenshtein distance in as.ab()
+    gen_syn_long <- which(!is.na(gen_syn$value) & nchar(gen_syn$value) >= 5)
     AMR_env$AB_index <- list(
       atc = atc[!is.na(atc)],
       atc_ab = atc_ab[!is.na(atc)],
       synonyms = synonyms[!is.na(synonyms)],
-      synonyms_ab = synonyms_ab[!is.na(synonyms)]
+      synonyms_ab = synonyms_ab[!is.na(synonyms)],
+      generalised_loinc = flat("generalised_loinc"),
+      generalised_synonyms = gen_syn,
+      generalised_synonyms_long = list(value = gen_syn$value[gen_syn_long], row = gen_syn$row[gen_syn_long]),
+      generalised_abbreviations = flat("generalised_abbreviations")
     )
   }
   AMR_env$AB_index
+}
+
+get_ab_translated_index <- function(language) {
+  # translated and generalised names of all antimicrobials, used by as.ab() for input that could not be matched otherwise
+  # this is built once per language
+  if (is.null(AMR_env$AB_translated[[language]])) {
+    AMR_env$AB_translated[[language]] <- generalise_antibiotic_name(translate_AMR(AMR_env$AB_lookup$name, language = language))
+  }
+  AMR_env$AB_translated[[language]]
 }
 
 get_mo_index <- function() {
