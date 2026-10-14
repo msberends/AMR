@@ -132,10 +132,11 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   stop_ifnot(destination %like% "[.]rds$", "the {.arg destination} must be a file location with file extension .rds.")
   mo_source_destination <- path.expand(destination)
 
-  # earlier coercions might have been based on another mo_source
-  AMR_env$mo_previously_coerced <- new_coercion_cache()
-
   if (is.null(path) || path %in% c(FALSE, "")) {
+    if (!is.null(AMR_env$mo_source) || file.exists(mo_source_destination)) {
+      # earlier coercions might have been based on this mo_source; get_mo_source() calls this function on every as.mo() call when no mo_source exists, so only reset when there was one
+      AMR_env$mo_previously_coerced <- new_coercion_cache()
+    }
     AMR_env$mo_source <- NULL
     if (file.exists(mo_source_destination)) {
       unlink(mo_source_destination)
@@ -229,6 +230,8 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
   attr(df, "mo_source_timestamp") <- file.mtime(path)
   saveRDS(df, mo_source_destination)
   AMR_env$mo_source <- df
+  # earlier coercions might have been based on another mo_source
+  AMR_env$mo_previously_coerced <- new_coercion_cache()
   message_(
     action, " mo_source file '", font_bold(mo_source_destination),
     "' (", formatted_filesize(mo_source_destination),
