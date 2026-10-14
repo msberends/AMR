@@ -39,6 +39,18 @@ test_that("test-session_cache.R", {
   expect_identical(colnames(AMR:::AMR_env$ab_previously_coerced), c("key", "input", "value"))
   # second run comes from the cache and gives the same result
   expect_identical(as.character(as.ab("amxcilin", info = FALSE)), "AMX")
+  # separate calls accumulate in the cache, and repeated input adds no rows
+  suppressWarnings(as.ab("ciproflxacin", info = FALSE))
+  expect_true(all(c("amxcilin", "ciproflxacin") %in% AMR:::AMR_env$ab_previously_coerced$input))
+  n_cached <- NROW(AMR:::AMR_env$ab_previously_coerced)
+  as.ab(c("amxcilin", "ciproflxacin"), info = FALSE)
+  expect_identical(NROW(AMR:::AMR_env$ab_previously_coerced), n_cached)
+  # a cached value is really used, not recomputed
+  amr_env <- AMR:::AMR_env
+  cache_bak <- amr_env$ab_previously_coerced
+  amr_env$ab_previously_coerced$value[amr_env$ab_previously_coerced$input == "amxcilin"] <- "GEN"
+  expect_identical(as.character(as.ab("amxcilin", info = FALSE)), "GEN")
+  amr_env$ab_previously_coerced <- cache_bak
   # ATC codes and synonyms are looked up in the session index
   expect_identical(as.character(as.ab(c("J01CA04", "J01MA02", "amoxil", "cipro"), info = FALSE)), c("AMX", "CIP", "AMX", "CIP"))
   # resetting does not touch microorganism uncertainties
@@ -57,6 +69,23 @@ test_that("test-session_cache.R", {
   # second run comes from the cache, and the uncertainties are still complete
   expect_identical(as.character(suppressWarnings(as.mo(rev(x), info = FALSE))), c("B_STPHY_AURS", "B_KLBSL_PNMN"))
   expect_identical(sort(mo_uncertainties()$original_input), sort(x))
+  # separate calls accumulate in the cache, also in interactive sessions without an mo_source file, where the default `reference_df = get_mo_source()` once emptied the cache on every call
+  mo_reset_session()
+  suppressWarnings(as.mo(x[1], info = FALSE))
+  suppressWarnings(as.mo(x[2], info = FALSE))
+  expect_true(all(x %in% AMR:::AMR_env$mo_previously_coerced$input))
+  n_cached <- NROW(AMR:::AMR_env$mo_previously_coerced)
+  invisible(get_mo_source(destination = tempfile(fileext = ".rds")))
+  expect_identical(NROW(AMR:::AMR_env$mo_previously_coerced), n_cached)
+  # repeated input adds no rows
+  suppressWarnings(as.mo(x, info = FALSE))
+  expect_identical(NROW(AMR:::AMR_env$mo_previously_coerced), n_cached)
+  # a cached value is really used, not recomputed
+  amr_env <- AMR:::AMR_env
+  cache_bak <- amr_env$mo_previously_coerced
+  amr_env$mo_previously_coerced$value[amr_env$mo_previously_coerced$input == x[1]] <- "B_ESCHR_COLI"
+  expect_identical(as.character(suppressWarnings(as.mo(x[1], info = FALSE))), "B_ESCHR_COLI")
+  amr_env$mo_previously_coerced <- cache_bak
   # another minimum_matching_score is another cache key
   n_cached <- NROW(AMR:::AMR_env$mo_previously_coerced)
   suppressWarnings(as.mo(x, minimum_matching_score = 0.1, info = FALSE))
