@@ -245,9 +245,9 @@ set_mo_source <- function(path, destination = getOption("AMR_mo_source", "~/mo_s
 #' @export
 get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.rds")) {
   if (!file.exists(path.expand(destination))) {
-    if (interactive()) {
-      # source file might have been deleted, so update reference
-      set_mo_source("")
+    if (interactive() && identical(attributes(AMR_env$mo_source)$mo_source_destination, path.expand(destination))) {
+      # the mo_source file in use was deleted, so remove the reference to it; this must only concern this destination, so that no other mo_source file is removed
+      set_mo_source("", destination = destination)
     }
     return(NULL)
   }
@@ -257,15 +257,24 @@ get_mo_source <- function(destination = getOption("AMR_mo_source", "~/mo_source.
     vowel <- ifelse(current_ext %like% "^[AEFHILMNORSX]", "n", "")
     stop_("The AMR mo source must be an RDS file, not a", vowel, " ", toupper(current_ext), " file. If \"", basename(destination), "\" was meant as your input file, use {.help [{.fun set_mo_source}](AMR::set_mo_source)} on this file. In any case, the option {.code AMR_mo_source} must be set to another path.")
   }
-  if (is.null(AMR_env$mo_source)) {
+  if (is.null(AMR_env$mo_source) || !identical(attributes(AMR_env$mo_source)$mo_source_destination, path.expand(destination))) {
+    # not loaded yet, or loaded from another destination
     AMR_env$mo_source <- readRDS_AMR(path.expand(destination))
+    # files created before AMR 1.5.0 lack this attribute
+    attr(AMR_env$mo_source, "mo_source_destination") <- path.expand(destination)
   }
 
-  old_time <- attributes(AMR_env$mo_source)$mo_source_timestamp
-  new_time <- file.mtime(attributes(AMR_env$mo_source)$mo_source_location)
-  if (interactive() && !identical(old_time, new_time)) {
-    # source file was updated, also update reference
-    set_mo_source(attributes(AMR_env$mo_source)$mo_source_location)
+  source_location <- attributes(AMR_env$mo_source)$mo_source_location
+  if (interactive() && !is.null(source_location)) {
+    if (!file.exists(source_location)) {
+      # the original file was moved or deleted, so remove the mo_source file as documented
+      set_mo_source("", destination = destination)
+      return(NULL)
+    }
+    if (!identical(attributes(AMR_env$mo_source)$mo_source_timestamp, file.mtime(source_location))) {
+      # the original file was updated, so update the mo_source file at this destination too
+      set_mo_source(source_location, destination = destination)
+    }
   }
   AMR_env$mo_source
 }

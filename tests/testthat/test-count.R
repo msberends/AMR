@@ -30,8 +30,9 @@
 test_that("test-count.R", {
   skip_on_cran()
 
-  expect_equal(count_R(example_isolates$AMX), count_resistant(example_isolates$AMX))
-  expect_equal(count_SI(example_isolates$AMX), count_susceptible(example_isolates$AMX))
+  # the counts in this file are based on EUCAST, which must also hold when another guideline is set with the AMR_guideline option
+  expect_equal(count_R(example_isolates$AMX), count_resistant(example_isolates$AMX, guideline = "EUCAST"))
+  expect_equal(count_SI(example_isolates$AMX), count_susceptible(example_isolates$AMX, guideline = "EUCAST"))
   expect_equal(count_IR(example_isolates$AMX), count_resistant(example_isolates$AMX, guideline = "CLSI"))
   expect_equal(count_S(example_isolates$AMX), count_susceptible(example_isolates$AMX, guideline = "CLSI"))
   expect_equal(count_all(example_isolates$AMX), n_sir(example_isolates$AMX))
@@ -64,9 +65,9 @@ test_that("test-count.R", {
   expect_error(count_df(example_isolates[, "date", drop = TRUE]))
 
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
-    expect_equal(example_isolates %>% count_susceptible(AMC), 1433)
-    expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE), 1687)
-    expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE), 1764)
+    expect_equal(example_isolates %>% count_susceptible(AMC, guideline = "EUCAST"), 1433)
+    expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = TRUE, guideline = "EUCAST"), 1687)
+    expect_equal(example_isolates %>% count_susceptible(AMC, GEN, only_all_tested = FALSE, guideline = "EUCAST"), 1764)
     expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = TRUE), 1798)
     expect_equal(example_isolates %>% count_all(AMC, GEN, only_all_tested = FALSE), 1936)
     expect_identical(
@@ -80,20 +81,20 @@ test_that("test-count.R", {
       example_isolates %>%
         group_by(ward) %>%
         summarise(
-          cipro = count_susceptible(CIP),
-          genta = count_susceptible(GEN),
-          combination = count_susceptible(CIP, GEN)
+          cipro = count_susceptible(CIP, guideline = "EUCAST"),
+          genta = count_susceptible(GEN, guideline = "EUCAST"),
+          combination = count_susceptible(CIP, GEN, guideline = "EUCAST")
         ) %>%
         pull(combination),
       c(946, 428, 94)
     )
 
-    # count_df
+    # count_df, which always combines S and I, as with EUCAST
     expect_equal(
       example_isolates %>% select(AMX) %>% count_df() %>% pull(value),
       c(
-        example_isolates$AMX %>% count_susceptible(),
-        example_isolates$AMX %>% count_resistant()
+        example_isolates$AMX %>% count_susceptible(guideline = "EUCAST"),
+        example_isolates$AMX %>% count_resistant(guideline = "EUCAST")
       )
     )
     expect_equal(

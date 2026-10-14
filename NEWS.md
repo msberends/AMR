@@ -1,4 +1,4 @@
-# AMR 3.0.1.9134
+# AMR 3.0.1.9135
 
 Planned as v3.1.0, mid October 2026.
 
@@ -84,6 +84,11 @@ Planned as v3.1.0, mid October 2026.
   * *Salmonella* serovars written with the species, such as `"Salmonella enterica serovar Typhi"`, no longer return *Salmonella bongori* or another subspecies
   * `as.mo()` and `mo_current()` now find the current name of synonyms with multiple sources (e.g., *Chaetomium abuense*)
   * `mo_taxonomy()` and `mo_info()` now contain an extra element `domain`
+* Own microorganism codes (`set_mo_source()` and `get_mo_source()`)
+  * Fixed `get_mo_source()` removing the `mo_source` file at the default location in interactive sessions, when called with a `destination` that does not exist
+  * Fixed `get_mo_source()` returning the `mo_source` already loaded instead of the one at the requested `destination`
+  * Fixed `get_mo_source()`, and therefore `as.mo()` and all `mo_*()` functions, throwing an error in interactive sessions after the original file of the `mo_source` was moved or deleted. The `mo_source` file is now removed, as documented.
+  * An updated original file now updates the `mo_source` file at its own `destination` instead of at the default location
 * `microorganisms` data set
   * Taxonomic update of all microorganisms, now based on COL 2026-04-18 XR, LPSN and BacDive of October 2026, and MycoBank of January 2026
   * Names listed twice by a source now take the correct record (e.g., *Eggerthella lenta*, *Gordonia amarae*, and *Anisakis simplex* were synonyms without a current name)

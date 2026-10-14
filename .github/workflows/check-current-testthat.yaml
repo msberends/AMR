@@ -41,6 +41,11 @@ on:
 
 name: check-recent
 
+# a new commit cancels the runs of the previous commit on the same PR or branch, a scheduled run is never cancelled by a push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -49,11 +54,15 @@ jobs:
     steps:
       - id: set-matrix
         shell: bash
+        # entries with "tests": true do not run R CMD check, but run the unit tests from source with .github/scripts/run_tests.sh, optionally:
+        # - "interactive": true, in a real interactive R session, so that code behind interactive() is also tested
+        # - "scenario", the user environment set up with .github/scripts/setup_test_scenario.R
+        # - "lang", the LANG environment variable
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo 'matrix={"config":[{"os":"ubuntu-latest","r":"release","allowfail":false}]}' >> "$GITHUB_OUTPUT"
+            echo 'matrix={"config":[{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"interactive","interactive":true}]}' >> "$GITHUB_OUTPUT"
           else
-            echo 'matrix={"config":[{"os":"windows-latest","r":"devel","allowfail":false},{"os":"ubuntu-latest","r":"devel","allowfail":false,"http-user-agent":"release"},{"os":"macOS-latest","r":"release","allowfail":true},{"os":"windows-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-1","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-2","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-3","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-4","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-5","allowfail":false}]}' >> "$GITHUB_OUTPUT"
+            echo 'matrix={"config":[{"os":"windows-latest","r":"devel","allowfail":false},{"os":"ubuntu-latest","r":"devel","allowfail":false,"http-user-agent":"release"},{"os":"macOS-latest","r":"release","allowfail":true},{"os":"windows-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-1","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-2","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-3","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-4","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-5","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"interactive","interactive":true},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"interactive, user setup","interactive":true,"scenario":"user"},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"Dutch locale","lang":"nl_NL.UTF-8"},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"CLSI as default guideline","scenario":"clsi"}]}' >> "$GITHUB_OUTPUT"
           fi
 
   R-code-check:
@@ -62,7 +71,7 @@ jobs:
 
     continue-on-error: ${{ matrix.config.allowfail }}
 
-    name: ${{ matrix.config.os }} (R-${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (R-${{ matrix.config.r }})${{ matrix.config.label && format(' {0}', matrix.config.label) || '' }}
 
     strategy:
       fail-fast: false
@@ -71,6 +80,8 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      AMR_TEST_INTERACTIVE: ${{ matrix.config.interactive && 'true' || 'false' }}
+      AMR_TEST_SCENARIO: ${{ matrix.config.scenario || '' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -86,11 +97,26 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: ${{ matrix.config.tests && 'any::pkgload' || 'any::rcmdcheck' }}
           needs: check
           upgrade: 'TRUE'
 
+      - name: Set LANG
+        if: matrix.config.lang
+        run: echo "LANG=${{ matrix.config.lang }}" >> "$GITHUB_ENV"
+
+      - name: Set up scenario '${{ matrix.config.scenario }}'
+        if: matrix.config.scenario
+        run: AMR_TEST_INTERACTIVE=true .github/scripts/run_tests.sh .github/scripts/setup_test_scenario.R
+
+      - name: Run unit tests
+        if: matrix.config.tests
+        env:
+          NOT_CRAN: true
+        run: .github/scripts/run_tests.sh .github/scripts/run_tests.R
+
       - uses: r-lib/actions/check-r-package@v2
+        if: ${{ !matrix.config.tests }}
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'

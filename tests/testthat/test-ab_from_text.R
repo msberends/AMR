@@ -44,10 +44,13 @@ test_that("test-ab_from_text.R", {
     ab_from_text("28/03/2020 amoxicilliin 500mg po tds", thorough_search = FALSE)[[1]],
     as.ab("Amoxicillin")
   )
+  # translated names are in the language of the system, and are tested here in English
+  old_opts <- options(AMR_locale = "en")
   expect_identical(
     ab_from_text("28/03/2020 amoxicilliin 500mg po tds", translate_ab = TRUE)[[1]],
     "Amoxicillin"
   )
+  options(old_opts)
   expect_identical(
     ab_from_text("administered amoxi/clav and cipro", collapse = ", ")[[1]],
     "AMC, CIP"

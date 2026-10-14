@@ -30,8 +30,9 @@
 test_that("test-proportion.R", {
   skip_on_cran()
 
-  expect_equal(proportion_R(example_isolates$AMX), resistance(example_isolates$AMX))
-  expect_equal(proportion_SI(example_isolates$AMX), susceptibility(example_isolates$AMX))
+  # with EUCAST, which must also hold when another guideline is set with the AMR_guideline option
+  expect_equal(proportion_R(example_isolates$AMX), resistance(example_isolates$AMX, guideline = "EUCAST"))
+  expect_equal(proportion_SI(example_isolates$AMX), susceptibility(example_isolates$AMX, guideline = "EUCAST"))
   expect_equal(proportion_IR(example_isolates$AMX), resistance(example_isolates$AMX, guideline = "CLSI"))
   expect_equal(proportion_S(example_isolates$AMX), susceptibility(example_isolates$AMX, guideline = "CLSI"))
   # AMX resistance in `example_isolates`

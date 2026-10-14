@@ -37,6 +37,11 @@ on:
 
 name: code-coverage
 
+# a new commit cancels the runs of the previous commit on the same PR or branch, a scheduled run is never cancelled by a push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   code-coverage:
     runs-on: ubuntu-latest

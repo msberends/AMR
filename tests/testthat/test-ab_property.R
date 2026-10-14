@@ -75,7 +75,7 @@ test_that("test-ab_property.R", {
   expect_true(ab_url("AMX") %like% "fhi[.]no")
 
   expect_identical(
-    colnames(set_ab_names(example_isolates[, 17:22])),
+    colnames(set_ab_names(example_isolates[, 17:22], language = "en")),
     c("cefoxitin", "cefotaxime", "ceftazidime", "ceftriaxone", "gentamicin", "tobramycin")
   )
   expect_identical(
@@ -97,7 +97,7 @@ test_that("test-ab_property.R", {
       "moxifloxacin", "vancomycin", "TEC"
     ) %in%
       (example_isolates %>%
-        set_ab_names(NIT:VAN) %>%
+        set_ab_names(NIT:VAN, language = "en") %>%
         colnames())))
   }
 })

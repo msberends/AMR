@@ -29,6 +29,9 @@
 
 test_that("test-interpretive_rules.R", {
   skip_on_cran()
+  # these tests are based on EUCAST rules, which must also hold when another guideline is set with the AMR_guideline option
+  old_opts <- options(AMR_guideline = "EUCAST")
+  on.exit(options(old_opts), add = TRUE)
 
   # thoroughly check input table
   expect_equal(

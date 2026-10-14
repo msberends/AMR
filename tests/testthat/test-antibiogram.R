@@ -35,21 +35,25 @@ test_that("test-antibiogram.R", {
 
   ab0 <- antibiogram(example_isolates)
 
+  # the column names of ab1 to ab6 and ab8 to ab9 are tested in English, which must also hold on systems in another language
   ab1 <- antibiogram(example_isolates,
-    antimicrobials = c(aminoglycosides(), carbapenems())
+    antimicrobials = c(aminoglycosides(), carbapenems()),
+    language = "en"
   )
 
   ab2 <- antibiogram(example_isolates,
     antimicrobials = aminoglycosides(),
     ab_transform = "atc",
-    mo_transform = "gramstain"
+    mo_transform = "gramstain",
+    language = "en"
   )
 
   ab3 <- antibiogram(example_isolates,
     antimicrobials = carbapenems(),
     ab_transform = "ab",
     mo_transform = "name",
-    formatting_type = 1
+    formatting_type = 1,
+    language = "en"
   )
 
   expect_inherits(ab1, "antibiogram")
@@ -65,7 +69,8 @@ test_that("test-antibiogram.R", {
   # combined antibiogram yield higher empiric coverage
   ab4 <- antibiogram(example_isolates,
     antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-    mo_transform = "gramstain"
+    mo_transform = "gramstain",
+    language = "en"
   )
 
   ab5 <- antibiogram(example_isolates,
@@ -73,7 +78,8 @@ test_that("test-antibiogram.R", {
     mo_transform = "gramstain",
     ab_transform = "name",
     sep = " & ",
-    add_total_n = FALSE
+    add_total_n = FALSE,
+    language = "en"
   )
 
   expect_inherits(ab4, "antibiogram")
@@ -87,7 +93,8 @@ test_that("test-antibiogram.R", {
   ab6 <- antibiogram(example_isolates,
     antimicrobials = c(aminoglycosides(), carbapenems()),
     syndromic_group = "ward",
-    ab_transform = NULL
+    ab_transform = NULL,
+    language = "en"
   )
 
   # with a custom language, though this will be determined automatically
@@ -112,7 +119,8 @@ test_that("test-antibiogram.R", {
   # the data set could contain a filter for e.g. respiratory specimens
   ab8 <- suppressWarnings(antibiogram(example_isolates,
     antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-    wisca = TRUE
+    wisca = TRUE,
+    language = "en"
   ))
 
   expect_inherits(ab8, "antibiogram")
@@ -125,7 +133,7 @@ test_that("test-antibiogram.R", {
     expect_warning(
       ab9 <- example_isolates %>%
         group_by(ward, gender) %>%
-        wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
+        wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"), language = "en")
     )
     expect_equal(colnames(ab9), c("ward", "gender", "Piperacillin/tazobactam", "Piperacillin/tazobactam + Gentamicin", "Piperacillin/tazobactam + Tobramycin"))
   }
