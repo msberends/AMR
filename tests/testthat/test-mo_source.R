@@ -29,7 +29,7 @@
 
 test_that("test-mo_source.R", {
   # set_mo_source() and the interactive branches of get_mo_source() only work in interactive sessions, see .github/scripts/run_tests.sh
-  skip_if_not(interactive())
+  skip_if(!interactive())
   skip_on_cran()
 
   dir <- tempfile("mo_source_test")

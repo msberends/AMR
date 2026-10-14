@@ -103,7 +103,10 @@ jobs:
 
       - name: Set LANG
         if: matrix.config.lang
-        run: echo "LANG=${{ matrix.config.lang }}" >> "$GITHUB_ENV"
+        # the package reads the language from LANG, while R needs a locale that is installed on the runner, so LC_ALL is set to the UTF-8 locale that is always available
+        run: |
+          echo "LANG=${{ matrix.config.lang }}" >> "$GITHUB_ENV"
+          echo "LC_ALL=C.UTF-8" >> "$GITHUB_ENV"
 
       - name: Set up scenario '${{ matrix.config.scenario }}'
         if: matrix.config.scenario
