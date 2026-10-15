@@ -26,7 +26,7 @@ clinical_breakpoints
 ## Format
 
 A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 61
-367 observations and 15 variables:
+393 observations and 15 variables:
 
 - `guideline`  
   Name of the guideline
@@ -113,17 +113,24 @@ to interpret raw data using a specific breakpoint type, e.g.
 ### Blocking Rows
 
 Where EUCAST lists an organism but gives no breakpoint for it (e.g.
-"IE", "-", "Note", breakpoints in brackets, or an organism excluded with
-"except"), [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) must
-not fall back to the breakpoint of a broader taxon, such as the
-breakpoint for *Vibrio* spp. where EUCAST gives "IE" for *V. fluvialis*.
-Such cases are included as "blocking rows": rows in which `breakpoint_S`
-and `breakpoint_R` are both `NA` and the `note` starts with
+"IE", "-", "Note", breakpoints in brackets, an organism excluded with
+"except", or no S category for a zone diameter),
+[`as.sir()`](https://amr-for-r.org/reference/as.sir.md) must not fall
+back to the breakpoint of a broader taxon, such as the breakpoint for
+*Vibrio* spp. where EUCAST gives "IE" for *V. fluvialis*. Such cases are
+included as "blocking rows": rows in which `breakpoint_S` and
+`breakpoint_R` are both `NA` and the `note` starts with
 `"[No breakpoint]"` followed by the reason.
 [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) returns `NA` for
-these. This currently applies to 15 653 rows. Remove them with
+these. This currently applies to 15 660 rows. Remove them with
 `subset(clinical_breakpoints, !is.na(breakpoint_S))` if only actual
 breakpoints are needed.
+
+Where another guideline has no S category for a zone diameter, such as
+CLSI for fluconazole in *C. glabrata* (SDD and R only), only
+`breakpoint_R` is given, and the `note` starts with `"[No S category]"`.
+[`as.sir()`](https://amr-for-r.org/reference/as.sir.md) then returns R
+where applicable, and `NA` otherwise.
 
 ### Imported From WHONET
 
@@ -196,7 +203,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 clinical_breakpoints
-#> # A tibble: 61,367 × 15
+#> # A tibble: 61,393 × 15
 #>    guideline   type  host  method site  mo            rank_index ab   ref_tbl   
 #>    <chr>       <chr> <chr> <chr>  <chr> <mo>               <dbl> <ab> <chr>     
 #>  1 EUCAST 2026 human human DISK   NA    B_ACHRMB_XYLS        2.1 FDC  A.xylosox…
@@ -209,7 +216,7 @@ clinical_breakpoints
 #>  8 EUCAST 2026 human human MIC    NA    B_ACHRMB_XYLS        2   TZP  A.xylosox…
 #>  9 EUCAST 2026 human human DISK   NA    B_ACNTB              3.1 AMC  Acinetoba…
 #> 10 EUCAST 2026 human human MIC    NA    B_ACNTB              3.1 AMC  Acinetoba…
-#> # ℹ 61,357 more rows
+#> # ℹ 61,383 more rows
 #> # ℹ 6 more variables: disk_dose <chr>, breakpoint_S <dbl>, breakpoint_R <dbl>,
 #> #   uti <lgl>, is_SDD <lgl>, note <chr>
 ```

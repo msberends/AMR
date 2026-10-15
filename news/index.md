@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9147
+## AMR 3.0.1.9148
 
 Planned as v3.1.0, mid October 2026.
 
@@ -241,6 +241,16 @@ Planned as v3.1.0, mid October 2026.
     breakpoints for roxithromycin
     ([\#308](https://github.com/msberends/AMR/issues/308))
   - Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
+  - Zone diameters for which the guideline has no S category (coded by
+    WHONET as an S breakpoint of 80 or 99 mm) are now blocking rows for
+    EUCAST, e.g. cefuroxime oral in *H. influenzae* in EUCAST 2011, and
+    keep only the R breakpoint for CLSI, e.g. fluconazole in *C.
+    glabrata*. Previously, these S breakpoints were stored as 50 mm.
+  - Breakpoints and ECOFFs for *Salmonella* serovars Typhi, Typhimurium,
+    and Paratyphi, and ECOFFs for the *Bacteroides fragilis* complex,
+    are now assigned to these taxa instead of to *S. enterica* subsp.
+    *enterica* and *B. fragilis*, and ECOFFs of amphotericin B for
+    *Neocosmospora solani* were added
 - Microorganism coercion
   ([`as.mo()`](https://amr-for-r.org/reference/as.mo.md)) and properties
   (`mo_*()`)
@@ -261,7 +271,10 @@ Planned as v3.1.0, mid October 2026.
     output of `mo_name(x, language = "fr")`, and cached per language
   - Input of the form `"X complex"` now falls back to `"X"` when the
     complex is not a distinct taxon, preventing `NA` for valid clinical
-    descriptions such as `"Proteus vulgaris complex"`
+    descriptions such as `"Proteus vulgaris complex"`, while a complex
+    named after several of its species returns the complex of one of
+    them, e.g., `"Acinetobacter calcoaceticus-baumannii complex"`
+    returns *A. baumannii* complex
     ([\#287](https://github.com/msberends/AMR/issues/287))
   - Abbreviated genus input now ranks candidates with an exactly
     matching species epithet above more prevalent organisms, so that
@@ -405,7 +418,8 @@ Planned as v3.1.0, mid October 2026.
   - Input validation of
     [`as.disk()`](https://amr-for-r.org/reference/as.disk.md) is now
     more strict, rejecting values that are not recognisable as a numeric
-    disk zone diameter
+    disk zone diameter. Values higher than 50 mm now return `NA` with a
+    warning, instead of being set to 50 mm.
 - MDRO determination
   ([`mdro()`](https://amr-for-r.org/reference/mdro.md))
   - Resistance can now be inferred from a drug/inhibitor combination

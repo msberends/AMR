@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9147</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9148</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9147" id="amr-3019147">AMR 3.0.1.9147<a class="anchor" aria-label="anchor" href="#amr-3019147"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9148" id="amr-3019148">AMR 3.0.1.9148<a class="anchor" aria-label="anchor" href="#amr-3019148"></a></h2>
 <p>Planned as v3.1.0, mid October 2026.</p>
 <div class="section level4">
-<h4 id="breaking-3-0-1-9147">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9147"></a></h4>
+<h4 id="breaking-3-0-1-9148">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9148"></a></h4>
 <ul><li>
 <p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms, with new top-level <em>domains</em> Bacteria and Archaea (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column was added to the <code>microorganisms</code> data set, and <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g., <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
 <table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
@@ -109,7 +109,7 @@
 <li><p>The <code>combine_SI</code> argument of these functions is deprecated in favour of <code>guideline</code>. While set, it is followed literally and takes precedence over <code>guideline</code>. Use <code>guideline = NULL</code> instead of <code>combine_SI = FALSE</code> to keep S, I, and R separate.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9147">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9147"></a></h4>
+<h4 id="new-3-0-1-9148">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9148"></a></h4>
 <ul><li>
 <strong>Updated clinical breakpoints</strong>
 <ul><li>EUCAST 2026 and CLSI 2026 are now supported, by adding over 5,700 new breakpoints to the <code>clinical_breakpoints</code> data set. EUCAST 2026 is now the default guideline for all MIC and disk diffusion interpretations.</li>
@@ -155,7 +155,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-0-1-9147">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9147"></a></h4>
+<h4 id="changed-3-0-1-9148">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9148"></a></h4>
 <ul><li>SIR interpretation (<code><a href="../reference/as.sir.html">as.sir()</a></code>)
 <ul><li>New argument <code>enforce_method</code> (<code>"auto"</code>, <code>"mic"</code>, or <code>"disk"</code>) to force the interpretation method when S3 class information is lost, e.g., when called from Python (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
 <li>When input consists of whole numbers only, disk zones are now assumed rather than MIC values (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
@@ -178,6 +178,8 @@
 <li>Fixed CLSI breakpoints for sulbactam/durlobactam, which were coded as sulfadimethoxine (<code>SUD</code>), and added the missing EUCAST 2011 breakpoints for roxithromycin (<a href="https://github.com/msberends/AMR/issues/308" class="external-link">#308</a>)</li>
 <li>Fixed some EUCAST Expert Rules, mostly on <em>S. pneumoniae</em>
 </li>
+<li>Zone diameters for which the guideline has no S category (coded by WHONET as an S breakpoint of 80 or 99 mm) are now blocking rows for EUCAST, e.g. cefuroxime oral in <em>H. influenzae</em> in EUCAST 2011, and keep only the R breakpoint for CLSI, e.g. fluconazole in <em>C. glabrata</em>. Previously, these S breakpoints were stored as 50 mm.</li>
+<li>Breakpoints and ECOFFs for <em>Salmonella</em> serovars Typhi, Typhimurium, and Paratyphi, and ECOFFs for the <em>Bacteroides fragilis</em> complex, are now assigned to these taxa instead of to <em>S. enterica</em> subsp. <em>enterica</em> and <em>B. fragilis</em>, and ECOFFs of amphotericin B for <em>Neocosmospora solani</em> were added</li>
 </ul></li>
 <li>Microorganism coercion (<code><a href="../reference/as.mo.html">as.mo()</a></code>) and properties (<code>mo_*()</code>)
 <ul><li>Considerably faster through one consistent session cache design, which is cleared when lookup tables change, e.g., after <code><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms()</a></code> (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)</li>
@@ -188,7 +190,7 @@
 <li>
 <code><a href="../reference/as.mo.html">mo_uncertainties()</a></code> now also lists uncertainties of previously coerced input</li>
 <li>Translated names in the set language are now recognised, such as the output of <code>mo_name(x, language = "fr")</code>, and cached per language</li>
-<li>Input of the form <code>"X complex"</code> now falls back to <code>"X"</code> when the complex is not a distinct taxon, preventing <code>NA</code> for valid clinical descriptions such as <code>"Proteus vulgaris complex"</code> (<a href="https://github.com/msberends/AMR/issues/287" class="external-link">#287</a>)</li>
+<li>Input of the form <code>"X complex"</code> now falls back to <code>"X"</code> when the complex is not a distinct taxon, preventing <code>NA</code> for valid clinical descriptions such as <code>"Proteus vulgaris complex"</code>, while a complex named after several of its species returns the complex of one of them, e.g., <code>"Acinetobacter calcoaceticus-baumannii complex"</code> returns <em>A. baumannii</em> complex (<a href="https://github.com/msberends/AMR/issues/287" class="external-link">#287</a>)</li>
 <li>Abbreviated genus input now ranks candidates with an exactly matching species epithet above more prevalent organisms, so that e.g. <code>"S. apiospermum"</code> returns <em>Scedosporium apiospermum</em> instead of a <em>Staphylococcus</em> species (<a href="https://github.com/msberends/AMR/issues/288" class="external-link">#288</a>)</li>
 <li>Abbreviated genus input for species with subspecies (e.g., <code>"P. ovale"</code>) now returns the species instead of a more prevalent organism, while explicit subspecies (e.g., <code>"P. ovale curtisi"</code>) are preserved (<a href="https://github.com/msberends/AMR/issues/288" class="external-link">#288</a>)</li>
 <li>
@@ -246,7 +248,7 @@
 <ul><li>New argument <code>round_to_next_log2</code> in <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.mic.html">rescale_mic()</a></code> to round values up to the nearest log2 dilution level (<a href="https://github.com/msberends/AMR/issues/255" class="external-link">#255</a>)</li>
 <li>
 <code><a href="../reference/as.mic.html">as.mic()</a></code> now handles values in scientific notation (e.g., <code>1e-3</code>) correctly</li>
-<li>Input validation of <code><a href="../reference/as.disk.html">as.disk()</a></code> is now more strict, rejecting values that are not recognisable as a numeric disk zone diameter</li>
+<li>Input validation of <code><a href="../reference/as.disk.html">as.disk()</a></code> is now more strict, rejecting values that are not recognisable as a numeric disk zone diameter. Values higher than 50 mm now return <code>NA</code> with a warning, instead of being set to 50 mm.</li>
 </ul></li>
 <li>MDRO determination (<code><a href="../reference/mdro.html">mdro()</a></code>)
 <ul><li>Resistance can now be inferred from a drug/inhibitor combination when the column of the base drug is absent (e.g., piperacillin inferred from piperacillin/tazobactam). This is controlled with the new argument <code>infer_from_combinations</code> (default: <code>TRUE</code>) (<a href="https://github.com/msberends/AMR/issues/209" class="external-link">#209</a>).</li>
@@ -281,7 +283,7 @@
 <li>Fixed a bug where R could crash after unloading the <code>data.table</code> package, and where suggested packages available on the machine that built the package were used even if they were not available to the user</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-0-1-9147">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9147"></a></h4>
+<h4 id="other-3-0-1-9148">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9148"></a></h4>
 <ul><li>Improved console messages with clickable links throughout the package, powered by <code>cli</code> if it is installed (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
 <li>The section <em>Interpretation of SIR</em> (in <code><a href="../reference/as.sir.html">?as.sir</a></code>) now explains for all functions with a <code>guideline</code> argument for aggregated analyses how S, SDD, I, R, WT, NWT, NS, and NI are categorised per guideline. The handling of ‘I’ per MDRO guideline in <code><a href="../reference/mdro.html">mdro()</a></code> will be revised in a future version (<a href="https://github.com/msberends/AMR/issues/323" class="external-link">#323</a>).</li>
 <li>
