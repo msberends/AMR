@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9138</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -260,7 +260,7 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 </ul></div>
 <div class="section level3">
 <h3 id="local-commits-on-main-never-touch-the-version-number">Local commits on <code>main</code>: never touch the version number<a class="anchor" aria-label="anchor" href="#local-commits-on-main-never-touch-the-version-number"></a></h3>
-<p>When committing directly on <code>main</code> in a local clone, <strong>never</strong> edit the <code>Version:</code> or <code>Date:</code> field in <code>DESCRIPTION</code>, nor line 1 of <code>NEWS.md</code>, and do not add a version prefix to the commit message. The git hooks in <code>.github/prehooks/</code> do this on every commit to <code>main</code>: <code>pre-commit</code> sets the version (commit count since the last tag + 9001) and date in <code>DESCRIPTION</code> and line 1 of <code>NEWS.md</code>, and <code>commit-msg</code> prepends <code>(vX.Y.Z.9NNN)</code> to the commit message. Adding NEWS bullets is still allowed. The section below applies only to PRs.</p>
+<p>When committing directly on <code>main</code> in a local clone, <strong>never</strong> edit the <code>Version:</code> or <code>Date:</code> field in <code>DESCRIPTION</code>, nor line 1 of <code>NEWS.md</code>, and do not add a version prefix to the commit message. The git hooks in <code>.github/prehooks/</code> do this on every commit to <code>main</code>: <code>pre-commit</code> sets the version (the number of commits since the last tag before the new commit, + 9001) and date in <code>DESCRIPTION</code> and line 1 of <code>NEWS.md</code>, and <code>commit-msg</code> prepends <code>(vX.Y.Z.9NNN)</code> to the commit message. Adding NEWS bullets is still allowed. The section below applies only to PRs.</p>
 </div>
 <div class="section level3">
 <h3 id="version-and-date-bump-required-for-every-pr">Version and date bump required for every PR<a class="anchor" aria-label="anchor" href="#version-and-date-bump-required-for-every-pr"></a></h3>
@@ -278,9 +278,9 @@ _pkgdown.yml    # pkgdown website configuration</code></pre>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="va">defaultbranch</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> branch <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-c</span> 3- <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">'^master$|^main$'</span><span class="va">)</span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">git</span> fetch origin <span class="va">${defaultbranch}</span> <span class="at">--quiet</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="va">currentcommit</span><span class="op">=</span><span class="va">$(</span><span class="fu">git</span> rev-list <span class="at">--count</span> <span class="va">${currenttagfull}</span>..origin/<span class="va">${defaultbranch})</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="va">currentversion</span><span class="op">=</span><span class="st">"</span><span class="va">${currenttag}</span><span class="st">.</span><span class="va">$((currentcommit</span> <span class="op">+</span> <span class="dv">9001</span> <span class="op">+</span> <span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="va">currentversion</span><span class="op">=</span><span class="st">"</span><span class="va">${currenttag}</span><span class="st">.</span><span class="va">$((currentcommit</span> <span class="op">+</span> <span class="dv">9001</span><span class="va">))</span><span class="st">"</span></span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$currentversion</span><span class="st">"</span></span></code></pre></div>
-<p>The <code>+ 1</code> accounts for the fact that this PR’s squash commit is not yet on the default branch. Set <strong>both</strong> of these files to the resulting version string (and only once per PR, even across multiple commits):</p>
+<p>This matches the <code>pre-commit</code> hook, which also counts the commits before the new one: the number of commits currently on the default branch + 9001 is the version of the next commit, i.e., of this PR’s squash commit. Do not add 1. Set <strong>both</strong> of these files to the resulting version string (and only once per PR, even across multiple commits):</p>
 <ol style="list-style-type: decimal"><li>
 <strong><code>DESCRIPTION</code></strong> — the <code>Version:</code> field</li>
 <li>

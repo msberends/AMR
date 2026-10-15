@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9137
+## AMR 3.0.1.9138
 
 Planned as v3.1.0, mid October 2026.
 
@@ -63,20 +63,31 @@ Planned as v3.1.0, mid October 2026.
   fully supported in all resistance and susceptibility functions and in
   all plots ([\#254](https://github.com/msberends/AMR/issues/254)).
 
-- [`count_df()`](https://amr-for-r.org/reference/count.md),
+- Aggregated analyses now follow the guideline for the ‘I’ category, set
+  with the new `guideline` argument or the `AMR_guideline` option:
+  EUCAST considers ‘I’ susceptible and CLSI considers ‘I’ resistant,
+  while SDD and WT are always considered susceptible, and NWT and NS
+  always resistant (see section *Interpretation of SIR* in
+  [`?as.sir`](https://amr-for-r.org/reference/as.sir.md)). This applies
+  to [`count_df()`](https://amr-for-r.org/reference/count.md),
   [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
-  and [`sir_df()`](https://amr-for-r.org/reference/proportion.md) now
-  follow the `AMR_guideline` option through their new `guideline`
-  argument. With CLSI, `combine_SI = TRUE` merges ‘I’ with R into `"IR"`
-  and returns `"S"` vs. `"IR"`, consistent with
-  [`count_susceptible()`](https://amr-for-r.org/reference/count.md) and
-  [`susceptibility()`](https://amr-for-r.org/reference/proportion.md).
-  Previously, these functions always merged ‘I’ with S, as with EUCAST.
-  Use `guideline = "EUCAST"` for the old behaviour. This also applies to
+  [`sir_df()`](https://amr-for-r.org/reference/proportion.md),
   [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
   [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md), and
-  [`labels_sir_count()`](https://amr-for-r.org/reference/plot.md), which
-  got the same argument.
+  [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  which with CLSI now return `"S"` vs. `"IR"` instead of `"SI"`
+  vs. `"R"`, and to
+  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md),
+  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md), and
+  [`format()`](https://rdrr.io/r/base/format.html) on the output of
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md).
+  Previously, these functions always considered ‘I’ susceptible, as with
+  EUCAST. Use `guideline = "EUCAST"` for the old behaviour.
+
+- The `combine_SI` argument of these functions is deprecated in favour
+  of `guideline`. While set, it is followed literally and takes
+  precedence over `guideline`. Use `guideline = NULL` instead of
+  `combine_SI = FALSE` to keep S, I, and R separate.
 
 #### New
 
@@ -339,17 +350,35 @@ Planned as v3.1.0, mid October 2026.
   - Fixed a bug where both functions failed without the `antimicrobials`
     argument if `tidyselect` was not available, e.g., for binary
     installations without `dplyr`
+  - Isolates of unknown species are now included in grouped antibiograms
+    and in [`wisca()`](https://amr-for-r.org/reference/antibiogram.md),
+    as they already were in traditional antibiograms. They were
+    previously excluded silently, with the warning “invalid
+    microorganism code, NA generated”. This can change WISCA coverage
+    estimates.
+  - Grouped traditional antibiograms now show the (translated) pathogen
+    names, as ungrouped antibiograms do, instead of microorganism codes
 - Resistance and susceptibility calculation
-  - New argument `guideline` (default: EUCAST) in
+  - New argument `guideline` (default: the `AMR_guideline` option,
+    otherwise EUCAST) in
     [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
     [`resistance()`](https://amr-for-r.org/reference/proportion.md),
     [`count_df()`](https://amr-for-r.org/reference/count.md),
     [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
     [`sir_df()`](https://amr-for-r.org/reference/proportion.md),
     [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
-    [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md), and
-    [`labels_sir_count()`](https://amr-for-r.org/reference/plot.md) to
-    interpret the ‘I’ category correctly per guideline
+    [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+    [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md),
+    [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md),
+    [`wisca()`](https://amr-for-r.org/reference/antibiogram.md), and
+    [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md)
+    to interpret the ‘I’ category correctly per guideline. Functions
+    that return results per category also accept `guideline = NULL` to
+    keep S, I, and R separate, while functions that return a single
+    proportion or count give an informative error.
+  - When EUCAST is assumed because neither the `guideline` argument nor
+    the `AMR_guideline` option is set, a message explains how to change
+    this, once per session and not in R Markdown or Quarto documents
   - `count_*()` and `proportion_*()` now handle WT, NWT, NS, and NI
     results correctly
     ([\#321](https://github.com/msberends/AMR/issues/321))
@@ -429,6 +458,15 @@ Planned as v3.1.0, mid October 2026.
   defaulting to the `AMR_guideline` option (otherwise EUCAST), so that
   generated values are based on the latest breakpoints of one guideline
   instead of those of all guidelines and years combined
+- Fixed [`format()`](https://rdrr.io/r/base/format.html) on the output
+  of
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md),
+  which counted I and SDD as resistant with the default
+  `combine_SI = TRUE`, contrary to its documentation. It now reads the
+  guideline used in
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md),
+  which can be overridden with its own `guideline` argument, and also
+  counts NS as resistant.
 - Fixed a bug in [`g.test()`](https://amr-for-r.org/reference/g.test.md)
   that returned the degrees of freedom as `argument` instead of
   `parameter`, so that they were not printed
@@ -443,6 +481,17 @@ Planned as v3.1.0, mid October 2026.
   powered by `cli` if it is installed
   ([\#191](https://github.com/msberends/AMR/issues/191),
   [\#265](https://github.com/msberends/AMR/issues/265))
+- The section *Interpretation of SIR* (in
+  [`?as.sir`](https://amr-for-r.org/reference/as.sir.md)) now explains
+  for all functions with a `guideline` argument for aggregated analyses
+  how S, SDD, I, R, WT, NWT, NS, and NI are categorised per guideline.
+  The handling of ‘I’ per MDRO guideline in
+  [`mdro()`](https://amr-for-r.org/reference/mdro.md) will be revised in
+  a future version
+  ([\#323](https://github.com/msberends/AMR/issues/323)).
+- [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md)
+  is now documented together with
+  [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md)
 - The documentation of
   [`get_AMR_locale()`](https://amr-for-r.org/reference/translate.md) now
   describes the actual order in which the language is determined: the

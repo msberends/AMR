@@ -13,6 +13,7 @@ bug_drug_combinations(
   col_mo = NULL,
   FUN = mo_shortname,
   include_n_rows = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   ...
 )
 
@@ -22,7 +23,8 @@ format(
   translate_ab = "name (ab, atc)",
   language = get_AMR_locale(),
   minimum = 30,
-  combine_SI = TRUE,
+  combine_SI,
+  guideline = attr(x, "guideline"),
   add_ab_group = TRUE,
   remove_intrinsic_resistant = FALSE,
   decimal.mark = getOption("OutDec"),
@@ -57,6 +59,22 @@ format(
   A [logical](https://rdrr.io/r/base/logical.html) to indicate if the
   total number of rows must be included in the output.
 
+- guideline:
+
+  A guideline name, `"EUCAST"` or `"CLSI"` (or any version thereof, e.g.
+  `"CLSI 2025"`), to determine whether the 'I' category is considered
+  susceptible (EUCAST) or resistant (CLSI) when calculating resistance
+  with [`format()`](https://rdrr.io/r/base/format.html). The default is
+  the package option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md), or
+  `"EUCAST"` if it is not set. In `bug_drug_combinations()`, this can
+  also be `NULL` or `FALSE`, after which
+  [`format()`](https://rdrr.io/r/base/format.html) requires its own
+  `guideline` to be set. In
+  [`format()`](https://rdrr.io/r/base/format.html), the default is the
+  guideline used in `bug_drug_combinations()`, which can be overridden
+  by setting it. See section *Interpretation of SIR* below.
+
 - ...:
 
   Arguments passed on to `FUN`.
@@ -86,9 +104,10 @@ format(
 
 - combine_SI:
 
-  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  values S, SDD, and I should be summed, so resistance will be based on
-  only R - the default is `TRUE`.
+  *(deprecated in favour of `guideline`)* A
+  [logical](https://rdrr.io/r/base/logical.html). If set, it takes
+  precedence over `guideline`: `TRUE` bases resistance on R only, and
+  `FALSE` on SDD, I, and R.
 
 - add_ab_group:
 
@@ -114,16 +133,96 @@ format(
 
 The function `bug_drug_combinations()` returns a
 [data.frame](https://rdrr.io/r/base/data.frame.html) with columns "mo",
-"ab", "S", "SDD", "I", "R", "WT, "NWT", and "total".
+"ab", "S", "SDD", "I", "R", "NI", "WT", "NWT", "NS", and "total".
 
 ## Details
 
 The function [`format()`](https://rdrr.io/r/base/format.html) calculates
 the resistance per bug-drug combination and returns a table ready for
-reporting/publishing. Use `combine_SI = TRUE` (default) to test R vs.
-S+I and `combine_SI = FALSE` to test R+I vs. S. This table can also
-directly be used in R Markdown / Quarto without the need for e.g.
+reporting/publishing. Following the `guideline`, resistance is based on
+R (EUCAST) or on I and R (CLSI), see section *Interpretation of SIR*
+below. This table can also directly be used in R Markdown / Quarto
+without the need for e.g.
 [`knitr::kable()`](https://rdrr.io/pkg/knitr/man/kable.html).
+
+## Interpretation of SIR
+
+In 2019, the European Committee on Antimicrobial Susceptibility Testing
+(EUCAST) has decided to change the definitions of susceptibility testing
+categories S, I, and R
+(<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
+
+In aggregated analyses, such as proportions, counts, antibiograms, and
+plots, the 'I' category must be considered either susceptible or
+resistant. In epidemiological AMR data analysis, this follows the
+guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I'
+resistant. The dose-dependent susceptibility of CLSI ('SDD') is always
+considered susceptible, as it equals what EUCAST defines as 'I'. All
+functions with a `guideline` argument for this purpose use these
+categories:
+
+|             |               |               |
+|-------------|---------------|---------------|
+| `guideline` | Susceptible   | Resistant     |
+| `"EUCAST"`  | S, SDD, I, WT | R, NWT, NS    |
+| `"CLSI"`    | S, SDD, WT    | I, R, NWT, NS |
+
+The values 'WT' (wild type) and 'NWT' (non-wild type) result from
+epidemiological cut-off values (ECOFFs) instead of clinical breakpoints.
+Since they are no clinical categories, 'WT' is always considered
+susceptible and 'NWT' always resistant, regardless of the guideline. The
+value 'NS' (non-susceptible) is always considered resistant, and 'NI'
+(non-interpretable) is always considered a missing result.
+
+The `guideline` argument can be:
+
+- **Left unset**, to use the package option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md), or
+  `"EUCAST"` if this option is not set. In the latter case, a message is
+  shown once per session (but not in R Markdown or Quarto documents);
+  set the option to silence it.
+
+- **`"EUCAST"`**, or any EUCAST version such as `"EUCAST 2025"`, to
+  consider 'I' susceptible, e.g., to return `"SI"` vs. `"R"` in
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md).
+
+- **`"CLSI"`**, or any CLSI version such as `"CLSI 2025"`, to consider
+  'I' resistant, e.g., to return `"S"` vs. `"IR"` in
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md).
+
+- **`NULL` or `FALSE`**, to keep S, I, and R separate. This is only
+  possible in functions that return results per category:
+  [`count_df()`](https://amr-for-r.org/reference/count.md),
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
+  [`sir_df()`](https://amr-for-r.org/reference/proportion.md),
+  [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  and `bug_drug_combinations()`. Functions that return a single
+  proportion or count, such as
+  [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
+  [`count_resistant()`](https://amr-for-r.org/reference/count.md),
+  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md),
+  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md), and
+  [`format()`](https://rdrr.io/r/base/format.html) on the result of
+  `bug_drug_combinations()`, require 'I' to be considered either
+  susceptible or resistant, and return an error.
+
+Use [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
+and [`resistance()`](https://amr-for-r.org/reference/proportion.md) (or
+[`count_susceptible()`](https://amr-for-r.org/reference/count.md) and
+[`count_resistant()`](https://amr-for-r.org/reference/count.md)) to
+follow the guideline, or e.g.
+[`proportion_SI()`](https://amr-for-r.org/reference/proportion.md) and
+[`proportion_R()`](https://amr-for-r.org/reference/proportion.md) to be
+explicit regardless of the guideline.
+
+The `combine_SI` argument of the functions that return results per
+category,
+[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md), and
+[`wisca()`](https://amr-for-r.org/reference/antibiogram.md) is
+deprecated in favour of `guideline`. If set, it is followed literally
+and takes precedence over `guideline`.
 
 ## Examples
 
@@ -166,19 +265,24 @@ head(x)
 #> 6 (unknown species) CAZ       0     0     0     0     0     0     0     0     0
 #> Use 'format()' on this result to get a publishable/printable format.
 format(x, translate_ab = "name (atc)")
+#> ℹ `bug_drug_combinations()` assumes the EUCAST guideline and thus considers the
+#>   'I' category susceptible when calculating resistance in `format()` (R vs.
+#>   S+SDD+I). Use `guideline = "CLSI"` for I+R vs. S+SDD. Set the `guideline`
+#>   argument, or set the `AMR_guideline` option to change the default (see
+#>   `?AMR-options`). This message is shown once per session.
 #> # A tibble: 39 × 12
 #>    Group     Drug  CoNS  `E. coli` `E. faecalis` `K. pneumoniae` `P. aeruginosa`
 #>    <chr>     <chr> <chr> <chr>     <chr>         <chr>           <chr>          
 #>  1 "Aminogl… Amik… "100… "  0.0% … "100.0% (39/… ""              ""             
-#>  2 ""        Gent… " 16… "  2.0% … "100.0% (39/… " 10.3% (6/58)" " 10.0% (3/30)"
+#>  2 ""        Gent… " 13… "  2.0% … "100.0% (39/… " 10.3% (6/58)" "  0.0% (0/30)"
 #>  3 ""        Kana… "100… ""        "100.0% (39/… ""              "100.0% (30/30…
 #>  4 ""        Tobr… " 78… "  2.6% … "100.0% (39/… " 10.3% (6/58)" "  0.0% (0/30)"
 #>  5 "Aminope… Amox… " 93… " 50.0% … ""            "100.0% (58/58… "100.0% (30/30…
-#>  6 ""        Amox… " 42… " 28.9% … ""            " 15.5% (9/58)" "100.0% (30/30…
+#>  6 ""        Amox… " 42… " 13.1% … ""            " 10.3% (6/58)" "100.0% (30/30…
 #>  7 ""        Ampi… " 93… " 50.0% … ""            "100.0% (58/58… "100.0% (30/30…
 #>  8 "Carbape… Imip… " 47… "  0.0% … "  0.0% (0/3… "  0.0% (0/51)" ""             
 #>  9 ""        Mero… " 47… "  0.0% … ""            "  0.0% (0/53)" ""             
-#> 10 "Cephalo… Cefa… " 47… "  3.7% … "100.0% (39/… ""              "100.0% (30/30…
+#> 10 "Cephalo… Cefa… " 47… "  2.4% … "100.0% (39/… ""              "100.0% (30/30…
 #> # ℹ 29 more rows
 #> # ℹ 5 more variables: `P. mirabilis` <chr>, `S. aureus` <chr>,
 #> #   `S. epidermidis` <chr>, `S. hominis` <chr>, `S. pneumoniae` <chr>

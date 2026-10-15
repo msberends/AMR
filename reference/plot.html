@@ -9,7 +9,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9138</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -189,19 +189,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span>  colours_SIR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>S <span class="op">=</span> <span class="st">"#3CAEA3"</span>, SDD <span class="op">=</span> <span class="st">"#8FD6C4"</span>, I <span class="op">=</span> <span class="st">"#F6D55C"</span>, R <span class="op">=</span> <span class="st">"#ED553B"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">theme_sir</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">labels_sir_count</span><span class="op">(</span></span>
-<span>  position <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  x <span class="op">=</span> <span class="st">"antibiotic"</span>,</span>
-<span>  translate_ab <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
-<span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
-<span>  datalabels.size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  datalabels.colour <span class="op">=</span> <span class="st">"grey15"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">theme_sir</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -287,30 +275,6 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <dt id="arg-aesthetics">aesthetics<a class="anchor" aria-label="anchor" href="#arg-aesthetics"></a></dt>
 <dd><p>Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size".</p></dd>
 
-
-<dt id="arg-position">position<a class="anchor" aria-label="anchor" href="#arg-position"></a></dt>
-<dd><p>Position adjustment of bars, either <code>"fill"</code>, <code>"stack"</code> or <code>"dodge"</code>.</p></dd>
-
-
-<dt id="arg-translate-ab">translate_ab<a class="anchor" aria-label="anchor" href="#arg-translate-ab"></a></dt>
-<dd><p>A column name of the <a href="antimicrobials.html">antimicrobials</a> data set to translate the antibiotic abbreviations to, using <code><a href="ab_property.html">ab_property()</a></code>.</p></dd>
-
-
-<dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
-<dd><p>The minimum allowed number of available (tested) isolates. Any isolate count lower than <code>minimum</code> will return <code>NA</code> with a warning. The default number of <code>30</code> isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see <em>Source</em>.</p></dd>
-
-
-<dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is <code>TRUE</code>. Following the <code>guideline</code> argument, the output then consists of <code>"SI"</code> (S+SDD+I) vs. <code>"R"</code> with EUCAST, and of <code>"S"</code> (S+SDD) vs. <code>"IR"</code> (I+R) with CLSI.</p></dd>
-
-
-<dt id="arg-datalabels-size">datalabels.size<a class="anchor" aria-label="anchor" href="#arg-datalabels-size"></a></dt>
-<dd><p>Size of the datalabels.</p></dd>
-
-
-<dt id="arg-datalabels-colour">datalabels.colour<a class="anchor" aria-label="anchor" href="#arg-datalabels-colour"></a></dt>
-<dd><p>Colour of the datalabels.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -345,7 +309,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <li><p><code>scale_y_percent()</code> transforms the y axis to a 0 to 100% range using <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code>.</p></li>
 <li><p><code>scale_sir_colours()</code> allows to set colours to any aesthetic, even for <code>shape</code> or <code>linetype</code>.</p></li>
 <li><p><code>theme_sir()</code> is a <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2 theme</a> with minimal distraction.</p></li>
-<li><p><code>labels_sir_count()</code> print datalabels on the bars with percentage and number of isolates, using <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>.</p></li>
+<li><p><code><a href="ggplot_sir.html">labels_sir_count()</a></code> print datalabels on the bars with percentage and number of isolates, using <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>.</p></li>
 </ul><p>The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.</p>
 <p>For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2026, unless the package option <code><a href="AMR-options.html">AMR_guideline</a></code> is set. See <code><a href="as.sir.html">as.sir()</a></code> for more information.</p>
 </div>

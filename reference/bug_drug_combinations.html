@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9138</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +60,7 @@
 <span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  FUN <span class="op">=</span> <span class="va">mo_shortname</span>,</span>
 <span>  include_n_rows <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -69,7 +70,8 @@
 <span>  translate_ab <span class="op">=</span> <span class="st">"name (ab, atc)"</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">combine_SI</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"guideline"</span><span class="op">)</span>,</span>
 <span>  add_ab_group <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  remove_intrinsic_resistant <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  decimal.mark <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"OutDec"</span><span class="op">)</span>,</span>
@@ -98,6 +100,10 @@
 <dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate if the total number of rows must be included in the output.</p></dd>
 
 
+<dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
+<dd><p>A guideline name, <code>"EUCAST"</code> or <code>"CLSI"</code> (or any version thereof, e.g. <code>"CLSI 2025"</code>), to determine whether the 'I' category is considered susceptible (EUCAST) or resistant (CLSI) when calculating resistance with <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code>. The default is the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, or <code>"EUCAST"</code> if it is not set. In <code>bug_drug_combinations()</code>, this can also be <code>NULL</code> or <code>FALSE</code>, after which <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> requires its own <code>guideline</code> to be set. In <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code>, the default is the guideline used in <code>bug_drug_combinations()</code>, which can be overridden by setting it. See section <em>Interpretation of SIR</em> below.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code>FUN</code>.</p></dd>
 
@@ -115,7 +121,7 @@
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether values S, SDD, and I should be summed, so resistance will be based on only R - the default is <code>TRUE</code>.</p></dd>
+<dd><p><em>(deprecated in favour of <code>guideline</code>)</em> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>. If set, it takes precedence over <code>guideline</code>: <code>TRUE</code> bases resistance on R only, and <code>FALSE</code> on SDD, I, and R.</p></dd>
 
 
 <dt id="arg-add-ab-group">add_ab_group<a class="anchor" aria-label="anchor" href="#arg-add-ab-group"></a></dt>
@@ -139,11 +145,24 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The function <code>bug_drug_combinations()</code> returns a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with columns "mo", "ab", "S", "SDD", "I", "R", "WT, "NWT", and "total".</p>
+    <p>The function <code>bug_drug_combinations()</code> returns a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with columns "mo", "ab", "S", "SDD", "I", "R", "NI", "WT", "NWT", "NS", and "total".</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The function <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> calculates the resistance per bug-drug combination and returns a table ready for reporting/publishing. Use <code>combine_SI = TRUE</code> (default) to test R vs. S+I and <code>combine_SI = FALSE</code> to test R+I vs. S. This table can also directly be used in R Markdown / Quarto without the need for e.g. <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code>.</p>
+    <p>The function <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> calculates the resistance per bug-drug combination and returns a table ready for reporting/publishing. Following the <code>guideline</code>, resistance is based on R (EUCAST) or on I and R (CLSI), see section <em>Interpretation of SIR</em> below. This table can also directly be used in R Markdown / Quarto without the need for e.g. <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
+
+
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/</a>).</p>
+<p>In aggregated analyses, such as proportions, counts, antibiograms, and plots, the 'I' category must be considered either susceptible or resistant. In epidemiological AMR data analysis, this follows the guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I' resistant. The dose-dependent susceptibility of CLSI ('SDD') is always considered susceptible, as it equals what EUCAST defines as 'I'. All functions with a <code>guideline</code> argument for this purpose use these categories:</p><table class="table table"><tr><td><code>guideline</code></td><td>Susceptible</td><td>Resistant</td></tr><tr><td><code>"EUCAST"</code></td><td>S, SDD, I, WT</td><td>R, NWT, NS</td></tr><tr><td><code>"CLSI"</code></td><td>S, SDD, WT</td><td>I, R, NWT, NS</td></tr></table><p>The values 'WT' (wild type) and 'NWT' (non-wild type) result from epidemiological cut-off values (ECOFFs) instead of clinical breakpoints. Since they are no clinical categories, 'WT' is always considered susceptible and 'NWT' always resistant, regardless of the guideline. The value 'NS' (non-susceptible) is always considered resistant, and 'NI' (non-interpretable) is always considered a missing result.</p>
+<p>The <code>guideline</code> argument can be:</p><ul><li><p><strong>Left unset</strong>, to use the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, or <code>"EUCAST"</code> if this option is not set. In the latter case, a message is shown once per session (but not in R Markdown or Quarto documents); set the option to silence it.</p></li>
+<li><p><strong><code>"EUCAST"</code></strong>, or any EUCAST version such as <code>"EUCAST 2025"</code>, to consider 'I' susceptible, e.g., to return <code>"SI"</code> vs. <code>"R"</code> in <code><a href="proportion.html">proportion_df()</a></code>.</p></li>
+<li><p><strong><code>"CLSI"</code></strong>, or any CLSI version such as <code>"CLSI 2025"</code>, to consider 'I' resistant, e.g., to return <code>"S"</code> vs. <code>"IR"</code> in <code><a href="proportion.html">proportion_df()</a></code>.</p></li>
+<li><p><strong><code>NULL</code> or <code>FALSE</code></strong>, to keep S, I, and R separate. This is only possible in functions that return results per category: <code><a href="count.html">count_df()</a></code>, <code><a href="proportion.html">proportion_df()</a></code>, <code><a href="proportion.html">sir_df()</a></code>, <code><a href="ggplot_sir.html">ggplot_sir()</a></code>, <code><a href="ggplot_sir.html">geom_sir()</a></code>, <code><a href="ggplot_sir.html">labels_sir_count()</a></code>, and <code>bug_drug_combinations()</code>. Functions that return a single proportion or count, such as <code><a href="proportion.html">susceptibility()</a></code>, <code><a href="count.html">count_resistant()</a></code>, <code><a href="antibiogram.html">antibiogram()</a></code>, <code><a href="antibiogram.html">wisca()</a></code>, and <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> on the result of <code>bug_drug_combinations()</code>, require 'I' to be considered either susceptible or resistant, and return an error.</p></li>
+</ul><p>Use <code><a href="proportion.html">susceptibility()</a></code> and <code><a href="proportion.html">resistance()</a></code> (or <code><a href="count.html">count_susceptible()</a></code> and <code><a href="count.html">count_resistant()</a></code>) to follow the guideline, or e.g. <code><a href="proportion.html">proportion_SI()</a></code> and <code><a href="proportion.html">proportion_R()</a></code> to be explicit regardless of the guideline.</p>
+<p>The <code>combine_SI</code> argument of the functions that return results per category, <code><a href="antibiogram.html">antibiogram()</a></code>, and <code><a href="antibiogram.html">wisca()</a></code> is deprecated in favour of <code>guideline</code>. If set, it is followed literally and takes precedence over <code>guideline</code>.</p>
     </div>
 
     <div class="section level2">
@@ -186,19 +205,24 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> (unknown species) CAZ       0     0     0     0     0     0     0     0     0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Use 'format()' on this result to get a publishable/printable format.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, translate_ab <span class="op">=</span> <span class="st">"name (atc)"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `bug_drug_combinations()` assumes the EUCAST guideline and thus considers the</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   'I' category susceptible when calculating resistance in `format()` (R vs.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   S+SDD+I). Use `guideline = "CLSI"` for I+R vs. S+SDD. Set the `guideline`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument, or set the `AMR_guideline` option to change the default (see</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `?AMR-options`). This message is shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 39 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Group     Drug  CoNS  `E. coli` `E. faecalis` `K. pneumoniae` `P. aeruginosa`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">"</span>Aminogl… Amik… <span style="color: #949494;">"</span>100… <span style="color: #949494;">"</span>  0.0% … <span style="color: #949494;">"</span>100.0% (39/… <span style="color: #949494;">""</span>              <span style="color: #949494;">""</span>             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">""</span>        Gent… <span style="color: #949494;">"</span> 16… <span style="color: #949494;">"</span>  2.0% … <span style="color: #949494;">"</span>100.0% (39/… <span style="color: #949494;">"</span> 10.3% (6/58)<span style="color: #949494;">"</span> <span style="color: #949494;">"</span> 10.0% (3/30)<span style="color: #949494;">"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">""</span>        Gent… <span style="color: #949494;">"</span> 13… <span style="color: #949494;">"</span>  2.0% … <span style="color: #949494;">"</span>100.0% (39/… <span style="color: #949494;">"</span> 10.3% (6/58)<span style="color: #949494;">"</span> <span style="color: #949494;">"</span>  0.0% (0/30)<span style="color: #949494;">"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">""</span>        Kana… <span style="color: #949494;">"</span>100… <span style="color: #949494;">""</span>        <span style="color: #949494;">"</span>100.0% (39/… <span style="color: #949494;">""</span>              <span style="color: #949494;">"</span>100.0% (30/30…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">""</span>        Tobr… <span style="color: #949494;">"</span> 78… <span style="color: #949494;">"</span>  2.6% … <span style="color: #949494;">"</span>100.0% (39/… <span style="color: #949494;">"</span> 10.3% (6/58)<span style="color: #949494;">"</span> <span style="color: #949494;">"</span>  0.0% (0/30)<span style="color: #949494;">"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">"</span>Aminope… Amox… <span style="color: #949494;">"</span> 93… <span style="color: #949494;">"</span> 50.0% … <span style="color: #949494;">""</span>            <span style="color: #949494;">"</span>100.0% (58/58… <span style="color: #949494;">"</span>100.0% (30/30…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">""</span>        Amox… <span style="color: #949494;">"</span> 42… <span style="color: #949494;">"</span> 28.9% … <span style="color: #949494;">""</span>            <span style="color: #949494;">"</span> 15.5% (9/58)<span style="color: #949494;">"</span> <span style="color: #949494;">"</span>100.0% (30/30…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">""</span>        Amox… <span style="color: #949494;">"</span> 42… <span style="color: #949494;">"</span> 13.1% … <span style="color: #949494;">""</span>            <span style="color: #949494;">"</span> 10.3% (6/58)<span style="color: #949494;">"</span> <span style="color: #949494;">"</span>100.0% (30/30…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">""</span>        Ampi… <span style="color: #949494;">"</span> 93… <span style="color: #949494;">"</span> 50.0% … <span style="color: #949494;">""</span>            <span style="color: #949494;">"</span>100.0% (58/58… <span style="color: #949494;">"</span>100.0% (30/30…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">"</span>Carbape… Imip… <span style="color: #949494;">"</span> 47… <span style="color: #949494;">"</span>  0.0% … <span style="color: #949494;">"</span>  0.0% (0/3… <span style="color: #949494;">"</span>  0.0% (0/51)<span style="color: #949494;">"</span> <span style="color: #949494;">""</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">""</span>        Mero… <span style="color: #949494;">"</span> 47… <span style="color: #949494;">"</span>  0.0% … <span style="color: #949494;">""</span>            <span style="color: #949494;">"</span>  0.0% (0/53)<span style="color: #949494;">"</span> <span style="color: #949494;">""</span>             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">"</span>Cephalo… Cefa… <span style="color: #949494;">"</span> 47… <span style="color: #949494;">"</span>  3.7% … <span style="color: #949494;">"</span>100.0% (39/… <span style="color: #949494;">""</span>              <span style="color: #949494;">"</span>100.0% (30/30…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">"</span>Cephalo… Cefa… <span style="color: #949494;">"</span> 47… <span style="color: #949494;">"</span>  2.4% … <span style="color: #949494;">"</span>100.0% (39/… <span style="color: #949494;">""</span>              <span style="color: #949494;">"</span>100.0% (30/30…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 29 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: `P. mirabilis` &lt;chr&gt;, `S. aureus` &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `S. epidermidis` &lt;chr&gt;, `S. hominis` &lt;chr&gt;, `S. pneumoniae` &lt;chr&gt;</span></span>

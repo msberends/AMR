@@ -36,7 +36,8 @@ wisca(
   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
   col_mo = NULL,
   language = get_AMR_locale(),
-  combine_SI = TRUE,
+  combine_SI,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   sep = " + ",
   sort_columns = TRUE,
   simulations = 1000,
@@ -60,7 +61,8 @@ antibiogram(
   col_mo = NULL,
   language = get_AMR_locale(),
   minimum = 30,
-  combine_SI = TRUE,
+  combine_SI,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   sep = " + ",
   sort_columns = TRUE,
   wisca = FALSE,
@@ -205,9 +207,20 @@ knit_print(
 
 - combine_SI:
 
-  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  all susceptibility should be determined by results of either S, SDD,
-  or I, instead of only S (default is `TRUE`).
+  *(deprecated in favour of `guideline`)* A
+  [logical](https://rdrr.io/r/base/logical.html). If set, it takes
+  precedence over `guideline`: `TRUE` considers S, SDD, and I
+  susceptible, and `FALSE` only S.
+
+- guideline:
+
+  A guideline name, `"EUCAST"` or `"CLSI"` (or any version thereof, e.g.
+  `"CLSI 2025"`), to determine whether the 'I' category is considered
+  susceptible (EUCAST) or resistant (CLSI). 'SDD' is always considered
+  susceptible. The default is the package option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md), or
+  `"EUCAST"` if it is not set. See section *Interpretation of SIR*
+  below.
 
 - sep:
 
@@ -499,10 +512,10 @@ combined using the same rules as
 [`sir_combine()`](https://amr-for-r.org/reference/sir_combine.md), see
 the section *Combination Therapy* below. Whether isolates must be tested
 for all antimicrobials can be set with the `only_all_tested` argument
-(default is `FALSE`). The 'I' and 'SDD' categories are considered
-susceptible if `combine_SI = TRUE` (default), which also determines
-whether a missing result can be ignored. To use a combination in other
-analyses as well, create a new variable with
+(default is `FALSE`). Whether the 'I' category is considered susceptible
+follows the `guideline` argument, which also determines whether a
+missing result can be ignored. To use a combination in other analyses as
+well, create a new variable with
 [`sir_combine()`](https://amr-for-r.org/reference/sir_combine.md).
 
 ### Plotting
@@ -631,9 +644,87 @@ all antimicrobials, so that:
       proportion_S() + proportion_I() + proportion_R() = 1
 
 In `antibiogram()` and `wisca()`, the result of the combination therapy
-(`"most_susceptible"`) is used, the 'I' and 'SDD' categories are
-considered susceptible if `combine_SI = TRUE` (default), and the result
-is then reduced to S or R.
+(`"most_susceptible"`) is used, the 'I' category is considered
+susceptible or not following the `guideline` argument ('SDD' is always
+considered susceptible), and the result is then reduced to S or R.
+
+## Interpretation of SIR
+
+In 2019, the European Committee on Antimicrobial Susceptibility Testing
+(EUCAST) has decided to change the definitions of susceptibility testing
+categories S, I, and R
+(<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
+
+In aggregated analyses, such as proportions, counts, antibiograms, and
+plots, the 'I' category must be considered either susceptible or
+resistant. In epidemiological AMR data analysis, this follows the
+guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I'
+resistant. The dose-dependent susceptibility of CLSI ('SDD') is always
+considered susceptible, as it equals what EUCAST defines as 'I'. All
+functions with a `guideline` argument for this purpose use these
+categories:
+
+|             |               |               |
+|-------------|---------------|---------------|
+| `guideline` | Susceptible   | Resistant     |
+| `"EUCAST"`  | S, SDD, I, WT | R, NWT, NS    |
+| `"CLSI"`    | S, SDD, WT    | I, R, NWT, NS |
+
+The values 'WT' (wild type) and 'NWT' (non-wild type) result from
+epidemiological cut-off values (ECOFFs) instead of clinical breakpoints.
+Since they are no clinical categories, 'WT' is always considered
+susceptible and 'NWT' always resistant, regardless of the guideline. The
+value 'NS' (non-susceptible) is always considered resistant, and 'NI'
+(non-interpretable) is always considered a missing result.
+
+The `guideline` argument can be:
+
+- **Left unset**, to use the package option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md), or
+  `"EUCAST"` if this option is not set. In the latter case, a message is
+  shown once per session (but not in R Markdown or Quarto documents);
+  set the option to silence it.
+
+- **`"EUCAST"`**, or any EUCAST version such as `"EUCAST 2025"`, to
+  consider 'I' susceptible, e.g., to return `"SI"` vs. `"R"` in
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md).
+
+- **`"CLSI"`**, or any CLSI version such as `"CLSI 2025"`, to consider
+  'I' resistant, e.g., to return `"S"` vs. `"IR"` in
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md).
+
+- **`NULL` or `FALSE`**, to keep S, I, and R separate. This is only
+  possible in functions that return results per category:
+  [`count_df()`](https://amr-for-r.org/reference/count.md),
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
+  [`sir_df()`](https://amr-for-r.org/reference/proportion.md),
+  [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  and
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md).
+  Functions that return a single proportion or count, such as
+  [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
+  [`count_resistant()`](https://amr-for-r.org/reference/count.md),
+  `antibiogram()`, `wisca()`, and
+  [`format()`](https://rdrr.io/r/base/format.html) on the result of
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md),
+  require 'I' to be considered either susceptible or resistant, and
+  return an error.
+
+Use [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
+and [`resistance()`](https://amr-for-r.org/reference/proportion.md) (or
+[`count_susceptible()`](https://amr-for-r.org/reference/count.md) and
+[`count_resistant()`](https://amr-for-r.org/reference/count.md)) to
+follow the guideline, or e.g.
+[`proportion_SI()`](https://amr-for-r.org/reference/proportion.md) and
+[`proportion_R()`](https://amr-for-r.org/reference/proportion.md) to be
+explicit regardless of the guideline.
+
+The `combine_SI` argument of the functions that return results per
+category, `antibiogram()`, and `wisca()` is deprecated in favour of
+`guideline`. If set, it is followed literally and takes precedence over
+`guideline`.
 
 ## References
 
@@ -712,14 +803,18 @@ example_isolates
 wisca(example_isolates,
   antimicrobials = c("AMC", "AMC+CIP", "AMC+GEN")
 )
-#> Warning: invalid microorganism code, NA generated
+#> ℹ `wisca()` assumes the EUCAST guideline and thus considers the 'I' category
+#>   susceptible, so S, SDD, and I count as covered. Use `guideline = "CLSI"` to
+#>   only count S and SDD as covered. Set the `guideline` argument, or set the
+#>   `AMR_guideline` option to change the default (see `?AMR-options`). This
+#>   message is shown once per session.
 #> # A tibble:       1 × 3
 #> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
 #> # Cred. interval: 95%
 #> # Simulations:    1000 per stratum
 #>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²
 #>   <chr>                         <chr>                     <chr>                 
-#> 1 74.2% (72.2-76.1%)            88.8% (87.1-90.3%)        90.8% (89.3-92.2%)    
+#> 1 74.3% (72.3-76.2%)            88.8% (87.2-90.4%)        90.8% (89.3-92.2%)    
 #> # ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,
 #> #   ²​`Amoxicillin/clavulanic acid + Gentamicin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -731,14 +826,13 @@ antibiogram(example_isolates,
   antimicrobials = c("AMC", "AMC+CIP", "AMC+GEN"),
   wisca = TRUE
 )
-#> Warning: invalid microorganism code, NA generated
 #> # A tibble:       1 × 3
 #> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
 #> # Cred. interval: 95%
 #> # Simulations:    1000 per stratum
 #>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²
 #>   <chr>                         <chr>                     <chr>                 
-#> 1 74.1% (72.1-75.9%)            88.8% (87.1-90.3%)        90.8% (89.5-92.1%)    
+#> 1 74.3% (72.4-76.2%)            88.9% (87.3-90.4%)        90.9% (89.4-92.3%)    
 #> # ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,
 #> #   ²​`Amoxicillin/clavulanic acid + Gentamicin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -750,7 +844,6 @@ out <- wisca(example_isolates,
   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   syndromic_group = "ward"
 )
-#> Warning: invalid microorganism code, NA generated
 out
 #> # A tibble:       3 × 4
 #> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
@@ -758,9 +851,9 @@ out
 #> # Simulations:    1000 per stratum
 #>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
 #>   <chr>             <chr>                     <chr>                             
-#> 1 Clinical          74.7% (69-80.3%)          93.6% (91.9-95.1%)                
-#> 2 ICU               57% (48.2-66%)            86.7% (83.5-89.7%)                
-#> 3 Outpatient        57.5% (46-68.7%)          76.5% (70.6-82.2%)                
+#> 1 Clinical          74.8% (69-80.1%)          93.7% (92.1-95.2%)                
+#> 2 ICU               57.2% (49.2-65.4%)        86.6% (83.5-89.7%)                
+#> 3 Outpatient        57.9% (46.2-69.8%)        76.6% (70.5-82.2%)                
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -791,14 +884,14 @@ if (requireNamespace("dplyr")) {
 #> # Simulations:    1000 per stratum
 #>   age_group gender `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentami…¹
 #>   <chr>     <chr>  <chr>                     <chr>                              
-#> 1 0-24      F      57.7% (29.5-82.1%)        70.5% (46.1-89%)                   
-#> 2 0-24      M      59.3% (33.1-84.2%)        76.2% (55.7-90.9%)                 
-#> 3 25-49     F      67.4% (43.3-90.4%)        93.8% (87.8-97.9%)                 
-#> 4 25-49     M      56.9% (27.1-86.5%)        90.9% (82.6-96.8%)                 
-#> 5 50-74     F      68.1% (53.3-82.6%)        96.9% (94.7-98.5%)                 
-#> 6 50-74     M      67.1% (56.3-77.3%)        96.8% (94.3-98.8%)                 
-#> 7 75+       F      73.3% (62.9-83.7%)        97.7% (96.1-98.9%)                 
-#> 8 75+       M      74% (64.1-82.9%)          97.9% (96-99%)                     
+#> 1 0-24      F      57.3% (31.1-82.2%)        70.9% (48.1-88.9%)                 
+#> 2 0-24      M      59.3% (30.7-86.3%)        76.2% (57.5-91.3%)                 
+#> 3 25-49     F      67.2% (43-89.1%)          93.7% (87-97.8%)                   
+#> 4 25-49     M      56.6% (24.9-87.3%)        91.2% (82-97.1%)                   
+#> 5 50-74     F      68.2% (54.1-82.1%)        96.9% (94.4-98.6%)                 
+#> 6 50-74     M      67.2% (56.1-77.4%)        96.8% (94-98.6%)                   
+#> 7 75+       F      73.4% (62.1-84%)          97.7% (95.8-99%)                   
+#> 8 75+       M      73.8% (63.8-82.8%)        97.8% (96.1-99.1%)                 
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -814,6 +907,11 @@ antibiogram(example_isolates,
 #> ℹ For `aminoglycosides()` using columns GEN (gentamicin), TOB (tobramycin), AMK
 #>   (amikacin), and KAN (kanamycin)
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
+#> ℹ `antibiogram()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible, so S, SDD, and I count as susceptible. Use `guideline =
+#>   "CLSI"` to only count S and SDD as susceptible. Set the `guideline` argument,
+#>   or set the `AMR_guideline` option to change the default (see `?AMR-options`).
+#>   This message is shown once per session.
 #> # A tibble:       10 × 7
 #> # Type:           Traditional Antibiogram
 #> # Conf. interval: 95%
@@ -970,7 +1068,6 @@ ureido <- wisca(example_isolates,
   syndromic_group = "ward"
 )
 #> ℹ For `ureidopenicillins()` using column TZP (piperacillin/tazobactam)
-#> Warning: invalid microorganism code, NA generated
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
@@ -981,9 +1078,9 @@ if (requireNamespace("knitr")) {
 #> 
 #> |Syndromic Group |Piperacillin/tazobactam |
 #> |:---------------|:-----------------------|
-#> |Clinical        |74.7% (68.7-79.8%)      |
-#> |ICU             |56.8% (48.9-65.7%)      |
-#> |Outpatient      |57.4% (45.6-68.4%)      |
+#> |Clinical        |74.8% (69.2-80.2%)      |
+#> |ICU             |57% (48.8-65.9%)        |
+#> |Outpatient      |57.4% (46.7-68.8%)      |
 
 
 # Generate plots with ggplot2 or base R --------------------------------
@@ -996,7 +1093,6 @@ ab2 <- wisca(example_isolates,
   antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
   syndromic_group = "ward"
 )
-#> Warning: invalid microorganism code, NA generated
 
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab1)

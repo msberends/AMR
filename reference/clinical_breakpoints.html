@@ -21,7 +21,7 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9138</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,11 +84,11 @@ Use as.sir() to transform MICs or disks measurements to SIR values."><meta prope
 <li><p><code>method</code><br> Testing method, either <code>"DISK"</code> or <code>"MIC"</code></p></li>
 <li><p><code>site</code><br> Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"</p></li>
 <li><p><code>mo</code><br> Microbial ID, see <code><a href="as.mo.html">as.mo()</a></code></p></li>
-<li><p><code>rank_index</code><br> Taxonomic rank index of <code>mo</code> from 1 (subspecies/infraspecies) to 7 (non-species related breakpoints), used to choose the most specific breakpoint; blocking rows (see <em>Details</em>) have the rank index of their organism + 0.1</p></li>
+<li><p><code>rank_index</code><br> Taxonomic rank index of <code>mo</code>, used to choose the most specific breakpoint (the lowest index): 1 for subspecies and infraspecies, 2 for species, 2.5 for species groups (e.g., <em>Streptococcus</em> group A), 3 for genus, 4 for family, 5 for order, 6 for other groups (e.g., Gram-negative or anaerobic bacteria), and 7 for non-species related (PK-PD) breakpoints. Blocking rows (see <em>Details</em>) have the rank index of their organism + 0.1, e.g., 2.6 for a species group, so that a breakpoint for the same organism always takes precedence.</p></li>
 <li><p><code>ab</code><br> Antimicrobial code as used by this package, EARS-Net and WHONET, see <code><a href="as.ab.html">as.ab()</a></code></p></li>
 <li><p><code>ref_tbl</code><br> Info about where the guideline rule can be found</p></li>
 <li><p><code>disk_dose</code><br> Dose of the used disk diffusion method</p></li>
-<li><p><code>breakpoint_S</code><br> Lowest MIC value or highest number of millimetres that leads to "S", is <code>NA</code> for blocking rows (see <em>Details</em>)</p></li>
+<li><p><code>breakpoint_S</code><br> Lowest MIC value or highest number of millimetres that leads to "S", is <code>NA</code> for blocking rows (see <em>Details</em>). EUCAST's off-scale MIC breakpoint of 0.001 mg/L, which indicates that there is no S category, is stored as 0.0001 to keep all isolates out of "S".</p></li>
 <li><p><code>breakpoint_R</code><br> Highest MIC value or lowest number of millimetres that leads to "R", can be <code>NA</code></p></li>
 <li><p><code>uti</code><br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> value (<code>TRUE</code>/<code>FALSE</code>) to indicate whether the rule applies to a urinary tract infection (UTI)</p></li>
 <li><p><code>is_SDD</code><br> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> value (<code>TRUE</code>/<code>FALSE</code>) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to 72 breakpoints.</p></li>

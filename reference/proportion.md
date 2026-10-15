@@ -56,7 +56,7 @@ proportion_df(
   language = get_AMR_locale(),
   minimum = 30,
   as_percent = FALSE,
-  combine_SI = TRUE,
+  combine_SI,
   confidence_level = 0.95,
   guideline = getOption("AMR_guideline", "EUCAST")
 )
@@ -67,7 +67,7 @@ sir_df(
   language = get_AMR_locale(),
   minimum = 30,
   as_percent = FALSE,
-  combine_SI = TRUE,
+  combine_SI,
   confidence_level = 0.95,
   guideline = getOption("AMR_guideline", "EUCAST")
 )
@@ -108,21 +108,20 @@ sir_df(
 
 - guideline:
 
-  Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category
-  will be considered as susceptible (see [EUCAST
-  website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)),
-  but with with CLSI, it will be considered resistant. Therefore:
-
-  - EUCAST: `susceptibility()` \\= \\S + \\I\\, `resistance()` \\= \\R\\
-
-  - CLSI: `susceptibility()` \\= \\S + \\SDD\\, `resistance()` \\= \\I +
-    \\R\\
-
-  You can also use e.g. `proportion_R()` or `proportion_S()` instead, to
-  be explicit. For `proportion_df()`,
-  [`count_df()`](https://amr-for-r.org/reference/count.md), and
-  `sir_df()`, the guideline determines how 'I' is merged when
-  `combine_SI = TRUE`.
+  A guideline name, `"EUCAST"` or `"CLSI"` (or any version thereof, e.g.
+  `"CLSI 2025"`), to determine whether the 'I' category is considered
+  susceptible (EUCAST) or resistant (CLSI). The default is the package
+  option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md), or
+  `"EUCAST"` if it is not set. For functions that return results per
+  category, i.e.,
+  [`count_df()`](https://amr-for-r.org/reference/count.md),
+  `proportion_df()`, `sir_df()`,
+  [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md), and
+  [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  this can also be `NULL` or `FALSE` to keep S, I, and R separate. See
+  section *Interpretation of SIR* below.
 
 - ab_result:
 
@@ -174,12 +173,10 @@ sir_df(
 
 - combine_SI:
 
-  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  the 'I' category must be merged with another category, so the output
-  only consists of susceptible vs. resistant - the default is `TRUE`.
-  Following the `guideline` argument, the output then consists of `"SI"`
-  (S+SDD+I) vs. `"R"` with EUCAST, and of `"S"` (S+SDD) vs. `"IR"` (I+R)
-  with CLSI.
+  *(deprecated in favour of `guideline`)* A
+  [logical](https://rdrr.io/r/base/logical.html). If set, it takes
+  precedence over `guideline`: `TRUE` merges S, SDD, and I into `"SI"`
+  vs. `"R"`, and `FALSE` keeps S, I, and R separate.
 
 ## Value
 
@@ -240,11 +237,74 @@ In 2019, the European Committee on Antimicrobial Susceptibility Testing
 categories S, I, and R
 (<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
 
-This AMR package follows insight; use `susceptibility()` (equal to
-`proportion_SI()`) to determine antimicrobial susceptibility and
-[`count_susceptible()`](https://amr-for-r.org/reference/count.md) (equal
-to [`count_SI()`](https://amr-for-r.org/reference/count.md)) to count
-susceptible isolates.
+In aggregated analyses, such as proportions, counts, antibiograms, and
+plots, the 'I' category must be considered either susceptible or
+resistant. In epidemiological AMR data analysis, this follows the
+guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I'
+resistant. The dose-dependent susceptibility of CLSI ('SDD') is always
+considered susceptible, as it equals what EUCAST defines as 'I'. All
+functions with a `guideline` argument for this purpose use these
+categories:
+
+|             |               |               |
+|-------------|---------------|---------------|
+| `guideline` | Susceptible   | Resistant     |
+| `"EUCAST"`  | S, SDD, I, WT | R, NWT, NS    |
+| `"CLSI"`    | S, SDD, WT    | I, R, NWT, NS |
+
+The values 'WT' (wild type) and 'NWT' (non-wild type) result from
+epidemiological cut-off values (ECOFFs) instead of clinical breakpoints.
+Since they are no clinical categories, 'WT' is always considered
+susceptible and 'NWT' always resistant, regardless of the guideline. The
+value 'NS' (non-susceptible) is always considered resistant, and 'NI'
+(non-interpretable) is always considered a missing result.
+
+The `guideline` argument can be:
+
+- **Left unset**, to use the package option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md), or
+  `"EUCAST"` if this option is not set. In the latter case, a message is
+  shown once per session (but not in R Markdown or Quarto documents);
+  set the option to silence it.
+
+- **`"EUCAST"`**, or any EUCAST version such as `"EUCAST 2025"`, to
+  consider 'I' susceptible, e.g., to return `"SI"` vs. `"R"` in
+  `proportion_df()`.
+
+- **`"CLSI"`**, or any CLSI version such as `"CLSI 2025"`, to consider
+  'I' resistant, e.g., to return `"S"` vs. `"IR"` in `proportion_df()`.
+
+- **`NULL` or `FALSE`**, to keep S, I, and R separate. This is only
+  possible in functions that return results per category:
+  [`count_df()`](https://amr-for-r.org/reference/count.md),
+  `proportion_df()`, `sir_df()`,
+  [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  and
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md).
+  Functions that return a single proportion or count, such as
+  `susceptibility()`,
+  [`count_resistant()`](https://amr-for-r.org/reference/count.md),
+  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md),
+  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md), and
+  [`format()`](https://rdrr.io/r/base/format.html) on the result of
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md),
+  require 'I' to be considered either susceptible or resistant, and
+  return an error.
+
+Use `susceptibility()` and `resistance()` (or
+[`count_susceptible()`](https://amr-for-r.org/reference/count.md) and
+[`count_resistant()`](https://amr-for-r.org/reference/count.md)) to
+follow the guideline, or e.g. `proportion_SI()` and `proportion_R()` to
+be explicit regardless of the guideline.
+
+The `combine_SI` argument of the functions that return results per
+category,
+[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md), and
+[`wisca()`](https://amr-for-r.org/reference/antibiogram.md) is
+deprecated in favour of `guideline`. If set, it is followed literally
+and takes precedence over `guideline`.
 
 ## Combination Therapy
 
@@ -312,9 +372,10 @@ all antimicrobials, so that:
 
 In [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) and
 [`wisca()`](https://amr-for-r.org/reference/antibiogram.md), the result
-of the combination therapy (`"most_susceptible"`) is used, the 'I' and
-'SDD' categories are considered susceptible if `combine_SI = TRUE`
-(default), and the result is then reduced to S or R.
+of the combination therapy (`"most_susceptible"`) is used, the 'I'
+category is considered susceptible or not following the `guideline`
+argument ('SDD' is always considered susceptible), and the result is
+then reduced to S or R.
 
 ## References
 
@@ -511,6 +572,16 @@ if (require("dplyr")) {
     group_by(ward) %>%
     sir_df(translate = FALSE)
 }
+#> ℹ `proportion_df()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible (S+SDD+I vs. R). Use `guideline = "CLSI"` for S+SDD vs.
+#>   I+R, or `guideline = NULL` to keep S, I, and R separate. Set the `guideline`
+#>   argument, or set the `AMR_guideline` option to change the default (see
+#>   `?AMR-options`). This message is shown once per session.
+#> ℹ `sir_df()` assumes the EUCAST guideline and thus considers the 'I' category
+#>   susceptible (S+SDD+I vs. R). Use `guideline = "CLSI"` for S+SDD vs. I+R, or
+#>   `guideline = NULL` to keep S, I, and R separate. Set the `guideline`
+#>   argument, or set the `AMR_guideline` option to change the default (see
+#>   `?AMR-options`). This message is shown once per session.
 #> # A tibble: 12 × 7
 #>    ward       antibiotic interpretation value ci_min ci_max isolates
 #>    <chr>      <chr>      <ord>          <dbl>  <dbl>  <dbl>    <int>

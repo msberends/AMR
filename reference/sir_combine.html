@@ -17,7 +17,7 @@ See Combination Therapy below for the exact rules. The same rules are used by an
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9138</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +92,7 @@ See Combination Therapy below for the exact rules. The same rules are used by an
 
 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
-<dd><p>Either <code>"EUCAST"</code> (default) or <code>"CLSI"</code>, to determine whether the 'I' category is considered susceptible. This only affects isolates with a missing result for any of the antimicrobials when <code>only_all_tested = FALSE</code>, see <em>Combination Therapy</em> below. The default can be changed with the <code>AMR_guideline</code> option, see <a href="AMR-options.html">AMR-options</a>.</p></dd>
+<dd><p>A guideline name, <code>"EUCAST"</code> or <code>"CLSI"</code> (or any version thereof, e.g. <code>"CLSI 2025"</code>), to determine whether the 'I' category is considered susceptible (EUCAST) or resistant (CLSI). This only affects isolates with a missing result for any of the antimicrobials when <code>only_all_tested = FALSE</code>, see <em>Combination Therapy</em> below. The default is the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, or <code>"EUCAST"</code> if it is not set. See section <em>Interpretation of SIR</em> below.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,7 +130,20 @@ See Combination Therapy below for the exact rules. The same rules are used by an
 <p>With <code>only_all_tested = TRUE</code>, all these functions count the result of the combination therapy (<code>"most_susceptible"</code>) of isolates tested for all antimicrobials, so that:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>    <span class="fu">count_S</span>()    <span class="sc">+</span>   <span class="fu">count_I</span>()    <span class="sc">+</span>   <span class="fu">count_R</span>()    <span class="ot">=</span> <span class="fu">count_all</span>()</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">proportion_S</span>() <span class="sc">+</span> <span class="fu">proportion_I</span>() <span class="sc">+</span> <span class="fu">proportion_R</span>() <span class="ot">=</span> <span class="dv">1</span></span></code></pre><p></p></div>
-<p>In <code><a href="antibiogram.html">antibiogram()</a></code> and <code><a href="antibiogram.html">wisca()</a></code>, the result of the combination therapy (<code>"most_susceptible"</code>) is used, the 'I' and 'SDD' categories are considered susceptible if <code>combine_SI = TRUE</code> (default), and the result is then reduced to S or R.</p>
+<p>In <code><a href="antibiogram.html">antibiogram()</a></code> and <code><a href="antibiogram.html">wisca()</a></code>, the result of the combination therapy (<code>"most_susceptible"</code>) is used, the 'I' category is considered susceptible or not following the <code>guideline</code> argument ('SDD' is always considered susceptible), and the result is then reduced to S or R.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
+
+
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/</a>).</p>
+<p>In aggregated analyses, such as proportions, counts, antibiograms, and plots, the 'I' category must be considered either susceptible or resistant. In epidemiological AMR data analysis, this follows the guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I' resistant. The dose-dependent susceptibility of CLSI ('SDD') is always considered susceptible, as it equals what EUCAST defines as 'I'. All functions with a <code>guideline</code> argument for this purpose use these categories:</p><table class="table table"><tr><td><code>guideline</code></td><td>Susceptible</td><td>Resistant</td></tr><tr><td><code>"EUCAST"</code></td><td>S, SDD, I, WT</td><td>R, NWT, NS</td></tr><tr><td><code>"CLSI"</code></td><td>S, SDD, WT</td><td>I, R, NWT, NS</td></tr></table><p>The values 'WT' (wild type) and 'NWT' (non-wild type) result from epidemiological cut-off values (ECOFFs) instead of clinical breakpoints. Since they are no clinical categories, 'WT' is always considered susceptible and 'NWT' always resistant, regardless of the guideline. The value 'NS' (non-susceptible) is always considered resistant, and 'NI' (non-interpretable) is always considered a missing result.</p>
+<p>The <code>guideline</code> argument can be:</p><ul><li><p><strong>Left unset</strong>, to use the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, or <code>"EUCAST"</code> if this option is not set. In the latter case, a message is shown once per session (but not in R Markdown or Quarto documents); set the option to silence it.</p></li>
+<li><p><strong><code>"EUCAST"</code></strong>, or any EUCAST version such as <code>"EUCAST 2025"</code>, to consider 'I' susceptible, e.g., to return <code>"SI"</code> vs. <code>"R"</code> in <code><a href="proportion.html">proportion_df()</a></code>.</p></li>
+<li><p><strong><code>"CLSI"</code></strong>, or any CLSI version such as <code>"CLSI 2025"</code>, to consider 'I' resistant, e.g., to return <code>"S"</code> vs. <code>"IR"</code> in <code><a href="proportion.html">proportion_df()</a></code>.</p></li>
+<li><p><strong><code>NULL</code> or <code>FALSE</code></strong>, to keep S, I, and R separate. This is only possible in functions that return results per category: <code><a href="count.html">count_df()</a></code>, <code><a href="proportion.html">proportion_df()</a></code>, <code><a href="proportion.html">sir_df()</a></code>, <code><a href="ggplot_sir.html">ggplot_sir()</a></code>, <code><a href="ggplot_sir.html">geom_sir()</a></code>, <code><a href="ggplot_sir.html">labels_sir_count()</a></code>, and <code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code>. Functions that return a single proportion or count, such as <code><a href="proportion.html">susceptibility()</a></code>, <code><a href="count.html">count_resistant()</a></code>, <code><a href="antibiogram.html">antibiogram()</a></code>, <code><a href="antibiogram.html">wisca()</a></code>, and <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> on the result of <code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code>, require 'I' to be considered either susceptible or resistant, and return an error.</p></li>
+</ul><p>Use <code><a href="proportion.html">susceptibility()</a></code> and <code><a href="proportion.html">resistance()</a></code> (or <code><a href="count.html">count_susceptible()</a></code> and <code><a href="count.html">count_resistant()</a></code>) to follow the guideline, or e.g. <code><a href="proportion.html">proportion_SI()</a></code> and <code><a href="proportion.html">proportion_R()</a></code> to be explicit regardless of the guideline.</p>
+<p>The <code>combine_SI</code> argument of the functions that return results per category, <code><a href="antibiogram.html">antibiogram()</a></code>, and <code><a href="antibiogram.html">wisca()</a></code> is deprecated in favour of <code>guideline</code>. If set, it is followed literally and takes precedence over <code>guideline</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -144,6 +157,11 @@ See Combination Therapy below for the exact rules. The same rules are used by an
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># combination therapy: is at least one of them expected to work?</span></span></span>
 <span class="r-in"><span><span class="fu">sir_combine</span><span class="op">(</span><span class="va">drug_a</span>, <span class="va">drug_b</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `sir_combine()` assumes the EUCAST guideline and thus considers the 'I'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   category susceptible, which affected the result for 'I' results combined with</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   a missing result. Use `guideline = "CLSI"` to consider it resistant. Set the</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `guideline` argument, or set the `AMR_guideline` option to change the default</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   (see `?AMR-options`). This message is shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Class <span style="color: #0000BB;">&lt;sir&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] S    S    R    I    I    &lt;NA&gt; &lt;NA&gt; SDD </span>
 <span class="r-in"><span><span class="fu">sir_combine</span><span class="op">(</span><span class="va">drug_a</span>, <span class="va">drug_b</span>, guideline <span class="op">=</span> <span class="st">"CLSI"</span><span class="op">)</span></span></span>

@@ -337,12 +337,13 @@ component analysis).
   [`facet_sir()`](https://amr-for-r.org/reference/plot.md)
   [`scale_y_percent()`](https://amr-for-r.org/reference/plot.md)
   [`scale_sir_colours()`](https://amr-for-r.org/reference/plot.md)
-  [`theme_sir()`](https://amr-for-r.org/reference/plot.md)
-  [`labels_sir_count()`](https://amr-for-r.org/reference/plot.md) :
-  Plotting Helpers for AMR Data Analysis
+  [`theme_sir()`](https://amr-for-r.org/reference/plot.md) : Plotting
+  Helpers for AMR Data Analysis
 
 - [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md)
-  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md) :
+  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md)
+  [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md)
+  :
 
   AMR Plots with `ggplot2`
 

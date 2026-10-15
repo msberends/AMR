@@ -63,7 +63,12 @@ the `AMR` package. Set them using the
   [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
   [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
   and many plotting functions. **While unset**, the AMR package uses the
-  latest implemented EUCAST guideline (currently EUCAST 2026).
+  latest implemented EUCAST guideline (currently EUCAST 2026). In
+  aggregated analyses, this option determines whether the 'I' category
+  is considered susceptible (EUCAST) or resistant (CLSI), see section
+  *Interpretation of SIR* in
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md); setting it
+  also silences the message that EUCAST is assumed.
 
   - For [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), this
     determines which clinical breakpoint guideline is used to interpret

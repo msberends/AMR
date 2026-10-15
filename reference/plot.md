@@ -142,18 +142,6 @@ scale_sir_colours(
 )
 
 theme_sir()
-
-labels_sir_count(
-  position = NULL,
-  x = "antibiotic",
-  translate_ab = "name",
-  minimum = 30,
-  language = get_AMR_locale(),
-  combine_SI = TRUE,
-  guideline = getOption("AMR_guideline", "EUCAST"),
-  datalabels.size = 3,
-  datalabels.colour = "grey15"
-)
 ```
 
 ## Arguments
@@ -287,41 +275,6 @@ labels_sir_count(
   also be (a combination of) "alpha", "colour", "fill", "linetype",
   "shape" or "size".
 
-- position:
-
-  Position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`.
-
-- translate_ab:
-
-  A column name of the
-  [antimicrobials](https://amr-for-r.org/reference/antimicrobials.md)
-  data set to translate the antibiotic abbreviations to, using
-  [`ab_property()`](https://amr-for-r.org/reference/ab_property.md).
-
-- minimum:
-
-  The minimum allowed number of available (tested) isolates. Any isolate
-  count lower than `minimum` will return `NA` with a warning. The
-  default number of `30` isolates is advised by the Clinical and
-  Laboratory Standards Institute (CLSI) as best practice, see *Source*.
-
-- combine_SI:
-
-  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  the 'I' category must be merged with another category, so the output
-  only consists of susceptible vs. resistant - the default is `TRUE`.
-  Following the `guideline` argument, the output then consists of `"SI"`
-  (S+SDD+I) vs. `"R"` with EUCAST, and of `"S"` (S+SDD) vs. `"IR"` (I+R)
-  with CLSI.
-
-- datalabels.size:
-
-  Size of the datalabels.
-
-- datalabels.colour:
-
-  Colour of the datalabels.
-
 ## Value
 
 The
@@ -385,8 +338,9 @@ internally used by
   theme](https://ggplot2.tidyverse.org/reference/theme.html) with
   minimal distraction.
 
-- `labels_sir_count()` print datalabels on the bars with percentage and
-  number of isolates, using
+- [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md)
+  print datalabels on the bars with percentage and number of isolates,
+  using
   [`ggplot2::geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
 
 The interpretation of "I" will be named "Increased exposure" for all

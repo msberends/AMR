@@ -123,6 +123,11 @@ if (require("dplyr") && require("ggplot2")) {
     )
 }
 #> Loading required package: ggplot2
+#> ℹ `ggplot_sir()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible (S+SDD+I vs. R). Use `guideline = "CLSI"` for S+SDD vs.
+#>   I+R, or `guideline = NULL` to keep S, I, and R separate. Set the `guideline`
+#>   argument, or set the `AMR_guideline` option to change the default (see
+#>   `?AMR-options`). This message is shown once per session.
 
 # }
 ```

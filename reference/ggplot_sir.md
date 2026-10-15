@@ -17,7 +17,7 @@ ggplot_sir(
   breaks = seq(0, 1, 0.1),
   limits = NULL,
   translate_ab = "name",
-  combine_SI = TRUE,
+  combine_SI,
   minimum = 30,
   language = get_AMR_locale(),
   guideline = getOption("AMR_guideline", "EUCAST"),
@@ -42,9 +42,21 @@ geom_sir(
   translate_ab = "name",
   minimum = 30,
   language = get_AMR_locale(),
-  combine_SI = TRUE,
+  combine_SI,
   guideline = getOption("AMR_guideline", "EUCAST"),
   ...
+)
+
+labels_sir_count(
+  position = NULL,
+  x = "antibiotic",
+  translate_ab = "name",
+  minimum = 30,
+  language = get_AMR_locale(),
+  combine_SI,
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  datalabels.size = 3,
+  datalabels.colour = "grey15"
 )
 ```
 
@@ -94,12 +106,10 @@ geom_sir(
 
 - combine_SI:
 
-  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  the 'I' category must be merged with another category, so the output
-  only consists of susceptible vs. resistant - the default is `TRUE`.
-  Following the `guideline` argument, the output then consists of `"SI"`
-  (S+SDD+I) vs. `"R"` with EUCAST, and of `"S"` (S+SDD) vs. `"IR"` (I+R)
-  with CLSI.
+  *(deprecated in favour of `guideline`)* A
+  [logical](https://rdrr.io/r/base/logical.html). If set, it takes
+  precedence over `guideline`: `TRUE` merges S, SDD, and I into `"SI"`
+  vs. `"R"`, and `FALSE` keeps S, I, and R separate.
 
 - minimum:
 
@@ -119,31 +129,19 @@ geom_sir(
 
 - guideline:
 
-  Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category
-  will be considered as susceptible (see [EUCAST
-  website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)),
-  but with with CLSI, it will be considered resistant. Therefore:
-
-  - EUCAST:
-    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
-    \\= \\S + \\I\\,
-    [`resistance()`](https://amr-for-r.org/reference/proportion.md) \\=
-    \\R\\
-
-  - CLSI:
-    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
-    \\= \\S + \\SDD\\,
-    [`resistance()`](https://amr-for-r.org/reference/proportion.md) \\=
-    \\I + \\R\\
-
-  You can also use e.g.
-  [`proportion_R()`](https://amr-for-r.org/reference/proportion.md) or
-  [`proportion_S()`](https://amr-for-r.org/reference/proportion.md)
-  instead, to be explicit. For
+  A guideline name, `"EUCAST"` or `"CLSI"` (or any version thereof, e.g.
+  `"CLSI 2025"`), to determine whether the 'I' category is considered
+  susceptible (EUCAST) or resistant (CLSI). The default is the package
+  option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md), or
+  `"EUCAST"` if it is not set. For functions that return results per
+  category, i.e.,
+  [`count_df()`](https://amr-for-r.org/reference/count.md),
   [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
-  [`count_df()`](https://amr-for-r.org/reference/count.md), and
-  [`sir_df()`](https://amr-for-r.org/reference/proportion.md), the
-  guideline determines how 'I' is merged when `combine_SI = TRUE`.
+  [`sir_df()`](https://amr-for-r.org/reference/proportion.md),
+  `ggplot_sir()`, `geom_sir()`, and `labels_sir_count()`, this can also
+  be `NULL` or `FALSE` to keep S, I, and R separate. See section
+  *Interpretation of SIR* below.
 
 - nrow:
 
@@ -156,8 +154,7 @@ geom_sir(
 
 - datalabels:
 
-  Show datalabels using
-  [`labels_sir_count()`](https://amr-for-r.org/reference/plot.md).
+  Show datalabels using `labels_sir_count()`.
 
 - datalabels.size:
 
@@ -230,13 +227,91 @@ Additional functions include:
   theme](https://ggplot2.tidyverse.org/reference/theme.html) with
   minimal distraction.
 
-- [`labels_sir_count()`](https://amr-for-r.org/reference/plot.md) print
-  datalabels on the bars with percentage and amount of isolates using
+- `labels_sir_count()` print datalabels on the bars with percentage and
+  amount of isolates using
   [`ggplot2::geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
 
 `ggplot_sir()` is a wrapper around all above functions that uses data as
 first input. This makes it possible to use this function after a pipe
 (`%>%`). See *Examples*.
+
+## Interpretation of SIR
+
+In 2019, the European Committee on Antimicrobial Susceptibility Testing
+(EUCAST) has decided to change the definitions of susceptibility testing
+categories S, I, and R
+(<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
+
+In aggregated analyses, such as proportions, counts, antibiograms, and
+plots, the 'I' category must be considered either susceptible or
+resistant. In epidemiological AMR data analysis, this follows the
+guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I'
+resistant. The dose-dependent susceptibility of CLSI ('SDD') is always
+considered susceptible, as it equals what EUCAST defines as 'I'. All
+functions with a `guideline` argument for this purpose use these
+categories:
+
+|             |               |               |
+|-------------|---------------|---------------|
+| `guideline` | Susceptible   | Resistant     |
+| `"EUCAST"`  | S, SDD, I, WT | R, NWT, NS    |
+| `"CLSI"`    | S, SDD, WT    | I, R, NWT, NS |
+
+The values 'WT' (wild type) and 'NWT' (non-wild type) result from
+epidemiological cut-off values (ECOFFs) instead of clinical breakpoints.
+Since they are no clinical categories, 'WT' is always considered
+susceptible and 'NWT' always resistant, regardless of the guideline. The
+value 'NS' (non-susceptible) is always considered resistant, and 'NI'
+(non-interpretable) is always considered a missing result.
+
+The `guideline` argument can be:
+
+- **Left unset**, to use the package option
+  [`AMR_guideline`](https://amr-for-r.org/reference/AMR-options.md), or
+  `"EUCAST"` if this option is not set. In the latter case, a message is
+  shown once per session (but not in R Markdown or Quarto documents);
+  set the option to silence it.
+
+- **`"EUCAST"`**, or any EUCAST version such as `"EUCAST 2025"`, to
+  consider 'I' susceptible, e.g., to return `"SI"` vs. `"R"` in
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md).
+
+- **`"CLSI"`**, or any CLSI version such as `"CLSI 2025"`, to consider
+  'I' resistant, e.g., to return `"S"` vs. `"IR"` in
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md).
+
+- **`NULL` or `FALSE`**, to keep S, I, and R separate. This is only
+  possible in functions that return results per category:
+  [`count_df()`](https://amr-for-r.org/reference/count.md),
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
+  [`sir_df()`](https://amr-for-r.org/reference/proportion.md),
+  `ggplot_sir()`, `geom_sir()`, `labels_sir_count()`, and
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md).
+  Functions that return a single proportion or count, such as
+  [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
+  [`count_resistant()`](https://amr-for-r.org/reference/count.md),
+  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md),
+  [`wisca()`](https://amr-for-r.org/reference/antibiogram.md), and
+  [`format()`](https://rdrr.io/r/base/format.html) on the result of
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md),
+  require 'I' to be considered either susceptible or resistant, and
+  return an error.
+
+Use [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
+and [`resistance()`](https://amr-for-r.org/reference/proportion.md) (or
+[`count_susceptible()`](https://amr-for-r.org/reference/count.md) and
+[`count_resistant()`](https://amr-for-r.org/reference/count.md)) to
+follow the guideline, or e.g.
+[`proportion_SI()`](https://amr-for-r.org/reference/proportion.md) and
+[`proportion_R()`](https://amr-for-r.org/reference/proportion.md) to be
+explicit regardless of the guideline.
+
+The `combine_SI` argument of the functions that return results per
+category,
+[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md), and
+[`wisca()`](https://amr-for-r.org/reference/antibiogram.md) is
+deprecated in favour of `guideline`. If set, it is followed literally
+and takes precedence over `guideline`.
 
 ## Examples
 
@@ -247,6 +322,11 @@ if (require("ggplot2") && require("dplyr")) {
   ggplot(example_isolates %>% select(AMX, NIT, FOS, TMP, CIP)) +
     geom_sir()
 }
+#> ℹ `geom_sir()` assumes the EUCAST guideline and thus considers the 'I' category
+#>   susceptible (S+SDD+I vs. R). Use `guideline = "CLSI"` for S+SDD vs. I+R, or
+#>   `guideline = NULL` to keep S, I, and R separate. Set the `guideline`
+#>   argument, or set the `AMR_guideline` option to change the default (see
+#>   `?AMR-options`). This message is shown once per session.
 
 if (require("ggplot2") && require("dplyr")) {
   # prettify the plot using some additional functions:
@@ -258,6 +338,11 @@ if (require("ggplot2") && require("dplyr")) {
     labels_sir_count() +
     theme_sir()
 }
+#> ℹ `labels_sir_count()` assumes the EUCAST guideline and thus considers the 'I'
+#>   category susceptible (S+SDD+I vs. R). Use `guideline = "CLSI"` for S+SDD vs.
+#>   I+R, or `guideline = NULL` to keep S, I, and R separate. Set the `guideline`
+#>   argument, or set the `AMR_guideline` option to change the default (see
+#>   `?AMR-options`). This message is shown once per session.
 
 if (require("ggplot2") && require("dplyr")) {
   # or better yet, simplify this using the wrapper function - a single command:

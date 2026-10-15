@@ -51,10 +51,14 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 60
   [`as.mo()`](https://amr-for-r.org/reference/as.mo.md)
 
 - `rank_index`  
-  Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 7
-  (non-species related breakpoints), used to choose the most specific
-  breakpoint; blocking rows (see *Details*) have the rank index of their
-  organism + 0.1
+  Taxonomic rank index of `mo`, used to choose the most specific
+  breakpoint (the lowest index): 1 for subspecies and infraspecies, 2
+  for species, 2.5 for species groups (e.g., *Streptococcus* group A), 3
+  for genus, 4 for family, 5 for order, 6 for other groups (e.g.,
+  Gram-negative or anaerobic bacteria), and 7 for non-species related
+  (PK-PD) breakpoints. Blocking rows (see *Details*) have the rank index
+  of their organism + 0.1, e.g., 2.6 for a species group, so that a
+  breakpoint for the same organism always takes precedence.
 
 - `ab`  
   Antimicrobial code as used by this package, EARS-Net and WHONET, see
@@ -68,7 +72,9 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 60
 
 - `breakpoint_S`  
   Lowest MIC value or highest number of millimetres that leads to "S",
-  is `NA` for blocking rows (see *Details*)
+  is `NA` for blocking rows (see *Details*). EUCAST's off-scale MIC
+  breakpoint of 0.001 mg/L, which indicates that there is no S category,
+  is stored as 0.0001 to keep all isolates out of "S".
 
 - `breakpoint_R`  
   Highest MIC value or lowest number of millimetres that leads to "R",

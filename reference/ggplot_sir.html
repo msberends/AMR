@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9138</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>AMR Plots with <code>ggplot2</code></h1>
-      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/R/ggplot_sir.R" class="external-link"><code>R/ggplot_sir.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/msberends/AMR/blob/main/R/ggplot_sir.R" class="external-link"><code>R/ggplot_sir.R</code></a>, <a href="https://github.com/msberends/AMR/blob/main/R/plotting.R" class="external-link"><code>R/plotting.R</code></a></small>
       <div class="d-none name"><code>ggplot_sir.Rd</code></div>
     </div>
 
@@ -64,7 +64,7 @@
 <span>  breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
 <span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  translate_ab <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">combine_SI</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
@@ -89,9 +89,21 @@
 <span>  translate_ab <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">combine_SI</span>,</span>
 <span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">labels_sir_count</span><span class="op">(</span></span>
+<span>  position <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="st">"antibiotic"</span>,</span>
+<span>  translate_ab <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">combine_SI</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
+<span>  datalabels.size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  datalabels.colour <span class="op">=</span> <span class="st">"grey15"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -132,7 +144,7 @@
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is <code>TRUE</code>. Following the <code>guideline</code> argument, the output then consists of <code>"SI"</code> (S+SDD+I) vs. <code>"R"</code> with EUCAST, and of <code>"S"</code> (S+SDD) vs. <code>"IR"</code> (I+R) with CLSI.</p></dd>
+<dd><p><em>(deprecated in favour of <code>guideline</code>)</em> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>. If set, it takes precedence over <code>guideline</code>: <code>TRUE</code> merges S, SDD, and I into <code>"SI"</code> vs. <code>"R"</code>, and <code>FALSE</code> keeps S, I, and R separate.</p></dd>
 
 
 <dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
@@ -144,9 +156,7 @@
 
 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
-<dd><p>Either <code>"EUCAST"</code> (default) or <code>"CLSI"</code>. With EUCAST, the 'I' category will be considered as susceptible (see <a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">EUCAST website</a>), but with with CLSI, it will be considered resistant. Therefore:</p><ul><li><p>EUCAST: <code><a href="proportion.html">susceptibility()</a></code> \(= \%S + \%I\), <code><a href="proportion.html">resistance()</a></code> \(= \%R\)</p></li>
-<li><p>CLSI: <code><a href="proportion.html">susceptibility()</a></code> \(= \%S + \%SDD\), <code><a href="proportion.html">resistance()</a></code> \(= \%I + \%R\)</p></li>
-</ul><p>You can also use e.g. <code><a href="proportion.html">proportion_R()</a></code> or <code><a href="proportion.html">proportion_S()</a></code> instead, to be explicit. For <code><a href="proportion.html">proportion_df()</a></code>, <code><a href="count.html">count_df()</a></code>, and <code><a href="proportion.html">sir_df()</a></code>, the guideline determines how 'I' is merged when <code>combine_SI = TRUE</code>.</p></dd>
+<dd><p>A guideline name, <code>"EUCAST"</code> or <code>"CLSI"</code> (or any version thereof, e.g. <code>"CLSI 2025"</code>), to determine whether the 'I' category is considered susceptible (EUCAST) or resistant (CLSI). The default is the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, or <code>"EUCAST"</code> if it is not set. For functions that return results per category, i.e., <code><a href="count.html">count_df()</a></code>, <code><a href="proportion.html">proportion_df()</a></code>, <code><a href="proportion.html">sir_df()</a></code>, <code>ggplot_sir()</code>, <code>geom_sir()</code>, and <code>labels_sir_count()</code>, this can also be <code>NULL</code> or <code>FALSE</code> to keep S, I, and R separate. See section <em>Interpretation of SIR</em> below.</p></dd>
 
 
 <dt id="arg-nrow">nrow<a class="anchor" aria-label="anchor" href="#arg-nrow"></a></dt>
@@ -158,7 +168,7 @@
 
 
 <dt id="arg-datalabels">datalabels<a class="anchor" aria-label="anchor" href="#arg-datalabels"></a></dt>
-<dd><p>Show datalabels using <code><a href="plot.html">labels_sir_count()</a></code>.</p></dd>
+<dd><p>Show datalabels using <code>labels_sir_count()</code>.</p></dd>
 
 
 <dt id="arg-datalabels-size">datalabels.size<a class="anchor" aria-label="anchor" href="#arg-datalabels-size"></a></dt>
@@ -201,8 +211,21 @@
 <li><p><code><a href="plot.html">scale_y_percent()</a></code> transforms the y axis to a 0 to 100% range using <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code>.</p></li>
 <li><p><code><a href="plot.html">scale_sir_colours()</a></code> sets colours to the bars (green for S, yellow for I, and red for R). with multilingual support. The default colours are colour-blind friendly, while maintaining the convention that e.g. 'susceptible' should be green and 'resistant' should be red.</p></li>
 <li><p><code><a href="plot.html">theme_sir()</a></code> is a <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2 theme</a> with minimal distraction.</p></li>
-<li><p><code><a href="plot.html">labels_sir_count()</a></code> print datalabels on the bars with percentage and amount of isolates using <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>.</p></li>
+<li><p><code>labels_sir_count()</code> print datalabels on the bars with percentage and amount of isolates using <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>.</p></li>
 </ul><p><code>ggplot_sir()</code> is a wrapper around all above functions that uses data as first input. This makes it possible to use this function after a pipe (<code>%&gt;%</code>). See <em>Examples</em>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
+
+
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/</a>).</p>
+<p>In aggregated analyses, such as proportions, counts, antibiograms, and plots, the 'I' category must be considered either susceptible or resistant. In epidemiological AMR data analysis, this follows the guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I' resistant. The dose-dependent susceptibility of CLSI ('SDD') is always considered susceptible, as it equals what EUCAST defines as 'I'. All functions with a <code>guideline</code> argument for this purpose use these categories:</p><table class="table table"><tr><td><code>guideline</code></td><td>Susceptible</td><td>Resistant</td></tr><tr><td><code>"EUCAST"</code></td><td>S, SDD, I, WT</td><td>R, NWT, NS</td></tr><tr><td><code>"CLSI"</code></td><td>S, SDD, WT</td><td>I, R, NWT, NS</td></tr></table><p>The values 'WT' (wild type) and 'NWT' (non-wild type) result from epidemiological cut-off values (ECOFFs) instead of clinical breakpoints. Since they are no clinical categories, 'WT' is always considered susceptible and 'NWT' always resistant, regardless of the guideline. The value 'NS' (non-susceptible) is always considered resistant, and 'NI' (non-interpretable) is always considered a missing result.</p>
+<p>The <code>guideline</code> argument can be:</p><ul><li><p><strong>Left unset</strong>, to use the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, or <code>"EUCAST"</code> if this option is not set. In the latter case, a message is shown once per session (but not in R Markdown or Quarto documents); set the option to silence it.</p></li>
+<li><p><strong><code>"EUCAST"</code></strong>, or any EUCAST version such as <code>"EUCAST 2025"</code>, to consider 'I' susceptible, e.g., to return <code>"SI"</code> vs. <code>"R"</code> in <code><a href="proportion.html">proportion_df()</a></code>.</p></li>
+<li><p><strong><code>"CLSI"</code></strong>, or any CLSI version such as <code>"CLSI 2025"</code>, to consider 'I' resistant, e.g., to return <code>"S"</code> vs. <code>"IR"</code> in <code><a href="proportion.html">proportion_df()</a></code>.</p></li>
+<li><p><strong><code>NULL</code> or <code>FALSE</code></strong>, to keep S, I, and R separate. This is only possible in functions that return results per category: <code><a href="count.html">count_df()</a></code>, <code><a href="proportion.html">proportion_df()</a></code>, <code><a href="proportion.html">sir_df()</a></code>, <code>ggplot_sir()</code>, <code>geom_sir()</code>, <code>labels_sir_count()</code>, and <code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code>. Functions that return a single proportion or count, such as <code><a href="proportion.html">susceptibility()</a></code>, <code><a href="count.html">count_resistant()</a></code>, <code><a href="antibiogram.html">antibiogram()</a></code>, <code><a href="antibiogram.html">wisca()</a></code>, and <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> on the result of <code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code>, require 'I' to be considered either susceptible or resistant, and return an error.</p></li>
+</ul><p>Use <code><a href="proportion.html">susceptibility()</a></code> and <code><a href="proportion.html">resistance()</a></code> (or <code><a href="count.html">count_susceptible()</a></code> and <code><a href="count.html">count_resistant()</a></code>) to follow the guideline, or e.g. <code><a href="proportion.html">proportion_SI()</a></code> and <code><a href="proportion.html">proportion_R()</a></code> to be explicit regardless of the guideline.</p>
+<p>The <code>combine_SI</code> argument of the functions that return results per category, <code><a href="antibiogram.html">antibiogram()</a></code>, and <code><a href="antibiogram.html">wisca()</a></code> is deprecated in favour of <code>guideline</code>. If set, it is followed literally and takes precedence over <code>guideline</code>.</p>
     </div>
 
     <div class="section level2">
@@ -213,6 +236,11 @@
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">example_isolates</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">AMX</span>, <span class="va">NIT</span>, <span class="va">FOS</span>, <span class="va">TMP</span>, <span class="va">CIP</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu">geom_sir</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `geom_sir()` assumes the EUCAST guideline and thus considers the 'I' category</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   susceptible (S+SDD+I vs. R). Use `guideline = "CLSI"` for S+SDD vs. I+R, or</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `guideline = NULL` to keep S, I, and R separate. Set the `guideline`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument, or set the `AMR_guideline` option to change the default (see</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `?AMR-options`). This message is shown once per session.</span>
 <span class="r-plt img"><img src="ggplot_sir-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># prettify the plot using some additional functions:</span></span></span>
@@ -221,9 +249,14 @@
 <span class="r-in"><span>    <span class="fu">geom_sir</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="plot.html">scale_y_percent</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="plot.html">scale_sir_colours</a></span><span class="op">(</span>aesthetics <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="plot.html">labels_sir_count</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu">labels_sir_count</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="plot.html">theme_sir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `labels_sir_count()` assumes the EUCAST guideline and thus considers the 'I'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   category susceptible (S+SDD+I vs. R). Use `guideline = "CLSI"` for S+SDD vs.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   I+R, or `guideline = NULL` to keep S, I, and R separate. Set the `guideline`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   argument, or set the `AMR_guideline` option to change the default (see</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `?AMR-options`). This message is shown once per session.</span>
 <span class="r-plt img"><img src="ggplot_sir-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="co"># or better yet, simplify this using the wrapper function - a single command:</span></span></span>

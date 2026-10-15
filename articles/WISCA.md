@@ -367,7 +367,9 @@ wisca_plot(wisca_out, wisca_plot_type = "posterior_coverage")
 
 - `simulations = 1000`: number of Monte Carlo draws
 - `conf_interval = 0.95`: coverage interval width
-- `combine_SI = TRUE`: count “I” and “SDD” as susceptible
+- `guideline = "EUCAST"` (or the `AMR_guideline` option): count “I” and
+  “SDD” as covered; use `guideline = "CLSI"` to count only “SDD” as
+  covered
 
 ## Practical considerations
 

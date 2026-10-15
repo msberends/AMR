@@ -13,7 +13,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9138</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,8 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span>  formatting_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_antibiogram_formatting_type"</span>, <span class="fl">14</span><span class="op">)</span>,</span>
 <span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">combine_SI</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  sep <span class="op">=</span> <span class="st">" + "</span>,</span>
 <span>  sort_columns <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  simulations <span class="op">=</span> <span class="fl">1000</span>,</span>
@@ -98,7 +99,8 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span>  col_mo <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">combine_SI</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  sep <span class="op">=</span> <span class="st">" + "</span>,</span>
 <span>  sort_columns <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  wisca <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -195,7 +197,11 @@ All antibiogram types adhere to previously described approaches (see Source), an
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is <code>TRUE</code>).</p></dd>
+<dd><p><em>(deprecated in favour of <code>guideline</code>)</em> A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>. If set, it takes precedence over <code>guideline</code>: <code>TRUE</code> considers S, SDD, and I susceptible, and <code>FALSE</code> only S.</p></dd>
+
+
+<dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
+<dd><p>A guideline name, <code>"EUCAST"</code> or <code>"CLSI"</code> (or any version thereof, e.g. <code>"CLSI 2025"</code>), to determine whether the 'I' category is considered susceptible (EUCAST) or resistant (CLSI). 'SDD' is always considered susceptible. The default is the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, or <code>"EUCAST"</code> if it is not set. See section <em>Interpretation of SIR</em> below.</p></dd>
 
 
 <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
@@ -350,7 +356,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <h3 id="inclusion-in-combination-antibiograms">Inclusion in Combination Antibiograms<a class="anchor" aria-label="anchor" href="#inclusion-in-combination-antibiograms"></a></h3>
 
 
-<p>For combination antibiograms, the results of the antimicrobials are combined using the same rules as <code><a href="sir_combine.html">sir_combine()</a></code>, see the section <em>Combination Therapy</em> below. Whether isolates must be tested for all antimicrobials can be set with the <code>only_all_tested</code> argument (default is <code>FALSE</code>). The 'I' and 'SDD' categories are considered susceptible if <code>combine_SI = TRUE</code> (default), which also determines whether a missing result can be ignored. To use a combination in other analyses as well, create a new variable with <code><a href="sir_combine.html">sir_combine()</a></code>.</p>
+<p>For combination antibiograms, the results of the antimicrobials are combined using the same rules as <code><a href="sir_combine.html">sir_combine()</a></code>, see the section <em>Combination Therapy</em> below. Whether isolates must be tested for all antimicrobials can be set with the <code>only_all_tested</code> argument (default is <code>FALSE</code>). Whether the 'I' category is considered susceptible follows the <code>guideline</code> argument, which also determines whether a missing result can be ignored. To use a combination in other analyses as well, create a new variable with <code><a href="sir_combine.html">sir_combine()</a></code>.</p>
 </div>
 
 <div class="section">
@@ -405,7 +411,20 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <p>With <code>only_all_tested = TRUE</code>, all these functions count the result of the combination therapy (<code>"most_susceptible"</code>) of isolates tested for all antimicrobials, so that:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>    <span class="fu">count_S</span>()    <span class="sc">+</span>   <span class="fu">count_I</span>()    <span class="sc">+</span>   <span class="fu">count_R</span>()    <span class="ot">=</span> <span class="fu">count_all</span>()</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="fu">proportion_S</span>() <span class="sc">+</span> <span class="fu">proportion_I</span>() <span class="sc">+</span> <span class="fu">proportion_R</span>() <span class="ot">=</span> <span class="dv">1</span></span></code></pre><p></p></div>
-<p>In <code>antibiogram()</code> and <code>wisca()</code>, the result of the combination therapy (<code>"most_susceptible"</code>) is used, the 'I' and 'SDD' categories are considered susceptible if <code>combine_SI = TRUE</code> (default), and the result is then reduced to S or R.</p>
+<p>In <code>antibiogram()</code> and <code>wisca()</code>, the result of the combination therapy (<code>"most_susceptible"</code>) is used, the 'I' category is considered susceptible or not following the <code>guideline</code> argument ('SDD' is always considered susceptible), and the result is then reduced to S or R.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="interpretation-of-sir">Interpretation of SIR<a class="anchor" aria-label="anchor" href="#interpretation-of-sir"></a></h2>
+
+
+<p>In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/</a>).</p>
+<p>In aggregated analyses, such as proportions, counts, antibiograms, and plots, the 'I' category must be considered either susceptible or resistant. In epidemiological AMR data analysis, this follows the guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I' resistant. The dose-dependent susceptibility of CLSI ('SDD') is always considered susceptible, as it equals what EUCAST defines as 'I'. All functions with a <code>guideline</code> argument for this purpose use these categories:</p><table class="table table"><tr><td><code>guideline</code></td><td>Susceptible</td><td>Resistant</td></tr><tr><td><code>"EUCAST"</code></td><td>S, SDD, I, WT</td><td>R, NWT, NS</td></tr><tr><td><code>"CLSI"</code></td><td>S, SDD, WT</td><td>I, R, NWT, NS</td></tr></table><p>The values 'WT' (wild type) and 'NWT' (non-wild type) result from epidemiological cut-off values (ECOFFs) instead of clinical breakpoints. Since they are no clinical categories, 'WT' is always considered susceptible and 'NWT' always resistant, regardless of the guideline. The value 'NS' (non-susceptible) is always considered resistant, and 'NI' (non-interpretable) is always considered a missing result.</p>
+<p>The <code>guideline</code> argument can be:</p><ul><li><p><strong>Left unset</strong>, to use the package option <code><a href="AMR-options.html">AMR_guideline</a></code>, or <code>"EUCAST"</code> if this option is not set. In the latter case, a message is shown once per session (but not in R Markdown or Quarto documents); set the option to silence it.</p></li>
+<li><p><strong><code>"EUCAST"</code></strong>, or any EUCAST version such as <code>"EUCAST 2025"</code>, to consider 'I' susceptible, e.g., to return <code>"SI"</code> vs. <code>"R"</code> in <code><a href="proportion.html">proportion_df()</a></code>.</p></li>
+<li><p><strong><code>"CLSI"</code></strong>, or any CLSI version such as <code>"CLSI 2025"</code>, to consider 'I' resistant, e.g., to return <code>"S"</code> vs. <code>"IR"</code> in <code><a href="proportion.html">proportion_df()</a></code>.</p></li>
+<li><p><strong><code>NULL</code> or <code>FALSE</code></strong>, to keep S, I, and R separate. This is only possible in functions that return results per category: <code><a href="count.html">count_df()</a></code>, <code><a href="proportion.html">proportion_df()</a></code>, <code><a href="proportion.html">sir_df()</a></code>, <code><a href="ggplot_sir.html">ggplot_sir()</a></code>, <code><a href="ggplot_sir.html">geom_sir()</a></code>, <code><a href="ggplot_sir.html">labels_sir_count()</a></code>, and <code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code>. Functions that return a single proportion or count, such as <code><a href="proportion.html">susceptibility()</a></code>, <code><a href="count.html">count_resistant()</a></code>, <code>antibiogram()</code>, <code>wisca()</code>, and <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> on the result of <code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code>, require 'I' to be considered either susceptible or resistant, and return an error.</p></li>
+</ul><p>Use <code><a href="proportion.html">susceptibility()</a></code> and <code><a href="proportion.html">resistance()</a></code> (or <code><a href="count.html">count_susceptible()</a></code> and <code><a href="count.html">count_resistant()</a></code>) to follow the guideline, or e.g. <code><a href="proportion.html">proportion_SI()</a></code> and <code><a href="proportion.html">proportion_R()</a></code> to be explicit regardless of the guideline.</p>
+<p>The <code>combine_SI</code> argument of the functions that return results per category, <code>antibiogram()</code>, and <code>wisca()</code> is deprecated in favour of <code>guideline</code>. If set, it is followed literally and takes precedence over <code>guideline</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -456,14 +475,18 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span><span class="fu">wisca</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"AMC+GEN"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>invalid microorganism code, NA generated</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `wisca()` assumes the EUCAST guideline and thus considers the 'I' category</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   susceptible, so S, SDD, and I count as covered. Use `guideline = "CLSI"` to</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   only count S and SDD as covered. Set the `guideline` argument, or set the</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   `AMR_guideline` option to change the default (see `?AMR-options`). This</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   message is shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble:       1 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Cred. interval: 95%</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 74.2% (72.2-76.1%)            88.8% (87.1-90.3%)        90.8% (89.3-92.2%)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 74.3% (72.3-76.2%)            88.8% (87.2-90.4%)        90.8% (89.3-92.2%)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Amoxicillin/clavulanic acid + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -475,14 +498,13 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"AMC+CIP"</span>, <span class="st">"AMC+GEN"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  wisca <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>invalid microorganism code, NA generated</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble:       1 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Cred. interval: 95%</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 74.1% (72.1-75.9%)            88.8% (87.1-90.3%)        90.8% (89.5-92.1%)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 74.3% (72.4-76.2%)            88.9% (87.3-90.4%)        90.9% (89.4-92.3%)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Amoxicillin/clavulanic acid + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -494,7 +516,6 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>invalid microorganism code, NA generated</span>
 <span class="r-in"><span><span class="va">out</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble:       3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)</span></span>
@@ -502,9 +523,9 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          74.7% (69-80.3%)          93.6% (91.9-95.1%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               57% (48.2-66%)            86.7% (83.5-89.7%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        57.5% (46-68.7%)          76.5% (70.6-82.2%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          74.8% (69-80.1%)          93.7% (92.1-95.2%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               57.2% (49.2-65.4%)        86.6% (83.5-89.7%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        57.9% (46.2-69.8%)        76.6% (70.5-82.2%)                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -535,14 +556,14 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   age_group gender `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentami…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0-24      F      57.7% (29.5-82.1%)        70.5% (46.1-89%)                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 0-24      M      59.3% (33.1-84.2%)        76.2% (55.7-90.9%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 25-49     F      67.4% (43.3-90.4%)        93.8% (87.8-97.9%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 25-49     M      56.9% (27.1-86.5%)        90.9% (82.6-96.8%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 50-74     F      68.1% (53.3-82.6%)        96.9% (94.7-98.5%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 50-74     M      67.1% (56.3-77.3%)        96.8% (94.3-98.8%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 75+       F      73.3% (62.9-83.7%)        97.7% (96.1-98.9%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 75+       M      74% (64.1-82.9%)          97.9% (96-99%)                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0-24      F      57.3% (31.1-82.2%)        70.9% (48.1-88.9%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 0-24      M      59.3% (30.7-86.3%)        76.2% (57.5-91.3%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 25-49     F      67.2% (43-89.1%)          93.7% (87-97.8%)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 25-49     M      56.6% (24.9-87.3%)        91.2% (82-97.1%)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 50-74     F      68.2% (54.1-82.1%)        96.9% (94.4-98.6%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 50-74     M      67.2% (56.1-77.4%)        96.8% (94-98.6%)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 75+       F      73.4% (62.1-84%)          97.7% (95.8-99%)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 75+       M      73.8% (63.8-82.8%)        97.8% (96.1-99.1%)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -558,6 +579,11 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `aminoglycosides()` using columns <span style="color: #00BB00; font-weight: bold;">GEN</span> (gentamicin), <span style="color: #00BB00; font-weight: bold;">TOB</span> (tobramycin), <span style="color: #00BB00; font-weight: bold;">AMK</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   (amikacin), and <span style="color: #00BB00; font-weight: bold;">KAN</span> (kanamycin)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `carbapenems()` using columns <span style="color: #00BB00; font-weight: bold;">IPM</span> (imipenem) and <span style="color: #00BB00; font-weight: bold;">MEM</span> (meropenem)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> `antibiogram()` assumes the EUCAST guideline and thus considers the 'I'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   category susceptible, so S, SDD, and I count as susceptible. Use `guideline =</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   "CLSI"` to only count S and SDD as susceptible. Set the `guideline` argument,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   or set the `AMR_guideline` option to change the default (see `?AMR-options`).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   This message is shown once per session.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble:       10 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Traditional Antibiogram</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Conf. interval: 95%</span></span>
@@ -714,7 +740,6 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `ureidopenicillins()` using column <span style="color: #00BB00; font-weight: bold;">TZP</span> (piperacillin/tazobactam)</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>invalid microorganism code, NA generated</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># in an Rmd file, you would just need to return `ureido` in a chunk,</span></span></span>
 <span class="r-in"><span><span class="co"># but to be explicit here:</span></span></span>
@@ -725,9 +750,9 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |Syndromic Group |Piperacillin/tazobactam |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------|:-----------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |74.7% (68.7-79.8%)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |56.8% (48.9-65.7%)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |57.4% (45.6-68.4%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |74.8% (69.2-80.2%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |57% (48.8-65.9%)        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |57.4% (46.7-68.8%)      |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>
@@ -740,7 +765,6 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>invalid microorganism code, NA generated</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ab1</span><span class="op">)</span></span></span>

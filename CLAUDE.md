@@ -235,10 +235,10 @@ When committing directly on `main` in a local clone, **never** edit the
 `Version:` or `Date:` field in `DESCRIPTION`, nor line 1 of `NEWS.md`,
 and do not add a version prefix to the commit message. The git hooks in
 `.github/prehooks/` do this on every commit to `main`: `pre-commit` sets
-the version (commit count since the last tag + 9001) and date in
-`DESCRIPTION` and line 1 of `NEWS.md`, and `commit-msg` prepends
-`(vX.Y.Z.9NNN)` to the commit message. Adding NEWS bullets is still
-allowed. The section below applies only to PRs.
+the version (the number of commits since the last tag before the new
+commit, + 9001) and date in `DESCRIPTION` and line 1 of `NEWS.md`, and
+`commit-msg` prepends `(vX.Y.Z.9NNN)` to the commit message. Adding NEWS
+bullets is still allowed. The section below applies only to PRs.
 
 ### Version and date bump required for every PR
 
@@ -270,12 +270,14 @@ currenttagfull=$(git describe --tags --abbrev=0)
 defaultbranch=$(git branch | cut -c 3- | grep -E '^master$|^main$')
 git fetch origin ${defaultbranch} --quiet
 currentcommit=$(git rev-list --count ${currenttagfull}..origin/${defaultbranch})
-currentversion="${currenttag}.$((currentcommit + 9001 + 1))"
+currentversion="${currenttag}.$((currentcommit + 9001))"
 echo "$currentversion"
 ```
 
-The `+ 1` accounts for the fact that this PR’s squash commit is not yet
-on the default branch. Set **both** of these files to the resulting
+This matches the `pre-commit` hook, which also counts the commits before
+the new one: the number of commits currently on the default branch +
+9001 is the version of the next commit, i.e., of this PR’s squash
+commit. Do not add 1. Set **both** of these files to the resulting
 version string (and only once per PR, even across multiple commits):
 
 1.  **`DESCRIPTION`** — the `Version:` field
