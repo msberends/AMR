@@ -578,7 +578,13 @@ antibiogram.default <- function(x,
       x$`.mo` <- mo_property(x$`.mo`, property = mo_transform, language = language)
     }
   }
-  x$`.mo`[x$`.mo` %in% c(NA, "UNKNOWN")] <- "(??)"
+  # keep unknown microorganisms, so that they are also included in grouped antibiograms and WISCA
+  if (is.mo(x$`.mo`)) {
+    # the 'mo' class only allows valid codes, of which "UNKNOWN" is one
+    x$`.mo`[is.na(x$`.mo`)] <- "UNKNOWN"
+  } else {
+    x$`.mo`[x$`.mo` %in% c(NA, "UNKNOWN")] <- "(??)"
+  }
 
   # get antimicrobials
   ab_trycatch <- tryCatch(colnames(suppressWarnings(x[, antimicrobials, drop = FALSE])), error = function(e) NULL)

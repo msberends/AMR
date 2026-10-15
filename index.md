@@ -220,12 +220,11 @@ the full explanation.
 wisca(example_isolates,
       antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
       minimum = 10) # Recommended threshold: >=30
-#> Warning: invalid microorganism code, NA generated
 ```
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:------------------------|:-------------------------------------|:-------------------------------------|
-| 69.8% (64.5-74.7%)      | 93.6% (92.1-95%)                     | 89.9% (87-92.5%)                     |
+| 70.2% (65-75.4%)        | 93.6% (92-95.1%)                     | 89.9% (87-92.5%)                     |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
@@ -235,14 +234,13 @@ wisca(example_isolates,
       antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
       syndromic_group = "ward",
       minimum = 10) # Recommended threshold: >=30
-#> Warning: invalid microorganism code, NA generated
 ```
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:----------------|:------------------------|:-------------------------------------|:-------------------------------------|
-| Clinical        | 74.6% (69.1-80.1%)      | 93.7% (92.1-95.1%)                   | 90.3% (87-93.1%)                     |
-| ICU             | 56.9% (48.3-66%)        | 86.7% (83.5-89.8%)                   | 83% (77.9-87.4%)                     |
-| Outpatient      | 57.7% (46.5-69.3%)      | 76.6% (70.5-82.2%)                   | 67.8% (56.9-77.5%)                   |
+| Clinical        | 74.8% (69-80.3%)        | 93.7% (92.1-95.1%)                   | 90.4% (86.8-93.3%)                   |
+| ICU             | 56.7% (48.2-65.4%)      | 86.6% (83.3-89.6%)                   | 83.1% (78.2-87.5%)                   |
+| Outpatient      | 57.6% (46-69%)          | 76.4% (69.8-81.7%)                   | 68% (57.7-77.5%)                     |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:

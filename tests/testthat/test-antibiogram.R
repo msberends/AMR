@@ -40,6 +40,22 @@ test_that("test-antibiogram.R", {
   expect_identical(get_gen(combine_SI = TRUE, guideline = "CLSI"), gen_eucast)
   expect_identical(get_gen(combine_SI = FALSE, guideline = "EUCAST"), gen_clsi) # identical since example_isolates contains no SDD
 
+  # isolates of unknown species must be included, also in WISCA
+  set.seed(1)
+  wisca_all <- suppressMessages(wisca(example_isolates, antimicrobials = "GEN", simulations = 100, info = FALSE, guideline = "EUCAST"))
+  set.seed(1)
+  wisca_known <- suppressMessages(wisca(example_isolates[example_isolates$mo != "UNKNOWN", ], antimicrobials = "GEN", simulations = 100, info = FALSE, guideline = "EUCAST"))
+  expect_true("UNKNOWN" %in% attributes(wisca_all)$wisca_parameters$mo)
+  expect_false(identical(as.data.frame(wisca_all), as.data.frame(wisca_known)))
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+    ab_grouped <- tryCatch(
+      example_isolates %>% group_by(ward) %>% antibiogram(antimicrobials = "GEN", minimum = 0, formatting_type = 1, guideline = "EUCAST"),
+      warning = function(w) conditionMessage(w)
+    )
+    expect_inherits(ab_grouped, "antibiogram")
+    expect_true("UNKNOWN" %in% as.character(ab_grouped[[2]]))
+  }
+
   # Traditional antibiogram ----------------------------------------------
 
 
