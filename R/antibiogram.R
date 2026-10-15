@@ -1191,7 +1191,8 @@ antibiogram.grouped_df <- function(x,
 
   antibiogram.default(x,
     antimicrobials = antimicrobials,
-    mo_transform = mo_transform,
+    # WISCA is pathogen-agnostic and needs the codes, a traditional antibiogram shows the (translated) names as in antibiogram.default()
+    mo_transform = if (isTRUE(wisca)) NULL else "shortname",
     ab_transform = ab_transform,
     syndromic_group = ".group",
     add_total_n = add_total_n,

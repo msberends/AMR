@@ -53,7 +53,8 @@ test_that("test-antibiogram.R", {
       warning = function(w) conditionMessage(w)
     )
     expect_inherits(ab_grouped, "antibiogram")
-    expect_true("UNKNOWN" %in% as.character(ab_grouped[[2]]))
+    expect_true(mo_shortname("UNKNOWN", language = NULL) %in% ab_grouped[[2]])
+    expect_false(any(as.character(ab_grouped[[2]]) %in% c("UNKNOWN", "B_ESCHR_COLI")))
   }
 
   # Traditional antibiogram ----------------------------------------------
