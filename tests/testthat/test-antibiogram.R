@@ -30,6 +30,33 @@
 test_that("test-antibiogram.R", {
   skip_on_cran()
 
+  # 'I' follows the guideline, see section 'Interpretation of SIR' in ?as.sir
+  get_gen <- function(...) suppressWarnings(antibiogram(example_isolates, antimicrobials = "GEN", ab_transform = NULL, formatting_type = 1, ...))$GEN
+  gen_eucast <- get_gen(guideline = "EUCAST")
+  gen_clsi <- get_gen(guideline = "CLSI")
+  expect_true(all(gen_eucast >= gen_clsi, na.rm = TRUE) && any(gen_eucast > gen_clsi, na.rm = TRUE))
+  expect_error(antibiogram(example_isolates, antimicrobials = "GEN", guideline = NULL))
+  # the deprecated combine_SI must be followed literally if set, regardless of the guideline
+  expect_identical(get_gen(combine_SI = TRUE, guideline = "CLSI"), gen_eucast)
+  expect_identical(get_gen(combine_SI = FALSE, guideline = "EUCAST"), gen_clsi) # identical since example_isolates contains no SDD
+
+  # isolates of unknown species must be included, also in WISCA
+  set.seed(1)
+  wisca_all <- suppressMessages(wisca(example_isolates, antimicrobials = "GEN", simulations = 100, info = FALSE, guideline = "EUCAST"))
+  set.seed(1)
+  wisca_known <- suppressMessages(wisca(example_isolates[example_isolates$mo != "UNKNOWN", ], antimicrobials = "GEN", simulations = 100, info = FALSE, guideline = "EUCAST"))
+  expect_true("UNKNOWN" %in% attributes(wisca_all)$wisca_parameters$mo)
+  expect_false(identical(as.data.frame(wisca_all), as.data.frame(wisca_known)))
+  if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
+    ab_grouped <- tryCatch(
+      example_isolates %>% group_by(ward) %>% antibiogram(antimicrobials = "GEN", minimum = 0, formatting_type = 1, guideline = "EUCAST"),
+      warning = function(w) conditionMessage(w)
+    )
+    expect_inherits(ab_grouped, "antibiogram")
+    expect_true(mo_shortname("UNKNOWN", language = NULL) %in% ab_grouped[[2]])
+    expect_false(any(as.character(ab_grouped[[2]]) %in% c("UNKNOWN", "B_ESCHR_COLI")))
+  }
+
   # Traditional antibiogram ----------------------------------------------
 
 

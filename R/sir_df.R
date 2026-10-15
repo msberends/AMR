@@ -34,9 +34,10 @@ sir_df <- function(data,
                    language = get_AMR_locale(),
                    minimum = 30,
                    as_percent = FALSE,
-                   combine_SI = TRUE,
+                   combine_SI,
                    confidence_level = 0.95,
                    guideline = getOption("AMR_guideline", "EUCAST")) {
+  guideline <- get_aggregation_guideline(guideline, missing(guideline), combine_SI, missing(combine_SI), fn = "sir_df")
   tryCatch(
     sir_calc_df(
       type = "both",
@@ -45,7 +46,6 @@ sir_df <- function(data,
       language = language,
       minimum = minimum,
       as_percent = as_percent,
-      combine_SI = combine_SI,
       confidence_level = confidence_level,
       guideline = guideline
     ),

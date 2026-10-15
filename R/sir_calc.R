@@ -35,6 +35,55 @@ dots2vars <- function(...) {
   paste0(dots[dots != "."], collapse = "+")
 }
 
+validate_sir_guideline <- function(guideline, fn, allow_none = FALSE) {
+  # returns "EUCAST" or "CLSI" to consider 'I' susceptible or resistant, or NULL to not merge 'I' at all, see the section 'Interpretation of SIR' in ?as.sir
+  if (is.null(guideline) || isFALSE(guideline)) {
+    stop_ifnot(
+      allow_none,
+      "{.arg guideline} must be {.val EUCAST} or {.val CLSI} in {.help [{.fun ", fn, "}](AMR::", fn, ")}, since a single proportion or count requires the 'I' category to be considered either susceptible (EUCAST) or resistant (CLSI). See the section 'Interpretation of SIR' in {.help [{.fun as.sir}](AMR::as.sir)}.",
+      call = FALSE
+    )
+    return(NULL)
+  }
+  stop_ifnot(
+    is.character(guideline) && length(guideline) == 1 && !is.na(guideline) && (guideline %like% "EUCAST" || guideline %like% "CLSI"),
+    "{.arg guideline} must be {.val EUCAST} or {.val CLSI}", ifelse(allow_none, ", or {.code NULL} to keep S, I, and R separate,", ""), " in {.help [{.fun ", fn, "}](AMR::", fn, ")}. See the section 'Interpretation of SIR' in {.help [{.fun as.sir}](AMR::as.sir)}.",
+    call = FALSE
+  )
+  if (guideline %like% "EUCAST") "EUCAST" else "CLSI"
+}
+
+message_guideline_assumed <- function(fn, txt) {
+  # informs once per session that EUCAST is assumed, only to be called when the `guideline` argument is missing
+  # - not when the AMR_guideline option is set, since that is a deliberate choice
+  # - not when knitting R Markdown or Quarto documents, so it will not end up in reports
+  if (is.null(getOption("AMR_guideline")) && !isTRUE(getOption("knitr.in.progress")) && message_not_thrown_before(fn, "guideline_assumed", entire_session = TRUE)) {
+    message_(
+      "{.help [{.fun ", fn, "}](AMR::", fn, ")} assumes the EUCAST guideline and thus considers the 'I' category susceptible", txt,
+      " Set the {.arg guideline} argument, or set the {.code AMR_guideline} option to change the default (see {.topic [AMR-options](AMR::AMR-options)}). This message is shown once per session."
+    )
+  }
+}
+
+get_aggregation_guideline <- function(guideline, guideline_missing, combine_SI, combine_SI_missing, fn) {
+  # for functions that return results per category: returns "EUCAST" ("SI" vs. "R"), "CLSI" ("S" vs. "IR"), or NULL (S, I, and R separately)
+  if (!combine_SI_missing) {
+    # deprecated argument, if set it must be followed literally, regardless of the guideline
+    meet_criteria(combine_SI, allow_class = "logical", has_length = 1, .call_depth = 1)
+    deprecation_warning("combine_SI", "guideline", fn = fn, is_argument = TRUE, extra_msg = "As long as `combine_SI` is set, it takes precedence over `guideline`. Use `guideline = \"EUCAST\"` to merge 'I' with S, `guideline = \"CLSI\"` to merge 'I' with R, or `guideline = NULL` to keep S, I, and R separate.")
+    if (isTRUE(combine_SI)) {
+      return("EUCAST")
+    } else {
+      return(NULL)
+    }
+  }
+  guideline <- validate_sir_guideline(guideline, fn = fn, allow_none = TRUE)
+  if (isTRUE(guideline_missing) && !is.null(guideline)) {
+    message_guideline_assumed(fn, txt = paste0(" (S+SDD+I vs. R). Use {.code guideline = \"CLSI\"} for S+SDD vs. I+R, or {.code guideline = NULL} to keep S, I, and R separate."))
+  }
+  guideline
+}
+
 sir_calc <- function(...,
                      ab_result,
                      minimum = 0,
@@ -219,9 +268,8 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
                         language = get_AMR_locale(),
                         minimum = 30,
                         as_percent = FALSE,
-                        combine_SI = TRUE,
                         confidence_level = 0.95,
-                        guideline = getOption("AMR_guideline", "EUCAST")) {
+                        guideline = "EUCAST") { # must be "EUCAST", "CLSI", or NULL, see get_aggregation_guideline()
   meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1)
   meet_criteria(data, allow_class = "data.frame")
   data <- ascertain_sir_classes(data, "data")
@@ -229,16 +277,10 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   language <- validate_language(language)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
-  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(confidence_level, allow_class = "numeric", has_length = 1)
-  meet_criteria(guideline, allow_class = "character", has_length = 1)
-  if (guideline %like% "EUCAST") {
-    guideline <- "EUCAST"
-  } else if (guideline %like% "CLSI") {
-    guideline <- "CLSI"
-  }
-  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
-  # with EUCAST, 'I' is merged with S into 'SI', with CLSI, 'I' is merged with R into 'IR'
+  meet_criteria(guideline, allow_class = "character", has_length = 1, is_in = c("EUCAST", "CLSI"), allow_NULL = TRUE)
+  # with EUCAST, 'I' is merged with S into 'SI', with CLSI, 'I' is merged with R into 'IR', and with NULL, 'I' is not merged
+  combine_SI <- !is.null(guideline)
   combined_levels <- if (identical(guideline, "CLSI")) c("S", "IR") else c("SI", "R")
 
   translate_ab <- get_translate_ab(translate_ab)

@@ -69,6 +69,7 @@ as.data.frame.deprecated_amr_dataset <- function(x, ...) {
 # currently deprecated arguments at least:
 # - `antibiotics` in `antibiogram()`
 # - `converse_capped_values` in `as.sir()`
+# - `combine_SI` in `count_df()`, `proportion_df()`, `sir_df()`, `ggplot_sir()`, `geom_sir()`, `labels_sir_count()`, `antibiogram()`, `wisca()`, and `format()` for `bug_drug_combinations()`
 
 #' @rdname AMR-deprecated
 #' @export

@@ -1546,14 +1546,14 @@ theme_sir <- function() {
     )
 }
 
-#' @rdname plot
+#' @rdname ggplot_sir
 #' @export
 labels_sir_count <- function(position = NULL,
                              x = "antibiotic",
                              translate_ab = "name",
                              minimum = 30,
                              language = get_AMR_locale(),
-                             combine_SI = TRUE,
+                             combine_SI,
                              guideline = getOption("AMR_guideline", "EUCAST"),
                              datalabels.size = 3,
                              datalabels.colour = "grey15") {
@@ -1563,7 +1563,7 @@ labels_sir_count <- function(position = NULL,
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   language <- validate_language(language)
-  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  guideline <- get_aggregation_guideline(guideline, missing(guideline), combine_SI, missing(combine_SI), fn = "labels_sir_count")
   meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
 
@@ -1586,7 +1586,6 @@ labels_sir_count <- function(position = NULL,
       transformed <- sir_df(
         data = x,
         translate_ab = translate_ab,
-        combine_SI = combine_SI,
         minimum = minimum,
         language = language,
         guideline = guideline

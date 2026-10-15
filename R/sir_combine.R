@@ -38,7 +38,8 @@
 #' @param ... Two or more vectors (or columns) with antimicrobial interpretations, or a data frame with such columns. They will be transformed internally with [as.sir()] if needed. All vectors must be of the same length.
 #' @param method Either `"most_susceptible"` (default) to return the most susceptible result, as for combination therapy, or `"most_resistant"` to return the most resistant result, as for resistance within a group of antimicrobials. See *Combination Therapy* below.
 #' @param only_all_tested A [logical] to indicate that isolates must be tested for all antimicrobials. If `TRUE`, the result is `NA` for isolates with a missing result for any of the antimicrobials. If `FALSE` (default), a missing result only leads to `NA` if a result for the missing antimicrobial could have changed the result, see *Combination Therapy* below.
-#' @param guideline Either `"EUCAST"` (default) or `"CLSI"`, to determine whether the 'I' category is considered susceptible. This only affects isolates with a missing result for any of the antimicrobials when `only_all_tested = FALSE`, see *Combination Therapy* below. The default can be changed with the `AMR_guideline` option, see [AMR-options].
+#' @param guideline A guideline name, `"EUCAST"` or `"CLSI"` (or any version thereof, e.g. `"CLSI 2025"`), to determine whether the 'I' category is considered susceptible (EUCAST) or resistant (CLSI). This only affects isolates with a missing result for any of the antimicrobials when `only_all_tested = FALSE`, see *Combination Therapy* below. The default is the package option [`AMR_guideline`][AMR-options], or `"EUCAST"` if it is not set. See section *Interpretation of SIR* below.
+#' @inheritSection as.sir Interpretation of SIR
 #' @section Combination Therapy:
 #' Results are ordered from susceptible to resistant: S (and WT), SDD, I, R (and NWT, NS). With `method = "most_susceptible"` (in [sir_combine()]), the most susceptible result of the antimicrobials is returned, and with `method = "most_resistant"`, the most resistant result. The value `"NI"` (non-interpretable) is considered a missing result.
 #'
@@ -82,7 +83,7 @@
 #'   proportion_S() + proportion_I() + proportion_R() = 1
 #' ```
 #'
-#' In [antibiogram()] and [wisca()], the result of the combination therapy (`"most_susceptible"`) is used, the 'I' and 'SDD' categories are considered susceptible if `combine_SI = TRUE` (default), and the result is then reduced to S or R.
+#' In [antibiogram()] and [wisca()], the result of the combination therapy (`"most_susceptible"`) is used, the 'I' category is considered susceptible or not following the `guideline` argument ('SDD' is always considered susceptible), and the result is then reduced to S or R.
 #' @return A [`sir`] vector with the same length as the input.
 #' @seealso [count()] and [proportion()] for counting and calculating susceptibility of (combinations of) antimicrobials, and [antibiogram()] for combination antibiograms.
 #' @export
@@ -142,13 +143,8 @@
 sir_combine <- function(..., method = c("most_susceptible", "most_resistant"), only_all_tested = FALSE, guideline = getOption("AMR_guideline", "EUCAST")) {
   method <- match.arg(method)
   meet_criteria(only_all_tested, allow_class = "logical", has_length = 1)
-  meet_criteria(guideline, allow_class = "character", has_length = 1)
-  if (guideline %like% "EUCAST") {
-    guideline <- "EUCAST"
-  } else if (guideline %like% "CLSI") {
-    guideline <- "CLSI"
-  }
-  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
+  guideline_missing <- missing(guideline)
+  guideline <- validate_sir_guideline(guideline, fn = "sir_combine")
 
   # unpack data frames, so that e.g. sir_combine(df[, c("GEN", "TOB")], CIP) works
   cols <- list()
@@ -166,12 +162,11 @@ sir_combine <- function(..., method = c("most_susceptible", "most_resistant"), o
 
   out <- sir_combine_engine(cols, S_values = get_susceptible_values(guideline), only_all_tested = only_all_tested, method = method)
 
-  if (isFALSE(only_all_tested) && is.null(getOption("AMR_guideline")) && missing(guideline)) {
+  if (isFALSE(only_all_tested) && is.null(getOption("AMR_guideline")) && guideline_missing) {
     # only notify about the assumed guideline if it affected the result
     out_clsi <- sir_combine_engine(cols, S_values = get_susceptible_values("CLSI"), only_all_tested = only_all_tested, method = method)
-    if (!identical(out, out_clsi) && message_not_thrown_before("sir_combine", "eucast_default", entire_session = TRUE)) {
-      message_("{.help [{.fun sir_combine}](AMR::sir_combine)} assumes the EUCAST guideline and thus considers the 'I' category susceptible, which affected the result for 'I' results combined with a missing result. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")
-      message_("This message will be shown once per session.")
+    if (!identical(out, out_clsi)) {
+      message_guideline_assumed("sir_combine", txt = ", which affected the result for 'I' results combined with a missing result. Use {.code guideline = \"CLSI\"} to consider it resistant.")
     }
   }
   out

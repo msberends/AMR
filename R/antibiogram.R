@@ -60,7 +60,8 @@
 #' @param col_mo Column name of the names or codes of the microorganisms (see [as.mo()]) - the default is the first column of class [`mo`]. Values will be coerced using [as.mo()].
 #' @param language Language to translate text, which defaults to the system language (see [get_AMR_locale()]).
 #' @param minimum The minimum allowed number of available (tested) isolates. Any isolate count lower than `minimum` will return `NA` with a warning. The default number of `30` isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see *Source*.
-#' @param combine_SI A [logical] to indicate whether all susceptibility should be determined by results of either S, SDD, or I, instead of only S (default is `TRUE`).
+#' @param combine_SI *(deprecated in favour of `guideline`)* A [logical]. If set, it takes precedence over `guideline`: `TRUE` considers S, SDD, and I susceptible, and `FALSE` only S.
+#' @param guideline A guideline name, `"EUCAST"` or `"CLSI"` (or any version thereof, e.g. `"CLSI 2025"`), to determine whether the 'I' category is considered susceptible (EUCAST) or resistant (CLSI). 'SDD' is always considered susceptible. The default is the package option [`AMR_guideline`][AMR-options], or `"EUCAST"` if it is not set. See section *Interpretation of SIR* below.
 #' @param sep A separating character for antimicrobial columns in combination antibiograms.
 #' @param sort_columns A [logical] to indicate whether the antimicrobial columns must be sorted on name.
 #' @param wisca A [logical] to indicate whether a Weighted-Incidence Syndromic Combination Antibiogram (WISCA) must be generated (default is `FALSE`). This will use a Bayesian decision model to estimate regimen coverage probabilities using [Monte Carlo simulations](https://en.wikipedia.org/wiki/Monte_Carlo_method). Per \doi{10.1093/jac/dkv397}, susceptibility priors are \eqn{\beta(0.5, 0.5)} (Jeffreys) and intrinsically resistant pairs (based on [intrinsic_resistant]) use \eqn{\beta(1, 9999)}.
@@ -137,7 +138,7 @@
 #'
 #' ### Inclusion in Combination Antibiograms
 #'
-#' For combination antibiograms, the results of the antimicrobials are combined using the same rules as [sir_combine()], see the section *Combination Therapy* below. Whether isolates must be tested for all antimicrobials can be set with the `only_all_tested` argument (default is `FALSE`). The 'I' and 'SDD' categories are considered susceptible if `combine_SI = TRUE` (default), which also determines whether a missing result can be ignored. To use a combination in other analyses as well, create a new variable with [sir_combine()].
+#' For combination antibiograms, the results of the antimicrobials are combined using the same rules as [sir_combine()], see the section *Combination Therapy* below. Whether isolates must be tested for all antimicrobials can be set with the `only_all_tested` argument (default is `FALSE`). Whether the 'I' category is considered susceptible follows the `guideline` argument, which also determines whether a missing result can be ignored. To use a combination in other analyses as well, create a new variable with [sir_combine()].
 #'
 #' ### Plotting
 #'
@@ -159,6 +160,7 @@
 #'
 #' For the full mathematical derivation and worked examples, see the [WISCA vignette](https://amr-for-r.org/articles/WISCA.html).
 #' @inheritSection sir_combine Combination Therapy
+#' @inheritSection as.sir Interpretation of SIR
 #' @references
 #' * Hebert C *et al.* (2012). **Demonstration of the weighted-incidence syndromic combination antibiogram: an empiric prescribing decision aid.** *Infection Control & Hospital Epidemiology* 33(4):381-388; \doi{10.1086/664768}
 #' * Bielicki JA *et al.* (2016). **Selecting appropriate empirical antibiotic regimens for paediatric bloodstream infections: application of a Bayesian decision model to local and pooled antimicrobial resistance surveillance data.** *Journal of Antimicrobial Chemotherapy* 71(3):794-802; \doi{10.1093/jac/dkv397}
@@ -312,7 +314,8 @@ wisca <- function(x,
                   formatting_type = getOption("AMR_antibiogram_formatting_type", 14),
                   col_mo = NULL,
                   language = get_AMR_locale(),
-                  combine_SI = TRUE,
+                  combine_SI,
+                  guideline = getOption("AMR_guideline", "EUCAST"),
                   sep = " + ",
                   sort_columns = TRUE,
                   simulations = 1000,
@@ -321,6 +324,9 @@ wisca <- function(x,
                   info = interactive(),
                   parallel = FALSE,
                   ...) {
+  if (missing(guideline) && missing(combine_SI)) {
+    message_antibiogram_guideline_assumed(wisca = TRUE)
+  }
   antibiogram(
     x = x,
     antimicrobials = antimicrobials,
@@ -333,6 +339,7 @@ wisca <- function(x,
     col_mo = col_mo,
     language = language,
     combine_SI = combine_SI,
+    guideline = guideline,
     sep = sep,
     sort_columns = sort_columns,
     wisca = TRUE,
@@ -359,7 +366,8 @@ antibiogram <- function(x,
                         col_mo = NULL,
                         language = get_AMR_locale(),
                         minimum = 30,
-                        combine_SI = TRUE,
+                        combine_SI,
+                        guideline = getOption("AMR_guideline", "EUCAST"),
                         sep = " + ",
                         sort_columns = TRUE,
                         wisca = FALSE,
@@ -386,7 +394,8 @@ antibiogram.default <- function(x,
                                 col_mo = NULL,
                                 language = get_AMR_locale(),
                                 minimum = 30,
-                                combine_SI = TRUE,
+                                combine_SI,
+                                guideline = getOption("AMR_guideline", "EUCAST"),
                                 sep = " + ",
                                 sort_columns = TRUE,
                                 wisca = FALSE,
@@ -427,7 +436,18 @@ antibiogram.default <- function(x,
   meet_criteria(col_mo, allow_class = "character", has_length = 1, allow_NULL = TRUE, is_in = colnames(x))
   language <- validate_language(language)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
-  meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+  fn <- ifelse(isTRUE(wisca), "wisca", "antibiogram")
+  if (!missing(combine_SI)) {
+    # deprecated argument, if set it must be followed literally, regardless of the guideline
+    meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
+    deprecation_warning("combine_SI", "guideline", fn = fn, is_argument = TRUE, extra_msg = "As long as `combine_SI` is set, it takes precedence over `guideline`. Use `guideline = \"EUCAST\"` to consider S, SDD, and I susceptible, or `guideline = \"CLSI\"` to consider S and SDD susceptible.")
+    S_values <- c("S", "WT", if (isTRUE(combine_SI)) c("SDD", "I"))
+  } else {
+    if (missing(guideline)) {
+      message_antibiogram_guideline_assumed(wisca = wisca)
+    }
+    S_values <- get_susceptible_values(validate_sir_guideline(guideline, fn = fn))
+  }
   meet_criteria(sep, allow_class = "character", has_length = 1)
   meet_criteria(sort_columns, allow_class = "logical", has_length = 1)
   meet_criteria(simulations, allow_class = c("numeric", "integer"), has_length = 1, is_finite = TRUE, is_positive = TRUE)
@@ -558,7 +578,13 @@ antibiogram.default <- function(x,
       x$`.mo` <- mo_property(x$`.mo`, property = mo_transform, language = language)
     }
   }
-  x$`.mo`[x$`.mo` %in% c(NA, "UNKNOWN")] <- "(??)"
+  # keep unknown microorganisms, so that they are also included in grouped antibiograms and WISCA
+  if (is.mo(x$`.mo`)) {
+    # the 'mo' class only allows valid codes, of which "UNKNOWN" is one
+    x$`.mo`[is.na(x$`.mo`)] <- "UNKNOWN"
+  } else {
+    x$`.mo`[x$`.mo` %in% c(NA, "UNKNOWN")] <- "(??)"
+  }
 
   # get antimicrobials
   ab_trycatch <- tryCatch(colnames(suppressWarnings(x[, antimicrobials, drop = FALSE])), error = function(e) NULL)
@@ -604,10 +630,6 @@ antibiogram.default <- function(x,
         next
       } else {
         # determine whether this new column should contain S, I, R, or NA
-        S_values <- c("S", "WT")
-        if (isTRUE(combine_SI)) {
-          S_values <- c(S_values, "SDD", "I")
-        }
         # same rules as sir_combine(), after which the result is reduced to S or R
         combined <- as.character(sir_combine_engine(as.list(x[, abx, drop = FALSE]), S_values = S_values, only_all_tested = only_all_tested))
         combined[!is.na(combined)] <- ifelse(combined[!is.na(combined)] %in% S_values, "S", "R")
@@ -643,7 +665,8 @@ antibiogram.default <- function(x,
     bug_drug_combinations(
       col_mo = ".mo",
       FUN = function(x) x,
-      include_n_rows = TRUE
+      include_n_rows = TRUE,
+      guideline = NULL # only counts are used here, S_values determines what is susceptible
     )
   colnames(out)[colnames(out) == "total"] <- "n_tested"
   colnames(out)[colnames(out) == "total_rows"] <- "n_total"
@@ -652,10 +675,7 @@ antibiogram.default <- function(x,
 
   counts <- out
 
-  out$n_susceptible <- out$S + out$WT
-  if (isTRUE(combine_SI)) {
-    out$n_susceptible <- out$n_susceptible + out$I + out$SDD
-  }
+  out$n_susceptible <- rowSums(out[, S_values, drop = FALSE])
   if (all(out$n_tested < minimum, na.rm = TRUE) && wisca == FALSE) {
     warning_("All combinations had less than {.arg minimum} = ", minimum, " results, returning an empty antibiogram")
     return(as_original_data_class(data.frame(), class(x), extra_class = "antibiogram"))
@@ -1109,7 +1129,7 @@ antibiogram.default <- function(x,
   out <- structure(as_original_data_class(new_df, class(x), extra_class = "antibiogram"),
     has_syndromic_group = has_syndromic_group,
     antibiogram_groups = attr(x, "antibiogram_groups", exact = TRUE),
-    combine_SI = combine_SI,
+    combine_SI = "I" %in% S_values,
     wisca = wisca,
     conf_interval = conf_interval,
     simulations = if (isFALSE(wisca)) NULL else simulations,
@@ -1122,6 +1142,14 @@ antibiogram.default <- function(x,
   )
   rownames(out) <- NULL
   out
+}
+
+message_antibiogram_guideline_assumed <- function(wisca) {
+  term <- ifelse(isTRUE(wisca), "covered", "susceptible")
+  message_guideline_assumed(
+    ifelse(isTRUE(wisca), "wisca", "antibiogram"),
+    txt = paste0(", so S, SDD, and I count as ", term, ". Use {.code guideline = \"CLSI\"} to only count S and SDD as ", term, ".")
+  )
 }
 
 #' @method antibiogram grouped_df
@@ -1138,7 +1166,8 @@ antibiogram.grouped_df <- function(x,
                                    col_mo = NULL,
                                    language = get_AMR_locale(),
                                    minimum = 30,
-                                   combine_SI = TRUE,
+                                   combine_SI,
+                                   guideline = getOption("AMR_guideline", "EUCAST"),
                                    sep = " + ",
                                    sort_columns = TRUE,
                                    wisca = FALSE,
@@ -1151,6 +1180,9 @@ antibiogram.grouped_df <- function(x,
   stop_ifnot(is.null(mo_transform), "{.arg mo_transform} must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, which could include the pathogen information (though not necessary). Nonetheless, this makes {.arg mo_transform} redundant.", call = FALSE)
   stop_ifnot(is.null(syndromic_group), "{.arg syndromic_group} must not be set if creating an antibiogram using a grouped tibble. The groups will become the variables over which the antimicrobials are calculated, making {.arg syndromic_group} redundant.", call = FALSE)
 
+  if (missing(guideline) && missing(combine_SI)) {
+    message_antibiogram_guideline_assumed(wisca = wisca)
+  }
   groups <- attributes(x)$groups
   group_cols <- intersect(colnames(groups), colnames(x))
   # paste group together, will be split later in antibiogram.default()
@@ -1159,7 +1191,8 @@ antibiogram.grouped_df <- function(x,
 
   antibiogram.default(x,
     antimicrobials = antimicrobials,
-    mo_transform = mo_transform,
+    # WISCA is pathogen-agnostic and needs the codes, a traditional antibiogram shows the (translated) names as in antibiogram.default()
+    mo_transform = if (isTRUE(wisca)) NULL else "shortname",
     ab_transform = ab_transform,
     syndromic_group = ".group",
     add_total_n = add_total_n,
@@ -1170,6 +1203,7 @@ antibiogram.grouped_df <- function(x,
     language = language,
     minimum = minimum,
     combine_SI = combine_SI,
+    guideline = guideline,
     sep = sep,
     sort_columns = sort_columns,
     wisca = wisca,

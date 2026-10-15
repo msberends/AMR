@@ -33,11 +33,6 @@
 #'
 #' [count_resistant()] should be used to count resistant isolates, [count_susceptible()] should be used to count susceptible isolates.
 #' @param ... One or more vectors (or columns) with antibiotic interpretations. They will be transformed internally with [as.sir()] if needed.
-#' @param guideline Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category will be considered as susceptible (see [EUCAST website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)), but with with CLSI, it will be considered resistant. Therefore:
-#'   * EUCAST: [count_susceptible()] \eqn{= N_{S} + N_{I}}, [count_resistant()] \eqn{= N_{R}}
-#'   * CLSI: [count_susceptible()] \eqn{= N_{S} + N_{SDD}}, [count_resistant()] \eqn{= N_{I} + N_{R}}
-#'
-#' You can also use e.g. [count_R()] or [count_S()] instead, to be explicit.
 #' @inheritParams proportion
 #' @inheritSection as.sir Interpretation of SIR
 #' @details These functions are meant to count isolates. Use the [resistance()]/[susceptibility()] functions to calculate microbial resistance/susceptibility.
@@ -126,16 +121,10 @@ count_resistant <- function(...,
                             only_all_tested = FALSE,
                             guideline = getOption("AMR_guideline", "EUCAST")) {
   # other arguments for meet_criteria are handled by sir_calc()
-  if (guideline %like% "EUCAST") {
-    guideline <- "EUCAST"
-  } else if (guideline %like% "CLSI") {
-    guideline <- "CLSI"
+  if (missing(guideline)) {
+    message_guideline_assumed("count_resistant", txt = ". Use {.code guideline = \"CLSI\"} to consider it resistant.")
   }
-  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
-  if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("count_resistant", "eucast_default", entire_session = TRUE)) {
-    message_("{.help [{.fun count_resistant}](AMR::count_resistant)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")
-    message_("This message will be shown once per session.")
-  }
+  guideline <- validate_sir_guideline(guideline, fn = "count_resistant")
   tryCatch(
     sir_calc(...,
       ab_result = c(
@@ -156,16 +145,10 @@ count_susceptible <- function(...,
                               only_all_tested = FALSE,
                               guideline = getOption("AMR_guideline", "EUCAST")) {
   # other arguments for meet_criteria are handled by sir_calc()
-  if (guideline %like% "EUCAST") {
-    guideline <- "EUCAST"
-  } else if (guideline %like% "CLSI") {
-    guideline <- "CLSI"
+  if (missing(guideline)) {
+    message_guideline_assumed("count_susceptible", txt = ". Use {.code guideline = \"CLSI\"} to consider it resistant.")
   }
-  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
-  if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("count_susceptible", "eucast_default", entire_session = TRUE)) {
-    message_("{.help [{.fun count_susceptible}](AMR::count_susceptible)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")
-    message_("This message will be shown once per session.")
-  }
+  guideline <- validate_sir_guideline(guideline, fn = "count_susceptible")
   tryCatch(
     sir_calc(...,
       ab_result = c(
@@ -267,15 +250,15 @@ n_sir <- count_all
 count_df <- function(data,
                      translate_ab = "name",
                      language = get_AMR_locale(),
-                     combine_SI = TRUE,
+                     combine_SI,
                      guideline = getOption("AMR_guideline", "EUCAST")) {
+  guideline <- get_aggregation_guideline(guideline, missing(guideline), combine_SI, missing(combine_SI), fn = "count_df")
   tryCatch(
     sir_calc_df(
       type = "count",
       data = data,
       translate_ab = translate_ab,
       language = language,
-      combine_SI = combine_SI,
       confidence_level = 0.95, # doesn't matter, will be removed
       guideline = guideline
     ),
