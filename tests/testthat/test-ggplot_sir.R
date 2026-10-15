@@ -96,6 +96,12 @@ test_that("test-ggplot_sir.R", {
         as.double()
     )
 
+    # the 'I' category is merged with R for CLSI
+    expect_identical(
+      levels(ggplot_sir(example_isolates[, c("AMC", "CIP")], guideline = "CLSI")$layers[[1]]$data(example_isolates[, c("AMC", "CIP")])$interpretation),
+      c("S", "IR")
+    )
+
     # support for scale_type ab and mo
     expect_inherits(
       (data.frame(

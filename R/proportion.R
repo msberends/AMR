@@ -42,9 +42,9 @@
 #'   * EUCAST: [susceptibility()] \eqn{= \%S + \%I}, [resistance()] \eqn{= \%R}
 #'   * CLSI: [susceptibility()] \eqn{= \%S + \%SDD}, [resistance()] \eqn{= \%I + \%R}
 #'
-#' You can also use e.g. [proportion_R()] or [proportion_S()] instead, to be explicit.
+#' You can also use e.g. [proportion_R()] or [proportion_S()] instead, to be explicit. For [proportion_df()], [count_df()], and [sir_df()], the guideline determines how 'I' is merged when `combine_SI = TRUE`.
 #' @inheritParams ab_property
-#' @param combine_SI A [logical] to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is `TRUE`.
+#' @param combine_SI A [logical] to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is `TRUE`. Following the `guideline` argument, the output then consists of `"SI"` (S+SDD+I) vs. `"R"` with EUCAST, and of `"S"` (S+SDD) vs. `"IR"` (I+R) with CLSI.
 #' @param ab_result Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R".
 #' @param confidence_level The confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
 #' @param side The side of the confidence interval to return. The default is `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
@@ -431,7 +431,8 @@ proportion_df <- function(data,
                           minimum = 30,
                           as_percent = FALSE,
                           combine_SI = TRUE,
-                          confidence_level = 0.95) {
+                          confidence_level = 0.95,
+                          guideline = getOption("AMR_guideline", "EUCAST")) {
   tryCatch(
     sir_calc_df(
       type = "proportion",
@@ -441,7 +442,8 @@ proportion_df <- function(data,
       minimum = minimum,
       as_percent = as_percent,
       combine_SI = combine_SI,
-      confidence_level = confidence_level
+      confidence_level = confidence_level,
+      guideline = guideline
     ),
     error = function(e) stop_(gsub("in sir_calc_df(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )

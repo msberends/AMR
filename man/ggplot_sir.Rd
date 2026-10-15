@@ -17,6 +17,7 @@ ggplot_sir(
   combine_SI = TRUE,
   minimum = 30,
   language = get_AMR_locale(),
+  guideline = getOption("AMR_guideline", "EUCAST"),
   nrow = NULL,
   colours = c(S = "#3CAEA3", SDD = "#8FD6C4", SI = "#3CAEA3", I = "#F6D55C", IR =
     "#ED553B", R = "#ED553B"),
@@ -39,6 +40,7 @@ geom_sir(
   minimum = 30,
   language = get_AMR_locale(),
   combine_SI = TRUE,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   ...
 )
 }
@@ -59,11 +61,19 @@ geom_sir(
 
 \item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
+\item{combine_SI}{A \link{logical} to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is \code{TRUE}. Following the \code{guideline} argument, the output then consists of \code{"SI"} (S+SDD+I) vs. \code{"R"} with EUCAST, and of \code{"S"} (S+SDD) vs. \code{"IR"} (I+R) with CLSI.}
 
 \item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
+
+\item{guideline}{Either \code{"EUCAST"} (default) or \code{"CLSI"}. With EUCAST, the 'I' category will be considered as susceptible (see \href{https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/}{EUCAST website}), but with with CLSI, it will be considered resistant. Therefore:
+\itemize{
+\item EUCAST: \code{\link[=susceptibility]{susceptibility()}} \eqn{= \%S + \%I}, \code{\link[=resistance]{resistance()}} \eqn{= \%R}
+\item CLSI: \code{\link[=susceptibility]{susceptibility()}} \eqn{= \%S + \%SDD}, \code{\link[=resistance]{resistance()}} \eqn{= \%I + \%R}
+}
+
+You can also use e.g. \code{\link[=proportion_R]{proportion_R()}} or \code{\link[=proportion_S]{proportion_S()}} instead, to be explicit. For \code{\link[=proportion_df]{proportion_df()}}, \code{\link[=count_df]{count_df()}}, and \code{\link[=sir_df]{sir_df()}}, the guideline determines how 'I' is merged when \code{combine_SI = TRUE}.}
 
 \item{nrow}{(when using \code{facet}) number of rows.}
 

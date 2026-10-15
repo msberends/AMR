@@ -267,7 +267,8 @@ n_sir <- count_all
 count_df <- function(data,
                      translate_ab = "name",
                      language = get_AMR_locale(),
-                     combine_SI = TRUE) {
+                     combine_SI = TRUE,
+                     guideline = getOption("AMR_guideline", "EUCAST")) {
   tryCatch(
     sir_calc_df(
       type = "count",
@@ -275,7 +276,8 @@ count_df <- function(data,
       translate_ab = translate_ab,
       language = language,
       combine_SI = combine_SI,
-      confidence_level = 0.95 # doesn't matter, will be removed
+      confidence_level = 0.95, # doesn't matter, will be removed
+      guideline = guideline
     ),
     error = function(e) stop_(gsub("in sir_calc_df(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )

@@ -1,4 +1,4 @@
-# AMR 3.0.1.9136
+# AMR 3.0.1.9137
 
 Planned as v3.1.0, mid October 2026.
 
@@ -25,6 +25,7 @@ Planned as v3.1.0, mid October 2026.
 * Parallel computing in `as.sir()`, `antibiogram()`, and `wisca()` now uses the `future` and `future.apply` packages, which is faster. A non-sequential plan (e.g., `future::plan(future::multisession)`) must be active before using `parallel = TRUE` (#281).
 * The options of `capped_mic_handling` in `as.sir()` have been redefined as `"none"`, `"conservative"`, `"standard"` (default), and `"lenient"`. The option `"inverse"` is no longer available (#243).
 * `as.sir()` now returns WT/NWT (Wildtype/Non-wildtype) instead of S/R when using ECOFF-based interpretation with `breakpoint_type = "ECOFF"`. WT/NWT results are fully supported in all resistance and susceptibility functions and in all plots (#254).
+* `count_df()`, `proportion_df()`, and `sir_df()` now follow the `AMR_guideline` option through their new `guideline` argument. With CLSI, `combine_SI = TRUE` merges 'I' with R into `"IR"` and returns `"S"` vs. `"IR"`, consistent with `count_susceptible()` and `susceptibility()`. Previously, these functions always merged 'I' with S, as with EUCAST. Use `guideline = "EUCAST"` for the old behaviour. This also applies to `ggplot_sir()`, `geom_sir()`, and `labels_sir_count()`, which got the same argument.
 
 ### New
 * **Updated clinical breakpoints**
@@ -109,7 +110,7 @@ Planned as v3.1.0, mid October 2026.
   * `wisca()` now follows Bielicki *et al.* (2016) more strictly by using $\text{Beta}(1, 9999)$ for intrinsically resistant pairs, forcing near-zero susceptibility regardless of observed data (based on EUCAST Expected Resistant Phenotypes)
   * Fixed a bug where both functions failed without the `antimicrobials` argument if `tidyselect` was not available, e.g., for binary installations without `dplyr`
 * Resistance and susceptibility calculation
-  * New argument `guideline` (default: EUCAST) in `susceptibility()` and `resistance()` to interpret the 'I' category correctly per guideline
+  * New argument `guideline` (default: EUCAST) in `susceptibility()`, `resistance()`, `count_df()`, `proportion_df()`, `sir_df()`, `ggplot_sir()`, `geom_sir()`, and `labels_sir_count()` to interpret the 'I' category correctly per guideline
   * `count_*()` and `proportion_*()` now handle WT, NWT, NS, and NI results correctly (#321)
 * MICs and disk diffusion
   * New argument `round_to_next_log2` in `as.mic()` and `rescale_mic()` to round values up to the nearest log2 dilution level (#255)
@@ -141,6 +142,7 @@ Planned as v3.1.0, mid October 2026.
 
 ### Other
 * Improved console messages with clickable links throughout the package, powered by `cli` if it is installed (#191, #265)
+* The documentation of `get_AMR_locale()` now describes the actual order in which the language is determined: the `AMR_locale` option, then the `LANG` system variable, then `LANGUAGE` only if `LANG` is not set, and then the system locale
 * Revamped console output of `interpretive_rules()`, with section headers, S/I/R values styled as in the printing of `sir` columns in tibbles, and the summary of edits sorted by SIR level, using `cli` if it is installed (#259)
 * The printing of `custom_interpretive_rules()` and `custom_mdro_guideline()` now styles SIR values as in tibbles, i.e., the colour of `I` depends on the guideline. `WT`, `NWT`, and `NS` were previously shown as `SDD`, `I`, and `R`, and values other than `S` and `R` as `I`.
 * The 'AMR for Python' vignette now contains sections on installation channels (stable from CRAN, or development from GitHub via `AMR.beta`) and on using `enforce_method` in `as_sir()` from Python

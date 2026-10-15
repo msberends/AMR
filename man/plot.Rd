@@ -159,6 +159,7 @@ labels_sir_count(
   minimum = 30,
   language = get_AMR_locale(),
   combine_SI = TRUE,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   datalabels.size = 3,
   datalabels.colour = "grey15"
 )
@@ -210,7 +211,7 @@ labels_sir_count(
 
 \item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
+\item{combine_SI}{A \link{logical} to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is \code{TRUE}. Following the \code{guideline} argument, the output then consists of \code{"SI"} (S+SDD+I) vs. \code{"R"} with EUCAST, and of \code{"S"} (S+SDD) vs. \code{"IR"} (I+R) with CLSI.}
 
 \item{datalabels.size}{Size of the datalabels.}
 

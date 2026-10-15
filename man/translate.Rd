@@ -41,15 +41,17 @@ And then save the file.
 Please read about adding or updating a language in \href{https://github.com/msberends/AMR/wiki/}{our Wiki}.
 \subsection{Changing the Default Language}{
 
-The system language will be used at default (as returned by \code{Sys.getenv("LANG")} or, if \code{LANG} is not set, \code{\link[=Sys.getlocale]{Sys.getlocale("LC_COLLATE")}}), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:
+The system language will be used at default, if that language is supported. The language to be used is determined in this order:
 \enumerate{
-\item Setting the package option \code{\link[=AMR-options]{AMR_locale}}, either by using e.g. \code{set_AMR_locale("German")} or by running e.g. \code{options(AMR_locale = "German")}.
+\item The package option \code{\link[=AMR-options]{AMR_locale}}, set by using e.g. \code{set_AMR_locale("German")} or by running e.g. \code{options(AMR_locale = "German")}.
 
 Note that setting an \R option only works in the same session. Save the command \code{options(AMR_locale = "(your language)")} to your \code{.Rprofile} file to apply it for every session. Run \code{utils::file.edit("~/.Rprofile")} to edit your \code{.Rprofile} file.
-\item Setting the system variable \code{LANGUAGE} or \code{LANG}, e.g. by adding \code{LANGUAGE="de_DE.utf8"} to your \code{.Renviron} file in your home directory.
+\item The system variable \code{LANG}, as returned by \code{Sys.getenv("LANG")}, e.g. set by adding \code{LANG="de_DE.utf8"} to your \code{.Renviron} file in your home directory.
+\item The system variable \code{LANGUAGE}, but only if \code{LANG} is not set. Note that \code{LANG} is set on most Linux and macOS systems, in which case \code{LANGUAGE} has no effect.
+\item The system locale, as returned by \code{\link[=Sys.getlocale]{Sys.getlocale("LC_COLLATE")}}, if neither \code{LANG} nor \code{LANGUAGE} is set.
 }
 
-Thus, if the package option \code{\link[=AMR-options]{AMR_locale}} is set, the system variables \code{LANGUAGE} and \code{LANG} will be ignored.
+Thus, if the package option \code{\link[=AMR-options]{AMR_locale}} is set, the system variables \code{LANG} and \code{LANGUAGE} will be ignored.
 }
 }
 \examples{

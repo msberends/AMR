@@ -89,14 +89,28 @@ test_that("test-count.R", {
       c(946, 428, 94)
     )
 
-    # count_df, which always combines S and I, as with EUCAST
+    # count_df, which combines 'I' with S for EUCAST and with R for CLSI
     expect_equal(
-      example_isolates %>% select(AMX) %>% count_df() %>% pull(value),
+      example_isolates %>% select(AMX) %>% count_df(guideline = "EUCAST") %>% pull(value),
       c(
         example_isolates$AMX %>% count_susceptible(guideline = "EUCAST"),
         example_isolates$AMX %>% count_resistant(guideline = "EUCAST")
       )
     )
+    expect_equal(
+      example_isolates %>% select(AMX) %>% count_df(guideline = "CLSI") %>% pull(value),
+      c(
+        example_isolates$AMX %>% count_susceptible(guideline = "CLSI"),
+        example_isolates$AMX %>% count_resistant(guideline = "CLSI")
+      )
+    )
+    expect_identical(
+      levels(count_df(example_isolates[, "AMX"], guideline = "CLSI")$interpretation),
+      c("S", "IR")
+    )
+    old_opts <- options(AMR_guideline = "CLSI")
+    expect_identical(count_df(example_isolates[, "AMX"]), count_df(example_isolates[, "AMX"], guideline = "CLSI"))
+    options(old_opts)
     expect_equal(
       example_isolates %>% select(AMX) %>% count_df(combine_SI = FALSE) %>% pull(value),
       c(

@@ -220,7 +220,8 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
                         minimum = 30,
                         as_percent = FALSE,
                         combine_SI = TRUE,
-                        confidence_level = 0.95) {
+                        confidence_level = 0.95,
+                        guideline = getOption("AMR_guideline", "EUCAST")) {
   meet_criteria(type, is_in = c("proportion", "count", "both"), has_length = 1)
   meet_criteria(data, allow_class = "data.frame")
   data <- ascertain_sir_classes(data, "data")
@@ -230,6 +231,15 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
   meet_criteria(as_percent, allow_class = "logical", has_length = 1)
   meet_criteria(combine_SI, allow_class = "logical", has_length = 1)
   meet_criteria(confidence_level, allow_class = "numeric", has_length = 1)
+  meet_criteria(guideline, allow_class = "character", has_length = 1)
+  if (guideline %like% "EUCAST") {
+    guideline <- "EUCAST"
+  } else if (guideline %like% "CLSI") {
+    guideline <- "CLSI"
+  }
+  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
+  # with EUCAST, 'I' is merged with S into 'SI', with CLSI, 'I' is merged with R into 'IR'
+  combined_levels <- if (identical(guideline, "CLSI")) c("S", "IR") else c("SI", "R")
 
   translate_ab <- get_translate_ab(translate_ab)
 
@@ -252,10 +262,12 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
       data[, i] <- as.character(as.sir(data[, i, drop = TRUE]))
       data[which(data[, i, drop = TRUE] %in% c("S", "SDD", "WT")), i] <- "S"
       data[which(data[, i, drop = TRUE] %in% c("R", "NWT", "NS")), i] <- "R"
-      if (isTRUE(combine_SI)) {
+      if (isTRUE(combine_SI) && identical(guideline, "CLSI")) {
+        data[which(data[, i, drop = TRUE] %in% c("I", "R")), i] <- "IR"
+      } else if (isTRUE(combine_SI)) {
         data[which(data[, i, drop = TRUE] %in% c("I", "S")), i] <- "SI"
       }
-      data[which(!data[, i, drop = TRUE] %in% c("S", "SI", "I", "R")), i] <- NA_character_
+      data[which(!data[, i, drop = TRUE] %in% c("S", "SI", "I", "IR", "R")), i] <- NA_character_
     }
   }
 
@@ -277,7 +289,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
     for (i in seq_len(ncol(.data))) {
       values <- .data[, i, drop = TRUE]
       if (isTRUE(combine_SI)) {
-        values <- factor(values, levels = c("SI", "R", "NI"), ordered = TRUE)
+        values <- factor(values, levels = c(combined_levels, "NI"), ordered = TRUE)
       } else {
         values <- factor(values, levels = c("S", "SDD", "I", "R", "NI"), ordered = TRUE)
       }
@@ -352,7 +364,7 @@ sir_calc_df <- function(type, # "proportion", "count" or "both"
 
   # apply factors for right sorting in interpretation
   if (isTRUE(combine_SI)) {
-    out$interpretation <- factor(out$interpretation, levels = c("SI", "R"), ordered = TRUE)
+    out$interpretation <- factor(out$interpretation, levels = combined_levels, ordered = TRUE)
   } else {
     # don't use as.sir() here, as it would add the class 'sir' and we would like
     # the same data structure as output, regardless of input

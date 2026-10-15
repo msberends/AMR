@@ -174,6 +174,7 @@ ggplot_sir <- function(data,
                        combine_SI = TRUE,
                        minimum = 30,
                        language = get_AMR_locale(),
+                       guideline = getOption("AMR_guideline", "EUCAST"),
                        nrow = NULL,
                        colours = c(
                          S = "#3CAEA3",
@@ -242,7 +243,7 @@ ggplot_sir <- function(data,
     geom_sir(
       position = position, x = x, fill = fill, translate_ab = translate_ab,
       minimum = minimum, language = language,
-      combine_SI = combine_SI, ...
+      combine_SI = combine_SI, guideline = guideline, ...
     ) +
     theme_sir()
 
@@ -263,6 +264,7 @@ ggplot_sir <- function(data,
       minimum = minimum,
       language = language,
       combine_SI = combine_SI,
+      guideline = guideline,
       datalabels.size = datalabels.size,
       datalabels.colour = datalabels.colour
     )
@@ -292,6 +294,7 @@ geom_sir <- function(position = NULL,
                      minimum = 30,
                      language = get_AMR_locale(),
                      combine_SI = TRUE,
+                     guideline = getOption("AMR_guideline", "EUCAST"),
                      ...) {
   x <- x[1]
   stop_ifnot_installed("ggplot2")
@@ -334,7 +337,8 @@ geom_sir <- function(position = NULL,
         translate_ab = translate_ab,
         language = language,
         minimum = minimum,
-        combine_SI = combine_SI
+        combine_SI = combine_SI,
+        guideline = guideline
       )
     },
     mapping = utils::modifyList(ggplot2::aes(), list(x = str2lang(x), y = str2lang(y), fill = str2lang(fill))),

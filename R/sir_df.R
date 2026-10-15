@@ -35,7 +35,8 @@ sir_df <- function(data,
                    minimum = 30,
                    as_percent = FALSE,
                    combine_SI = TRUE,
-                   confidence_level = 0.95) {
+                   confidence_level = 0.95,
+                   guideline = getOption("AMR_guideline", "EUCAST")) {
   tryCatch(
     sir_calc_df(
       type = "both",
@@ -45,7 +46,8 @@ sir_df <- function(data,
       minimum = minimum,
       as_percent = as_percent,
       combine_SI = combine_SI,
-      confidence_level = confidence_level
+      confidence_level = confidence_level,
+      guideline = guideline
     ),
     error = function(e) stop_(gsub("in sir_calc_df(): ", "", conditionMessage(e), fixed = TRUE), call = -5)
   )

@@ -44,7 +44,8 @@ count_df(
   data,
   translate_ab = "name",
   language = get_AMR_locale(),
-  combine_SI = TRUE
+  combine_SI = TRUE,
+  guideline = getOption("AMR_guideline", "EUCAST")
 )
 }
 \arguments{
@@ -66,7 +67,7 @@ You can also use e.g. \code{\link[=count_R]{count_R()}} or \code{\link[=count_S]
 
 \item{language}{Language of the returned text - the default is the current system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can also be set with the package option \code{\link[=AMR-options]{AMR_locale}}. Use \code{language = NULL} or \code{language = ""} to prevent translation.}
 
-\item{combine_SI}{A \link{logical} to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is \code{TRUE}.}
+\item{combine_SI}{A \link{logical} to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is \code{TRUE}. Following the \code{guideline} argument, the output then consists of \code{"SI"} (S+SDD+I) vs. \code{"R"} with EUCAST, and of \code{"S"} (S+SDD) vs. \code{"IR"} (I+R) with CLSI.}
 }
 \value{
 An \link{integer}

@@ -99,12 +99,26 @@ test_that("test-proportion.R", {
       c(1181, 577, 116)
     )
 
-    # proportion_df
+    # proportion_df, which combines 'I' with S for EUCAST and with R for CLSI
     expect_equal(
-      example_isolates %>% select(AMX) %>% proportion_df() %>% pull(value),
+      example_isolates %>% select(AMX) %>% proportion_df(guideline = "EUCAST") %>% pull(value),
       c(
         example_isolates$AMX %>% proportion_SI(),
         example_isolates$AMX %>% proportion_R()
+      )
+    )
+    expect_equal(
+      example_isolates %>% select(AMX) %>% proportion_df(guideline = "CLSI") %>% pull(value),
+      c(
+        example_isolates$AMX %>% proportion_S(),
+        example_isolates$AMX %>% proportion_IR()
+      )
+    )
+    expect_equal(
+      example_isolates %>% select(AMX) %>% sir_df(guideline = "CLSI") %>% pull(isolates),
+      c(
+        example_isolates$AMX %>% count_S(),
+        example_isolates$AMX %>% count_IR()
       )
     )
     expect_equal(

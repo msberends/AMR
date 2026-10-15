@@ -1554,6 +1554,7 @@ labels_sir_count <- function(position = NULL,
                              minimum = 30,
                              language = get_AMR_locale(),
                              combine_SI = TRUE,
+                             guideline = getOption("AMR_guideline", "EUCAST"),
                              datalabels.size = 3,
                              datalabels.colour = "grey15") {
   stop_ifnot_installed("ggplot2")
@@ -1587,7 +1588,8 @@ labels_sir_count <- function(position = NULL,
         translate_ab = translate_ab,
         combine_SI = combine_SI,
         minimum = minimum,
-        language = language
+        language = language,
+        guideline = guideline
       )
       transformed$gr <- transformed[, x_name, drop = TRUE]
       transformed %pm>%
