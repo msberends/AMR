@@ -38,13 +38,9 @@
 #' @param only_all_tested (for combination therapies, i.e. using more than one variable for `...`): a [logical] to indicate that isolates must be tested for all antimicrobials, see section *Combination Therapy* below. Use [sir_combine()] to create a new variable for a combination therapy.
 #' @param data A [data.frame] containing columns with class [`sir`] (see [as.sir()]).
 #' @param translate_ab A column name of the [antimicrobials] data set to translate the antibiotic abbreviations to, using [ab_property()].
-#' @param guideline Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category will be considered as susceptible (see [EUCAST website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)), but with with CLSI, it will be considered resistant. Therefore:
-#'   * EUCAST: [susceptibility()] \eqn{= \%S + \%I}, [resistance()] \eqn{= \%R}
-#'   * CLSI: [susceptibility()] \eqn{= \%S + \%SDD}, [resistance()] \eqn{= \%I + \%R}
-#'
-#' You can also use e.g. [proportion_R()] or [proportion_S()] instead, to be explicit. For [proportion_df()], [count_df()], and [sir_df()], the guideline determines how 'I' is merged when `combine_SI = TRUE`.
+#' @param guideline A guideline name, `"EUCAST"` or `"CLSI"` (or any version thereof, e.g. `"CLSI 2025"`), to determine whether the 'I' category is considered susceptible (EUCAST) or resistant (CLSI). The default is the package option [`AMR_guideline`][AMR-options], or `"EUCAST"` if it is not set. For functions that return results per category, i.e., [count_df()], [proportion_df()], [sir_df()], [ggplot_sir()], [geom_sir()], and [labels_sir_count()], this can also be `NULL` or `FALSE` to keep S, I, and R separate. See section *Interpretation of SIR* below.
 #' @inheritParams ab_property
-#' @param combine_SI A [logical] to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is `TRUE`. Following the `guideline` argument, the output then consists of `"SI"` (S+SDD+I) vs. `"R"` with EUCAST, and of `"S"` (S+SDD) vs. `"IR"` (I+R) with CLSI.
+#' @param combine_SI *(deprecated in favour of `guideline`)* A [logical]. If set, it takes precedence over `guideline`: `TRUE` merges S, SDD, and I into `"SI"` vs. `"R"`, and `FALSE` keeps S, I, and R separate.
 #' @param ab_result Antibiotic results to test against, must be one or more values of "S", "SDD", "I", or "R".
 #' @param confidence_level The confidence level for the returned confidence interval. For the calculation, the number of S or SI isolates, and R isolates are compared with the total number of available isolates with R, S, or I by using [binom.test()], i.e., the Clopper-Pearson method.
 #' @param side The side of the confidence interval to return. The default is `"both"` for a length 2 vector, but can also be (abbreviated as) `"min"`/`"left"`/`"lower"`/`"less"` or `"max"`/`"right"`/`"higher"`/`"greater"`.
@@ -199,16 +195,10 @@ resistance <- function(...,
                        only_all_tested = FALSE,
                        guideline = getOption("AMR_guideline", "EUCAST")) {
   # other arguments for meet_criteria are handled by sir_calc()
-  if (guideline %like% "EUCAST") {
-    guideline <- "EUCAST"
-  } else if (guideline %like% "CLSI") {
-    guideline <- "CLSI"
+  if (missing(guideline)) {
+    message_guideline_assumed("resistance", txt = ". Use {.code guideline = \"CLSI\"} to consider it resistant.")
   }
-  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
-  if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("resistance", "eucast_default", entire_session = TRUE)) {
-    message_("{.help [{.fun resistance}](AMR::resistance)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")
-    message_("This message will be shown once per session.")
-  }
+  guideline <- validate_sir_guideline(guideline, fn = "resistance")
   tryCatch(
     sir_calc(...,
       ab_result = c(
@@ -233,16 +223,10 @@ susceptibility <- function(...,
                            only_all_tested = FALSE,
                            guideline = getOption("AMR_guideline", "EUCAST")) {
   # other arguments for meet_criteria are handled by sir_calc()
-  if (guideline %like% "EUCAST") {
-    guideline <- "EUCAST"
-  } else if (guideline %like% "CLSI") {
-    guideline <- "CLSI"
+  if (missing(guideline)) {
+    message_guideline_assumed("susceptibility", txt = ". Use {.code guideline = \"CLSI\"} to consider it resistant.")
   }
-  meet_criteria(guideline, allow_class = "character", is_in = c("EUCAST", "CLSI"), has_length = 1)
-  if (is.null(getOption("AMR_guideline")) && missing(guideline) && message_not_thrown_before("susceptibility", "eucast_default", entire_session = TRUE)) {
-    message_("{.help [{.fun susceptibility}](AMR::susceptibility)} assumes the EUCAST guideline and thus considers the 'I' category susceptible. Set the {.arg guideline} argument or the {.code AMR_guideline} option to either \"CLSI\" or \"EUCAST\", see {.topic [AMR-options](AMR::AMR-options)}.")
-    message_("This message will be shown once per session.")
-  }
+  guideline <- validate_sir_guideline(guideline, fn = "susceptibility")
   tryCatch(
     sir_calc(...,
       ab_result = c(
@@ -430,9 +414,10 @@ proportion_df <- function(data,
                           language = get_AMR_locale(),
                           minimum = 30,
                           as_percent = FALSE,
-                          combine_SI = TRUE,
+                          combine_SI,
                           confidence_level = 0.95,
                           guideline = getOption("AMR_guideline", "EUCAST")) {
+  guideline <- get_aggregation_guideline(guideline, missing(guideline), combine_SI, missing(combine_SI), fn = "proportion_df")
   tryCatch(
     sir_calc_df(
       type = "proportion",
@@ -441,7 +426,6 @@ proportion_df <- function(data,
       language = language,
       minimum = minimum,
       as_percent = as_percent,
-      combine_SI = combine_SI,
       confidence_level = confidence_level,
       guideline = guideline
     ),

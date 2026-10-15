@@ -22,7 +22,6 @@
 \alias{scale_sir_colours}
 \alias{scale_sir_colors}
 \alias{theme_sir}
-\alias{labels_sir_count}
 \title{Plotting Helpers for AMR Data Analysis}
 \usage{
 scale_x_mic(keep_operators = "edges", mic_range = NULL, ...)
@@ -151,18 +150,6 @@ scale_sir_colours(
 )
 
 theme_sir()
-
-labels_sir_count(
-  position = NULL,
-  x = "antibiotic",
-  translate_ab = "name",
-  minimum = 30,
-  language = get_AMR_locale(),
-  combine_SI = TRUE,
-  guideline = getOption("AMR_guideline", "EUCAST"),
-  datalabels.size = 3,
-  datalabels.colour = "grey15"
-)
 }
 \arguments{
 \item{keep_operators}{A \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
@@ -204,18 +191,6 @@ labels_sir_count(
 \item{limits}{A \link{numeric} vector of length two providing limits of the scale, use \code{NA} to refer to the existing minimum or maximum.}
 
 \item{aesthetics}{Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size".}
-
-\item{position}{Position adjustment of bars, either \code{"fill"}, \code{"stack"} or \code{"dodge"}.}
-
-\item{translate_ab}{A column name of the \link{antimicrobials} data set to translate the antibiotic abbreviations to, using \code{\link[=ab_property]{ab_property()}}.}
-
-\item{minimum}{The minimum allowed number of available (tested) isolates. Any isolate count lower than \code{minimum} will return \code{NA} with a warning. The default number of \code{30} isolates is advised by the Clinical and Laboratory Standards Institute (CLSI) as best practice, see \emph{Source}.}
-
-\item{combine_SI}{A \link{logical} to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is \code{TRUE}. Following the \code{guideline} argument, the output then consists of \code{"SI"} (S+SDD+I) vs. \code{"R"} with EUCAST, and of \code{"S"} (S+SDD) vs. \code{"IR"} (I+R) with CLSI.}
-
-\item{datalabels.size}{Size of the datalabels.}
-
-\item{datalabels.colour}{Colour of the datalabels.}
 }
 \value{
 The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} model that is extendible with any \code{ggplot2} function.

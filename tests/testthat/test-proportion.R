@@ -122,12 +122,18 @@ test_that("test-proportion.R", {
       )
     )
     expect_equal(
-      example_isolates %>% select(AMX) %>% proportion_df(combine_SI = FALSE) %>% pull(value),
+      example_isolates %>% select(AMX) %>% proportion_df(guideline = NULL) %>% pull(value),
       c(
         example_isolates$AMX %>% proportion_S(),
         example_isolates$AMX %>% proportion_I(),
         example_isolates$AMX %>% proportion_R()
       )
+    )
+
+    expect_error(susceptibility(example_isolates$AMX, guideline = NULL))
+    expect_identical(
+      suppressWarnings(sir_df(example_isolates[, "AMX"], combine_SI = TRUE, guideline = "CLSI")),
+      sir_df(example_isolates[, "AMX"], guideline = "EUCAST")
     )
 
     # expect_warning(example_isolates %>% group_by(ward) %>% summarise(across(KAN, sir_confidence_interval)))

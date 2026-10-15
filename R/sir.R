@@ -173,7 +173,25 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @section Interpretation of SIR:
 #' In 2019, the European Committee on Antimicrobial Susceptibility Testing (EUCAST) has decided to change the definitions of susceptibility testing categories S, I, and R (<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
 #'
-#' This AMR package follows insight; use [susceptibility()] (equal to [proportion_SI()]) to determine antimicrobial susceptibility and [count_susceptible()] (equal to [count_SI()]) to count susceptible isolates.
+#' In aggregated analyses, such as proportions, counts, antibiograms, and plots, the 'I' category must be considered either susceptible or resistant. In epidemiological AMR data analysis, this follows the guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I' resistant. The dose-dependent susceptibility of CLSI ('SDD') is always considered susceptible, as it equals what EUCAST defines as 'I'. All functions with a `guideline` argument for this purpose use these categories:
+#'
+#' | `guideline` | Susceptible | Resistant |
+#' |---|---|---|
+#' | `"EUCAST"` | S, SDD, I, WT | R, NWT, NS |
+#' | `"CLSI"` | S, SDD, WT | I, R, NWT, NS |
+#'
+#' The values 'WT' (wild type) and 'NWT' (non-wild type) result from epidemiological cut-off values (ECOFFs) instead of clinical breakpoints. Since they are no clinical categories, 'WT' is always considered susceptible and 'NWT' always resistant, regardless of the guideline. The value 'NS' (non-susceptible) is always considered resistant, and 'NI' (non-interpretable) is always considered a missing result.
+#'
+#' The `guideline` argument can be:
+#'
+#' * **Left unset**, to use the package option [`AMR_guideline`][AMR-options], or `"EUCAST"` if this option is not set. In the latter case, a message is shown once per session (but not in R Markdown or Quarto documents); set the option to silence it.
+#' * **`"EUCAST"`**, or any EUCAST version such as `"EUCAST 2025"`, to consider 'I' susceptible, e.g., to return `"SI"` vs. `"R"` in [proportion_df()].
+#' * **`"CLSI"`**, or any CLSI version such as `"CLSI 2025"`, to consider 'I' resistant, e.g., to return `"S"` vs. `"IR"` in [proportion_df()].
+#' * **`NULL` or `FALSE`**, to keep S, I, and R separate. This is only possible in functions that return results per category: [count_df()], [proportion_df()], [sir_df()], [ggplot_sir()], [geom_sir()], [labels_sir_count()], and [bug_drug_combinations()]. Functions that return a single proportion or count, such as [susceptibility()], [count_resistant()], [antibiogram()], [wisca()], and [format()] on the result of [bug_drug_combinations()], require 'I' to be considered either susceptible or resistant, and return an error.
+#'
+#' Use [susceptibility()] and [resistance()] (or [count_susceptible()] and [count_resistant()]) to follow the guideline, or e.g. [proportion_SI()] and [proportion_R()] to be explicit regardless of the guideline.
+#'
+#' The `combine_SI` argument of the functions that return results per category, [antibiogram()], and [wisca()] is deprecated in favour of `guideline`. If set, it is followed literally and takes precedence over `guideline`.
 #' @return Ordered [factor] with new class `sir`
 #' @aliases sir
 #' @export

@@ -30,6 +30,16 @@
 test_that("test-antibiogram.R", {
   skip_on_cran()
 
+  # 'I' follows the guideline, see section 'Interpretation of SIR' in ?as.sir
+  get_gen <- function(...) suppressWarnings(antibiogram(example_isolates, antimicrobials = "GEN", ab_transform = NULL, formatting_type = 1, ...))$GEN
+  gen_eucast <- get_gen(guideline = "EUCAST")
+  gen_clsi <- get_gen(guideline = "CLSI")
+  expect_true(all(gen_eucast >= gen_clsi, na.rm = TRUE) && any(gen_eucast > gen_clsi, na.rm = TRUE))
+  expect_error(antibiogram(example_isolates, antimicrobials = "GEN", guideline = NULL))
+  # the deprecated combine_SI must be followed literally if set, regardless of the guideline
+  expect_identical(get_gen(combine_SI = TRUE, guideline = "CLSI"), gen_eucast)
+  expect_identical(get_gen(combine_SI = FALSE, guideline = "EUCAST"), gen_clsi) # identical since example_isolates contains no SDD
+
   # Traditional antibiogram ----------------------------------------------
 
 

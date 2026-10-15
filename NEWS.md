@@ -1,4 +1,4 @@
-# AMR 3.0.1.9137
+# AMR 3.0.1.9138
 
 Planned as v3.1.0, mid October 2026.
 
@@ -25,7 +25,8 @@ Planned as v3.1.0, mid October 2026.
 * Parallel computing in `as.sir()`, `antibiogram()`, and `wisca()` now uses the `future` and `future.apply` packages, which is faster. A non-sequential plan (e.g., `future::plan(future::multisession)`) must be active before using `parallel = TRUE` (#281).
 * The options of `capped_mic_handling` in `as.sir()` have been redefined as `"none"`, `"conservative"`, `"standard"` (default), and `"lenient"`. The option `"inverse"` is no longer available (#243).
 * `as.sir()` now returns WT/NWT (Wildtype/Non-wildtype) instead of S/R when using ECOFF-based interpretation with `breakpoint_type = "ECOFF"`. WT/NWT results are fully supported in all resistance and susceptibility functions and in all plots (#254).
-* `count_df()`, `proportion_df()`, and `sir_df()` now follow the `AMR_guideline` option through their new `guideline` argument. With CLSI, `combine_SI = TRUE` merges 'I' with R into `"IR"` and returns `"S"` vs. `"IR"`, consistent with `count_susceptible()` and `susceptibility()`. Previously, these functions always merged 'I' with S, as with EUCAST. Use `guideline = "EUCAST"` for the old behaviour. This also applies to `ggplot_sir()`, `geom_sir()`, and `labels_sir_count()`, which got the same argument.
+* Aggregated analyses now follow the guideline for the 'I' category, set with the new `guideline` argument or the `AMR_guideline` option: EUCAST considers 'I' susceptible and CLSI considers 'I' resistant, while SDD and WT are always considered susceptible, and NWT and NS always resistant (see section *Interpretation of SIR* in `?as.sir`). This applies to `count_df()`, `proportion_df()`, `sir_df()`, `ggplot_sir()`, `geom_sir()`, and `labels_sir_count()`, which with CLSI now return `"S"` vs. `"IR"` instead of `"SI"` vs. `"R"`, and to `antibiogram()`, `wisca()`, and `format()` on the output of `bug_drug_combinations()`. Previously, these functions always considered 'I' susceptible, as with EUCAST. Use `guideline = "EUCAST"` for the old behaviour.
+* The `combine_SI` argument of these functions is deprecated in favour of `guideline`. While set, it is followed literally and takes precedence over `guideline`. Use `guideline = NULL` instead of `combine_SI = FALSE` to keep S, I, and R separate.
 
 ### New
 * **Updated clinical breakpoints**
@@ -110,7 +111,8 @@ Planned as v3.1.0, mid October 2026.
   * `wisca()` now follows Bielicki *et al.* (2016) more strictly by using $\text{Beta}(1, 9999)$ for intrinsically resistant pairs, forcing near-zero susceptibility regardless of observed data (based on EUCAST Expected Resistant Phenotypes)
   * Fixed a bug where both functions failed without the `antimicrobials` argument if `tidyselect` was not available, e.g., for binary installations without `dplyr`
 * Resistance and susceptibility calculation
-  * New argument `guideline` (default: EUCAST) in `susceptibility()`, `resistance()`, `count_df()`, `proportion_df()`, `sir_df()`, `ggplot_sir()`, `geom_sir()`, and `labels_sir_count()` to interpret the 'I' category correctly per guideline
+  * New argument `guideline` (default: the `AMR_guideline` option, otherwise EUCAST) in `susceptibility()`, `resistance()`, `count_df()`, `proportion_df()`, `sir_df()`, `ggplot_sir()`, `geom_sir()`, `labels_sir_count()`, `antibiogram()`, `wisca()`, and `bug_drug_combinations()` to interpret the 'I' category correctly per guideline. Functions that return results per category also accept `guideline = NULL` to keep S, I, and R separate, while functions that return a single proportion or count give an informative error.
+  * When EUCAST is assumed because neither the `guideline` argument nor the `AMR_guideline` option is set, a message explains how to change this, once per session and not in R Markdown or Quarto documents
   * `count_*()` and `proportion_*()` now handle WT, NWT, NS, and NI results correctly (#321)
 * MICs and disk diffusion
   * New argument `round_to_next_log2` in `as.mic()` and `rescale_mic()` to round values up to the nearest log2 dilution level (#255)
@@ -137,11 +139,14 @@ Planned as v3.1.0, mid October 2026.
 * `custom_eucast_rules()` has been renamed to `custom_interpretive_rules()`. The old name is now deprecated but still works (#268).
 * Logical comparison (`==`, `!=`) of the `sir` class with a `factor` is now possible on R >= 4.3
 * New argument `guideline` in `random_mic()` and `random_disk()`, defaulting to the `AMR_guideline` option (otherwise EUCAST), so that generated values are based on the latest breakpoints of one guideline instead of those of all guidelines and years combined
+* Fixed `format()` on the output of `bug_drug_combinations()`, which counted I and SDD as resistant with the default `combine_SI = TRUE`, contrary to its documentation. It now reads the guideline used in `bug_drug_combinations()`, which can be overridden with its own `guideline` argument, and also counts NS as resistant.
 * Fixed a bug in `g.test()` that returned the degrees of freedom as `argument` instead of `parameter`, so that they were not printed
 * Fixed a bug where R could crash after unloading the `data.table` package, and where suggested packages available on the machine that built the package were used even if they were not available to the user
 
 ### Other
 * Improved console messages with clickable links throughout the package, powered by `cli` if it is installed (#191, #265)
+* The section *Interpretation of SIR* (in `?as.sir`) now explains for all functions with a `guideline` argument for aggregated analyses how S, SDD, I, R, WT, NWT, NS, and NI are categorised per guideline. The handling of 'I' per MDRO guideline in `mdro()` will be revised in a future version (#323).
+* `labels_sir_count()` is now documented together with `ggplot_sir()`
 * The documentation of `get_AMR_locale()` now describes the actual order in which the language is determined: the `AMR_locale` option, then the `LANG` system variable, then `LANGUAGE` only if `LANG` is not set, and then the system locale
 * Revamped console output of `interpretive_rules()`, with section headers, S/I/R values styled as in the printing of `sir` columns in tibbles, and the summary of edits sorted by SIR level, using `cli` if it is installed (#259)
 * The printing of `custom_interpretive_rules()` and `custom_mdro_guideline()` now styles SIR values as in tibbles, i.e., the colour of `I` depends on the guideline. `WT`, `NWT`, and `NS` were previously shown as `SDD`, `I`, and `R`, and values other than `S` and `R` as `I`.

@@ -111,13 +111,26 @@ test_that("test-count.R", {
     old_opts <- options(AMR_guideline = "CLSI")
     expect_identical(count_df(example_isolates[, "AMX"]), count_df(example_isolates[, "AMX"], guideline = "CLSI"))
     options(old_opts)
+    # guideline = NULL or FALSE keeps S, I, and R separate
     expect_equal(
-      example_isolates %>% select(AMX) %>% count_df(combine_SI = FALSE) %>% pull(value),
+      example_isolates %>% select(AMX) %>% count_df(guideline = NULL) %>% pull(value),
       c(
         suppressWarnings(example_isolates$AMX %>% count_S()),
         example_isolates$AMX %>% count_I(),
         example_isolates$AMX %>% count_R()
       )
+    )
+    expect_identical(count_df(example_isolates[, "AMX"], guideline = FALSE), count_df(example_isolates[, "AMX"], guideline = NULL))
+    expect_error(count_df(example_isolates[, "AMX"], guideline = "WHO"))
+    expect_error(count_susceptible(example_isolates$AMX, guideline = NULL))
+    # the deprecated combine_SI must be followed literally if set, regardless of the guideline
+    expect_identical(
+      suppressWarnings(count_df(example_isolates[, "AMX"], combine_SI = TRUE, guideline = "CLSI")),
+      count_df(example_isolates[, "AMX"], guideline = "EUCAST")
+    )
+    expect_identical(
+      suppressWarnings(count_df(example_isolates[, "AMX"], combine_SI = FALSE, guideline = "CLSI")),
+      count_df(example_isolates[, "AMX"], guideline = NULL)
     )
 
     # grouping in sir_calc_df() (= backbone of sir_df())

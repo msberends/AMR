@@ -101,6 +101,16 @@ test_that("test-ggplot_sir.R", {
       levels(ggplot_sir(example_isolates[, c("AMC", "CIP")], guideline = "CLSI")$layers[[1]]$data(example_isolates[, c("AMC", "CIP")])$interpretation),
       c("S", "IR")
     )
+    # S, I, and R are kept separate with guideline = NULL
+    expect_identical(
+      levels(ggplot_sir(example_isolates[, c("AMC", "CIP")], guideline = NULL)$layers[[1]]$data(example_isolates[, c("AMC", "CIP")])$interpretation),
+      c("S", "I", "R")
+    )
+    # the deprecated combine_SI must be followed literally if set, regardless of the guideline
+    expect_identical(
+      levels(suppressWarnings(ggplot_sir(example_isolates[, c("AMC", "CIP")], combine_SI = TRUE, guideline = "CLSI"))$layers[[1]]$data(example_isolates[, c("AMC", "CIP")])$interpretation),
+      c("SI", "R")
+    )
 
     # support for scale_type ab and mo
     expect_inherits(
