@@ -1,4 +1,4 @@
-# AMR 3.0.1.9146
+# AMR 3.0.1.9147
 
 Planned as v3.1.0, mid October 2026.
 
@@ -32,7 +32,7 @@ Planned as v3.1.0, mid October 2026.
 * **Updated clinical breakpoints**
   * EUCAST 2026 and CLSI 2026 are now supported, by adding over 5,700 new breakpoints to the `clinical_breakpoints` data set. EUCAST 2026 is now the default guideline for all MIC and disk diffusion interpretations.
   * Human EUCAST breakpoints from 2019 (v9.0) onwards are now retrieved directly from the EUCAST Excel files, instead of relying on the WHONET repository. As a result:
-    * `clinical_breakpoints` now contains blocking rows (`NA` breakpoints, with the reason in `note`) where EUCAST gives no breakpoint for an organism, so that `as.sir()` no longer falls back to the breakpoint of a broader taxon
+    * `clinical_breakpoints` now contains blocking rows (`NA` breakpoints, with the reason in `note`) where EUCAST gives no breakpoint for an organism, so that `as.sir()` no longer falls back to the breakpoint of a broader taxon. This includes infections other than UTI where EUCAST gives breakpoints in brackets or no breakpoint, but does give a breakpoint for UTI, e.g., aminoglycosides for *Acinetobacter* spp.
     * Restrictions in EUCAST notes are applied, e.g., zone diameter breakpoints for *E. coli* only
     * EUCAST PK-PD (non-species related) breakpoints of 2019-2023 and *H. parainfluenzae* MIC breakpoints are now included
 * **Unified interpretive rules**
@@ -68,6 +68,7 @@ Planned as v3.1.0, mid October 2026.
   * `info = FALSE` now suppresses all messages, including those for columns without breakpoints
   * Combined MIC/SIR input values (e.g., `"<= 0.002; S"` or `"S; 0.002"`) are now parsed correctly (#252)
   * Setting a year-qualified guideline, such as `options(AMR_guideline = "EUCAST 2012")`, no longer causes errors or silently wrong results in `interpretive_rules()`, `resistance()`, `susceptibility()`, `count_resistant()`, `count_susceptible()`, and the SIR plotting and printing functions (#298)
+  * With an unknown `uti` (`NA`, the default), non-UTI breakpoints are now consistently preferred over UTI breakpoints. Previously, this preference was only applied together with its note, which is shown once. UTI breakpoints are only used if there are no non-UTI breakpoints, which is now noted in `sir_interpretation_history()` for every interpretation. A blocking row of a broader taxon does not override a UTI breakpoint of the organism itself, e.g., Enterobacterales and nitroxoline for *E. coli*.
 * `clinical_breakpoints` data set
   * Fixed EUCAST breakpoint rules for *Aerococcus* (v12 onwards), which were never applied, and for *Pasteurella*, which were partly filed under *Neisseria meningitidis* (#290)
   * Fixed streptomycin breakpoints imported from WHONET, which were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)

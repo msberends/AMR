@@ -640,9 +640,9 @@ test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
 
 test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   skip_on_cran()
-  sir <- function(x, mo, ab, guideline, include_screening = FALSE) {
+  sir <- function(x, mo, ab, guideline, include_screening = FALSE, uti = NA) {
     as.character(suppressMessages(suppressWarnings(
-      as.sir(x, mo = mo, ab = ab, guideline = guideline, include_screening = include_screening)
+      as.sir(x, mo = mo, ab = ab, guideline = guideline, include_screening = include_screening, uti = uti)
     )))
   }
   # IE for V. fluvialis, while Vibrio spp. has breakpoints
@@ -678,4 +678,21 @@ test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   expect_identical(sir(as.mic(0.064), "Haemophilus influenzae", "LVX", "EUCAST 2026"), "S")
   # high-level gentamicin resistance (screening test given in the notes)
   expect_identical(sir(as.mic(256), "Enterococcus faecium", "GEH", "EUCAST 2026"), "R")
+  # breakpoints in brackets for systemic infections are not replaced by the UTI breakpoint if uti is unknown
+  expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026"), NA_character_)
+  expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026", uti = FALSE), NA_character_)
+  expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026", uti = TRUE), "S")
+  # UTI breakpoints are only used for unknown uti if there are no non-UTI breakpoints, which is noted every time
+  for (i in 1:2) {
+    sir_interpretation_history(clean = TRUE)
+    expect_identical(sir(as.mic(16), "Escherichia coli", "NTR", "EUCAST 2026"), "S")
+    sir_history <- sir_interpretation_history(clean = TRUE)
+    expect_match(sir_history$notes, "only available for (uncomplicated) urinary tract infections", fixed = TRUE)
+  }
+  expect_identical(sir(as.mic(16), "Escherichia coli", "NTR", "EUCAST 2026", uti = FALSE), NA_character_)
+  # the blocking row of Enterobacterales does not override the UTI breakpoint for E. coli itself
+  expect_identical(sir(as.mic(2), "Escherichia coli", "CZO", "EUCAST 2026"), "I")
+  # with UTI and non-UTI breakpoints, unknown uti takes the non-UTI breakpoint
+  expect_identical(sir(as.mic(c(2, 8, 32)), "Escherichia coli", "CZO", "CLSI 2025"), c("S", "R", "R"))
+  expect_identical(sir(as.mic(c(2, 8, 32)), "Escherichia coli", "CZO", "CLSI 2025", uti = TRUE), c("S", "S", "R"))
 })

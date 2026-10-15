@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 60 237 observations and 15 variables:
+A \link[tibble:tibble]{tibble} with 61 367 observations and 15 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either \code{"ECOFF"}, \code{"animal"}, or \code{"human"}
@@ -49,7 +49,7 @@ The default is \code{"human"}, which can also be set with the package option \co
 
 \subsection{Blocking Rows}{
 
-Where EUCAST lists an organism but gives no breakpoint for it (e.g. "IE", "-", "Note", breakpoints in brackets, or an organism excluded with "except"), \code{\link[=as.sir]{as.sir()}} must not fall back to the breakpoint of a broader taxon, such as the breakpoint for \emph{Vibrio} spp. where EUCAST gives "IE" for \emph{V. fluvialis}. Such cases are included as "blocking rows": rows in which \code{breakpoint_S} and \code{breakpoint_R} are both \code{NA} and the \code{note} starts with \code{"[No breakpoint]"} followed by the reason. \code{\link[=as.sir]{as.sir()}} returns \code{NA} for these. This currently applies to 14 523 rows. Remove them with \code{subset(clinical_breakpoints, !is.na(breakpoint_S))} if only actual breakpoints are needed.
+Where EUCAST lists an organism but gives no breakpoint for it (e.g. "IE", "-", "Note", breakpoints in brackets, or an organism excluded with "except"), \code{\link[=as.sir]{as.sir()}} must not fall back to the breakpoint of a broader taxon, such as the breakpoint for \emph{Vibrio} spp. where EUCAST gives "IE" for \emph{V. fluvialis}. Such cases are included as "blocking rows": rows in which \code{breakpoint_S} and \code{breakpoint_R} are both \code{NA} and the \code{note} starts with \code{"[No breakpoint]"} followed by the reason. \code{\link[=as.sir]{as.sir()}} returns \code{NA} for these. This currently applies to 15 653 rows. Remove them with \code{subset(clinical_breakpoints, !is.na(breakpoint_S))} if only actual breakpoints are needed.
 }
 
 \subsection{Imported From WHONET}{

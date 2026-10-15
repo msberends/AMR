@@ -38,7 +38,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @param x Vector of values (for class [`mic`]: MIC values in mg/L, for class [`disk`]: a disk diffusion radius in millimetres).
 #' @param mo A vector (or column name) with [character]s that can be coerced to valid microorganism codes with [as.mo()], can be left empty to determine it automatically.
 #' @param ab A vector (or column name) with [character]s that can be coerced to a valid antimicrobial drug code with [as.ab()].
-#' @param uti (Urinary Tract Infection) a vector (or column name) with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See *Examples*.
+#' @param uti (Urinary Tract Infection) a vector (or column name) with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. If `uti` is `NA` (unknown), non-UTI breakpoints are preferred, and UTI breakpoints are only used if no non-UTI breakpoints exist for the drug-bug combination, which is noted in [sir_interpretation_history()]. With `uti = FALSE`, UTI breakpoints are never used. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline A guideline name (or column name) to use for SIR interpretation. Defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*. Using a column name allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.
 #' @param capped_mic_handling A [character] string that controls how MIC values with a cap (i.e., starting with `<`, `<=`, `>`, or `>=`) are interpreted. Supports the following options:
@@ -1814,8 +1814,28 @@ as_sir_method <- function(method_short,
     }
 
     # if the user explicitly set uti, keep only those rows
+    uti_assumed <- FALSE
     if (!is.na(uti_current)) {
       breakpoints_current <- breakpoints_current[breakpoints_current$uti == uti_current, , drop = FALSE]
+    } else if (any(breakpoints_current$uti %in% TRUE)) {
+      # uti is unknown: non-UTI rows take precedence over UTI rows, and UTI rows are only used if there are no non-UTI rows. A non-UTI breakpoint applies at any taxonomic level, but a non-UTI row without breakpoints (a 'blocking row', e.g. for EUCAST's breakpoints in brackets) only applies if it is at least as specific as the UTI rows: the blocking row of e.g. Enterobacterales must not override the UTI breakpoint given for E. coli itself.
+      # taxonomic level without the 0.1 that a blocking row adds to its rank_index, e.g. 3.1 -> 3 and 2.6 -> 2.5
+      taxonomic_level <- round(breakpoints_current$rank_index * 2) / 2
+      is_blocking <- is.na(breakpoints_current$breakpoint_S) & is.na(breakpoints_current$breakpoint_R)
+      is_uti <- breakpoints_current$uti %in% TRUE
+      too_broad <- !is_uti & is_blocking & taxonomic_level > min(taxonomic_level[is_uti])
+      breakpoints_current <- breakpoints_current[!too_broad, , drop = FALSE]
+      if (any(!breakpoints_current$uti %in% TRUE)) {
+        if (length(unique(breakpoints_current$site)) > 1) {
+          notes_current <- paste0(
+            notes_current, "\n",
+            paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming non-UTI. Use argument `uti` to set which isolates are from urine. See `?as.sir`.")
+          )
+        }
+        breakpoints_current <- breakpoints_current[!breakpoints_current$uti %in% TRUE, , drop = FALSE]
+      } else {
+        uti_assumed <- TRUE
+      }
     }
 
     # build a helper factor so FALSE < NA < TRUE
@@ -1837,19 +1857,11 @@ as_sir_method <- function(method_short,
     } else {
       site <- paste0("body site '", site, "'")
     }
-    if (nrow(breakpoints_current) == 1 && all(breakpoints_current$uti == TRUE) && is.na(uti_current) && message_not_thrown_before("as.sir", "uti", ab_current)) {
-      # only UTI breakpoints available
+    if (isTRUE(uti_assumed)) {
+      # only UTI breakpoints available, noted for every interpretation so that sir_interpretation_history() shows it
       notes_current <- paste0(
         notes_current, "\n",
-        paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI) - assuming `uti = TRUE`.")
-      )
-    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && any(is.na(uti_current)) && all(c(TRUE, FALSE) %in% breakpoints_current$uti, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteUTI", mo_current, ab_current)) {
-      # both UTI and Non-UTI breakpoints available
-      breakpoints_current <- breakpoints_current %pm>%
-        pm_filter(uti == FALSE)
-      notes_current <- paste0(
-        notes_current, "\n",
-        paste0("Breakpoints for UTI ", font_bold("and"), " non-UTI available for ", ab_formatted, " in ", mo_formatted, " - assuming ", site, ". Use argument `uti` to set which isolates are from urine. See `?as.sir`.")
+        paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI) - assuming `uti = TRUE`. Use `uti = FALSE` to prevent this.")
       )
     } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
       # breakpoints for multiple body sites available

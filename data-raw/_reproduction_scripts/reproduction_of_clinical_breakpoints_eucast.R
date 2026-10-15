@@ -494,7 +494,7 @@ parse_bp <- function(txt) {
   t <- trimws(txt)
   # placeholders such as "-" (susceptibility testing not recommended), "IE"
   # or "Note" are kept as they are: the cleanup turns them into blocking rows
-  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets" (see is_bracketed_bp()). They are kept as they are in the raw file, so that they remain distinguishable from clinical breakpoints. The cleanup turns them into blocking rows as well: the row stays in clinical_breakpoints, but with breakpoint_S and breakpoint_R set to NA and the bracketed values stated in the note (see "Blocking rows").
+  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets" (see is_bracketed_bp()). They are kept as they are in the raw file, so that they remain distinguishable from clinical breakpoints. The cleanup turns them into blocking rows as well, with breakpoint_S and breakpoint_R set to NA and the bracketed values stated in the note (see "Blocking rows"). Like any blocking row, it is left out of clinical_breakpoints where the organism has a (non-screening) breakpoint of its own for the same agent, method and UTI status (see "Pruning blocking rows").
   t
 }
 
@@ -1975,7 +1975,7 @@ split_mo_list_one <- function(s, sheet_genus_fallback) {
 # kept as "blocking rows": breakpoint_S and breakpoint_R are NA, so as.sir()
 # returns NA, and the note starts with "[No breakpoint]" and the reason. A
 # blocking row is only kept where the organism has no breakpoint of its own
-# for that agent and method (see "Pruning blocking rows" below), and its
+# for that agent, method and UTI status (see "Pruning blocking rows" below), and its
 # rank_index is that of its organism + 0.1, so that a breakpoint for the same
 # organism (e.g. for another route, or a screening breakpoint when
 # as.sir(..., include_screening = TRUE)) always takes precedence. Blocking rows
@@ -2216,7 +2216,7 @@ breakpoints_eucast <- breakpoints_eucast |>
 # Restrict to rows whose logged input is one of the actual, full ab_input
 # strings this pipeline passed in, which is what a reviewer needs to see.
 ab_previously_coerced_eucast <- AMR:::AMR_env$ab_previously_coerced |>
-  filter(tolower(trimws(x_bak)) %in% tolower(trimws(unique(breakpoints_eucast$ab_input))))
+  filter(tolower(trimws(input)) %in% tolower(trimws(unique(breakpoints_eucast$ab_input))))
 breakpoints_eucast <- breakpoints_eucast |> select(-ab_input)
 if (nrow(ab_previously_coerced_eucast) > 0) {
   message(
@@ -2627,20 +2627,17 @@ if (nrow(unresolved_mo) > 0 || nrow(unresolved_ab) > 0) {
 }
 
 # Pruning blocking rows ----
-# A blocking row is only needed where its organism has no (non-screening)
-# breakpoint of its own for that agent and method, and blocking rows for the
-# PK-PD table ("UNKNOWN") have no function. Of several blocking rows for the
-# same organism, agent and method, the first is kept.
+# A blocking row is only needed where its organism has no (non-screening) breakpoint of its own for that agent, method and UTI status, and blocking rows for the PK-PD table ("UNKNOWN") have no function. UTI status is part of the comparison, so that a breakpoint for UTI only does not remove the blocking row for other infections, e.g. Acinetobacter spp. and amikacin since v14.0: breakpoints in brackets for systemic infections, a breakpoint for infections originating from the urinary tract. Of several blocking rows for the same organism, agent, method and UTI status, the first is kept. Blocking rows for UTI keep their site, so that they remain distinguishable from the blocking row for other infections.
 has_own_bp <- breakpoints_eucast |>
   filter(!is_blocker, !grepl("screen", site, ignore.case = TRUE)) |>
-  distinct(guideline, type, host, mo, ab, method)
+  distinct(guideline, type, host, mo, ab, method, uti)
 breakpoints_eucast <- bind_rows(
   breakpoints_eucast |> filter(!is_blocker),
   breakpoints_eucast |>
     filter(is_blocker, mo != "UNKNOWN") |>
-    anti_join(has_own_bp, by = c("guideline", "type", "host", "mo", "ab", "method")) |>
-    distinct(guideline, type, host, mo, ab, method, .keep_all = TRUE) |>
-    mutate(site = NA_character_, uti = FALSE, disk_dose = NA_character_)
+    anti_join(has_own_bp, by = c("guideline", "type", "host", "mo", "ab", "method", "uti")) |>
+    distinct(guideline, type, host, mo, ab, method, uti, .keep_all = TRUE) |>
+    mutate(site = if_else(uti, site, NA_character_), disk_dose = NA_character_)
 )
 
 breakpoints_eucast <- breakpoints_eucast |>
