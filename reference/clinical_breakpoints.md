@@ -25,8 +25,8 @@ clinical_breakpoints
 
 ## Format
 
-A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 60
-237 observations and 15 variables:
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 61
+367 observations and 15 variables:
 
 - `guideline`  
   Name of the guideline
@@ -121,7 +121,7 @@ Such cases are included as "blocking rows": rows in which `breakpoint_S`
 and `breakpoint_R` are both `NA` and the `note` starts with
 `"[No breakpoint]"` followed by the reason.
 [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) returns `NA` for
-these. This currently applies to 14 523 rows. Remove them with
+these. This currently applies to 15 653 rows. Remove them with
 `subset(clinical_breakpoints, !is.na(breakpoint_S))` if only actual
 breakpoints are needed.
 
@@ -196,7 +196,7 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 clinical_breakpoints
-#> # A tibble: 60,237 × 15
+#> # A tibble: 61,367 × 15
 #>    guideline   type  host  method site  mo            rank_index ab   ref_tbl   
 #>    <chr>       <chr> <chr> <chr>  <chr> <mo>               <dbl> <ab> <chr>     
 #>  1 EUCAST 2026 human human DISK   NA    B_ACHRMB_XYLS        2.1 FDC  A.xylosox…
@@ -209,7 +209,7 @@ clinical_breakpoints
 #>  8 EUCAST 2026 human human MIC    NA    B_ACHRMB_XYLS        2   TZP  A.xylosox…
 #>  9 EUCAST 2026 human human DISK   NA    B_ACNTB              3.1 AMC  Acinetoba…
 #> 10 EUCAST 2026 human human MIC    NA    B_ACNTB              3.1 AMC  Acinetoba…
-#> # ℹ 60,227 more rows
+#> # ℹ 61,357 more rows
 #> # ℹ 6 more variables: disk_dose <chr>, breakpoint_S <dbl>, breakpoint_R <dbl>,
 #> #   uti <lgl>, is_SDD <lgl>, note <chr>
 ```

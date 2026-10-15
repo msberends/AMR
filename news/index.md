@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9146
+## AMR 3.0.1.9147
 
 Planned as v3.1.0, mid October 2026.
 
@@ -103,7 +103,10 @@ Planned as v3.1.0, mid October 2026.
       breakpoints, with the reason in `note`) where EUCAST gives no
       breakpoint for an organism, so that
       [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) no longer
-      falls back to the breakpoint of a broader taxon
+      falls back to the breakpoint of a broader taxon. This includes
+      infections other than UTI where EUCAST gives breakpoints in
+      brackets or no breakpoint, but does give a breakpoint for UTI,
+      e.g., aminoglycosides for *Acinetobacter* spp.
     - Restrictions in EUCAST notes are applied, e.g., zone diameter
       breakpoints for *E. coli* only
     - EUCAST PK-PD (non-species related) breakpoints of 2019-2023 and
@@ -217,6 +220,15 @@ Planned as v3.1.0, mid October 2026.
     [`count_susceptible()`](https://amr-for-r.org/reference/count.md),
     and the SIR plotting and printing functions
     ([\#298](https://github.com/msberends/AMR/issues/298))
+  - With an unknown `uti` (`NA`, the default), non-UTI breakpoints are
+    now consistently preferred over UTI breakpoints. Previously, this
+    preference was only applied together with its note, which is shown
+    once. UTI breakpoints are only used if there are no non-UTI
+    breakpoints, which is now noted in
+    [`sir_interpretation_history()`](https://amr-for-r.org/reference/as.sir.md)
+    for every interpretation. A blocking row of a broader taxon does not
+    override a UTI breakpoint of the organism itself, e.g.,
+    Enterobacterales and nitroxoline for *E. coli*.
 - `clinical_breakpoints` data set
   - Fixed EUCAST breakpoint rules for *Aerococcus* (v12 onwards), which
     were never applied, and for *Pasteurella*, which were partly filed

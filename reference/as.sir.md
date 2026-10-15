@@ -196,8 +196,11 @@ sir_interpretation_history(clean = FALSE)
   a column containing [logical](https://rdrr.io/r/base/logical.html)s or
   when left blank, the data set will be searched for a column
   'specimen', and rows within this column containing 'urin' (such as
-  'urine', 'urina') will be regarded isolates from a UTI. See
-  *Examples*.
+  'urine', 'urina') will be regarded isolates from a UTI. If `uti` is
+  `NA` (unknown), non-UTI breakpoints are preferred, and UTI breakpoints
+  are only used if no non-UTI breakpoints exist for the drug-bug
+  combination, which is noted in `sir_interpretation_history()`. With
+  `uti = FALSE`, UTI breakpoints are never used. See *Examples*.
 
 - capped_mic_handling:
 
@@ -780,17 +783,17 @@ x <- sir_interpretation_history(clean = TRUE)
 # most basic application:
 as.sir(df_wide)
 #>      microorganism amoxicillin cipro tobra genta ERY
-#> 1 Escherichia coli           S     I     S     S   R
+#> 1 Escherichia coli           S     I  <NA>  <NA>   R
 
 # return a 'logbook' about the results:
 sir_interpretation_history()
 #> # A tibble: 4 × 18
 #>   datetime            index method ab_given    mo_given   host_given input_given
 #>   <dttm>              <int> <chr>  <chr>       <chr>      <chr>      <chr>      
-#> 1 2026-10-15 10:19:56     1 MIC    amoxicillin Escherich… human      8          
-#> 2 2026-10-15 10:19:57     1 MIC    cipro       Escherich… human      0.256      
-#> 3 2026-10-15 10:19:57     1 DISK   tobra       Escherich… human      16         
-#> 4 2026-10-15 10:19:57     1 DISK   genta       Escherich… human      18         
+#> 1 2026-10-15 13:04:51     1 MIC    amoxicillin Escherich… human      8          
+#> 2 2026-10-15 13:04:51     1 MIC    cipro       Escherich… human      0.256      
+#> 3 2026-10-15 13:04:52     1 DISK   tobra       Escherich… human      16         
+#> 4 2026-10-15 13:04:52     1 DISK   genta       Escherich… human      18         
 #> # ℹ 11 more variables: ab <ab>, mo <mo>, host <chr>, input <chr>,
 #> #   outcome <sir>, notes <chr>, guideline <chr>, ref_table <chr>, uti <lgl>,
 #> #   breakpoint_S_R <chr>, site <chr>

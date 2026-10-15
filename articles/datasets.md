@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 60 237 rows and 15 columns, containing the following
+A data set with 61 367 rows and 15 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, *is_SDD*,
@@ -156,7 +156,7 @@ and *note*.
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 10 October 2026 07:42:25 UTC. Find more info
+It was last updated on 15 October 2026 12:55:57 UTC. Find more info
 about the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -167,10 +167,10 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
   (0.2 MB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.txt)
-  (10.3 MB)  
+  (10.7 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.xlsx)
-  (4.2 MB)  
+  (4.3 MB)  
 - Download as [Apache Feather
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.feather)
   (3 MB)  
@@ -179,10 +179,10 @@ here](https://amr-for-r.org/reference/clinical_breakpoints.html).
   (0.3 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.sav)
-  (25.8 MB)  
+  (26.4 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/clinical_breakpoints.dta)
-  (19.1 MB)
+  (19.5 MB)
 
 **Example content**
 

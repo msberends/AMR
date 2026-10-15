@@ -9,7 +9,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9146</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9147</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -196,7 +196,7 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 
 
 <dt id="arg-uti">uti<a class="anchor" aria-label="anchor" href="#arg-uti"></a></dt>
-<dd><p>(Urinary Tract Infection) a vector (or column name) with <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>s (<code>TRUE</code> or <code>FALSE</code>) to specify whether a UTI specific interpretation from the guideline should be chosen. For using <code>as.sir()</code> on a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, this can also be a column containing <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. See <em>Examples</em>.</p></dd>
+<dd><p>(Urinary Tract Infection) a vector (or column name) with <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>s (<code>TRUE</code> or <code>FALSE</code>) to specify whether a UTI specific interpretation from the guideline should be chosen. For using <code>as.sir()</code> on a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, this can also be a column containing <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. If <code>uti</code> is <code>NA</code> (unknown), non-UTI breakpoints are preferred, and UTI breakpoints are only used if no non-UTI breakpoints exist for the drug-bug combination, which is noted in <code>sir_interpretation_history()</code>. With <code>uti = FALSE</code>, UTI breakpoints are never used. See <em>Examples</em>.</p></dd>
 
 
 <dt id="arg-capped-mic-handling">capped_mic_handling<a class="anchor" aria-label="anchor" href="#arg-capped-mic-handling"></a></dt>
@@ -462,17 +462,17 @@ Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI 2011-2026, 
 <span class="r-in"><span><span class="co"># most basic application:</span></span></span>
 <span class="r-in"><span><span class="fu">as.sir</span><span class="op">(</span><span class="va">df_wide</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      microorganism amoxicillin cipro tobra genta ERY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli           S     I     S     S   R</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Escherichia coli           S     I  &lt;NA&gt;  &lt;NA&gt;   R</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return a 'logbook' about the results:</span></span></span>
 <span class="r-in"><span><span class="fu">sir_interpretation_history</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   datetime            index method ab_given    mo_given   host_given input_given</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-10-15 <span style="color: #949494;">10:19:56</span>     1 MIC    amoxicillin Escherich… human      8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-10-15 <span style="color: #949494;">10:19:57</span>     1 MIC    cipro       Escherich… human      0.256      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-10-15 <span style="color: #949494;">10:19:57</span>     1 DISK   tobra       Escherich… human      16         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-10-15 <span style="color: #949494;">10:19:57</span>     1 DISK   genta       Escherich… human      18         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2026-10-15 <span style="color: #949494;">13:04:51</span>     1 MIC    amoxicillin Escherich… human      8          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2026-10-15 <span style="color: #949494;">13:04:51</span>     1 MIC    cipro       Escherich… human      0.256      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2026-10-15 <span style="color: #949494;">13:04:52</span>     1 DISK   tobra       Escherich… human      16         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2026-10-15 <span style="color: #949494;">13:04:52</span>     1 DISK   genta       Escherich… human      18         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: ab &lt;ab&gt;, mo &lt;mo&gt;, host &lt;chr&gt;, input &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   outcome &lt;sir&gt;, notes &lt;chr&gt;, guideline &lt;chr&gt;, ref_table &lt;chr&gt;, uti &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   breakpoint_S_R &lt;chr&gt;, site &lt;chr&gt;</span></span>
