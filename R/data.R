@@ -182,7 +182,8 @@
 #' A data set containing commonly used codes for microorganisms, from laboratory systems and [WHONET](https://whonet.org). Define your own with [set_mo_source()]. They will all be searched when using [as.mo()] and consequently all the [`mo_*`][mo_property()] functions.
 #' @format A [tibble][tibble::tibble] with `r format(nrow(microorganisms.codes), big.mark = " ")` observations and `r ncol(microorganisms.codes)` variables:
 #' - `code`\cr Commonly used code of a microorganism. ***This is a unique identifier.***
-#' - `mo`\cr ID of the microorganism in the [microorganisms] data set
+#' - `mo`\cr ID of the microorganism in the [microorganisms] data set. This is the record of the name that the code was named after, also if that name is outdated, so that the code and the microorganism ID remain relatable: e.g., the WHONET code `EAE` refers to *Enterobacter aerogenes* (`B_ENTRBC_AERG`). [as.mo()] returns the current name, here *Klebsiella aerogenes*. Codes for organisms that are not in the [microorganisms] data set, such as viruses, refer to `UNKNOWN`.
+#' - `source`\cr Source of the code, with the name it refers to, e.g. `"WHONET (Enterobacter aerogenes)"`, or `NA` if the source is unknown
 #' @inheritSection AMR Download Our Reference Data
 #' @seealso [as.mo()] [microorganisms]
 #' @examples

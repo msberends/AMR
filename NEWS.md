@@ -1,4 +1,4 @@
-# AMR 3.0.1.9148
+# AMR 3.0.1.9149
 
 Planned as v3.1.0, mid October 2026.
 
@@ -55,6 +55,7 @@ Planned as v3.1.0, mid October 2026.
   * New function `amr_course()` to download and unpack course or webinar materials from GitHub in one call
   * New typed missing value constants `NA_ab_` and `NA_mo_`, for use in pipelines that need missing values of a specific class
   * A registry of all MO codes since v2.0.0 now prevents existing codes from being reused or mixed up. Codes of earlier releases are translated to the current code of the same taxon.
+  * New column `source` in the `microorganisms.codes` data set, stating the source of a code and the name it refers to, e.g., `"WHONET (Enterobacter aerogenes)"`
 
 ### Changed
 * SIR interpretation (`as.sir()`)
@@ -98,9 +99,14 @@ Planned as v3.1.0, mid October 2026.
   * Taxonomic update of all microorganisms, now based on COL 2026-04-18 XR, LPSN and BacDive of October 2026, and MycoBank of January 2026
   * Names listed twice by a source now take the correct record (e.g., *Eggerthella lenta*, *Gordonia amarae*, and *Anisakis simplex* were synonyms without a current name)
   * Synonyms without a current name are now linked via LPSN or removed, with their codes retired. The *M. tuberculosis* complex is always kept.
-  * Higher taxonomy and parent records are now consistent, and all data sets refer only to current names (except `intrinsic_resistant`)
+  * Higher taxonomy and parent records are now consistent, and all data sets refer only to current names (except `intrinsic_resistant` and `microorganisms.codes`)
   * *Erysipelatoclostridium* and its species are now synonyms of *Thomasclavelia*; *E. merdavium* is retired
   * Author references now strip `emend.` and everything after it, so that `ref` reflects the combination authority rather than the emendation author (e.g., *Rhodococcus equi* now returns "Goodfellow et al., 1977" instead of "Nouioui et al., 2018")
+* `microorganisms.codes` data set
+  * Fixed WHONET codes that referred to an unrelated microorganism, e.g., `VAG` ("Vaginal flora") to *Vagococcus*, `PAR` ("Parasite") to *Paracoccus*, the *Leptospira interrogans* serovars to *Legionella*, and *Salmonella* O-groups to *Salmonella* Group A. Codes for organisms that are not in the `microorganisms` data set, such as viruses, now refer to `UNKNOWN`, and names that only partly exist refer to the genus.
+  * WHONET codes for *Salmonella* serovars now refer to the serovar instead of *S. enterica* subsp. *enterica*, e.g., `SAT` to *Salmonella* Typhi
+  * Codes now refer to the name they were named after, also if that name is outdated, so that the code and the microorganism code remain relatable, e.g., `EAE` refers to *Enterobacter aerogenes* (`B_ENTRBC_AERG`). `as.mo()` still returns the current name, here *Klebsiella aerogenes*.
+  * Added 271 WHONET codes
 * Antimicrobial coercion (`as.ab()`) and `antimicrobials` data set
   * Considerably faster through the same session cache design as `as.mo()` (#313)
   * Input that is not a known name or code is now coerced up to 70 times faster, with identical results, as LOINC codes, synonyms, and abbreviations are looked up in one step instead of per antimicrobial, and translated names are built once per language

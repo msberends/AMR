@@ -51,10 +51,12 @@ file_organisms <- file.path(github_repo, "Organisms.txt")
 file_breakpoints <- file.path(github_repo, "Breakpoints.txt")
 file_antibiotics <- file.path(github_repo, "Antibiotics.txt")
 
-whonet_organisms_raw <- read_tsv(file_organisms, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
-  # remove old taxonomic names
-  filter(TAXONOMIC_STATUS == "C") |>
+# all names per WHONET code, i.e. the current name (TAXONOMIC_STATUS "C") and older names ("O")
+whonet_organisms_all <- read_tsv(file_organisms, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   mutate(ORGANISM_CODE = toupper(WHONET_ORG_CODE))
+# one row per code with its current name
+whonet_organisms_raw <- whonet_organisms_all |>
+  filter(TAXONOMIC_STATUS == "C")
 
 whonet_breakpoints_raw <- read_tsv(file_breakpoints, na = c("", "NA", "-"), show_col_types = FALSE, guess_max = Inf) |>
   filter(GUIDELINES %in% c("CLSI", "EUCAST"))
@@ -67,59 +69,157 @@ whonet_antibiotics_raw <- read_tsv(file_antibiotics, na = c("", "NA", "-"), show
 
 whonet_organisms <- whonet_organisms_raw |>
   select(ORGANISM_CODE, ORGANISM, SPECIES_GROUP, GBIF_TAXON_ID) |>
-  mutate(
-    # this one was called Issatchenkia orientalis, but it should be:
-    ORGANISM = if_else(ORGANISM_CODE == "ckr", "Candida krusei", ORGANISM)
-  ) |>
-  # try to match on GBIF identifier
-  left_join(microorganisms |> distinct(mo, gbif, status) |> filter(!is.na(gbif)), by = c("GBIF_TAXON_ID" = "gbif")) |>
+  # GBIF identifier, used if WHONET's name itself is not in the microorganisms data set
+  left_join(microorganisms |> distinct(mo_gbif = as.character(mo), gbif, status) |> filter(!is.na(gbif)), by = c("GBIF_TAXON_ID" = "gbif")) |>
   # remove duplicates
   arrange(ORGANISM_CODE, GBIF_TAXON_ID, status) |>
   distinct(ORGANISM_CODE, .keep_all = TRUE) |>
+  select(-status) |>
   # add Enterobacterales, which is a subkingdom code in their data
-  bind_rows(data.frame(ORGANISM_CODE = "ebc", ORGANISM = "Enterobacterales", mo = as.mo("Enterobacterales"))) |>
+  bind_rows(data.frame(ORGANISM_CODE = "ebc", ORGANISM = "Enterobacterales")) |>
   arrange(ORGANISM)
 
 
 ## Add new WHO codes to microorganisms.codes ----
 
-matched <- whonet_organisms |> filter(!is.na(mo))
-unmatched <- whonet_organisms |> filter(is.na(mo))
-
 # generate the mo codes and add their names
+# Fuzzy matching alone (as.mo() with minimum_matching_score = 0.55) mapped WHONET names that are not in the microorganisms data set to unrelated taxa, e.g. "Vaginal flora" to Vagococcus, "Parasite" to Paracoccus and "Babesia bigemina" to Babesia divergens. A WHONET name is therefore matched exactly (case-insensitive, including outdated names), first as is and then after removing qualifiers such as subspecies notation, serotypes, biovars, and "sp.", then on its GBIF identifier, and otherwise to its genus. The code of the matched record itself is used, also if it is an outdated name, so that the WHONET code and the microorganism code remain relatable (e.g. EAE is Enterobacter aerogenes, B_ENTRBC_AERG, which as.mo() returns as Klebsiella aerogenes). The fuzzy result of as.mo() is only used where it is consistent with that exact match: the exact match must be the same taxon or one of its ancestors, every epithet of the fuzzy result must be spelled within one character of a word in WHONET's name (e.g. "Pneumocystis jiroveci"), and for a group all its words apart from "group" and "complex" must occur in WHONET's name (e.g. "Streptococcus, beta-haem. Group A" for Streptococcus Group A). WHONET names that match nothing become UNKNOWN, apart from descriptive groups such as "Gram negative rods".
 message("Getting MO codes for WHONET input...")
-unmatched <- unmatched |>
-  mutate(
-    mo = as.mo(gsub("(sero[a-z]*| nontypable| non[-][a-zA-Z]+|var[.]| not .*|sp[.],.*|, .*variant.*|, .*toxin.*|, microaer.*| beta-haem[.])", "", ORGANISM),
-      minimum_matching_score = 0.55,
-      keep_synonyms = TRUE,
-      language = "en"
-    ),
-    mo = case_when(
-      ORGANISM %like% "Anaerobic" & ORGANISM %like% "negative" ~ as.mo("B_ANAER-NEG"),
-      ORGANISM %like% "Anaerobic" & ORGANISM %like% "positive" ~ as.mo("B_ANAER-POS"),
-      ORGANISM %like% "Anaerobic" ~ as.mo("B_ANAER"),
-      TRUE ~ mo
-    ),
-    mo_name = mo_name(mo,
-      keep_synonyms = TRUE,
-      language = "en"
-    )
-  )
-# check if coercion at least resembles the first part (genus)
-unmatched <- unmatched |>
-  mutate(
-    first_part = sapply(ORGANISM, function(x) strsplit(gsub("[^a-zA-Z _-]+", "", x), " ")[[1]][1], USE.NAMES = FALSE),
-    keep = mo_name %like_case% first_part | ORGANISM %like% "Gram " | ORGANISM == "Other" | ORGANISM %like% "anaerobic"
-  ) |>
-  arrange(keep)
-if (interactive()) View(unmatched)
-unmatched <- unmatched |>
-  filter(keep == TRUE)
+# obvious errors in WHONET's names, corrected before matching
+whonet_name_fixes <- c(
+  "^Legionella interrogans" = "Leptospira interrogans", # the serovars of Leptospira interrogans are named "Legionella interrogans serovar ..."
+  "^Agchylostoma " = "Ancylostoma ", # old spelling
+  "^Salmonella Group ([A-Z])[0-9]+ " = "Salmonella Group \\1 " # subgroups such as C1 (O:7) belong to their group, e.g. Salmonella Group C
+)
+fix_whonet_name <- function(x) {
+  for (i in seq_along(whonet_name_fixes)) x <- sub(names(whonet_name_fixes)[i], whonet_name_fixes[i], x)
+  x
+}
+mo_fullname_lower <- tolower(microorganisms$fullname)
+# the code of the record with this name, also if it is an outdated name
+exact_mo <- function(x) {
+  i <- match(tolower(trimws(x)), mo_fullname_lower)
+  if (is.na(i)) NA_character_ else as.character(microorganisms$mo[i])
+}
+current_mo <- function(x) as.character(as.mo(as.character(x), keep_synonyms = FALSE, info = FALSE))
+whonet_name_candidates <- function(x) {
+  x <- gsub("\\s+", " ", trimws(x))
+  no_parentheses <- gsub("\\s*\\([^)]*\\)", "", x)
+  no_subsp <- gsub(" (ss|subsp)\\. ", " ", no_parentheses)
+  no_comma <- sub(",.*$", "", no_subsp)
+  as_complex <- sub(" group$", " complex", no_comma)
+  no_qualifier <- sub(" (serotype|serovar|serogroup|biotype|biovar|genomovar|genomospecies|type|group|var\\.|DT|phage type|strain) .*$", "", no_comma, ignore.case = TRUE)
+  no_sp <- sub(" spp?\\.?$", "", no_qualifier)
+  words <- strsplit(no_sp, " ")[[1]]
+  species <- if (length(words) >= 3) paste(words[1:2], collapse = " ") else no_sp
+  unique(c(x, no_parentheses, no_subsp, no_comma, as_complex, no_qualifier, no_sp, species))
+}
+exact_whonet_mo <- function(x, genus_fallback = TRUE) {
+  all_candidates <- whonet_name_candidates(x)
+  candidates <- all_candidates
+  # a candidate reduced to only the genus is a genus fallback, unless WHONET's name is the genus itself (e.g. "Arthrographis sp."), so that a consistent fuzzy result can still be more specific (e.g. "Streptococcus, beta-haemolytic")
+  if (!grepl("^[^ ]+( spp?\\.?)?$", gsub("\\s*\\([^)]*\\)", "", trimws(x)))) {
+    candidates <- candidates[grepl(" ", candidates)]
+  }
+  for (candidate in candidates) {
+    out <- exact_mo(candidate)
+    if (!is.na(out)) {
+      return(out)
+    }
+  }
+  # a complex named after several of its species, e.g. 'Mycobacterium avium-intracellulare complex'
+  if (grepl(" complex$", all_candidates[1])) {
+    out <- as.character(as.mo(all_candidates[1], info = FALSE))
+    if (grepl("-C$", out)) {
+      return(out)
+    }
+  }
+  if (!genus_fallback) {
+    return(NA_character_)
+  }
+  out <- exact_mo(strsplit(all_candidates[length(all_candidates)], " ")[[1]][1])
+  if (!is.na(out) && mo_rank(out, keep_synonyms = TRUE) %in% "genus") out else NA_character_
+}
+fuzzy_is_consistent <- function(fuzzy, exact, whonet_name) {
+  if (is.na(fuzzy) || is.na(exact) || fuzzy == "UNKNOWN") {
+    return(FALSE)
+  }
+  fuzzy_current <- current_mo(fuzzy)
+  ancestors <- c(fuzzy_current, current_mo(c(mo_genus(fuzzy_current), paste(mo_genus(fuzzy_current), mo_species(fuzzy_current)))))
+  if (!current_mo(exact) %in% ancestors) {
+    return(FALSE)
+  }
+  whonet_words <- strsplit(tolower(gsub("[^A-Za-z0-9 ]", " ", whonet_name)), " +")[[1]]
+  fuzzy_words <- strsplit(tolower(gsub("[^A-Za-z0-9 ]", " ", gsub("\\s*\\([^)]*\\)", "", mo_name(fuzzy, language = NULL)))), " +")[[1]]
+  fuzzy_words <- fuzzy_words[fuzzy_words != ""]
+  if (mo_rank(fuzzy) %in% c("species", "subspecies")) {
+    # every epithet within one character of a word in WHONET's name (the epithets, since the name of e.g. B_STRPT_MILL is "Milleri Group Streptococcus (MGS)")
+    epithets <- tolower(c(mo_species(fuzzy, keep_synonyms = TRUE), mo_subspecies(fuzzy, keep_synonyms = TRUE)))
+    epithets <- epithets[epithets != ""]
+    all(vapply(epithets, function(w) any(adist(w, whonet_words) <= 1), logical(1)))
+  } else {
+    # the generic words of a group name need not occur, e.g. "Streptococcus viridans, alpha-hem." for Viridans Group Streptococcus
+    all(fuzzy_words[!fuzzy_words %in% c("group", "complex")] %in% whonet_words)
+  }
+}
+# The name that a code was named after is used, so that the code and the microorganism code remain relatable: of all names of a code (current and older ones) that exist in the microorganisms data set and refer to the same taxon, the one whose initials form the code, preferring an older name, e.g. EAE is Enterobacter aerogenes (current WHONET name: Klebsiella aerogenes) and CKR is Candida krusei (current WHONET name: Issatchenkia orientalis). Without such a name, the current WHONET name is used.
+matches_code_initials <- function(code, name) {
+  words <- strsplit(tolower(gsub("[^A-Za-z ]", " ", name)), " +")
+  genus <- vapply(words, function(w) w[1], character(1))
+  species <- vapply(words, function(w) if (length(w) >= 2) w[2] else "", character(1))
+  code <- tolower(code)
+  nchar(code) == 3 & substr(genus, 1, 1) == substr(code, 1, 1) & startsWith(species, substr(code, 2, 3))
+}
+# An older name is only used if it is an outdated name of the same taxon as the current WHONET name, since some older WHONET names refer to another taxon in the microorganisms data set, e.g. PCA "Pneumocystis carinii" (current WHONET name: Pneumocystis jirovecii).
+current_whonet_mo <- whonet_organisms |>
+  transmute(ORGANISM_CODE, current_taxon = current_mo(vapply(fix_whonet_name(ORGANISM), exact_whonet_mo, character(1), genus_fallback = FALSE, USE.NAMES = FALSE)))
+whonet_name_by_initials <- whonet_organisms_all |>
+  filter(ORGANISM_CODE %in% whonet_organisms$ORGANISM_CODE, matches_code_initials(ORGANISM_CODE, ORGANISM)) |>
+  mutate(record = vapply(fix_whonet_name(ORGANISM), exact_whonet_mo, character(1), genus_fallback = FALSE, USE.NAMES = FALSE)) |>
+  filter(!is.na(record)) |>
+  left_join(current_whonet_mo, by = "ORGANISM_CODE") |>
+  filter(TAXONOMIC_STATUS == "C" | current_mo(record) == current_taxon) |>
+  arrange(ORGANISM_CODE, TAXONOMIC_STATUS != "O") |>
+  distinct(ORGANISM_CODE, .keep_all = TRUE)
+whonet_organisms <- whonet_organisms |>
+  mutate(ORGANISM = coalesce(whonet_name_by_initials$ORGANISM[match(ORGANISM_CODE, whonet_name_by_initials$ORGANISM_CODE)], ORGANISM))
+whonet_organisms |>
+  filter(ORGANISM_CODE %in% whonet_name_by_initials$ORGANISM_CODE[whonet_name_by_initials$TAXONOMIC_STATUS == "O"]) |>
+  select(ORGANISM_CODE, ORGANISM)
 
-organisms <- matched |>
-  transmute(code = toupper(ORGANISM_CODE), group = SPECIES_GROUP, mo) |>
-  bind_rows(unmatched |> transmute(code = toupper(ORGANISM_CODE), group = SPECIES_GROUP, mo)) |>
+whonet_organisms <- whonet_organisms |>
+  mutate(
+    name_to_match = fix_whonet_name(ORGANISM),
+    exact = vapply(name_to_match, exact_whonet_mo, character(1), genus_fallback = FALSE, USE.NAMES = FALSE),
+    genus = vapply(name_to_match, exact_whonet_mo, character(1), USE.NAMES = FALSE),
+    fuzzy = if_else(is.na(exact) & is.na(mo_gbif),
+      as.character(as.mo(gsub("(sero[a-z]*| nontypable| non[-][a-zA-Z]+|var[.]| not .*|sp[.],.*|, .*variant.*|, .*toxin.*|, microaer.*| beta-haem[.])", "", name_to_match),
+        minimum_matching_score = 0.55,
+        keep_synonyms = TRUE,
+        language = "en",
+        info = FALSE
+      )),
+      NA_character_
+    ),
+    fuzzy_ok = mapply(fuzzy_is_consistent, fuzzy, genus, name_to_match, USE.NAMES = FALSE),
+    mo = as.mo(case_when(
+      ORGANISM %like% "Anaerobic" & ORGANISM %like% "negative" ~ "B_ANAER-NEG",
+      ORGANISM %like% "Anaerobic" & ORGANISM %like% "positive" ~ "B_ANAER-POS",
+      ORGANISM %like% "Anaerobic" ~ "B_ANAER",
+      ORGANISM %like% "^(Non-fermenting )?Gram negative" ~ "B_GRAMN",
+      ORGANISM %like% "^Gram positive" ~ "B_GRAMP",
+      !is.na(exact) ~ exact,
+      !is.na(mo_gbif) ~ mo_gbif,
+      fuzzy_ok ~ fuzzy,
+      !is.na(genus) ~ genus,
+      TRUE ~ "UNKNOWN"
+    ), keep_synonyms = TRUE),
+    mo_name = mo_name(mo, keep_synonyms = TRUE, language = "en")
+  )
+if (interactive()) View(whonet_organisms)
+
+organisms <- whonet_organisms |>
+  transmute(code = toupper(ORGANISM_CODE), group = SPECIES_GROUP, mo, source = paste0("WHONET (", ORGANISM, ")")) |>
   mutate(name = mo_name(mo, keep_synonyms = TRUE)) |>
   arrange(code)
 
@@ -150,13 +250,18 @@ organisms <- organisms |>
   bind_rows(subspp) |>
   arrange(code)
 
-# add the groups
+# add the groups, unless the group code is also an organism code (e.g. ABX), which then already has its microorganism
+group_codes <- organisms |>
+  filter(!is.na(group), !group %in% code) |>
+  pull(group) |>
+  unique()
 organisms <- organisms |>
   bind_rows(tibble(
-    code = organisms |> filter(!is.na(group)) |> pull(group) |> unique(),
+    code = group_codes,
     group = NA,
-    mo = organisms |> filter(!is.na(group)) |> pull(group) |> unique() |> as.mo(keep_synonyms = TRUE),
-    name = mo_name(mo, keep_synonyms = TRUE)
+    mo = as.mo(group_codes, keep_synonyms = TRUE),
+    name = mo_name(mo, keep_synonyms = TRUE),
+    source = "WHONET (species group)"
   )) |>
   arrange(code, group) |>
   select(-group) |>
@@ -188,13 +293,44 @@ microorganisms.codes2 <- microorganisms.codes |>
   # remove all old WHONET codes, whether we (in the end) keep them or not
   filter(!toupper(code) %in% toupper(organisms$code)) |>
   # and add the new ones
-  bind_rows(organisms |> select(code, mo)) |>
+  bind_rows(organisms |> select(code, mo, source)) |>
   arrange(code) |>
   distinct(code, .keep_all = TRUE)
 # new codes:
 microorganisms.codes2$code[which(!microorganisms.codes2$code %in% microorganisms.codes$code)]
 mo_name(microorganisms.codes2$mo[which(!microorganisms.codes2$code %in% microorganisms.codes$code)], keep_synonyms = TRUE)
-microorganisms.codes <- microorganisms.codes2 |> distinct()
+microorganisms.codes2 <- microorganisms.codes2 |> distinct()
+
+# Remap guard: an existing code must not silently start to point to another taxon, since that changes the result of as.mo() for users' data. Remaps that follow a taxonomic update (the outdated and the new code have the same current name) are accepted. All other remaps must be listed in data-raw/whonet_remaps_reviewed.csv, after checking the WHONET name against the old and the new microorganism, with `reviewed = TRUE` to accept the new microorganism, or `reviewed = REJECT` to keep the old one.
+remaps <- microorganisms.codes |>
+  transmute(code, mo_old = as.character(mo)) |>
+  inner_join(microorganisms.codes2 |> transmute(code, mo_new = as.character(mo)), by = "code") |>
+  filter(current_mo(mo_old) != current_mo(mo_new)) |>
+  left_join(whonet_organisms |> transmute(code = ORGANISM_CODE, whonet_name = ORGANISM) |> distinct(code, .keep_all = TRUE), by = "code") |>
+  mutate(name_old = mo_name(mo_old, keep_synonyms = TRUE, language = NULL), name_new = mo_name(mo_new, keep_synonyms = TRUE, language = NULL))
+remaps_file <- "data-raw/whonet_remaps_reviewed.csv"
+# a reviewed remap applies to the taxa, i.e. to the current names of the old and the new microorganism, so it still holds if another record of the same taxon is used (e.g. an outdated name)
+remaps_listed <- read.csv(remaps_file, stringsAsFactors = FALSE, na.strings = "", colClasses = "character")
+remap_key <- function(df) paste(df$code, current_mo(df$mo_old), current_mo(df$mo_new))
+remaps_rejected <- remaps[remap_key(remaps) %in% remap_key(remaps_listed[remaps_listed$reviewed == "REJECT", ]), ]
+remaps_unreviewed <- remaps[!remap_key(remaps) %in% remap_key(remaps_listed[remaps_listed$reviewed %in% c("TRUE", "REJECT"), ]), ]
+if (nrow(remaps_unreviewed) > 0) {
+  # unreviewed remaps are added to the file with `reviewed = FALSE`, so that only `reviewed` needs to be changed after checking them
+  remaps_listed <- remaps_listed |>
+    bind_rows(remaps_unreviewed[!remap_key(remaps_unreviewed) %in% remap_key(remaps_listed), ] |> mutate(reviewed = "FALSE")) |>
+    select(code, whonet_name, mo_old, name_old, mo_new, name_new, any_of("assessment"), reviewed) |>
+    arrange(code)
+  write.csv(remaps_listed, remaps_file, row.names = FALSE, na = "")
+  print(as.data.frame(remaps_unreviewed |> select(code, whonet_name, name_old, name_new)))
+  stop(
+    nrow(remaps_unreviewed), " WHONET code(s) would point to another microorganism, see above. ",
+    "Review them in ", remaps_file, " and set `reviewed` to TRUE (accept) or REJECT (keep the old microorganism)."
+  )
+}
+# rejected remaps keep their old microorganism
+i <- match(remaps_rejected$code, microorganisms.codes2$code)
+microorganisms.codes2$mo[i] <- as.mo(remaps_rejected$mo_old, keep_synonyms = TRUE)
+microorganisms.codes <- microorganisms.codes2
 
 # Run this part to update ASIARS-Net:
 # 2024-06-14: file not available anymore
@@ -224,6 +360,7 @@ microorganisms.codes <- microorganisms.codes2 |> distinct()
 
 ## Save to package ----
 class(microorganisms.codes$mo) <- c("mo", "character")
+microorganisms.codes <- AMR:::dataset_UTF8_to_ASCII(microorganisms.codes)
 usethis::use_data(microorganisms.codes, overwrite = TRUE, compress = "xz", version = 2)
 rm(microorganisms.codes)
 devtools::load_all()

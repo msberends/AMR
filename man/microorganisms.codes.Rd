@@ -3,12 +3,13 @@
 \docType{data}
 \name{microorganisms.codes}
 \alias{microorganisms.codes}
-\title{Data Set with 6 022 Common Microorganism Codes}
+\title{Data Set with 6 293 Common Microorganism Codes}
 \format{
-A \link[tibble:tibble]{tibble} with 6 022 observations and 2 variables:
+A \link[tibble:tibble]{tibble} with 6 293 observations and 3 variables:
 \itemize{
 \item \code{code}\cr Commonly used code of a microorganism. \emph{\strong{This is a unique identifier.}}
-\item \code{mo}\cr ID of the microorganism in the \link{microorganisms} data set
+\item \code{mo}\cr ID of the microorganism in the \link{microorganisms} data set. This is the record of the name that the code was named after, also if that name is outdated, so that the code and the microorganism ID remain relatable: e.g., the WHONET code \code{EAE} refers to \emph{Enterobacter aerogenes} (\code{B_ENTRBC_AERG}). \code{\link[=as.mo]{as.mo()}} returns the current name, here \emph{Klebsiella aerogenes}. Codes for organisms that are not in the \link{microorganisms} data set, such as viruses, refer to \code{UNKNOWN}.
+\item \code{source}\cr Source of the code, with the name it refers to, e.g. \code{"WHONET (Enterobacter aerogenes)"}, or \code{NA} if the source is unknown
 }
 }
 \usage{

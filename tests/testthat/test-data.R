@@ -486,7 +486,6 @@ test_that("data sets refer only to current names", {
   check <- list(
     "example_isolates$mo" = example_isolates$mo,
     "clinical_breakpoints$mo" = clinical_breakpoints$mo,
-    "microorganisms.codes$mo" = microorganisms.codes$mo,
     "microorganisms.groups$mo" = microorganisms.groups$mo,
     "microorganisms.groups$mo_group" = microorganisms.groups$mo_group
   )
@@ -572,11 +571,15 @@ test_that("microorganisms.groups: consistent groups of current names", {
   expect_identical(g$mo_group_name, microorganisms$fullname[match(g$mo_group, microorganisms$mo)])
 })
 
-test_that("microorganisms.codes: unique codes for existing current names", {
+test_that("microorganisms.codes: unique codes for existing names", {
   skip_on_cran()
   dup <- microorganisms.codes$code[duplicated(toupper(microorganisms.codes$code))]
   expect_true(length(dup) == 0, info = paste("Duplicated codes:", paste(utils::head(dup, 25), collapse = ", ")))
   expect_false(anyNA(microorganisms.codes$mo))
+  # a code keeps the record of the name it was named after, also if outdated, while as.mo() returns the current name
+  expect_identical(as.character(microorganisms.codes$mo[microorganisms.codes$code == "EAE"]), "B_ENTRBC_AERG")
+  expect_identical(as.character(as.mo("EAE")), "B_KLBSL_AERG")
+  expect_true(all(is.na(microorganisms.codes$source) | grepl("^WHONET \\(.+\\)$", microorganisms.codes$source)))
 })
 
 test_that("clinical_breakpoints: consistent and unambiguous", {

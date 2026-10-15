@@ -20574,6 +20574,7 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_ACHRMB_XYLS"	2	"TZP"	"A.xylosoxidans (file: Clinical Breakpoint Tables v. 11.0)"		4	4	FALSE	FALSE	"[1] For susceptibility testing purposes, the concentration of tazobactam is fixed at 4 mg/L."
 "EUCAST 2021"	"human"	"human"	"DISK"		"B_ACNTB"	3.1	"AMC"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_ACNTB"	3.1	"AMC"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB"	3	"AMK"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"DISK"	"Infections originating from the urinary tract"	"B_ACNTB"	3	"AMK"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"	"30 mcg"	19	19	TRUE	FALSE	
 "EUCAST 2021"	"human"	"human"	"DISK"		"B_ACNTB"	3.1	"AMK"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives breakpoints in brackets only (S (19), R (19)) | [( )] Breakpoints in brackets are based on ECOFF values for relevant species. They are used to distinguish between organisms with and without acquired resistance mechanisms. ECOFFs do not predict clinical susceptibility but in some situations and/or when the agent is combined with another active agent, therapy may be considered. | [A] For systemic infections, aminoglycosides must be used in combination with other active therapy. In this circumstance, the breakpoint/ECOFF in brackets can be used to distinguish between organisms with and without acquired resistance mechanisms. For isolates without resistance mechanisms, include a comment in the report: \"Aminoglycosides are often given in combination with other agents, either to support the activity of the aminoglycoside or to broaden the spectrum of therapy. In systemic infections, the aminoglycoside must be supported by other active therapy.\" For more information, see http://www.eucast.org/guidance_documents/."
 "EUCAST 2021"	"human"	"human"	"MIC"	"Infections originating from the urinary tract"	"B_ACNTB"	3	"AMK"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"		8	8	TRUE	FALSE	
@@ -20680,6 +20681,7 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_ACNTB"	3.1	"LMU"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2021"	"human"	"human"	"DISK"		"B_ACNTB"	3.1	"LNZ"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_ACNTB"	3.1	"LNZ"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB"	3	"LVX"	"ECOFF"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"DISK"		"B_ACNTB"	3	"LVX"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"	"5 mcg"	23	20	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"DISK"	"Topical, Screen"	"B_ACNTB"	3	"LVX"	"Topical agents (file: Clinical Breakpoint Tables v. 11.0)"	"5 mcg"	23	23	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_ACNTB"	3	"LVX"	"Acinetobacter (file: Clinical Breakpoint Tables v. 11.0)"		0.5	1	FALSE	FALSE	
@@ -20801,10 +20803,6 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_LWFF"	2	"IPM"	"ECOFF"		1	1	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_LWFF"	2	"MEM"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_LWFF"	2	"TOB"	"ECOFF"		2	2	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_VNTN"	2	"AMK"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_VNTN"	2	"CIP"	"ECOFF"		1	1	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_VNTN"	2	"LVX"	"ECOFF"		0.5	0.5	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_VNTN"	2	"TOB"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"DISK"		"B_AERCC_SNGN"	2	"AMP"	"A.sanguinicola_A.urinae (file: Clinical Breakpoint Tables v. 11.0)"	"2 mcg"	26	26	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_AERCC_SNGN"	2	"AMP"	"A.sanguinicola_A.urinae (file: Clinical Breakpoint Tables v. 11.0)"		0.25	0.25	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"DISK"		"B_AERCC_SNGN"	2.1	"AMX"	"A.sanguinicola_A.urinae (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [A] Infer susceptibility from ampicillin susceptibility."
@@ -25001,6 +24999,7 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2021"	"human"	"human"	"MIC"		"UNKNOWN"	7	"TZP"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 11.0)"		8	16	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\". | [3] For susceptibility testing purposes, the concentration of tazobactam is fixed at 4 mg/L."
 "EUCAST 2020"	"human"	"human"	"DISK"		"B_ACNTB"	3.1	"AMC"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_ACNTB"	3.1	"AMC"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB"	3	"AMK"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"DISK"	"Infections originating from the urinary tract"	"B_ACNTB"	3	"AMK"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"	"30 mcg"	19	19	TRUE	FALSE	
 "EUCAST 2020"	"human"	"human"	"DISK"		"B_ACNTB"	3.1	"AMK"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives breakpoints in brackets only (S (19), R (19)) | [( )] Breakpoints in brackets are based on ECOFF values for relevant species. They are used to distinguish between organisms with and without acquired resistance mechanisms. ECOFFs do not predict clinical susceptibility but in some situations and/or when the agent is combined with another active agent, therapy may be considered. | [A] For systemic infections, aminoglycosides must be used in combination with other active therapy. In this circumstance, the breakpoint/ECOFF in brackets can be used to distinguish between organisms with and without acquired resistance mechanisms. For isolates without resistance mechanisms, include a comment in the report: \"Aminoglycosides are often given in combination with other agents, either to support the activity of the aminoglycoside or to broaden the spectrum of therapy. In systemic infections, the aminoglycoside must be supported by other active therapy.\" For more information, see http://www.eucast.org/guidance_documents/."
 "EUCAST 2020"	"human"	"human"	"MIC"	"Infections originating from the urinary tract"	"B_ACNTB"	3	"AMK"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"		8	8	TRUE	FALSE	
@@ -25101,6 +25100,7 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_ACNTB"	3.1	"LEX"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2020"	"human"	"human"	"DISK"		"B_ACNTB"	3.1	"LNZ"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_ACNTB"	3.1	"LNZ"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB"	3	"LVX"	"ECOFF"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"DISK"		"B_ACNTB"	3	"LVX"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"	"5 mcg"	23	20	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"DISK"	"Topical, Screen"	"B_ACNTB"	3	"LVX"	"Topical agents (file: Clinical Breakpoint Tables v. 10.0)"	"5 mcg"	23	23	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_ACNTB"	3	"LVX"	"Acinetobacter (file: Clinical Breakpoint Tables v. 10.0)"		0.5	1	FALSE	FALSE	
@@ -25220,10 +25220,6 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_LWFF"	2	"IPM"	"ECOFF"		1	1	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_LWFF"	2	"MEM"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_LWFF"	2	"TOB"	"ECOFF"		2	2	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_VNTN"	2	"AMK"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_VNTN"	2	"CIP"	"ECOFF"		1	1	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_VNTN"	2	"LVX"	"ECOFF"		0.5	0.5	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_ACNTB_VNTN"	2	"TOB"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"DISK"		"B_AERCC_SNGN"	2	"AMP"	"A.sanguinicola_A.urinae (file: Clinical Breakpoint Tables v. 10.0)"	"2 mcg"	26	26	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"MIC"		"B_AERCC_SNGN"	2	"AMP"	"A.sanguinicola_A.urinae (file: Clinical Breakpoint Tables v. 10.0)"		0.25	0.25	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"DISK"		"B_AERCC_SNGN"	2.1	"AMX"	"A.sanguinicola_A.urinae (file: Clinical Breakpoint Tables v. 10.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [A] Infer susceptibility from ampicillin susceptibility."

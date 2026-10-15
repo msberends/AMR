@@ -4947,7 +4947,8 @@ save_df <- function(...) {
     compress = "xz"
   )
 }
-microorganisms.codes <- fix_old_mos(AMR::microorganisms.codes, taxonomy, drop = TRUE)
+# microorganisms.codes keeps the record of the name that a code was named after, also if it is an outdated name (e.g. EAE is Enterobacter aerogenes), so that a code and its microorganism code remain relatable; as.mo() returns the current name
+microorganisms.codes <- fix_old_mos(AMR::microorganisms.codes, taxonomy, drop = TRUE, current = FALSE)
 if (!identical(microorganisms.codes, AMR::microorganisms.codes)) save_df(microorganisms.codes)
 rm(microorganisms.codes)
 
