@@ -49,7 +49,10 @@ test_that("test-antibiogram.R", {
   expect_false(identical(as.data.frame(wisca_all), as.data.frame(wisca_known)))
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     ab_grouped <- tryCatch(
-      example_isolates %>% group_by(ward) %>% antibiogram(antimicrobials = "GEN", minimum = 0, formatting_type = 1, guideline = "EUCAST"),
+      # pathogen names are translated, so test in English, which must also hold on systems in another language
+      example_isolates %>%
+        group_by(ward) %>%
+        antibiogram(antimicrobials = "GEN", minimum = 0, formatting_type = 1, guideline = "EUCAST", language = "en"),
       warning = function(w) conditionMessage(w)
     )
     expect_inherits(ab_grouped, "antibiogram")

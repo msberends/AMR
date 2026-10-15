@@ -138,6 +138,7 @@ TAXONOMY_VERSION <- list(
 
 globalVariables(c(
   ".coverage",
+  ".data",
   ".GenericCallEnv",
   ".lower",
   ".mo",

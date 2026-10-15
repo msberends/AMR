@@ -114,5 +114,90 @@ test_that("test-plotting.R", {
         scale_x_sir(),
       "gg"
     )
+
+    # named colours are matched by name, and SDD, S/I and I/R follow S and R
+    expect_identical(AMR:::expand_SIR_colours(c(R = "r", I = "i", SDD = "d", S = "s")), c("s", "d", "i", "r", "s", "r"))
+    expect_identical(AMR:::expand_SIR_colours(c(S = "s", I = "i", R = "r")), c("s", "s", "i", "r", "s", "r"))
+    expect_identical(AMR:::expand_SIR_colours(c("s", "i", "r")), c("s", "s", "i", "r", "s", "r"))
+    expect_error(AMR:::expand_SIR_colours(c(S = "s", I = "i", X = "r")))
+
+    # colours of SIR bar plots follow the SIR values
+    sir_values <- as.sir(c("S", "S", "R", "NI", "NS"))
+    keep <- AMR:::plot_sir_levels_to_keep(sir_values, table(sir_values))
+    expect_identical(names(table(sir_values))[keep], c("S", "R", "NI", "NS"))
+    p <- autoplot(sir_values)
+    expect_identical(as.character(p$data$x), c("S", "R", "NI", "NS"))
+    expect_identical(unique(ggplot_build(p)$data[[1]]$fill), c("#3CAEA3", "#ED553B", "grey30"))
+
+    # SDD in disk diffusion plots
+    p <- autoplot(as.disk(15:30), mo = "Escherichia coli", ab = "cefepime", guideline = "CLSI 2025", language = "en")
+    expect_true("(SDD) Susceptible dose-dependent" %in% as.character(p$data$cols))
+    expect_false(anyNA(p$data$cols))
+
+    # colours and labels are named by, and cover, all SIR levels
+    expect_identical(names(AMR:::plot_sir_colour_values(AMR:::expand_SIR_colours("red"))), AMR:::VALID_SIR_LEVELS)
+    expect_identical(names(AMR:::plot_sir_label_values("EUCAST")), AMR:::VALID_SIR_LEVELS)
+
+    # arguments are passed on
+    expect_identical(scale_x_sir(name = "Interpretation")$name, "Interpretation")
+    expect_identical(scale_fill_sir(values = c(S = "black"))$palette(1)[["S"]], "black")
+    expect_identical(scale_fill_sir(values = c(S = "black"))$palette(1)[["R"]], "#ED553B")
+    expect_error(scale_fill_sir(values = c("black", "white", "grey")))
+    expect_warning(scale_x_sir(values = c(S = "black")))
+    expect_identical(AMR:::plot_count_ticks(3), c(0, 1, 2, 3))
+    expect_identical(AMR:::plot_name_of_I("EUCAST"), "Susceptible, incr. exp.")
+    expect_identical(AMR:::plot_name_of_I("EUCAST 2018"), "Intermediate")
+
+    # unquoted column names in facet_sir() are not evaluated, also not if an object with that name exists
+    antibiotic <- "some other column"
+    expect_identical(facet_sir(antibiotic)$params$facets, facet_sir("antibiotic")$params$facets)
+
+    # the default of eucast_I follows the guideline option
+    expect_identical(scale_fill_sir(language = "en")$labels("I"), "(I) Susceptible, incr. exp.")
+    old_option <- options(AMR_guideline = "EUCAST 2018")
+    expect_identical(scale_fill_sir(language = "en")$labels("I"), "(I) Intermediate")
+    options(old_option)
+
+    # keep_operators = TRUE/FALSE equals "all"/"none"
+    mic_labels <- function(keep_operators) {
+      p <- ggplot(data.frame(m = as.mic(c(">=8", "2", "<=0.5"))), aes(m, 1)) +
+        geom_point() +
+        scale_x_mic(keep_operators = keep_operators)
+      ggplot_build(p)$layout$panel_params[[1]]$x$get_labels()
+    }
+    expect_identical(mic_labels(TRUE), mic_labels("all"))
+    expect_identical(mic_labels(FALSE), mic_labels("none"))
+    expect_false(identical(mic_labels(TRUE), mic_labels(FALSE)))
   }
+
+  # base R plots: texts in the legend (drawn with text()) and bar names (drawn with axis())
+  recorded_strings <- function(expr, fn) {
+    pdf(NULL)
+    dev.control("enable")
+    on.exit(dev.off())
+    force(expr)
+    unlist(lapply(recordPlot()[[1]], function(call) {
+      if (identical(call[[2]][[1]]$name, fn)) {
+        as.character(call[[2]][[if (fn == "C_text") 3 else 4]])
+      }
+    }))
+  }
+  mic_values <- as.mic(c(0.25, 0.25, 4, 32))
+
+  # the legend is based on the interpretation, so SDD is not shown when it has the colour of S
+  expect_identical(
+    recorded_strings(plot(mic_values, mo = "Escherichia coli", ab = "AMC", language = "en", colours_SIR = c("green", "yellow", "red")), "C_text"),
+    c("(S) Susceptible", "(R) Resistant")
+  )
+  # zone diameters run from resistant to susceptible, and so does the legend
+  expect_identical(
+    recorded_strings(plot(as.disk(15:30), mo = "Escherichia coli", ab = "cefepime", guideline = "CLSI 2025", language = "en"), "C_text"),
+    c("(R) Resistant", "(SDD) Susceptible dose-dependent", "(S) Susceptible")
+  )
+  # barplot() for MIC values passes on language and expand
+  expect_identical(
+    recorded_strings(barplot(mic_values, mo = "Escherichia coli", ab = "AMC", language = "nl"), "C_text"),
+    c("(S) Gevoelig", "(R) Resistent")
+  )
+  expect_true(length(recorded_strings(barplot(mic_values, expand = TRUE), "C_axis")) > length(recorded_strings(barplot(mic_values, expand = FALSE), "C_axis")))
 })

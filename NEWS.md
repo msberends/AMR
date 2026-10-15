@@ -1,4 +1,4 @@
-# AMR 3.0.1.9150
+# AMR 3.0.1.9151
 
 Planned as v3.1.0, mid October 2026.
 
@@ -129,6 +129,19 @@ Planned as v3.1.0, mid October 2026.
   * New argument `round_to_next_log2` in `as.mic()` and `rescale_mic()` to round values up to the nearest log2 dilution level (#255)
   * `as.mic()` now handles values in scientific notation (e.g., `1e-3`) correctly
   * Input validation of `as.disk()` is now more strict, rejecting values that are not recognisable as a numeric disk zone diameter. Values higher than 50 mm now return `NA` with a warning, instead of being set to 50 mm.
+* Plotting (`plot()`, `barplot()`, and `autoplot()` for MIC, disk diffusion and SIR values, and the `scale_*_mic()` and `scale_*_sir()` functions)
+  * The colours and legend labels of interpreted MIC and disk values are now based on the interpretation itself instead of matching colours, so that the legend of `plot()` no longer shows SDD when `colours_SIR` gives SDD the colour of S (e.g., with one or three colours), and NI and NS are labelled too
+  * Fixed `autoplot()` for disk diffusion values, which left SDD bars without colour and legend entry
+  * Fixed `barplot()` for MIC values, which ignored the `language` and `expand` arguments, and which now also has the `include_PKPD` and `breakpoint_type` arguments
+  * Fixed `barplot()` for SIR values, which gave NI, WT, and NWT the wrong colours, and always showed empty bars for WT, NWT, and NS. `barplot()` and `autoplot()` for SIR values now always show S and R, and all other values (such as SDD, I, WT, NWT, and NS) only when they occur. Data with only WT and NWT shows these two.
+  * `autoplot()` for disk diffusion values now validates `include_PKPD` and `breakpoint_type`, and `plot()` and `autoplot()` for SIR values now validate `language`
+  * The y axis of `plot()` and `barplot()` now has a readable number of tick marks for large counts, instead of one per count
+  * A named `colours_SIR` is now matched by name in all plotting functions, and needs at least the names S, I and R. SDD gets the colour of S if not set. Previously, the colours of S/I and I/R were taken by position, and a named vector of three colours gave missing colours.
+  * `keep_operators = TRUE` and `FALSE` in the `scale_*_mic()` functions now behave like `"all"` and `"none"`, as in `as.mic()`
+  * Fixed the `scale_*_sir()` functions failing when `values` was set. A named `values` (e.g., `values = c(S = "green")`) now replaces the colours of the SIR values it names, and `scale_x_sir()` warns that it ignores `values`.
+  * Fixed `scale_x_sir()` ignoring other arguments, such as `name`
+  * The `scale_*_sir()` functions now call 'I' "Intermediate" by default if the `AMR_guideline` option is set to EUCAST before 2019
+  * `facet_sir()` now accepts unquoted column names, e.g., `facet_sir(antibiotic)`
 * MDRO determination (`mdro()`)
   * Resistance can now be inferred from a drug/inhibitor combination when the column of the base drug is absent (e.g., piperacillin inferred from piperacillin/tazobactam). This is controlled with the new argument `infer_from_combinations` (default: `TRUE`) (#209).
   * BRMO classification now includes bacterial complexes (#275)
@@ -142,6 +155,8 @@ Planned as v3.1.0, mid October 2026.
   * Translating is now around 50 times faster, with identical results, as the translations are prepared once per language and applied to all values at once. This also makes `ab_group()` faster in other languages.
   * Translations are no longer translated again (e.g., "Ticarcillinee" in Dutch and "groupee" in French), and parts of combination names are no longer left untranslated
   * Fixed Italian names of CoNS and CoPS (#256), Dutch names of antimicrobials, and output of `sir_df()` in other languages (#272)
+  * Added translations of "Susceptible dose-dependent", "Non-susceptible", "Wildtype", and "Non-wildtype", which were previously shown half translated in plots
+  * Corrected the translations of the interpretation categories (S, I, R, and NI) in 18 languages, which were partly incorrect (e.g., Ukrainian words in Russian, "temporary" for Intermediate in Finnish, and "intermediate product" in Czech), and made them consistent with the newly added categories. Where available, the terms of national antimicrobial susceptibility testing committees and laboratories are used, e.g., "Sensibel bei erhöhter Exposition" (German), "Sensible, cuando se incrementa la exposición" (Spanish), and "Känslig vid ökad exponering" (Swedish).
 * Interpretive rules (`interpretive_rules()`, `eucast_rules()`, and `clsi_rules()`)
   * Considerably faster, around 11 to 18 times, with identical results
   * The number of added and changed values now only counts values that were actually written, so that values left untouched due to `overwrite = FALSE` or `add_if_missing = FALSE` are no longer reported as changes or additions, also not in the output of `verbose = TRUE` (#259)
@@ -158,6 +173,7 @@ Planned as v3.1.0, mid October 2026.
 * Improved console messages with clickable links throughout the package, powered by `cli` if it is installed (#191, #265)
 * The section *Interpretation of SIR* (in `?as.sir`) now explains for all functions with a `guideline` argument for aggregated analyses how S, SDD, I, R, WT, NWT, NS, and NI are categorised per guideline. The handling of 'I' per MDRO guideline in `mdro()` will be revised in a future version (#323).
 * `labels_sir_count()` is now documented together with `ggplot_sir()`
+* Corrected the documentation of `colours_SIR` and `eucast_I` in the plotting functions, and an example of `scale_colour_sir()` in which the title was not applied
 * The documentation of `get_AMR_locale()` now describes the actual order in which the language is determined: the `AMR_locale` option, then the `LANG` system variable, then `LANGUAGE` only if `LANG` is not set, and then the system locale
 * Revamped console output of `interpretive_rules()`, with section headers, S/I/R values styled as in the printing of `sir` columns in tibbles, and the summary of edits sorted by SIR level, using `cli` if it is installed (#259)
 * The printing of `custom_interpretive_rules()` and `custom_mdro_guideline()` now styles SIR values as in tibbles, i.e., the colour of `I` depends on the guideline. `WT`, `NWT`, and `NS` were previously shown as `SDD`, `I`, and `R`, and values other than `S` and `R` as `I`.

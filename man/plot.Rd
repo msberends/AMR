@@ -35,21 +35,21 @@ scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
 scale_x_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") \%like\% "EUCAST",
+  eucast_I = plot_name_of_I(getOption("AMR_guideline", "EUCAST")) != "Intermediate",
   ...
 )
 
 scale_colour_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") \%like\% "EUCAST",
+  eucast_I = plot_name_of_I(getOption("AMR_guideline", "EUCAST")) != "Intermediate",
   ...
 )
 
 scale_fill_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") \%like\% "EUCAST",
+  eucast_I = plot_name_of_I(getOption("AMR_guideline", "EUCAST")) != "Intermediate",
   ...
 )
 
@@ -158,11 +158,11 @@ theme_sir()
 
 \item{...}{Arguments passed on to methods.}
 
-\item{colours_SIR}{Colours to use for filling in the bars, must be a vector of three values (in the order S, I and R). The default colours are colour-blind friendly.}
+\item{colours_SIR}{Colours to use for filling in the bars, must be a vector of one, three or four values (in the order S, SDD, I and R), or a named vector with at least the names S, I and R. With three values or without a name SDD, SDD gets the colour of S. The default colours are colour-blind friendly.}
 
 \item{language}{Language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the package option \code{\link[=AMR-options]{AMR_locale}}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} to prevent translation.}
 
-\item{eucast_I}{A \link{logical} to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be \code{TRUE} if the default \link[=as.sir]{AMR interpretation guideline} is set to EUCAST (which is the default). With \code{FALSE}, it will be interpreted as "Intermediate".}
+\item{eucast_I}{A \link{logical} to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be \code{TRUE} if the default \link[=as.sir]{AMR interpretation guideline} is set to EUCAST 2019 or later (which is the default). With \code{FALSE}, it will be interpreted as "Intermediate".}
 
 \item{x, object}{Values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}}).}
 
@@ -198,12 +198,12 @@ The \code{autoplot()} functions return a \code{\link[ggplot2:ggplot]{ggplot}} mo
 \description{
 Functions to plot classes \code{sir}, \code{mic} and \code{disk}, with support for base \R and \code{ggplot2}.
 
-Especially the \verb{scale_*_mic()} functions are relevant wrappers to plot MIC values for \code{ggplot2}. They allows custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
+Especially the \verb{scale_*_mic()} functions are relevant wrappers to plot MIC values for \code{ggplot2}. They allow custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
 }
 \details{
 \subsection{The \verb{scale_*_mic()} Functions}{
 
-The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} functions allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous, logarithmic scale.
+The functions \code{\link[=scale_x_mic]{scale_x_mic()}}, \code{\link[=scale_y_mic]{scale_y_mic()}}, \code{\link[=scale_colour_mic]{scale_colour_mic()}}, and \code{\link[=scale_fill_mic]{scale_fill_mic()}} allow to plot the \link[=as.mic]{mic} class (MIC values) on a continuous, logarithmic scale.
 
 There is normally no need to add these scale functions to your plot, as they are applied automatically when plotting values of class \link[=as.mic]{mic}.
 
@@ -212,7 +212,7 @@ When manually added though, they allow to rescale the MIC range with an 'inside'
 
 \subsection{The \verb{scale_*_sir()} Functions}{
 
-The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} functions allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI < WT < NWT < NS).
+The functions \code{\link[=scale_x_sir]{scale_x_sir()}}, \code{\link[=scale_colour_sir]{scale_colour_sir()}}, and \code{\link[=scale_fill_sir]{scale_fill_sir()}} allow to plot the \link[=as.sir]{sir} class in the right order (S < SDD < I < R < NI < WT < NWT < NS).
 
 There is normally no need to add these scale functions to your plot, as they are applied automatically when plotting values of class \link[=as.sir]{sir}.
 
@@ -227,10 +227,10 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 \item \code{\link[=scale_y_percent]{scale_y_percent()}} transforms the y axis to a 0 to 100\% range using \code{\link[ggplot2:scale_y_continuous]{ggplot2::scale_y_continuous()}}.
 \item \code{\link[=scale_sir_colours]{scale_sir_colours()}} allows to set colours to any aesthetic, even for \code{shape} or \code{linetype}.
 \item \code{\link[=theme_sir]{theme_sir()}} is a \link[ggplot2:theme]{ggplot2 theme} with minimal distraction.
-\item \code{\link[=labels_sir_count]{labels_sir_count()}} print datalabels on the bars with percentage and number of isolates, using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.
+\item \code{\link[=labels_sir_count]{labels_sir_count()}} prints data labels on the bars with percentage and number of isolates, using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.
 }
 
-The interpretation of "I" will be named "Increased exposure" for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
+The interpretation of "I" will be named "Susceptible, incr. exp." (susceptible, increased exposure) for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
 For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2026, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
 }
@@ -254,7 +254,7 @@ if (require("ggplot2")) {
 }
 
 if (require("ggplot2")) {
-  # support for 27 languages, various guidelines, and many options
+  # support for all languages in ?translate, various guidelines, and many options
   autoplot(some_disk_values,
     mo = "Escherichia coli", ab = "cipro",
     guideline = "CLSI", language = "no",
@@ -351,8 +351,8 @@ if (require("ggplot2")) {
   ) +
     theme_minimal() +
     geom_boxplot(fill = NA, colour = "grey30") +
-    geom_jitter(width = 0.25)
-  labs(title = "scale_y_mic()/scale_colour_sir() automatically applied")
+    geom_jitter(width = 0.25) +
+    labs(title = "scale_y_mic()/scale_colour_sir() automatically applied")
 
   mic_sir_plot
 }
@@ -361,7 +361,7 @@ if (require("ggplot2")) {
     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
     scale_colour_sir(
       language = "pt", # Portuguese
-      name = "Support in 28 languages"
+      name = "Support in many languages"
     )
 }
 }
