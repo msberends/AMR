@@ -39,7 +39,7 @@
 #' @param guideline Interpretation guideline to use - the default is the latest included EUCAST guideline, see *Details*.
 #' @param main,title Title of the plot.
 #' @param xlab,ylab Axis title.
-#' @param colours_SIR Colours to use for filling in the bars, must be a vector of one, three or four values (in the order S, SDD, I and R), or a named vector with at least the names S, I and R. With three values or without a name SDD, SDD gets the colour of S. The default colours are colour-blind friendly.
+#' @param colours_SIR Colours to use for filling in the bars, must be a vector of one, three or four values (in the order S, SDD, I and R), or a named vector with any of the names S, SDD, I, R, SI and IR. Missing names S, I and R get the default colour, and with three values or without a name SDD, SDD gets the colour of S. The default colours are colour-blind friendly.
 #' @param language Language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see [get_AMR_locale()]) and can be overwritten by setting the package option [`AMR_locale`][AMR-options], e.g. `options(AMR_locale = "de")`, see [translate]. Use `language = NULL` to prevent translation.
 #' @param expand A [logical] to indicate whether the range on the x axis should be expanded between the lowest and highest value. For MIC values, intermediate values will be factors of 2 starting from the highest MIC value. For disk diameters, the whole diameter range will be filled.
 #' @param aesthetics Aesthetics to apply the colours to - the default is "fill" but can also be (a combination of) "alpha", "colour", "fill", "linetype", "shape" or "size".
@@ -1484,10 +1484,9 @@ expand_SIR_colours <- function(colours_SIR, unname = TRUE) {
       all(names(colours_SIR) %in% sir_order),
       "Unknown names in {.arg colours_SIR}. Expected any of: ", vector_or(sir_order, quotes = FALSE, sort = FALSE), "."
     )
-    stop_ifnot(
-      all(c("S", "I", "R") %in% names(colours_SIR)),
-      "A named {.arg colours_SIR} must contain at least the names S, I and R."
-    )
+    # S, I and R get the default colours, unless set, e.g. for ggplot_sir(colours = c(SI = "yellow"))
+    default_colours <- c(S = "#3CAEA3", I = "#F6D55C", R = "#ED553B")
+    colours_SIR[setdiff(names(default_colours), names(colours_SIR))] <- default_colours[setdiff(names(default_colours), names(colours_SIR))]
   }
   # SDD and SI get the colour of S, and IR gets the colour of R, unless set
   colours_SIR[setdiff(c("SDD", "SI"), names(colours_SIR))] <- colours_SIR[["S"]]

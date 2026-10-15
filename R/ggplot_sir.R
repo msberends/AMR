@@ -271,7 +271,8 @@ ggplot_sir <- function(data,
   }
 
   if (!is.null(facet)) {
-    p <- p + facet_sir(facet = facet, nrow = nrow)
+    # pass the value, as facet_sir() takes an unquoted name as column name
+    p <- p + do.call(facet_sir, list(facet = facet, nrow = nrow))
   }
 
   p <- p + ggplot2::labs(

@@ -158,7 +158,7 @@ theme_sir()
 
 \item{...}{Arguments passed on to methods.}
 
-\item{colours_SIR}{Colours to use for filling in the bars, must be a vector of one, three or four values (in the order S, SDD, I and R), or a named vector with at least the names S, I and R. With three values or without a name SDD, SDD gets the colour of S. The default colours are colour-blind friendly.}
+\item{colours_SIR}{Colours to use for filling in the bars, must be a vector of one, three or four values (in the order S, SDD, I and R), or a named vector with any of the names S, SDD, I, R, SI and IR. Missing names S, I and R get the default colour, and with three values or without a name SDD, SDD gets the colour of S. The default colours are colour-blind friendly.}
 
 \item{language}{Language to be used to translate 'Susceptible', 'Increased exposure'/'Intermediate' and 'Resistant' - the default is system language (see \code{\link[=get_AMR_locale]{get_AMR_locale()}}) and can be overwritten by setting the package option \code{\link[=AMR-options]{AMR_locale}}, e.g. \code{options(AMR_locale = "de")}, see \link{translate}. Use \code{language = NULL} to prevent translation.}
 

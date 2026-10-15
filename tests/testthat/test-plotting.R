@@ -120,6 +120,8 @@ test_that("test-plotting.R", {
     expect_identical(AMR:::expand_SIR_colours(c(S = "s", I = "i", R = "r")), c("s", "s", "i", "r", "s", "r"))
     expect_identical(AMR:::expand_SIR_colours(c("s", "i", "r")), c("s", "s", "i", "r", "s", "r"))
     expect_error(AMR:::expand_SIR_colours(c(S = "s", I = "i", X = "r")))
+    # missing names S, I and R get the default colours, as in the example of ggplot_sir()
+    expect_identical(AMR:::expand_SIR_colours(c(SI = "y")), c("#3CAEA3", "#3CAEA3", "#F6D55C", "#ED553B", "y", "#ED553B"))
 
     # colours of SIR bar plots follow the SIR values
     sir_values <- as.sir(c("S", "S", "R", "NI", "NS"))
@@ -153,8 +155,11 @@ test_that("test-plotting.R", {
     expect_identical(facet_sir(antibiotic)$params$facets, facet_sir("antibiotic")$params$facets)
 
     # the default of eucast_I follows the guideline option
+    old_option <- options(AMR_guideline = "EUCAST")
     expect_identical(scale_fill_sir(language = "en")$labels("I"), "(I) Susceptible, incr. exp.")
-    old_option <- options(AMR_guideline = "EUCAST 2018")
+    options(AMR_guideline = "EUCAST 2018")
+    expect_identical(scale_fill_sir(language = "en")$labels("I"), "(I) Intermediate")
+    options(AMR_guideline = "CLSI")
     expect_identical(scale_fill_sir(language = "en")$labels("I"), "(I) Intermediate")
     options(old_option)
 

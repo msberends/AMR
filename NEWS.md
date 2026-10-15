@@ -1,4 +1,4 @@
-# AMR 3.0.1.9151
+# AMR 3.0.1.9152
 
 Planned as v3.1.0, mid October 2026.
 
@@ -136,7 +136,7 @@ Planned as v3.1.0, mid October 2026.
   * Fixed `barplot()` for SIR values, which gave NI, WT, and NWT the wrong colours, and always showed empty bars for WT, NWT, and NS. `barplot()` and `autoplot()` for SIR values now always show S and R, and all other values (such as SDD, I, WT, NWT, and NS) only when they occur. Data with only WT and NWT shows these two.
   * `autoplot()` for disk diffusion values now validates `include_PKPD` and `breakpoint_type`, and `plot()` and `autoplot()` for SIR values now validate `language`
   * The y axis of `plot()` and `barplot()` now has a readable number of tick marks for large counts, instead of one per count
-  * A named `colours_SIR` is now matched by name in all plotting functions, and needs at least the names S, I and R. SDD gets the colour of S if not set. Previously, the colours of S/I and I/R were taken by position, and a named vector of three colours gave missing colours.
+  * A named `colours_SIR` is now matched by name in all plotting functions, and S, I and R get their default colour if not set. SDD gets the colour of S if not set. Previously, the colours of S/I and I/R were taken by position, and a named vector of three colours gave missing colours.
   * `keep_operators = TRUE` and `FALSE` in the `scale_*_mic()` functions now behave like `"all"` and `"none"`, as in `as.mic()`
   * Fixed the `scale_*_sir()` functions failing when `values` was set. A named `values` (e.g., `values = c(S = "green")`) now replaces the colours of the SIR values it names, and `scale_x_sir()` warns that it ignores `values`.
   * Fixed `scale_x_sir()` ignoring other arguments, such as `name`

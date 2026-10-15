@@ -59,6 +59,13 @@ test_that("test-ggplot_sir.R", {
         ggplot_sir(x = "antibiotic", facet = "interpretation"),
       "gg"
     )
+    # the facet is passed on as value, so the plot can be built
+    expect_inherits(
+      ggplot_build(example_isolates %>%
+        select(AMC, CIP) %>%
+        ggplot_sir(x = "interpretation", facet = "antibiotic")),
+      "ggplot_built"
+    )
 
     expect_equal(
       (example_isolates %>%
