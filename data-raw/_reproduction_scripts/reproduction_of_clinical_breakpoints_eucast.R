@@ -494,10 +494,7 @@ parse_bp <- function(txt) {
   t <- trimws(txt)
   # placeholders such as "-" (susceptibility testing not recommended), "IE"
   # or "Note" are kept as they are: the cleanup turns them into blocking rows
-  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets"
-  # (see is_bracketed_bp()). They are preserved as-is in the raw file so
-  # they remain distinguishable from clinical breakpoints. The cleanup
-  # section later excludes them from the clinical_breakpoints table.
+  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets" (see is_bracketed_bp()). They are kept as they are in the raw file, so that they remain distinguishable from clinical breakpoints. The cleanup turns them into blocking rows as well: the row stays in clinical_breakpoints, but with breakpoint_S and breakpoint_R set to NA and the bracketed values stated in the note (see "Blocking rows").
   t
 }
 
