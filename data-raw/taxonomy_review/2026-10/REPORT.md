@@ -405,3 +405,20 @@ simplex* and *Enterobius vermicularis* as accepted), while this build had them a
   `MO_RELEVANT_GENERA` now). Effect: 24 never released, not relevant COL records less. The data sets that are computed
   from this one are recreated in the right order by the new `run_after_microorganisms_build.R`, which the build runs
   at its end; `reproduction_of_intrinsic_resistant.R` uses `devtools::load_all()` instead of the installed package
+
+## 7. Open issues for the next update (15 October 2026)
+
+Found while correcting the WHONET codes in `microorganisms.codes` (v3.0.1.9149), left for the next taxonomy update:
+
+- [ ] **Bacterial GBIF records next to LPSN.** 8,638 bacterial records have `source = "GBIF"`, 7,445 of them accepted.
+  They are kept because LPSN has no record with their name, and they bring the GBIF synonymy along, which can create a
+  parallel taxon. Example: LPSN does not know *Faecalimonas nexile* (*Clostridium nexile* is *Faecalimonas nexilis*,
+  and *phoceensis* is in *Coprococcus* since 2025), but the GBIF records *Faecalimonas nexile* (synonym) and
+  *Faecalimonas phoceensis* (accepted), both already in v3.0.1, make `as.mo("Faecalimonas nexile")` return *F.
+  phoceensis*, next to LPSN's *Coprococcus phoceensis*. To do: determine how many bacterial GBIF records duplicate an
+  LPSN taxon, decide how they are linked or removed, and add a strict test.
+- [ ] **Outdated names kept as separate accepted records**, e.g. *Arthroderma obtusum* and *Arthroderma racemosum*
+  next to *Nannizzia obtusa* and *Nannizzia racemosa*, and *Microsporum cookei* next to *Paraphyton cookei* (Dukik et al.
+  2017). The WHONET pipeline shows them: an older WHONET name only refers to the same taxon as the current WHONET name if
+  `microorganisms` links them.
+- [ ] **Lower-case serovar name**: *Salmonella panama* (`B_SLMNL_PANM`) instead of *Salmonella* Panama.
