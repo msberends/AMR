@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9150</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9151</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9150" id="amr-3019150">AMR 3.0.1.9150<a class="anchor" aria-label="anchor" href="#amr-3019150"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9151" id="amr-3019151">AMR 3.0.1.9151<a class="anchor" aria-label="anchor" href="#amr-3019151"></a></h2>
 <p>Planned as v3.1.0, mid October 2026.</p>
 <div class="section level4">
-<h4 id="breaking-3-0-1-9150">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9150"></a></h4>
+<h4 id="breaking-3-0-1-9151">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9151"></a></h4>
 <ul><li>
 <p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms, with new top-level <em>domains</em> Bacteria and Archaea (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column was added to the <code>microorganisms</code> data set, and <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g., <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
 <table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
@@ -109,7 +109,7 @@
 <li><p>The <code>combine_SI</code> argument of these functions is deprecated in favour of <code>guideline</code>. While set, it is followed literally and takes precedence over <code>guideline</code>. Use <code>guideline = NULL</code> instead of <code>combine_SI = FALSE</code> to keep S, I, and R separate.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9150">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9150"></a></h4>
+<h4 id="new-3-0-1-9151">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9151"></a></h4>
 <ul><li>
 <strong>Updated clinical breakpoints</strong>
 <ul><li>EUCAST 2026 and CLSI 2026 are now supported, by adding over 5,700 new breakpoints to the <code>clinical_breakpoints</code> data set. EUCAST 2026 is now the default guideline for all MIC and disk diffusion interpretations.</li>
@@ -157,7 +157,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-0-1-9150">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9150"></a></h4>
+<h4 id="changed-3-0-1-9151">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9151"></a></h4>
 <ul><li>SIR interpretation (<code><a href="../reference/as.sir.html">as.sir()</a></code>)
 <ul><li>New argument <code>enforce_method</code> (<code>"auto"</code>, <code>"mic"</code>, or <code>"disk"</code>) to force the interpretation method when S3 class information is lost, e.g., when called from Python (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
 <li>When input consists of whole numbers only, disk zones are now assumed rather than MIC values (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
@@ -259,6 +259,27 @@
 <code><a href="../reference/as.mic.html">as.mic()</a></code> now handles values in scientific notation (e.g., <code>1e-3</code>) correctly</li>
 <li>Input validation of <code><a href="../reference/as.disk.html">as.disk()</a></code> is now more strict, rejecting values that are not recognisable as a numeric disk zone diameter. Values higher than 50 mm now return <code>NA</code> with a warning, instead of being set to 50 mm.</li>
 </ul></li>
+<li>Plotting (<code><a href="../reference/plot.html">plot()</a></code>, <code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code>, and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> for MIC, disk diffusion and SIR values, and the <code>scale_*_mic()</code> and <code>scale_*_sir()</code> functions)
+<ul><li>The colours and legend labels of interpreted MIC and disk values are now based on the interpretation itself instead of matching colours, so that the legend of <code><a href="../reference/plot.html">plot()</a></code> no longer shows SDD when <code>colours_SIR</code> gives SDD the colour of S (e.g., with one or three colours), and NI and NS are labelled too</li>
+<li>Fixed <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> for disk diffusion values, which left SDD bars without colour and legend entry</li>
+<li>Fixed <code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code> for MIC values, which ignored the <code>language</code> and <code>expand</code> arguments, and which now also has the <code>include_PKPD</code> and <code>breakpoint_type</code> arguments</li>
+<li>Fixed <code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code> for SIR values, which gave NI, WT, and NWT the wrong colours, and always showed empty bars for WT, NWT, and NS. <code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> for SIR values now always show S and R, and all other values (such as SDD, I, WT, NWT, and NS) only when they occur. Data with only WT and NWT shows these two.</li>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> for disk diffusion values now validates <code>include_PKPD</code> and <code>breakpoint_type</code>, and <code><a href="../reference/plot.html">plot()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> for SIR values now validate <code>language</code>
+</li>
+<li>The y axis of <code><a href="../reference/plot.html">plot()</a></code> and <code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code> now has a readable number of tick marks for large counts, instead of one per count</li>
+<li>A named <code>colours_SIR</code> is now matched by name in all plotting functions, and needs at least the names S, I and R. SDD gets the colour of S if not set. Previously, the colours of S/I and I/R were taken by position, and a named vector of three colours gave missing colours.</li>
+<li>
+<code>keep_operators = TRUE</code> and <code>FALSE</code> in the <code>scale_*_mic()</code> functions now behave like <code>"all"</code> and <code>"none"</code>, as in <code><a href="../reference/as.mic.html">as.mic()</a></code>
+</li>
+<li>Fixed the <code>scale_*_sir()</code> functions failing when <code>values</code> was set. A named <code>values</code> (e.g., <code>values = c(S = "green")</code>) now replaces the colours of the SIR values it names, and <code><a href="../reference/plot.html">scale_x_sir()</a></code> warns that it ignores <code>values</code>.</li>
+<li>Fixed <code><a href="../reference/plot.html">scale_x_sir()</a></code> ignoring other arguments, such as <code>name</code>
+</li>
+<li>The <code>scale_*_sir()</code> functions now call ‘I’ “Intermediate” by default if the <code>AMR_guideline</code> option is set to EUCAST before 2019</li>
+<li>
+<code><a href="../reference/plot.html">facet_sir()</a></code> now accepts unquoted column names, e.g., <code>facet_sir(antibiotic)</code>
+</li>
+</ul></li>
 <li>MDRO determination (<code><a href="../reference/mdro.html">mdro()</a></code>)
 <ul><li>Resistance can now be inferred from a drug/inhibitor combination when the column of the base drug is absent (e.g., piperacillin inferred from piperacillin/tazobactam). This is controlled with the new argument <code>infer_from_combinations</code> (default: <code>TRUE</code>) (<a href="https://github.com/msberends/AMR/issues/209" class="external-link">#209</a>).</li>
 <li>BRMO classification now includes bacterial complexes (<a href="https://github.com/msberends/AMR/issues/275" class="external-link">#275</a>)</li>
@@ -276,6 +297,8 @@
 <li>Translating is now around 50 times faster, with identical results, as the translations are prepared once per language and applied to all values at once. This also makes <code><a href="../reference/ab_property.html">ab_group()</a></code> faster in other languages.</li>
 <li>Translations are no longer translated again (e.g., “Ticarcillinee” in Dutch and “groupee” in French), and parts of combination names are no longer left untranslated</li>
 <li>Fixed Italian names of CoNS and CoPS (<a href="https://github.com/msberends/AMR/issues/256" class="external-link">#256</a>), Dutch names of antimicrobials, and output of <code><a href="../reference/proportion.html">sir_df()</a></code> in other languages (<a href="https://github.com/msberends/AMR/issues/272" class="external-link">#272</a>)</li>
+<li>Added translations of “Susceptible dose-dependent”, “Non-susceptible”, “Wildtype”, and “Non-wildtype”, which were previously shown half translated in plots</li>
+<li>Corrected the translations of the interpretation categories (S, I, R, and NI) in 18 languages, which were partly incorrect (e.g., Ukrainian words in Russian, “temporary” for Intermediate in Finnish, and “intermediate product” in Czech), and made them consistent with the newly added categories. Where available, the terms of national antimicrobial susceptibility testing committees and laboratories are used, e.g., “Sensibel bei erhöhter Exposition” (German), “Sensible, cuando se incrementa la exposición” (Spanish), and “Känslig vid ökad exponering” (Swedish).</li>
 </ul></li>
 <li>Interpretive rules (<code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code>, and <code><a href="../reference/interpretive_rules.html">clsi_rules()</a></code>)
 <ul><li>Considerably faster, around 11 to 18 times, with identical results</li>
@@ -292,12 +315,13 @@
 <li>Fixed a bug where R could crash after unloading the <code>data.table</code> package, and where suggested packages available on the machine that built the package were used even if they were not available to the user</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-0-1-9150">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9150"></a></h4>
+<h4 id="other-3-0-1-9151">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9151"></a></h4>
 <ul><li>Improved console messages with clickable links throughout the package, powered by <code>cli</code> if it is installed (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
 <li>The section <em>Interpretation of SIR</em> (in <code><a href="../reference/as.sir.html">?as.sir</a></code>) now explains for all functions with a <code>guideline</code> argument for aggregated analyses how S, SDD, I, R, WT, NWT, NS, and NI are categorised per guideline. The handling of ‘I’ per MDRO guideline in <code><a href="../reference/mdro.html">mdro()</a></code> will be revised in a future version (<a href="https://github.com/msberends/AMR/issues/323" class="external-link">#323</a>).</li>
 <li>
 <code><a href="../reference/ggplot_sir.html">labels_sir_count()</a></code> is now documented together with <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code>
 </li>
+<li>Corrected the documentation of <code>colours_SIR</code> and <code>eucast_I</code> in the plotting functions, and an example of <code><a href="../reference/plot.html">scale_colour_sir()</a></code> in which the title was not applied</li>
 <li>The documentation of <code><a href="../reference/translate.html">get_AMR_locale()</a></code> now describes the actual order in which the language is determined: the <code>AMR_locale</code> option, then the <code>LANG</code> system variable, then <code>LANGUAGE</code> only if <code>LANG</code> is not set, and then the system locale</li>
 <li>Revamped console output of <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, with section headers, S/I/R values styled as in the printing of <code>sir</code> columns in tibbles, and the summary of edits sorted by SIR level, using <code>cli</code> if it is installed (<a href="https://github.com/msberends/AMR/issues/259" class="external-link">#259</a>)</li>
 <li>The printing of <code><a href="../reference/custom_interpretive_rules.html">custom_interpretive_rules()</a></code> and <code><a href="../reference/custom_mdro_guideline.html">custom_mdro_guideline()</a></code> now styles SIR values as in tibbles, i.e., the colour of <code>I</code> depends on the guideline. <code>WT</code>, <code>NWT</code>, and <code>NS</code> were previously shown as <code>SDD</code>, <code>I</code>, and <code>R</code>, and values other than <code>S</code> and <code>R</code> as <code>I</code>.</li>

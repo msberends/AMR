@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9150
+## AMR 3.0.1.9151
 
 Planned as v3.1.0, mid October 2026.
 
@@ -442,6 +442,62 @@ Planned as v3.1.0, mid October 2026.
     more strict, rejecting values that are not recognisable as a numeric
     disk zone diameter. Values higher than 50 mm now return `NA` with a
     warning, instead of being set to 50 mm.
+- Plotting ([`plot()`](https://amr-for-r.org/reference/plot.md),
+  [`barplot()`](https://rdrr.io/r/graphics/barplot.html), and
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  for MIC, disk diffusion and SIR values, and the `scale_*_mic()` and
+  `scale_*_sir()` functions)
+  - The colours and legend labels of interpreted MIC and disk values are
+    now based on the interpretation itself instead of matching colours,
+    so that the legend of
+    [`plot()`](https://amr-for-r.org/reference/plot.md) no longer shows
+    SDD when `colours_SIR` gives SDD the colour of S (e.g., with one or
+    three colours), and NI and NS are labelled too
+  - Fixed
+    [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+    for disk diffusion values, which left SDD bars without colour and
+    legend entry
+  - Fixed [`barplot()`](https://rdrr.io/r/graphics/barplot.html) for MIC
+    values, which ignored the `language` and `expand` arguments, and
+    which now also has the `include_PKPD` and `breakpoint_type`
+    arguments
+  - Fixed [`barplot()`](https://rdrr.io/r/graphics/barplot.html) for SIR
+    values, which gave NI, WT, and NWT the wrong colours, and always
+    showed empty bars for WT, NWT, and NS.
+    [`barplot()`](https://rdrr.io/r/graphics/barplot.html) and
+    [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+    for SIR values now always show S and R, and all other values (such
+    as SDD, I, WT, NWT, and NS) only when they occur. Data with only WT
+    and NWT shows these two.
+  - [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+    for disk diffusion values now validates `include_PKPD` and
+    `breakpoint_type`, and
+    [`plot()`](https://amr-for-r.org/reference/plot.md) and
+    [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+    for SIR values now validate `language`
+  - The y axis of [`plot()`](https://amr-for-r.org/reference/plot.md)
+    and [`barplot()`](https://rdrr.io/r/graphics/barplot.html) now has a
+    readable number of tick marks for large counts, instead of one per
+    count
+  - A named `colours_SIR` is now matched by name in all plotting
+    functions, and needs at least the names S, I and R. SDD gets the
+    colour of S if not set. Previously, the colours of S/I and I/R were
+    taken by position, and a named vector of three colours gave missing
+    colours.
+  - `keep_operators = TRUE` and `FALSE` in the `scale_*_mic()` functions
+    now behave like `"all"` and `"none"`, as in
+    [`as.mic()`](https://amr-for-r.org/reference/as.mic.md)
+  - Fixed the `scale_*_sir()` functions failing when `values` was set. A
+    named `values` (e.g., `values = c(S = "green")`) now replaces the
+    colours of the SIR values it names, and
+    [`scale_x_sir()`](https://amr-for-r.org/reference/plot.md) warns
+    that it ignores `values`.
+  - Fixed [`scale_x_sir()`](https://amr-for-r.org/reference/plot.md)
+    ignoring other arguments, such as `name`
+  - The `scale_*_sir()` functions now call ‘I’ “Intermediate” by default
+    if the `AMR_guideline` option is set to EUCAST before 2019
+  - [`facet_sir()`](https://amr-for-r.org/reference/plot.md) now accepts
+    unquoted column names, e.g., `facet_sir(antibiotic)`
 - MDRO determination
   ([`mdro()`](https://amr-for-r.org/reference/mdro.md))
   - Resistance can now be inferred from a drug/inhibitor combination
@@ -476,6 +532,18 @@ Planned as v3.1.0, mid October 2026.
     of antimicrobials, and output of
     [`sir_df()`](https://amr-for-r.org/reference/proportion.md) in other
     languages ([\#272](https://github.com/msberends/AMR/issues/272))
+  - Added translations of “Susceptible dose-dependent”,
+    “Non-susceptible”, “Wildtype”, and “Non-wildtype”, which were
+    previously shown half translated in plots
+  - Corrected the translations of the interpretation categories (S, I,
+    R, and NI) in 18 languages, which were partly incorrect (e.g.,
+    Ukrainian words in Russian, “temporary” for Intermediate in Finnish,
+    and “intermediate product” in Czech), and made them consistent with
+    the newly added categories. Where available, the terms of national
+    antimicrobial susceptibility testing committees and laboratories are
+    used, e.g., “Sensibel bei erhöhter Exposition” (German), “Sensible,
+    cuando se incrementa la exposición” (Spanish), and “Känslig vid ökad
+    exponering” (Swedish).
 - Interpretive rules
   ([`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
   [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
@@ -540,6 +608,10 @@ Planned as v3.1.0, mid October 2026.
 - [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md)
   is now documented together with
   [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md)
+- Corrected the documentation of `colours_SIR` and `eucast_I` in the
+  plotting functions, and an example of
+  [`scale_colour_sir()`](https://amr-for-r.org/reference/plot.md) in
+  which the title was not applied
 - The documentation of
   [`get_AMR_locale()`](https://amr-for-r.org/reference/translate.md) now
   describes the actual order in which the language is determined: the

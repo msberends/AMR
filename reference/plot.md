@@ -4,7 +4,7 @@ Functions to plot classes `sir`, `mic` and `disk`, with support for base
 R and `ggplot2`.
 
 Especially the `scale_*_mic()` functions are relevant wrappers to plot
-MIC values for `ggplot2`. They allows custom MIC ranges and to plot
+MIC values for `ggplot2`. They allow custom MIC ranges and to plot
 intermediate log2 levels for missing MIC values.
 
 ## Usage
@@ -21,21 +21,21 @@ scale_fill_mic(keep_operators = "edges", mic_range = NULL, ...)
 scale_x_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") %like% "EUCAST",
+  eucast_I = plot_name_of_I(getOption("AMR_guideline", "EUCAST")) != "Intermediate",
   ...
 )
 
 scale_colour_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") %like% "EUCAST",
+  eucast_I = plot_name_of_I(getOption("AMR_guideline", "EUCAST")) != "Intermediate",
   ...
 )
 
 scale_fill_sir(
   colours_SIR = c(S = "#3CAEA3", SDD = "#8FD6C4", I = "#F6D55C", R = "#ED553B"),
   language = get_AMR_locale(),
-  eucast_I = getOption("AMR_guideline", "EUCAST") %like% "EUCAST",
+  eucast_I = plot_name_of_I(getOption("AMR_guideline", "EUCAST")) != "Intermediate",
   ...
 )
 
@@ -169,8 +169,10 @@ theme_sir()
 
 - colours_SIR:
 
-  Colours to use for filling in the bars, must be a vector of three
-  values (in the order S, I and R). The default colours are colour-blind
+  Colours to use for filling in the bars, must be a vector of one, three
+  or four values (in the order S, SDD, I and R), or a named vector with
+  at least the names S, I and R. With three values or without a name
+  SDD, SDD gets the colour of S. The default colours are colour-blind
   friendly.
 
 - language:
@@ -191,8 +193,8 @@ theme_sir()
   the 'I' must be interpreted as "Susceptible, under increased
   exposure". Will be `TRUE` if the default [AMR interpretation
   guideline](https://amr-for-r.org/reference/as.sir.md) is set to EUCAST
-  (which is the default). With `FALSE`, it will be interpreted as
-  "Intermediate".
+  2019 or later (which is the default). With `FALSE`, it will be
+  interpreted as "Intermediate".
 
 - x, object:
 
@@ -288,7 +290,7 @@ that is extendible with any `ggplot2` function.
 ### The `scale_*_mic()` Functions
 
 The functions `scale_x_mic()`, `scale_y_mic()`, `scale_colour_mic()`,
-and `scale_fill_mic()` functions allow to plot the
+and `scale_fill_mic()` allow to plot the
 [mic](https://amr-for-r.org/reference/as.mic.md) class (MIC values) on a
 continuous, logarithmic scale.
 
@@ -304,7 +306,7 @@ log2 levels will always be plotted too.
 ### The `scale_*_sir()` Functions
 
 The functions `scale_x_sir()`, `scale_colour_sir()`, and
-`scale_fill_sir()` functions allow to plot the
+`scale_fill_sir()` allow to plot the
 [sir](https://amr-for-r.org/reference/as.sir.md) class in the right
 order (S \< SDD \< I \< R \< NI \< WT \< NWT \< NS).
 
@@ -339,13 +341,13 @@ internally used by
   minimal distraction.
 
 - [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md)
-  print datalabels on the bars with percentage and number of isolates,
+  prints data labels on the bars with percentage and number of isolates,
   using
   [`ggplot2::geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
 
-The interpretation of "I" will be named "Increased exposure" for all
-EUCAST guidelines since 2019, and will be named "Intermediate" in all
-other cases.
+The interpretation of "I" will be named "Susceptible, incr. exp."
+(susceptible, increased exposure) for all EUCAST guidelines since 2019,
+and will be named "Intermediate" in all other cases.
 
 For interpreting MIC values as well as disk diffusion diameters, the
 default guideline is EUCAST 2026, unless the package option
@@ -377,7 +379,7 @@ if (require("ggplot2")) {
 
 
 if (require("ggplot2")) {
-  # support for 27 languages, various guidelines, and many options
+  # support for all languages in ?translate, various guidelines, and many options
   autoplot(some_disk_values,
     mo = "Escherichia coli", ab = "cipro",
     guideline = "CLSI", language = "no",
@@ -482,8 +484,8 @@ if (require("ggplot2")) {
   ) +
     theme_minimal() +
     geom_boxplot(fill = NA, colour = "grey30") +
-    geom_jitter(width = 0.25)
-  labs(title = "scale_y_mic()/scale_colour_sir() automatically applied")
+    geom_jitter(width = 0.25) +
+    labs(title = "scale_y_mic()/scale_colour_sir() automatically applied")
 
   mic_sir_plot
 }
@@ -493,7 +495,7 @@ if (require("ggplot2")) {
     scale_y_mic(mic_range = c(0.005, 32), name = "Our MICs!") +
     scale_colour_sir(
       language = "pt", # Portuguese
-      name = "Support in 28 languages"
+      name = "Support in many languages"
     )
 }
 
