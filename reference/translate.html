@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9136</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,10 +90,12 @@
 <h3 id="changing-the-default-language">Changing the Default Language<a class="anchor" aria-label="anchor" href="#changing-the-default-language"></a></h3>
 
 
-<p>The system language will be used at default (as returned by <code>Sys.getenv("LANG")</code> or, if <code>LANG</code> is not set, <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale("LC_COLLATE")</a></code>), if that language is supported. But the language to be used can be overwritten in two ways and will be checked in this order:</p><ol><li><p>Setting the package option <code><a href="AMR-options.html">AMR_locale</a></code>, either by using e.g. <code>set_AMR_locale("German")</code> or by running e.g. <code>options(AMR_locale = "German")</code>.</p>
+<p>The system language will be used at default, if that language is supported. The language to be used is determined in this order:</p><ol><li><p>The package option <code><a href="AMR-options.html">AMR_locale</a></code>, set by using e.g. <code>set_AMR_locale("German")</code> or by running e.g. <code>options(AMR_locale = "German")</code>.</p>
 <p>Note that setting an <span style="R">R</span> option only works in the same session. Save the command <code>options(AMR_locale = "(your language)")</code> to your <code>.Rprofile</code> file to apply it for every session. Run <code>utils::file.edit("~/.Rprofile")</code> to edit your <code>.Rprofile</code> file.</p></li>
-<li><p>Setting the system variable <code>LANGUAGE</code> or <code>LANG</code>, e.g. by adding <code>LANGUAGE="de_DE.utf8"</code> to your <code>.Renviron</code> file in your home directory.</p></li>
-</ol><p>Thus, if the package option <code><a href="AMR-options.html">AMR_locale</a></code> is set, the system variables <code>LANGUAGE</code> and <code>LANG</code> will be ignored.</p>
+<li><p>The system variable <code>LANG</code>, as returned by <code>Sys.getenv("LANG")</code>, e.g. set by adding <code>LANG="de_DE.utf8"</code> to your <code>.Renviron</code> file in your home directory.</p></li>
+<li><p>The system variable <code>LANGUAGE</code>, but only if <code>LANG</code> is not set. Note that <code>LANG</code> is set on most Linux and macOS systems, in which case <code>LANGUAGE</code> has no effect.</p></li>
+<li><p>The system locale, as returned by <code><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale("LC_COLLATE")</a></code>, if neither <code>LANG</code> nor <code>LANGUAGE</code> is set.</p></li>
+</ol><p>Thus, if the package option <code><a href="AMR-options.html">AMR_locale</a></code> is set, the system variables <code>LANG</code> and <code>LANGUAGE</code> will be ignored.</p>
 </div>
 
     </div>

@@ -64,15 +64,12 @@ Wiki](https://github.com/msberends/AMR/wiki/).
 
 ### Changing the Default Language
 
-The system language will be used at default (as returned by
-`Sys.getenv("LANG")` or, if `LANG` is not set,
-[`Sys.getlocale("LC_COLLATE")`](https://rdrr.io/r/base/locales.html)),
-if that language is supported. But the language to be used can be
-overwritten in two ways and will be checked in this order:
+The system language will be used at default, if that language is
+supported. The language to be used is determined in this order:
 
-1.  Setting the package option
-    [`AMR_locale`](https://amr-for-r.org/reference/AMR-options.md),
-    either by using e.g. `set_AMR_locale("German")` or by running e.g.
+1.  The package option
+    [`AMR_locale`](https://amr-for-r.org/reference/AMR-options.md), set
+    by using e.g. `set_AMR_locale("German")` or by running e.g.
     `options(AMR_locale = "German")`.
 
     Note that setting an R option only works in the same session. Save
@@ -80,13 +77,21 @@ overwritten in two ways and will be checked in this order:
     `.Rprofile` file to apply it for every session. Run
     `utils::file.edit("~/.Rprofile")` to edit your `.Rprofile` file.
 
-2.  Setting the system variable `LANGUAGE` or `LANG`, e.g. by adding
-    `LANGUAGE="de_DE.utf8"` to your `.Renviron` file in your home
-    directory.
+2.  The system variable `LANG`, as returned by `Sys.getenv("LANG")`,
+    e.g. set by adding `LANG="de_DE.utf8"` to your `.Renviron` file in
+    your home directory.
+
+3.  The system variable `LANGUAGE`, but only if `LANG` is not set. Note
+    that `LANG` is set on most Linux and macOS systems, in which case
+    `LANGUAGE` has no effect.
+
+4.  The system locale, as returned by
+    [`Sys.getlocale("LC_COLLATE")`](https://rdrr.io/r/base/locales.html),
+    if neither `LANG` nor `LANGUAGE` is set.
 
 Thus, if the package option
 [`AMR_locale`](https://amr-for-r.org/reference/AMR-options.md) is set,
-the system variables `LANGUAGE` and `LANG` will be ignored.
+the system variables `LANG` and `LANGUAGE` will be ignored.
 
 ## Examples
 

@@ -20,6 +20,7 @@ ggplot_sir(
   combine_SI = TRUE,
   minimum = 30,
   language = get_AMR_locale(),
+  guideline = getOption("AMR_guideline", "EUCAST"),
   nrow = NULL,
   colours = c(S = "#3CAEA3", SDD = "#8FD6C4", SI = "#3CAEA3", I = "#F6D55C", IR =
     "#ED553B", R = "#ED553B"),
@@ -42,6 +43,7 @@ geom_sir(
   minimum = 30,
   language = get_AMR_locale(),
   combine_SI = TRUE,
+  guideline = getOption("AMR_guideline", "EUCAST"),
   ...
 )
 ```
@@ -93,9 +95,11 @@ geom_sir(
 - combine_SI:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  all values of S, SDD, and I must be merged into one, so the output
-  only consists of S+SDD+I vs. R (susceptible vs. resistant) - the
-  default is `TRUE`.
+  the 'I' category must be merged with another category, so the output
+  only consists of susceptible vs. resistant - the default is `TRUE`.
+  Following the `guideline` argument, the output then consists of `"SI"`
+  (S+SDD+I) vs. `"R"` with EUCAST, and of `"S"` (S+SDD) vs. `"IR"` (I+R)
+  with CLSI.
 
 - minimum:
 
@@ -112,6 +116,34 @@ geom_sir(
   and can also be set with the package option
   [`AMR_locale`](https://amr-for-r.org/reference/AMR-options.md). Use
   `language = NULL` or `language = ""` to prevent translation.
+
+- guideline:
+
+  Either `"EUCAST"` (default) or `"CLSI"`. With EUCAST, the 'I' category
+  will be considered as susceptible (see [EUCAST
+  website](https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/)),
+  but with with CLSI, it will be considered resistant. Therefore:
+
+  - EUCAST:
+    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
+    \\= \\S + \\I\\,
+    [`resistance()`](https://amr-for-r.org/reference/proportion.md) \\=
+    \\R\\
+
+  - CLSI:
+    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
+    \\= \\S + \\SDD\\,
+    [`resistance()`](https://amr-for-r.org/reference/proportion.md) \\=
+    \\I + \\R\\
+
+  You can also use e.g.
+  [`proportion_R()`](https://amr-for-r.org/reference/proportion.md) or
+  [`proportion_S()`](https://amr-for-r.org/reference/proportion.md)
+  instead, to be explicit. For
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
+  [`count_df()`](https://amr-for-r.org/reference/count.md), and
+  [`sir_df()`](https://amr-for-r.org/reference/proportion.md), the
+  guideline determines how 'I' is merged when `combine_SI = TRUE`.
 
 - nrow:
 

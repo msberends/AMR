@@ -9,7 +9,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9136</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -198,6 +198,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  datalabels.size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  datalabels.colour <span class="op">=</span> <span class="st">"grey15"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -300,7 +301,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is <code>TRUE</code>. Following the <code>guideline</code> argument, the output then consists of <code>"SI"</code> (S+SDD+I) vs. <code>"R"</code> with EUCAST, and of <code>"S"</code> (S+SDD) vs. <code>"IR"</code> (I+R) with CLSI.</p></dd>
 
 
 <dt id="arg-datalabels-size">datalabels.size<a class="anchor" aria-label="anchor" href="#arg-datalabels-size"></a></dt>

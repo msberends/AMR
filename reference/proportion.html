@@ -9,7 +9,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9136</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,7 +102,8 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  as_percent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  confidence_level <span class="op">=</span> <span class="fl">0.95</span></span>
+<span>  confidence_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">sir_df</span><span class="op">(</span></span>
@@ -112,7 +113,8 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  as_percent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  confidence_level <span class="op">=</span> <span class="fl">0.95</span></span>
+<span>  confidence_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -139,7 +141,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 <dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
 <dd><p>Either <code>"EUCAST"</code> (default) or <code>"CLSI"</code>. With EUCAST, the 'I' category will be considered as susceptible (see <a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">EUCAST website</a>), but with with CLSI, it will be considered resistant. Therefore:</p><ul><li><p>EUCAST: <code>susceptibility()</code> \(= \%S + \%I\), <code>resistance()</code> \(= \%R\)</p></li>
 <li><p>CLSI: <code>susceptibility()</code> \(= \%S + \%SDD\), <code>resistance()</code> \(= \%I + \%R\)</p></li>
-</ul><p>You can also use e.g. <code>proportion_R()</code> or <code>proportion_S()</code> instead, to be explicit.</p></dd>
+</ul><p>You can also use e.g. <code>proportion_R()</code> or <code>proportion_S()</code> instead, to be explicit. For <code>proportion_df()</code>, <code><a href="count.html">count_df()</a></code>, and <code>sir_df()</code>, the guideline determines how 'I' is merged when <code>combine_SI = TRUE</code>.</p></dd>
 
 
 <dt id="arg-ab-result">ab_result<a class="anchor" aria-label="anchor" href="#arg-ab-result"></a></dt>
@@ -171,7 +173,7 @@ resistance() should be used to calculate resistance, susceptibility() should be 
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is <code>TRUE</code>. Following the <code>guideline</code> argument, the output then consists of <code>"SI"</code> (S+SDD+I) vs. <code>"R"</code> with EUCAST, and of <code>"S"</code> (S+SDD) vs. <code>"IR"</code> (I+R) with CLSI.</p></dd>
 
 </dl></div>
     <div class="section level2">

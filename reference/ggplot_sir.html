@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9136</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +67,7 @@
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>S <span class="op">=</span> <span class="st">"#3CAEA3"</span>, SDD <span class="op">=</span> <span class="st">"#8FD6C4"</span>, SI <span class="op">=</span> <span class="st">"#3CAEA3"</span>, I <span class="op">=</span> <span class="st">"#F6D55C"</span>, IR <span class="op">=</span></span>
 <span>    <span class="st">"#ED553B"</span>, R <span class="op">=</span> <span class="st">"#ED553B"</span><span class="op">)</span>,</span>
@@ -89,6 +90,7 @@
 <span>  minimum <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -130,7 +132,7 @@
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is <code>TRUE</code>. Following the <code>guideline</code> argument, the output then consists of <code>"SI"</code> (S+SDD+I) vs. <code>"R"</code> with EUCAST, and of <code>"S"</code> (S+SDD) vs. <code>"IR"</code> (I+R) with CLSI.</p></dd>
 
 
 <dt id="arg-minimum">minimum<a class="anchor" aria-label="anchor" href="#arg-minimum"></a></dt>
@@ -139,6 +141,12 @@
 
 <dt id="arg-language">language<a class="anchor" aria-label="anchor" href="#arg-language"></a></dt>
 <dd><p>Language of the returned text - the default is the current system language (see <code><a href="translate.html">get_AMR_locale()</a></code>) and can also be set with the package option <code><a href="AMR-options.html">AMR_locale</a></code>. Use <code>language = NULL</code> or <code>language = ""</code> to prevent translation.</p></dd>
+
+
+<dt id="arg-guideline">guideline<a class="anchor" aria-label="anchor" href="#arg-guideline"></a></dt>
+<dd><p>Either <code>"EUCAST"</code> (default) or <code>"CLSI"</code>. With EUCAST, the 'I' category will be considered as susceptible (see <a href="https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/" class="external-link">EUCAST website</a>), but with with CLSI, it will be considered resistant. Therefore:</p><ul><li><p>EUCAST: <code><a href="proportion.html">susceptibility()</a></code> \(= \%S + \%I\), <code><a href="proportion.html">resistance()</a></code> \(= \%R\)</p></li>
+<li><p>CLSI: <code><a href="proportion.html">susceptibility()</a></code> \(= \%S + \%SDD\), <code><a href="proportion.html">resistance()</a></code> \(= \%I + \%R\)</p></li>
+</ul><p>You can also use e.g. <code><a href="proportion.html">proportion_R()</a></code> or <code><a href="proportion.html">proportion_S()</a></code> instead, to be explicit. For <code><a href="proportion.html">proportion_df()</a></code>, <code><a href="count.html">count_df()</a></code>, and <code><a href="proportion.html">sir_df()</a></code>, the guideline determines how 'I' is merged when <code>combine_SI = TRUE</code>.</p></dd>
 
 
 <dt id="arg-nrow">nrow<a class="anchor" aria-label="anchor" href="#arg-nrow"></a></dt>

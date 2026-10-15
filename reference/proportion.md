@@ -57,7 +57,8 @@ proportion_df(
   minimum = 30,
   as_percent = FALSE,
   combine_SI = TRUE,
-  confidence_level = 0.95
+  confidence_level = 0.95,
+  guideline = getOption("AMR_guideline", "EUCAST")
 )
 
 sir_df(
@@ -67,7 +68,8 @@ sir_df(
   minimum = 30,
   as_percent = FALSE,
   combine_SI = TRUE,
-  confidence_level = 0.95
+  confidence_level = 0.95,
+  guideline = getOption("AMR_guideline", "EUCAST")
 )
 ```
 
@@ -117,7 +119,10 @@ sir_df(
     \\R\\
 
   You can also use e.g. `proportion_R()` or `proportion_S()` instead, to
-  be explicit.
+  be explicit. For `proportion_df()`,
+  [`count_df()`](https://amr-for-r.org/reference/count.md), and
+  `sir_df()`, the guideline determines how 'I' is merged when
+  `combine_SI = TRUE`.
 
 - ab_result:
 
@@ -170,9 +175,11 @@ sir_df(
 - combine_SI:
 
   A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
-  all values of S, SDD, and I must be merged into one, so the output
-  only consists of S+SDD+I vs. R (susceptible vs. resistant) - the
-  default is `TRUE`.
+  the 'I' category must be merged with another category, so the output
+  only consists of susceptible vs. resistant - the default is `TRUE`.
+  Following the `guideline` argument, the output then consists of `"SI"`
+  (S+SDD+I) vs. `"R"` with EUCAST, and of `"S"` (S+SDD) vs. `"IR"` (I+R)
+  with CLSI.
 
 ## Value
 

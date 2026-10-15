@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9136
+## AMR 3.0.1.9137
 
 Planned as v3.1.0, mid October 2026.
 
@@ -62,6 +62,21 @@ Planned as v3.1.0, mid October 2026.
   interpretation with `breakpoint_type = "ECOFF"`. WT/NWT results are
   fully supported in all resistance and susceptibility functions and in
   all plots ([\#254](https://github.com/msberends/AMR/issues/254)).
+
+- [`count_df()`](https://amr-for-r.org/reference/count.md),
+  [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
+  and [`sir_df()`](https://amr-for-r.org/reference/proportion.md) now
+  follow the `AMR_guideline` option through their new `guideline`
+  argument. With CLSI, `combine_SI = TRUE` merges ‘I’ with R into `"IR"`
+  and returns `"S"` vs. `"IR"`, consistent with
+  [`count_susceptible()`](https://amr-for-r.org/reference/count.md) and
+  [`susceptibility()`](https://amr-for-r.org/reference/proportion.md).
+  Previously, these functions always merged ‘I’ with S, as with EUCAST.
+  Use `guideline = "EUCAST"` for the old behaviour. This also applies to
+  [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md), and
+  [`labels_sir_count()`](https://amr-for-r.org/reference/plot.md), which
+  got the same argument.
 
 #### New
 
@@ -326,9 +341,15 @@ Planned as v3.1.0, mid October 2026.
     installations without `dplyr`
 - Resistance and susceptibility calculation
   - New argument `guideline` (default: EUCAST) in
-    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md)
-    and [`resistance()`](https://amr-for-r.org/reference/proportion.md)
-    to interpret the ‘I’ category correctly per guideline
+    [`susceptibility()`](https://amr-for-r.org/reference/proportion.md),
+    [`resistance()`](https://amr-for-r.org/reference/proportion.md),
+    [`count_df()`](https://amr-for-r.org/reference/count.md),
+    [`proportion_df()`](https://amr-for-r.org/reference/proportion.md),
+    [`sir_df()`](https://amr-for-r.org/reference/proportion.md),
+    [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
+    [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md), and
+    [`labels_sir_count()`](https://amr-for-r.org/reference/plot.md) to
+    interpret the ‘I’ category correctly per guideline
   - `count_*()` and `proportion_*()` now handle WT, NWT, NS, and NI
     results correctly
     ([\#321](https://github.com/msberends/AMR/issues/321))
@@ -422,6 +443,11 @@ Planned as v3.1.0, mid October 2026.
   powered by `cli` if it is installed
   ([\#191](https://github.com/msberends/AMR/issues/191),
   [\#265](https://github.com/msberends/AMR/issues/265))
+- The documentation of
+  [`get_AMR_locale()`](https://amr-for-r.org/reference/translate.md) now
+  describes the actual order in which the language is determined: the
+  `AMR_locale` option, then the `LANG` system variable, then `LANGUAGE`
+  only if `LANG` is not set, and then the system locale
 - Revamped console output of
   [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
   with section headers, S/I/R values styled as in the printing of `sir`

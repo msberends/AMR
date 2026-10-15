@@ -9,7 +9,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9136</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9137</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +88,8 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 <span>  <span class="va">data</span>,</span>
 <span>  translate_ab <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>  language <span class="op">=</span> <span class="fu"><a href="translate.html">get_AMR_locale</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  combine_SI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  guideline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"AMR_guideline"</span>, <span class="st">"EUCAST"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -123,7 +124,7 @@ count_resistant() should be used to count resistant isolates, count_susceptible(
 
 
 <dt id="arg-combine-si">combine_SI<a class="anchor" aria-label="anchor" href="#arg-combine-si"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether all values of S, SDD, and I must be merged into one, so the output only consists of S+SDD+I vs. R (susceptible vs. resistant) - the default is <code>TRUE</code>.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> to indicate whether the 'I' category must be merged with another category, so the output only consists of susceptible vs. resistant - the default is <code>TRUE</code>. Following the <code>guideline</code> argument, the output then consists of <code>"SI"</code> (S+SDD+I) vs. <code>"R"</code> with EUCAST, and of <code>"S"</code> (S+SDD) vs. <code>"IR"</code> (I+R) with CLSI.</p></dd>
 
 </dl></div>
     <div class="section level2">
