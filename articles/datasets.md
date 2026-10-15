@@ -147,7 +147,7 @@ as comma separated values.
 
 ## `clinical_breakpoints`: Interpretation from MIC values & disk diameters to SIR
 
-A data set with 61 393 rows and 15 columns, containing the following
+A data set with 61 389 rows and 15 columns, containing the following
 column names:  
 *guideline*, *type*, *host*, *method*, *site*, *mo*, *rank_index*, *ab*,
 *ref_tbl*, *disk_dose*, *breakpoint_S*, *breakpoint_R*, *uti*, *is_SDD*,
@@ -156,7 +156,7 @@ and *note*.
 This data set is in R available as `clinical_breakpoints`, after you
 load the `AMR` package.
 
-It was last updated on 15 October 2026 15:05:41 UTC. Find more info
+It was last updated on 15 October 2026 19:08:04 UTC. Find more info
 about the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/clinical_breakpoints.html).
 
@@ -525,25 +525,25 @@ here](https://amr-for-r.org/reference/example_isolates_unclean.html).
 
 ## `microorganisms.codes`: Common Laboratory Codes
 
-A data set with 6 022 rows and 2 columns, containing the following
+A data set with 6 293 rows and 3 columns, containing the following
 column names:  
-*code* and *mo*.
+*code*, *mo*, and *source*.
 
 This data set is in R available as `microorganisms.codes`, after you
 load the `AMR` package.
 
-It was last updated on 7 October 2026 10:55:12 UTC. Find more info about
-the contents, (scientific) source, and structure of this [data set
+It was last updated on 15 October 2026 19:08:04 UTC. Find more info
+about the contents, (scientific) source, and structure of this [data set
 here](https://amr-for-r.org/reference/microorganisms.codes.html).
 
 **Direct download links:**
 
 - Download as [original R Data Structure (RDS)
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.rds)
-  (27 kB)  
+  (47 kB)  
 - Download as [tab-separated text
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.txt)
-  (0.1 MB)  
+  (0.2 MB)  
 - Download as [Microsoft Excel
   workbook](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.xlsx)
   (0.1 MB)  
@@ -552,24 +552,24 @@ here](https://amr-for-r.org/reference/microorganisms.codes.html).
   (0.1 MB)  
 - Download as [Apache Parquet
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.parquet)
-  (67 kB)  
+  (0.1 MB)  
 - Download as [IBM SPSS Statistics data
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.sav)
-  (0.2 MB)  
+  (0.3 MB)  
 - Download as [Stata DTA
   file](https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.dta)
-  (0.2 MB)
+  (0.5 MB)
 
 **Example content**
 
-| code |      mo      |
-|:----:|:------------:|
-| 1011 |   B_GRAMP    |
-| 1012 |   B_GRAMP    |
-| 1013 |   B_GRAMN    |
-| 1014 |   B_GRAMN    |
-| 1015 |   F_YEAST    |
-| 103  | B_ESCHR_COLI |
+| code |      mo      |             source             |
+|:----:|:------------:|:------------------------------:|
+| 1011 |   B_GRAMP    |                                |
+| 1012 |   B_GRAMP    |                                |
+| 1013 |   B_GRAMN    |                                |
+| 1014 |   B_GRAMN    |                                |
+| 1015 |   F_YEAST    |                                |
+| 103  | B_ESCHR_COLI | WHONET (Escherichia coli O103) |
 
 ------------------------------------------------------------------------
 

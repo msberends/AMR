@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9148</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9150</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -612,7 +612,7 @@ inhibitors</td>
 <code>clinical_breakpoints</code>: Interpretation from MIC values
 &amp; disk diameters to SIR<a class="anchor" aria-label="anchor" href="#clinical_breakpoints-interpretation-from-mic-values-disk-diameters-to-sir"></a>
 </h2>
-<p>A data set with 61 393 rows and 15 columns, containing the following
+<p>A data set with 61 389 rows and 15 columns, containing the following
 column names:<br><em>guideline</em>, <em>type</em>, <em>host</em>, <em>method</em>,
 <em>site</em>, <em>mo</em>, <em>rank_index</em>, <em>ab</em>,
 <em>ref_tbl</em>, <em>disk_dose</em>, <em>breakpoint_S</em>,
@@ -620,7 +620,7 @@ column names:<br><em>guideline</em>, <em>type</em>, <em>host</em>, <em>method</e
 <em>note</em>.</p>
 <p>This data set is in R available as <code>clinical_breakpoints</code>,
 after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 15 October 2026 15:05:41 UTC. Find more info
+<p>It was last updated on 15 October 2026 19:08:04 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/clinical_breakpoints.html">data
 set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
@@ -2084,20 +2084,20 @@ set here</a>.</p>
 <h2 id="microorganisms-codes-common-laboratory-codes">
 <code>microorganisms.codes</code>: Common Laboratory Codes<a class="anchor" aria-label="anchor" href="#microorganisms-codes-common-laboratory-codes"></a>
 </h2>
-<p>A data set with 6 022 rows and 2 columns, containing the following
-column names:<br><em>code</em> and <em>mo</em>.</p>
+<p>A data set with 6 293 rows and 3 columns, containing the following
+column names:<br><em>code</em>, <em>mo</em>, and <em>source</em>.</p>
 <p>This data set is in R available as <code>microorganisms.codes</code>,
 after you load the <code>AMR</code> package.</p>
-<p>It was last updated on 7 October 2026 10:55:12 UTC. Find more info
+<p>It was last updated on 15 October 2026 19:08:04 UTC. Find more info
 about the contents, (scientific) source, and structure of this <a href="https://amr-for-r.org/reference/microorganisms.codes.html">data
 set here</a>.</p>
 <p><strong>Direct download links:</strong></p>
 <ul>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.rds" class="external-link">original
-R Data Structure (RDS) file</a> (27 kB)<br>
+R Data Structure (RDS) file</a> (47 kB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.txt" class="external-link">tab-separated
-text file</a> (0.1 MB)<br>
+text file</a> (0.2 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.xlsx" class="external-link">Microsoft
 Excel workbook</a> (0.1 MB)<br>
@@ -2106,44 +2106,51 @@ Excel workbook</a> (0.1 MB)<br>
 Feather file</a> (0.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.parquet" class="external-link">Apache
-Parquet file</a> (67 kB)<br>
+Parquet file</a> (0.1 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.sav" class="external-link">IBM
-SPSS Statistics data file</a> (0.2 MB)<br>
+SPSS Statistics data file</a> (0.3 MB)<br>
 </li>
 <li>Download as <a href="https://github.com/msberends/AMR/raw/main/data-raw/datasets/microorganisms.codes.dta" class="external-link">Stata
-DTA file</a> (0.2 MB)</li>
+DTA file</a> (0.5 MB)</li>
 </ul>
 <p><strong>Example content</strong></p>
 <table class="table">
 <thead><tr class="header">
 <th align="center">code</th>
 <th align="center">mo</th>
+<th align="center">source</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="center">1011</td>
 <td align="center">B_GRAMP</td>
+<td align="center"></td>
 </tr>
 <tr class="even">
 <td align="center">1012</td>
 <td align="center">B_GRAMP</td>
+<td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="center">1013</td>
 <td align="center">B_GRAMN</td>
+<td align="center"></td>
 </tr>
 <tr class="even">
 <td align="center">1014</td>
 <td align="center">B_GRAMN</td>
+<td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="center">1015</td>
 <td align="center">F_YEAST</td>
+<td align="center"></td>
 </tr>
 <tr class="even">
 <td align="center">103</td>
 <td align="center">B_ESCHR_COLI</td>
+<td align="center">WHONET (Escherichia coli O103)</td>
 </tr>
 </tbody>
 </table>

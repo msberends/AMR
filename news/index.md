@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9148
+## AMR 3.0.1.9150
 
 Planned as v3.1.0, mid October 2026.
 
@@ -181,6 +181,9 @@ Planned as v3.1.0, mid October 2026.
   - A registry of all MO codes since v2.0.0 now prevents existing codes
     from being reused or mixed up. Codes of earlier releases are
     translated to the current code of the same taxon.
+  - New column `source` in the `microorganisms.codes` data set, stating
+    the source of a code and the name it refers to, e.g.,
+    `"WHONET (Enterobacter aerogenes)"`
 
 #### Changed
 
@@ -324,13 +327,32 @@ Planned as v3.1.0, mid October 2026.
     with their codes retired. The *M. tuberculosis* complex is always
     kept.
   - Higher taxonomy and parent records are now consistent, and all data
-    sets refer only to current names (except `intrinsic_resistant`)
+    sets refer only to current names (except `intrinsic_resistant` and
+    `microorganisms.codes`)
   - *Erysipelatoclostridium* and its species are now synonyms of
     *Thomasclavelia*; *E. merdavium* is retired
   - Author references now strip `emend.` and everything after it, so
     that `ref` reflects the combination authority rather than the
     emendation author (e.g., *Rhodococcus equi* now returns “Goodfellow
     et al., 1977” instead of “Nouioui et al., 2018”)
+- `microorganisms.codes` data set
+  - Fixed WHONET codes that referred to an unrelated microorganism,
+    e.g., `VAG` (“Vaginal flora”) to *Vagococcus*, `PAR` (“Parasite”) to
+    *Paracoccus*, the *Leptospira interrogans* serovars to *Legionella*,
+    and *Salmonella* O-groups to *Salmonella* Group A. Codes for
+    organisms that are not in the `microorganisms` data set, such as
+    viruses, now refer to `UNKNOWN`, and names that only partly exist
+    refer to the genus.
+  - WHONET codes for *Salmonella* serovars now refer to the serovar
+    instead of *S. enterica* subsp. *enterica*, e.g., `SAT` to
+    *Salmonella* Typhi
+  - Codes now refer to the name they were named after, also if that name
+    is outdated, so that the code and the microorganism code remain
+    relatable, e.g., `EAE` refers to *Enterobacter aerogenes*
+    (`B_ENTRBC_AERG`).
+    [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) still returns
+    the current name, here *Klebsiella aerogenes*.
+  - Added 271 WHONET codes
 - Antimicrobial coercion
   ([`as.ab()`](https://amr-for-r.org/reference/as.ab.md)) and
   `antimicrobials` data set

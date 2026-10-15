@@ -1,4 +1,4 @@
-# Data Set with 6 022 Common Microorganism Codes
+# Data Set with 6 293 Common Microorganism Codes
 
 A data set containing commonly used codes for microorganisms, from
 laboratory systems and [WHONET](https://whonet.org). Define your own
@@ -17,7 +17,7 @@ microorganisms.codes
 ## Format
 
 A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 6
-022 observations and 2 variables:
+293 observations and 3 variables:
 
 - `code`  
   Commonly used code of a microorganism. ***This is a unique
@@ -26,7 +26,19 @@ A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 6
 - `mo`  
   ID of the microorganism in the
   [microorganisms](https://amr-for-r.org/reference/microorganisms.md)
-  data set
+  data set. This is the record of the name that the code was named
+  after, also if that name is outdated, so that the code and the
+  microorganism ID remain relatable: e.g., the WHONET code `EAE` refers
+  to *Enterobacter aerogenes* (`B_ENTRBC_AERG`).
+  [`as.mo()`](https://amr-for-r.org/reference/as.mo.md) returns the
+  current name, here *Klebsiella aerogenes*. Codes for organisms that
+  are not in the
+  [microorganisms](https://amr-for-r.org/reference/microorganisms.md)
+  data set, such as viruses, refer to `UNKNOWN`.
+
+- `source`  
+  Source of the code, with the name it refers to, e.g.
+  `"WHONET (Enterobacter aerogenes)"`, or `NA` if the source is unknown
 
 ## Download Our Reference Data
 
@@ -53,27 +65,27 @@ repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
 
 ``` r
 microorganisms.codes
-#> # A tibble: 6,022 × 2
-#>    code  mo               
-#>    <chr> <mo>             
-#>  1 1011  B_GRAMP          
-#>  2 1012  B_GRAMP          
-#>  3 1013  B_GRAMN          
-#>  4 1014  B_GRAMN          
-#>  5 1015  F_YEAST          
-#>  6 103   B_ESCHR_COLI     
-#>  7 104   B_SLMNL_ENTR_ENTR
-#>  8 1100  B_STRPT          
-#>  9 1101  B_STRPT_VIRI     
-#> 10 1102  B_STRPT_HAEM     
-#> # ℹ 6,012 more rows
+#> # A tibble: 6,293 × 3
+#>    code  mo           source                                
+#>    <chr> <mo>         <chr>                                 
+#>  1 1011  B_GRAMP      NA                                    
+#>  2 1012  B_GRAMP      NA                                    
+#>  3 1013  B_GRAMN      NA                                    
+#>  4 1014  B_GRAMN      NA                                    
+#>  5 1015  F_YEAST      NA                                    
+#>  6 103   B_ESCHR_COLI WHONET (Escherichia coli O103)        
+#>  7 104   B_SLMNL_HMRM WHONET (Salmonella Typhimurium DT 104)
+#>  8 1100  B_STRPT      NA                                    
+#>  9 1101  B_STRPT_VIRI NA                                    
+#> 10 1102  B_STRPT_HAEM NA                                    
+#> # ℹ 6,283 more rows
 
 # 'ECO' or 'eco' is the WHONET code for E. coli:
 microorganisms.codes[microorganisms.codes$code == "ECO", ]
-#> # A tibble: 1 × 2
-#>   code  mo          
-#>   <chr> <mo>        
-#> 1 ECO   B_ESCHR_COLI
+#> # A tibble: 1 × 3
+#>   code  mo           source                   
+#>   <chr> <mo>         <chr>                    
+#> 1 ECO   B_ESCHR_COLI WHONET (Escherichia coli)
 
 # and therefore, 'eco' will be understood as E. coli in this package:
 mo_info("eco")
