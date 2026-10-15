@@ -297,11 +297,11 @@
 #' - `method`\cr Testing method, either `r vector_or(clinical_breakpoints$method, documentation = TRUE)`
 #' - `site`\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]
-#' - `rank_index`\cr Taxonomic rank index of `mo` from 1 (subspecies/infraspecies) to 7 (non-species related breakpoints), used to choose the most specific breakpoint; blocking rows (see *Details*) have the rank index of their organism + 0.1
+#' - `rank_index`\cr Taxonomic rank index of `mo`, used to choose the most specific breakpoint (the lowest index): 1 for subspecies and infraspecies, 2 for species, 2.5 for species groups (e.g., *Streptococcus* group A), 3 for genus, 4 for family, 5 for order, 6 for other groups (e.g., Gram-negative or anaerobic bacteria), and 7 for non-species related (PK-PD) breakpoints. Blocking rows (see *Details*) have the rank index of their organism + 0.1, e.g., 2.6 for a species group, so that a breakpoint for the same organism always takes precedence.
 #' - `ab`\cr Antimicrobial code as used by this package, EARS-Net and WHONET, see [as.ab()]
 #' - `ref_tbl`\cr Info about where the guideline rule can be found
 #' - `disk_dose`\cr Dose of the used disk diffusion method
-#' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S", is `NA` for blocking rows (see *Details*)
+#' - `breakpoint_S`\cr Lowest MIC value or highest number of millimetres that leads to "S", is `NA` for blocking rows (see *Details*). EUCAST's off-scale MIC breakpoint of 0.001 mg/L, which indicates that there is no S category, is stored as 0.0001 to keep all isolates out of "S".
 #' - `breakpoint_R`\cr Highest MIC value or lowest number of millimetres that leads to "R", can be `NA`
 #' - `uti`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary tract infection (UTI)
 #' - `is_SDD`\cr A [logical] value (`TRUE`/`FALSE`) to indicate whether the intermediate range between "S" and "R" should be interpreted as "SDD", instead of "I". This currently applies to `r sum(clinical_breakpoints$is_SDD)` breakpoints.
