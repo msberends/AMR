@@ -59,7 +59,7 @@ times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation
 in scientific research.
 
 After installing this package, R knows [**~103 000 distinct microbial
-species**](./reference/microorganisms.html) (updated april 2026) and all
+species**](./reference/microorganisms.html) (updated April 2026) and all
 [**~630 antimicrobial and antiviral
 drugs**](./reference/antimicrobials.html) by name and code (including
 ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all
