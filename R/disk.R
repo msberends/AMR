@@ -35,7 +35,7 @@
 #' @param na.rm A [logical] indicating whether missing values should be removed.
 #' @details Interpret disk values as SIR values with [as.sir()]. It supports guidelines from EUCAST and CLSI.
 #'
-#' Disk diffusion growth zone sizes must be between 0 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 0-50 range will return `NA`.
+#' Disk diffusion growth zone sizes must be between 0 and 50 millimetres. Decimal values are rounded up. All input values outside the 0-50 range, including values higher than 50, return `NA` with a warning.
 #' @return An [integer] with additional class [`disk`]
 #' @aliases disk
 #' @export

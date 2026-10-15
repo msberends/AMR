@@ -113,7 +113,7 @@ unmatched <- unmatched |>
     keep = mo_name %like_case% first_part | ORGANISM %like% "Gram " | ORGANISM == "Other" | ORGANISM %like% "anaerobic"
   ) |>
   arrange(keep)
-unmatched |> View()
+if (interactive()) View(unmatched)
 unmatched <- unmatched |>
   filter(keep == TRUE)
 
@@ -171,8 +171,11 @@ organisms <- organisms |> filter(code != "XXX")
 organisms |> filter(code == "SGM")
 # organisms <- organisms |>
 #   filter(!(code == "SGM" & name %like% "Streptococcus"))
-# this must be empty:
-organisms$code[organisms$code |> duplicated()]
+# this must be empty, e.g. a species group code that as.mo() resolves to another taxon than its organism code:
+if (anyDuplicated(organisms$code) > 0) {
+  print(organisms |> filter(code %in% code[duplicated(code)]))
+  stop("WHONET organism code(s) resolve to more than one microorganism, see above")
+}
 
 saveRDS(organisms, "data-raw/organisms.rds", version = 2)
 
@@ -230,22 +233,11 @@ devtools::load_all()
 
 # now that we have the correct MO codes, get the breakpoints and convert them
 
-whonet_breakpoints_raw |>
-  count(GUIDELINES, BREAKPOINT_TYPE) |>
-  pivot_wider(names_from = BREAKPOINT_TYPE, values_from = n) |>
-  janitor::adorn_totals(where = c("row", "col"))
-whonet_breakpoints_raw |>
-  filter(YEAR == format(Sys.Date(), "%Y")) |>
-  count(GUIDELINES, YEAR, BREAKPOINT_TYPE) |>
-  pivot_wider(names_from = BREAKPOINT_TYPE, values_from = n) |>
-  janitor::adorn_totals(where = c("row", "col"))
+# overview tables with row and column totals, for inspection only
+with(whonet_breakpoints_raw, addmargins(table(GUIDELINES, BREAKPOINT_TYPE)))
+with(whonet_breakpoints_raw |> filter(YEAR == format(Sys.Date(), "%Y")), addmargins(table(GUIDELINES, BREAKPOINT_TYPE)))
 # compared to current
-AMR::clinical_breakpoints |>
-  count(GUIDELINES = gsub("[^a-zA-Z]", "", guideline), type) |>
-  arrange(tolower(type)) |>
-  pivot_wider(names_from = type, values_from = n) |>
-  as.data.frame() |>
-  janitor::adorn_totals(where = c("row", "col"))
+with(AMR::clinical_breakpoints, addmargins(table(GUIDELINES = gsub("[^a-zA-Z]", "", guideline), type)))
 
 breakpoints <- whonet_breakpoints_raw |>
   mutate(code = toupper(ORGANISM_CODE)) |>
@@ -301,8 +293,11 @@ whonet_code_check <- breakpoints |>
     by_name = as.ab(ANTIBIOTIC, info = FALSE)
   ) |>
   filter(is.na(by_code) | is.na(by_name) | by_code != by_name)
-# this should be empty:
-whonet_code_check
+# this must be empty:
+if (nrow(whonet_code_check) > 0) {
+  print(whonet_code_check)
+  stop("WHONET antimicrobial code(s) do not match WHONET's own name of the agent, add them to `whonet_ab_recode`")
+}
 
 
 ## Build new breakpoints table ----
@@ -333,7 +328,8 @@ breakpoints_new <- breakpoints |>
     breakpoint_S = ifelse(type == "ECOFF" & is.na(S) & !is.na(ECV_ECOFF), ECV_ECOFF, S),
     breakpoint_R = ifelse(type == "ECOFF" & is.na(R) & !is.na(ECV_ECOFF), ECV_ECOFF, R),
     uti = ifelse(is.na(site), FALSE, gsub(".*(UTI|urinary|urine).*", "UTI", site) == "UTI"),
-    is_SDD = !is.na(SDD)
+    is_SDD = !is.na(SDD),
+    note = NA_character_
   ) |>
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:
   mutate(disk_dose = disk_dose %>%
@@ -346,9 +342,11 @@ breakpoints_new <- breakpoints |>
   distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE)
 
 # fix reference table names
-breakpoints_new |>
-  filter(guideline %like% "EUCAST", is.na(ref_tbl)) |>
-  View()
+if (interactive()) {
+  breakpoints_new |>
+    filter(guideline %like% "EUCAST", is.na(ref_tbl)) |>
+    View()
+}
 breakpoints_new <- breakpoints_new |>
   mutate(ref_tbl = case_when(
     is.na(ref_tbl) & guideline %like% "EUCAST 202" ~ lead(ref_tbl),
@@ -357,6 +355,18 @@ breakpoints_new <- breakpoints_new |>
   ))
 
 # clean disk zones
+# WHONET uses an S breakpoint above 50 mm (e.g. 80 or 99) where the guideline has no S category for a zone diameter, e.g. EUCAST 2011 for cefuroxime oral in H. influenzae. These cannot be stored as zone diameters (as.disk() returns NA for values above 50 mm), so the WHONET value is kept in `S_above_50` and handled under "Zone diameters without S category" below, after the fixes for WHONET errors. Any other value outside 0-50 mm must stop the script.
+breakpoints_new <- breakpoints_new |>
+  mutate(
+    S_above_50 = if_else(method == "DISK" & type != "ECOFF" & breakpoint_S > 50, breakpoint_S, NA_real_),
+    breakpoint_S = if_else(is.na(S_above_50), breakpoint_S, NA_real_)
+  )
+invalid_disk <- breakpoints_new |>
+  filter(method == "DISK" & ((!is.na(breakpoint_S) & (breakpoint_S < 0 | breakpoint_S > 50)) | (!is.na(breakpoint_R) & (breakpoint_R < 0 | breakpoint_R > 50))))
+if (nrow(invalid_disk) > 0) {
+  print(invalid_disk |> select(guideline, type, mo, ab, breakpoint_S, breakpoint_R))
+  stop(nrow(invalid_disk), " zone diameter breakpoint(s) outside 0-50 mm that are not an S breakpoint of a guideline without S category, see above")
+}
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_S", drop = TRUE]))
 breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R"] <- as.double(as.disk(breakpoints_new[which(breakpoints_new$method == "DISK"), "breakpoint_R", drop = TRUE]))
 
@@ -384,8 +394,6 @@ breakpoints_new[which(breakpoints_new$breakpoint_R == 257), "breakpoint_R"] <- m
 breakpoints_new[which(breakpoints_new$breakpoint_R == 513), "breakpoint_R"] <- m[which(m == 512) + 1]
 breakpoints_new[which(breakpoints_new$breakpoint_R == 1025), "breakpoint_R"] <- m[which(m == 1024) + 1]
 
-# S breakpoints must never be missing:
-anyNA(breakpoints_new$breakpoint_S)
 
 # a lot of R breakpoints are missing, but for CLSI this is required and can be set using as.sir(..., substitute_missing_r_breakpoint = TRUE/FALSE, ...)
 # 2025-04-20/ For EUCAST, this should not be the case, only happens to old guideline now it seems
@@ -452,7 +460,7 @@ kleb_tmp_disk <- breakpoints_new |>
   uncount(length(kleb_spp)) |>
   mutate(mo = kleb_spp)
 breakpoints_new <- breakpoints_new |>
-  filter(!(guideline == "EUCAST 2026" & method == "MIC" & ab == "TMP" & mo == as.mo("Klebsiella"))) |>
+  filter(!(guideline == "EUCAST 2026" & ab == "TMP" & mo == as.mo("Klebsiella"))) |>
   bind_rows(
     kleb_tmp_mic,
     kleb_tmp_disk
@@ -472,13 +480,41 @@ breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpo
 breakpoints_new$breakpoint_S[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
 breakpoints_new$breakpoint_R[breakpoints_new$guideline %like% "EUCAST" & breakpoints_new$ab == "TMP" & breakpoints_new$mo == as.mo("Enterococcus") & breakpoints_new$type == "human" & breakpoints_new$method == "MIC"] <- 1
 
+# Zone diameters without S category: for EUCAST, there is no breakpoint for the organism then, so these become blocking rows (see "Blocking rows" in the EUCAST script, reproduction_of_clinical_breakpoints_eucast.R). Other guidelines keep the R breakpoint, so that as.sir() can still return R, e.g. CLSI for fluconazole in C. glabrata (SDD >= 15 mm, R <= 14 mm, no S category). Rows whose S breakpoint was set by the fixes above are left alone.
+no_S_category <- !is.na(breakpoints_new$S_above_50) & is.na(breakpoints_new$breakpoint_S)
+breakpoints_new |>
+  filter(no_S_category) |>
+  select(guideline, type, mo, ab, S_above_50, breakpoint_R)
+no_S_eucast <- no_S_category & breakpoints_new$guideline %like% "EUCAST"
+breakpoints_new$note[no_S_eucast] <- paste0("[No breakpoint] EUCAST gives no S category for this zone diameter (S >= ", breakpoints_new$S_above_50[no_S_eucast], " mm in WHONET)")
+breakpoints_new$breakpoint_R[no_S_eucast] <- NA_real_
+breakpoints_new$site[no_S_eucast] <- NA_character_
+no_S_other <- no_S_category & !no_S_eucast
+breakpoints_new$note[no_S_other] <- paste0("[No S category] ", gsub(" .*", "", breakpoints_new$guideline[no_S_other]), " gives no S category for this zone diameter (S >= ", breakpoints_new$S_above_50[no_S_other], " mm in WHONET), so only R can be interpreted")
+# a blocking row is only kept where the organism has no breakpoint of its own for that agent, method and UTI status
+is_blocker <- grepl("^\\[No breakpoint\\] ", breakpoints_new$note)
+has_own_bp <- breakpoints_new[!is_blocker, ] |> distinct(guideline, type, host, mo, ab, method, uti)
+breakpoints_new <- bind_rows(
+  breakpoints_new[!is_blocker, ],
+  breakpoints_new[is_blocker, ] |> anti_join(has_own_bp, by = c("guideline", "type", "host", "mo", "ab", "method", "uti"))
+) |>
+  select(-S_above_50)
+# S breakpoints must never be missing, except in blocking rows and for zone diameters without S category
+missing_S <- breakpoints_new |>
+  filter(is.na(breakpoint_S) & !grepl("^\\[(No breakpoint|No S category)\\] ", note))
+if (nrow(missing_S) > 0) {
+  print(missing_S |> select(guideline, type, mo, ab, method, breakpoint_S, breakpoint_R))
+  stop(nrow(missing_S), " row(s) without S breakpoint, see above")
+}
+
 # WHONET still contains PK/PD rules for EUCAST >= 2024, but this was ended from v14 (2024) on
+guideline_year <- function(x) as.integer(gsub("[^0-9]", "", x))
 breakpoints_new <- breakpoints_new |>
-  filter(!(guideline %like% "EUCAST (2024|2025|2026)" & ref_tbl == "PK/PD"))
+  filter(!(guideline %like% "EUCAST" & guideline_year(guideline) >= 2024 & ref_tbl == "PK/PD"))
 
 # WHONET still contains generic anaerobic rules for EUCAST >= 2021, but this was ended from v12 (2022) on
 breakpoints_new <- breakpoints_new |>
-  filter(!(guideline %like% "EUCAST (2022|2023|2024|2025|2026)" & ref_tbl %like% "anaerob"))
+  filter(!(guideline %like% "EUCAST" & guideline_year(guideline) >= 2022 & ref_tbl %like% "anaerob"))
 
 # WHONET adds one log2 level to the R breakpoint for their software, e.g. in AMC in Enterobacterales:
 # EUCAST 2023 guideline: S <= 8 and R > 8
@@ -501,11 +537,13 @@ breakpoints_new <- breakpoints_new |>
 
 
 # check the strange duplicates
-breakpoints_new |>
-  mutate(id = paste(guideline, type, host, method, site, mo, ab, uti)) %>%
-  filter(id %in% .$id[which(duplicated(id))]) |>
-  arrange(desc(guideline)) |>
-  View()
+if (interactive()) {
+  breakpoints_new |>
+    mutate(id = paste(guideline, type, host, method, site, mo, ab, uti)) %>%
+    filter(id %in% .$id[which(duplicated(id))]) |>
+    arrange(desc(guideline)) |>
+    View()
+}
 # 2024-06-19/ mostly ECOFFs, but there's no explanation in the whonet_breakpoints_raw df, we have to remove duplicates
 # 2025-04-20/ same, most important one seems M. tuberculosis in CLSI (also in 2025)
 breakpoints_new <- breakpoints_new |>
@@ -547,7 +585,9 @@ breakpoints_new <- breakpoints_new |>
     mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
     mo != "UNKNOWN" ~ 6, # for B_ANAER, etc.
     TRUE ~ 7
-  )) |>
+  ) +
+    # a breakpoint of the same organism always precedes its blocking row
+    if_else(grepl("^\\[No breakpoint\\] ", note), 0.1, 0)) |>
   # and arrange
   arrange(desc(guideline), mo, ab, type, host, method)
 

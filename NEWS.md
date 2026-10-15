@@ -1,4 +1,4 @@
-# AMR 3.0.1.9147
+# AMR 3.0.1.9148
 
 Planned as v3.1.0, mid October 2026.
 
@@ -74,6 +74,8 @@ Planned as v3.1.0, mid October 2026.
   * Fixed streptomycin breakpoints imported from WHONET, which were coded as streptoduocin (`STR`) instead of streptomycin (`STR1`)
   * Fixed CLSI breakpoints for sulbactam/durlobactam, which were coded as sulfadimethoxine (`SUD`), and added the missing EUCAST 2011 breakpoints for roxithromycin (#308)
   * Fixed some EUCAST Expert Rules, mostly on *S. pneumoniae*
+  * Zone diameters for which the guideline has no S category (coded by WHONET as an S breakpoint of 80 or 99 mm) are now blocking rows for EUCAST, e.g. cefuroxime oral in *H. influenzae* in EUCAST 2011, and keep only the R breakpoint for CLSI, e.g. fluconazole in *C. glabrata*. Previously, these S breakpoints were stored as 50 mm.
+  * Breakpoints and ECOFFs for *Salmonella* serovars Typhi, Typhimurium, and Paratyphi, and ECOFFs for the *Bacteroides fragilis* complex, are now assigned to these taxa instead of to *S. enterica* subsp. *enterica* and *B. fragilis*, and ECOFFs of amphotericin B for *Neocosmospora solani* were added
 * Microorganism coercion (`as.mo()`) and properties (`mo_*()`)
   * Considerably faster through one consistent session cache design, which is cleared when lookup tables change, e.g., after `add_custom_microorganisms()` (#313)
   * `mo_*()` functions now retrieve properties of valid `mo` input directly, and only for unique values
@@ -81,7 +83,7 @@ Planned as v3.1.0, mid October 2026.
   * Previously coerced input is now recognised again, e.g., for an unknown species of a known genus, instead of being matched again on every call (#313)
   * `mo_uncertainties()` now also lists uncertainties of previously coerced input
   * Translated names in the set language are now recognised, such as the output of `mo_name(x, language = "fr")`, and cached per language
-  * Input of the form `"X complex"` now falls back to `"X"` when the complex is not a distinct taxon, preventing `NA` for valid clinical descriptions such as `"Proteus vulgaris complex"` (#287)
+  * Input of the form `"X complex"` now falls back to `"X"` when the complex is not a distinct taxon, preventing `NA` for valid clinical descriptions such as `"Proteus vulgaris complex"`, while a complex named after several of its species returns the complex of one of them, e.g., `"Acinetobacter calcoaceticus-baumannii complex"` returns *A. baumannii* complex (#287)
   * Abbreviated genus input now ranks candidates with an exactly matching species epithet above more prevalent organisms, so that e.g. `"S. apiospermum"` returns *Scedosporium apiospermum* instead of a *Staphylococcus* species (#288)
   * Abbreviated genus input for species with subspecies (e.g., `"P. ovale"`) now returns the species instead of a more prevalent organism, while explicit subspecies (e.g., `"P. ovale curtisi"`) are preserved (#288)
   * *Salmonella* serovars written with the species, such as `"Salmonella enterica serovar Typhi"`, no longer return *Salmonella bongori* or another subspecies
@@ -120,7 +122,7 @@ Planned as v3.1.0, mid October 2026.
 * MICs and disk diffusion
   * New argument `round_to_next_log2` in `as.mic()` and `rescale_mic()` to round values up to the nearest log2 dilution level (#255)
   * `as.mic()` now handles values in scientific notation (e.g., `1e-3`) correctly
-  * Input validation of `as.disk()` is now more strict, rejecting values that are not recognisable as a numeric disk zone diameter
+  * Input validation of `as.disk()` is now more strict, rejecting values that are not recognisable as a numeric disk zone diameter. Values higher than 50 mm now return `NA` with a warning, instead of being set to 50 mm.
 * MDRO determination (`mdro()`)
   * Resistance can now be inferred from a drug/inhibitor combination when the column of the base drug is absent (e.g., piperacillin inferred from piperacillin/tazobactam). This is controlled with the new argument `infer_from_combinations` (default: `TRUE`) (#209).
   * BRMO classification now includes bacterial complexes (#275)

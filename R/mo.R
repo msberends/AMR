@@ -344,6 +344,16 @@ as.mo <- function(x,
         if (x_out %in% MO_lookup_current$fullname_lower) {
           return(as.character(MO_lookup_current$mo[match(x_out, MO_lookup_current$fullname_lower)]))
         }
+        # a complex named after several of its species, such as 'Acinetobacter calcoaceticus-baumannii complex', must return the complex of one of these species (here 'Acinetobacter baumannii complex') instead of being matched as one of the species after the " complex" was stripped
+        x_words <- strsplit(x_out, " ", fixed = TRUE)[[1]]
+        if (length(x_words) >= 2) {
+          x_epithets <- strsplit(paste(x_words[-1], collapse = " "), "[-/ ]+", perl = TRUE)[[1]]
+          x_complexes <- paste(x_words[1], x_epithets[x_epithets != ""], "complex")
+          x_complexes <- x_complexes[x_complexes %in% MO_lookup_current$fullname_lower]
+          if (length(x_complexes) > 0) {
+            return(as.character(MO_lookup_current$mo[match(x_complexes[1], MO_lookup_current$fullname_lower)]))
+          }
+        }
       }
 
       # Salmonella serovars are stored without species (e.g. 'Salmonella Typhi'), but are often written with it, as in

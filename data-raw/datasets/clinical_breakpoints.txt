@@ -407,10 +407,12 @@
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"MFX"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_BCTRD_FRGL"	2	"MTR"	"ECOFF"	"5 mcg"	25	25	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"MTR"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"MTR"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"TGC"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_BCTRD_FRGL"	2	"TZP"	"ECOFF"	"30/6 mcg"	24	24	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"TZP"	"ECOFF"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL-C"	2.5	"MTR"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL-C"	2.5	"TZP"	"ECOFF"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_OVTS"	2	"IPM"	"ECOFF"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_OVTS"	2	"MEM"	"ECOFF"		0.25	0.25	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_THTT"	2	"IPM"	"ECOFF"		2	2	FALSE	FALSE	
@@ -3169,7 +3171,7 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm d
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AMP"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AMX"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"	"15 mcg"	12	12	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		16	16	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CAZ"	"ECOFF"	"10 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"CAZ"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"CEP"	"ECOFF"		16	16	FALSE	FALSE	
@@ -3206,6 +3208,8 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm d
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"ECOFF"	"5 mcg"	22	22	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2.1	"ATM"	"S.maltophilia (file: Clinical Breakpoint Tables v. 16.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2026"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2.1	"ATM"	"S.maltophilia (file: Clinical Breakpoint Tables v. 16.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2026"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2.1	"AZA"	"S.maltophilia (file: Clinical Breakpoint Tables v. 16.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [A] The ECOFF can be used to exclude acquired resistance mechanisms (presence of resistance indicated by MICs >8 mg/L or aztreonam-avibactam 30-20 ug disk zone diameter <21 mm)."
@@ -5198,14 +5202,6 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"VOR"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_CRYPT_NFRM"	2.1	"VOR"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence)"
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_FUSRM_JKRI"	2	"AMB"	"Antifungal ECOFFs"		8	8	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"FLU"	"Antifungal ECOFFs"		128	128	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"POS"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"FLU"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"AMB"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
@@ -5222,6 +5218,7 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2.1	"POS"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [5] The ECOFFs for these species are in general higher than for C. albicans."
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2.1	"RZF"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [7] Breakpoints apply for MICs determined with Tween 20 supplemented medium according to the EUCAST E.Def 7.4 method."
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2.1	"VOR"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence)"
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NCSMS_SOLN"	2	"AMB"	"Antifungal ECOFFs"		8	8	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
@@ -5240,15 +5237,23 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"		0.016	0.016	FALSE	FALSE	"[7] Breakpoints apply for MICs determined with Tween 20 supplemented medium according to the EUCAST E.Def 7.4 method."
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2.1	"VOR"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [5] The ECOFFs for these species are in general higher than for C. albicans."
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"		1	1	FALSE	FALSE	
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2.1	"CAS"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [2] Isolates that are susceptible to anidulafungin as well as micafungin should be considered susceptible to caspofungin, until caspofungin breakpoints have  been established. EUCAST breakpoints have not yet been established for caspofungin, due to significant inter-laboratory variation in MIC ranges for caspofungin."
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"FLU"	"Antifungal ECOFFs"		128	128	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2.1	"FLU"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2.1	"ISV"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence)"
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2.1	"ITR"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [5] The ECOFFs for these species are in general higher than for C. albicans."
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2.1	"MIF"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [6] MICs for C. krusei are approximately three two-fold dilution steps higher than those for C. albicans  and, similarly, those for C. guilliermondii are approximately eight two-fold dilutions higher. In addition, there were only a small number of cases involving these species in the clinical trials. This means there is insufficient evidence (IE) to indicate whether the wild-type population of these pathogens can be considered susceptible to micafungin."
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"POS"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2.1	"POS"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [5] The ECOFFs for these species are in general higher than for C. albicans."
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"		0.032	0.032	FALSE	FALSE	"[7] Breakpoints apply for MICs determined with Tween 20 supplemented medium according to the EUCAST E.Def 7.4 method."
+"EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2.1	"VOR"	"5. Yeast (file: Antifungal Clinical Breakpoint Table v. 12.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [5] The ECOFFs for these species are in general higher than for C. albicans."
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"AMB"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"ITR"	"Antifungal ECOFFs"		2	2	FALSE	FALSE	
@@ -5668,10 +5673,12 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"MFX"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_BCTRD_FRGL"	2	"MTR"	"ECOFF"	"5 mcg"	25	25	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"MTR"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"MTR"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"TGC"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_BCTRD_FRGL"	2	"TZP"	"ECOFF"	"30/6 mcg"	24	24	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL"	2	"TZP"	"ECOFF"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL-C"	2.5	"MTR"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_FRGL-C"	2.5	"TZP"	"ECOFF"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_OVTS"	2	"IPM"	"ECOFF"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_OVTS"	2	"MEM"	"ECOFF"		0.25	0.25	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_BCTRD_THTT"	2	"IPM"	"ECOFF"		2	2	FALSE	FALSE	
@@ -8196,7 +8203,7 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm d
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AMP"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AMX"	"ECOFF"		4	4	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"	"15 mcg"	12	12	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		16	16	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CAZ"	"ECOFF"	"10 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"CAZ"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"CEP"	"ECOFF"		16	16	FALSE	FALSE	
@@ -8233,6 +8240,8 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm d
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"ECOFF"	"5 mcg"	22	22	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2025"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2.1	"ATM"	"S.maltophilia (file: Clinical Breakpoint Tables v. 15.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2025"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2.1	"ATM"	"S.maltophilia (file: Clinical Breakpoint Tables v. 15.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives - (susceptibility testing is not recommended)"
 "EUCAST 2025"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2.1	"AZA"	"S.maltophilia (file: Clinical Breakpoint Tables v. 15.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence)"
@@ -10138,23 +10147,13 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"POS"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"VOR"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_FUSRM_JKRI"	2	"AMB"	"Antifungal ECOFFs"		8	8	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2025"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2025"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"FLU"	"Antifungal ECOFFs"		128	128	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"POS"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"EUCAST 2025"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"Candida"		0.032	0.032	FALSE	FALSE	
-"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"FLU"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"AMB"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"FLU"	"Antifungal ECOFFs"		16	16	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"ITR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"POS"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NCSMS_SOLN"	2	"AMB"	"Antifungal ECOFFs"		8	8	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2025"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
@@ -10168,6 +10167,17 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"Antifungal ECOFFs"		0.016	0.016	FALSE	FALSE	
 "EUCAST 2025"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"Candida"		0.016	0.016	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2025"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2025"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"FLU"	"Antifungal ECOFFs"		128	128	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"POS"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2025"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"AMB"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"ITR"	"Antifungal ECOFFs"		2	2	FALSE	FALSE	
 "EUCAST 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	2	"AMO"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
@@ -12391,19 +12401,19 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm d
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AMP"	"ECOFF"	"10 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"	"15 mcg"	12	12	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CAZ"	"ECOFF"	"10 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CHL"	"ECOFF"	"30 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CTB"	"ECOFF"	"30 mcg"	25	25	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CTX"	"ECOFF"	"5 mcg"	21	21	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"GEN"	"ECOFF"	"10 mcg"	14	14	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"NAL"	"ECOFF"	"30 mcg"	16	16	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"PEF"	"ECOFF"	"5 mcg"	24	24	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"SXT"	"ECOFF"	"1.25/23.75 mcg"	21	21	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TCY"	"ECOFF"	"30 mcg"	17	17	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"ECOFF"	"5 mcg"	23	23	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2024"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2.1	"FDC"	"S.maltophilia (file: Clinical Breakpoint Tables v. 14.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [A] Zone diameters of >=20 mm for the cefiderocol 30 ug disk correspond to MIC values below the PK-PD breakpoint of S <= 2 mg/L."
 "EUCAST 2024"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2.1	"FDC"	"S.maltophilia (file: Clinical Breakpoint Tables v. 14.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [1] Broth microdilution MIC determination must be performed in iron-depleted Mueller-Hinton broth and specific reading instructions must be followed. For testing conditions and reading instructions, see https://www.eucast.org/eucastguidancedocuments/."
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_STNTR_MLTP"	2	"SXT"	"ECOFF"	"1.25/23.75 mcg"	16	16	FALSE	FALSE	
@@ -13828,22 +13838,13 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"POS"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"VOR"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_FUSRM_JKRI"	2	"AMB"	"Antifungal ECOFFs"		8	8	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2024"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2024"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"FLU"	"Antifungal ECOFFs"		128	128	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"POS"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"FLU"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"AMB"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"FLU"	"Antifungal ECOFFs"		16	16	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"ITR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"POS"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NCSMS_SOLN"	2	"AMB"	"Antifungal ECOFFs"		8	8	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2024"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
@@ -13856,6 +13857,16 @@ Positive test: Isolates with gentamicin MIC >128 mg/L denote presence of aminogl
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"POS"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"Antifungal ECOFFs"		0.016	0.016	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2024"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Antifungal ECOFFs"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2024"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"FLU"	"Antifungal ECOFFs"		128	128	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"Antifungal ECOFFs"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"POS"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"Antifungal ECOFFs"		1	1	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"AMB"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"ITR"	"Antifungal ECOFFs"		2	2	FALSE	FALSE	
 "EUCAST 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	2	"AMO"	"Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
@@ -15938,9 +15949,9 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm. 
 "EUCAST 2023"	"human"	"human"	"DISK"		"B_SLMNL"	3.1	"CIP"	"Enterobacterales (file: Clinical Breakpoint Tables v. 13.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [A] Tests with a ciprofloxacin 5 ug disk will not reliably detect low-level resistance in Salmonella spp. Perform an MIC test, or infer susceptibility from the pefloxacin 5 ug screening test. | [1] There is clinical evidence for ciprofloxacin to indicate a poor response in systemic infections caused by Salmonella spp. with low-level ciprofloxacin resistance (MIC >0.06 mg/L). The available data relate mainly to Salmonella Typhi but there are also case reports of poor response with other Salmonella species."
 "EUCAST 2023"	"human"	"human"	"MIC"		"B_SLMNL"	3	"CIP"	"Enterobacterales (file: Clinical Breakpoint Tables v. 13.1)"		0.064	0.064	FALSE	FALSE	"[1] There is clinical evidence for ciprofloxacin to indicate a poor response in systemic infections caused by Salmonella spp. with low-level ciprofloxacin resistance (MIC >0.06 mg/L). The available data relate mainly to Salmonella Typhi but there are also case reports of poor response with other Salmonella species."
 "EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
-"EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"EUCAST 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2023"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2.1	"FDC"	"S.maltophilia (file: Clinical Breakpoint Tables v. 13.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [A] Zone diameters of >=20 mm for the cefiderocol 30 ug disk correspond to MIC values below the PK-PD breakpoint of S <= 2 mg/L."
 "EUCAST 2023"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2.1	"FDC"	"S.maltophilia (file: Clinical Breakpoint Tables v. 13.1)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [1] Broth microdilution MIC determination must be performed in iron-depleted Mueller-Hinton broth and specific reading instructions must be followed. For testing conditions and reading instructions, see https://www.eucast.org/eucastguidancedocuments/."
 "EUCAST 2023"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"SXT"	"S.maltophilia (file: Clinical Breakpoint Tables v. 13.1)"	"1.25/23.75 mcg"	50	16	FALSE	FALSE	"[A] There may be growth within the inhibition zone. The density of growth may vary from a fine haze to substantial growth (see pictures below). If any zone edge can be seen, ignore growth within the inhibition zone and read the zone diameter. | [1] Trimethoprim:sulfamethoxazole in the ratio 1:19. Breakpoints are expressed as the trimethoprim concentration."
@@ -17217,12 +17228,12 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2023"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2023"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.25	FALSE	FALSE	
 "EUCAST 2023"	"human"	"human"	"MIC"		"F_CRYPT_NFRM"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2023"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2023"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2023"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2023"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2023"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Candida"		1e-04	16	FALSE	FALSE	
 "EUCAST 2023"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2023"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2023"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2023"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 13.1)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based. More information is available in the EUCAST Guidance Document on how to test and interpret results when there are no breakpoints. | [2] For susceptibility testing purposes, the concentration of clavulanic acid is fixed at 2 mg/L."
 "EUCAST 2023"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 13.1)"		1	1	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based. More information is available in the EUCAST Guidance Document on how to test and interpret results when there are no breakpoints."
 "EUCAST 2023"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 13.1)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based. More information is available in the EUCAST Guidance Document on how to test and interpret results when there are no breakpoints."
@@ -19228,9 +19239,9 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm. 
 "EUCAST 2022"	"human"	"human"	"DISK"	"Screen"	"B_SLMNL"	3	"PEF"	"Enterobacterales (file: Clinical Breakpoint Tables v. 12.0)"	"5 mcg"	24	24	FALSE	FALSE	"[2/C] The pefloxacin 5 ug breakpoint used to screen for clinical fluoroquinolone resistance in Salmonella spp., can also be used to detect fluoroquinolone resistance mechanisms in other Enterobacterales such as E. coli, K. pneumoniae and Shigella spp. | [B] Susceptibility of Salmonella spp. to ciprofloxacin can be inferred from the pefloxacin disk diffusion screening test. | [1] There is clinical evidence for ciprofloxacin to indicate a poor response in systemic infections caused by Salmonella spp. with low-level ciprofloxacin resistance (MIC >0.06 mg/L). The available data relate mainly to  Salmonella Typhi but there are also case reports of poor response with other Salmonella species."
 "EUCAST 2022"	"human"	"human"	"MIC"		"B_SLMNL"	3.1	"PEF"	"Enterobacterales (file: Clinical Breakpoint Tables v. 12.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives NA (not applicable) | [1] There is clinical evidence for ciprofloxacin to indicate a poor response in systemic infections caused by Salmonella spp. with low-level ciprofloxacin resistance (MIC >0.06 mg/L). The available data relate mainly to  Salmonella Typhi but there are also case reports of poor response with other Salmonella species. | [2] The pefloxacin 5 ug breakpoint used to screen for clinical fluoroquinolone resistance in Salmonella spp., can also be used to detect fluoroquinolone resistance mechanisms in other Enterobacterales such as E. coli, K. pneumoniae and Shigella spp."
 "EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
-"EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"EUCAST 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2022"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2.1	"FDC"	"S.maltophilia (file: Clinical Breakpoint Tables v. 12.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [A] Zone diameters of >=20 mm for the cefiderocol 30 ug disk correspond to MIC values below the PK-PD breakpoint of S <= 2 mg/L."
 "EUCAST 2022"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2.1	"FDC"	"S.maltophilia (file: Clinical Breakpoint Tables v. 12.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [1] Broth microdilution MIC determination must be performed in iron-depleted Mueller-Hinton broth and specific reading instructions must be followed. For testing conditions and reading instructions, see https://www.eucast.org/eucastguidancedocuments/."
 "EUCAST 2022"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"SXT"	"S.maltophilia (file: Clinical Breakpoint Tables v. 12.0)"	"1.25/23.75 mcg"	50	16	FALSE	FALSE	"[A] There may be growth within the inhibition zone. The density of growth may vary from a fine haze to substantial growth (see pictures below). If any zone edge can be seen, ignore growth within the inhibition zone and read the zone diameter. | [1] Trimethoprim:sulfamethoxazole in the ratio 1:19. Breakpoints are expressed as the trimethoprim concentration."
@@ -20508,12 +20519,12 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2022"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2022"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.25	FALSE	FALSE	
 "EUCAST 2022"	"human"	"human"	"MIC"		"F_CRYPT_NFRM"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2022"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2022"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2022"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2022"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2022"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Candida"		1e-04	16	FALSE	FALSE	
 "EUCAST 2022"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2022"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2022"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2022"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 12.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based. More information is available in the EUCAST Guidance Document on how to test and interpret results when there are no breakpoints. | [2] For susceptibility testing purposes, the concentration of clavulanic acid is fixed at 2 mg/L."
 "EUCAST 2022"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 12.0)"		1	1	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based. More information is available in the EUCAST Guidance Document on how to test and interpret results when there are no breakpoints."
 "EUCAST 2022"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 12.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based. More information is available in the EUCAST Guidance Document on how to test and interpret results when there are no breakpoints."
@@ -23259,11 +23270,17 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm. 
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AMP"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"CXM"	"ECOFF"		16	16	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"AMP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"CXM"	"ECOFF"		16	16	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_PRTY"	1	"AMP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AMP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"CXM"	"ECOFF"		16	16	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"DOX"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2.1	"FDC"	"S.maltophilia (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives Note (see note) | [A] Zone diameters of >=20 mm for the cefiderocol 30 ug disk correspond to MIC values below the PK-PD breakpoint of S <= 2 mg/L."
 "EUCAST 2021"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2.1	"FDC"	"S.maltophilia (file: Clinical Breakpoint Tables v. 11.0)"				FALSE	FALSE	"[No breakpoint] EUCAST gives IE (insufficient evidence) | [1] Broth microdilution MIC determination must be performed in iron-depleted Mueller-Hinton broth and specific reading instructions must be followed. For testing conditions and reading instructions, see http://www.eucast.org/guidance_documents/."
@@ -24920,14 +24937,6 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2021"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.25	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_CLVSP_LSTN"	2	"ITR"	"ECOFF"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_CLVSP_LSTN"	2	"VOR"	"ECOFF"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"ECOFF"		1	1	FALSE	FALSE	
-"EUCAST 2021"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"ECOFF"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2021"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"FLU"	"ECOFF"		128	128	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"ECOFF"		1	1	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"ECOFF"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"ECOFF"		1	1	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"FLU"	"ECOFF"		16	16	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"ITR"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"VOR"	"ECOFF"		0.25	0.25	FALSE	FALSE	
@@ -24941,6 +24950,14 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"ECOFF"		0.032	0.032	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
 "EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"ECOFF"		1	1	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"ECOFF"		1	1	FALSE	FALSE	
+"EUCAST 2021"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2021"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"FLU"	"ECOFF"		128	128	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"ECOFF"		1	1	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"ECOFF"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2021"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"ECOFF"		1	1	FALSE	FALSE	
 "EUCAST 2021"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 11.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\". | [2] For susceptibility testing purposes, the concentration of clavulanic acid is fixed at 2 mg/L."
 "EUCAST 2021"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 11.0)"		1	1	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\"."
 "EUCAST 2021"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 11.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\"."
@@ -27576,11 +27593,17 @@ Positive test: Isolates with gentamicin MIC >128 mg/L or a zone diameter <8 mm. 
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AMP"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"CXM"	"ECOFF"		16	16	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"AMP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"CXM"	"ECOFF"		16	16	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_PRTY"	1	"AMP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AMP"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"CXM"	"ECOFF"		16	16	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"MEM"	"ECOFF"		0.125	0.125	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"TZP"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"DOX"	"ECOFF"		8	8	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"MNO"	"ECOFF"		1	1	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"B_STNTR_MLTP"	2	"SXT"	"ECOFF"		2	2	FALSE	FALSE	
@@ -29187,14 +29210,6 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2020"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.25	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_CLVSP_LSTN"	2	"ITR"	"ECOFF"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_CLVSP_LSTN"	2	"VOR"	"ECOFF"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"ECOFF"		1	1	FALSE	FALSE	
-"EUCAST 2020"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"ECOFF"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2020"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"FLU"	"ECOFF"		128	128	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"ECOFF"		1	1	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"ECOFF"		0.25	0.25	FALSE	FALSE	
-"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"ECOFF"		1	1	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"FLU"	"ECOFF"		16	16	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"ITR"	"ECOFF"		2	2	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"VOR"	"ECOFF"		0.25	0.25	FALSE	FALSE	
@@ -29208,6 +29223,14 @@ Positive test: Isolates with gentamicin MIC >128 mg/L. The isolate is high-level
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"ECOFF"		0.032	0.032	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
 "EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"ECOFF"		1	1	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"ECOFF"		1	1	FALSE	FALSE	
+"EUCAST 2020"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2020"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"FLU"	"ECOFF"		128	128	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"ECOFF"		1	1	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"ECOFF"		0.25	0.25	FALSE	FALSE	
+"EUCAST 2020"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"ECOFF"		1	1	FALSE	FALSE	
 "EUCAST 2020"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 10.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\". | [2] For susceptibility testing purposes, the concentration of clavulanic acid is fixed at 2 mg/L."
 "EUCAST 2020"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 10.0)"		1	1	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\"."
 "EUCAST 2020"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 10.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\"."
@@ -31987,12 +32010,12 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2019"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"ITR"	"Candida"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2019"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2019"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.25	FALSE	FALSE	
-"EUCAST 2019"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2019"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2019"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2019"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2019"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Candida"		0.002	32	FALSE	FALSE	
 "EUCAST 2019"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2019"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2019"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2019"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 9.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\". | [2] For susceptibility testing purposes, the concentration of clavulanic acid is fixed at 2 mg/L."
 "EUCAST 2019"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 9.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\"."
 "EUCAST 2019"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMX"	"PK PD breakpoints (file: Clinical Breakpoint Tables v. 9.0)"		2	8	FALSE	FALSE	"[PK-PD] These breakpoints are used only when there are no species-specific breakpoints or other recommendations (a dash or a note) in the species-specific tables. If the MIC is greater than the PK-PD resistant breakpoint, advise against use of the agent. If the MIC is less than or equal to the PK-PD susceptible breakpoint, suggest that the agent can be used with caution. The MIC may also be reported although this is not essential. Include a note that the guidance is based on PK-PD breakpoints only, and include the dosage on which PK-PD breakpoint is based.More information is available in the guidance document \"Antimicrobial susceptibility tests on groups of organisms or agents for which there are no EUCAST breakpoints\"."
@@ -32799,12 +32822,12 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2018"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"ITR"	"Candida"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2018"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2018"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Candida"		0.002	32	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2018"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2018"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK/PD"		2	8	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK/PD"		8	16	FALSE	FALSE	
 "EUCAST 2018"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK/PD"		2	8	FALSE	FALSE	
@@ -33605,12 +33628,12 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2017"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"ITR"	"Candida"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2017"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2017"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Candida"		0.002	32	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2017"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2017"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK/PD"		2	8	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK/PD"		8	16	FALSE	FALSE	
 "EUCAST 2017"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK/PD"		2	8	FALSE	FALSE	
@@ -34350,12 +34373,12 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2016"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"ITR"	"Candida"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2016"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2016"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Candida"		0.002	32	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2016"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2016"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK/PD"		2	8	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK/PD"		8	16	FALSE	FALSE	
 "EUCAST 2016"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK/PD"		2	8	FALSE	FALSE	
@@ -35068,12 +35091,12 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2015"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"ITR"	"Candida"		0.125	0.125	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2015"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2015"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Candida"		0.002	32	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2015"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2015"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK/PD"		2	8	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK/PD"		8	16	FALSE	FALSE	
 "EUCAST 2015"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK/PD"		2	8	FALSE	FALSE	
@@ -35783,12 +35806,12 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2014"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"FLU"	"Candida"		2	4	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2014"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2014"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Candida"		0.002	32	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Candida"		0.032	0.032	FALSE	FALSE	
+"EUCAST 2014"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2014"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"PK/PD"		2	8	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"PK/PD"		8	16	FALSE	FALSE	
 "EUCAST 2014"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"PK/PD"		2	8	FALSE	FALSE	
@@ -36481,10 +36504,10 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2013"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2013"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"POS"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2013"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Candida"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2013"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
-"EUCAST 2013"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2013"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
 "EUCAST 2013"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
+"EUCAST 2013"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"Candida"		1	1	FALSE	FALSE	
+"EUCAST 2013"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Candida"		0.064	0.064	FALSE	FALSE	
 "EUCAST 2013"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMC"	"Unknown"		2	8	FALSE	FALSE	
 "EUCAST 2013"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMK"	"Unknown"		8	16	FALSE	FALSE	
 "EUCAST 2013"	"human"	"human"	"MIC"		"UNKNOWN"	7	"AMP"	"Unknown"		2	8	FALSE	FALSE	
@@ -37146,14 +37169,14 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"CTB"	"Unknown"		1	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"CTX"	"Unknown"	"5 mcg"	22	22	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"CTX"	"Unknown"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"CXA"	"Unknown"	"30 mcg"	50	25	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2.1	"CXA"	"Unknown"	"30 mcg"			FALSE	FALSE	"[No breakpoint] EUCAST gives no S category for this zone diameter (S >= 99 mm in WHONET)"
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"CXA"	"Unknown"		0.125	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"CXM"	"Unknown"	"30 mcg"	25	22	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"CXM"	"Unknown"		1	2	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"DOR"	"Unknown"	"10 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"DOR"	"Unknown"		1	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"DOX"	"Unknown"		1	2	FALSE	FALSE	
-"EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"ERY"	"Unknown"	"15 mcg"	50	12	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2.1	"ERY"	"Unknown"	"15 mcg"			FALSE	FALSE	"[No breakpoint] EUCAST gives no S category for this zone diameter (S >= 99 mm in WHONET)"
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"ERY"	"Unknown"		0.5	16	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_INFL"	2	"ETP"	"Unknown"	"10 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_INFL"	2	"ETP"	"Unknown"		0.5	0.5	FALSE	FALSE	
@@ -37204,14 +37227,14 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"CTB"	"Unknown"		1	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"CTX"	"Unknown"	"5 mcg"	22	22	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"CTX"	"Unknown"		0.125	0.125	FALSE	FALSE	
-"EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"CXA"	"Unknown"	"30 mcg"	50	25	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2.1	"CXA"	"Unknown"	"30 mcg"			FALSE	FALSE	"[No breakpoint] EUCAST gives no S category for this zone diameter (S >= 99 mm in WHONET)"
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"CXA"	"Unknown"		0.125	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"CXM"	"Unknown"	"30 mcg"	25	22	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"CXM"	"Unknown"		1	2	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"DOR"	"Unknown"	"10 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"DOR"	"Unknown"		1	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"DOX"	"Unknown"		1	2	FALSE	FALSE	
-"EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"ERY"	"Unknown"	"15 mcg"	50	12	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2.1	"ERY"	"Unknown"	"15 mcg"			FALSE	FALSE	"[No breakpoint] EUCAST gives no S category for this zone diameter (S >= 99 mm in WHONET)"
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"ERY"	"Unknown"		0.5	16	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_HMPHL_PRNF"	2	"ETP"	"Unknown"	"10 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_HMPHL_PRNF"	2	"ETP"	"Unknown"		0.5	0.5	FALSE	FALSE	
@@ -37298,7 +37321,7 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_NESSR_MNNG"	2	"TCY"	"Unknown"		1	2	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_PSDMN"	3	"AMK"	"Unknown"	"30 mcg"	18	15	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_PSDMN"	3	"AMK"	"Unknown"		8	16	FALSE	FALSE	
-"EUCAST 2011"	"human"	"human"	"DISK"		"B_PSDMN"	3	"ATM"	"Unknown"	"30 mcg"	50	16	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"DISK"		"B_PSDMN"	3.1	"ATM"	"Unknown"	"30 mcg"			FALSE	FALSE	"[No breakpoint] EUCAST gives no S category for this zone diameter (S >= 99 mm in WHONET)"
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_PSDMN"	3	"ATM"	"Unknown"		1	16	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_PSDMN"	3	"CAZ"	"Unknown"		8	8	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_PSDMN"	3	"CIP"	"Unknown"	"5 mcg"	25	22	FALSE	FALSE	
@@ -37592,7 +37615,7 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_STRPT_PNMN"	2	"AMP"	"Unknown"	"2 mcg"	28	22	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_STRPT_PNMN"	2	"AMP"	"Unknown"		0.5	2	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_STRPT_PNMN"	2	"AZM"	"Unknown"		0.25	0.5	FALSE	FALSE	
-"EUCAST 2011"	"human"	"human"	"DISK"		"B_STRPT_PNMN"	2	"CEC"	"Unknown"	"30 mcg"	50	28	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"DISK"		"B_STRPT_PNMN"	2.1	"CEC"	"Unknown"	"30 mcg"			FALSE	FALSE	"[No breakpoint] EUCAST gives no S category for this zone diameter (S >= 99 mm in WHONET)"
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_STRPT_PNMN"	2	"CEC"	"Unknown"		0.032	0.5	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_STRPT_PNMN"	2	"CHL"	"Unknown"	"30 mcg"	20	20	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_STRPT_PNMN"	2	"CHL"	"Unknown"		8	8	FALSE	FALSE	
@@ -37623,7 +37646,7 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_STRPT_PNMN"	2	"MFX"	"Unknown"		0.5	0.5	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_STRPT_PNMN"	2	"MNO"	"Unknown"		0.5	1	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_STRPT_PNMN"	2	"NOR"	"Unknown"	"10 mcg"	12	12	FALSE	FALSE	
-"EUCAST 2011"	"human"	"human"	"DISK"		"B_STRPT_PNMN"	2	"OFX"	"Unknown"	"5 mcg"	50	15	FALSE	FALSE	
+"EUCAST 2011"	"human"	"human"	"DISK"		"B_STRPT_PNMN"	2.1	"OFX"	"Unknown"	"5 mcg"			FALSE	FALSE	"[No breakpoint] EUCAST gives no S category for this zone diameter (S >= 99 mm in WHONET)"
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_STRPT_PNMN"	2	"OFX"	"Unknown"		0.125	4	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"DISK"		"B_STRPT_PNMN"	2	"OXA"	"Unknown"	"1 mcg"	18	18	FALSE	FALSE	
 "EUCAST 2011"	"human"	"human"	"MIC"		"B_STRPT_PNMN"	2	"PEN"	"Unknown"		0.064	2	FALSE	FALSE	
@@ -39226,21 +39249,21 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2026"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AMP"	"Copied from EUCAST 2024"	"10 mcg"	20	20	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Copied from EUCAST 2024"	"15 mcg"	12	12	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Copied from EUCAST 2024"		32	32	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A-2"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A-2"		16	32	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CAZ"	"Copied from EUCAST 2024"	"10 mcg"	20	20	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CHL"	"Copied from EUCAST 2024"	"30 mcg"	20	20	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CTB"	"Copied from EUCAST 2024"	"30 mcg"	25	25	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CTX"	"Copied from EUCAST 2024"	"5 mcg"	21	21	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"Copied from EUCAST 2024"		8	8	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"GEN"	"Copied from EUCAST 2024"	"10 mcg"	14	14	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"Copied from EUCAST 2024"		0.064	0.064	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"NAL"	"Copied from EUCAST 2024"	"30 mcg"	16	16	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"PEF"	"Copied from EUCAST 2024"	"5 mcg"	24	24	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"SXT"	"Copied from EUCAST 2024"	"1.25/23.75 mcg"	21	21	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TCY"	"Copied from EUCAST 2024"	"30 mcg"	17	17	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"Copied from EUCAST 2024"	"5 mcg"	23	23	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"Copied from EUCAST 2024"		0.064	0.064	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Copied from EUCAST 2024"		32	32	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A-2"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A-2"		16	32	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"Copied from EUCAST 2024"		8	8	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"B_SMYCS"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE	
@@ -40241,22 +40264,6 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"POS"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"VOR"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_FUSRM_JKRI"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		8	8	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"CAS"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"FLU"	"Copied from EUCAST 2024 Antifungal ECOFFs"		128	128	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"M27 Table 1"		0.25		FALSE	FALSE	
-"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M27 Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"ANI"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"FLU"	"M59 Table 1"		1	1	FALSE	FALSE	
@@ -40275,12 +40282,13 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2026"	"human"	"human"	"DISK"		"F_MYRZY_GLLR"	2	"MIF"	"Table 1"	"10 mcg"	16	13	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"MIF"	"M27 Table 1"		2	8	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NCSMS_SOLN"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		8	8	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"M27 Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"CAS"	"M27 Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M59 Table 4"		8	8	FALSE	FALSE	
-"CLSI 2026"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"	50	14	FALSE	TRUE	
+"CLSI 2026"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"		14	FALSE	TRUE	"[No S category] CLSI gives no S category for this zone diameter (S >= 80 mm in WHONET), so only R can be interpreted"
 "CLSI 2026"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M27 Table 1"		1e-04	64	FALSE	TRUE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ITR"	"M59 Table 1"		4	4	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"M59 Table 4"		0.032	0.032	FALSE	FALSE	
@@ -40290,6 +40298,22 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.016	0.016	FALSE	FALSE	
 "CLSI 2026"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"M27 Table 1"		0.5		FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"CAS"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"FLU"	"Copied from EUCAST 2024 Antifungal ECOFFs"		128	128	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"M27 Table 1"		0.25		FALSE	FALSE	
+"CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
+"CLSI 2026"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M27 Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		2	2	FALSE	FALSE	
 "CLSI 2026"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
@@ -41854,21 +41878,21 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2025"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AMP"	"Copied from EUCAST 2024"	"10 mcg"	20	20	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Copied from EUCAST 2024"	"15 mcg"	12	12	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Copied from EUCAST 2024"		32	32	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A-2"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A-2"		16	32	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CAZ"	"Copied from EUCAST 2024"	"10 mcg"	20	20	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CHL"	"Copied from EUCAST 2024"	"30 mcg"	20	20	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CTB"	"Copied from EUCAST 2024"	"30 mcg"	25	25	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CTX"	"Copied from EUCAST 2024"	"5 mcg"	21	21	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"Copied from EUCAST 2024"		8	8	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"GEN"	"Copied from EUCAST 2024"	"10 mcg"	14	14	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"Copied from EUCAST 2024"		0.064	0.064	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"NAL"	"Copied from EUCAST 2024"	"30 mcg"	16	16	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"PEF"	"Copied from EUCAST 2024"	"5 mcg"	24	24	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"SXT"	"Copied from EUCAST 2024"	"1.25/23.75 mcg"	21	21	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TCY"	"Copied from EUCAST 2024"	"30 mcg"	17	17	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"Copied from EUCAST 2024"	"5 mcg"	23	23	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"Copied from EUCAST 2024"		0.064	0.064	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Copied from EUCAST 2024"		32	32	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A-2"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A-2"		16	32	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"Copied from EUCAST 2024"		8	8	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"B_SMYCS"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE	
@@ -42865,22 +42889,6 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"POS"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"VOR"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_FUSRM_JKRI"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		8	8	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"CAS"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"FLU"	"Copied from EUCAST 2024 Antifungal ECOFFs"		128	128	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"M27 Table 1"		0.25		FALSE	FALSE	
-"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M27 Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"ANI"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"FLU"	"M59 Table 1"		1	1	FALSE	FALSE	
@@ -42899,12 +42907,13 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2025"	"human"	"human"	"DISK"		"F_MYRZY_GLLR"	2	"MIF"	"Table 1"	"10 mcg"	16	13	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"MIF"	"M27 Table 1"		2	8	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NCSMS_SOLN"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		8	8	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"M27 Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"CAS"	"M27 Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M59 Table 4"		8	8	FALSE	FALSE	
-"CLSI 2025"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"	50	14	FALSE	TRUE	
+"CLSI 2025"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"		14	FALSE	TRUE	"[No S category] CLSI gives no S category for this zone diameter (S >= 80 mm in WHONET), so only R can be interpreted"
 "CLSI 2025"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M27 Table 1"		1e-04	64	FALSE	TRUE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ITR"	"M59 Table 1"		4	4	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"M59 Table 4"		0.032	0.032	FALSE	FALSE	
@@ -42914,6 +42923,22 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.016	0.016	FALSE	FALSE	
 "CLSI 2025"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"M27 Table 1"		0.5		FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"CAS"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"FLU"	"Copied from EUCAST 2024 Antifungal ECOFFs"		128	128	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"M27 Table 1"		0.25		FALSE	FALSE	
+"CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
+"CLSI 2025"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M27 Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		2	2	FALSE	FALSE	
 "CLSI 2025"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
@@ -44480,21 +44505,21 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2024"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AMP"	"Copied from EUCAST 2024"	"10 mcg"	20	20	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Copied from EUCAST 2024"	"15 mcg"	12	12	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Copied from EUCAST 2024"		32	32	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A-2"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A-2"		16	32	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CAZ"	"Copied from EUCAST 2024"	"10 mcg"	20	20	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CHL"	"Copied from EUCAST 2024"	"30 mcg"	20	20	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CTB"	"Copied from EUCAST 2024"	"30 mcg"	25	25	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CTX"	"Copied from EUCAST 2024"	"5 mcg"	21	21	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"Copied from EUCAST 2024"		8	8	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"GEN"	"Copied from EUCAST 2024"	"10 mcg"	14	14	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"Copied from EUCAST 2024"		0.064	0.064	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"NAL"	"Copied from EUCAST 2024"	"30 mcg"	16	16	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"PEF"	"Copied from EUCAST 2024"	"5 mcg"	24	24	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"SXT"	"Copied from EUCAST 2024"	"1.25/23.75 mcg"	21	21	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TCY"	"Copied from EUCAST 2024"	"30 mcg"	17	17	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"TMP"	"Copied from EUCAST 2024"	"5 mcg"	23	23	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"Copied from EUCAST 2024"		0.064	0.064	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Copied from EUCAST 2024"		32	32	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A-2"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A-2"		16	32	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"Copied from EUCAST 2024"		8	8	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"B_SMYCS"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE	
@@ -45490,22 +45515,6 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"POS"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"VOR"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_FUSRM_JKRI"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		8	8	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"CAS"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"FLU"	"Copied from EUCAST 2024 Antifungal ECOFFs"		128	128	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"M27 Table 1"		0.25		FALSE	FALSE	
-"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M27 Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"ANI"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"FLU"	"M59 Table 1"		1	1	FALSE	FALSE	
@@ -45524,12 +45533,13 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2024"	"human"	"human"	"DISK"		"F_MYRZY_GLLR"	2	"MIF"	"Table 1"	"10 mcg"	16	13	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"MIF"	"M27 Table 1"		2	8	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_MYRZY_GLLR"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NCSMS_SOLN"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		8	8	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"M27 Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"CAS"	"M27 Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M59 Table 4"		8	8	FALSE	FALSE	
-"CLSI 2024"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"	50	14	FALSE	TRUE	
+"CLSI 2024"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"		14	FALSE	TRUE	"[No S category] CLSI gives no S category for this zone diameter (S >= 80 mm in WHONET), so only R can be interpreted"
 "CLSI 2024"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M27 Table 1"		1e-04	64	FALSE	TRUE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ITR"	"M59 Table 1"		4	4	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"M59 Table 4"		0.032	0.032	FALSE	FALSE	
@@ -45539,6 +45549,22 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.016	0.016	FALSE	FALSE	
 "CLSI 2024"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"M27 Table 1"		0.5		FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"CAS"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"FLU"	"Copied from EUCAST 2024 Antifungal ECOFFs"		128	128	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.032	0.032	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"M27 Table 1"		0.25		FALSE	FALSE	
+"CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
+"CLSI 2024"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M27 Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"AMB"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_SCCHR_CRVS"	2	"ITR"	"Copied from EUCAST 2024 Antifungal ECOFFs"		2	2	FALSE	FALSE	
 "CLSI 2024"	"ECOFF"	"ECOFF"	"MIC"		"F_TRCHP_INDT"	2	"AMO"	"Copied from EUCAST 2024 Antifungal ECOFFs"		0.5	0.5	FALSE	FALSE	
@@ -46863,12 +46889,12 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
 "CLSI 2023"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"	"30 mcg"	21	17	FALSE	FALSE	
 "CLSI 2023"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2023"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
 "CLSI 2023"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMC"	"M24 Table 7"		8	32	FALSE	FALSE	
 "CLSI 2023"	"human"	"human"	"MIC"		"B_SMYCS"	3	"AMK"	"M24 Table 7"		8	16	FALSE	FALSE	
 "CLSI 2023"	"human"	"human"	"MIC"		"B_SMYCS"	3	"CIP"	"M24 Table 7"		1	4	FALSE	FALSE	
@@ -47682,20 +47708,6 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"ITR"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"POS"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"VOR"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"CAS"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M27 Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"RZF"	"M27 Table 1"		0.25		FALSE	FALSE	
-"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M27 Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"ANI"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"FLU"	"M59 Table 1"		1	1	FALSE	FALSE	
@@ -47719,7 +47731,7 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2023"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"M27 Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2023"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"CAS"	"M27 Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M59 Table 4"		8	8	FALSE	FALSE	
-"CLSI 2023"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"	50	14	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"		14	FALSE	FALSE	"[No S category] CLSI gives no S category for this zone diameter (S >= 80 mm in WHONET), so only R can be interpreted"
 "CLSI 2023"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M27 Table 1"		1e-04	64	FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ITR"	"M59 Table 1"		4	4	FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"M59 Table 4"		0.032	0.032	FALSE	FALSE	
@@ -47728,6 +47740,20 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"POS"	"M59 Table 1"		1	1	FALSE	FALSE	
 "CLSI 2023"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"RZF"	"M27 Table 1"		0.5		FALSE	FALSE	
 "CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"CAS"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M27 Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"RZF"	"M27 Table 1"		0.25		FALSE	FALSE	
+"CLSI 2023"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
+"CLSI 2023"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M27 Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2022"	"human"	"human"	"MIC"		"B_ABTRP"	3	"AMP"	"M45 Table 1"		0.25	8	FALSE	FALSE	
 "CLSI 2022"	"human"	"human"	"MIC"		"B_ABTRP"	3	"CHL"	"M45 Table 1"		4	8	FALSE	FALSE	
 "CLSI 2022"	"human"	"human"	"MIC"		"B_ABTRP"	3	"CIP"	"M45 Table 1"		1	4	FALSE	FALSE	
@@ -48904,12 +48930,12 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR"	2	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
 "CLSI 2022"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"	"30 mcg"	21	17	FALSE	FALSE	
 "CLSI 2022"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2022"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_HMRM"	1	"MEM"	"ECOFF"		0.064	0.064	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"ECOFF"		32	32	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"B_SLMNL_TYPH"	1	"FOX"	"ECOFF"		8	8	FALSE	FALSE	
 "CLSI 2022"	"human"	"human"	"MIC"	"Parenteral"	"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2022"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2022"	"human"	"human"	"DISK"	"Parenteral"	"B_STNTR_MLTP"	2	"FDC"	"Table 2B-4"	"30 mcg"	15		FALSE	FALSE	
@@ -49673,19 +49699,6 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"ITR"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"POS"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_CRYPT_NFRM"	2	"VOR"	"M59 Table 2"		0.25	0.25	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
-"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"ANI"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_KLYVR_RXNS"	2	"FLU"	"M59 Table 1"		1	1	FALSE	FALSE	
@@ -49709,7 +49722,7 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2022"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2022"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"CAS"	"Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"M59 Table 4"		8	8	FALSE	FALSE	
-"CLSI 2022"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"	50	14	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"		14	FALSE	FALSE	"[No S category] CLSI gives no S category for this zone diameter (S >= 80 mm in WHONET), so only R can be interpreted"
 "CLSI 2022"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"		1e-04	64	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"ITR"	"M59 Table 1"		4	4	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"M59 Table 4"		0.032	0.032	FALSE	FALSE	
@@ -49717,6 +49730,19 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2022"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Table 1"		0.064	0.25	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"POS"	"M59 Table 1"		1	1	FALSE	FALSE	
 "CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_NKSMY_BRTS"	2	"VOR"	"M59 Table 1"		0.25	0.25	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"AMB"	"M59 Table 1"		2	2	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"ITR"	"M59 Table 1"		1	1	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"M59 Table 4"		0.25	0.25	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"POS"	"M59 Table 1"		0.5	0.5	FALSE	FALSE	
+"CLSI 2022"	"ECOFF"	"ECOFF"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"M59 Table 4"		0.5	0.5	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
+"CLSI 2022"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"B_ABTRP"	3	"AMP"	"M45 Table 1"		0.25	8	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"B_ABTRP"	3	"CHL"	"M45 Table 1"		4	8	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"B_ABTRP"	3	"CIP"	"M45 Table 1"		1	4	FALSE	FALSE	
@@ -50571,9 +50597,9 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2021"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE	
 "CLSI 2021"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"	"30 mcg"	21	17	FALSE	FALSE	
 "CLSI 2021"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET01 Table 2A"		2	8	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2021"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET01 Table 2A"		4	16	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"	"Parenteral"	"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"DISK"	"Parenteral"	"B_STNTR_MLTP"	2	"FDC"	"Table 2B-4"	"30 mcg"	17	12	FALSE	FALSE	
@@ -51241,13 +51267,6 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2021"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"DISK"		"F_CANDD_TRPC"	2	"VOR"	"Table 1"	"1 mcg"	17	14	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Table 1"		0.125	1	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"ANI"	"Table 1"		2	8	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"DISK"		"F_MYRZY_GLLR"	2	"CAS"	"Table 1"	"5 mcg"	13	10	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"CAS"	"Table 1"		2	8	FALSE	FALSE	
@@ -51255,10 +51274,17 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2021"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"MIF"	"Table 1"		2	8	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"CAS"	"Table 1"		0.125	0.5	FALSE	FALSE	
-"CLSI 2021"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"	50	14	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"		14	FALSE	FALSE	"[No S category] CLSI gives no S category for this zone diameter (S >= 80 mm in WHONET), so only R can be interpreted"
 "CLSI 2021"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"		1e-04	64	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"MIF"	"Table 1"	"10 mcg"	30	27	FALSE	FALSE	
 "CLSI 2021"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Table 1"		0.064	0.25	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
+"CLSI 2021"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"B_ABTRP"	3	"AMP"	"M45 Table 1"		0.25	8	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"B_ABTRP"	3	"CHL"	"M45 Table 1"		4	8	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"B_ABTRP"	3	"CIP"	"M45 Table 1"		1	4	FALSE	FALSE	
@@ -52108,9 +52134,9 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2020"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE	
 "CLSI 2020"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET08 Table 2A"	"30 mcg"	21	17	FALSE	FALSE	
 "CLSI 2020"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET08 Table 2A"		2	8	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2020"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"	"Parenteral"	"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"DISK"	"Parenteral"	"B_STNTR_MLTP"	2	"FDC"	"Table 2B-4"	"30 mcg"	17	12	FALSE	FALSE	
@@ -52754,13 +52780,6 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2020"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"DISK"		"F_CANDD_TRPC"	2	"VOR"	"Table 1"	"1 mcg"	17	14	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Table 1"		0.125	1	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"ANI"	"Table 1"		2	8	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"DISK"		"F_MYRZY_GLLR"	2	"CAS"	"Table 1"	"5 mcg"	13	10	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"CAS"	"Table 1"		2	8	FALSE	FALSE	
@@ -52768,10 +52787,17 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2020"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"MIF"	"Table 1"		2	8	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"CAS"	"Table 1"		0.125	0.5	FALSE	FALSE	
-"CLSI 2020"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"	50	14	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"		14	FALSE	FALSE	"[No S category] CLSI gives no S category for this zone diameter (S >= 80 mm in WHONET), so only R can be interpreted"
 "CLSI 2020"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"		1e-04	64	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"MIF"	"Table 1"	"10 mcg"	30	27	FALSE	FALSE	
 "CLSI 2020"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Table 1"		0.064	0.25	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
+"CLSI 2020"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"B_ABTRP"	3	"AMP"	"M45 Table 1"		0.25	8	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"B_ABTRP"	3	"CHL"	"M45 Table 1"		4	8	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"B_ABTRP"	3	"CIP"	"M45 Table 1"		1	4	FALSE	FALSE	
@@ -53618,9 +53644,9 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2019"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE	
 "CLSI 2019"	"animal"	"swine"	"DISK"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET08 Table 2A"	"30 mcg"	21	17	FALSE	FALSE	
 "CLSI 2019"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR"	2	"TIO"	"VET08 Table 2A"		2	8	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2019"	"animal"	"swine"	"MIC"	"Respiratory"	"B_SLMNL_ENTR_ENTR"	1	"FLR"	"VET08 Table 2A"		4	16	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"FDC"	"Table 2B-4"		4	16	FALSE	FALSE	
@@ -54126,13 +54152,6 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2019"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"DISK"		"F_CANDD_TRPC"	2	"VOR"	"Table 1"	"1 mcg"	17	14	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"F_CANDD_TRPC"	2	"VOR"	"Table 1"		0.125	1	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"ANI"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"CAS"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"DISK"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"MIC"		"F_ISSTC_BRMP"	2	"VOR"	"Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"ANI"	"Table 1"		2	8	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"DISK"		"F_MYRZY_GLLR"	2	"CAS"	"Table 1"	"5 mcg"	13	10	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"CAS"	"Table 1"		2	8	FALSE	FALSE	
@@ -54140,10 +54159,17 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2019"	"human"	"human"	"MIC"		"F_MYRZY_GLLR"	2	"MIF"	"Table 1"		2	8	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"ANI"	"Table 1"		0.125	0.5	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"CAS"	"Table 1"		0.125	0.5	FALSE	FALSE	
-"CLSI 2019"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"	50	14	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"	"25 mcg"		14	FALSE	FALSE	"[No S category] CLSI gives no S category for this zone diameter (S >= 80 mm in WHONET), so only R can be interpreted"
 "CLSI 2019"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"FLU"	"Table 1"		1e-04	64	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"DISK"		"F_NKSMY_BRTS"	2	"MIF"	"Table 1"	"10 mcg"	30	27	FALSE	FALSE	
 "CLSI 2019"	"human"	"human"	"MIC"		"F_NKSMY_BRTS"	2	"MIF"	"Table 1"		0.064	0.25	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"ANI"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"	"5 mcg"	17	14	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"CAS"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"	"10 mcg"	22	19	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"MIF"	"Table 1"		0.25	1	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"DISK"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"	"1 mcg"	15	12	FALSE	FALSE	
+"CLSI 2019"	"human"	"human"	"MIC"		"F_PICHI_KDRV"	2	"VOR"	"Table 1"		0.5	2	FALSE	FALSE	
 "CLSI 2018"	"human"	"human"	"MIC"		"B_ABTRP"	3	"FEP"	"M45 Table 1"		1	4	FALSE	FALSE	
 "CLSI 2018"	"human"	"human"	"MIC"		"B_ABTRP"	3	"GAT"	"M45 Table 1"		1	4	FALSE	FALSE	
 "CLSI 2018"	"human"	"human"	"MIC"		"B_ABTRP"	3	"IPM"	"M45 Table 1"		0.5	2	FALSE	FALSE	
@@ -54854,8 +54880,8 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2018"	"human"	"human"	"MIC"		"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE	
 "CLSI 2018"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE	
 "CLSI 2018"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5 mcg"	24	23	FALSE	FALSE	
-"CLSI 2018"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2018"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
+"CLSI 2018"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2018"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2018"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2018"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2018"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"LVX"	"Table 2B-4"	"5 mcg"	17	13	FALSE	FALSE	
@@ -55824,8 +55850,8 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2017"	"human"	"human"	"MIC"		"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE	
 "CLSI 2017"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE	
 "CLSI 2017"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5 mcg"	24	23	FALSE	FALSE	
-"CLSI 2017"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2017"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
+"CLSI 2017"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2017"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2017"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2017"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2017"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"LVX"	"Table 2B-4"	"5 mcg"	17	13	FALSE	FALSE	
@@ -56794,8 +56820,8 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2016"	"human"	"human"	"MIC"		"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE	
 "CLSI 2016"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE	
 "CLSI 2016"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5 mcg"	24	23	FALSE	FALSE	
-"CLSI 2016"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2016"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
+"CLSI 2016"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2016"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2016"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2016"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2016"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"LVX"	"Table 2B-4"	"5 mcg"	17	13	FALSE	FALSE	
@@ -57770,8 +57796,8 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2015"	"human"	"human"	"MIC"		"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE	
 "CLSI 2015"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"OFX"	"Table 2A"		0.125	2	FALSE	FALSE	
 "CLSI 2015"	"human"	"human"	"DISK"		"B_SLMNL"	3	"PEF"	"Table 2A"	"5 mcg"	24	23	FALSE	FALSE	
-"CLSI 2015"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
-"CLSI 2015"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
+"CLSI 2015"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"	"15 mcg"	13	12	FALSE	FALSE	
+"CLSI 2015"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"AZM"	"Table 2A"		16	32	FALSE	FALSE	
 "CLSI 2015"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2015"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2015"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"LVX"	"Table 2B-4"	"5 mcg"	17	13	FALSE	FALSE	
@@ -60639,8 +60665,8 @@ Some countries prefer to categorise wild-type isolates of E. coli and P. mirabil
 "CLSI 2012"	"human"	"human"	"DISK"	"Extraintestinal"	"B_SLMNL"	3	"CIP"	"Table 2A"	"5 mcg"	31	20	FALSE	FALSE	
 "CLSI 2012"	"human"	"human"	"MIC"	"Intestinal"	"B_SLMNL"	3	"CIP"	"Table 2A"		1	4	FALSE	FALSE	
 "CLSI 2012"	"human"	"human"	"MIC"	"Extraintestinal"	"B_SLMNL"	3	"CIP"	"Table 2A"		0.064	1	FALSE	FALSE	
-"CLSI 2012"	"human"	"human"	"DISK"		"B_SLMNL_ENTR_ENTR"	1	"CIP"	"Table 2A"	"5 mcg"	31	20	FALSE	FALSE	
-"CLSI 2012"	"human"	"human"	"MIC"		"B_SLMNL_ENTR_ENTR"	1	"CIP"	"Table 2A"		0.064	1	FALSE	FALSE	
+"CLSI 2012"	"human"	"human"	"DISK"		"B_SLMNL_TYPH"	1	"CIP"	"Table 2A"	"5 mcg"	31	20	FALSE	FALSE	
+"CLSI 2012"	"human"	"human"	"MIC"		"B_SLMNL_TYPH"	1	"CIP"	"Table 2A"		0.064	1	FALSE	FALSE	
 "CLSI 2012"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CAZ"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2012"	"human"	"human"	"MIC"		"B_STNTR_MLTP"	2	"CHL"	"Table 2B-4"		8	32	FALSE	FALSE	
 "CLSI 2012"	"human"	"human"	"DISK"		"B_STNTR_MLTP"	2	"LVX"	"Table 2B-4"	"5 mcg"	17	13	FALSE	FALSE	

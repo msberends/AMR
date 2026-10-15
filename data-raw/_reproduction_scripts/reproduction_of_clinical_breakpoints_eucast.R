@@ -2750,10 +2750,9 @@ merge_eucast_breakpoints <- function(clinical_breakpoints, breakpoints_eucast, e
     paste(sort(unique(paste(replaced$guideline, replaced$scope))), collapse = ", "),
     ") with ", nrow(breakpoints_eucast), " rows from the EUCAST workbooks"
   )
-  # rows without any breakpoint are only kept as the blocking rows of the
-  # EUCAST workbooks (see "Blocking rows")
+  # rows without any breakpoint are only kept as blocking rows (see "Blocking rows"), which also come from the WHONET-based rows for zone diameters without S category, e.g. EUCAST 2011
   kept |>
-    filter(!(is.na(breakpoint_S) & is.na(breakpoint_R)) & !is.na(mo) & !is.na(ab)) |>
+    filter((!(is.na(breakpoint_S) & is.na(breakpoint_R)) | grepl("^\\[No breakpoint\\] ", note)) & !is.na(mo) & !is.na(ab)) |>
     bind_rows(breakpoints_eucast) |>
     arrange(desc(guideline), mo, ab, type, host, method, rank_index) |>
     distinct(guideline, type, host, ab, mo, method, site, breakpoint_S, .keep_all = TRUE) |>

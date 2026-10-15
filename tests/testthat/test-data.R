@@ -69,7 +69,10 @@ test_that("test-data.R", {
   expect_true(all(clinical_breakpoints$guideline[is_blocking] %like% "EUCAST"))
   expect_false(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking), "breakpoint_S", drop = TRUE])))
   expect_true(anyNA(as.mic(clinical_breakpoints[which(clinical_breakpoints$method == "MIC" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking), "breakpoint_R", drop = TRUE])))
-  expect_false(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking), "breakpoint_S", drop = TRUE])))
+  # zone diameters without S category in the guideline (e.g. CLSI for fluconazole in C. glabrata) only have an R breakpoint, and must state this
+  no_S_category <- grepl("^\\[No S category\\] ", clinical_breakpoints$note)
+  expect_true(all(is.na(clinical_breakpoints$breakpoint_S[no_S_category]) & !is.na(clinical_breakpoints$breakpoint_R[no_S_category]) & clinical_breakpoints$method[no_S_category] == "DISK"))
+  expect_false(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking & !no_S_category), "breakpoint_S", drop = TRUE])))
   expect_true(anyNA(as.disk(clinical_breakpoints[which(clinical_breakpoints$method == "DISK" & clinical_breakpoints$ref_tbl != "ECOFF" & !is_blocking), "breakpoint_R", drop = TRUE])))
 
   # antibiotic names must always be coercible to their original AB code

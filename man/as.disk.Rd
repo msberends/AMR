@@ -27,7 +27,7 @@ This transforms a vector to a new class \code{\link{disk}}, which is a disk diff
 \details{
 Interpret disk values as SIR values with \code{\link[=as.sir]{as.sir()}}. It supports guidelines from EUCAST and CLSI.
 
-Disk diffusion growth zone sizes must be between 0 and 50 millimetres. Values higher than 50 but lower than 100 will be maximised to 50. All others input values outside the 0-50 range will return \code{NA}.
+Disk diffusion growth zone sizes must be between 0 and 50 millimetres. Decimal values are rounded up. All input values outside the 0-50 range, including values higher than 50, return \code{NA} with a warning.
 
 \code{NA_disk_} is a missing value of the new \code{disk} class.
 }
