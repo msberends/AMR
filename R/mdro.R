@@ -364,7 +364,7 @@ mdro <- function(x = NULL,
     guideline$name <- "Companion handbook to the WHO guidelines for the programmatic management of drug-resistant tuberculosis"
     guideline$author <- "WHO (World Health Organization)"
     guideline$version <- "WHO/HTM/TB/2014.11, 2014"
-    guideline$source_url <- font_url("https://www.who.int/publications/i/item/9789241548809", "Direct download")
+    guideline$source_url <- NA_character_
     guideline$type <- "MDR-TB's"
 
     # support per country:

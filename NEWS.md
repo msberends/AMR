@@ -1,6 +1,6 @@
-# AMR 3.0.1.9154
+# AMR 3.1.0
 
-Planned as v3.1.0, mid October 2026.
+This substantial release makes most core functions considerably faster, adds EUCAST 2026 and CLSI 2026 breakpoints, adopts the new prokaryotic kingdoms of Göker and Oren (2024), introduces WT/NWT interpretation for ECOFFs, unifies the EUCAST and CLSI interpretive rules, and supports `tidymodels` pipelines. As it contains several breaking changes, please read the *Breaking* section below before updating.
 
 ### Breaking
 * The former *kingdoms* Bacteria and Archaea are now each divided into four kingdoms, with new top-level *domains* Bacteria and Archaea (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new `domain` column was added to the `microorganisms` data set, and `mo_kingdom()` now returns the formal kingdom (e.g., `"Pseudomonadati"` instead of `"Bacteria"`). Use `mo_domain()` for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), `kingdom` and `domain` are identical.
@@ -167,6 +167,7 @@ Planned as v3.1.0, mid October 2026.
   * The changes of custom rules are now also printed when no other rules were applied
   * The `rule` column of the output of `verbose = TRUE` no longer contains formatting markup (e.g., `{.field AMC}`) for the inhibitor-inheritance rules
 * `custom_eucast_rules()` has been renamed to `custom_interpretive_rules()`. The old name is now deprecated but still works (#268).
+*  The package option `AMR_eucastrules` has been replaced by `AMR_interpretive_rules`, which applies to `interpretive_rules()`, `eucast_rules()`, and `clsi_rules()`. Its default is now `c("breakpoints", "expected_phenotypes")`. A set `AMR_eucastrules` option is now ignored, with a warning in `eucast_rules()`.
 * Logical comparison (`==`, `!=`) of the `sir` class with a `factor` is now possible on R >= 4.3
 * New argument `guideline` in `random_mic()` and `random_disk()`, defaulting to the `AMR_guideline` option (otherwise EUCAST), so that generated values are based on the latest breakpoints of one guideline instead of those of all guidelines and years combined
 * Fixed `format()` on the output of `bug_drug_combinations()`, which counted I and SDD as resistant with the default `combine_SI = TRUE`, contrary to its documentation. It now reads the guideline used in `bug_drug_combinations()`, which can be overridden with its own `guideline` argument, and also counts NS as resistant.

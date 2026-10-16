@@ -134,7 +134,7 @@ pca <- function(x,
   pca_data <- x[, which(vapply(FUN.VALUE = logical(1), x, function(x) is.numeric(x))), drop = FALSE]
 
   message_(
-    "Columns selected for PCA: ", vector_and(font_bold(colnames(pca_data), collapse = NULL), quotes = TRUE),
+    "Columns selected for PCA: ", vector_and(paste0("{.field ", font_bold(colnames(pca_data), collapse = NULL), "}"), quotes = FALSE),
     ". Total observations available: ", nrow(pca_data), "."
   )
 

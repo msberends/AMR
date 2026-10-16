@@ -492,7 +492,7 @@ antibiogram.default <- function(x,
       if (has_syndromic_group) {
         sims <- sims * length(unique(x$`.syndromic_group`))
       }
-      message_("Are you sure you want to run in non-parallel (=sequential) mode?", as_note = FALSE)
+      message_(font_bold("Are you sure you want to run in non-parallel (=sequential) mode?"), as_note = FALSE)
       message_("WISCA can take a ", ifelse(sims > 10000, font_bold("very "), ""), "long time for the ", format(sims, decimal.mark = ".", big.mark = " "), " simulations you require, and you already have the {.pkg future} package installed.", as_note = FALSE)
       q <- utils::menu(c(
         "Yes, still run in sequential mode",

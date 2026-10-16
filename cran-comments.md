@@ -1,6 +1,6 @@
-This version is a minor release (v3.1.0) following the bugfix release v3.0.1 in September 2025. It adds the EUCAST 2026 and CLSI 2026 clinical breakpoints (EUCAST 2026 is now the default), a taxonomic update of all microorganisms, unified EUCAST and CLSI interpretive rules, support for `tidymodels` pipelines, and many improvements and bug fixes, as listed in `NEWS.md`.
+This version is a minor release (v3.1.0) following the bugfix release v3.0.1 in September 2025.The many improvements and bug fixes are in `NEWS.md`.
 
-This package has two reverse dependencies, `MIC` and `MIMER`, both checked against this version. `MIMER` passes. `MIC` is affected by a change in the output of `as.sir()` for interpretation based on epidemiological cut-off values (ECOFFs), which makes some of its unit tests fail; its maintainer has been informed in advance through an issue in its GitHub repository.
+This package has two reverse dependencies, `MIC` and `MIMER`, both checked against this version. `MIMER` passes. `MIC` is affected by a change in the output of `AMR::as.sir()` for interpretation based on epidemiological cut-off values (ECOFFs), which makes some of its unit tests fail; its maintainer has been informed [in advance through this issue](https://github.com/agerada/MIC/issues/15) in their GitHub repository.
 
 As with all previous >20 releases, some CHECKs may return an `INFO` for narrowly exceeding the installation size limit. The size has been reduced to a minimum in prior coordination with CRAN maintainers.
 

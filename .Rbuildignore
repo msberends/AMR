@@ -13,6 +13,8 @@
 ^\.claude$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+index\.html
+README\.html
 ^\.github$
 ^doc$
 ^docs$
