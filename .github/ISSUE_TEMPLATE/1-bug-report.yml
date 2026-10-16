@@ -42,7 +42,7 @@ body:
       multiple: false
       options:
         - ''
-        - Latest CRAN version (3.0.1)
-        - One of the latest GitHub versions (3.0.1.9xxx)
+        - Latest CRAN version (3.1.0)
+        - One of the latest GitHub versions (3.1.0.9xxx)
     validations:
       required: true

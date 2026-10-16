@@ -1,3 +1,5 @@
+# AMR 3.1.0.9001
+
 # AMR 3.1.0
 
 This substantial release makes most core functions considerably faster, adds EUCAST 2026 and CLSI 2026 breakpoints, adopts the new prokaryotic kingdoms of Göker and Oren (2024), introduces WT/NWT interpretation for ECOFFs, unifies the EUCAST and CLSI interpretive rules, and supports `tidymodels` pipelines. As it contains several breaking changes, please read the *Breaking* section below before updating.
