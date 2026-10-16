@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9152
+## AMR 3.0.1.9153
 
 Planned as v3.1.0, mid October 2026.
 
@@ -263,6 +263,10 @@ Planned as v3.1.0, mid October 2026.
     ([\#313](https://github.com/msberends/AMR/issues/313))
   - `mo_*()` functions now retrieve properties of valid `mo` input
     directly, and only for unique values
+  - Subsetting, combining, and binding rows of `mo` vectors (e.g., in
+    [`rbind()`](https://rdrr.io/r/base/cbind.html)) is now much faster,
+    as codes are checked against a hashed set instead of the whole
+    `microorganisms` data set
   - The mapping of outdated taxonomic names to their current names is
     now remembered per code
   - Previously coerced input is now recognised again, e.g., for an
@@ -405,6 +409,11 @@ Planned as v3.1.0, mid October 2026.
     estimates.
   - Grouped traditional antibiograms now show the (translated) pathogen
     names, as ungrouped antibiograms do, instead of microorganism codes
+  - [`wisca()`](https://amr-for-r.org/reference/antibiogram.md) and
+    [`wisca_plot()`](https://amr-for-r.org/reference/antibiogram.md) are
+    considerably faster, especially with syndromic groups, by
+    determining intrinsic resistance and pathogen names only once per
+    regimen and pathogen
 - Resistance and susceptibility calculation
   - New argument `guideline` (default: the `AMR_guideline` option,
     otherwise EUCAST) in
@@ -507,6 +516,13 @@ Planned as v3.1.0, mid October 2026.
     ([\#209](https://github.com/msberends/AMR/issues/209)).
   - BRMO classification now includes bacterial complexes
     ([\#275](https://github.com/msberends/AMR/issues/275))
+  - Fixed a bug in the CMI 2012 guideline where pandrug-resistant (PDR)
+    isolates were classified as extensively drug-resistant (XDR), and
+    another isolate could be marked as PDR instead, if the isolate was
+    not among the first rows of the data. This can change the PDR and
+    XDR results of `guideline = "CMI 2012"` (the default).
+  - Considerably faster, as the classes per isolate are now determined
+    per column instead of per cell
 - [`top_n_microorganisms()`](https://amr-for-r.org/reference/top_n_microorganisms.md)
   - New argument `property_for_each` for sub-grouping within the top *n*
     groups. Rank ordering is enforced, so that only lower taxonomic

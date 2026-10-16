@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9152</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9153</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9152" id="amr-3019152">AMR 3.0.1.9152<a class="anchor" aria-label="anchor" href="#amr-3019152"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.1.9153" id="amr-3019153">AMR 3.0.1.9153<a class="anchor" aria-label="anchor" href="#amr-3019153"></a></h2>
 <p>Planned as v3.1.0, mid October 2026.</p>
 <div class="section level4">
-<h4 id="breaking-3-0-1-9152">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9152"></a></h4>
+<h4 id="breaking-3-0-1-9153">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9153"></a></h4>
 <ul><li>
 <p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms, with new top-level <em>domains</em> Bacteria and Archaea (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column was added to the <code>microorganisms</code> data set, and <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g., <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
 <table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
@@ -109,7 +109,7 @@
 <li><p>The <code>combine_SI</code> argument of these functions is deprecated in favour of <code>guideline</code>. While set, it is followed literally and takes precedence over <code>guideline</code>. Use <code>guideline = NULL</code> instead of <code>combine_SI = FALSE</code> to keep S, I, and R separate.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9152">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9152"></a></h4>
+<h4 id="new-3-0-1-9153">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9153"></a></h4>
 <ul><li>
 <strong>Updated clinical breakpoints</strong>
 <ul><li>EUCAST 2026 and CLSI 2026 are now supported, by adding over 5,700 new breakpoints to the <code>clinical_breakpoints</code> data set. EUCAST 2026 is now the default guideline for all MIC and disk diffusion interpretations.</li>
@@ -157,7 +157,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-0-1-9152">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9152"></a></h4>
+<h4 id="changed-3-0-1-9153">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9153"></a></h4>
 <ul><li>SIR interpretation (<code><a href="../reference/as.sir.html">as.sir()</a></code>)
 <ul><li>New argument <code>enforce_method</code> (<code>"auto"</code>, <code>"mic"</code>, or <code>"disk"</code>) to force the interpretation method when S3 class information is lost, e.g., when called from Python (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
 <li>When input consists of whole numbers only, disk zones are now assumed rather than MIC values (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
@@ -187,6 +187,7 @@
 <ul><li>Considerably faster through one consistent session cache design, which is cleared when lookup tables change, e.g., after <code><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms()</a></code> (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)</li>
 <li>
 <code>mo_*()</code> functions now retrieve properties of valid <code>mo</code> input directly, and only for unique values</li>
+<li>Subsetting, combining, and binding rows of <code>mo</code> vectors (e.g., in <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code>) is now much faster, as codes are checked against a hashed set instead of the whole <code>microorganisms</code> data set</li>
 <li>The mapping of outdated taxonomic names to their current names is now remembered per code</li>
 <li>Previously coerced input is now recognised again, e.g., for an unknown species of a known genus, instead of being matched again on every call (<a href="https://github.com/msberends/AMR/issues/313" class="external-link">#313</a>)</li>
 <li>
@@ -246,6 +247,8 @@
 </li>
 <li>Isolates of unknown species are now included in grouped antibiograms and in <code><a href="../reference/antibiogram.html">wisca()</a></code>, as they already were in traditional antibiograms. They were previously excluded silently, with the warning “invalid microorganism code, NA generated”. This can change WISCA coverage estimates.</li>
 <li>Grouped traditional antibiograms now show the (translated) pathogen names, as ungrouped antibiograms do, instead of microorganism codes</li>
+<li>
+<code><a href="../reference/antibiogram.html">wisca()</a></code> and <code><a href="../reference/antibiogram.html">wisca_plot()</a></code> are considerably faster, especially with syndromic groups, by determining intrinsic resistance and pathogen names only once per regimen and pathogen</li>
 </ul></li>
 <li>Resistance and susceptibility calculation
 <ul><li>New argument <code>guideline</code> (default: the <code>AMR_guideline</code> option, otherwise EUCAST) in <code><a href="../reference/proportion.html">susceptibility()</a></code>, <code><a href="../reference/proportion.html">resistance()</a></code>, <code><a href="../reference/count.html">count_df()</a></code>, <code><a href="../reference/proportion.html">proportion_df()</a></code>, <code><a href="../reference/proportion.html">sir_df()</a></code>, <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code>, <code><a href="../reference/ggplot_sir.html">geom_sir()</a></code>, <code><a href="../reference/ggplot_sir.html">labels_sir_count()</a></code>, <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, <code><a href="../reference/antibiogram.html">wisca()</a></code>, and <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to interpret the ‘I’ category correctly per guideline. Functions that return results per category also accept <code>guideline = NULL</code> to keep S, I, and R separate, while functions that return a single proportion or count give an informative error.</li>
@@ -283,6 +286,8 @@
 <li>MDRO determination (<code><a href="../reference/mdro.html">mdro()</a></code>)
 <ul><li>Resistance can now be inferred from a drug/inhibitor combination when the column of the base drug is absent (e.g., piperacillin inferred from piperacillin/tazobactam). This is controlled with the new argument <code>infer_from_combinations</code> (default: <code>TRUE</code>) (<a href="https://github.com/msberends/AMR/issues/209" class="external-link">#209</a>).</li>
 <li>BRMO classification now includes bacterial complexes (<a href="https://github.com/msberends/AMR/issues/275" class="external-link">#275</a>)</li>
+<li>Fixed a bug in the CMI 2012 guideline where pandrug-resistant (PDR) isolates were classified as extensively drug-resistant (XDR), and another isolate could be marked as PDR instead, if the isolate was not among the first rows of the data. This can change the PDR and XDR results of <code>guideline = "CMI 2012"</code> (the default).</li>
+<li>Considerably faster, as the classes per isolate are now determined per column instead of per cell</li>
 </ul></li>
 <li>
 <code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code>
@@ -315,7 +320,7 @@
 <li>Fixed a bug where R could crash after unloading the <code>data.table</code> package, and where suggested packages available on the machine that built the package were used even if they were not available to the user</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-0-1-9152">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9152"></a></h4>
+<h4 id="other-3-0-1-9153">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9153"></a></h4>
 <ul><li>Improved console messages with clickable links throughout the package, powered by <code>cli</code> if it is installed (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
 <li>The section <em>Interpretation of SIR</em> (in <code><a href="../reference/as.sir.html">?as.sir</a></code>) now explains for all functions with a <code>guideline</code> argument for aggregated analyses how S, SDD, I, R, WT, NWT, NS, and NI are categorised per guideline. The handling of ‘I’ per MDRO guideline in <code><a href="../reference/mdro.html">mdro()</a></code> will be revised in a future version (<a href="https://github.com/msberends/AMR/issues/323" class="external-link">#323</a>).</li>
 <li>

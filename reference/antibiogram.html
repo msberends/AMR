@@ -13,7 +13,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9152</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9153</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -511,11 +511,12 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># and use `wisca_plot()` to assess the simulation outcomes.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Or, use it directly in R Markdown or Quarto, see `antibiogram()`.</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># stratified by syndrome or clinical group</span></span></span>
-<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">wisca</span><span class="op">(</span><span class="va">example_isolates</span>,</span></span>
+<span class="r-in"><span><span class="co"># stratified by syndrome or clinical group, here for the 5 most common species to keep the plot readable</span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">wisca</span><span class="op">(</span><span class="fu"><a href="top_n_microorganisms.html">top_n_microorganisms</a></span><span class="op">(</span><span class="va">example_isolates</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using column <span style="color: #00BB00; font-weight: bold;">mo</span> as input for `col_mo`.</span>
 <span class="r-in"><span><span class="va">out</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble:       3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)</span></span>
@@ -523,9 +524,9 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          74.8% (69-80.1%)          93.7% (92.1-95.2%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               57.2% (49.2-65.4%)        86.6% (83.5-89.7%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        57.9% (46.2-69.8%)        76.6% (70.5-82.2%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          76% (68.1-83.3%)          99% (98.2-99.6%)                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               53.3% (39.6-68.5%)        98.4% (96.7-99.4%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        62.8% (41.2-84.9%)        96.2% (91.1-99.1%)                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -547,7 +548,6 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">wisca</span><span class="op">(</span>antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using column <span style="color: #00BB00; font-weight: bold;">mo</span> as input for `col_mo`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Number of tested isolates should exceed 30 for each regimen (and group). WISCA</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> coverage estimates might be inaccurate.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble:       8 × 5</span></span>
@@ -556,14 +556,14 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   age_group gender `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentami…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0-24      F      57.3% (31.1-82.2%)        70.9% (48.1-88.9%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 0-24      M      59.3% (30.7-86.3%)        76.2% (57.5-91.3%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 25-49     F      67.2% (43-89.1%)          93.7% (87-97.8%)                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 25-49     M      56.6% (24.9-87.3%)        91.2% (82-97.1%)                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 50-74     F      68.2% (54.1-82.1%)        96.9% (94.4-98.6%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 50-74     M      67.2% (56.1-77.4%)        96.8% (94-98.6%)                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 75+       F      73.4% (62.1-84%)          97.7% (95.8-99%)                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 75+       M      73.8% (63.8-82.8%)        97.8% (96.1-99.1%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0-24      F      57.4% (27.9-82.7%)        71% (49-89.8%)                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 0-24      M      60% (32.3-84.8%)          75.9% (56.5-90.8%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 25-49     F      66.9% (43.2-90.3%)        93.8% (87.3-98%)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 25-49     M      57.4% (25.6-87.4%)        91.2% (82.2-96.9%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 50-74     F      68.5% (54.7-83.1%)        96.9% (94.6-98.6%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 50-74     M      66.8% (55.9-77.4%)        96.8% (94.1-98.6%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 75+       F      73.1% (62.2-83.2%)        97.7% (96-99%)                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 75+       M      73.9% (63.8-82.7%)        97.8% (96-99%)                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -750,9 +750,9 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |Syndromic Group |Piperacillin/tazobactam |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------|:-----------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |74.8% (69.2-80.2%)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |57% (48.8-65.9%)        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |57.4% (46.7-68.8%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |74.8% (69-80.4%)        |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |57.1% (48.6-65.5%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |57.6% (46.5-68.8%)      |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>

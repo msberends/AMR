@@ -839,11 +839,12 @@ antibiogram(example_isolates,
 #> # and use `wisca_plot()` to assess the simulation outcomes.
 #> # Or, use it directly in R Markdown or Quarto, see `antibiogram()`.
 
-# stratified by syndrome or clinical group
-out <- wisca(example_isolates,
+# stratified by syndrome or clinical group, here for the 5 most common species to keep the plot readable
+out <- wisca(top_n_microorganisms(example_isolates, n = 5),
   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   syndromic_group = "ward"
 )
+#> ℹ Using column mo as input for `col_mo`.
 out
 #> # A tibble:       3 × 4
 #> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
@@ -851,9 +852,9 @@ out
 #> # Simulations:    1000 per stratum
 #>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
 #>   <chr>             <chr>                     <chr>                             
-#> 1 Clinical          74.8% (69-80.1%)          93.7% (92.1-95.2%)                
-#> 2 ICU               57.2% (49.2-65.4%)        86.6% (83.5-89.7%)                
-#> 3 Outpatient        57.9% (46.2-69.8%)        76.6% (70.5-82.2%)                
+#> 1 Clinical          76% (68.1-83.3%)          99% (98.2-99.6%)                  
+#> 2 ICU               53.3% (39.6-68.5%)        98.4% (96.7-99.4%)                
+#> 3 Outpatient        62.8% (41.2-84.9%)        96.2% (91.1-99.1%)                
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -875,7 +876,6 @@ if (requireNamespace("dplyr")) {
     ) %>%
     wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 }
-#> ℹ Using column mo as input for `col_mo`.
 #> Warning: Number of tested isolates should exceed 30 for each regimen (and group). WISCA
 #> coverage estimates might be inaccurate.
 #> # A tibble:       8 × 5
@@ -884,14 +884,14 @@ if (requireNamespace("dplyr")) {
 #> # Simulations:    1000 per stratum
 #>   age_group gender `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentami…¹
 #>   <chr>     <chr>  <chr>                     <chr>                              
-#> 1 0-24      F      57.3% (31.1-82.2%)        70.9% (48.1-88.9%)                 
-#> 2 0-24      M      59.3% (30.7-86.3%)        76.2% (57.5-91.3%)                 
-#> 3 25-49     F      67.2% (43-89.1%)          93.7% (87-97.8%)                   
-#> 4 25-49     M      56.6% (24.9-87.3%)        91.2% (82-97.1%)                   
-#> 5 50-74     F      68.2% (54.1-82.1%)        96.9% (94.4-98.6%)                 
-#> 6 50-74     M      67.2% (56.1-77.4%)        96.8% (94-98.6%)                   
-#> 7 75+       F      73.4% (62.1-84%)          97.7% (95.8-99%)                   
-#> 8 75+       M      73.8% (63.8-82.8%)        97.8% (96.1-99.1%)                 
+#> 1 0-24      F      57.4% (27.9-82.7%)        71% (49-89.8%)                     
+#> 2 0-24      M      60% (32.3-84.8%)          75.9% (56.5-90.8%)                 
+#> 3 25-49     F      66.9% (43.2-90.3%)        93.8% (87.3-98%)                   
+#> 4 25-49     M      57.4% (25.6-87.4%)        91.2% (82.2-96.9%)                 
+#> 5 50-74     F      68.5% (54.7-83.1%)        96.9% (94.6-98.6%)                 
+#> 6 50-74     M      66.8% (55.9-77.4%)        96.8% (94.1-98.6%)                 
+#> 7 75+       F      73.1% (62.2-83.2%)        97.7% (96-99%)                     
+#> 8 75+       M      73.9% (63.8-82.7%)        97.8% (96-99%)                     
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -1078,9 +1078,9 @@ if (requireNamespace("knitr")) {
 #> 
 #> |Syndromic Group |Piperacillin/tazobactam |
 #> |:---------------|:-----------------------|
-#> |Clinical        |74.8% (69.2-80.2%)      |
-#> |ICU             |57% (48.8-65.9%)        |
-#> |Outpatient      |57.4% (46.7-68.8%)      |
+#> |Clinical        |74.8% (69-80.4%)        |
+#> |ICU             |57.1% (48.6-65.5%)      |
+#> |Outpatient      |57.6% (46.5-68.8%)      |
 
 
 # Generate plots with ggplot2 or base R --------------------------------
