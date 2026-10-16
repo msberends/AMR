@@ -363,7 +363,7 @@ antibiogram(example_isolates,
   wisca = TRUE
 )
 
-# stratified by syndrome or clinical group, here for the 5 most common species to keep the plot readable
+# stratified by syndrome or clinical group (5 most common species, for a readable plot)
 out <- wisca(top_n_microorganisms(example_isolates, n = 5),
   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   syndromic_group = "ward"
