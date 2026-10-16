@@ -12,6 +12,7 @@
 ^CLAUDE\.md$
 ^\.claude$
 ^cran-comments\.md$
+^release\.md$
 ^CRAN-RELEASE$
 index\.html
 README\.html
