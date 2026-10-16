@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0.1.9154</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.0.1.9154" id="amr-3019154">AMR 3.0.1.9154<a class="anchor" aria-label="anchor" href="#amr-3019154"></a></h2>
-<p>Planned as v3.1.0, mid October 2026.</p>
+<h2 class="pkg-version" data-toc-text="3.1.0" id="amr-310">AMR 3.1.0<a class="anchor" aria-label="anchor" href="#amr-310"></a></h2>
+<p>This substantial release makes most core functions considerably faster, adds EUCAST 2026 and CLSI 2026 breakpoints, adopts the new prokaryotic kingdoms of Göker and Oren (2024), introduces WT/NWT interpretation for ECOFFs, unifies the EUCAST and CLSI interpretive rules, and supports <code>tidymodels</code> pipelines. As it contains several breaking changes, please read the <em>Breaking</em> section below before updating.</p>
 <div class="section level4">
-<h4 id="breaking-3-0-1-9154">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-0-1-9154"></a></h4>
+<h4 id="breaking-3-1-0">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-1-0"></a></h4>
 <ul><li>
 <p>The former <em>kingdoms</em> Bacteria and Archaea are now each divided into four kingdoms, with new top-level <em>domains</em> Bacteria and Archaea (Göker and Oren, 2024, DOI: 10.1099/ijsem.0.006242). Following this, a new <code>domain</code> column was added to the <code>microorganisms</code> data set, and <code><a href="../reference/mo_property.html">mo_kingdom()</a></code> now returns the formal kingdom (e.g., <code>"Pseudomonadati"</code> instead of <code>"Bacteria"</code>). Use <code><a href="../reference/mo_property.html">mo_domain()</a></code> for the old behaviour. For non-prokaryotic kingdoms (Fungi, Protozoa, etc.), <code>kingdom</code> and <code>domain</code> are identical.</p>
 <table class="table"><colgroup><col width="33%"><col width="29%"><col width="37%"></colgroup><thead><tr><th>
@@ -109,7 +109,7 @@
 <li><p>The <code>combine_SI</code> argument of these functions is deprecated in favour of <code>guideline</code>. While set, it is followed literally and takes precedence over <code>guideline</code>. Use <code>guideline = NULL</code> instead of <code>combine_SI = FALSE</code> to keep S, I, and R separate.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-0-1-9154">New<a class="anchor" aria-label="anchor" href="#new-3-0-1-9154"></a></h4>
+<h4 id="new-3-1-0">New<a class="anchor" aria-label="anchor" href="#new-3-1-0"></a></h4>
 <ul><li>
 <strong>Updated clinical breakpoints</strong>
 <ul><li>EUCAST 2026 and CLSI 2026 are now supported, by adding over 5,700 new breakpoints to the <code>clinical_breakpoints</code> data set. EUCAST 2026 is now the default guideline for all MIC and disk diffusion interpretations.</li>
@@ -157,7 +157,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-0-1-9154">Changed<a class="anchor" aria-label="anchor" href="#changed-3-0-1-9154"></a></h4>
+<h4 id="changed-3-1-0">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0"></a></h4>
 <ul><li>SIR interpretation (<code><a href="../reference/as.sir.html">as.sir()</a></code>)
 <ul><li>New argument <code>enforce_method</code> (<code>"auto"</code>, <code>"mic"</code>, or <code>"disk"</code>) to force the interpretation method when S3 class information is lost, e.g., when called from Python (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
 <li>When input consists of whole numbers only, disk zones are now assumed rather than MIC values (<a href="https://github.com/msberends/AMR/issues/291" class="external-link">#291</a>)</li>
@@ -313,6 +313,7 @@
 </ul></li>
 <li>
 <code><a href="../reference/AMR-deprecated.html">custom_eucast_rules()</a></code> has been renamed to <code><a href="../reference/custom_interpretive_rules.html">custom_interpretive_rules()</a></code>. The old name is now deprecated but still works (<a href="https://github.com/msberends/AMR/issues/268" class="external-link">#268</a>).</li>
+<li>The package option <code>AMR_eucastrules</code> has been replaced by <code>AMR_interpretive_rules</code>, which applies to <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>, <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code>, and <code><a href="../reference/interpretive_rules.html">clsi_rules()</a></code>. Its default is now <code>c("breakpoints", "expected_phenotypes")</code>. A set <code>AMR_eucastrules</code> option is now ignored, with a warning in <code><a href="../reference/interpretive_rules.html">eucast_rules()</a></code>.</li>
 <li>Logical comparison (<code>==</code>, <code>!=</code>) of the <code>sir</code> class with a <code>factor</code> is now possible on R &gt;= 4.3</li>
 <li>New argument <code>guideline</code> in <code><a href="../reference/random.html">random_mic()</a></code> and <code><a href="../reference/random.html">random_disk()</a></code>, defaulting to the <code>AMR_guideline</code> option (otherwise EUCAST), so that generated values are based on the latest breakpoints of one guideline instead of those of all guidelines and years combined</li>
 <li>Fixed <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> on the output of <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code>, which counted I and SDD as resistant with the default <code>combine_SI = TRUE</code>, contrary to its documentation. It now reads the guideline used in <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code>, which can be overridden with its own <code>guideline</code> argument, and also counts NS as resistant.</li>
@@ -320,7 +321,7 @@
 <li>Fixed a bug where R could crash after unloading the <code>data.table</code> package, and where suggested packages available on the machine that built the package were used even if they were not available to the user</li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-0-1-9154">Other<a class="anchor" aria-label="anchor" href="#other-3-0-1-9154"></a></h4>
+<h4 id="other-3-1-0">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0"></a></h4>
 <ul><li>Improved console messages with clickable links throughout the package, powered by <code>cli</code> if it is installed (<a href="https://github.com/msberends/AMR/issues/191" class="external-link">#191</a>, <a href="https://github.com/msberends/AMR/issues/265" class="external-link">#265</a>)</li>
 <li>The section <em>Interpretation of SIR</em> (in <code><a href="../reference/as.sir.html">?as.sir</a></code>) now explains for all functions with a <code>guideline</code> argument for aggregated analyses how S, SDD, I, R, WT, NWT, NS, and NI are categorised per guideline. The handling of ‘I’ per MDRO guideline in <code><a href="../reference/mdro.html">mdro()</a></code> will be revised in a future version (<a href="https://github.com/msberends/AMR/issues/323" class="external-link">#323</a>).</li>
 <li>

@@ -46,14 +46,6 @@ the `AMR` package. Set them using the
   package. This is explained in
   [`add_custom_microorganisms()`](https://amr-for-r.org/reference/add_custom_microorganisms.md).
 
-- `AMR_eucastrules`  
-  A [character](https://rdrr.io/r/base/character.html) to set the
-  default types of rules for
-  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
-  function, must be one or more of: `"breakpoints"`, `"expert"`,
-  `"other"`, `"custom"`, `"all"`, and defaults to
-  `c("breakpoints", "expert")`.
-
 - `AMR_guideline`  
   A [character](https://rdrr.io/r/base/character.html) to set the
   default guideline used throughout the `AMR` package wherever a
@@ -99,16 +91,6 @@ the `AMR` package. Set them using the
     background and therefore depend on the active `guideline` setting,
     which again uses EUCAST 2026 if not set explicitly.
 
-- `AMR_guideline`  
-  A [character](https://rdrr.io/r/base/character.html) to set the
-  default guideline for interpreting MIC values and disk diffusion
-  diameters with
-  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md). Can be only
-  the guideline name (e.g., `"CLSI"`) or the name with a year (e.g.
-  `"CLSI 2019"`). The default to the latest implemented EUCAST
-  guideline, currently `"EUCAST 2026"`. Supported guideline are
-  currently EUCAST (2011-2026) and CLSI (2011-2026).
-
 - `AMR_ignore_pattern`  
   A [regular expression](https://rdrr.io/r/base/regex.html) to ignore
   (i.e., make `NA`) any match given in
@@ -121,17 +103,23 @@ the `AMR` package. Set them using the
   that PK/PD clinical breakpoints must be applied as a last resort - the
   default is `TRUE`.
 
-- `AMR_substitute_missing_r_breakpoint`  
-  A [logical](https://rdrr.io/r/base/logical.html) to use in
-  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), to indicate
-  that missing R breakpoints must be substituted with `"R"` - the
-  default is `FALSE`.
-
 - `AMR_include_screening`  
   A [logical](https://rdrr.io/r/base/logical.html) to use in
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), to indicate
   that clinical breakpoints for screening are allowed - the default is
   `FALSE`.
+
+- `AMR_interpretive_rules`  
+  A [character](https://rdrr.io/r/base/character.html) to set the
+  default types of rules for
+  [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md)
+  and
+  [`clsi_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  must be one or more of: `"breakpoints"`, `"expected_phenotypes"`,
+  `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to
+  `c("breakpoints", "expected_phenotypes")`. This option replaces the
+  old option `AMR_eucastrules`.
 
 - `AMR_keep_synonyms`  
   A [logical](https://rdrr.io/r/base/logical.html) to use in
@@ -159,6 +147,12 @@ the `AMR` package. Set them using the
   [`mo_*`](https://amr-for-r.org/reference/mo_property.md) functions.
   This is explained in
   [`set_mo_source()`](https://amr-for-r.org/reference/mo_source.md).
+
+- `AMR_substitute_missing_r_breakpoint`  
+  A [logical](https://rdrr.io/r/base/logical.html) to use in
+  [`as.sir()`](https://amr-for-r.org/reference/as.sir.md), to indicate
+  that missing R breakpoints must be substituted with `"R"` - the
+  default is `FALSE`.
 
 ## Saving Settings Between Sessions
 

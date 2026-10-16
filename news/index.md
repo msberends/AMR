@@ -1,8 +1,13 @@
 # Changelog
 
-## AMR 3.0.1.9154
+## AMR 3.1.0
 
-Planned as v3.1.0, mid October 2026.
+This substantial release makes most core functions considerably faster,
+adds EUCAST 2026 and CLSI 2026 breakpoints, adopts the new prokaryotic
+kingdoms of Göker and Oren (2024), introduces WT/NWT interpretation for
+ECOFFs, unifies the EUCAST and CLSI interpretive rules, and supports
+`tidymodels` pipelines. As it contains several breaking changes, please
+read the *Breaking* section below before updating.
 
 #### Breaking
 
@@ -582,6 +587,15 @@ Planned as v3.1.0, mid October 2026.
   [`custom_interpretive_rules()`](https://amr-for-r.org/reference/custom_interpretive_rules.md).
   The old name is now deprecated but still works
   ([\#268](https://github.com/msberends/AMR/issues/268)).
+- The package option `AMR_eucastrules` has been replaced by
+  `AMR_interpretive_rules`, which applies to
+  [`interpretive_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md),
+  and
+  [`clsi_rules()`](https://amr-for-r.org/reference/interpretive_rules.md).
+  Its default is now `c("breakpoints", "expected_phenotypes")`. A set
+  `AMR_eucastrules` option is now ignored, with a warning in
+  [`eucast_rules()`](https://amr-for-r.org/reference/interpretive_rules.md).
 - Logical comparison (`==`, `!=`) of the `sir` class with a `factor` is
   now possible on R \>= 4.3
 - New argument `guideline` in
