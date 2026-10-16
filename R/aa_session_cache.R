@@ -101,7 +101,31 @@ reset_ab_cache <- function() {
   AMR_env$ab_previously_coerced <- new_coercion_cache()
 }
 
+mo_codes_valid <- function(x) {
+  # whether codes are in `AMR_env$MO_lookup`; a hashed set avoids scanning the whole lookup table for every check, as `[<-.mo` runs one for every piece that rbind() binds
+  x <- as.character(x)
+  if (length(x) > 1000) {
+    # for long vectors, base matching is faster than looking up every unique value
+    add_MO_lookup_to_AMR_env()
+    return(x %in% as.character(AMR_env$MO_lookup$mo))
+  }
+  if (is.null(AMR_env$MO_codes_hash)) {
+    add_MO_lookup_to_AMR_env()
+    codes <- unique(as.character(AMR_env$MO_lookup$mo))
+    AMR_env$MO_codes_hash <- list2env(stats::setNames(as.list(rep(TRUE, length(codes))), codes), hash = TRUE, size = length(codes))
+  }
+  ux <- unique(x)
+  valid <- vapply(
+    FUN.VALUE = logical(1),
+    ux,
+    function(code) !is.na(code) && nzchar(code) && exists(code, envir = AMR_env$MO_codes_hash, inherits = FALSE),
+    USE.NAMES = FALSE
+  )
+  valid[match(x, ux)]
+}
+
 reset_mo_cache <- function() {
+  AMR_env$MO_codes_hash <- NULL
   AMR_env$MO_index <- NULL
   AMR_env$MO_translated <- NULL
   AMR_env$mo_accepted <- NULL

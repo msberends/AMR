@@ -767,7 +767,8 @@ pillar_shaft.mo <- function(x, ...) {
     mo_cols <- NULL
   }
 
-  all_mos <- c(AMR_env$MO_lookup$mo, NA)
+  # as.character() prevents that c.mo() runs its integrity check on the full lookup table
+  all_mos <- c(as.character(AMR_env$MO_lookup$mo), NA)
   if (!all(x %in% all_mos) ||
     (!is.null(df) && !all(unlist(df[, which(mo_cols), drop = FALSE]) %in% all_mos))) {
     # markup old mo codes
@@ -887,7 +888,8 @@ print.mo <- function(x, print.shortnames = FALSE, ...) {
   }
   x <- as.character(x)
   names(x) <- x_names
-  if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
+  # as.character() prevents that c.mo() runs its integrity check on the full lookup table
+  if (!all(as.character(x) %in% c(as.character(AMR_env$MO_lookup$mo), NA))) {
     warning_(
       "Some MO codes are from another AMR package version. ",
       "Please update the MO codes with {.help [{.fun as.mo}](AMR::as.mo)}.",
@@ -921,7 +923,8 @@ summary.mo <- function(object, ...) {
 #' @noRd
 as.data.frame.mo <- function(x, ...) {
   add_MO_lookup_to_AMR_env()
-  if (!all(x %in% c(AMR_env$MO_lookup$mo, NA))) {
+  # as.character() prevents that c.mo() runs its integrity check on the full lookup table
+  if (!all(as.character(x) %in% c(as.character(AMR_env$MO_lookup$mo), NA))) {
     warning_(
       "The data contains old MO codes (from another AMR package version). ",
       "Please update your MO codes with {.help [{.fun as.mo}](AMR::as.mo)}."
@@ -959,7 +962,7 @@ as.data.frame.mo <- function(x, ...) {
   attributes(y) <- attributes(i)
   # must only contain valid MOs
   add_MO_lookup_to_AMR_env()
-  return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
+  return_after_mo_integrity_check(y)
 }
 #' @method [[<- mo
 #' @export
@@ -969,7 +972,7 @@ as.data.frame.mo <- function(x, ...) {
   attributes(y) <- attributes(i)
   # must only contain valid MOs
   add_MO_lookup_to_AMR_env()
-  return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
+  return_after_mo_integrity_check(y)
 }
 #' @method c mo
 #' @export
@@ -979,7 +982,7 @@ c.mo <- function(...) {
   y <- NextMethod()
   attributes(y) <- attributes(x)
   add_MO_lookup_to_AMR_env()
-  return_after_integrity_check(y, "microorganism code", as.character(AMR_env$MO_lookup$mo))
+  return_after_mo_integrity_check(y)
 }
 
 #' @method unique mo

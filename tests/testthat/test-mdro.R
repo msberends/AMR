@@ -348,3 +348,19 @@ test_that("test-mdro.R", {
     "AMC, AMX (inferred from AMC/AXS), AXS, DAP, LNZ, TEC, VAN"
   )
 })
+
+test_that("test-mdro.R - PDR does not depend on the row position", {
+  # a pandrug-resistant S. aureus must be PDR regardless of the rows before it, which other microorganisms take
+  abx <- c("GEN", "RIF", "CPT", "OXA", "FOX", "CIP", "MFX", "SXT", "FUS", "VAN", "TEC", "TLV", "TGC", "CLI", "DAP", "ERY", "LNZ", "CHL", "FOS", "QDA", "TCY", "DOX", "MNO")
+  pdr_first <- data.frame(mo = as.mo(c("S. aureus", "E. coli", "E. coli", "E. coli")))
+  pdr_last <- data.frame(mo = as.mo(c("E. coli", "E. coli", "E. coli", "S. aureus")))
+  for (ab in abx) {
+    pdr_first[[ab]] <- as.sir(c("R", "S", "S", "S"))
+    pdr_last[[ab]] <- as.sir(c("S", "S", "S", "R"))
+  }
+  out_first <- suppressMessages(suppressWarnings(mdro(pdr_first, guideline = "CMI 2012", info = FALSE)))
+  out_last <- suppressMessages(suppressWarnings(mdro(pdr_last, guideline = "CMI 2012", info = FALSE)))
+  expect_identical(as.character(out_first[1]), "Pandrug-resistant (PDR)")
+  expect_identical(as.character(out_last[4]), "Pandrug-resistant (PDR)")
+  expect_identical(as.character(out_first[2:4]), as.character(out_last[1:3]))
+})

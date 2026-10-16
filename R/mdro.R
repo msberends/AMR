@@ -743,6 +743,19 @@ mdro <- function(x = NULL,
   fluoroquinolones <- c(CIP, ENX, FLE, GAT, GEM, GRX, LVX, LOM, MFX, NOR, OFX, PAZ, PEF, PRU, RFL, SPX, TMX, TVA)
   # nolint end
 
+  # helper function returning a logical matrix (rows x cols) of which cells contain any of `values`
+  column_matches <- function(df, rows, cols, values) {
+    matrix(
+      vapply(
+        FUN.VALUE = logical(length(rows)),
+        cols,
+        function(col) as.character(df[rows, col, drop = TRUE]) %in% values
+      ),
+      nrow = length(rows),
+      dimnames = list(NULL, cols)
+    )
+  }
+
   # helper function for editing the table
   trans_tbl <- function(to, rows, cols, any_all, reason = NULL) {
     cols.bak <- cols
@@ -759,19 +772,18 @@ mdro <- function(x = NULL,
         ),
         stringsAsFactors = FALSE
       )
+      # determine the non-susceptible columns per column instead of per cell, which is much faster
+      group_vct <- unique(unname(cols_ab))
+      nonsus <- column_matches(x, rows, group_vct, search_result)
+      current <- x[rows, "all_nonsusceptible_columns", drop = TRUE]
       x[rows, "all_nonsusceptible_columns"] <<- vapply(
         FUN.VALUE = character(1),
-        rows,
-        function(row, group_vct = cols_ab) {
-          cols_nonsus <- vapply(
-            FUN.VALUE = logical(1),
-            x[row, group_vct, drop = FALSE],
-            function(y) y %in% search_result
-          )
+        seq_along(rows),
+        function(i) {
           paste(
             unique(sort(c(
-              unlist(strsplit(x[row, "all_nonsusceptible_columns", drop = TRUE], ", ", fixed = TRUE)),
-              names(cols_nonsus)[cols_nonsus]
+              unlist(strsplit(current[i], ", ", fixed = TRUE)),
+              group_vct[nonsus[i, ]]
             ))),
             collapse = ", "
           )
@@ -827,51 +839,39 @@ mdro <- function(x = NULL,
         ),
         stringsAsFactors = FALSE
       )
+      # determine the matches per column instead of per cell, which is much faster
+      lst_cols <- unique(unname(lst_vector))
+      available <- column_matches(x, rows, lst_cols, VALID_SIR_LEVELS[VALID_SIR_LEVELS != "NI"])
+      nonsus <- column_matches(x, rows, lst_cols, search_result)
+      count_groups <- function(matches) {
+        rowSums(matrix(
+          vapply(
+            FUN.VALUE = logical(length(rows)),
+            lst,
+            function(group) {
+              group <- group[!is.na(group)]
+              rowSums(matches[, lst_cols %in% group, drop = FALSE]) > 0
+            }
+          ),
+          nrow = length(rows)
+        ))
+      }
+
       x[rows, "classes_in_guideline"] <<- length(lst)
-      x[rows, "classes_available"] <<- vapply(
-        FUN.VALUE = double(1),
-        rows,
-        function(row, group_tbl = lst) {
-          sum(vapply(
-            FUN.VALUE = logical(1),
-            group_tbl,
-            function(group) any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% VALID_SIR_LEVELS[VALID_SIR_LEVELS != "NI"])
-          ))
-        }
-      )
+      x[rows, "classes_available"] <<- count_groups(available)
 
       if (isTRUE(verbose)) {
         x[rows, "all_nonsusceptible_columns"] <<- vapply(
           FUN.VALUE = character(1),
-          rows,
-          function(row, group_vct = lst_vector) {
-            cols_nonsus <- vapply(FUN.VALUE = logical(1), x[row, group_vct, drop = FALSE], function(y) y %in% search_result)
-            paste(unique(sort(names(cols_nonsus)[cols_nonsus])), collapse = ", ")
-          }
+          seq_along(rows),
+          function(i) paste(sort(lst_cols[nonsus[i, ]]), collapse = ", ")
         )
       }
-      x[rows, "classes_affected"] <<- vapply(
-        FUN.VALUE = double(1),
-        rows,
-        function(row, group_tbl = lst) {
-          sum(
-            vapply(
-              FUN.VALUE = logical(1),
-              group_tbl,
-              function(group) {
-                any(unlist(x[row, group[!is.na(group)], drop = TRUE]) %in% search_result, na.rm = TRUE)
-              }
-            ),
-            na.rm = TRUE
-          )
-        }
-      )
+      x[rows, "classes_affected"] <<- count_groups(nonsus)
       # for PDR; all drugs are R (or I if combine_SI = FALSE)
-      x_transposed <- as.list(as.data.frame(t(x[rows, lst_vector, drop = FALSE]),
-        stringsAsFactors = FALSE
-      ))
-      row_filter <- vapply(FUN.VALUE = logical(1), x_transposed, function(y) all(y %in% search_result, na.rm = TRUE))
-      x[which(row_filter), "classes_affected"] <<- 999
+      row_filter <- rowSums(!nonsus) == 0
+      # `row_filter` is relative to `rows`, so it must be mapped back to the rows of `x`
+      x[rows[row_filter], "classes_affected"] <<- 999
     }
 
     if (isTRUE(info)) {

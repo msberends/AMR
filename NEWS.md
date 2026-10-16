@@ -1,4 +1,4 @@
-# AMR 3.0.1.9152
+# AMR 3.0.1.9153
 
 Planned as v3.1.0, mid October 2026.
 
@@ -80,6 +80,7 @@ Planned as v3.1.0, mid October 2026.
 * Microorganism coercion (`as.mo()`) and properties (`mo_*()`)
   * Considerably faster through one consistent session cache design, which is cleared when lookup tables change, e.g., after `add_custom_microorganisms()` (#313)
   * `mo_*()` functions now retrieve properties of valid `mo` input directly, and only for unique values
+  * Subsetting, combining, and binding rows of `mo` vectors (e.g., in `rbind()`) is now much faster, as codes are checked against a hashed set instead of the whole `microorganisms` data set
   * The mapping of outdated taxonomic names to their current names is now remembered per code
   * Previously coerced input is now recognised again, e.g., for an unknown species of a known genus, instead of being matched again on every call (#313)
   * `mo_uncertainties()` now also lists uncertainties of previously coerced input
@@ -121,6 +122,7 @@ Planned as v3.1.0, mid October 2026.
   * Fixed a bug where both functions failed without the `antimicrobials` argument if `tidyselect` was not available, e.g., for binary installations without `dplyr`
   * Isolates of unknown species are now included in grouped antibiograms and in `wisca()`, as they already were in traditional antibiograms. They were previously excluded silently, with the warning "invalid microorganism code, NA generated". This can change WISCA coverage estimates.
   * Grouped traditional antibiograms now show the (translated) pathogen names, as ungrouped antibiograms do, instead of microorganism codes
+  * `wisca()` and `wisca_plot()` are considerably faster, especially with syndromic groups, by determining intrinsic resistance and pathogen names only once per regimen and pathogen
 * Resistance and susceptibility calculation
   * New argument `guideline` (default: the `AMR_guideline` option, otherwise EUCAST) in `susceptibility()`, `resistance()`, `count_df()`, `proportion_df()`, `sir_df()`, `ggplot_sir()`, `geom_sir()`, `labels_sir_count()`, `antibiogram()`, `wisca()`, and `bug_drug_combinations()` to interpret the 'I' category correctly per guideline. Functions that return results per category also accept `guideline = NULL` to keep S, I, and R separate, while functions that return a single proportion or count give an informative error.
   * When EUCAST is assumed because neither the `guideline` argument nor the `AMR_guideline` option is set, a message explains how to change this, once per session and not in R Markdown or Quarto documents
@@ -145,6 +147,8 @@ Planned as v3.1.0, mid October 2026.
 * MDRO determination (`mdro()`)
   * Resistance can now be inferred from a drug/inhibitor combination when the column of the base drug is absent (e.g., piperacillin inferred from piperacillin/tazobactam). This is controlled with the new argument `infer_from_combinations` (default: `TRUE`) (#209).
   * BRMO classification now includes bacterial complexes (#275)
+  * Fixed a bug in the CMI 2012 guideline where pandrug-resistant (PDR) isolates were classified as extensively drug-resistant (XDR), and another isolate could be marked as PDR instead, if the isolate was not among the first rows of the data. This can change the PDR and XDR results of `guideline = "CMI 2012"` (the default).
+  * Considerably faster, as the classes per isolate are now determined per column instead of per cell
 * `top_n_microorganisms()`
   * New argument `property_for_each` for sub-grouping within the top *n* groups. Rank ordering is enforced, so that only lower taxonomic ranks are allowed.
   * `property = NULL` is now accepted

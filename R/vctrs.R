@@ -160,7 +160,7 @@ vec_cast.character.mo <- function(x, to, ...) {
 }
 vec_cast.mo.character <- function(x, to, ...) {
   add_MO_lookup_to_AMR_env()
-  return_after_integrity_check(x, "microorganism code", as.character(AMR_env$MO_lookup$mo))
+  return_after_mo_integrity_check(x)
 }
 
 # S3: disk ----

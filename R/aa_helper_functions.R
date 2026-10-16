@@ -724,6 +724,16 @@ return_after_integrity_check <- function(value, type, check_vector) {
   value
 }
 
+return_after_mo_integrity_check <- function(value) {
+  # same as return_after_integrity_check(), but with a hashed lookup of the codes, see mo_codes_valid()
+  valid <- is.na(value) | mo_codes_valid(value)
+  if (!all(valid)) {
+    warning_("invalid microorganism code, NA generated")
+    value[!valid] <- NA
+  }
+  value
+}
+
 # transforms data set to a tibble with only ASCII values, to comply with CRAN policies
 dataset_UTF8_to_ASCII <- function(df) {
   trans <- function(vect) {

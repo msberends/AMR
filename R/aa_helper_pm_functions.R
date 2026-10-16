@@ -354,8 +354,11 @@ pm_group_data_worker <- function(.data, pm_groups) {
   class(res) <- "data.frame"
   nrow_res <- nrow(res)
   rows <- rep(list(NA), nrow_res)
+  # compute the group keys only once, instead of for every group
+  data_keys <- as.character(interaction(.data[, pm_groups]))
+  res_keys <- as.character(interaction(res[, pm_groups]))
   for (i in seq_len(nrow_res)) {
-    rows[[i]] <- which(interaction(.data[, pm_groups]) %in% interaction(res[i, pm_groups]))
+    rows[[i]] <- which(data_keys %in% res_keys[i])
   }
   res$`.rows` <- rows
   res <- res[do.call(order, lapply(pm_groups, function(x) res[, x])), , drop = FALSE]

@@ -192,8 +192,8 @@
 #'   wisca = TRUE
 #' )
 #'
-#' # stratified by syndrome or clinical group
-#' out <- wisca(example_isolates,
+#' # stratified by syndrome or clinical group, here for the 5 most common species to keep the plot readable
+#' out <- wisca(top_n_microorganisms(example_isolates, n = 5),
 #'   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
 #'   syndromic_group = "ward"
 #' )
@@ -1230,21 +1230,31 @@ create_wisca_priors <- function(data, sep) {
   beta_prior_beta <- rep(0.5, n_pathogens)
 
   # strongly informative Beta(1, 9999) for intrinsically resistant bug-drug pairs (Bielicki et al., 2016)
-  is_intrinsic <- vapply(
-    FUN.VALUE = logical(1),
-    seq_len(nrow(data)),
-    function(i) {
-      # split by " + ", or wherever `sep` is set to
-      ab_components <- as.ab(trimws(strsplit(as.character(data$ab[i]), trimws(sep), fixed = TRUE)[[1]]))
-      ab_components <- ab_components[!is.na(ab_components)]
-      length(ab_components) > 0 &&
-        all(vapply(
-          FUN.VALUE = logical(1),
-          ab_components,
-          function(ab) any(AMR::intrinsic_resistant$mo == data$mo[i] & AMR::intrinsic_resistant$ab == ab)
-        ))
-    }
-  )
+  # coerce every unique regimen only once and look up the bug-drug pairs as keys, which is much faster than per row
+  if (is.null(AMR_env$intrinsic_resistant_keys)) {
+    # the intrinsic_resistant data set never changes within a session
+    AMR_env$intrinsic_resistant_keys <- paste(as.character(AMR::intrinsic_resistant$mo), as.character(AMR::intrinsic_resistant$ab))
+  }
+  regimens <- unique(as.character(data$ab))
+  regimen_components <- lapply(regimens, function(regimen) {
+    # split by " + ", or wherever `sep` is set to
+    ab_components <- as.ab(trimws(strsplit(regimen, trimws(sep), fixed = TRUE)[[1]]))
+    as.character(ab_components[!is.na(ab_components)])
+  })
+  components <- regimen_components[match(as.character(data$ab), regimens)]
+  # look up all bug-drug pairs at once, and require all components of a regimen to be intrinsically resistant
+  pair_row <- rep(seq_len(nrow(data)), lengths(components))
+  pair_intrinsic <- paste(as.character(data$mo)[pair_row], unlist(components)) %in% AMR_env$intrinsic_resistant_keys
+  is_intrinsic <- lengths(components) > 0 & !seq_len(nrow(data)) %in% pair_row[!pair_intrinsic]
+  for (i in which(is.na(data$mo))) {
+    # keep the original behaviour for a missing microorganism
+    is_intrinsic[i] <- length(components[[i]]) > 0 &&
+      all(vapply(
+        FUN.VALUE = logical(1),
+        components[[i]],
+        function(ab) any(AMR::intrinsic_resistant$mo == data$mo[i] & AMR::intrinsic_resistant$ab == ab)
+      ))
+  }
   beta_prior_alpha[is_intrinsic] <- 1
   beta_prior_beta[is_intrinsic] <- 9999
 
@@ -1635,7 +1645,9 @@ plot_wisca_susceptibility_incidence <- function(wisca_model, sep) {
     )
   })
   df <- do.call(rbind, df_list)
-  df$pathogen <- mo_shortname(df$pathogen, keep_synonyms = TRUE, info = FALSE)
+  # only translate the unique pathogens, as there is a row for every simulation
+  pathogens <- unique(df$pathogen)
+  df$pathogen <- mo_shortname(pathogens, keep_synonyms = TRUE, info = FALSE)[match(df$pathogen, pathogens)]
 
   # order pathogens by median incidence across all regimens
   med_inc <- tapply(df$incidence, df$pathogen, stats::median)

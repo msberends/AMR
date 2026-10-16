@@ -1178,8 +1178,10 @@ get_guideline <- function(guideline, reference_data) {
     return(guideline)
   }
   guideline_param <- trimws2(toupper(guideline))
-  latest_clsi <- rev(sort(subset(reference_data, guideline %like% "CLSI")$guideline))[1L]
-  latest_eucast <- rev(sort(subset(reference_data, guideline %like% "EUCAST")$guideline))[1L]
+  # only the unique guidelines are needed, which is much faster than subsetting the whole table
+  guidelines_available <- unique(reference_data$guideline)
+  latest_clsi <- rev(sort(guidelines_available[guidelines_available %like% "CLSI"]))[1L]
+  latest_eucast <- rev(sort(guidelines_available[guidelines_available %like% "EUCAST"]))[1L]
   guideline_param[guideline_param == "CLSI"] <- latest_clsi
   guideline_param[guideline_param == "EUCAST"] <- latest_eucast
   # like 'EUCAST2020', should be 'EUCAST 2020'
