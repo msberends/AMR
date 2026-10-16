@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.0.1.9151
+## AMR 3.0.1.9152
 
 Planned as v3.1.0, mid October 2026.
 
@@ -480,10 +480,10 @@ Planned as v3.1.0, mid October 2026.
     readable number of tick marks for large counts, instead of one per
     count
   - A named `colours_SIR` is now matched by name in all plotting
-    functions, and needs at least the names S, I and R. SDD gets the
-    colour of S if not set. Previously, the colours of S/I and I/R were
-    taken by position, and a named vector of three colours gave missing
-    colours.
+    functions, and S, I and R get their default colour if not set. SDD
+    gets the colour of S if not set. Previously, the colours of S/I and
+    I/R were taken by position, and a named vector of three colours gave
+    missing colours.
   - `keep_operators = TRUE` and `FALSE` in the `scale_*_mic()` functions
     now behave like `"all"` and `"none"`, as in
     [`as.mic()`](https://amr-for-r.org/reference/as.mic.md)

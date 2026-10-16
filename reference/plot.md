@@ -171,9 +171,9 @@ theme_sir()
 
   Colours to use for filling in the bars, must be a vector of one, three
   or four values (in the order S, SDD, I and R), or a named vector with
-  at least the names S, I and R. With three values or without a name
-  SDD, SDD gets the colour of S. The default colours are colour-blind
-  friendly.
+  any of the names S, SDD, I, R, SI and IR. Missing names S, I and R get
+  the default colour, and with three values or without a name SDD, SDD
+  gets the colour of S. The default colours are colour-blind friendly.
 
 - language:
 

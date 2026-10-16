@@ -139,3 +139,5 @@ data %>%
   select(Country, AMP_ND2, AMC_ED20, CAZ_ED10, CIP_ED5) %>%
   ggplot_sir(translate_ab = "ab", facet = "Country", datalabels = FALSE)
 ```
+
+![](WHONET_files/figure-html/unnamed-chunk-7-1.png)

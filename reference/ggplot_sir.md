@@ -378,7 +378,7 @@ if (require("ggplot2") && require("dplyr")) {
     select(AMX) %>%
     ggplot_sir(colours = c(SI = "yellow"))
 }
-#> Error in expand_SIR_colours(colours_SIR, unname = FALSE): A named `colours_SIR` must contain at least the names S, I and R.
+
 if (require("ggplot2") && require("dplyr")) {
   # but you can also use the built-in colour-blind friendly colours for
   # your plots, where "S" is green, "I" is yellow and "R" is red:
@@ -437,8 +437,6 @@ if (require("ggplot2") && require("dplyr")) {
     )
 }
 #> ℹ Using column mo as input for `mo_is_gram_negative()`
-#> Error in combine_vars(data, params$plot_env, vars, drop = params$drop): At least one layer must contain all faceting variables: `facet`
-#> ✖ Plot is missing `facet`
-#> ✖ Layer 1 is missing `facet`
+
 # }
 ```
