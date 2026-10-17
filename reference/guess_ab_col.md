@@ -1,4 +1,4 @@
-# Guess Antibiotic Column
+# Guess Antimicrobial Column
 
 This tries to find a column name in a data set based on information from
 the [antimicrobials](https://amr-for-r.org/reference/antimicrobials.md)

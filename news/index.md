@@ -1,8 +1,15 @@
 # Changelog
 
-## AMR 3.1.0.9002
+## AMR 3.1.0.9003
+
+#### Other
+
+- The manual index on the website was rewritten to improve findability,
+  with sections ordered by task and a filter field
 
 ## AMR 3.1.0
+
+CRAN release: 2026-10-16
 
 This substantial release makes most core functions considerably faster,
 adds EUCAST 2026 and CLSI 2026 breakpoints, adopts the new prokaryotic

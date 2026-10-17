@@ -1,4 +1,4 @@
-# Random MIC Values/Disk Zones/SIR Generation
+# Generate Random MIC Values, Disk Zones, or SIR Results
 
 These functions can be used for generating random MIC values and disk
 diffusion diameters, for AMR data analysis practice. By providing a

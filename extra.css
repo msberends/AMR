@@ -68,12 +68,56 @@
   --bs-dropdown-link-active-color: white !important;
 }
 
+/* mode-dependent colours; light mode is enforced in _pkgdown.yml (light-switch: false), the dark values below are prepared for when it is enabled; they are set on :root only, since pkgdown also marks the navbar as dark */
+:root {
+  color-scheme: light;
+  --amr-code-literal: var(--bs-dark);
+  --amr-code-muted: var(--bs-gray-600);
+  --amr-search-text: #0b3d33;
+  --amr-search-placeholder: rgba(11, 61, 51, 0.65);
+  --amr-accent: var(--amr-green-dark); /* green for text; --amr-green-dark is the brand colour for backgrounds such as the navbar */
+  --amr-accent-rgb: var(--amr-green-dark-rgb);
+  --amr-text-muted: #5b6770;
+  --amr-ref-border: #e3e8e6;
+  --amr-filter-border: #c4cdca;
+  --amr-filter-placeholder: #7b8783;
+  --amr-filter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%237b8783' stroke-width='1.75' stroke-linecap='round'%3E%3Ccircle cx='6.75' cy='6.75' r='5'/%3E%3Cpath d='M10.5 10.5l4 4'/%3E%3C/svg%3E");
+  --amr-filter-clear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%237b8783' stroke-width='1.75' stroke-linecap='round'%3E%3Cpath d='M4 4l8 8M12 4l-8 8'/%3E%3C/svg%3E");
+  --amr-chip-bg: #f4f6f5;
+  --amr-chip-border: #dde3e1;
+  --amr-chip-match-bg: rgba(var(--amr-green-light-rgb), 0.5);
+  --amr-badge-bg: var(--amr-green-dark);
+  --amr-badge-text: white;
+}
+:root[data-bs-theme="dark"] {
+  color-scheme: dark;
+  --amr-accent: #4fc3a1;
+  --amr-accent-rgb: 79, 195, 161;
+  --bs-link-color: var(--amr-accent) !important;
+  --bs-link-color-rgb: var(--amr-accent-rgb) !important;
+  --amr-green-middle: #8fd1c1;
+  --amr-green-middle-rgb: 143, 209, 193;
+  --amr-code-literal: var(--bs-gray-300);
+  --amr-code-muted: var(--bs-gray-500);
+  --amr-text-muted: var(--bs-gray-400);
+  --amr-ref-border: rgba(255, 255, 255, 0.1);
+  --amr-filter-border: rgba(255, 255, 255, 0.25);
+  --amr-filter-placeholder: var(--bs-gray-500);
+  --amr-filter-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23adb5bd' stroke-width='1.75' stroke-linecap='round'%3E%3Ccircle cx='6.75' cy='6.75' r='5'/%3E%3Cpath d='M10.5 10.5l4 4'/%3E%3C/svg%3E");
+  --amr-filter-clear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23adb5bd' stroke-width='1.75' stroke-linecap='round'%3E%3Cpath d='M4 4l8 8M12 4l-8 8'/%3E%3C/svg%3E");
+  --amr-chip-bg: rgba(255, 255, 255, 0.04);
+  --amr-chip-border: rgba(255, 255, 255, 0.14);
+  --amr-chip-match-bg: rgba(var(--amr-accent-rgb), 0.25);
+}
+
 /* Python page */
 body.amr-for-python * {
   --amr-green-light: #FFD43B; /* Python yellow */
   --amr-green-light-rgb: 255, 212, 59;
   --amr-green-dark: #306998; /* Python blue */
   --amr-green-dark-rgb: 48, 105, 152;
+  --amr-accent: var(--amr-green-dark);
+  --amr-accent-rgb: var(--amr-green-dark-rgb);
   --amr-green-middle: #b1bc5e; /* Adjusted middle yellow */
   --amr-green-middle-rgb: 177, 188, 94;
   --bs-success: var(--amr-green-dark) !important;
@@ -114,12 +158,15 @@ body.amr-for-python * {
   opacity: 0.75;
   font-size: 0.85em;
 }
-input[type="search"] {
-  color: var(--bs-tertiary-bg) !important;
+.navbar input[type="search"] {
+  color: var(--amr-search-text) !important;
   background-color: var(--amr-green-light) !important;
-  max-width: 160px;
+  max-width: 220px;
   border-color: var(--amr-green-dark) !important;
   border-radius: 2px !important;
+}
+.navbar input[type="search"]::placeholder {
+  color: var(--amr-search-placeholder) !important;
 }
 .dropdown-item:hover,
 .dropdown-item:focus {
@@ -149,6 +196,8 @@ blockquote {
 }
 p {
   text-align: justify;
+  /* pkgdown only hyphenates on small screens; justified text needs it on all screens */
+  hyphens: auto;
 }
 
 /* 
@@ -167,10 +216,152 @@ this shows on top of every sidebar to the right
   padding-bottom: 10px;
 }
 
+/* REFERENCE INDEX ('Manual'), see pkgdown/templates/content-reference-index.html */
+.template-reference-index {
+  --amr-navbar-height: 72px; /* set exactly by extra.js */
+}
 .template-reference-index .section-desc {
-  font-style: italic;
   text-align: justify;
-  font-size: 16px;
+  hyphens: auto;
+  color: var(--amr-text-muted);
+  margin-bottom: 0.5rem;
+}
+.template-reference-index h2 {
+  margin-top: 2.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--amr-green-dark);
+}
+.amr-ref-filter + .section h2 {
+  margin-top: 1.5rem;
+}
+.template-reference-index h3 {
+  margin-top: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--amr-accent);
+}
+/* while filtering, sub-headings show the title of their section, as the section heading may be far above */
+.amr-ref-filtering main h3[data-amr-parent]::before {
+  content: attr(data-amr-parent) " \203A";
+  display: block;
+  font-size: 0.8rem;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--amr-text-muted);
+}
+/* filter field, sticky below the navbar */
+.amr-ref-filter {
+  clear: right; /* start below the package logo, which pkgdown lets hang below the page header */
+  position: sticky;
+  top: var(--amr-navbar-height);
+  z-index: 10;
+  padding: 0.75rem 0;
+  background: var(--bs-body-bg);
+}
+.amr-ref-filter.amr-ref-stuck {
+  box-shadow: 0 1px 0 var(--amr-ref-border);
+}
+#amr-ref-filter-input {
+  width: 100%;
+  max-width: none;
+  padding-left: 2.5rem;
+  color: var(--bs-body-color);
+  background: var(--bs-body-bg) var(--amr-filter-icon) no-repeat left 0.85rem center / 1rem 1rem;
+  border: 1px solid var(--amr-filter-border);
+  border-radius: 2px;
+}
+#amr-ref-filter-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background: var(--amr-filter-clear) no-repeat center / 1rem 1rem;
+  cursor: pointer;
+}
+#amr-ref-filter-input::placeholder {
+  color: var(--amr-filter-placeholder);
+}
+#amr-ref-filter-input:focus {
+  border-color: var(--amr-accent);
+  box-shadow: 0 0 0 1px var(--amr-accent) !important;
+}
+.amr-ref-filter-status {
+  font-size: 0.85rem;
+  padding-top: 0.35rem;
+  color: var(--amr-text-muted);
+}
+.amr-ref-filter-status:empty {
+  display: none;
+}
+/* topics: title first, function names as chips below */
+.amr-ref-list {
+  margin-bottom: 0;
+}
+.amr-ref-item {
+  padding: 0.6rem 0 0.35rem;
+  border-bottom: 1px solid var(--amr-ref-border);
+}
+.amr-ref-item dt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.5rem;
+  font-weight: bold !important;
+  margin-bottom: 0.3rem;
+}
+.amr-ref-item dt a {
+  color: var(--bs-body-color);
+}
+.amr-ref-item dt a:hover {
+  color: var(--amr-accent);
+}
+.template-reference-index .amr-ref-item dd {
+  margin: 0;
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.amr-ref-item dd code {
+  display: inline-block;
+  margin: 0 0.25rem 0.3rem 0;
+  padding: 0 0.4rem;
+  background: var(--amr-chip-bg);
+  border: 1px solid var(--amr-chip-border);
+  border-radius: 2px;
+}
+.amr-ref-item dd code.amr-ref-match {
+  background: var(--amr-chip-match-bg);
+  border-color: var(--amr-accent);
+}
+.amr-ref-item:not(.amr-ref-expanded) dd code.amr-ref-extra:not(.amr-ref-match) {
+  display: none;
+}
+.amr-ref-more {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 0.85rem;
+  color: var(--amr-accent);
+  cursor: pointer;
+}
+.amr-ref-more:hover {
+  text-decoration: underline;
+}
+.amr-ref-hidden {
+  display: none !important;
+}
+.amr-ref-textmatch dt::after {
+  content: "mentioned on this page";
+  padding: 0 0.45rem;
+  font-weight: bold;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--amr-badge-text);
+  background: var(--amr-badge-bg);
+  border-radius: 2px;
 }
 
 @media (max-width: 575.98px) {
@@ -192,7 +383,7 @@ this shows on top of every sidebar to the right
 
 .template-reference-topic h3,
 .template-reference-topic h3 code {
-  color: var(--amr-green-dark) !important;
+  color: var(--amr-accent) !important;
 }
 .template-reference-topic h3 {
   font-weight: normal;
@@ -232,11 +423,11 @@ code, .code {
 .ot, .dv, .fl, .cn, .at,
 .op a {
   /* numbers, TRUE/FALSE and operators */
-  color: var(--bs-dark) !important;
+  color: var(--amr-code-literal) !important;
 }
 pre .fu, .fu {
   /* functions */
-  color: var(--amr-green-dark) !important;
+  color: var(--amr-accent) !important;
 }
 pre .fu a:hover, .fu a:hover {
   /* functions */
@@ -249,18 +440,18 @@ pre .st, .st {
 }
 pre .co, .co {
   /* comments */
-  color: var(--amr-green-dark) !important;
+  color: var(--amr-accent) !important;
   font-style: italic !important;
 }
 div.sourceCode  pre .co,
 div.sourceCode .co {
   /* comments in example sections, since functions are already green too */
-  color: var(--bs-gray-600) !important;
+  color: var(--amr-code-muted) !important;
 }
 pre code .r-out,
 pre code .r-msg {
   /* output of functions */
-  color: var(--bs-gray-600) !important;
+  color: var(--amr-code-muted) !important;
   font-style: normal !important;
 }
 code a[href],
@@ -269,7 +460,7 @@ pre a[href],
 a code[href],
 a pre[href] {
   /* adjusted colour for all real links; having href attribute */
-  color: var(--amr-green-dark);
+  color: var(--amr-accent);
   text-decoration: none;
 }
 a[href] {

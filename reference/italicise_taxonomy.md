@@ -1,4 +1,4 @@
-# Italicise Taxonomic Families, Genera, Species, Subspecies
+# Italicise Taxonomic Families, Genera, Species, and Subspecies
 
 According to the binomial nomenclature, the lowest four taxonomic levels
 (family, genus, species, subspecies) should be printed in italics. This

@@ -1,4 +1,4 @@
-# Transform Input to an Antibiotic ID
+# Transform Input to an Antimicrobial Drug ID
 
 Use this function to determine the antimicrobial drug code of one or
 more antimicrobials. The data set

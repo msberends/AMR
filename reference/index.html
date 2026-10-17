@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,574 +42,532 @@
 
   </div>
 </nav><div class="container template-reference-index">
+<!-- AMR: adapted from pkgdown's BS5 template, with titles first, function names second, and a filter field (see pkgdown/extra.js) -->
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Package index</h1>
     </div>
 
+    <div class="amr-ref-filter">
+      <input type="search" id="amr-ref-filter-input" class="form-control" placeholder="Filter, e.g. mo_gramstain or WISCA" aria-label="Filter the manual" autocomplete="off" spellcheck="false"><div id="amr-ref-filter-status" class="amr-ref-filter-status" aria-live="polite"></div>
+    </div>
+
     <div class="section level2">
-      <h2 id="introduction-to-the-package">Introduction to the package<a class="anchor" aria-label="anchor" href="#introduction-to-the-package"></a></h2>
+      <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a></h2>
 
-      <div class="section-desc"><p>Please find the introduction to (and some general information about) our package here.</p></div>
+      <div class="section-desc"><p>An overview of the package, its options for users and teams, and its 28 supported languages.</p></div>
 
-      <dl></dl></div><div class="section level2">
-
-
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="AMR.html">AMR-package</a></code> <code><a href="AMR.html">AMR</a></code>
 
-        </dt>
-        <dd>The <code>AMR</code> Package</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="AMR.html">The <code>AMR</code> Package</a></dt>
+          <dd><code><a href="AMR.html">AMR-package</a></code> <code><a href="AMR.html">AMR</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="AMR-options.html">Options for the AMR Package</a></dt>
+          <dd><code><a href="AMR-options.html">AMR-options</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="translate.html">Translate Strings from the AMR Package</a></dt>
+          <dd><code><a href="translate.html">get_AMR_locale()</a></code> <code><a href="translate.html">set_AMR_locale()</a></code> <code><a href="translate.html">reset_AMR_locale()</a></code> <code><a href="translate.html">translate_AMR()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="amr_course.html">Download and Unpack an AMR Course Repository</a></dt>
+          <dd><code><a href="amr_course.html">amr_course()</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="preparing-data-microorganisms">Preparing data: microorganisms<a class="anchor" aria-label="anchor" href="#preparing-data-microorganisms"></a></h2>
+      <h2 id="cleaning-data">Cleaning data<a class="anchor" aria-label="anchor" href="#cleaning-data"></a></h2>
 
-      <div class="section-desc"><p>These functions are meant to get taxonomically valid properties of microorganisms from any input, but also properties derived from taxonomy, such as the Gram stain (<code><a href="../reference/mo_property.html">mo_gramstain()</a></code>) , or <code><a href="../reference/mo_property.html">mo_is_yeast()</a></code>. Use <code><a href="../reference/mo_source.html">mo_source()</a></code> to teach this package how to translate your own codes to valid microorganisms, and use <code><a href="../reference/add_custom_microorganisms.html">add_custom_microorganisms()</a></code> to add your own custom microorganisms to this package.</p></div>
+      <div class="section-desc"><p>Transform raw input of any kind into valid microorganisms with <code><a href="../reference/as.mo.html">as.mo()</a></code>, antimicrobials with <code><a href="../reference/as.ab.html">as.ab()</a></code>, and MIC values and disk diffusion zones with <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code>, and retrieve their properties.</p></div>
 
-      <dl></dl></div><div class="section level2">
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+      <h3 id="microorganisms">Microorganisms<a class="anchor" aria-label="anchor" href="#microorganisms"></a></h3>
+
+
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
 
 
-      <dl><dt>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="as.mo.html">Transform Arbitrary Input to Valid Microbial Taxonomy</a></dt>
+          <dd><code><a href="as.mo.html">as.mo()</a></code> <code><a href="as.mo.html">is.mo()</a></code> <code><a href="as.mo.html">mo_uncertainties()</a></code> <code><a href="as.mo.html">mo_renamed()</a></code> <code><a href="as.mo.html">mo_failures()</a></code> <code><a href="as.mo.html">mo_reset_session()</a></code> <code><a href="as.mo.html">mo_cleaning_regex()</a></code> <code><a href="as.mo.html">NA_mo_</a></code> </dd>
+        </div>
 
-          <code><a href="as.mo.html">as.mo()</a></code> <code><a href="as.mo.html">is.mo()</a></code> <code><a href="as.mo.html">mo_uncertainties()</a></code> <code><a href="as.mo.html">mo_renamed()</a></code> <code><a href="as.mo.html">mo_failures()</a></code> <code><a href="as.mo.html">mo_reset_session()</a></code> <code><a href="as.mo.html">mo_cleaning_regex()</a></code> <code><a href="as.mo.html">NA_mo_</a></code>
+        <div class="amr-ref-item">
+          <dt><a href="mo_property.html">Get Properties of a Microorganism</a></dt>
+          <dd><code><a href="mo_property.html">mo_name()</a></code> <code><a href="mo_property.html">mo_fullname()</a></code> <code><a href="mo_property.html">mo_shortname()</a></code> <code><a href="mo_property.html">mo_subspecies()</a></code> <code><a href="mo_property.html">mo_species()</a></code> <code><a href="mo_property.html">mo_genus()</a></code> <code><a href="mo_property.html">mo_family()</a></code> <code><a href="mo_property.html">mo_order()</a></code> <code><a href="mo_property.html">mo_class()</a></code> <code><a href="mo_property.html">mo_phylum()</a></code> <code><a href="mo_property.html">mo_kingdom()</a></code> <code><a href="mo_property.html">mo_domain()</a></code> <code><a href="mo_property.html">mo_type()</a></code> <code><a href="mo_property.html">mo_status()</a></code> <code><a href="mo_property.html">mo_pathogenicity()</a></code> <code><a href="mo_property.html">mo_gramstain()</a></code> <code><a href="mo_property.html">mo_is_gram_negative()</a></code> <code><a href="mo_property.html">mo_is_gram_positive()</a></code> <code><a href="mo_property.html">mo_is_yeast()</a></code> <code><a href="mo_property.html">mo_is_intrinsic_resistant()</a></code> <code><a href="mo_property.html">mo_oxygen_tolerance()</a></code> <code><a href="mo_property.html">mo_is_anaerobic()</a></code> <code><a href="mo_property.html">mo_morphology()</a></code> <code><a href="mo_property.html">mo_snomed()</a></code> <code><a href="mo_property.html">mo_ref()</a></code> <code><a href="mo_property.html">mo_authors()</a></code> <code><a href="mo_property.html">mo_year()</a></code> <code><a href="mo_property.html">mo_lpsn()</a></code> <code><a href="mo_property.html">mo_mycobank()</a></code> <code><a href="mo_property.html">mo_gbif()</a></code> <code><a href="mo_property.html">mo_rank()</a></code> <code><a href="mo_property.html">mo_taxonomy()</a></code> <code><a href="mo_property.html">mo_synonyms()</a></code> <code><a href="mo_property.html">mo_current()</a></code> <code><a href="mo_property.html">mo_group_members()</a></code> <code><a href="mo_property.html">mo_info()</a></code> <code><a href="mo_property.html">mo_url()</a></code> <code><a href="mo_property.html">mo_property()</a></code> </dd>
+        </div>
 
-        </dt>
-        <dd>Transform Arbitrary Input to Valid Microbial Taxonomy</dd>
+        <div class="amr-ref-item">
+          <dt><a href="mo_source.html">User-Defined Reference Data Set for Microorganisms</a></dt>
+          <dd><code><a href="mo_source.html">set_mo_source()</a></code> <code><a href="mo_source.html">get_mo_source()</a></code> </dd>
+        </div>
 
-        <dt>
+        <div class="amr-ref-item">
+          <dt><a href="add_custom_microorganisms.html">Add Custom Microorganisms</a></dt>
+          <dd><code><a href="add_custom_microorganisms.html">add_custom_microorganisms()</a></code> <code><a href="add_custom_microorganisms.html">clear_custom_microorganisms()</a></code> </dd>
+        </div>
 
-          <code><a href="mo_property.html">mo_name()</a></code> <code><a href="mo_property.html">mo_fullname()</a></code> <code><a href="mo_property.html">mo_shortname()</a></code> <code><a href="mo_property.html">mo_subspecies()</a></code> <code><a href="mo_property.html">mo_species()</a></code> <code><a href="mo_property.html">mo_genus()</a></code> <code><a href="mo_property.html">mo_family()</a></code> <code><a href="mo_property.html">mo_order()</a></code> <code><a href="mo_property.html">mo_class()</a></code> <code><a href="mo_property.html">mo_phylum()</a></code> <code><a href="mo_property.html">mo_kingdom()</a></code> <code><a href="mo_property.html">mo_domain()</a></code> <code><a href="mo_property.html">mo_type()</a></code> <code><a href="mo_property.html">mo_status()</a></code> <code><a href="mo_property.html">mo_pathogenicity()</a></code> <code><a href="mo_property.html">mo_gramstain()</a></code> <code><a href="mo_property.html">mo_is_gram_negative()</a></code> <code><a href="mo_property.html">mo_is_gram_positive()</a></code> <code><a href="mo_property.html">mo_is_yeast()</a></code> <code><a href="mo_property.html">mo_is_intrinsic_resistant()</a></code> <code><a href="mo_property.html">mo_oxygen_tolerance()</a></code> <code><a href="mo_property.html">mo_is_anaerobic()</a></code> <code><a href="mo_property.html">mo_morphology()</a></code> <code><a href="mo_property.html">mo_snomed()</a></code> <code><a href="mo_property.html">mo_ref()</a></code> <code><a href="mo_property.html">mo_authors()</a></code> <code><a href="mo_property.html">mo_year()</a></code> <code><a href="mo_property.html">mo_lpsn()</a></code> <code><a href="mo_property.html">mo_mycobank()</a></code> <code><a href="mo_property.html">mo_gbif()</a></code> <code><a href="mo_property.html">mo_rank()</a></code> <code><a href="mo_property.html">mo_taxonomy()</a></code> <code><a href="mo_property.html">mo_synonyms()</a></code> <code><a href="mo_property.html">mo_current()</a></code> <code><a href="mo_property.html">mo_group_members()</a></code> <code><a href="mo_property.html">mo_info()</a></code> <code><a href="mo_property.html">mo_url()</a></code> <code><a href="mo_property.html">mo_property()</a></code>
-
-        </dt>
-        <dd>Get Properties of a Microorganism</dd>
-
-        <dt>
-
-          <code><a href="add_custom_microorganisms.html">add_custom_microorganisms()</a></code> <code><a href="add_custom_microorganisms.html">clear_custom_microorganisms()</a></code>
-
-        </dt>
-        <dd>Add Custom Microorganisms</dd>
-
-        <dt>
-
-          <code><a href="mo_source.html">set_mo_source()</a></code> <code><a href="mo_source.html">get_mo_source()</a></code>
-
-        </dt>
-        <dd>User-Defined Reference Data Set for Microorganisms</dd>
+        <div class="amr-ref-item">
+          <dt><a href="mo_matching_score.html">Calculate the Matching Score for Microorganisms</a></dt>
+          <dd><code><a href="mo_matching_score.html">mo_matching_score()</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="preparing-data-antimicrobials">Preparing data: antimicrobials<a class="anchor" aria-label="anchor" href="#preparing-data-antimicrobials"></a></h2>
 
-      <div class="section-desc"><p>Use these functions to get valid properties of antimicrobials from any input or to clean your input. You can even retrieve drug names and doses from clinical text records, using <code><a href="../reference/ab_from_text.html">ab_from_text()</a></code>.</p></div>
-
-      <dl></dl></div><div class="section level2">
+      <h3 id="antimicrobials">Antimicrobials<a class="anchor" aria-label="anchor" href="#antimicrobials"></a></h3>
 
 
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="as.ab.html">as.ab()</a></code> <code><a href="as.ab.html">is.ab()</a></code> <code><a href="as.ab.html">ab_reset_session()</a></code> <code><a href="as.ab.html">NA_ab_</a></code>
 
-        </dt>
-        <dd>Transform Input to an Antibiotic ID</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="as.ab.html">Transform Input to an Antimicrobial Drug ID</a></dt>
+          <dd><code><a href="as.ab.html">as.ab()</a></code> <code><a href="as.ab.html">is.ab()</a></code> <code><a href="as.ab.html">ab_reset_session()</a></code> <code><a href="as.ab.html">NA_ab_</a></code> </dd>
+        </div>
 
-        <dt>
+        <div class="amr-ref-item">
+          <dt><a href="ab_property.html">Get Properties of an Antimicrobial Drug</a></dt>
+          <dd><code><a href="ab_property.html">ab_name()</a></code> <code><a href="ab_property.html">ab_cid()</a></code> <code><a href="ab_property.html">ab_synonyms()</a></code> <code><a href="ab_property.html">ab_tradenames()</a></code> <code><a href="ab_property.html">ab_group()</a></code> <code><a href="ab_property.html">ab_atc()</a></code> <code><a href="ab_property.html">ab_atc_group1()</a></code> <code><a href="ab_property.html">ab_atc_group2()</a></code> <code><a href="ab_property.html">ab_loinc()</a></code> <code><a href="ab_property.html">ab_ddd()</a></code> <code><a href="ab_property.html">ab_ddd_units()</a></code> <code><a href="ab_property.html">ab_info()</a></code> <code><a href="ab_property.html">ab_url()</a></code> <code><a href="ab_property.html">ab_property()</a></code> <code><a href="ab_property.html">set_ab_names()</a></code> </dd>
+        </div>
 
-          <code><a href="ab_property.html">ab_name()</a></code> <code><a href="ab_property.html">ab_cid()</a></code> <code><a href="ab_property.html">ab_synonyms()</a></code> <code><a href="ab_property.html">ab_tradenames()</a></code> <code><a href="ab_property.html">ab_group()</a></code> <code><a href="ab_property.html">ab_atc()</a></code> <code><a href="ab_property.html">ab_atc_group1()</a></code> <code><a href="ab_property.html">ab_atc_group2()</a></code> <code><a href="ab_property.html">ab_loinc()</a></code> <code><a href="ab_property.html">ab_ddd()</a></code> <code><a href="ab_property.html">ab_ddd_units()</a></code> <code><a href="ab_property.html">ab_info()</a></code> <code><a href="ab_property.html">ab_url()</a></code> <code><a href="ab_property.html">ab_property()</a></code> <code><a href="ab_property.html">set_ab_names()</a></code>
+        <div class="amr-ref-item">
+          <dt><a href="ab_from_text.html">Retrieve Antimicrobial Drug Names and Doses from Clinical Text</a></dt>
+          <dd><code><a href="ab_from_text.html">ab_from_text()</a></code> </dd>
+        </div>
 
-        </dt>
-        <dd>Get Properties of an Antibiotic</dd>
+        <div class="amr-ref-item">
+          <dt><a href="add_custom_antimicrobials.html">Add Custom Antimicrobials</a></dt>
+          <dd><code><a href="add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code> <code><a href="add_custom_antimicrobials.html">add_custom_antimicrobial_synonyms()</a></code> <code><a href="add_custom_antimicrobials.html">clear_custom_antimicrobials()</a></code> </dd>
+        </div>
 
-        <dt>
-
-          <code><a href="ab_from_text.html">ab_from_text()</a></code>
-
-        </dt>
-        <dd>Retrieve Antimicrobial Drug Names and Doses from Clinical Text</dd>
-
-        <dt>
-
-          <code><a href="atc_online.html">atc_online_property()</a></code> <code><a href="atc_online.html">atc_online_groups()</a></code> <code><a href="atc_online.html">atc_online_ddd()</a></code> <code><a href="atc_online.html">atc_online_ddd_units()</a></code>
-
-        </dt>
-        <dd>Get ATC Properties from WHOCC Website</dd>
-
-        <dt>
-
-          <code><a href="add_custom_antimicrobials.html">add_custom_antimicrobials()</a></code> <code><a href="add_custom_antimicrobials.html">add_custom_antimicrobial_synonyms()</a></code> <code><a href="add_custom_antimicrobials.html">clear_custom_antimicrobials()</a></code>
-
-        </dt>
-        <dd>Add Custom Antimicrobials</dd>
+        <div class="amr-ref-item">
+          <dt><a href="atc_online.html">Get ATC Properties from WHOCC Website</a></dt>
+          <dd><code><a href="atc_online.html">atc_online_property()</a></code> <code><a href="atc_online.html">atc_online_groups()</a></code> <code><a href="atc_online.html">atc_online_ddd()</a></code> <code><a href="atc_online.html">atc_online_ddd_units()</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="interpreting-data-antimicrobial-results">Interpreting data: antimicrobial results<a class="anchor" aria-label="anchor" href="#interpreting-data-antimicrobial-results"></a></h2>
 
-      <div class="section-desc"><p>With <code><a href="../reference/as.mic.html">as.mic()</a></code> and <code><a href="../reference/as.disk.html">as.disk()</a></code> you can transform your raw input to valid MIC or disk diffusion values. Use <code><a href="../reference/as.sir.html">as.sir()</a></code> for cleaning raw data to let it only contain “R”, “I” and “S”, or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines. Afterwards, you can extend antibiotic interpretations by applying interpretive rules, for example <a href="https://www.eucast.org/expert_rules_and_intrinsic_resistance/" class="external-link">from EUCAST</a> with <code><a href="../reference/interpretive_rules.html">interpretive_rules()</a></code>.</p></div>
-
-      <dl></dl></div><div class="section level2">
+      <h3 id="antivirals">Antivirals<a class="anchor" aria-label="anchor" href="#antivirals"></a></h3>
 
 
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="as.sir.html">as.sir()</a></code> <code><a href="as.sir.html">NA_sir_</a></code> <code><a href="as.sir.html">is.sir()</a></code> <code><a href="as.sir.html">is_sir_eligible()</a></code> <code><a href="as.sir.html">sir_interpretation_history()</a></code>
 
-        </dt>
-        <dd>Interpret MIC and Disk Diffusion as SIR, or Clean Existing SIR Data</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="as.av.html">Transform Input to an Antiviral Drug ID</a></dt>
+          <dd><code><a href="as.av.html">as.av()</a></code> <code><a href="as.av.html">is.av()</a></code> </dd>
+        </div>
 
-        <dt>
+        <div class="amr-ref-item">
+          <dt><a href="av_property.html">Get Properties of an Antiviral Drug</a></dt>
+          <dd><code><a href="av_property.html">av_name()</a></code> <code><a href="av_property.html">av_cid()</a></code> <code><a href="av_property.html">av_synonyms()</a></code> <code><a href="av_property.html">av_tradenames()</a></code> <code><a href="av_property.html">av_group()</a></code> <code><a href="av_property.html">av_atc()</a></code> <code><a href="av_property.html">av_loinc()</a></code> <code><a href="av_property.html">av_ddd()</a></code> <code><a href="av_property.html">av_ddd_units()</a></code> <code><a href="av_property.html">av_info()</a></code> <code><a href="av_property.html">av_url()</a></code> <code><a href="av_property.html">av_property()</a></code> </dd>
+        </div>
 
-          <code><a href="as.mic.html">as.mic()</a></code> <code><a href="as.mic.html">is.mic()</a></code> <code><a href="as.mic.html">NA_mic_</a></code> <code><a href="as.mic.html">rescale_mic()</a></code> <code><a href="as.mic.html">mic_p50()</a></code> <code><a href="as.mic.html">mic_p90()</a></code> <code><a href="as.mic.html">droplevels(<i>&lt;mic&gt;</i>)</a></code>
+        <div class="amr-ref-item">
+          <dt><a href="av_from_text.html">Retrieve Antiviral Drug Names and Doses from Clinical Text</a></dt>
+          <dd><code><a href="av_from_text.html">av_from_text()</a></code> </dd>
+        </div>
+      </dl></div><div class="section level2">
 
-        </dt>
-        <dd>Transform Input to Minimum Inhibitory Concentrations (MIC)</dd>
+      <h3 id="test-results">Test results<a class="anchor" aria-label="anchor" href="#test-results"></a></h3>
 
-        <dt>
 
-          <code><a href="as.disk.html">as.disk()</a></code> <code><a href="as.disk.html">NA_disk_</a></code> <code><a href="as.disk.html">is.disk()</a></code>
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
-        </dt>
-        <dd>Transform Input to Disk Diffusion Diameters</dd>
 
-        <dt>
 
-          <code><a href="interpretive_rules.html">interpretive_rules()</a></code> <code><a href="interpretive_rules.html">eucast_rules()</a></code> <code><a href="interpretive_rules.html">clsi_rules()</a></code> <code><a href="interpretive_rules.html">eucast_dosage()</a></code>
 
-        </dt>
-        <dd>Apply Interpretive Rules</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="as.mic.html">Transform Input to Minimum Inhibitory Concentrations (MIC)</a></dt>
+          <dd><code><a href="as.mic.html">as.mic()</a></code> <code><a href="as.mic.html">is.mic()</a></code> <code><a href="as.mic.html">NA_mic_</a></code> <code><a href="as.mic.html">rescale_mic()</a></code> <code><a href="as.mic.html">mic_p50()</a></code> <code><a href="as.mic.html">mic_p90()</a></code> <code><a href="as.mic.html">droplevels(<i>&lt;mic&gt;</i>)</a></code> </dd>
+        </div>
 
-        <dt>
+        <div class="amr-ref-item">
+          <dt><a href="as.disk.html">Transform Input to Disk Diffusion Diameters</a></dt>
+          <dd><code><a href="as.disk.html">as.disk()</a></code> <code><a href="as.disk.html">NA_disk_</a></code> <code><a href="as.disk.html">is.disk()</a></code> </dd>
+        </div>
+      </dl></div><div class="section level2">
+      <h2 id="interpreting-results-as-sir">Interpreting results as SIR<a class="anchor" aria-label="anchor" href="#interpreting-results-as-sir"></a></h2>
 
-          <code><a href="custom_interpretive_rules.html">custom_interpretive_rules()</a></code>
+      <div class="section-desc"><p>Interpret MIC values and disk diffusion zones as SIR with <code><a href="../reference/as.sir.html">as.sir()</a></code>, according to EUCAST or CLSI, for every guideline year from 2011 to 2026, and apply interpretive rules. <code><a href="../reference/as.sir.html">as.sir()</a></code> also cleans existing SIR data.</p></div>
 
-        </dt>
-        <dd>Define Custom Interpretive Rules</dd>
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+
+
+
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="as.sir.html">Interpret MIC and Disk Diffusion as SIR, or Clean Existing SIR Data</a></dt>
+          <dd><code><a href="as.sir.html">as.sir()</a></code> <code><a href="as.sir.html">NA_sir_</a></code> <code><a href="as.sir.html">is.sir()</a></code> <code><a href="as.sir.html">is_sir_eligible()</a></code> <code><a href="as.sir.html">sir_interpretation_history()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="interpretive_rules.html">Apply Interpretive Rules</a></dt>
+          <dd><code><a href="interpretive_rules.html">interpretive_rules()</a></code> <code><a href="interpretive_rules.html">eucast_rules()</a></code> <code><a href="interpretive_rules.html">clsi_rules()</a></code> <code><a href="interpretive_rules.html">eucast_dosage()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="custom_interpretive_rules.html">Define Custom Interpretive Rules</a></dt>
+          <dd><code><a href="custom_interpretive_rules.html">custom_interpretive_rules()</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
       <h2 id="analysing-data">Analysing data<a class="anchor" aria-label="anchor" href="#analysing-data"></a></h2>
 
-      <div class="section-desc"><p>Use these function for the analysis part. You can use <code><a href="../reference/proportion.html">susceptibility()</a></code> or <code><a href="../reference/proportion.html">resistance()</a></code> on any antibiotic column. With <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination antibiogram (WISCA). This function also comes with support for R Markdown and Quarto. Be sure to first select the isolates that are appropiate for analysis, by using <code><a href="../reference/first_isolate.html">first_isolate()</a></code> or <code><a href="../reference/get_episode.html">is_new_episode()</a></code>. You can also filter your data on certain resistance in certain antibiotic classes (<code><a href="../reference/antimicrobial_selectors.html">carbapenems()</a></code>, <code><a href="../reference/antimicrobial_selectors.html">aminoglycosides()</a></code>), or determine multi-drug resistant microorganisms (MDRO, <code><a href="../reference/mdro.html">mdro()</a></code>).</p></div>
+      <div class="section-desc"><p>Select first isolates with <code><a href="../reference/first_isolate.html">first_isolate()</a></code>, generate traditional, combination, syndromic, and WISCA antibiograms with <code><a href="../reference/antibiogram.html">antibiogram()</a></code> and <code><a href="../reference/antibiogram.html">wisca()</a></code>, calculate resistance, and determine multidrug-resistant organisms.</p></div>
 
-      <dl></dl></div><div class="section level2">
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+      <h3 id="selecting-isolates-and-antimicrobials">Selecting isolates and antimicrobials<a class="anchor" aria-label="anchor" href="#selecting-isolates-and-antimicrobials"></a></h3>
+
+
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
 
 
-      <dl><dt>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="first_isolate.html">Determine First Isolates</a></dt>
+          <dd><code><a href="first_isolate.html">first_isolate()</a></code> <code><a href="first_isolate.html">filter_first_isolate()</a></code> </dd>
+        </div>
 
-          <code><a href="antibiogram.html">wisca()</a></code> <code><a href="antibiogram.html">antibiogram()</a></code> <code><a href="antibiogram.html">retrieve_wisca_parameters()</a></code> <code><a href="antibiogram.html">plot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">autoplot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">wisca_plot()</a></code> <code><a href="antibiogram.html">knit_print(<i>&lt;antibiogram&gt;</i>)</a></code>
+        <div class="amr-ref-item">
+          <dt><a href="get_episode.html">Determine Clinical or Epidemic Episodes</a></dt>
+          <dd><code><a href="get_episode.html">get_episode()</a></code> <code><a href="get_episode.html">is_new_episode()</a></code> </dd>
+        </div>
 
-        </dt>
-        <dd>Generate Antibiograms (WISCA, Traditional, Combination, or Syndromic)</dd>
+        <div class="amr-ref-item">
+          <dt><a href="key_antimicrobials.html">(Key) Antimicrobials for First Weighted Isolates</a></dt>
+          <dd><code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> <code><a href="key_antimicrobials.html">all_antimicrobials()</a></code> <code><a href="key_antimicrobials.html">antimicrobials_equal()</a></code> </dd>
+        </div>
 
-        <dt>
+        <div class="amr-ref-item">
+          <dt><a href="top_n_microorganisms.html">Filter Top <em>n</em> Microorganisms</a></dt>
+          <dd><code><a href="top_n_microorganisms.html">top_n_microorganisms()</a></code> </dd>
+        </div>
 
-          <code><a href="proportion.html">resistance()</a></code> <code><a href="proportion.html">susceptibility()</a></code> <code><a href="proportion.html">sir_confidence_interval()</a></code> <code><a href="proportion.html">proportion_R()</a></code> <code><a href="proportion.html">proportion_IR()</a></code> <code><a href="proportion.html">proportion_I()</a></code> <code><a href="proportion.html">proportion_SI()</a></code> <code><a href="proportion.html">proportion_S()</a></code> <code><a href="proportion.html">proportion_df()</a></code> <code><a href="proportion.html">sir_df()</a></code>
+        <div class="amr-ref-item">
+          <dt><a href="antimicrobial_selectors.html">Antimicrobial Selectors</a></dt>
+          <dd><code><a href="antimicrobial_selectors.html">aminoglycosides()</a></code> <code><a href="antimicrobial_selectors.html">aminopenicillins()</a></code> <code><a href="antimicrobial_selectors.html">antifungals()</a></code> <code><a href="antimicrobial_selectors.html">antimycobacterials()</a></code> <code><a href="antimicrobial_selectors.html">betalactams()</a></code> <code><a href="antimicrobial_selectors.html">betalactams_with_inhibitor()</a></code> <code><a href="antimicrobial_selectors.html">carbapenems()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_1st()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_2nd()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_3rd()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_4th()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_5th()</a></code> <code><a href="antimicrobial_selectors.html">fluoroquinolones()</a></code> <code><a href="antimicrobial_selectors.html">glycopeptides()</a></code> <code><a href="antimicrobial_selectors.html">ionophores()</a></code> <code><a href="antimicrobial_selectors.html">isoxazolylpenicillins()</a></code> <code><a href="antimicrobial_selectors.html">lincosamides()</a></code> <code><a href="antimicrobial_selectors.html">lipoglycopeptides()</a></code> <code><a href="antimicrobial_selectors.html">macrolides()</a></code> <code><a href="antimicrobial_selectors.html">monobactams()</a></code> <code><a href="antimicrobial_selectors.html">nitrofurans()</a></code> <code><a href="antimicrobial_selectors.html">oxazolidinones()</a></code> <code><a href="antimicrobial_selectors.html">penicillins()</a></code> <code><a href="antimicrobial_selectors.html">peptides()</a></code> <code><a href="antimicrobial_selectors.html">phenicols()</a></code> <code><a href="antimicrobial_selectors.html">phosphonics()</a></code> <code><a href="antimicrobial_selectors.html">polymyxins()</a></code> <code><a href="antimicrobial_selectors.html">quinolones()</a></code> <code><a href="antimicrobial_selectors.html">rifamycins()</a></code> <code><a href="antimicrobial_selectors.html">spiropyrimidinetriones()</a></code> <code><a href="antimicrobial_selectors.html">streptogramins()</a></code> <code><a href="antimicrobial_selectors.html">sulfonamides()</a></code> <code><a href="antimicrobial_selectors.html">tetracyclines()</a></code> <code><a href="antimicrobial_selectors.html">trimethoprims()</a></code> <code><a href="antimicrobial_selectors.html">ureidopenicillins()</a></code> <code><a href="antimicrobial_selectors.html">amr_class()</a></code> <code><a href="antimicrobial_selectors.html">amr_selector()</a></code> <code><a href="antimicrobial_selectors.html">administrable_per_os()</a></code> <code><a href="antimicrobial_selectors.html">administrable_iv()</a></code> <code><a href="antimicrobial_selectors.html">not_intrinsic_resistant()</a></code> </dd>
+        </div>
 
-        </dt>
-        <dd>Calculate Antimicrobial Resistance</dd>
+        <div class="amr-ref-item">
+          <dt><a href="guess_ab_col.html">Guess Antimicrobial Column</a></dt>
+          <dd><code><a href="guess_ab_col.html">guess_ab_col()</a></code> </dd>
+        </div>
 
-        <dt>
-
-          <code><a href="count.html">count_resistant()</a></code> <code><a href="count.html">count_susceptible()</a></code> <code><a href="count.html">count_S()</a></code> <code><a href="count.html">count_SI()</a></code> <code><a href="count.html">count_I()</a></code> <code><a href="count.html">count_IR()</a></code> <code><a href="count.html">count_R()</a></code> <code><a href="count.html">count_all()</a></code> <code><a href="count.html">n_sir()</a></code> <code><a href="count.html">count_df()</a></code>
-
-        </dt>
-        <dd>Count Available Isolates</dd>
-
-        <dt>
-
-          <code><a href="sir_combine.html">sir_combine()</a></code>
-
-        </dt>
-        <dd>Combine SIR Results of Multiple Antimicrobials</dd>
-
-        <dt>
-
-          <code><a href="get_episode.html">get_episode()</a></code> <code><a href="get_episode.html">is_new_episode()</a></code>
-
-        </dt>
-        <dd>Determine Clinical or Epidemic Episodes</dd>
-
-        <dt>
-
-          <code><a href="first_isolate.html">first_isolate()</a></code> <code><a href="first_isolate.html">filter_first_isolate()</a></code>
-
-        </dt>
-        <dd>Determine First Isolates</dd>
-
-        <dt>
-
-          <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> <code><a href="key_antimicrobials.html">all_antimicrobials()</a></code> <code><a href="key_antimicrobials.html">antimicrobials_equal()</a></code>
-
-        </dt>
-        <dd>(Key) Antimicrobials for First Weighted Isolates</dd>
-
-        <dt>
-
-          <code><a href="mdro.html">mdro()</a></code> <code><a href="mdro.html">brmo()</a></code> <code><a href="mdro.html">mrgn()</a></code> <code><a href="mdro.html">mdr_tb()</a></code> <code><a href="mdro.html">mdr_cmi2012()</a></code> <code><a href="mdro.html">eucast_exceptional_phenotypes()</a></code>
-
-        </dt>
-        <dd>Determine Multidrug-Resistant Organisms (MDRO)</dd>
-
-        <dt>
-
-          <code><a href="custom_mdro_guideline.html">custom_mdro_guideline()</a></code> <code><a href="custom_mdro_guideline.html">c(<i>&lt;custom_mdro_guideline&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Define Custom MDRO Guideline</dd>
-
-        <dt>
-
-          <code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code> <code><a href="bug_drug_combinations.html">format(<i>&lt;bug_drug_combinations&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Determine Bug-Drug Combinations</dd>
-
-        <dt>
-
-          <code><a href="antimicrobial_selectors.html">aminoglycosides()</a></code> <code><a href="antimicrobial_selectors.html">aminopenicillins()</a></code> <code><a href="antimicrobial_selectors.html">antifungals()</a></code> <code><a href="antimicrobial_selectors.html">antimycobacterials()</a></code> <code><a href="antimicrobial_selectors.html">betalactams()</a></code> <code><a href="antimicrobial_selectors.html">betalactams_with_inhibitor()</a></code> <code><a href="antimicrobial_selectors.html">carbapenems()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_1st()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_2nd()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_3rd()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_4th()</a></code> <code><a href="antimicrobial_selectors.html">cephalosporins_5th()</a></code> <code><a href="antimicrobial_selectors.html">fluoroquinolones()</a></code> <code><a href="antimicrobial_selectors.html">glycopeptides()</a></code> <code><a href="antimicrobial_selectors.html">ionophores()</a></code> <code><a href="antimicrobial_selectors.html">isoxazolylpenicillins()</a></code> <code><a href="antimicrobial_selectors.html">lincosamides()</a></code> <code><a href="antimicrobial_selectors.html">lipoglycopeptides()</a></code> <code><a href="antimicrobial_selectors.html">macrolides()</a></code> <code><a href="antimicrobial_selectors.html">monobactams()</a></code> <code><a href="antimicrobial_selectors.html">nitrofurans()</a></code> <code><a href="antimicrobial_selectors.html">oxazolidinones()</a></code> <code><a href="antimicrobial_selectors.html">penicillins()</a></code> <code><a href="antimicrobial_selectors.html">peptides()</a></code> <code><a href="antimicrobial_selectors.html">phenicols()</a></code> <code><a href="antimicrobial_selectors.html">phosphonics()</a></code> <code><a href="antimicrobial_selectors.html">polymyxins()</a></code> <code><a href="antimicrobial_selectors.html">quinolones()</a></code> <code><a href="antimicrobial_selectors.html">rifamycins()</a></code> <code><a href="antimicrobial_selectors.html">spiropyrimidinetriones()</a></code> <code><a href="antimicrobial_selectors.html">streptogramins()</a></code> <code><a href="antimicrobial_selectors.html">sulfonamides()</a></code> <code><a href="antimicrobial_selectors.html">tetracyclines()</a></code> <code><a href="antimicrobial_selectors.html">trimethoprims()</a></code> <code><a href="antimicrobial_selectors.html">ureidopenicillins()</a></code> <code><a href="antimicrobial_selectors.html">amr_class()</a></code> <code><a href="antimicrobial_selectors.html">amr_selector()</a></code> <code><a href="antimicrobial_selectors.html">administrable_per_os()</a></code> <code><a href="antimicrobial_selectors.html">administrable_iv()</a></code> <code><a href="antimicrobial_selectors.html">not_intrinsic_resistant()</a></code>
-
-        </dt>
-        <dd>Antimicrobial Selectors</dd>
-
-        <dt>
-
-          <code><a href="top_n_microorganisms.html">top_n_microorganisms()</a></code>
-
-        </dt>
-        <dd>Filter Top <em>n</em> Microorganisms</dd>
-
-        <dt>
-
-          <code><a href="mean_amr_distance.html">mean_amr_distance()</a></code> <code><a href="mean_amr_distance.html">amr_distance_from_row()</a></code>
-
-        </dt>
-        <dd>Calculate the Mean AMR Distance</dd>
-
-        <dt>
-
-          <code><a href="resistance_predict.html">resistance_predict()</a></code> <code><a href="resistance_predict.html">sir_predict()</a></code> <code><a href="resistance_predict.html">plot(<i>&lt;resistance_predict&gt;</i>)</a></code> <code><a href="resistance_predict.html">ggplot_sir_predict()</a></code> <code><a href="resistance_predict.html">autoplot(<i>&lt;resistance_predict&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Predict Antimicrobial Resistance</dd>
-
-        <dt>
-
-          <code><a href="guess_ab_col.html">guess_ab_col()</a></code>
-
-        </dt>
-        <dd>Guess Antibiotic Column</dd>
+        <div class="amr-ref-item">
+          <dt><a href="availability.html">Check Availability of Columns</a></dt>
+          <dd><code><a href="availability.html">availability()</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="plotting-data">Plotting data<a class="anchor" aria-label="anchor" href="#plotting-data"></a></h2>
 
-      <div class="section-desc"><p>Use these functions for the plotting part. The <code>scale_*_mic()</code> functions extend the ggplot2 package to allow plotting of MIC values, even within a manually set range. If using <code><a href="../reference/plot.html">plot()</a></code> (base R) or <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> (ggplot2) on MIC values or disk diffusion values, the user can set the interpretation guideline to give the bars the right SIR colours. The <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code> function is a short wrapper for users not much accustomed to ggplot2 yet. The <code><a href="../reference/ggplot_pca.html">ggplot_pca()</a></code> function is a specific function to plot so-called biplots for PCA (principal component analysis).</p></div>
-
-      <dl></dl></div><div class="section level2">
+      <h3 id="generating-antibiograms-and-wisca">Generating antibiograms and WISCA<a class="anchor" aria-label="anchor" href="#generating-antibiograms-and-wisca"></a></h3>
 
 
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="plot.html">scale_x_mic()</a></code> <code><a href="plot.html">scale_y_mic()</a></code> <code><a href="plot.html">scale_colour_mic()</a></code> <code><a href="plot.html">scale_fill_mic()</a></code> <code><a href="plot.html">scale_x_sir()</a></code> <code><a href="plot.html">scale_colour_sir()</a></code> <code><a href="plot.html">scale_fill_sir()</a></code> <code><a href="plot.html">plot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;sir&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;sir&gt;</i>)</a></code> <code><a href="plot.html">facet_sir()</a></code> <code><a href="plot.html">scale_y_percent()</a></code> <code><a href="plot.html">scale_sir_colours()</a></code> <code><a href="plot.html">theme_sir()</a></code>
 
-        </dt>
-        <dd>Plotting Helpers for AMR Data Analysis</dd>
-
-        <dt>
-
-          <code><a href="ggplot_sir.html">ggplot_sir()</a></code> <code><a href="ggplot_sir.html">geom_sir()</a></code> <code><a href="ggplot_sir.html">labels_sir_count()</a></code>
-
-        </dt>
-        <dd>AMR Plots with <code>ggplot2</code></dd>
-
-        <dt>
-
-          <code><a href="ggplot_pca.html">ggplot_pca()</a></code>
-
-        </dt>
-        <dd>PCA Biplot with <code>ggplot2</code></dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="antibiogram.html">Generate Antibiograms (WISCA, Traditional, Combination, or Syndromic)</a></dt>
+          <dd><code><a href="antibiogram.html">wisca()</a></code> <code><a href="antibiogram.html">antibiogram()</a></code> <code><a href="antibiogram.html">retrieve_wisca_parameters()</a></code> <code><a href="antibiogram.html">plot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">autoplot(<i>&lt;antibiogram&gt;</i>)</a></code> <code><a href="antibiogram.html">wisca_plot()</a></code> <code><a href="antibiogram.html">knit_print(<i>&lt;antibiogram&gt;</i>)</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="amr-specific-options">AMR-specific options<a class="anchor" aria-label="anchor" href="#amr-specific-options"></a></h2>
 
-      <div class="section-desc"><p>The AMR package is customisable, by providing settings that can be set per user or per team. For example, the default interpretation guideline can be changed from EUCAST to CLSI, or a supported language can be set for the whole team (system-language independent) for antibiotic names in a foreign language.</p></div>
-
-      <dl></dl></div><div class="section level2">
+      <h3 id="calculating-resistance-and-susceptibility">Calculating resistance and susceptibility<a class="anchor" aria-label="anchor" href="#calculating-resistance-and-susceptibility"></a></h3>
 
 
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="AMR-options.html">AMR-options</a></code>
 
-        </dt>
-        <dd>Options for the AMR package</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="proportion.html">Calculate Antimicrobial Resistance</a></dt>
+          <dd><code><a href="proportion.html">resistance()</a></code> <code><a href="proportion.html">susceptibility()</a></code> <code><a href="proportion.html">sir_confidence_interval()</a></code> <code><a href="proportion.html">proportion_R()</a></code> <code><a href="proportion.html">proportion_IR()</a></code> <code><a href="proportion.html">proportion_I()</a></code> <code><a href="proportion.html">proportion_SI()</a></code> <code><a href="proportion.html">proportion_S()</a></code> <code><a href="proportion.html">proportion_df()</a></code> <code><a href="proportion.html">sir_df()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="count.html">Count Available Isolates</a></dt>
+          <dd><code><a href="count.html">count_resistant()</a></code> <code><a href="count.html">count_susceptible()</a></code> <code><a href="count.html">count_S()</a></code> <code><a href="count.html">count_SI()</a></code> <code><a href="count.html">count_I()</a></code> <code><a href="count.html">count_IR()</a></code> <code><a href="count.html">count_R()</a></code> <code><a href="count.html">count_all()</a></code> <code><a href="count.html">n_sir()</a></code> <code><a href="count.html">count_df()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="sir_combine.html">Combine SIR Results of Multiple Antimicrobials</a></dt>
+          <dd><code><a href="sir_combine.html">sir_combine()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="bug_drug_combinations.html">Determine Bug-Drug Combinations</a></dt>
+          <dd><code><a href="bug_drug_combinations.html">bug_drug_combinations()</a></code> <code><a href="bug_drug_combinations.html">format(<i>&lt;bug_drug_combinations&gt;</i>)</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="other-antiviral-drugs">Other: antiviral drugs<a class="anchor" aria-label="anchor" href="#other-antiviral-drugs"></a></h2>
 
-      <div class="section-desc"><p>This package also provides extensive support for antiviral agents, even though it is not the primary scope of this package. Working with data containing information about antiviral drugs was never easier. Use these functions to get valid properties of antiviral drugs from any input or to clean your input. You can even retrieve drug names and doses from clinical text records, using <code><a href="../reference/av_from_text.html">av_from_text()</a></code>.</p></div>
-
-      <dl></dl></div><div class="section level2">
+      <h3 id="determining-multidrug-resistance">Determining multidrug resistance<a class="anchor" aria-label="anchor" href="#determining-multidrug-resistance"></a></h3>
 
 
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="as.av.html">as.av()</a></code> <code><a href="as.av.html">is.av()</a></code>
 
-        </dt>
-        <dd>Transform Input to an Antiviral Drug ID</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="mdro.html">Determine Multidrug-Resistant Organisms (MDRO)</a></dt>
+          <dd><code><a href="mdro.html">mdro()</a></code> <code><a href="mdro.html">brmo()</a></code> <code><a href="mdro.html">mrgn()</a></code> <code><a href="mdro.html">mdr_tb()</a></code> <code><a href="mdro.html">mdr_cmi2012()</a></code> <code><a href="mdro.html">eucast_exceptional_phenotypes()</a></code> </dd>
+        </div>
 
-        <dt>
-
-          <code><a href="av_property.html">av_name()</a></code> <code><a href="av_property.html">av_cid()</a></code> <code><a href="av_property.html">av_synonyms()</a></code> <code><a href="av_property.html">av_tradenames()</a></code> <code><a href="av_property.html">av_group()</a></code> <code><a href="av_property.html">av_atc()</a></code> <code><a href="av_property.html">av_loinc()</a></code> <code><a href="av_property.html">av_ddd()</a></code> <code><a href="av_property.html">av_ddd_units()</a></code> <code><a href="av_property.html">av_info()</a></code> <code><a href="av_property.html">av_url()</a></code> <code><a href="av_property.html">av_property()</a></code>
-
-        </dt>
-        <dd>Get Properties of an Antiviral Drug</dd>
-
-        <dt>
-
-          <code><a href="av_from_text.html">av_from_text()</a></code>
-
-        </dt>
-        <dd>Retrieve Antiviral Drug Names and Doses from Clinical Text</dd>
+        <div class="amr-ref-item">
+          <dt><a href="custom_mdro_guideline.html">Define Custom MDRO Guideline</a></dt>
+          <dd><code><a href="custom_mdro_guideline.html">custom_mdro_guideline()</a></code> <code><a href="custom_mdro_guideline.html">c(<i>&lt;custom_mdro_guideline&gt;</i>)</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="other-background-information-on-included-data">Other: background information on included data<a class="anchor" aria-label="anchor" href="#other-background-information-on-included-data"></a></h2>
+      <h2 id="visualising-data">Visualising data<a class="anchor" aria-label="anchor" href="#visualising-data"></a></h2>
 
-      <div class="section-desc"><p>Some pages about our package and its external sources. Be sure to read our <a href="./../articles/index.html">How To’s</a> for more information about how to work with functions in this package.</p></div>
+      <div class="section-desc"><p>Plot MIC values, disk zones, and SIR results in base R or <code>ggplot2</code>, with scales and colours tailored to AMR data.</p></div>
 
-      <dl></dl></div><div class="section level2">
-
-
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="microorganisms.html">microorganisms</a></code>
 
-        </dt>
-        <dd>Data Set with 103 222 Taxonomic Records of Microorganisms</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="plot.html">Plotting Helpers for AMR Data Analysis</a></dt>
+          <dd><code><a href="plot.html">scale_x_mic()</a></code> <code><a href="plot.html">scale_y_mic()</a></code> <code><a href="plot.html">scale_colour_mic()</a></code> <code><a href="plot.html">scale_fill_mic()</a></code> <code><a href="plot.html">scale_x_sir()</a></code> <code><a href="plot.html">scale_colour_sir()</a></code> <code><a href="plot.html">scale_fill_sir()</a></code> <code><a href="plot.html">plot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;mic&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;disk&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;sir&gt;</i>)</a></code> <code><a href="plot.html">autoplot(<i>&lt;sir&gt;</i>)</a></code> <code><a href="plot.html">facet_sir()</a></code> <code><a href="plot.html">scale_y_percent()</a></code> <code><a href="plot.html">scale_sir_colours()</a></code> <code><a href="plot.html">theme_sir()</a></code> </dd>
+        </div>
 
-        <dt>
+        <div class="amr-ref-item">
+          <dt><a href="ggplot_sir.html">AMR Plots with <code>ggplot2</code></a></dt>
+          <dd><code><a href="ggplot_sir.html">ggplot_sir()</a></code> <code><a href="ggplot_sir.html">geom_sir()</a></code> <code><a href="ggplot_sir.html">labels_sir_count()</a></code> </dd>
+        </div>
 
-          <code><a href="antimicrobials.html">antimicrobials</a></code> <code><a href="antimicrobials.html">antibiotics</a></code> <code><a href="antimicrobials.html">antivirals</a></code>
-
-        </dt>
-        <dd>Data Sets with 626 Antimicrobial Drugs</dd>
-
-        <dt>
-
-          <code><a href="clinical_breakpoints.html">clinical_breakpoints</a></code>
-
-        </dt>
-        <dd>Data Set with Clinical Breakpoints for SIR Interpretation</dd>
-
-        <dt>
-
-          <code><a href="example_isolates.html">example_isolates</a></code>
-
-        </dt>
-        <dd>Data Set with 2 000 Example Isolates</dd>
-
-        <dt>
-
-          <code><a href="esbl_isolates.html">esbl_isolates</a></code>
-
-        </dt>
-        <dd>Data Set with 500 ESBL Isolates</dd>
-
-        <dt>
-
-          <code><a href="microorganisms.codes.html">microorganisms.codes</a></code>
-
-        </dt>
-        <dd>Data Set with 6 293 Common Microorganism Codes</dd>
-
-        <dt>
-
-          <code><a href="microorganisms.groups.html">microorganisms.groups</a></code>
-
-        </dt>
-        <dd>Data Set with 466 Microorganisms In Species Groups</dd>
-
-        <dt>
-
-          <code><a href="intrinsic_resistant.html">intrinsic_resistant</a></code>
-
-        </dt>
-        <dd>Data Set Denoting Bacterial Intrinsic Resistance</dd>
-
-        <dt>
-
-          <code><a href="dosage.html">dosage</a></code>
-
-        </dt>
-        <dd>Data Set with Treatment Dosages as Defined by EUCAST</dd>
-
-        <dt>
-
-          <code><a href="WHOCC.html">WHOCC</a></code>
-
-        </dt>
-        <dd>WHOCC: WHO Collaborating Centre for Drug Statistics Methodology</dd>
-
-        <dt>
-
-          <code><a href="example_isolates_unclean.html">example_isolates_unclean</a></code>
-
-        </dt>
-        <dd>Data Set with Unclean Data</dd>
-
-        <dt>
-
-          <code><a href="WHONET.html">WHONET</a></code>
-
-        </dt>
-        <dd>Data Set with 500 Isolates - WHONET Example</dd>
+        <div class="amr-ref-item">
+          <dt><a href="ggplot_pca.html">PCA Biplot with <code>ggplot2</code></a></dt>
+          <dd><code><a href="ggplot_pca.html">ggplot_pca()</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="other-miscellaneous-functions">Other: miscellaneous functions<a class="anchor" aria-label="anchor" href="#other-miscellaneous-functions"></a></h2>
+      <h2 id="modelling">Modelling<a class="anchor" aria-label="anchor" href="#modelling"></a></h2>
 
-      <div class="section-desc"><p>Miscellaneous functions that support various parts of an AMR analysis, such as working with ages, joining tables, principal component analysis, and other utilities. Especially the ‘like’ function can be useful: <code>if (x %like% y) {...}</code>.</p></div>
+      <div class="section-desc"><p>Use AMR data types in <code>tidymodels</code> pipelines, and perform principal component analysis or distance calculations on resistance profiles.</p></div>
 
-      <dl></dl></div><div class="section level2">
-
-
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="age_groups.html">age_groups()</a></code>
 
-        </dt>
-        <dd>Split Ages into Age Groups</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="amr-tidymodels.html">AMR Extensions for Tidymodels</a></dt>
+          <dd><code><a href="amr-tidymodels.html">all_sir()</a></code> <code><a href="amr-tidymodels.html">all_sir_predictors()</a></code> <code><a href="amr-tidymodels.html">all_mic()</a></code> <code><a href="amr-tidymodels.html">all_mic_predictors()</a></code> <code><a href="amr-tidymodels.html">all_disk()</a></code> <code><a href="amr-tidymodels.html">all_disk_predictors()</a></code> <code><a href="amr-tidymodels.html">step_mic_log2()</a></code> <code><a href="amr-tidymodels.html">step_sir_numeric()</a></code> </dd>
+        </div>
 
-        <dt>
+        <div class="amr-ref-item">
+          <dt><a href="pca.html">Principal Component Analysis (for AMR)</a></dt>
+          <dd><code><a href="pca.html">pca()</a></code> </dd>
+        </div>
 
-          <code><a href="age.html">age()</a></code>
-
-        </dt>
-        <dd>Age in Years of Individuals</dd>
-
-        <dt>
-
-          <code><a href="amr_course.html">amr_course()</a></code>
-
-        </dt>
-        <dd>Download and Unpack an AMR Course Repository</dd>
-
-        <dt>
-
-          <code><a href="export_ncbi_biosample.html">export_ncbi_biosample()</a></code>
-
-        </dt>
-        <dd>Export Data Set as NCBI BioSample Antibiogram</dd>
-
-        <dt>
-
-          <code><a href="availability.html">availability()</a></code>
-
-        </dt>
-        <dd>Check Availability of Columns</dd>
-
-        <dt>
-
-          <code><a href="translate.html">get_AMR_locale()</a></code> <code><a href="translate.html">set_AMR_locale()</a></code> <code><a href="translate.html">reset_AMR_locale()</a></code> <code><a href="translate.html">translate_AMR()</a></code>
-
-        </dt>
-        <dd>Translate Strings from the AMR Package</dd>
-
-        <dt>
-
-          <code><a href="italicise_taxonomy.html">italicise_taxonomy()</a></code> <code><a href="italicise_taxonomy.html">italicize_taxonomy()</a></code>
-
-        </dt>
-        <dd>Italicise Taxonomic Families, Genera, Species, Subspecies</dd>
-
-        <dt>
-
-          <code><a href="join.html">inner_join_microorganisms()</a></code> <code><a href="join.html">left_join_microorganisms()</a></code> <code><a href="join.html">right_join_microorganisms()</a></code> <code><a href="join.html">full_join_microorganisms()</a></code> <code><a href="join.html">semi_join_microorganisms()</a></code> <code><a href="join.html">anti_join_microorganisms()</a></code>
-
-        </dt>
-        <dd>Join microorganisms to a Data Set</dd>
-
-        <dt>
-
-          <code><a href="like.html">like()</a></code> <code><a href="like.html">`%like%`</a></code> <code><a href="like.html">`%unlike%`</a></code> <code><a href="like.html">`%like_case%`</a></code> <code><a href="like.html">`%unlike_case%`</a></code>
-
-        </dt>
-        <dd>Vectorised Pattern Matching with Keyboard Shortcut</dd>
-
-        <dt>
-
-          <code><a href="mo_matching_score.html">mo_matching_score()</a></code>
-
-        </dt>
-        <dd>Calculate the Matching Score for Microorganisms</dd>
-
-        <dt>
-
-          <code><a href="pca.html">pca()</a></code>
-
-        </dt>
-        <dd>Principal Component Analysis (for AMR)</dd>
-
-        <dt>
-
-          <code><a href="random.html">random_mic()</a></code> <code><a href="random.html">random_disk()</a></code> <code><a href="random.html">random_sir()</a></code>
-
-        </dt>
-        <dd>Random MIC Values/Disk Zones/SIR Generation</dd>
+        <div class="amr-ref-item">
+          <dt><a href="mean_amr_distance.html">Calculate the Mean AMR Distance</a></dt>
+          <dd><code><a href="mean_amr_distance.html">mean_amr_distance()</a></code> <code><a href="mean_amr_distance.html">amr_distance_from_row()</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="other-statistical-tests">Other: statistical tests<a class="anchor" aria-label="anchor" href="#other-statistical-tests"></a></h2>
+      <h2 id="reference-data">Reference data<a class="anchor" aria-label="anchor" href="#reference-data"></a></h2>
 
-      <div class="section-desc"><p>Some statistical tests or methods usable for AMR analyses are not part of base R and were added to this package for convenience.</p></div>
+      <div class="section-desc"><p>The data sets underlying this package, all of which can also be <a href="../articles/datasets.html">downloaded in other formats</a>.</p></div>
 
-      <dl></dl></div><div class="section level2">
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+      <h3 id="microorganisms-1">Microorganisms<a class="anchor" aria-label="anchor" href="#microorganisms-1"></a></h3>
+
+
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
 
 
-      <dl><dt>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="microorganisms.html">Data Set with 103 222 Taxonomic Records of Microorganisms</a></dt>
+          <dd><code><a href="microorganisms.html">microorganisms</a></code> </dd>
+        </div>
 
-          <code><a href="g.test.html">g.test()</a></code>
+        <div class="amr-ref-item">
+          <dt><a href="microorganisms.codes.html">Data Set with 6 293 Common Microorganism Codes</a></dt>
+          <dd><code><a href="microorganisms.codes.html">microorganisms.codes</a></code> </dd>
+        </div>
 
-        </dt>
-        <dd><em>G</em>-test for Count Data</dd>
-
-        <dt>
-
-          <code><a href="kurtosis.html">kurtosis()</a></code>
-
-        </dt>
-        <dd>Kurtosis of the Sample</dd>
-
-        <dt>
-
-          <code><a href="skewness.html">skewness()</a></code>
-
-        </dt>
-        <dd>Skewness of the Sample</dd>
+        <div class="amr-ref-item">
+          <dt><a href="microorganisms.groups.html">Data Set with 466 Microorganisms In Species Groups</a></dt>
+          <dd><code><a href="microorganisms.groups.html">microorganisms.groups</a></code> </dd>
+        </div>
       </dl></div><div class="section level2">
-      <h2 id="other-deprecated-functions-arguments-datasets">Other: deprecated functions/arguments/datasets<a class="anchor" aria-label="anchor" href="#other-deprecated-functions-arguments-datasets"></a></h2>
 
-      <div class="section-desc"><p>These objects are deprecated, meaning that they will still work but show a warning that they will be removed in a future version.</p></div>
-
-      <dl></dl></div><div class="section level2">
+      <h3 id="antimicrobials-1">Antimicrobials<a class="anchor" aria-label="anchor" href="#antimicrobials-1"></a></h3>
 
 
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
 
 
-      <dl><dt>
 
-          <code><a href="AMR-deprecated.html">custom_eucast_rules()</a></code> <code><a href="AMR-deprecated.html">ab_class()</a></code> <code><a href="AMR-deprecated.html">ab_selector()</a></code>
 
-        </dt>
-        <dd>Deprecated Functions, Arguments, or Datasets</dd>
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="antimicrobials.html">Data Sets with 626 Antimicrobial Drugs</a></dt>
+          <dd><code><a href="antimicrobials.html">antimicrobials</a></code> <code><a href="antimicrobials.html">antibiotics</a></code> <code><a href="antimicrobials.html">antivirals</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="WHOCC.html">WHOCC: WHO Collaborating Centre for Drug Statistics Methodology</a></dt>
+          <dd><code><a href="WHOCC.html">WHOCC</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="dosage.html">Data Set with Treatment Dosages as Defined by EUCAST</a></dt>
+          <dd><code><a href="dosage.html">dosage</a></code> </dd>
+        </div>
+      </dl></div><div class="section level2">
+
+      <h3 id="breakpoints-and-intrinsic-resistance">Breakpoints and intrinsic resistance<a class="anchor" aria-label="anchor" href="#breakpoints-and-intrinsic-resistance"></a></h3>
+
+
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+
+
+
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="clinical_breakpoints.html">Data Set with Clinical Breakpoints for SIR Interpretation</a></dt>
+          <dd><code><a href="clinical_breakpoints.html">clinical_breakpoints</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="intrinsic_resistant.html">Data Set Denoting Bacterial Intrinsic Resistance</a></dt>
+          <dd><code><a href="intrinsic_resistant.html">intrinsic_resistant</a></code> </dd>
+        </div>
+      </dl></div><div class="section level2">
+
+      <h3 id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a></h3>
+
+
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+
+
+
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="example_isolates.html">Data Set with 2 000 Example Isolates</a></dt>
+          <dd><code><a href="example_isolates.html">example_isolates</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="example_isolates_unclean.html">Data Set with Unclean Data</a></dt>
+          <dd><code><a href="example_isolates_unclean.html">example_isolates_unclean</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="esbl_isolates.html">Data Set with 500 ESBL Isolates</a></dt>
+          <dd><code><a href="esbl_isolates.html">esbl_isolates</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="WHONET.html">Data Set with 500 Isolates - WHONET Example</a></dt>
+          <dd><code><a href="WHONET.html">WHONET</a></code> </dd>
+        </div>
+      </dl></div><div class="section level2">
+      <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a></h2>
+
+      <div class="section-desc"><p>Helper functions for pattern matching with <code>%like%</code>, ages, joining and italicising taxonomy, generating random test results, and data export.</p></div>
+
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+
+
+
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="like.html">Vectorised Pattern Matching with Keyboard Shortcut</a></dt>
+          <dd><code><a href="like.html">like()</a></code> <code><a href="like.html">`%like%`</a></code> <code><a href="like.html">`%unlike%`</a></code> <code><a href="like.html">`%like_case%`</a></code> <code><a href="like.html">`%unlike_case%`</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="age.html">Age in Years of Individuals</a></dt>
+          <dd><code><a href="age.html">age()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="age_groups.html">Split Ages into Age Groups</a></dt>
+          <dd><code><a href="age_groups.html">age_groups()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="join.html">Join microorganisms to a Data Set</a></dt>
+          <dd><code><a href="join.html">inner_join_microorganisms()</a></code> <code><a href="join.html">left_join_microorganisms()</a></code> <code><a href="join.html">right_join_microorganisms()</a></code> <code><a href="join.html">full_join_microorganisms()</a></code> <code><a href="join.html">semi_join_microorganisms()</a></code> <code><a href="join.html">anti_join_microorganisms()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="italicise_taxonomy.html">Italicise Taxonomic Families, Genera, Species, and Subspecies</a></dt>
+          <dd><code><a href="italicise_taxonomy.html">italicise_taxonomy()</a></code> <code><a href="italicise_taxonomy.html">italicize_taxonomy()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="random.html">Generate Random MIC Values, Disk Zones, or SIR Results</a></dt>
+          <dd><code><a href="random.html">random_mic()</a></code> <code><a href="random.html">random_disk()</a></code> <code><a href="random.html">random_sir()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="export_ncbi_biosample.html">Export Data Set as NCBI BioSample Antibiogram</a></dt>
+          <dd><code><a href="export_ncbi_biosample.html">export_ncbi_biosample()</a></code> </dd>
+        </div>
+      </dl></div><div class="section level2">
+
+      <h3 id="statistical-tests">Statistical tests<a class="anchor" aria-label="anchor" href="#statistical-tests"></a></h3>
+
+
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+
+
+
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="g.test.html"><em>G</em>-test for Count Data</a></dt>
+          <dd><code><a href="g.test.html">g.test()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="kurtosis.html">Kurtosis of the Sample</a></dt>
+          <dd><code><a href="kurtosis.html">kurtosis()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="skewness.html">Skewness of the Sample</a></dt>
+          <dd><code><a href="skewness.html">skewness()</a></code> </dd>
+        </div>
+      </dl></div><div class="section level2">
+      <h2 id="deprecated-functions">Deprecated functions<a class="anchor" aria-label="anchor" href="#deprecated-functions"></a></h2>
+
+      <div class="section-desc"><p>These still work, but show a warning and will be removed in a future version.</p></div>
+
+      <dl class="amr-ref-list"></dl></div><div class="section level2">
+
+
+
+
+      <dl class="amr-ref-list"><div class="amr-ref-item">
+          <dt><a href="AMR-deprecated.html">Deprecated Functions, Arguments, or Data Sets</a></dt>
+          <dd><code><a href="AMR-deprecated.html">custom_eucast_rules()</a></code> <code><a href="AMR-deprecated.html">ab_class()</a></code> <code><a href="AMR-deprecated.html">ab_selector()</a></code> </dd>
+        </div>
+
+        <div class="amr-ref-item">
+          <dt><a href="resistance_predict.html">Predict Antimicrobial Resistance</a></dt>
+          <dd><code><a href="resistance_predict.html">resistance_predict()</a></code> <code><a href="resistance_predict.html">sir_predict()</a></code> <code><a href="resistance_predict.html">plot(<i>&lt;resistance_predict&gt;</i>)</a></code> <code><a href="resistance_predict.html">ggplot_sir_predict()</a></code> <code><a href="resistance_predict.html">autoplot(<i>&lt;resistance_predict&gt;</i>)</a></code> </dd>
+        </div>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

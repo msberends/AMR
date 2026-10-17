@@ -1,4 +1,4 @@
-# Options for the AMR package
+# Options for the AMR Package
 
 This is an overview of all the package-specific options you can set in
 the `AMR` package. Set them using the

@@ -64,6 +64,177 @@ $(function () {
     document.title = document.title.replace("Package index", "Manual");
   }
 
+  // reference index ('Manual'): collapse long function lists and filter topics, see pkgdown/templates/content-reference-index.html
+  if ($(".amr-ref-item").length > 0) {
+    const maxAliases = 8;
+    const $body = $(".template-reference-index");
+    const $input = $("#amr-ref-filter-input");
+    const $status = $("#amr-ref-filter-status");
+    const $items = $(".amr-ref-item");
+    const pageText = {}; // full text per reference page, from search.json
+    let pageTextLoaded = false;
+
+    // keep the sticky filter field directly below the navbar, which hides when scrolling down
+    const navbar = document.querySelector(".navbar.fixed-top");
+    const filterBar = document.querySelector(".amr-ref-filter");
+    function placeFilter() {
+      const navBottom = navbar ? Math.max(0, navbar.getBoundingClientRect().bottom) : 0;
+      $body.css("--amr-navbar-height", navBottom + "px");
+      $(filterBar).toggleClass("amr-ref-stuck", filterBar.getBoundingClientRect().top <= navBottom + 1 && window.scrollY > 0);
+    }
+    let placing = false;
+    $(window).on("scroll resize", function () {
+      if (placing) return;
+      placing = true;
+      // follow the navbar during its slide transition
+      const start = performance.now();
+      (function step(now) {
+        placeFilter();
+        if (now - start < 400) requestAnimationFrame(step); else placing = false;
+      })(start);
+    });
+    placeFilter();
+
+    // headings that are jumped to (e.g. from 'On this page') must end up below the filter field, and below the navbar
+    // when jumping up, since the navbar only shows when scrolling up
+    $(document).on("click", 'a[href^="#"]', function () {
+      const target = document.getElementById(decodeURIComponent($(this).attr("href").slice(1)));
+      if (!target) return;
+      const up = target.getBoundingClientRect().top < 0;
+      document.documentElement.style.scrollPaddingTop = ((up && navbar ? navbar.offsetHeight : 0) + filterBar.offsetHeight + 8) + "px";
+    });
+    // the same when opening a link to a section, as the browser jumps before this script runs
+    if (window.location.hash) {
+      const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+      if (target) {
+        document.documentElement.style.scrollPaddingTop = (filterBar.offsetHeight + 8) + "px";
+        target.scrollIntoView();
+      }
+    }
+
+    function updateMoreButton($item) {
+      const nHidden = $item.find("code.amr-ref-extra:not(.amr-ref-match)").length;
+      $item.find(".amr-ref-more").text("+ " + nHidden + " more").toggle(nHidden > 0);
+    }
+
+    $items.each(function () {
+      const $item = $(this);
+      const $codes = $item.find("dd code");
+      // pkgdown puts backticks around non-syntactic names, e.g. `%like%`
+      $codes.find("a").each(function () {
+        const name = $(this).text();
+        if (/^`.+`$/.test(name)) $(this).text(name.slice(1, -1));
+      });
+      $item.data("page", $item.find("dt a").attr("href"));
+      $item.data("text", ($item.find("dt").text() + " " + $item.find("dd").text()).toLowerCase());
+      // do not offer to show only one or two more
+      if ($codes.length > maxAliases + 2) {
+        $codes.slice(maxAliases).addClass("amr-ref-extra");
+        $item.find("dd").append('<button type="button" class="amr-ref-more"></button>');
+        updateMoreButton($item);
+      }
+    });
+    let h2Title = "";
+    $(".template-reference-index main").find("h2, h3").each(function () {
+      if (this.tagName === "H2") h2Title = $(this).text().trim();
+      else $(this).attr("data-amr-parent", h2Title);
+    });
+    $(".amr-ref-more").on("click", function () {
+      $(this).closest(".amr-ref-item").addClass("amr-ref-expanded");
+      $(this).remove();
+    });
+
+    function loadPageText() {
+      if (pageTextLoaded) return;
+      pageTextLoaded = true;
+      $.getJSON($("#search-input").data("search-index") || "../search.json", function (data) {
+        data.forEach(function (x) {
+          if (x.dir !== "Reference") return;
+          const page = x.path.split("/").pop();
+          pageText[page] = (pageText[page] || "") + " " + (x.what + " " + x.text + " " + x.code).toLowerCase();
+        });
+        filter();
+      });
+    }
+
+    function filter() {
+      const terms = $.trim($input.val()).toLowerCase().split(/\s+/).filter(Boolean);
+      $body.toggleClass("amr-ref-filtering", terms.length > 0);
+      let nDirect = 0;
+      let nText = 0;
+      $items.each(function () {
+        const $item = $(this);
+        const $codes = $item.find("dd code");
+        const direct = terms.length > 0 && terms.every(t => $item.data("text").includes(t));
+        const text = terms.length > 0 && !direct && terms.every(t => (pageText[$item.data("page")] || "").includes(t));
+        $item.toggleClass("amr-ref-hidden", terms.length > 0 && !direct && !text);
+        $item.toggleClass("amr-ref-textmatch", text);
+        // highlight the function names that match, which also reveals them if collapsed
+        $codes.each(function () {
+          const name = $(this).text().toLowerCase();
+          $(this).toggleClass("amr-ref-match", direct && terms.some(t => name.includes(t)));
+        });
+        updateMoreButton($item);
+        if (direct) nDirect++;
+        if (text) nText++;
+      });
+      // hide headings (with their descriptions) that have no visible topic before the next heading of the same or a higher level;
+      // this follows the document order, since pkgdown puts a heading and its topics in separate sibling blocks
+      const nVisible = new Map();
+      let h2 = null;
+      let h3 = null;
+      $(".template-reference-index main").find("h2, h3, .amr-ref-item").each(function () {
+        if (this.tagName === "H2") {
+          h2 = this;
+          h3 = null;
+          nVisible.set(this, 0);
+        } else if (this.tagName === "H3") {
+          h3 = this;
+          nVisible.set(this, 0);
+        } else if (!$(this).hasClass("amr-ref-hidden")) {
+          if (h2) nVisible.set(h2, nVisible.get(h2) + 1);
+          if (h3) nVisible.set(h3, nVisible.get(h3) + 1);
+        }
+      });
+      nVisible.forEach((n, heading) => $(heading).closest(".section").toggleClass("amr-ref-hidden", n === 0));
+      // blocks that only hold topics
+      $(".template-reference-index main .section").not(":has(h2, h3)").each(function () {
+        $(this).toggleClass("amr-ref-hidden", $(this).find(".amr-ref-item:not(.amr-ref-hidden)").length === 0);
+      });
+      const topics = n => n + (n === 1 ? " topic" : " topics");
+      if (terms.length === 0) {
+        $status.text("");
+      } else if (nDirect + nText === 0) {
+        $status.text(pageTextLoaded ? "No topics found" : "Searching...");
+      } else if (nText === 0) {
+        $status.text(topics(nDirect) + " found by name or title");
+      } else if (nDirect === 0) {
+        $status.text("No topics found by name or title, but " + topics(nText) + " mention it");
+      } else {
+        $status.text(topics(nDirect) + " found by name or title, and " + nText + " more mention it");
+      }
+      placeFilter();
+    }
+
+    $input.on("input", function () {
+      loadPageText();
+      filter();
+    });
+    $input.on("keydown", function (e) {
+      if (e.key === "Escape") {
+        $input.val("");
+        filter();
+      }
+    });
+    // press '/' anywhere to focus the filter field
+    $(document).on("keydown", function (e) {
+      if (e.key === "/" && !$(e.target).is("input, textarea")) {
+        e.preventDefault();
+        $input.trigger("focus");
+      }
+    });
+  }
+
   // remove leading newline in code examples on changelog
   if ($("body .template-news").length > 0) {
     $("body .template-news").html($("body .template-news").html().replaceAll('sourceCode R">\n<span', 'sourceCode R"><span'));
@@ -160,6 +331,23 @@ $(function () {
   // add lines between collaborator types
   $('.template-citation-authors li:contains("Contributor")').first().before('<hr>');
   $('.template-citation-authors li:contains("Former doctoral advisor")').first().before('<hr>');
+
+  // dark variants of figures: list a file name here and put a file with '_dark' before its extension next to it in pkgdown/assets,
+  // e.g. "logo_umcg.svg" requires "logo_umcg_dark.svg"; images are swapped when the theme is dark, also after switching theme
+  const darkVariants = [];
+  function applyDarkVariants() {
+    const dark = document.documentElement.getAttribute("data-bs-theme") === "dark";
+    $("img").each(function () {
+      const src = $(this).attr("src") || "";
+      const file = src.split(/[?#]/)[0].split("/").pop();
+      const base = file.replace(/_dark(\.\w+)$/, "$1");
+      if (!darkVariants.includes(base)) return;
+      const target = dark ? base.replace(/(\.\w+)$/, "_dark$1") : base;
+      if (file !== target) $(this).attr("src", src.replace(file, target));
+    });
+  }
+  applyDarkVariants();
+  new MutationObserver(applyDarkVariants).observe(document.documentElement, { attributes: true, attributeFilter: ["data-bs-theme"] });
 });
 
 $('head').append("<!-- Matomo --><script type='text/javascript'> var _paq = _paq || []; /* tracker methods like 'setCustomDimension' should be called before 'trackPageView' */ _paq.push(['setDomains', ['*.amr-for-r.org']]); _paq.push(['enableCrossDomainLinking']); _paq.push(['trackPageView']); _paq.push(['enableLinkTracking']); (function() { var u='https://analyse.uscloud.nl/'; _paq.push(['setTrackerUrl', u+'piwik.php']); _paq.push(['setSiteId', '3']); var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);  })();</script><!-- End Matomo Code -->");

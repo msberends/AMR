@@ -1,4 +1,4 @@
-# Deprecated Functions, Arguments, or Datasets
+# Deprecated Functions, Arguments, or Data Sets
 
 These objects are so-called
 '[Deprecated](https://rdrr.io/r/base/Deprecated.html)'. **They will be

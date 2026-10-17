@@ -1,4 +1,4 @@
-# Get Properties of an Antibiotic
+# Get Properties of an Antimicrobial Drug
 
 Use these functions to return a specific property of an antibiotic from
 the [antimicrobials](https://amr-for-r.org/reference/antimicrobials.md)
