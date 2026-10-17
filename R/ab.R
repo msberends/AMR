@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-#' Transform Input to an Antibiotic ID
+#' Transform Input to an Antimicrobial Drug ID
 #'
 #' Use this function to determine the antimicrobial drug code of one or more antimicrobials. The data set [antimicrobials] will be searched for abbreviations, official names and synonyms (brand names).
 #' @param x A [character] vector to determine to antibiotic ID.

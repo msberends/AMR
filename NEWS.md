@@ -1,4 +1,7 @@
-# AMR 3.1.0.9002
+# AMR 3.1.0.9003
+
+### Other
+* The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field
 
 # AMR 3.1.0
 

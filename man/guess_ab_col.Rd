@@ -2,7 +2,7 @@
 % Please edit documentation in R/guess_ab_col.R
 \name{guess_ab_col}
 \alias{guess_ab_col}
-\title{Guess Antibiotic Column}
+\title{Guess Antimicrobial Column}
 \usage{
 guess_ab_col(
   x = NULL,

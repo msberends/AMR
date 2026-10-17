@@ -38,6 +38,8 @@ template:
       <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
       <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
   bootswatch: "flatly"
+  # dark mode: the CSS in pkgdown/extra.css is prepared for it, but light mode is enforced for now
+  light-switch: false
   bslib:
     base_font: {google: "Lato"}
     heading_font: {google: "Lato"}
@@ -127,155 +129,136 @@ navbar:
       href: "https://github.com/msberends/AMR"
 
 reference:
-  - title: "Introduction to the package"
+  - title: "Getting started"
     desc: >
-      Please find the introduction to (and some general information about) our package here.
+      An overview of the package, its options for users and teams, and its 28 supported languages.
     contents:
     - "`AMR`"
-    
-  - title: "Preparing data: microorganisms"
+    - "`AMR-options`"
+    - "`translate`"
+    - "`amr_course`"
+
+  - title: "Cleaning data"
     desc: >
-      These functions are meant to get taxonomically valid properties of microorganisms from any input, but
-      also properties derived from taxonomy, such as the Gram stain (`mo_gramstain()`) , or `mo_is_yeast()`.
-      Use `mo_source()` to teach this package how to translate your own codes to valid microorganisms, and
-      use `add_custom_microorganisms()` to add your own custom microorganisms to this package.
+      Transform raw input of any kind into valid microorganisms with `as.mo()`, antimicrobials with `as.ab()`, and MIC values and disk diffusion zones with `as.mic()` and `as.disk()`, and retrieve their properties.
+  - subtitle: "Microorganisms"
     contents:
     - "`as.mo`"
     - "`mo_property`"
-    - "`add_custom_microorganisms`"
     - "`mo_source`"
-
-  - title: "Preparing data: antimicrobials"
-    desc: >
-      Use these functions to get valid properties of antimicrobials from any input or to clean your input.
-      You can even retrieve drug names and doses from clinical text records, using `ab_from_text()`.
+    - "`add_custom_microorganisms`"
+    - "`mo_matching_score`"
+  - subtitle: "Antimicrobials"
     contents:
     - "`as.ab`"
     - "`ab_property`"
     - "`ab_from_text`"
-    - "`atc_online_property`"
     - "`add_custom_antimicrobials`"
-
-  - title: "Interpreting data: antimicrobial results"
-    desc: >
-      With `as.mic()` and `as.disk()` you can transform your raw input to valid MIC or disk diffusion values.
-      Use `as.sir()` for cleaning raw data to let it only contain "R", "I" and "S", or to interpret MIC or disk diffusion values as SIR based on the lastest EUCAST and CLSI guidelines.
-      Afterwards, you can extend antibiotic interpretations by applying interpretive rules, for example [from EUCAST](https://www.eucast.org/expert_rules_and_intrinsic_resistance/) with `interpretive_rules()`.
+    - "`atc_online_property`"
+  - subtitle: "Antivirals"
     contents:
-    - "`as.sir`"
+    - "`as.av`"
+    - "`av_property`"
+    - "`av_from_text`"
+  - subtitle: "Test results"
+    contents:
     - "`as.mic`"
     - "`as.disk`"
+
+  - title: "Interpreting results as SIR"
+    desc: >
+      Interpret MIC values and disk diffusion zones as SIR with `as.sir()`, according to EUCAST or CLSI, for every guideline year from 2011 to 2026, and apply interpretive rules. `as.sir()` also cleans existing SIR data.
+    contents:
+    - "`as.sir`"
     - "`interpretive_rules`"
     - "`custom_interpretive_rules`"
 
   - title: "Analysing data"
     desc: >
-      Use these function for the analysis part. You can use `susceptibility()` or `resistance()` on any antibiotic column.
-      With `antibiogram()`, you can generate a traditional, combined, syndromic, or weighted-incidence syndromic combination
-      antibiogram (WISCA). This function also comes with support for R Markdown and Quarto.
-      Be sure to first select the isolates that are appropiate for analysis, by using `first_isolate()` or `is_new_episode()`.
-      You can also filter your data on certain resistance in certain antibiotic classes (`carbapenems()`, `aminoglycosides()`),
-      or determine multi-drug resistant microorganisms (MDRO, `mdro()`).
+      Select first isolates with `first_isolate()`, generate traditional, combination, syndromic, and WISCA antibiograms with `antibiogram()` and `wisca()`, calculate resistance, and determine multidrug-resistant organisms.
+  - subtitle: "Selecting isolates and antimicrobials"
+    contents:
+    - "`first_isolate`"
+    - "`get_episode`"
+    - "`key_antimicrobials`"
+    - "`top_n_microorganisms`"
+    - "`antimicrobial_selectors`"
+    - "`guess_ab_col`"
+    - "`availability`"
+  - subtitle: "Generating antibiograms and WISCA"
     contents:
     - "`antibiogram`"
+  - subtitle: "Calculating resistance and susceptibility"
+    contents:
     - "`proportion`"
     - "`count`"
     - "`sir_combine`"
-    - "`is_new_episode`"
-    - "`first_isolate`"
-    - "`key_antimicrobials`"
+    - "`bug_drug_combinations`"
+  - subtitle: "Determining multidrug resistance"
+    contents:
     - "`mdro`"
     - "`custom_mdro_guideline`"
-    - "`bug_drug_combinations`"
-    - "`antimicrobial_selectors`"
-    - "`top_n_microorganisms`"
-    - "`mean_amr_distance`"
-    - "`resistance_predict`"
-    - "`guess_ab_col`"
-    
-  - title: "Plotting data"
+
+  - title: "Visualising data"
     desc: >
-      Use these functions for the plotting part. The `scale_*_mic()` functions extend the ggplot2 package to allow plotting of 
-      MIC values, even within a manually set range.
-      If using `plot()` (base R) or `autoplot()` (ggplot2) on MIC values or disk diffusion values, the user can
-      set the interpretation guideline to give the bars the right SIR colours.
-      The `ggplot_sir()` function is a short wrapper for users not much accustomed to ggplot2 yet.
-      The `ggplot_pca()` function is a specific function to plot so-called biplots for PCA (principal component analysis).
+      Plot MIC values, disk zones, and SIR results in base R or `ggplot2`, with scales and colours tailored to AMR data.
     contents:
     - "`plot`"
     - "`ggplot_sir`"
     - "`ggplot_pca`"
-    
-  - title: "AMR-specific options"
-    desc: >
-      The AMR package is customisable, by providing settings that can be set per user or per team. For
-      example, the default interpretation guideline can be changed from EUCAST to CLSI, or a supported
-      language can be set for the whole team (system-language independent) for antibiotic names in a
-      foreign language.
-    contents:
-    - "`AMR-options`"
-    
-  - title: "Other: antiviral drugs"
-    desc: >
-      This package also provides extensive support for antiviral agents, even though it is not the primary
-      scope of this package. Working with data containing information about antiviral drugs was never easier.
-      Use these functions to get valid properties of antiviral drugs from any input or to clean your input.
-      You can even retrieve drug names and doses from clinical text records, using `av_from_text()`.
-    contents:
-    - "`as.av`"
-    - "`av_property`"
-    - "`av_from_text`"
 
-  - title: "Other: background information on included data"
+  - title: "Modelling"
     desc: >
-      Some pages about our package and its external sources. Be sure to read our [How To's](./../articles/index.html)
-      for more information about how to work with functions in this package.
+      Use AMR data types in `tidymodels` pipelines, and perform principal component analysis or distance calculations on resistance profiles.
+    contents:
+    - "`amr-tidymodels`"
+    - "`pca`"
+    - "`mean_amr_distance`"
+
+  - title: "Reference data"
+    desc: >
+      The data sets underlying this package, all of which can also be [downloaded in other formats](../articles/datasets.html).
+  - subtitle: "Microorganisms"
     contents:
     - "`microorganisms`"
-    - "`antimicrobials`"
-    - "`clinical_breakpoints`"
-    - "`example_isolates`"
-    - "`esbl_isolates`"
     - "`microorganisms.codes`"
     - "`microorganisms.groups`"
-    - "`intrinsic_resistant`"
-    - "`dosage`"
+  - subtitle: "Antimicrobials"
+    contents:
+    - "`antimicrobials`"
     - "`WHOCC`"
+    - "`dosage`"
+  - subtitle: "Breakpoints and intrinsic resistance"
+    contents:
+    - "`clinical_breakpoints`"
+    - "`intrinsic_resistant`"
+  - subtitle: "Example data"
+    contents:
+    - "`example_isolates`"
     - "`example_isolates_unclean`"
+    - "`esbl_isolates`"
     - "`WHONET`"
 
-  - title: "Other: miscellaneous functions"
+  - title: "Utilities"
     desc: >
-      Miscellaneous functions that support various parts of an AMR analysis,
-      such as working with ages, joining tables, principal component analysis,
-      and other utilities. Especially the 'like' function can be useful:
-      `if (x %like% y) {...}`.
+      Helper functions for pattern matching with `%like%`, ages, joining and italicising taxonomy, generating random test results, and data export.
     contents:
-    - "`age_groups`"
-    - "`age`"
-    - "`amr_course`"
-    - "`export_ncbi_biosample`"
-    - "`availability`"
-    - "`get_AMR_locale`"
-    - "`italicise_taxonomy`"
-    - "`join`"
     - "`like`"
-    - "`mo_matching_score`"
-    - "`pca`"
+    - "`age`"
+    - "`age_groups`"
+    - "`join`"
+    - "`italicise_taxonomy`"
     - "`random`"
-
-  - title: "Other: statistical tests"
-    desc: >
-      Some statistical tests or methods usable for AMR analyses are not part of base R and were added to this package for convenience.
+    - "`export_ncbi_biosample`"
+  - subtitle: "Statistical tests"
     contents:
     - "`g.test`"
     - "`kurtosis`"
     - "`skewness`"
 
-  - title: "Other: deprecated functions/arguments/datasets"
+  - title: "Deprecated functions"
     desc: >
-      These objects are deprecated, meaning that they will still
-      work but show a warning that they will be removed
-      in a future version.
+      These still work, but show a warning and will be removed in a future version.
     contents:
     - "`AMR-deprecated`"
+    - "`resistance_predict`"

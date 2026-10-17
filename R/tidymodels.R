@@ -17,7 +17,6 @@
 #' These steps integrate with `recipes::recipe()` and work like standard preprocessing steps. They are useful for preparing data for modelling, especially with classification models.
 #' @seealso [recipes::recipe()], [as.sir()], [as.mic()], [as.disk()]
 #' @name amr-tidymodels
-#' @keywords internal
 #' @export
 #' @examples
 #' if (require("tidymodels")) {

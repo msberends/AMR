@@ -6,7 +6,7 @@
 \alias{is.ab}
 \alias{ab_reset_session}
 \alias{NA_ab_}
-\title{Transform Input to an Antibiotic ID}
+\title{Transform Input to an Antimicrobial Drug ID}
 \usage{
 as.ab(
   x,

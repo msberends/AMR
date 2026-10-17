@@ -147,4 +147,3 @@ if (require("tidymodels")) {
 \seealso{
 \code{\link[recipes:recipe]{recipes::recipe()}}, \code{\link[=as.sir]{as.sir()}}, \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}}
 }
-\keyword{internal}

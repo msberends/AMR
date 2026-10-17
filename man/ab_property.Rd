@@ -17,7 +17,7 @@
 \alias{ab_info}
 \alias{ab_url}
 \alias{set_ab_names}
-\title{Get Properties of an Antibiotic}
+\title{Get Properties of an Antimicrobial Drug}
 \usage{
 ab_name(x, language = get_AMR_locale(), tolower = FALSE, ...)
 

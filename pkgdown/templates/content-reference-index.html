@@ -1,0 +1,33 @@
+<!-- AMR: adapted from pkgdown's BS5 template, with titles first, function names second, and a filter field (see pkgdown/extra.js) -->
+<div class="row">
+  <main id="main" class="col-md-9">
+    <div class="page-header">
+      {{#logo}}<img src="{{logo.src}}" class="logo" alt="" >{{/logo}}
+      <h1>{{{pagetitle}}}</h1>
+    </div>
+
+    <div class="amr-ref-filter">
+      <input type="search" id="amr-ref-filter-input" class="form-control" placeholder="Filter, e.g. mo_gramstain or WISCA" aria-label="Filter the manual" autocomplete="off" spellcheck="false">
+      <div id="amr-ref-filter-status" class="amr-ref-filter-status" aria-live="polite"></div>
+    </div>
+
+    {{#rows}}<div {{#slug}}id="{{.}}"{{/slug}} class="section level2">
+      {{#title}}<h2>{{{.}}}</h2>{{/title}}
+      {{#subtitle}}<h3>{{{.}}}</h3>{{/subtitle}}
+      {{#desc}}<div class="section-desc">{{{desc}}}</div>{{/desc}}
+
+      <dl class="amr-ref-list">{{#topics}}
+        <div class="amr-ref-item">
+          <dt><a href="{{path}}">{{{title}}}</a>{{#lifecycle}} <span class="badge lifecycle lifecycle-{{.}}">{{.}}</span>{{/lifecycle}}</dt>
+          <dd>{{#aliases}}<code><a href="{{path}}">{{{.}}}</a></code> {{/aliases}}</dd>
+        </div>
+      {{/topics}}</dl>
+    </div>{{/rows}}
+  </main>
+
+  <aside class="col-md-3">
+    <nav id="toc" aria-label="{{#translate}}{{toc}}{{/translate}}">
+      <h2>{{#translate}}{{on_this_page}}{{/translate}}</h2>
+    </nav>
+  </aside>
+</div>

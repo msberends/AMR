@@ -2,7 +2,7 @@
 % Please edit documentation in R/aa_options.R
 \name{AMR-options}
 \alias{AMR-options}
-\title{Options for the AMR package}
+\title{Options for the AMR Package}
 \description{
 This is an overview of all the package-specific options you can set in the \code{AMR} package. Set them using the \code{\link[=options]{options()}} function, e.g.:
 

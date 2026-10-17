@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-#' Guess Antibiotic Column
+#' Guess Antimicrobial Column
 #'
 #' This tries to find a column name in a data set based on information from the [antimicrobials] data set. Also supports WHONET abbreviations.
 #' @param x A [data.frame].

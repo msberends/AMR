@@ -3,7 +3,7 @@
 \name{italicise_taxonomy}
 \alias{italicise_taxonomy}
 \alias{italicize_taxonomy}
-\title{Italicise Taxonomic Families, Genera, Species, Subspecies}
+\title{Italicise Taxonomic Families, Genera, Species, and Subspecies}
 \usage{
 italicise_taxonomy(string, type = c("markdown", "ansi", "html"))
 

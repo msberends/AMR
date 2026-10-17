@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-#' Deprecated Functions, Arguments, or Datasets
+#' Deprecated Functions, Arguments, or Data Sets
 #'
 #' These objects are so-called '[Deprecated]'. **They will be removed in a future version of this package.** Using these will give a warning with the name of the alternative object it has been replaced by (if there is one).
 #' @keywords internal

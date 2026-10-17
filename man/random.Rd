@@ -5,7 +5,7 @@
 \alias{random_mic}
 \alias{random_disk}
 \alias{random_sir}
-\title{Random MIC Values/Disk Zones/SIR Generation}
+\title{Generate Random MIC Values, Disk Zones, or SIR Results}
 \usage{
 random_mic(
   size = NULL,

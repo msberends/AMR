@@ -27,7 +27,7 @@
 # how to conduct AMR data analysis: https://amr-for-r.org              #
 # ==================================================================== #
 
-#' Get Properties of an Antibiotic
+#' Get Properties of an Antimicrobial Drug
 #'
 #' Use these functions to return a specific property of an antibiotic from the [antimicrobials] data set. All input values will be evaluated internally with [as.ab()].
 #' @param x Any (vector of) text that can be coerced to a valid antibiotic drug code with [as.ab()].

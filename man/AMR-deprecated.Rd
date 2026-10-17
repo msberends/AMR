@@ -5,7 +5,7 @@
 \alias{custom_eucast_rules}
 \alias{ab_class}
 \alias{ab_selector}
-\title{Deprecated Functions, Arguments, or Datasets}
+\title{Deprecated Functions, Arguments, or Data Sets}
 \usage{
 custom_eucast_rules(...)
 
