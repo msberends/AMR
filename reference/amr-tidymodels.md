@@ -61,6 +61,13 @@ step_sir_numeric(
   A logical to indicate if the quantities for preprocessing have been
   estimated.
 
+- columns:
+
+  A character string of the selected variable names. This is `NULL`
+  until the step is trained by
+  [`recipes::prep()`](https://recipes.tidymodels.org/reference/prep.html),
+  and should not be set manually.
+
 - skip:
 
   A logical. Should the step be skipped when the recipe is baked by
