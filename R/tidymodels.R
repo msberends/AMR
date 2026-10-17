@@ -2,6 +2,7 @@
 #'
 #' This family of functions allows using AMR-specific data types such as `<sir>` and `<mic>` inside `tidymodels` pipelines.
 #' @inheritParams recipes::step_center
+#' @param columns A character string of the selected variable names. This is `NULL` until the step is trained by [recipes::prep()], and should not be set manually.
 #' @details
 #' You can read more in our online [AMR with tidymodels introduction](https://amr-for-r.org/articles/AMR_with_tidymodels.html).
 #'

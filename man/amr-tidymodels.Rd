@@ -56,6 +56,8 @@ See \code{\link[recipes:selections]{selections()}} for more details.}
 \item{trained}{A logical to indicate if the quantities for preprocessing have
 been estimated.}
 
+\item{columns}{A character string of the selected variable names. This is \code{NULL} until the step is trained by \code{\link[recipes:prep]{recipes::prep()}}, and should not be set manually.}
+
 \item{skip}{A logical. Should the step be skipped when the recipe is baked by
 \code{\link[recipes:bake]{bake()}}? While all operations are baked when \code{\link[recipes:prep]{prep()}} is run, some
 operations may not be able to be conducted on new data (e.g. processing the
