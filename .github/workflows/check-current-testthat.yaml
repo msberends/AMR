@@ -97,7 +97,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: ${{ matrix.config.tests && 'any::pkgload' || 'any::rcmdcheck' }}
+          # pak solves all suggested packages as one set and fails as a whole if one of them requires a newer R, so such packages are ignored on older R versions (with `pkg=?ignore-before-r=x.y.z`) and the checks run without them
+          extra-packages: ${{ matrix.config.tests && 'any::pkgload' || 'any::rcmdcheck' }} readxl=?ignore-before-r=4.2.0
           needs: check
           upgrade: 'TRUE'
 
@@ -120,6 +121,9 @@ jobs:
 
       - uses: r-lib/actions/check-r-package@v2
         if: ${{ !matrix.config.tests }}
+        env:
+          # suggested packages ignored on older R versions (see above) must not fail the check
+          _R_CHECK_FORCE_SUGGESTS_: false
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
