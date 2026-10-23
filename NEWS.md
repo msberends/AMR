@@ -1,7 +1,8 @@
-# AMR 3.1.0.9005
+# AMR 3.1.0.9006
 
 ### Other
 * The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field
+* Fixed the link to the copyright section and added MycoBank as a taxonomy source in the *Welcome to AMR* vignette (#325)
 
 # AMR 3.1.0
 
