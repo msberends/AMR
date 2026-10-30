@@ -158,7 +158,7 @@
 #'
 #' **Pathogens included in the model:** For each regimen (and group), only pathogens that occur in the data and have at least one test result for the regimen are included. Pathogens without any test result for a regimen do not contribute to its coverage, nor to its `n_total` in `long_numeric`. Use [retrieve_wisca_parameters()] to get the parameters that were used.
 #'
-#' **Rare pathogens:** Since every pathogen receives a prior weight of 1 in the Dirichlet distribution, pathogens found only once or a few times are given relatively much weight, which pulls the incidence towards a uniform distribution. Their very uncertain susceptibility can then strongly lower the estimated coverage, without reflecting the clinical expectation. A warning is therefore given when this prior weight accounts for more than 5% of the pathogen incidence in any regimen (or group). Consider limiting the analysis to the most common pathogens using [top_n_microorganisms()], or grouping rare pathogens before running WISCA.
+#' **Rare pathogens and small groups:** Since every pathogen receives a prior weight of 1 in the Dirichlet distribution, the prior weighs heavily when there are few isolates relative to the number of pathogens, i.e., with pathogens found only once or a few times, or in small groups. This pulls the incidence towards a uniform distribution, and the very uncertain susceptibility of rare pathogens can then strongly lower the estimated coverage, without reflecting the clinical expectation. A warning is therefore given when this prior weight accounts for more than 5% of the pathogen incidence in any regimen (or group). Consider limiting the analysis to the most common pathogens using [top_n_microorganisms()], or using fewer and larger groups.
 #'
 #' **Interpreting the output:** Overlapping credible intervals between regimens indicate no significant difference in coverage; if a narrower-spectrum regimen overlaps with a broader one, the narrower-spectrum option may be preferred on stewardship grounds. Non-overlapping intervals indicate a clinically meaningful difference. For small sample sizes, consider pooling data from multiple sites to improve precision, provided pathogen distributions are sufficiently similar (Bielicki *et al.*, 2016).
 #'
@@ -186,12 +186,13 @@
 #'
 #' # basic WISCA: empirical coverage per regimen, weighted by pathogen
 #' # incidence, with 95% credible intervals
-#' wisca(example_isolates,
+#' # (10 most common species, since rare species can distort coverage estimates)
+#' wisca(top_n_microorganisms(example_isolates, n = 10),
 #'   antimicrobials = c("AMC", "AMC+CIP", "AMC+GEN")
 #' )
 #'
 #' # equivalent using antibiogram():
-#' antibiogram(example_isolates,
+#' antibiogram(top_n_microorganisms(example_isolates, n = 10),
 #'   antimicrobials = c("AMC", "AMC+CIP", "AMC+GEN"),
 #'   wisca = TRUE
 #' )
@@ -276,7 +277,7 @@
 #'
 #' # Print the output for R Markdown / Quarto -----------------------------
 #'
-#' ureido <- wisca(example_isolates,
+#' ureido <- wisca(top_n_microorganisms(example_isolates, n = 10),
 #'   antimicrobials = ureidopenicillins(),
 #'   syndromic_group = "ward"
 #' )
@@ -294,7 +295,7 @@
 #'   antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
 #'   mo_transform = "gramstain"
 #' )
-#' ab2 <- wisca(example_isolates,
+#' ab2 <- wisca(top_n_microorganisms(example_isolates, n = 10),
 #'   antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
 #'   syndromic_group = "ward"
 #' )
@@ -777,9 +778,9 @@ antibiogram.default <- function(x,
     )
     if (any(prior_share > 0.05)) {
       warning_(
-        "In ", sum(prior_share > 0.05), " of ", length(prior_share), " WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than 5% of the pathogen incidence (up to ", round(max(prior_share) * 100, 1), "%), since many pathogens occur only rarely. ",
-        "Because WISCA gives every pathogen a prior weight of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the estimated coverage without reflecting the clinical expectation. ",
-        "Consider limiting the analysis to the most common pathogens with {.help [{.fun top_n_microorganisms}](AMR::top_n_microorganisms)}, or grouping rare pathogens before running WISCA.",
+        "In ", sum(prior_share > 0.05), " of ", length(prior_share), " WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than 5% of the pathogen incidence (up to ", round(max(prior_share) * 100, 1), "%), since there are few isolates relative to the number of pathogens, i.e., rare pathogens or a small group. ",
+        "Because WISCA gives every pathogen a prior weight of 1 (Bielicki et al., 2016), this can strongly lower the estimated coverage without reflecting the clinical expectation. ",
+        "Consider limiting the analysis to the most common pathogens with {.help [{.fun top_n_microorganisms}](AMR::top_n_microorganisms)}, or using fewer and larger groups.",
         call = FALSE
       )
     }
