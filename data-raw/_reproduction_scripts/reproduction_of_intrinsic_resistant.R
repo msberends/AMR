@@ -58,6 +58,23 @@ int_resis3 <- int_resis2[which(!int_resis2$ab %in% untreatable), ]
 int_resis3$ab <- as.ab(int_resis3$ab)
 int_resis3
 
+# add species groups (e.g., complexes) for every antimicrobial to which all their species are intrinsically resistant (#338)
+groups <- microorganisms.groups[which(microorganisms$rank[match(microorganisms.groups$mo, microorganisms$mo)] == "species"), , drop = FALSE]
+int_resis_keys <- paste(int_resis3$mo, int_resis3$ab)
+groups_species <- split(as.character(groups$mo), as.character(groups$mo_group))
+int_resis_groups <- do.call(rbind, Map(function(group, species) {
+  abx <- unique(as.character(int_resis3$ab[int_resis3$mo %in% species]))
+  abx <- abx[vapply(abx, function(ab) all(paste(species, ab) %in% int_resis_keys), logical(1))]
+  data.frame(mo = rep(group, length(abx)), ab = abx, stringsAsFactors = FALSE)
+}, names(groups_species), groups_species))
+int_resis_groups <- int_resis_groups[which(!paste(int_resis_groups$mo, int_resis_groups$ab) %in% int_resis_keys), , drop = FALSE]
+int_resis_groups$mo <- as.mo(int_resis_groups$mo, keep_synonyms = TRUE)
+int_resis_groups$ab <- as.ab(int_resis_groups$ab)
+int_resis3 <- bind_rows(int_resis3, int_resis_groups)
+# keep the order of the microorganisms and antimicrobials data sets
+int_resis3 <- int_resis3[order(match(int_resis3$mo, microorganisms$mo), match(int_resis3$ab, antimicrobials$ab)), , drop = FALSE]
+rownames(int_resis3) <- NULL
+
 all(int_resis3$mo %in% microorganisms$mo)
 all(int_resis3$ab %in% antimicrobials$ab)
 

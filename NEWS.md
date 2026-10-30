@@ -1,4 +1,4 @@
-# AMR 3.1.0.9012
+# AMR 3.1.0.9013
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -9,6 +9,8 @@ This version fixes a critical bug in WISCA that biased all coverage estimates of
   * A new warning is given when the prior weight of 1 per pathogen (Bielicki *et al.*, 2016) accounts for more than 5% of the pathogen incidence, i.e., with rare pathogens or small groups, as this can strongly lower the estimated coverage; consider `top_n_microorganisms()` or fewer and larger groups in that case
 * Microorganism coercion (`as.mo()`)
   * Fixed the misaligned arrows in the message on taxonomically renamed microorganisms in colour-supporting consoles, for old names whose author reference lacks "*et al.*" (#336)
+* `intrinsic_resistant` data set
+  * Species groups and complexes are now listed for every antimicrobial to which all their species are intrinsically resistant. This adds 62 bug-drug combinations for the *Burkholderia cepacia* complex, coryneform bacteria, the *Enterobacter cloacae* complex (e.g., amoxicillin and amoxicillin/clavulanic acid), the *Klebsiella pneumoniae* complex, and coagulase-negative staphylococci, which affects `mo_is_intrinsic_resistant()`, `not_intrinsic_resistant()`, and the priors of `wisca()` (#338)
 
 ### Other
 * The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field
