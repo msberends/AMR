@@ -100,15 +100,15 @@ which work in base R, `dplyr` and `data.table`.
 
 ``` r
 
-# AMR works great with dplyr, but it's not required or neccesary
+# AMR works great with dplyr, but it's not required or necessary
 library(AMR)
 library(dplyr, warn.conflicts = FALSE)
 
-example_isolates %>%
-  mutate(bacteria = mo_fullname()) %>%
+example_isolates |>
+  mutate(bacteria = mo_fullname()) |>
   # filtering functions for microorganisms:
   filter(mo_is_gram_negative(),
-         mo_is_intrinsic_resistant(ab = "cefotax")) %>%
+         mo_is_intrinsic_resistant(ab = "cefotax")) |>
   # antimicrobial selectors:
   select(bacteria,
          aminoglycosides(),
@@ -171,9 +171,10 @@ full explanation.
 
 ``` r
 
-wisca(top_n_microorganisms(example_isolates, n = 10), # 10 most common species
-      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-      minimum = 10) # Recommended threshold: >=30
+example_isolates |>
+  top_n_microorganisms(n = 10) |> # 10 most common species
+  wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+        minimum = 10) # Recommended threshold: >=30
 ```
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
@@ -185,10 +186,11 @@ generate syndrome-specific or ward-specific coverage estimates:
 
 ``` r
 
-wisca(top_n_microorganisms(example_isolates, n = 10),
-      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-      syndromic_group = "ward",
-      minimum = 10) # Recommended threshold: >=30
+example_isolates |>
+  top_n_microorganisms(n = 10) |>
+  wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+        syndromic_group = "ward",
+        minimum = 10) # Recommended threshold: >=30
 #> Warning: In 3 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than
 #> 5% of the pathogen incidence (up to 6.4%), since there are few isolates relative to the number of
 #> pathogens, i.e., rare pathogens or a small group. Because WISCA gives every pathogen a prior weight
@@ -208,9 +210,9 @@ for tracking resistance per species over time:
 
 ``` r
 
-antibiogram(example_isolates,
-            mo_transform = "gramstain",
-            antimicrobials = c("AMC", carbapenems(), "TZP"))
+example_isolates |>
+  antibiogram(mo_transform = "gramstain",
+              antimicrobials = c("AMC", carbapenems(), "TZP"))
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
@@ -224,9 +226,9 @@ second agent, stratified by species:
 
 ``` r
 
-antibiogram(example_isolates,
-            mo_transform = "gramstain",
-            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
+example_isolates |>
+  antibiogram(mo_transform = "gramstain",
+              antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
 | Pathogen | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
@@ -242,11 +244,11 @@ system language:
 
 ``` r
 
-antibiogram(example_isolates,
-            antimicrobials = c("cipro", "tobra", "genta"), # any arbitrary name or code will work
-            mo_transform = "gramstain",
-            ab_transform = "name",
-            language = "uk") # Ukrainian
+example_isolates |>
+  antibiogram(antimicrobials = c("cipro", "tobra", "genta"), # any arbitrary name or code will work
+              mo_transform = "gramstain",
+              ab_transform = "name",
+              language = "uk") # Ukrainian
 ```
 
 | Збудник       | Гентаміцин          | Тобраміцин         | Ципрофлоксацин     |
@@ -301,9 +303,9 @@ function:
 
 ``` r
 
-example_isolates %>%
+example_isolates |>
   # group by ward:
-  group_by(ward) %>%
+  group_by(ward) |>
   # calculate AMR using resistance() for gentamicin and tobramycin
   # and get their 95% confidence intervals using sir_confidence_interval():
   summarise(across(c(GEN, TOB),
@@ -326,9 +328,9 @@ to select a series of antibiotic columns:
 library(AMR)
 library(dplyr)
 
-out <- example_isolates %>%
+out <- example_isolates |>
   # group by ward:
-  group_by(ward) %>%
+  group_by(ward) |>
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
@@ -353,7 +355,7 @@ out
 ``` r
 
 # transform the antibiotic columns to names:
-out %>% set_ab_names()
+out |> set_ab_names()
 #> # A tibble: 3 × 6
 #>   ward       gentamicin tobramycin amikacin kanamycin colistin
 #>   <chr>           <dbl>      <dbl>    <dbl>     <dbl>    <dbl>
@@ -365,7 +367,7 @@ out %>% set_ab_names()
 ``` r
 
 # transform the antibiotic column to ATC codes:
-out %>% set_ab_names(property = "atc")
+out |> set_ab_names(property = "atc")
 #> # A tibble: 3 × 6
 #>   ward       J01GB03 J01GB01 J01GB06 J01GB04 J01XB01
 #>   <chr>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
