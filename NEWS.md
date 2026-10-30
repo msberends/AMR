@@ -1,4 +1,4 @@
-# AMR 3.1.0.9013
+# AMR 3.1.0.9014
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 

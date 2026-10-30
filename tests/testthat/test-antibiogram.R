@@ -75,7 +75,16 @@ test_that("test-antibiogram.R", {
   expect_false("B_BRCLL_MLTN" %in% retrieve_wisca_parameters(wisca_with)$mo)
   # warning for a large prior weight of rare pathogens
   expect_warning(wisca(wisca_data, antimicrobials = "MEM", syndromic_group = "grp", simulations = 100, info = FALSE), "prior weight")
-  expect_warning(wisca(example_isolates, antimicrobials = "MEM", simulations = 100, info = FALSE), NA)
+  # (expect_warning(..., NA) is not supported by tinytest)
+  wisca_warnings <- character(0)
+  withCallingHandlers(
+    wisca(example_isolates, antimicrobials = "MEM", simulations = 100, info = FALSE),
+    warning = function(w) {
+      wisca_warnings <<- c(wisca_warnings, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    }
+  )
+  expect_false(any(grepl("prior weight", wisca_warnings)))
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     ab_grouped <- tryCatch(
       # pathogen names are translated, so test in English, which must also hold on systems in another language
