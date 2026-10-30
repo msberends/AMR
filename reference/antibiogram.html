@@ -13,7 +13,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9014</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -365,7 +365,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 
 <p>All types of antibiograms as listed above can be plotted (using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">ggplot2::autoplot()</a></code> or base <span style="R">R</span>'s <code><a href="plot.html">plot()</a></code> and <code><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot()</a></code>). As mentioned above, the numeric values of an antibiogram are stored in a long format as the <a href="https://rdrr.io/r/base/attributes.html" class="external-link">attribute</a> <code>long_numeric</code>. You can retrieve them using <code>attributes(x)$long_numeric</code>, where <code>x</code> is the outcome of <code>antibiogram()</code> or <code>wisca()</code>.</p>
 <p>The outcome of <code>antibiogram()</code> can also be used directly in R Markdown / Quarto (i.e., <code>knitr</code>) for reports. In this case, <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">knitr::kable()</a></code> will be applied automatically and microorganism names will even be printed in italics at default (see argument <code>italicise</code>).</p>
-<p>You can also use functions from specific 'table reporting' packages to transform the output of <code>antibiogram()</code> to your needs, e.g. with <code>flextable::as_flextable()</code> or <code>gt::gt()</code>.</p>
+<p>You can also use functions from specific 'table reporting' packages to transform the output of <code>antibiogram()</code> to your needs, e.g. with <code><a href="https://davidgohel.github.io/flextable/reference/as_flextable.html" class="external-link">flextable::as_flextable()</a></code> or <code>gt::gt()</code>.</p>
 </div>
 
     </div>

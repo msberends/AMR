@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9014</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.1.0.9013" id="amr-3109013">AMR 3.1.0.9013<a class="anchor" aria-label="anchor" href="#amr-3109013"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.1.0.9014" id="amr-3109014">AMR 3.1.0.9014<a class="anchor" aria-label="anchor" href="#amr-3109014"></a></h2>
 <p>This version fixes a critical bug in WISCA that biased all coverage estimates of <code><a href="../reference/antibiogram.html">wisca()</a></code> and <code>antibiogram(..., wisca = TRUE)</code> downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.</p>
 <div class="section level4">
-<h4 id="changed-3-1-0-9013">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0-9013"></a></h4>
+<h4 id="changed-3-1-0-9014">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0-9014"></a></h4>
 <ul><li>WISCA (<code><a href="../reference/antibiogram.html">wisca()</a></code> and <code>antibiogram(..., wisca = TRUE)</code>)
 <ul><li>Fixed a critical bug that systematically underestimated the coverage of every WISCA since AMR 3.0.0. Pathogens absent from a syndromic group, and pathogens without any test result for a regimen, were still included in the model with only prior information: each added a prior weight of 1 to the pathogen incidence, and untested pathogens kept their full incidence weight while counting as about 50% susceptible. The bias was largest for stratified analyses (e.g., up to 14 percentage points for meropenem in random strata of <code>example_isolates</code>). Now, only pathogens that occur in a group and have at least one test result for the regimen are included. Please re-run all WISCA analyses (<a href="https://github.com/msberends/AMR/issues/337" class="external-link">#337</a>)</li>
 <li>
@@ -68,7 +68,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-1-0-9013">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0-9013"></a></h4>
+<h4 id="other-3-1-0-9014">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0-9014"></a></h4>
 <ul><li>The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field</li>
 <li>Fixed the link to the copyright section and added MycoBank as a taxonomy source in the <em>Welcome to AMR</em> vignette (<a href="https://github.com/msberends/AMR/issues/325" class="external-link">#325</a>)</li>
 </ul></div>
