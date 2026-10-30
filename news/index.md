@@ -1,9 +1,38 @@
 # Changelog
 
-## AMR 3.1.0.9009
+## AMR 3.1.0.9010
+
+This version fixes a critical bug in WISCA that biased all coverage
+estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
+and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users
+are strongly advised to re-run their WISCA analyses.
 
 #### Changed
 
+- WISCA ([`wisca()`](https://amr-for-r.org/reference/antibiogram.md) and
+  `antibiogram(..., wisca = TRUE)`)
+  - Fixed a critical bug that systematically underestimated the coverage
+    of every WISCA since AMR 3.0.0. Pathogens absent from a syndromic
+    group, and pathogens without any test result for a regimen, were
+    still included in the model with only prior information: each added
+    a prior weight of 1 to the pathogen incidence, and untested
+    pathogens kept their full incidence weight while counting as about
+    50% susceptible. The bias was largest for stratified analyses (e.g.,
+    up to 14 percentage points for meropenem in random strata of
+    `example_isolates`). Now, only pathogens that occur in a group and
+    have at least one test result for the regimen are included. Please
+    re-run all WISCA analyses
+    ([\#337](https://github.com/msberends/AMR/issues/337))
+  - [`retrieve_wisca_parameters()`](https://amr-for-r.org/reference/antibiogram.md)
+    now returns only the parameters actually used in the model, and
+    `n_total` in the `long_numeric` attribute now counts only isolates
+    of the pathogens included for that regimen
+  - A new warning is given when the prior weight of 1 per pathogen
+    (Bielicki *et al.*, 2016) accounts for more than 5% of the pathogen
+    incidence, as many rare pathogens can then strongly lower the
+    estimated coverage; consider
+    [`top_n_microorganisms()`](https://amr-for-r.org/reference/top_n_microorganisms.md)
+    in that case
 - Microorganism coercion
   ([`as.mo()`](https://amr-for-r.org/reference/as.mo.md))
   - Fixed the misaligned arrows in the message on taxonomically renamed

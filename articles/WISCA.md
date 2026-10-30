@@ -265,8 +265,8 @@ wisca_out
 
 | Syndromic Group | Amoxicillin/clavulanic acid | Amoxicillin/clavulanic acid + Ciprofloxacin | Amoxicillin/clavulanic acid + Gentamicin |
 |:---|:---|:---|:---|
-| Non-UTI | 72.5% (69.9-75.1%) | 86.9% (84.8-89%) | 91.4% (89.5-93%) |
-| UTI | 86% (82.5-89%) | 94.8% (92.5-96.6%) | 97.9% (96.3-99%) |
+| Non-UTI | 72.5% (69.9-75.2%) | 87% (85-88.9%) | 91.5% (89.8-93%) |
+| UTI | 86.8% (83.6-89.5%) | 95.6% (93.6-97.2%) | 98.8% (97.6-99.6%) |
 
 The `AMR` package is available in 28 languages, which can all be used
 for the [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -283,8 +283,8 @@ wisca(data,
 
 | Grupo sindrómico | Amoxicilina/ácido clavulánico | Amoxicilina/ácido clavulánico + Ciprofloxacina | Amoxicilina/ácido clavulánico + Gentamicina |
 |:---|:---|:---|:---|
-| Non-UCI | 72.6% (69.9-75.3%) | 87% (84.9-89.1%) | 91.4% (89.7-92.9%) |
-| UCI | 86% (82.7-89%) | 94.8% (92.7-96.4%) | 97.9% (96.5-99%) |
+| Non-UCI | 72.5% (70-75.1%) | 87.1% (84.9-89%) | 91.5% (89.8-93%) |
+| UCI | 86.8% (83.8-89.7%) | 95.6% (93.7-97.2%) | 98.8% (97.7-99.6%) |
 
 ### Interpreting the output
 

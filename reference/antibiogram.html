@@ -13,7 +13,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -377,6 +377,8 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <p>WISCA (Weighted-Incidence Syndromic Combination Antibiogram) estimates the probability that an empirical antimicrobial regimen will provide adequate coverage for a given infection syndrome, before the causative pathogen has been identified.</p>
 <p>It does so by combining two quantities: the relative incidence of each pathogen within the syndrome (modelled as a Dirichlet distribution) and the susceptibility of each pathogen to the regimen (modelled as Beta distributions). These are combined via Monte Carlo simulation to produce a coverage estimate with a credible interval.</p>
 <p><strong>Prior distributions:</strong> Pathogen incidence uses a non-informative \(Dirichlet(1, 1, \ldots, 1)\) prior. Susceptibility proportions use the Jeffreys prior, \(\beta(0.5, 0.5)\), except for pathogen-drug combinations with known intrinsic resistance, which use a strongly informative \(\beta(1, 9999)\) prior that forces near-zero susceptibility regardless of observed data. Intrinsic resistance is determined using the <a href="intrinsic_resistant.html">intrinsic_resistant</a> data set, which is based on <a href="https://www.eucast.org/bacteria/important-additional-information/expert-rules/" class="external-link">'EUCAST Expected Resistant Phenotypes' v1.2</a> (2023).</p>
+<p><strong>Pathogens included in the model:</strong> For each regimen (and group), only pathogens that occur in the data and have at least one test result for the regimen are included. Pathogens without any test result for a regimen do not contribute to its coverage, nor to its <code>n_total</code> in <code>long_numeric</code>. Use <code>retrieve_wisca_parameters()</code> to get the parameters that were used.</p>
+<p><strong>Rare pathogens:</strong> Since every pathogen receives a prior weight of 1 in the Dirichlet distribution, pathogens found only once or a few times are given relatively much weight, which pulls the incidence towards a uniform distribution. Their very uncertain susceptibility can then strongly lower the estimated coverage, without reflecting the clinical expectation. A warning is therefore given when this prior weight accounts for more than 5% of the pathogen incidence in any regimen (or group). Consider limiting the analysis to the most common pathogens using <code><a href="top_n_microorganisms.html">top_n_microorganisms()</a></code>, or grouping rare pathogens before running WISCA.</p>
 <p><strong>Interpreting the output:</strong> Overlapping credible intervals between regimens indicate no significant difference in coverage; if a narrower-spectrum regimen overlaps with a broader one, the narrower-spectrum option may be preferred on stewardship grounds. Non-overlapping intervals indicate a clinically meaningful difference. For small sample sizes, consider pooling data from multiple sites to improve precision, provided pathogen distributions are sufficiently similar (Bielicki <em>et al.</em>, 2016).</p>
 <p>For the full mathematical derivation and worked examples, see the <a href="https://amr-for-r.org/articles/WISCA.html">WISCA vignette</a>.</p>
     </div>
@@ -486,7 +488,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 74.3% (72.3-76.2%)            88.8% (87.2-90.4%)        90.8% (89.3-92.2%)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 74.9% (72.9-76.9%)            89.7% (88.3-91.1%)        91.9% (90.6-93.1%)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Amoxicillin/clavulanic acid + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -504,7 +506,7 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 74.3% (72.4-76.2%)            88.9% (87.3-90.4%)        90.9% (89.4-92.3%)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 74.9% (72.9-76.9%)            89.7% (88.1-91.1%)        91.9% (90.5-93%)      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​`Amoxicillin/clavulanic acid + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -517,6 +519,13 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using column <span style="color: #00BB00; font-weight: bold;">mo</span> as input for `col_mo`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>In 2 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> accounts for more than 5% of the pathogen incidence (up to 5.1%), since many</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> pathogens occur only rarely. Because WISCA gives every pathogen a prior weight</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> estimated coverage without reflecting the clinical expectation. Consider</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> limiting the analysis to the most common pathogens with</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> `top_n_microorganisms()`, or grouping rare pathogens before running WISCA.</span>
 <span class="r-in"><span><span class="va">out</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble:       3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)</span></span>
@@ -524,9 +533,9 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          76% (68.1-83.3%)          99% (98.2-99.6%)                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               53.3% (39.6-68.5%)        98.4% (96.7-99.4%)                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        62.8% (41.2-84.9%)        96.2% (91.1-99.1%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Clinical          76.4% (68.6-83.9%)        99% (98.2-99.6%)                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ICU               54.4% (45.4-67.2%)        98.4% (96.8-99.4%)                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Outpatient        67% (47.6-88.5%)          96.2% (91.4-99%)                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -550,20 +559,27 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Number of tested isolates should exceed 30 for each regimen (and group). WISCA</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> coverage estimates might be inaccurate.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>In 12 of 24 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> accounts for more than 5% of the pathogen incidence (up to 33.3%), since many</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> pathogens occur only rarely. Because WISCA gives every pathogen a prior weight</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> estimated coverage without reflecting the clinical expectation. Consider</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> limiting the analysis to the most common pathogens with</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> `top_n_microorganisms()`, or grouping rare pathogens before running WISCA.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble:       8 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Cred. interval: 95%</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Simulations:    1000 per stratum</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   age_group gender `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentami…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0-24      F      57.4% (27.9-82.7%)        71% (49-89.8%)                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 0-24      M      60% (32.3-84.8%)          75.9% (56.5-90.8%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 25-49     F      66.9% (43.2-90.3%)        93.8% (87.3-98%)                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 25-49     M      57.4% (25.6-87.4%)        91.2% (82.2-96.9%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 50-74     F      68.5% (54.7-83.1%)        96.9% (94.6-98.6%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 50-74     M      66.8% (55.9-77.4%)        96.8% (94.1-98.6%)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 75+       F      73.1% (62.2-83.2%)        97.7% (96-99%)                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 75+       M      73.9% (63.8-82.7%)        97.8% (96-99%)                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0-24      F      75.5% (14.7-100%)         81.6% (54.9-97.3%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 0-24      M      83.2% (45.8-99.5%)        86.6% (65.9-98.2%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 25-49     F      92% (80.3-98.7%)          95.3% (89.1-98.8%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 25-49     M      80.8% (57.8-96.3%)        93.3% (85-98.3%)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 50-74     F      75.4% (66.2-86.5%)        97% (94.9-98.7%)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 50-74     M      68.4% (58-78.4%)          96.8% (94.2-98.7%)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 75+       F      75% (63.9-84.4%)          97.8% (96.1-99%)                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 75+       M      75% (65.1-83.6%)          97.9% (96-99.1%)                   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,</span></span>
@@ -740,6 +756,13 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> For `ureidopenicillins()` using column <span style="color: #00BB00; font-weight: bold;">TZP</span> (piperacillin/tazobactam)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>In 2 of 3 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> accounts for more than 5% of the pathogen incidence (up to 13.3%), since many</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> pathogens occur only rarely. Because WISCA gives every pathogen a prior weight</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> estimated coverage without reflecting the clinical expectation. Consider</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> limiting the analysis to the most common pathogens with</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> `top_n_microorganisms()`, or grouping rare pathogens before running WISCA.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># in an Rmd file, you would just need to return `ureido` in a chunk,</span></span></span>
 <span class="r-in"><span><span class="co"># but to be explicit here:</span></span></span>
@@ -750,9 +773,9 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |Syndromic Group |Piperacillin/tazobactam |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:---------------|:-----------------------|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |74.8% (69-80.4%)        |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |57.1% (48.6-65.5%)      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |57.6% (46.5-68.8%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Clinical        |77.8% (72.6-83.1%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |ICU             |59.8% (53.9-67.7%)      |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Outpatient      |68.4% (52.2-84.6%)      |</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate plots with ggplot2 or base R --------------------------------</span></span></span>
@@ -765,6 +788,13 @@ All antibiogram types adhere to previously described approaches (see Source), an
 <span class="r-in"><span>  antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AMC"</span>, <span class="st">"CIP"</span>, <span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  syndromic_group <span class="op">=</span> <span class="st">"ward"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>In 8 of 12 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> accounts for more than 5% of the pathogen incidence (up to 13.3%), since many</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> pathogens occur only rarely. Because WISCA gives every pathogen a prior weight</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> estimated coverage without reflecting the clinical expectation. Consider</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> limiting the analysis to the most common pathogens with</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> `top_n_microorganisms()`, or grouping rare pathogens before running WISCA.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ab1</span><span class="op">)</span></span></span>
