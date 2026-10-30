@@ -156,6 +156,10 @@
 #'
 #' **Prior distributions:** Pathogen incidence uses a non-informative \eqn{Dirichlet(1, 1, \ldots, 1)} prior. Susceptibility proportions use the Jeffreys prior, \eqn{\beta(0.5, 0.5)}, except for pathogen-drug combinations with known intrinsic resistance, which use a strongly informative \eqn{\beta(1, 9999)} prior that forces near-zero susceptibility regardless of observed data. Intrinsic resistance is determined using the [intrinsic_resistant] data set, which is based on `r format_eucast_version_nr(names(EUCAST_VERSION_EXPECTED_PHENOTYPES[1]))`.
 #'
+#' **Pathogens included in the model:** For each regimen (and group), only pathogens that occur in the data and have at least one test result for the regimen are included. Pathogens without any test result for a regimen do not contribute to its coverage, nor to its `n_total` in `long_numeric`. Use [retrieve_wisca_parameters()] to get the parameters that were used.
+#'
+#' **Rare pathogens:** Since every pathogen receives a prior weight of 1 in the Dirichlet distribution, pathogens found only once or a few times are given relatively much weight, which pulls the incidence towards a uniform distribution. Their very uncertain susceptibility can then strongly lower the estimated coverage, without reflecting the clinical expectation. A warning is therefore given when this prior weight accounts for more than 5% of the pathogen incidence in any regimen (or group). Consider limiting the analysis to the most common pathogens using [top_n_microorganisms()], or grouping rare pathogens before running WISCA.
+#'
 #' **Interpreting the output:** Overlapping credible intervals between regimens indicate no significant difference in coverage; if a narrower-spectrum regimen overlaps with a broader one, the narrower-spectrum option may be preferred on stewardship grounds. Non-overlapping intervals indicate a clinically meaningful difference. For small sample sizes, consider pooling data from multiple sites to improve precision, provided pathogen distributions are sufficiently similar (Bielicki *et al.*, 2016).
 #'
 #' For the full mathematical derivation and worked examples, see the [WISCA vignette](https://amr-for-r.org/articles/WISCA.html).
@@ -744,7 +748,8 @@ antibiogram.default <- function(x,
         coverage = NA_real_,
         lower_ci = NA_real_,
         upper_ci = NA_real_,
-        n_total = sum(n_total, na.rm = TRUE),
+        # only pathogens with test results for the regimen enter the WISCA model, see below
+        n_total = sum(n_total[which(n_tested > 0)]),
         n_tested = sum(n_tested, na.rm = TRUE),
         n_susceptible = sum(n_susceptible, na.rm = TRUE)
       )
@@ -761,7 +766,24 @@ antibiogram.default <- function(x,
       out_wisca$group <- out_wisca$ab
     }
 
-    wisca_parameters <- out
+    # only pathogens that occur in the group (n_total > 0) and have at least one test result for the regimen (n_tested > 0) may contribute to WISCA; otherwise, absent or untested pathogens would enter with prior-only parameters and bias the coverage downwards (#337)
+    wisca_parameters <- out[which(out$n_total > 0 & out$n_tested > 0), , drop = FALSE]
+
+    # the Dirichlet prior of 1 per pathogen (Bielicki et al., 2016) weighs heavily when many pathogens are rare
+    prior_share <- vapply(
+      split(wisca_parameters$n_total, as.character(wisca_parameters$group)),
+      function(n) length(n) / (length(n) + sum(n)),
+      FUN.VALUE = numeric(1)
+    )
+    if (any(prior_share > 0.05)) {
+      warning_(
+        "In ", sum(prior_share > 0.05), " of ", length(prior_share), " WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than 5% of the pathogen incidence (up to ", round(max(prior_share) * 100, 1), "%), since many pathogens occur only rarely. ",
+        "Because WISCA gives every pathogen a prior weight of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the estimated coverage without reflecting the clinical expectation. ",
+        "Consider limiting the analysis to the most common pathogens with {.help [{.fun top_n_microorganisms}](AMR::top_n_microorganisms)}, or grouping rare pathogens before running WISCA.",
+        call = FALSE
+      )
+    }
+
     wisca_draws <- list()
     wisca_components <- list()
 

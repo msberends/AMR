@@ -59,8 +59,8 @@ times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation
 in scientific research.
 
 After installing this package, R knows [**~103 000 distinct microbial
-species**](./reference/microorganisms.html) (updated April 2026) and all
-[**~630 antimicrobial and antiviral
+species**](./reference/microorganisms.html) (updated October 2026) and
+all [**~630 antimicrobial and antiviral
 drugs**](./reference/antimicrobials.html) by name and code (including
 ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all
 about valid SIR and MIC values. The integral clinical breakpoint
@@ -224,7 +224,7 @@ wisca(example_isolates,
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:------------------------|:-------------------------------------|:-------------------------------------|
-| 70.2% (65-75.4%)        | 93.6% (92-95.1%)                     | 89.9% (87-92.5%)                     |
+| 72.5% (67.7-77.1%)      | 96% (95.1-96.9%)                     | 92.1% (89.3-94.4%)                   |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
@@ -234,13 +234,19 @@ wisca(example_isolates,
       antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
       syndromic_group = "ward",
       minimum = 10) # Recommended threshold: >=30
+#> Warning: In 6 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than
+#> 5% of the pathogen incidence (up to 13.3%), since many pathogens occur only rarely. Because WISCA
+#> gives every pathogen a prior weight of 1 (Bielicki et al., 2016), such rare pathogens can strongly
+#> lower the estimated coverage without reflecting the clinical expectation. Consider limiting the
+#> analysis to the most common pathogens with `top_n_microorganisms()`, or grouping rare pathogens
+#> before running WISCA.
 ```
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:----------------|:------------------------|:-------------------------------------|:-------------------------------------|
-| Clinical        | 74.8% (69-80.3%)        | 93.7% (92.1-95.1%)                   | 90.4% (86.8-93.3%)                   |
-| ICU             | 56.7% (48.2-65.4%)      | 86.6% (83.3-89.6%)                   | 83.1% (78.2-87.5%)                   |
-| Outpatient      | 57.6% (46-69%)          | 76.4% (69.8-81.7%)                   | 68% (57.7-77.5%)                     |
+| Clinical        | 78% (72.7-83.4%)        | 96.3% (95.1-97.3%)                   | 93% (89.4-95.7%)                     |
+| ICU             | 59.7% (53.5-67.9%)      | 92.2% (90-94.3%)                     | 88.2% (83.4-92.2%)                   |
+| Outpatient      | 67.9% (51.9-84.7%)      | 92.8% (88.2-96.6%)                   | 79.8% (64.9-92.9%)                   |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:
@@ -427,7 +433,7 @@ data analysis. This package can be used for:
   organisms (MDRO) ([tutorial](./reference/mdro.html))
 - Calculating (empirical) susceptibility of both mono therapy and
   combination therapies ([tutorial](./articles/AMR.html))
-- Apply AMR functions in predictive modelling
+- Applying AMR functions in predictive modelling
   ([tutorial](./articles/AMR_with_tidymodels.html))
 - Getting properties for any microorganism (like Gram stain, species,
   genus or family) ([manual](./reference/mo_property.html))
@@ -435,7 +441,8 @@ data analysis. This package can be used for:
   EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)
   ([manual](./reference/ab_property.html))
 - Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
-- Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
+- Applying EUCAST and CLSI interpretive rules
+  ([manual](./reference/interpretive_rules.html))
 - Getting SNOMED codes of a microorganism, or getting properties of a
   microorganism based on a SNOMED code
   ([manual](./reference/mo_property.html))

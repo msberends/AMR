@@ -47,6 +47,35 @@ test_that("test-antibiogram.R", {
   wisca_known <- suppressMessages(wisca(example_isolates[example_isolates$mo != "UNKNOWN", ], antimicrobials = "GEN", simulations = 100, info = FALSE, guideline = "EUCAST"))
   expect_true("UNKNOWN" %in% attributes(wisca_all)$wisca_parameters$mo)
   expect_false(identical(as.data.frame(wisca_all), as.data.frame(wisca_known)))
+
+  # WISCA only includes pathogens that occur in a group and were tested for the regimen (#337)
+  set.seed(337)
+  wisca_data <- example_isolates[mo_domain(example_isolates$mo) == "Bacteria", ]
+  wisca_data$grp <- sample(c("A", "B", "C"), nrow(wisca_data), replace = TRUE)
+  wisca_strat <- suppressWarnings(wisca(wisca_data, antimicrobials = "MEM", syndromic_group = "grp", simulations = 5000, info = FALSE))
+  wisca_params <- retrieve_wisca_parameters(wisca_strat)
+  # no absent or untested pathogens
+  expect_true(all(wisca_params$n_total > 0 & wisca_params$n_tested > 0))
+  # each stratum equals the unstratified WISCA of its subset
+  for (g in c("A", "B", "C")) {
+    wisca_subset <- suppressWarnings(wisca(wisca_data[wisca_data$grp == g, ], antimicrobials = "MEM", simulations = 5000, info = FALSE))
+    cov_strat <- attributes(wisca_strat)$long_numeric$coverage[attributes(wisca_strat)$long_numeric$syndromic_group == g]
+    expect_true(abs(cov_strat - attributes(wisca_subset)$long_numeric$coverage) < 0.01)
+    expect_identical(attributes(wisca_strat)$long_numeric$n_total[attributes(wisca_strat)$long_numeric$syndromic_group == g], attributes(wisca_subset)$long_numeric$n_total)
+  }
+  # untested pathogens have no influence
+  wisca_untested <- wisca_data[1:20, ]
+  wisca_untested$mo <- as.mo("Brucella melitensis")
+  wisca_untested$MEM <- NA_sir_
+  set.seed(337)
+  wisca_without <- suppressWarnings(wisca(wisca_data, antimicrobials = "MEM", simulations = 1000, info = FALSE))
+  set.seed(337)
+  wisca_with <- suppressWarnings(wisca(rbind(wisca_data, wisca_untested), antimicrobials = "MEM", simulations = 1000, info = FALSE))
+  expect_identical(attributes(wisca_with)$long_numeric, attributes(wisca_without)$long_numeric)
+  expect_false("B_BRCLL_MLTN" %in% retrieve_wisca_parameters(wisca_with)$mo)
+  # warning for a large prior weight of rare pathogens
+  expect_warning(wisca(wisca_data, antimicrobials = "MEM", syndromic_group = "grp", simulations = 100, info = FALSE), "prior weight")
+  expect_warning(wisca(example_isolates, antimicrobials = "MEM", simulations = 100, info = FALSE), NA)
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {
     ab_grouped <- tryCatch(
       # pathogen names are translated, so test in English, which must also hold on systems in another language
@@ -230,7 +259,19 @@ test_that("test-antibiogram.R", {
       expect_equal(nrow(ab_grp_seq), nrow(ab_grp_par))
     }
 
-    # 6. parallel = TRUE without a plan raises an informative error
+    # 6. parallel and sequential use the same WISCA parameters and give the same coverage (#337)
+    set.seed(337)
+    wisca_data <- example_isolates[mo_domain(example_isolates$mo) == "Bacteria", ]
+    wisca_data$grp <- sample(c("A", "B", "C"), nrow(wisca_data), replace = TRUE)
+    future::plan(future::sequential)
+    wisca_strat_seq <- suppressWarnings(wisca(wisca_data, antimicrobials = "MEM", syndromic_group = "grp", simulations = 5000, info = FALSE))
+    future::plan(future::multicore)
+    wisca_strat_par <- suppressWarnings(wisca(wisca_data, antimicrobials = "MEM", syndromic_group = "grp", simulations = 5000, parallel = TRUE, info = FALSE))
+    expect_identical(retrieve_wisca_parameters(wisca_strat_par), retrieve_wisca_parameters(wisca_strat_seq))
+    expect_true(all(retrieve_wisca_parameters(wisca_strat_par)$n_tested > 0))
+    expect_true(all(abs(attributes(wisca_strat_par)$long_numeric$coverage - attributes(wisca_strat_seq)$long_numeric$coverage) < 0.01))
+
+    # 7. parallel = TRUE without a plan raises an informative error
     future::plan(future::sequential)
     expect_error(
       suppressWarnings(wisca(example_isolates, antimicrobials = "TZP", parallel = TRUE, info = FALSE)),
