@@ -53,7 +53,7 @@ devtools::load_all()
 # parsing so that every one of them can be reviewed
 parse_log <- new.env()
 parse_log$disk_dose_inherited <- NULL
-parse_log$mic_scope_extensions <- NULL
+parse_log$scope_extensions <- NULL
 parse_log$no_breakpoints_determined <- NULL
 
 # ==============================================================================
@@ -494,7 +494,10 @@ parse_bp <- function(txt) {
   t <- trimws(txt)
   # placeholders such as "-" (susceptibility testing not recommended), "IE"
   # or "Note" are kept as they are: the cleanup turns them into blocking rows
-  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets" (see is_bracketed_bp()). They are kept as they are in the raw file, so that they remain distinguishable from clinical breakpoints. The cleanup turns them into blocking rows as well, with breakpoint_S and breakpoint_R set to NA and the bracketed values stated in the note (see "Blocking rows"). Like any blocking row, it is left out of clinical_breakpoints where the organism has a (non-screening) breakpoint of its own for the same agent, method and UTI status (see "Pruning blocking rows").
+  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets"
+  # (see is_bracketed_bp()). The raw data retain these values and their
+  # EUCAST definition. They are excluded before clinical breakpoint cleanup,
+  # so they do not generate blocking rows or prevent PK-PD fallback.
   t
 }
 
@@ -604,12 +607,12 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
   # --- Parse rich text for cols A:I ---
   parsed <- parse_cells(cells |> filter(col >= 1, col <= 9), formats)
 
-  # --- Statements extending MIC breakpoints to another species ---
+  # --- Statements extending breakpoints to other organisms ---
   # The H. influenzae sheet states (v9.0-v16.1): "In the absence of specific
   # breakpoints, the H. influenzae MIC breakpoints can be applied to H.
   # parainfluenzae." This applies to MIC breakpoints only, not to zone
   # diameters. Such statements are logged here (with the sheet's own text)
-  # and applied in the cleanup section, see `parse_log$mic_scope_extensions`.
+  # and applied in the cleanup section, see `parse_log$scope_extensions`.
   # Any other "breakpoints can be applied to <species>" statement that this
   # pattern does not recognise stops the script, so that it is not missed.
   sheet_text <- unique(parsed$full_text[!is.na(parsed$full_text) & parsed$col == 1])
@@ -623,11 +626,11 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
       if (substr(genus, 1, 1) != m[2] || m[2] != m[4]) {
         stop("parse_sheet(): MIC scope statement on sheet '", sheet_name, "' does not match the sheet's genus '", genus, "': ", m[1])
       }
-      parse_log$mic_scope_extensions <- rbind(
-        parse_log$mic_scope_extensions,
+      parse_log$scope_extensions <- rbind(
+        parse_log$scope_extensions,
         data.frame(
           guideline = ver$guideline, sheet = sheet_name,
-          from_text = paste(genus, m[3]), to_text = paste(genus, m[5]), statement = m[1]
+          from_text = paste(genus, m[3]), to_text = paste(genus, m[5]), statement = m[1], method = "MIC"
         )
       )
     } else if (grepl("breakpoints can (also )?be applied to [A-Z]\\.", txt_squished)) {
@@ -636,6 +639,23 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
         sheet_name, "': ", substr(txt_squished, 1, 300)
       )
     }
+  }
+
+  # EUCAST extends Bacteroides breakpoints to these taxa for both methods.
+  statement <- paste0(
+    "Breakpoints for Bacteroides spp. are also valid for Parabacteroides spp. ",
+    "and for Phocaeicola dorei/vulgatus (previously named Bacteroides dorei/vulgatus)."
+  )
+  if (any(grepl(statement, gsub("\\s+", " ", sheet_text), fixed = TRUE))) {
+    extension <- expand.grid(
+      to_text = c("Parabacteroides", "Phocaeicola dorei", "Phocaeicola vulgatus"),
+      method = c("MIC", "DISK"), stringsAsFactors = FALSE
+    )
+    parse_log$scope_extensions <- bind_rows(
+      parse_log$scope_extensions,
+      extension |> mutate(guideline = ver$guideline, sheet = sheet_name,
+        from_text = "Bacteroides", statement = statement)
+    )
   }
 
   # --- Detect header rows (col 2 contains "MIC breakpoint") ---
@@ -1980,8 +2000,7 @@ split_mo_list_one <- function(s, sheet_genus_fallback) {
 # organism (e.g. for another route, or a screening breakpoint when
 # as.sir(..., include_screening = TRUE)) always takes precedence. Blocking rows
 # arise from:
-#  1. cells with "IE", "-", "Note", "IP", "NA" or "ND", and EUCAST's
-#     breakpoints in brackets (see is_bracketed_bp());
+#  1. cells with "IE", "-", "Note", "IP", "NA" or "ND";
 #  2. organisms excluded with "except" or "other than", e.g. "Bacillus spp.
 #     except B. anthracis" or "Klebsiella spp. (except K. aerogenes)";
 #  3. restrictions in the notes, see eucast_note_rules;
@@ -2008,10 +2027,11 @@ blocking_note <- function(reason, note) {
 }
 
 breakpoints_eucast <- breakpoints_eucast_raw |>
+  # Exclude bracketed values before generating blockers, including scope blockers.
+  filter(!is_bracketed) |>
   mutate(
-    is_blocker = is_bracketed | (!is_bp_value(breakpoint_S) & !is_bp_value(breakpoint_R)),
+    is_blocker = !is_bp_value(breakpoint_S) & !is_bp_value(breakpoint_R),
     note = case_when(
-      is_bracketed ~ blocking_note(paste0("EUCAST gives breakpoints in brackets only (S ", breakpoint_S, ", R ", breakpoint_R, ")"), note),
       is_blocker ~ blocking_note(paste0(
         "EUCAST gives ",
         coalesce(
@@ -2204,8 +2224,16 @@ breakpoints_eucast <- breakpoints_eucast |>
     # also fixes a source cell missing a space before "(", e.g. "Meropenem(indications..."
     ab_input = gsub("\\s*\\(.*$", "", ab),
     ab_input = trimws(sub("\\s+(iv|i\\.v\\.|oral)$", "", ab_input, ignore.case = TRUE)),
-    ab = as.ab(ab_input)
-  )
+    ab = as.ab(ab_input),
+    # use dedicated screening test codes when available (e.g. FOX -> FOX-S).
+    ab = as.ab(if_else(
+      !is.na(site) &
+        site == "Screen" &
+        paste0(as.character(ab), "-S") %in% as.character(antibiotics$ab),
+      paste0(as.character(ab), "-S"),
+      as.character(ab)
+    )
+  ))
 
 # ab_previously_coerced also logs every intermediate word-by-word fallback
 # as.ab() tries internally while resolving a route-suffixed name (e.g. for
@@ -2420,7 +2448,7 @@ for (r in seq_len(nrow(hlar_rows))) {
 }
 fox_mic <- breakpoints_eucast |>
   filter(
-    ab == "FOX", method == "MIC",
+    ab == "FOX-S", method == "MIC",
     grepl("S\\. aureus and S\\. lugdunensis with cefoxitin MIC values >[0-9]+ mg/L and S\\. saprophyticus with cefoxitin MIC values >[0-9]+ mg/L are methicillin resistant", note)
   ) |>
   distinct(guideline, .keep_all = TRUE)
@@ -2444,13 +2472,13 @@ if (length(derived_rows) > 0) {
   breakpoints_eucast <- bind_rows(breakpoints_eucast, derived)
 }
 cons_rule <- "If coagulase-negative staphylococci are not identified to species level, use zone diameter breakpoints S\u2265([0-9]+), R<([0-9]+) mm"
-for (g in unique(breakpoints_eucast$guideline[grepl(cons_rule, breakpoints_eucast$note) & breakpoints_eucast$ab == "FOX" & breakpoints_eucast$method == "DISK"])) {
-  rows <- which(breakpoints_eucast$guideline == g & breakpoints_eucast$ab == "FOX" & breakpoints_eucast$method == "DISK" &
+for (g in unique(breakpoints_eucast$guideline[grepl(cons_rule, breakpoints_eucast$note) & breakpoints_eucast$ab == "FOX-S" & breakpoints_eucast$method == "DISK"])) {
+  rows <- which(breakpoints_eucast$guideline == g & breakpoints_eucast$ab == "FOX-S" & breakpoints_eucast$method == "DISK" &
     breakpoints_eucast$mo == "B_STPHY_CONS" & !breakpoints_eucast$is_blocker)
   if (length(rows) != 1) stop("expected one cefoxitin zone diameter row for coagulase-negative staphylococci in ", g)
   m <- regmatches(breakpoints_eucast$note[rows], regexec(cons_rule, breakpoints_eucast$note[rows]))[[1]]
   if (length(m) != 3 || m[2] != m[3]) stop("unexpected cefoxitin rule for unidentified CoNS in ", g)
-  own_rows <- unique(as.character(breakpoints_eucast$mo[breakpoints_eucast$guideline == g & breakpoints_eucast$ab == "FOX" &
+  own_rows <- unique(as.character(breakpoints_eucast$mo[breakpoints_eucast$guideline == g & breakpoints_eucast$ab == "FOX-S" &
     breakpoints_eucast$method == "DISK" & breakpoints_eucast$mo != "B_STPHY_CONS"]))
   members <- setdiff(as.character(AMR::microorganisms.groups$mo[AMR::microorganisms.groups$mo_group == "B_STPHY_CONS"]), own_rows)
   species_rows <- breakpoints_eucast[rep(rows, length(members)), ]
@@ -2483,20 +2511,29 @@ if (any(is.na(table_scope$table_mo) | table_scope$table_mo == "UNKNOWN")) {
 }
 scope_blockers <- breakpoints_eucast |>
   filter(sheet != "Topical agents", !grepl("^PK", sheet)) |>
-  distinct(guideline, sheet, table_organism, ab, method, .keep_all = TRUE) |>
+  distinct(guideline, sheet, table_organism, ab, method, site, .keep_all = TRUE) |>
   inner_join(table_scope, by = c("guideline", "sheet", "table_organism"), relationship = "many-to-many") |>
   mutate(mo = table_mo, note = NA_character_) |>
   select(-table_mo) |>
-  to_blocker("EUCAST lists this agent in this table for other organisms only")
+  mutate(
+    is_blocker = TRUE,
+    breakpoint_S = NA_character_,
+    breakpoint_R = NA_character_,
+    note = blocking_note(
+      "EUCAST lists this agent in this table for other organisms only",
+      note
+    )
+  )
+
 breakpoints_eucast <- bind_rows(breakpoints_eucast, scope_blockers)
 
-# Apply the statements that extend MIC breakpoints to another species (see
-# parse_sheet(), "Statements extending MIC breakpoints to another species"):
-# the MIC rows of the source species on that sheet are copied for the target
+# Apply statements extending breakpoints to other organisms (see
+# parse_sheet(), "Statements extending breakpoints to other organisms"):
+# rows of the source organism and specified method are copied for the target
 # species, with EUCAST's statement in the note. A breakpoint that the source
 # gives for the target species itself always takes precedence.
-if (!is.null(parse_log$mic_scope_extensions)) {
-  scope_ext <- parse_log$mic_scope_extensions |>
+if (!is.null(parse_log$scope_extensions)) {
+  scope_ext <- parse_log$scope_extensions |>
     distinct() |>
     mutate(
       from_mo = as.character(as.mo(from_text, info = FALSE)),
@@ -2504,13 +2541,13 @@ if (!is.null(parse_log$mic_scope_extensions)) {
     )
   if (anyNA(scope_ext$from_mo) || anyNA(scope_ext$to_mo) || any(c(scope_ext$from_mo, scope_ext$to_mo) == "UNKNOWN")) {
     print(scope_ext)
-    stop("species in a MIC scope statement could not be resolved, see above")
+    stop("organisms in a scope statement could not be resolved, see above")
   }
   scope_rows <- breakpoints_eucast |>
     filter(method == "MIC") |>
     mutate(mo_chr = as.character(mo)) |>
-    inner_join(scope_ext |> select(guideline, sheet, mo_chr = from_mo, to_mo, statement),
-      by = c("guideline", "sheet", "mo_chr")
+    inner_join(scope_ext |> select(guideline, sheet, method, mo_chr = from_mo, to_mo, statement),
+      by = c("guideline", "sheet", "method", "mo_chr"), relationship = "many-to-many"
     ) |>
     mutate(
       mo = as.mo(to_mo),
@@ -2524,9 +2561,9 @@ if (!is.null(parse_log$mic_scope_extensions)) {
       )
     ) |>
     select(-mo_chr, -to_mo, -statement) |>
-    anti_join(breakpoints_eucast |> filter(method == "MIC"), by = c("guideline", "mo", "ab", "method", "site"))
+    anti_join(breakpoints_eucast, by = c("guideline", "mo", "ab", "method", "site"))
   message(
-    "NOTE: ", nrow(scope_rows), " MIC breakpoint row(s) added following EUCAST's statement(s): ",
+    "NOTE: ", nrow(scope_rows), " breakpoint row(s) added following EUCAST's statement(s): ",
     paste(unique(paste0(scope_ext$guideline, " ", scope_ext$from_text, " -> ", scope_ext$to_text)), collapse = ", ")
   )
   breakpoints_eucast <- bind_rows(breakpoints_eucast, scope_rows)
@@ -2627,9 +2664,14 @@ if (nrow(unresolved_mo) > 0 || nrow(unresolved_ab) > 0) {
 }
 
 # Pruning blocking rows ----
-# A blocking row is only needed where its organism has no (non-screening) breakpoint of its own for that agent, method and UTI status, and blocking rows for the PK-PD table ("UNKNOWN") have no function. UTI status is part of the comparison, so that a breakpoint for UTI only does not remove the blocking row for other infections, e.g. Acinetobacter spp. and amikacin since v14.0: breakpoints in brackets for systemic infections, a breakpoint for infections originating from the urinary tract. Of several blocking rows for the same organism, agent, method and UTI status, the first is kept. Blocking rows for UTI keep their site, so that they remain distinguishable from the blocking row for other infections.
+# A blocking row is only needed where its organism has no breakpoint of
+# its own for the same agent, method and UTI status. Blocking rows for the
+# PK-PD table ("UNKNOWN") have no function. UTI status is compared separately,
+# so a UTI-only breakpoint does not remove a blocker for other infections.
+# For duplicate blockers with these keys, the first is kept. UTI blockers
+# retain their site to distinguish them from blockers for other infections.
 has_own_bp <- breakpoints_eucast |>
-  filter(!is_blocker, !grepl("screen", site, ignore.case = TRUE)) |>
+  filter(!is_blocker) |>
   distinct(guideline, type, host, mo, ab, method, uti)
 breakpoints_eucast <- bind_rows(
   breakpoints_eucast |> filter(!is_blocker),
@@ -2637,7 +2679,66 @@ breakpoints_eucast <- bind_rows(
     filter(is_blocker, mo != "UNKNOWN") |>
     anti_join(has_own_bp, by = c("guideline", "type", "host", "mo", "ab", "method", "uti")) |>
     distinct(guideline, type, host, mo, ab, method, uti, .keep_all = TRUE) |>
-    mutate(site = if_else(uti, site, NA_character_), disk_dose = NA_character_)
+    mutate(disk_dose = NA_character_)
+)
+
+# Keep only blockers that prevent inheritance of a broader breakpoint.
+real_bp <- breakpoints_eucast |>
+  filter(
+    !is_blocker,
+    !is.na(breakpoint_S) | !is.na(breakpoint_R)
+  ) |>
+  distinct(guideline, type, host, ab, method, uti, mo)
+
+blockers <- breakpoints_eucast |>
+  filter(is_blocker) |>
+  mutate(block_id = row_number())
+
+# Find potentially applicable broader breakpoints.
+candidates <- blockers |>
+  select(block_id, guideline, type, host, ab, method, uti,
+         block_mo = mo) |>
+  inner_join(
+    real_bp |>
+      rename(parent_mo = mo),
+    by = c(
+      "guideline", "type", "host",
+      "ab", "method", "uti"
+    ),
+    relationship = "many-to-many",
+    na_matches = "na"
+  ) |>
+  filter(block_mo != parent_mo)
+
+# Calculate each taxonomic relationship only once.
+taxon_pairs <- candidates |>
+  distinct(parent_mo, block_mo)
+
+taxon_pairs$is_broader <- mapply(
+  function(parent, child) {
+    if (is.na(parent) || is.na(child)) return(FALSE)
+    
+    parent == "UNKNOWN" ||
+      isTRUE(taxon_contains(parent, child))
+  },
+  as.character(taxon_pairs$parent_mo),
+  as.character(taxon_pairs$block_mo)
+)
+
+# Identify blockers with at least one applicable broader breakpoint.
+needed_blockers <- candidates |>
+  inner_join(
+    taxon_pairs |> filter(is_broader),
+    by = c("parent_mo", "block_mo"),
+    relationship = "many-to-many"
+  ) |>
+  distinct(block_id)
+
+breakpoints_eucast <- bind_rows(
+  breakpoints_eucast |> filter(!is_blocker),
+  blockers |>
+    semi_join(needed_blockers, by = "block_id") |>
+    select(-block_id)
 )
 
 breakpoints_eucast <- breakpoints_eucast |>
