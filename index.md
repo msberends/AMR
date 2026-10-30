@@ -171,37 +171,37 @@ full explanation.
 
 ``` r
 
-wisca(example_isolates,
+wisca(top_n_microorganisms(example_isolates, n = 10), # 10 most common species
       antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
       minimum = 10) # Recommended threshold: >=30
 ```
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|
-| 72.5% (67.7-77.1%) | 96% (95.1-96.9%) | 92.1% (89.3-94.4%) |
+| 73% (67.7-79%) | 98.7% (98-99.2%) | 93.8% (90.5-96.6%) |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
 
 ``` r
 
-wisca(example_isolates,
+wisca(top_n_microorganisms(example_isolates, n = 10),
       antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
       syndromic_group = "ward",
       minimum = 10) # Recommended threshold: >=30
-#> Warning: In 6 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than
-#> 5% of the pathogen incidence (up to 13.3%), since many pathogens occur only rarely. Because WISCA
-#> gives every pathogen a prior weight of 1 (Bielicki et al., 2016), such rare pathogens can strongly
-#> lower the estimated coverage without reflecting the clinical expectation. Consider limiting the
-#> analysis to the most common pathogens with `top_n_microorganisms()`, or grouping rare pathogens
-#> before running WISCA.
+#> Warning: In 3 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than
+#> 5% of the pathogen incidence (up to 6.4%), since there are few isolates relative to the number of
+#> pathogens, i.e., rare pathogens or a small group. Because WISCA gives every pathogen a prior weight
+#> of 1 (Bielicki et al., 2016), this can strongly lower the estimated coverage without reflecting the
+#> clinical expectation. Consider limiting the analysis to the most common pathogens with
+#> `top_n_microorganisms()`, or using fewer and larger groups.
 ```
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|:---|
-| Clinical | 78% (72.7-83.4%) | 96.3% (95.1-97.3%) | 93% (89.4-95.7%) |
-| ICU | 59.7% (53.5-67.9%) | 92.2% (90-94.3%) | 88.2% (83.4-92.2%) |
-| Outpatient | 67.9% (51.9-84.7%) | 92.8% (88.2-96.6%) | 79.8% (64.9-92.9%) |
+| Clinical | 78.9% (72.8-85.6%) | 98.7% (97.8-99.3%) | 94.5% (90.3-97.6%) |
+| ICU | 57.3% (48.9-69.5%) | 97.5% (95.7-98.8%) | 91.7% (85.8-96.3%) |
+| Outpatient | 68% (49.4-88.5%) | 95.7% (90.7-98.7%) | 79.3% (62.7-93.8%) |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:

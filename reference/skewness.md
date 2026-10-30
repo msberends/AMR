@@ -45,5 +45,5 @@ skewness(x, na.rm = FALSE)
 
 ``` r
 skewness(runif(1000))
-#> [1] -0.009951441
+#> [1] -0.04597954
 ```

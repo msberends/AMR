@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,22 +49,22 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.1.0.9010" id="amr-3109010">AMR 3.1.0.9010<a class="anchor" aria-label="anchor" href="#amr-3109010"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.1.0.9011" id="amr-3109011">AMR 3.1.0.9011<a class="anchor" aria-label="anchor" href="#amr-3109011"></a></h2>
 <p>This version fixes a critical bug in WISCA that biased all coverage estimates of <code><a href="../reference/antibiogram.html">wisca()</a></code> and <code>antibiogram(..., wisca = TRUE)</code> downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.</p>
 <div class="section level4">
-<h4 id="changed-3-1-0-9010">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0-9010"></a></h4>
+<h4 id="changed-3-1-0-9011">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0-9011"></a></h4>
 <ul><li>WISCA (<code><a href="../reference/antibiogram.html">wisca()</a></code> and <code>antibiogram(..., wisca = TRUE)</code>)
 <ul><li>Fixed a critical bug that systematically underestimated the coverage of every WISCA since AMR 3.0.0. Pathogens absent from a syndromic group, and pathogens without any test result for a regimen, were still included in the model with only prior information: each added a prior weight of 1 to the pathogen incidence, and untested pathogens kept their full incidence weight while counting as about 50% susceptible. The bias was largest for stratified analyses (e.g., up to 14 percentage points for meropenem in random strata of <code>example_isolates</code>). Now, only pathogens that occur in a group and have at least one test result for the regimen are included. Please re-run all WISCA analyses (<a href="https://github.com/msberends/AMR/issues/337" class="external-link">#337</a>)</li>
 <li>
 <code><a href="../reference/antibiogram.html">retrieve_wisca_parameters()</a></code> now returns only the parameters actually used in the model, and <code>n_total</code> in the <code>long_numeric</code> attribute now counts only isolates of the pathogens included for that regimen</li>
-<li>A new warning is given when the prior weight of 1 per pathogen (Bielicki <em>et al.</em>, 2016) accounts for more than 5% of the pathogen incidence, as many rare pathogens can then strongly lower the estimated coverage; consider <code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code> in that case</li>
+<li>A new warning is given when the prior weight of 1 per pathogen (Bielicki <em>et al.</em>, 2016) accounts for more than 5% of the pathogen incidence, i.e., with rare pathogens or small groups, as this can strongly lower the estimated coverage; consider <code><a href="../reference/top_n_microorganisms.html">top_n_microorganisms()</a></code> or fewer and larger groups in that case</li>
 </ul></li>
 <li>Microorganism coercion (<code><a href="../reference/as.mo.html">as.mo()</a></code>)
 <ul><li>Fixed the misaligned arrows in the message on taxonomically renamed microorganisms in colour-supporting consoles, for old names whose author reference lacks “<em>et al.</em>” (<a href="https://github.com/msberends/AMR/issues/336" class="external-link">#336</a>)</li>
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-1-0-9010">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0-9010"></a></h4>
+<h4 id="other-3-1-0-9011">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0-9011"></a></h4>
 <ul><li>The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field</li>
 <li>Fixed the link to the copyright section and added MycoBank as a taxonomy source in the <em>Welcome to AMR</em> vignette (<a href="https://github.com/msberends/AMR/issues/325" class="external-link">#325</a>)</li>
 </ul></div>

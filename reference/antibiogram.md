@@ -572,17 +572,18 @@ regimen do not contribute to its coverage, nor to its `n_total` in
 `long_numeric`. Use `retrieve_wisca_parameters()` to get the parameters
 that were used.
 
-**Rare pathogens:** Since every pathogen receives a prior weight of 1 in
-the Dirichlet distribution, pathogens found only once or a few times are
-given relatively much weight, which pulls the incidence towards a
-uniform distribution. Their very uncertain susceptibility can then
-strongly lower the estimated coverage, without reflecting the clinical
-expectation. A warning is therefore given when this prior weight
-accounts for more than 5% of the pathogen incidence in any regimen (or
-group). Consider limiting the analysis to the most common pathogens
-using
+**Rare pathogens and small groups:** Since every pathogen receives a
+prior weight of 1 in the Dirichlet distribution, the prior weighs
+heavily when there are few isolates relative to the number of pathogens,
+i.e., with pathogens found only once or a few times, or in small groups.
+This pulls the incidence towards a uniform distribution, and the very
+uncertain susceptibility of rare pathogens can then strongly lower the
+estimated coverage, without reflecting the clinical expectation. A
+warning is therefore given when this prior weight accounts for more than
+5% of the pathogen incidence in any regimen (or group). Consider
+limiting the analysis to the most common pathogens using
 [`top_n_microorganisms()`](https://amr-for-r.org/reference/top_n_microorganisms.md),
-or grouping rare pathogens before running WISCA.
+or using fewer and larger groups.
 
 **Interpreting the output:** Overlapping credible intervals between
 regimens indicate no significant difference in coverage; if a
@@ -819,7 +820,8 @@ example_isolates
 
 # basic WISCA: empirical coverage per regimen, weighted by pathogen
 # incidence, with 95% credible intervals
-wisca(example_isolates,
+# (10 most common species, since rare species can distort coverage estimates)
+wisca(top_n_microorganisms(example_isolates, n = 10),
   antimicrobials = c("AMC", "AMC+CIP", "AMC+GEN")
 )
 #> ℹ `wisca()` assumes the EUCAST guideline and thus considers the 'I' category
@@ -827,13 +829,14 @@ wisca(example_isolates,
 #>   only count S and SDD as covered. Set the `guideline` argument, or set the
 #>   `AMR_guideline` option to change the default (see `?AMR-options`). This
 #>   message is shown once per session.
+#> ℹ Using column mo as input for `col_mo`.
 #> # A tibble:       1 × 3
 #> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
 #> # Cred. interval: 95%
 #> # Simulations:    1000 per stratum
 #>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²
 #>   <chr>                         <chr>                     <chr>                 
-#> 1 74.9% (72.9-76.9%)            89.7% (88.3-91.1%)        91.9% (90.6-93.1%)    
+#> 1 76.9% (74.7-79%)              89.5% (88-91.1%)          93.6% (92.4-94.8%)    
 #> # ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,
 #> #   ²​`Amoxicillin/clavulanic acid + Gentamicin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -841,7 +844,7 @@ wisca(example_isolates,
 #> # Or, use it directly in R Markdown or Quarto, see `antibiogram()`.
 
 # equivalent using antibiogram():
-antibiogram(example_isolates,
+antibiogram(top_n_microorganisms(example_isolates, n = 10),
   antimicrobials = c("AMC", "AMC+CIP", "AMC+GEN"),
   wisca = TRUE
 )
@@ -851,7 +854,7 @@ antibiogram(example_isolates,
 #> # Simulations:    1000 per stratum
 #>   `Amoxicillin/clavulanic acid` Amoxicillin/clavulanic …¹ Amoxicillin/clavulan…²
 #>   <chr>                         <chr>                     <chr>                 
-#> 1 74.9% (72.9-76.9%)            89.7% (88.1-91.1%)        91.9% (90.5-93%)      
+#> 1 76.8% (74.8-78.9%)            89.6% (88-91.1%)          93.7% (92.4-94.9%)    
 #> # ℹ abbreviated names: ¹​`Amoxicillin/clavulanic acid + Ciprofloxacin`,
 #> #   ²​`Amoxicillin/clavulanic acid + Gentamicin`
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -863,14 +866,14 @@ out <- wisca(top_n_microorganisms(example_isolates, n = 5),
   antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
   syndromic_group = "ward"
 )
-#> ℹ Using column mo as input for `col_mo`.
 #> Warning: In 2 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen
-#> accounts for more than 5% of the pathogen incidence (up to 5.1%), since many
-#> pathogens occur only rarely. Because WISCA gives every pathogen a prior weight
-#> of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the
-#> estimated coverage without reflecting the clinical expectation. Consider
-#> limiting the analysis to the most common pathogens with
-#> `top_n_microorganisms()`, or grouping rare pathogens before running WISCA.
+#> accounts for more than 5% of the pathogen incidence (up to 5.1%), since there
+#> are few isolates relative to the number of pathogens, i.e., rare pathogens or a
+#> small group. Because WISCA gives every pathogen a prior weight of 1 (Bielicki
+#> et al., 2016), this can strongly lower the estimated coverage without
+#> reflecting the clinical expectation. Consider limiting the analysis to the most
+#> common pathogens with `top_n_microorganisms()`, or using fewer and larger
+#> groups.
 out
 #> # A tibble:       3 × 4
 #> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
@@ -878,9 +881,9 @@ out
 #> # Simulations:    1000 per stratum
 #>   `Syndromic Group` `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentam…¹
 #>   <chr>             <chr>                     <chr>                             
-#> 1 Clinical          76.4% (68.6-83.9%)        99% (98.2-99.6%)                  
-#> 2 ICU               54.4% (45.4-67.2%)        98.4% (96.8-99.4%)                
-#> 3 Outpatient        67% (47.6-88.5%)          96.2% (91.4-99%)                  
+#> 1 Clinical          76.1% (69-83.5%)          99% (98.2-99.6%)                  
+#> 2 ICU               54% (45.3-66.7%)          98.4% (96.9-99.5%)                
+#> 3 Outpatient        68.4% (47.5-89.2%)        96.1% (91-99%)                    
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -905,26 +908,27 @@ if (requireNamespace("dplyr")) {
 #> Warning: Number of tested isolates should exceed 30 for each regimen (and group). WISCA
 #> coverage estimates might be inaccurate.
 #> Warning: In 12 of 24 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen
-#> accounts for more than 5% of the pathogen incidence (up to 33.3%), since many
-#> pathogens occur only rarely. Because WISCA gives every pathogen a prior weight
-#> of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the
-#> estimated coverage without reflecting the clinical expectation. Consider
-#> limiting the analysis to the most common pathogens with
-#> `top_n_microorganisms()`, or grouping rare pathogens before running WISCA.
+#> accounts for more than 5% of the pathogen incidence (up to 33.3%), since there
+#> are few isolates relative to the number of pathogens, i.e., rare pathogens or a
+#> small group. Because WISCA gives every pathogen a prior weight of 1 (Bielicki
+#> et al., 2016), this can strongly lower the estimated coverage without
+#> reflecting the clinical expectation. Consider limiting the analysis to the most
+#> common pathogens with `top_n_microorganisms()`, or using fewer and larger
+#> groups.
 #> # A tibble:       8 × 5
 #> # Type:           Weighted-Incidence Syndromic Combination Antibiogram (WISCA)
 #> # Cred. interval: 95%
 #> # Simulations:    1000 per stratum
 #>   age_group gender `Piperacillin/tazobactam` Piperacillin/tazobactam + Gentami…¹
 #>   <chr>     <chr>  <chr>                     <chr>                              
-#> 1 0-24      F      75.5% (14.7-100%)         81.6% (54.9-97.3%)                 
-#> 2 0-24      M      83.2% (45.8-99.5%)        86.6% (65.9-98.2%)                 
-#> 3 25-49     F      92% (80.3-98.7%)          95.3% (89.1-98.8%)                 
-#> 4 25-49     M      80.8% (57.8-96.3%)        93.3% (85-98.3%)                   
-#> 5 50-74     F      75.4% (66.2-86.5%)        97% (94.9-98.7%)                   
-#> 6 50-74     M      68.4% (58-78.4%)          96.8% (94.2-98.7%)                 
-#> 7 75+       F      75% (63.9-84.4%)          97.8% (96.1-99%)                   
-#> 8 75+       M      75% (65.1-83.6%)          97.9% (96-99.1%)                   
+#> 1 0-24      F      74.7% (16.9-100%)         81.5% (54.9-97.3%)                 
+#> 2 0-24      M      83.5% (50.2-99.1%)        86.7% (66.6-98.3%)                 
+#> 3 25-49     F      92.1% (80.9-98.6%)        95.2% (88.9-98.7%)                 
+#> 4 25-49     M      80.5% (57.5-95.8%)        93.3% (85.3-98.4%)                 
+#> 5 50-74     F      75.6% (65.4-88%)          97% (94.7-98.6%)                   
+#> 6 50-74     M      68.1% (56.7-78.9%)        96.7% (94.1-98.6%)                 
+#> 7 75+       F      75.1% (63.6-85.5%)        97.8% (96-99%)                     
+#> 8 75+       M      74.9% (64.4-84.2%)        97.8% (96.1-99.1%)                 
 #> # ℹ abbreviated name: ¹​`Piperacillin/tazobactam + Gentamicin`
 #> # ℹ 1 more variable: `Piperacillin/tazobactam + Tobramycin` <chr>
 #> # Use `ggplot2::autoplot()` or base R `plot()` to create a plot of this antibiogram,
@@ -1096,18 +1100,19 @@ antibiogram(ex1,
 
 # Print the output for R Markdown / Quarto -----------------------------
 
-ureido <- wisca(example_isolates,
+ureido <- wisca(top_n_microorganisms(example_isolates, n = 10),
   antimicrobials = ureidopenicillins(),
   syndromic_group = "ward"
 )
 #> ℹ For `ureidopenicillins()` using column TZP (piperacillin/tazobactam)
-#> Warning: In 2 of 3 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen
-#> accounts for more than 5% of the pathogen incidence (up to 13.3%), since many
-#> pathogens occur only rarely. Because WISCA gives every pathogen a prior weight
-#> of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the
-#> estimated coverage without reflecting the clinical expectation. Consider
-#> limiting the analysis to the most common pathogens with
-#> `top_n_microorganisms()`, or grouping rare pathogens before running WISCA.
+#> Warning: In 1 of 3 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen
+#> accounts for more than 5% of the pathogen incidence (up to 5.6%), since there
+#> are few isolates relative to the number of pathogens, i.e., rare pathogens or a
+#> small group. Because WISCA gives every pathogen a prior weight of 1 (Bielicki
+#> et al., 2016), this can strongly lower the estimated coverage without
+#> reflecting the clinical expectation. Consider limiting the analysis to the most
+#> common pathogens with `top_n_microorganisms()`, or using fewer and larger
+#> groups.
 
 # in an Rmd file, you would just need to return `ureido` in a chunk,
 # but to be explicit here:
@@ -1118,9 +1123,9 @@ if (requireNamespace("knitr")) {
 #> 
 #> |Syndromic Group |Piperacillin/tazobactam |
 #> |:---------------|:-----------------------|
-#> |Clinical        |77.8% (72.6-83.1%)      |
-#> |ICU             |59.8% (53.9-67.7%)      |
-#> |Outpatient      |68.4% (52.2-84.6%)      |
+#> |Clinical        |79.1% (72.2-85.8%)      |
+#> |ICU             |57.3% (48.9-69%)        |
+#> |Outpatient      |67.8% (49.1-87.9%)      |
 
 
 # Generate plots with ggplot2 or base R --------------------------------
@@ -1129,17 +1134,18 @@ ab1 <- antibiogram(example_isolates,
   antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
   mo_transform = "gramstain"
 )
-ab2 <- wisca(example_isolates,
+ab2 <- wisca(top_n_microorganisms(example_isolates, n = 10),
   antimicrobials = c("AMC", "CIP", "TZP", "TZP+TOB"),
   syndromic_group = "ward"
 )
-#> Warning: In 8 of 12 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen
-#> accounts for more than 5% of the pathogen incidence (up to 13.3%), since many
-#> pathogens occur only rarely. Because WISCA gives every pathogen a prior weight
-#> of 1 (Bielicki et al., 2016), such rare pathogens can strongly lower the
-#> estimated coverage without reflecting the clinical expectation. Consider
-#> limiting the analysis to the most common pathogens with
-#> `top_n_microorganisms()`, or grouping rare pathogens before running WISCA.
+#> Warning: In 4 of 12 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen
+#> accounts for more than 5% of the pathogen incidence (up to 6.4%), since there
+#> are few isolates relative to the number of pathogens, i.e., rare pathogens or a
+#> small group. Because WISCA gives every pathogen a prior weight of 1 (Bielicki
+#> et al., 2016), this can strongly lower the estimated coverage without
+#> reflecting the clinical expectation. Consider limiting the analysis to the most
+#> common pathogens with `top_n_microorganisms()`, or using fewer and larger
+#> groups.
 
 if (requireNamespace("ggplot2")) {
   ggplot2::autoplot(ab1)

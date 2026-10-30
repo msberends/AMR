@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,7 +172,7 @@
 <p>The <code>AMR</code> package supports four types of antibiograms, with support for 28 languages. If used inside <a href="https://rmarkdown.rstudio.com" class="external-link">R Markdown</a> or <a href="https://quarto.org" class="external-link">Quarto</a>, the table will be printed in the right output format automatically (such as markdown, LaTeX, HTML, etc.).</p>
 <p><strong>For empirical therapy guidance (i.e., coverage estimates), use WISCA</strong> (Weighted-Incidence Syndromic Combination Antibiogram). When a clinician starts empirical treatment, the causative pathogen is unknown. The relevant question is not <em>“what percentage of E. coli is susceptible?”</em> but <em>“what is the probability that this regimen will cover whatever pathogen is causing the infection?”</em>. WISCA answers that question directly, weighting susceptibility by pathogen incidence and providing credible intervals via Bayesian simulation. See <code><a href="articles/WISCA.html">vignette("WISCA")</a></code> for the full explanation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="fu"><a href="reference/top_n_microorganisms.html">top_n_microorganisms</a></span><span class="op">(</span><span class="va">example_isolates</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="co"># 10 most common species</span></span>
 <span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
 <span>      minimum <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Recommended threshold: &gt;=30</span></span></code></pre></div>
 <table class="table">
@@ -187,23 +187,23 @@
 <th align="left">Piperacillin/tazobactam + Tobramycin</th>
 </tr></thead>
 <tbody><tr>
-<td align="left">72.5% (67.7-77.1%)</td>
-<td align="left">96% (95.1-96.9%)</td>
-<td align="left">92.1% (89.3-94.4%)</td>
+<td align="left">73% (67.7-79%)</td>
+<td align="left">98.7% (98-99.2%)</td>
+<td align="left">93.8% (90.5-96.6%)</td>
 </tr></tbody>
 </table>
 <p>WISCA supports stratification by any clinical variable, so you can generate syndrome-specific or ward-specific coverage estimates:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="va">example_isolates</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/antibiogram.html">wisca</a></span><span class="op">(</span><span class="fu"><a href="reference/top_n_microorganisms.html">top_n_microorganisms</a></span><span class="op">(</span><span class="va">example_isolates</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>      antimicrobials <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TZP"</span>, <span class="st">"TZP+TOB"</span>, <span class="st">"TZP+GEN"</span><span class="op">)</span>,</span>
 <span>      syndromic_group <span class="op">=</span> <span class="st">"ward"</span>,</span>
 <span>      minimum <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Recommended threshold: &gt;=30</span></span>
-<span><span class="co">#&gt; Warning: In 6 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than</span></span>
-<span><span class="co">#&gt; 5% of the pathogen incidence (up to 13.3%), since many pathogens occur only rarely. Because WISCA</span></span>
-<span><span class="co">#&gt; gives every pathogen a prior weight of 1 (Bielicki et al., 2016), such rare pathogens can strongly</span></span>
-<span><span class="co">#&gt; lower the estimated coverage without reflecting the clinical expectation. Consider limiting the</span></span>
-<span><span class="co">#&gt; analysis to the most common pathogens with `top_n_microorganisms()`, or grouping rare pathogens</span></span>
-<span><span class="co">#&gt; before running WISCA.</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: In 3 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than</span></span>
+<span><span class="co">#&gt; 5% of the pathogen incidence (up to 6.4%), since there are few isolates relative to the number of</span></span>
+<span><span class="co">#&gt; pathogens, i.e., rare pathogens or a small group. Because WISCA gives every pathogen a prior weight</span></span>
+<span><span class="co">#&gt; of 1 (Bielicki et al., 2016), this can strongly lower the estimated coverage without reflecting the</span></span>
+<span><span class="co">#&gt; clinical expectation. Consider limiting the analysis to the most common pathogens with</span></span>
+<span><span class="co">#&gt; `top_n_microorganisms()`, or using fewer and larger groups.</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="14%">
@@ -220,21 +220,21 @@
 <tbody>
 <tr>
 <td align="left">Clinical</td>
-<td align="left">78% (72.7-83.4%)</td>
-<td align="left">96.3% (95.1-97.3%)</td>
-<td align="left">93% (89.4-95.7%)</td>
+<td align="left">78.9% (72.8-85.6%)</td>
+<td align="left">98.7% (97.8-99.3%)</td>
+<td align="left">94.5% (90.3-97.6%)</td>
 </tr>
 <tr>
 <td align="left">ICU</td>
-<td align="left">59.7% (53.5-67.9%)</td>
-<td align="left">92.2% (90-94.3%)</td>
-<td align="left">88.2% (83.4-92.2%)</td>
+<td align="left">57.3% (48.9-69.5%)</td>
+<td align="left">97.5% (95.7-98.8%)</td>
+<td align="left">91.7% (85.8-96.3%)</td>
 </tr>
 <tr>
 <td align="left">Outpatient</td>
-<td align="left">67.9% (51.9-84.7%)</td>
-<td align="left">92.8% (88.2-96.6%)</td>
-<td align="left">79.8% (64.9-92.9%)</td>
+<td align="left">68% (49.4-88.5%)</td>
+<td align="left">95.7% (90.7-98.7%)</td>
+<td align="left">79.3% (62.7-93.8%)</td>
 </tr>
 </tbody>
 </table>

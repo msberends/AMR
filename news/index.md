@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.1.0.9010
+## AMR 3.1.0.9011
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -29,10 +29,10 @@ are strongly advised to re-run their WISCA analyses.
     of the pathogens included for that regimen
   - A new warning is given when the prior weight of 1 per pathogen
     (Bielicki *et al.*, 2016) accounts for more than 5% of the pathogen
-    incidence, as many rare pathogens can then strongly lower the
-    estimated coverage; consider
+    incidence, i.e., with rare pathogens or small groups, as this can
+    strongly lower the estimated coverage; consider
     [`top_n_microorganisms()`](https://amr-for-r.org/reference/top_n_microorganisms.md)
-    in that case
+    or fewer and larger groups in that case
 - Microorganism coercion
   ([`as.mo()`](https://amr-for-r.org/reference/as.mo.md))
   - Fixed the misaligned arrows in the message on taxonomically renamed

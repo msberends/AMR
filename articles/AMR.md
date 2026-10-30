@@ -643,6 +643,7 @@ Bayesian Monte Carlo simulation:
 ``` r
 
 wisca_result <- example_isolates %>%
+  top_n_microorganisms(n = 10) %>%
   wisca(
     antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
     minimum = 10
@@ -652,7 +653,7 @@ wisca_result
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|
-| 72.7% (67.5-77.4%) | 96% (95-97%) | 92.3% (89.7-94.6%) |
+| 73% (67.1-79.3%) | 98.7% (98.1-99.2%) | 93.9% (90.4-96.7%) |
 
 The output tells you: *“given the species distribution in your data,
 there is an estimated X% probability that this regimen covers the
@@ -679,14 +680,14 @@ wisca_out
 
 | age_group | gender | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:---|:---|:---|:---|:---|
-| 0-24 | F | 75.5% (13.9-100%) | 81.5% (55.4-98.2%) | 84.4% (51.1-99.5%) |
-| 0-24 | M | 82.7% (44.7-99.5%) | 87.2% (68.3-98.2%) | 83.3% (48.4-99.5%) |
-| 25-49 | F | 91.9% (79.5-98.7%) | 95.4% (88.9-98.9%) | 88.1% (69.4-98.2%) |
-| 25-49 | M | 81.1% (55.2-96.6%) | 93.3% (85.2-98.3%) | 85.1% (56.4-97.6%) |
-| 50-74 | F | 75.4% (65.3-87.9%) | 97% (94.7-98.6%) | 90.1% (82.7-96.2%) |
-| 50-74 | M | 68% (55.9-78.6%) | 96.8% (93.9-98.7%) | 86.9% (77.1-94.7%) |
-| 75+ | F | 75.1% (64.4-85.4%) | 97.7% (95.8-99%) | 92.6% (86.3-97%) |
-| 75+ | M | 74.9% (65.2-83.5%) | 97.8% (96.2-99%) | 94.4% (89.1-98%) |
+| 0-24 | F | 76.2% (21-99.9%) | 81.2% (53.3-97.5%) | 83.5% (52-99.5%) |
+| 0-24 | M | 83.2% (49.6-99.5%) | 86.8% (66-98.1%) | 82.8% (48.8-99.4%) |
+| 25-49 | F | 92.3% (82-98.6%) | 95.3% (89.3-98.9%) | 88.2% (70.8-97.9%) |
+| 25-49 | M | 81.1% (58.2-96%) | 93.4% (85.8-98%) | 84.9% (58.8-97.3%) |
+| 50-74 | F | 75.5% (65.4-87.9%) | 96.9% (94.6-98.6%) | 90.2% (82.2-96.4%) |
+| 50-74 | M | 68.2% (57.2-79.2%) | 96.7% (94.1-98.7%) | 86.7% (77.3-95%) |
+| 75+ | F | 75% (64.3-84.9%) | 97.7% (95.9-99%) | 92.6% (86.2-96.9%) |
+| 75+ | M | 74.7% (65.2-83.5%) | 97.8% (96.2-99.1%) | 94.5% (89.9-98%) |
 
 Keep in mind that more granular stratification produces more relevant
 estimates for each subgroup, but with wider credible intervals due to
