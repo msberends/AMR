@@ -1,4 +1,8 @@
-# AMR 3.1.0.9006
+# AMR 3.1.0.9009
+
+### Changed
+* Microorganism coercion (`as.mo()`)
+  * Fixed the misaligned arrows in the message on taxonomically renamed microorganisms in colour-supporting consoles, for old names whose author reference lacks "*et al.*" (#336)
 
 ### Other
 * The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field

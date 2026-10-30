@@ -1144,7 +1144,10 @@ print.mo_renamed <- function(x, extra_txt = "", n = 25, ...) {
   rows <- seq_len(min(NROW(x), n))
 
   message_("The following microorganism", ifelse(NROW(x) > 1, "s were", " was"), " taxonomically renamed", extra_txt, ":")
-  old_format <- format(paste0(font_italic(x$old[rows], collapse = NULL), x$ref_old[rows])) # format() will set trailing spaces for textual alignment
+  old_format <- paste0(font_italic(x$old[rows], collapse = NULL), x$ref_old[rows])
+  # pad based on the visible width, since format() counts ANSI codes as characters
+  visible_width <- nchar(font_stripstyle(old_format), type = "width")
+  old_format <- paste0(old_format, strrep(" ", max(visible_width) - visible_width))
   old_format <- gsub(" ", "\u00a0", old_format, fixed = TRUE)
   for (old_tax in rows) {
     message_("\u00a0\u00a0", AMR_env$bullet_icon, " ", old_format[old_tax], " -> ", font_italic(x$new[old_tax]), x$ref_new[old_tax], as_note = FALSE)
