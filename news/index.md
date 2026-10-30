@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.1.0.9012
+## AMR 3.1.0.9013
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -39,6 +39,19 @@ are strongly advised to re-run their WISCA analyses.
     microorganisms in colour-supporting consoles, for old names whose
     author reference lacks “*et al.*”
     ([\#336](https://github.com/msberends/AMR/issues/336))
+- `intrinsic_resistant` data set
+  - Species groups and complexes are now listed for every antimicrobial
+    to which all their species are intrinsically resistant. This adds 62
+    bug-drug combinations for the *Burkholderia cepacia* complex,
+    coryneform bacteria, the *Enterobacter cloacae* complex (e.g.,
+    amoxicillin and amoxicillin/clavulanic acid), the *Klebsiella
+    pneumoniae* complex, and coagulase-negative staphylococci, which
+    affects
+    [`mo_is_intrinsic_resistant()`](https://amr-for-r.org/reference/mo_property.md),
+    [`not_intrinsic_resistant()`](https://amr-for-r.org/reference/antimicrobial_selectors.md),
+    and the priors of
+    [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
+    ([\#338](https://github.com/msberends/AMR/issues/338))
 
 #### Other
 
