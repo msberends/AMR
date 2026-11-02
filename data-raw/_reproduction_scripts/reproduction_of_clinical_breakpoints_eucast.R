@@ -2544,7 +2544,6 @@ if (!is.null(parse_log$scope_extensions)) {
     stop("organisms in a scope statement could not be resolved, see above")
   }
   scope_rows <- breakpoints_eucast |>
-    filter(method == "MIC") |>
     mutate(mo_chr = as.character(mo)) |>
     inner_join(scope_ext |> select(guideline, sheet, method, mo_chr = from_mo, to_mo, statement),
       by = c("guideline", "sheet", "method", "mo_chr"), relationship = "many-to-many"
