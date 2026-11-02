@@ -729,6 +729,30 @@ breakpoints_new <- breakpoints_new |>
   arrange(desc(guideline), mo, ab, type, host, method)
 
 clinical_breakpoints <- merge_eucast_breakpoints(breakpoints_new, breakpoints_eucast, eucast_coverage)
+
+# Screening tests ----
+# Every explicit screening test is stored under its screening agent, so that it can never be taken for a breakpoint of the regular agent (#328). The EUCAST rows from its own tables already are, see reproduction_of_clinical_breakpoints_eucast.R. This takes care of the WHONET-based rows, as decided in #328:
+# - all rows with a site that states screening
+# - high-level aminoglycoside tests: GEH and STH to GEN-S and STR1-S (as.sir() keeps accepting GEH and STH)
+# - cefoxitin MIC for S. aureus and S. lugdunensis in EUCAST 2012-2018, which from 2019 on is labelled as screening
+# - CLSI surrogate tests: cefoxitin for staphylococci, and pefloxacin for Salmonella
+# EUCAST 2011-2013 rows without a label stay under the regular agent, also as decided in #328.
+screening_year <- as.integer(gsub("[^0-9]", "", clinical_breakpoints$guideline))
+screening_genus <- mo_genus(clinical_breakpoints$mo, keep_synonyms = TRUE, language = NULL)
+is_human <- clinical_breakpoints$type == "human"
+is_screening <- (!is.na(clinical_breakpoints$site) & grepl("screen", clinical_breakpoints$site, ignore.case = TRUE) & !grepl("-S$", as.character(clinical_breakpoints$ab))) |
+  (is_human & clinical_breakpoints$guideline %like% "EUCAST" & screening_year %in% 2012:2018 & clinical_breakpoints$ab == "FOX" & clinical_breakpoints$method == "MIC" & as.character(clinical_breakpoints$mo) %in% c("B_STPHY_AURS", "B_STPHY_LGDN")) |
+  (is_human & clinical_breakpoints$guideline %like% "CLSI" & clinical_breakpoints$ab == "FOX" & screening_genus %in% "Staphylococcus") |
+  (is_human & clinical_breakpoints$guideline %like% "CLSI" & screening_year >= 2015 & clinical_breakpoints$ab == "PEF" & screening_genus %in% "Salmonella")
+message("NOTE: ", sum(is_screening), " WHONET-based row(s) moved to their screening agent")
+clinical_breakpoints$ab <- as.character(clinical_breakpoints$ab)
+clinical_breakpoints$ab[is_screening] <- paste0(clinical_breakpoints$ab[is_screening], "-S")
+clinical_breakpoints$ab[clinical_breakpoints$ab == "GEH"] <- "GEN-S"
+clinical_breakpoints$ab[clinical_breakpoints$ab == "STH"] <- "STR1-S"
+if (any(!clinical_breakpoints$ab %in% AMR::antimicrobials$ab)) {
+  stop("agent(s) missing from the antimicrobials data set: ", toString(unique(clinical_breakpoints$ab[!clinical_breakpoints$ab %in% AMR::antimicrobials$ab])))
+}
+clinical_breakpoints$ab <- as.ab(clinical_breakpoints$ab)
 usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = "xz", version = 2)
 rm(clinical_breakpoints)
 devtools::load_all(".")

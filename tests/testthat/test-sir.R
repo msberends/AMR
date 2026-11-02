@@ -433,7 +433,7 @@ test_that("test-sir.R", {
   )
   # an S category remains unaffected, e.g. EUCAST CIP in E. coli (S <= 0.25, R > 0.5)
   expect_equal(
-    suppressMessages(as.sir(as.mic(c("<=0.5", "<0.5", "<=0.25")), mo = "Escherichia coli", ab = "CIP", guideline = "EUCAST 2026", capped_mic_handling = "standard")),
+    suppressMessages(as.sir(as.mic(c("<=0.5", "<0.5", "<=0.25")), mo = "Escherichia coli", ab = "CIP", guideline = "EUCAST 2026", capped_mic_handling = "standard", site = "non-meningitis")),
     as.sir(c("NI", "S", "S"))
   )
   # capped values must not be forced to S or R if there is no breakpoint (blocking row, here: EUCAST CIP in S. aureus in brackets only)
@@ -638,6 +638,26 @@ test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
   expect_equal(as.character(result), "R")
 })
 
+test_that("as.sir() uses screening breakpoints as specified (#328)", {
+  skip_on_cran()
+  sir <- function(ab, ...) {
+    as.character(suppressMessages(suppressWarnings(as.sir(as.disk(20), mo = "S. aureus", ab = ab, guideline = "EUCAST 2026", info = FALSE, ...))))
+  }
+  expect_identical(sir("FOX"), NA_character_)
+  expect_false(is.na(sir("FOX-S")))
+  expect_false(is.na(sir("FOX-S", include_screening = TRUE)))
+  expect_false(is.na(sir("FOX", include_screening = TRUE)))
+  expect_identical(sir("FOX", include_screening = TRUE), sir("FOX-S"))
+  expect_identical(sir("FOX", include_screening = FALSE), NA_character_)
+  expect_identical(sir("FOX-S", include_screening = FALSE), NA_character_)
+  # with a note, as this may be by accident
+  expect_message(as.sir(as.disk(20), mo = "S. aureus", ab = "FOX-S", guideline = "EUCAST 2026", include_screening = FALSE, info = FALSE), "include_screening")
+  sir_interpretation_history(clean = TRUE)
+  sir("FOX-S", include_screening = FALSE)
+  sir_history <- sir_interpretation_history(clean = TRUE)
+  expect_match(sir_history$notes, "include_screening = FALSE", fixed = TRUE)
+})
+
 test_that("as.sir() takes the site of a breakpoint into account", {
   skip_on_cran()
   sir <- function(x, mo, ab, ..., guideline = "EUCAST 2026") {
@@ -788,7 +808,7 @@ test_that("Morganella is interpreted as reported, not as M. morganii (#330)", {
 
 test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   skip_on_cran()
-  sir <- function(x, mo, ab, guideline, include_screening = FALSE, uti = NA) {
+  sir <- function(x, mo, ab, guideline, include_screening = NULL, uti = NA) {
     as.character(suppressMessages(suppressWarnings(
       as.sir(x, mo = mo, ab = ab, guideline = guideline, include_screening = include_screening, uti = uti)
     )))
@@ -813,7 +833,7 @@ test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   # H. influenzae MIC breakpoints apply to H. parainfluenzae, zone diameters do not
   expect_identical(sir(as.mic(0.5), "Haemophilus parainfluenzae", "CIP", "EUCAST 2026"), "R")
   expect_identical(sir(as.disk(30), "Haemophilus parainfluenzae", "CIP", "EUCAST 2026"), NA_character_)
-  # cefoxitin screen: CoNS not identified to species level use S >= 25 mm
+  # cefoxitin screen: CoNS not identified to species level use S >= 25 mm, also with the regular agent if allowed (#328)
   expect_identical(sir(as.disk(23), "B_STPHY_CONS", "FOX", "EUCAST 2026", include_screening = TRUE), "R")
   expect_identical(sir(as.disk(23), "Staphylococcus hominis", "FOX", "EUCAST 2026", include_screening = TRUE), "S")
   expect_identical(sir(as.disk(26), "Staphylococcus epidermidis", "FOX", "EUCAST 2026", include_screening = TRUE), "R")
@@ -824,8 +844,9 @@ test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   expect_identical(sir(as.mic(0.0005), "Pseudomonas aeruginosa", "CIP", "EUCAST 2026"), "I")
   # EUCAST's 0.06 mg/L is the dilution 0.0625, i.e. 0.064 in this package
   expect_identical(sir(as.mic(0.064), "Haemophilus influenzae", "LVX", "EUCAST 2026"), "S")
-  # high-level gentamicin resistance (screening test given in the notes)
+  # high-level gentamicin resistance (screening test given in the notes), under both codes (#328)
   expect_identical(sir(as.mic(256), "Enterococcus faecium", "GEH", "EUCAST 2026"), "R")
+  expect_identical(sir(as.mic(256), "Enterococcus faecium", "GEN-S", "EUCAST 2026"), "R")
   # breakpoints in brackets are not in the data set (#327), so a UTI breakpoint is used if uti is unknown and nothing else is available, which is noted every time
   sir_interpretation_history(clean = TRUE)
   expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026"), "S")

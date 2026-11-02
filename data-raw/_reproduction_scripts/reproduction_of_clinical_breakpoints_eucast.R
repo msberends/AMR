@@ -2276,15 +2276,17 @@ breakpoints_eucast <- breakpoints_eucast |>
     ab_input = gsub("\\s*\\(.*$", "", ab),
     ab_input = trimws(sub("\\s+(iv|i\\.v\\.|oral)$", "", ab_input, ignore.case = TRUE)),
     ab = as.ab(ab_input),
-    # use dedicated screening test codes when available (e.g. FOX -> FOX-S).
-    ab = as.ab(if_else(
-      !is.na(site) &
-        site == "Screen" &
-        paste0(as.character(ab), "-S") %in% as.character(antibiotics$ab),
-      paste0(as.character(ab), "-S"),
-      as.character(ab)
-    )
-  ))
+    # every screening test is stored under its screening agent (e.g. FOX-S), so that it can never be taken for a breakpoint of the regular agent (#328)
+    is_screening_row = !is.na(site) & grepl("Screen", site, fixed = TRUE),
+    ab = as.ab(if_else(is_screening_row, paste0(as.character(ab), "-S"), as.character(ab))),
+    # the agent now holds the screening meaning; the topical cut-off values remain distinguishable from systemic screening tests by their site
+    site = if_else(site %in% "Topical, Screen", "Topical", site)
+  ) |>
+  select(-is_screening_row)
+if (any(!is.na(breakpoints_eucast$ab_input) & grepl("Screen", breakpoints_eucast$site, fixed = TRUE) & is.na(breakpoints_eucast$ab))) {
+  print(distinct(filter(breakpoints_eucast, grepl("Screen", site, fixed = TRUE), is.na(ab)), ab_input))
+  stop("screening agent(s) missing from the antimicrobials data set, see above")
+}
 
 # ab_previously_coerced also logs every intermediate word-by-word fallback
 # as.ab() tries internally while resolving a route-suffixed name (e.g. for
@@ -2475,13 +2477,13 @@ derived_rows <- list()
 hlar_rows <- breakpoints_eucast |>
   filter(
     grepl("Negative test: Isolates with (gentamicin|streptomycin) MIC \u2264", note),
-    ab %in% c("GEN", "STR1"), site %in% "Screen"
+    ab %in% c("GEN-S", "STR1-S"), site %in% "Screen"
   )
 for (r in seq_len(nrow(hlar_rows))) {
   row <- hlar_rows[r, ]
   # the note of a row can also hold the test for the other agent, so the
   # agent is taken from the row itself
-  agent <- c(GEN = "gentamicin", STR1 = "streptomycin")[as.character(row$ab)]
+  agent <- c("GEN-S" = "gentamicin", "STR1-S" = "streptomycin")[as.character(row$ab)]
   if (is.na(agent)) stop("unexpected agent for a high-level aminoglycoside screening test: ", row$ab)
   neg <- regmatches(row$note, regexec(paste0("Negative test: Isolates with ", agent, " MIC \u2264([0-9]+) mg/L(?: or a zone diameter \u2265([0-9]+) mm)?"), row$note, perl = TRUE))[[1]]
   pos <- regmatches(row$note, regexec(paste0("Positive test: Isolates with ", agent, " MIC >([0-9]+) mg/L(?: or a zone diameter <([0-9]+) mm)?"), row$note, perl = TRUE))[[1]]
@@ -2492,11 +2494,26 @@ for (r in seq_len(nrow(hlar_rows))) {
   if (!nzchar(value)) next # e.g. no zone diameter given in this version
   derived_rows[[length(derived_rows) + 1]] <- row |>
     mutate(
-      ab = as.ab(if (agent == "gentamicin") "GEH" else "STH"), site = NA_character_, is_blocker = FALSE,
+      site = "Screen", is_blocker = FALSE,
       breakpoint_S = value, breakpoint_R = value,
       note = sub("^\\[No breakpoint\\][^|]*(\\| )?", "", note)
     )
 }
+# EUCAST states that some clinical breakpoints can also be used as a screening test, e.g. "Erythromycin can be used to screen for macrolide resistance in staphylococci". These stay under the regular agent, with a copy under the screening agent (#328).
+also_screening <- breakpoints_eucast |>
+  filter(
+    !is_blocker, !grepl("-S$", as.character(ab)), !site %in% c("Screen", "Topical"),
+    (ab == "ERY" & grepl("Erythromycin can be used to screen", note, fixed = TRUE)) |
+      (ab == "TCY" & grepl("Tetracycline can be used to screen", note, fixed = TRUE)) |
+      (ab == "PEN" & grepl("Benzylpenicillin( 1 unit| \\(MIC or disk diffusion\\))? can be used to screen", note)) |
+      (ab == "NAL" & grepl("nalidixic acid disk diffusion test can be used to screen", note, fixed = TRUE)) |
+      (ab == "NOR" & grepl("norfloxacin disk diffusion test can be used to screen", note, fixed = TRUE))
+  ) |>
+  mutate(ab = as.ab(paste0(as.character(ab), "-S")), site = "Screen")
+message("NOTE: ", nrow(also_screening), " clinical breakpoint row(s) copied to their screening agent, as EUCAST also allows them as a screening test")
+breakpoints_eucast <- breakpoints_eucast |>
+  bind_rows(also_screening)
+
 fox_mic <- breakpoints_eucast |>
   filter(
     ab == "FOX-S", method == "MIC",

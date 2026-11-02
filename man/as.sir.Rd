@@ -47,7 +47,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
     FALSE),
-  include_screening = getOption("AMR_include_screening", FALSE),
+  include_screening = getOption("AMR_include_screening", NULL),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   host = NULL,
@@ -70,7 +70,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
     FALSE),
-  include_screening = getOption("AMR_include_screening", FALSE),
+  include_screening = getOption("AMR_include_screening", NULL),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   host = NULL,
@@ -93,7 +93,7 @@ is_sir_eligible(x, threshold = 0.05)
   reference_data = AMR::clinical_breakpoints,
   substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
     FALSE),
-  include_screening = getOption("AMR_include_screening", FALSE),
+  include_screening = getOption("AMR_include_screening", NULL),
   include_PKPD = getOption("AMR_include_PKPD", TRUE),
   breakpoint_type = getOption("AMR_breakpoint_type", "human"),
   host = NULL,
@@ -168,7 +168,7 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 
 \item{substitute_missing_r_breakpoint}{A \link{logical} to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is \code{FALSE}. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be \code{"S"} or \code{NA}. Setting this to \code{TRUE} will convert the \code{NA}s in these cases to \code{"R"}. Can also be set with the package option \code{\link[=AMR-options]{AMR_substitute_missing_r_breakpoint}}.}
 
-\item{include_screening}{A \link{logical} to indicate that clinical breakpoints for screening are allowed - the default is \code{FALSE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_screening}}.}
+\item{include_screening}{A \link{logical} to indicate that clinical breakpoints for screening are allowed. At default (\code{NULL}, can be set with the package option \code{\link[=AMR-options]{AMR_include_screening}}), these are only used for screening agents, e.g. \code{FOX-S}, but not for regular agents, e.g. \code{FOX}. Use \code{TRUE} to also use them for regular agents (with \code{FOX} then taking the breakpoints of \code{FOX-S}), and \code{FALSE} to never use them, which gives \code{NA} with a note for a screening agent.}
 
 \item{include_PKPD}{A \link{logical} to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is \code{TRUE}. Can also be set with the package option \code{\link[=AMR-options]{AMR_include_PKPD}}.}
 
