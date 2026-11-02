@@ -50,7 +50,7 @@ LOINC:
 }
 }
 
-An object of class \code{deprecated_amr_dataset} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 506 rows and 14 columns.
+An object of class \code{deprecated_amr_dataset} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 519 rows and 14 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 120 rows and 11 columns.
 }

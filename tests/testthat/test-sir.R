@@ -663,15 +663,20 @@ test_that("as.sir() takes the site of a breakpoint into account", {
   sir <- function(x, mo, ab, ..., guideline = "EUCAST 2026") {
     as.character(suppressMessages(suppressWarnings(as.sir(x, mo = mo, ab = ab, guideline = guideline, info = FALSE, ...))))
   }
-  # every site for humans in the data set must be known, so that none can be overlooked
-  sites <- unique(clinical_breakpoints$site[!is.na(clinical_breakpoints$site) & clinical_breakpoints$type == "human"])
+  # every site in the data set, for humans and for animals, must be known, so that none can be overlooked
+  sites <- unique(clinical_breakpoints$site[!is.na(clinical_breakpoints$site)])
   for (s in sites) {
-    expect_true(length(setdiff(sir_site_parts(s), SIR_SITE_NOT_A_SITE)) == length(sir_site_tokens(s)), info = s)
+    known <- vapply(setdiff(sir_site_parts(s), SIR_SITE_NOT_A_SITE), function(part) length(sir_site_tokens(part)) == 1, logical(1))
+    expect_true(all(known), info = s)
   }
-  expect_identical(sort(c(names(SIR_SITE_PATTERNS), NA), na.last = TRUE), sort(SIR_SITE_ORDER, na.last = TRUE))
+  expect_identical(sort(names(SIR_SITE_PATTERNS)), sort(SIR_SITE_ORDER))
+  expect_identical(
+    SIR_SITE_ORDER,
+    c("systemic", "iv", "meningitis", "endocarditis", "pneumonia", "mastitis", "respiratory", "metritis", "genital", "intestinal", "other", "non-meningitis", "non-endocarditis", "non-pneumonia", "extraintestinal", "soft tissue", "skin", "wounds", "inhaled", "oral", "prophylaxis", "uti", "topical", "screen")
+  )
 
   # the fixed codes, all other values give an error
-  expect_identical(sir_site_normalise(c("Meningitis", "iv, meningitis", NA)), c("meningitis", "meningitis,iv", NA))
+  expect_identical(sir_site_normalise(c("Meningitis", "iv, meningitis", NA)), c("meningitis", "iv,meningitis", NA))
   expect_error(as.sir(as.mic(1), mo = "E. coli", ab = "AMC", site = "brain", info = FALSE))
   expect_error(as.sir(as.mic(1), mo = "E. coli", ab = "AMC", site = "uti", uti = FALSE, info = FALSE))
 
@@ -687,12 +692,56 @@ test_that("as.sir() takes the site of a breakpoint into account", {
   expect_true(sir_site_fits("systemic", "meningitis"))
   expect_false(sir_site_fits("systemic", "uti"))
 
+  # veterinary sites: the same rules, where sites that are part of each other do not contradict
+  expect_identical(sir_site_tokens("Mammary gland"), "mastitis")
+  expect_identical(sir_site_tokens("Wounds, abscesses"), "wounds")
+  expect_false(sir_site_fits("mastitis", "respiratory"))
+  expect_false(sir_site_fits("respiratory", "uti"))
+  expect_true(sir_site_fits("respiratory", "pneumonia"))
+  expect_true(sir_site_fits("pneumonia", "respiratory"))
+  expect_true(sir_site_fits("metritis", "genital"))
+  expect_true(sir_site_fits(c("skin", "soft tissue"), "wounds"))
+
+  # "other" means any site not listed: it fits no breakpoint limited to an indication, but it does fit the rest
+  expect_false(sir_site_fits("meningitis", "other"))
+  expect_false(sir_site_fits("uti", "other"))
+  expect_false(sir_site_fits("mastitis", "other"))
+  expect_true(sir_site_fits(character(0), "other"))
+  expect_true(sir_site_fits("other", "other"))
+  expect_true(sir_site_fits("non-meningitis", "other"))
+  expect_true(sir_site_fits("iv", "other"))
+  expect_true(sir_site_given(character(0), "other"))
+  expect_false(sir_site_given(character(0), "uti"))
+
   # site = NA takes the most systemic site, also compared to a breakpoint without a site
-  expect_true(sir_site_rank("Meningitis") < sir_site_rank("Non-meningitis"))
-  expect_true(sir_site_rank("Intravenous") < sir_site_rank(NA))
-  expect_true(sir_site_rank(NA) < sir_site_rank("Oral"))
+  expect_true(sir_site_rank("Systemic infections") < sir_site_rank("Intravenous"))
+  expect_true(sir_site_rank("Intravenous") < sir_site_rank("Meningitis"))
+  expect_true(sir_site_rank("Pneumonia") < sir_site_rank("Mastitis"))
+  expect_identical(sir_site_rank("Mastitis"), sir_site_rank("Mammary gland"))
+  expect_true(sir_site_rank("Mastitis") < sir_site_rank("Intestinal"))
+  # "other" and no site are one position: below meningitis, and above UTI
+  expect_identical(sir_site_rank(NA), sir_site_rank("Other infections"))
+  expect_true(sir_site_rank("Meningitis") < sir_site_rank("Other infections"))
+  expect_true(sir_site_rank("Other infections") < sir_site_rank("Uncomplicated urinary tract infection"))
+  expect_true(sir_site_rank("Intestinal") < sir_site_rank(NA))
+  expect_true(sir_site_rank(NA) < sir_site_rank("Non-meningitis"))
   expect_true(sir_site_rank("Oral") < sir_site_rank("Uncomplicated urinary tract infection"))
-  expect_identical(sir_site_rank("Intravenous, Meningitis"), sir_site_rank("Meningitis"))
+  # a second site breaks a tie on the first one
+  expect_true(sir_site_rank("Intravenous, Meningitis") < sir_site_rank("Intravenous, Non-meningitis"))
+  expect_true(sir_site_rank("Intravenous, Non-meningitis") < sir_site_rank("Meningitis"))
+
+  # "other" in as.sir(): takes the breakpoint for other infections, or without a site
+  expect_identical(sir(as.mic(0.25), "Streptococcus pneumoniae", "PEN", site = "other", guideline = "EUCAST 2012"), "I")
+  expect_identical(sir(as.mic(0.25), "Streptococcus pneumoniae", "PEN", site = "meningitis", guideline = "EUCAST 2012"), "R")
+  # only breakpoints limited to an indication: no result
+  expect_identical(sir(as.mic(1), "Escherichia coli", "NTR", site = "other"), NA_character_)
+  # veterinary: per site for the host, and no result for another site
+  vet <- function(x, mo, ab, ...) {
+    sir(x, mo, ab, guideline = "CLSI 2026", breakpoint_type = "animal", host = "cattle", ...)
+  }
+  expect_identical(vet(as.mic(2), "Staphylococcus aureus", "KAC", site = "mastitis"), "S")
+  expect_identical(vet(as.mic(32), "Staphylococcus aureus", "KAC", site = "mastitis"), "R")
+  expect_identical(vet(as.mic(2), "Staphylococcus aureus", "KAC", site = "meningitis"), NA_character_)
 
   # S. pneumoniae and benzylpenicillin, with breakpoints for meningitis and for other infections
   pen <- as.mic(0.25)
