@@ -826,10 +826,24 @@ test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   expect_identical(sir(as.mic(0.064), "Haemophilus influenzae", "LVX", "EUCAST 2026"), "S")
   # high-level gentamicin resistance (screening test given in the notes)
   expect_identical(sir(as.mic(256), "Enterococcus faecium", "GEH", "EUCAST 2026"), "R")
-  # breakpoints in brackets for systemic infections are not replaced by the UTI breakpoint if uti is unknown
-  expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026"), NA_character_)
+  # breakpoints in brackets are not in the data set (#327), so a UTI breakpoint is used if uti is unknown and nothing else is available, which is noted every time
+  sir_interpretation_history(clean = TRUE)
+  expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026"), "S")
+  sir_history <- sir_interpretation_history(clean = TRUE)
+  expect_match(sir_history$notes, "only available for (uncomplicated) urinary tract infections", fixed = TRUE)
   expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026", uti = FALSE), NA_character_)
   expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026", uti = TRUE), "S")
+  # without a breakpoint in brackets, PK-PD breakpoints apply if EUCAST has these, as in EUCAST 2023 for aminoglycosides
+  sir_interpretation_history(clean = TRUE)
+  expect_identical(sir(as.mic(0.5), "Escherichia coli", "AMK", "EUCAST 2023", uti = FALSE), "S")
+  sir_history <- sir_interpretation_history(clean = TRUE)
+  expect_match(sir_history$ref_table, "PK PD", fixed = TRUE)
+  # and the breakpoints of a broader taxon for another route, of which the site is noted
+  sir_interpretation_history(clean = TRUE)
+  expect_identical(sir(as.mic(4), "Enterococcus faecalis", "AMX", "EUCAST 2026", uti = FALSE), "S")
+  expect_identical(sir_interpretation_history(clean = TRUE)$site, "Intravenous")
+  # an organism that a table excludes stays excluded, also if EUCAST has breakpoints in brackets for it
+  expect_identical(sir(as.mic(1), "Bacillus anthracis", "VAN", "EUCAST 2026"), NA_character_)
   # UTI breakpoints are only used for unknown uti if there are no non-UTI breakpoints, which is noted every time
   for (i in 1:2) {
     sir_interpretation_history(clean = TRUE)

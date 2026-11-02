@@ -582,6 +582,16 @@ test_that("microorganisms.codes: unique codes for existing names", {
   expect_true(all(is.na(microorganisms.codes$source) | grepl("^WHONET \\(.+\\)$", microorganisms.codes$source)))
 })
 
+test_that("clinical_breakpoints: no EUCAST breakpoints in brackets (#327)", {
+  skip_on_cran()
+  expect_false(any(grepl("brackets", clinical_breakpoints$note, fixed = TRUE)))
+  expect_false(any(grepl("[( )]", clinical_breakpoints$note, fixed = TRUE)))
+  # e.g., systemic amikacin for Enterobacterales in EUCAST 2026, with only the breakpoint for infections originating from the urinary tract left
+  amk <- subset(clinical_breakpoints, guideline == "EUCAST 2026" & type == "human" & ab == "AMK" & method == "MIC" & mo == "B_[ORD]_ENTRBCTR")
+  expect_identical(nrow(amk), 1L)
+  expect_true(amk$uti)
+})
+
 test_that("clinical_breakpoints: EUCAST MIC breakpoints are stored as published (#331)", {
   skip_on_cran()
   cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
