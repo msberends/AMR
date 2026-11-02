@@ -599,7 +599,8 @@ test_that("clinical_breakpoints: screening tests are under screening agents (#32
   expect_false(any(ab %in% c("GEH", "STH")))
   expect_true(all(c("GEH", "STH") %in% AMR::antimicrobials$ab))
   # topical cut-off values
-  topical <- cb[cb$site %in% "Topical", , drop = FALSE]
+  # (mupirocin also has actual breakpoints for nasal decolonisation, #329)
+  topical <- cb[cb$site %in% "Topical" & !as.character(cb$ab) %in% "MUP", , drop = FALSE]
   expect_true(all(grepl("-S$", as.character(topical$ab))))
   expect_false(any(cb$site %in% "Topical, Screen"))
   # explicit lists: moved
@@ -614,6 +615,47 @@ test_that("clinical_breakpoints: screening tests are under screening agents (#32
   ery <- function(agent) cb[human & cb$guideline == "EUCAST 2026" & ab == agent & as.character(cb$mo) == "B_MRXLL_CTRR" & cb$method == "DISK", c("breakpoint_S", "breakpoint_R"), drop = FALSE]
   expect_true(nrow(ery("ERY")) > 0)
   expect_identical(unname(as.list(ery("ERY-S"))), unname(as.list(ery("ERY"))))
+})
+
+test_that("clinical_breakpoints: EUCAST breakpoints stated in the Notes (#329)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb <- cb[cb$type == "human", , drop = FALSE]
+  bp <- function(guideline, ab, mo, method, site = NULL) {
+    x <- cb[cb$guideline == guideline & as.character(cb$ab) == ab & as.character(cb$mo) == as.character(as.mo(mo, info = FALSE)) & cb$method == method, , drop = FALSE]
+    if (!is.null(site)) {
+      x <- x[x$site %in% site, , drop = FALSE]
+    }
+    c(x$breakpoint_S, x$breakpoint_R)
+  }
+  # oxacillin disk for S. pseudintermedius and related species
+  expect_identical(bp("EUCAST 2019", "OXA-S", "S. pseudintermedius", "DISK"), c(20, 20))
+  expect_identical(bp("EUCAST 2026", "OXA-S", "S. pseudintermedius", "DISK"), c(20, 20))
+  # oxacillin MIC for coagulase-negative staphylococci, not for the species excluded by EUCAST
+  expect_identical(bp("EUCAST 2026", "OXA-S", "B_STPHY_CONS", "MIC"), c(0.25, 0.25))
+  expect_identical(bp("EUCAST 2026", "OXA-S", "S. lugdunensis", "MIC"), c(NA_real_, NA_real_))
+  expect_identical(bp("EUCAST 2026", "OXA-S", "S. saprophyticus", "MIC"), c(NA_real_, NA_real_))
+  # hedged statements are not taken over
+  expect_false(any(as.character(cb$ab) == "OXA-S" & as.character(cb$mo) == "B_STPHY_AURS" & cb$method == "MIC" & !is.na(cb$breakpoint_R)))
+  # mupirocin for nasal decolonisation, which changed over the years
+  expect_identical(bp("EUCAST 2023", "MUP", "S. aureus", "MIC", "Topical"), c(1, 256))
+  expect_identical(bp("EUCAST 2023", "MUP", "S. aureus", "DISK", "Topical"), c(30, 18))
+  expect_identical(bp("EUCAST 2026", "MUP", "S. aureus", "MIC", "Topical"), c(1, 1))
+  expect_identical(bp("EUCAST 2026", "MUP", "S. aureus", "DISK", "Topical"), c(30, 30))
+  # meropenem in other infections than meningitis for N. meningitidis, stated in EUCAST 2021
+  expect_identical(bp("EUCAST 2021", "MEM", "N. meningitidis", "MIC", "Non-meningitis"), c(0.25, 0.25))
+  # Bacteroides extends to these taxa for both methods, unlike H. influenzae, which extends for MIC only
+  for (g in paste("EUCAST", 2023:2026)) {
+    for (to in c("Parabacteroides", "Phocaeicola dorei", "Phocaeicola vulgatus")) {
+      for (m in c("MIC", "DISK")) {
+        from_rows <- cb[cb$guideline == g & as.character(cb$mo) == "B_BCTRD" & cb$method == m & !is.na(cb$breakpoint_S), , drop = FALSE]
+        to_rows <- cb[cb$guideline == g & as.character(cb$mo) == as.character(as.mo(to, info = FALSE)) & cb$method == m & !is.na(cb$breakpoint_S), , drop = FALSE]
+        expect_true(nrow(from_rows) > 0, info = paste(g, m))
+        expect_true(all(as.character(from_rows$ab) %in% as.character(to_rows$ab)), info = paste(g, to, m))
+      }
+    }
+  }
+  expect_false(any(as.character(cb$mo) == "B_HMPHL_PRNF" & cb$method == "DISK" & cb$guideline %like% "EUCAST 202" & !is.na(cb$breakpoint_S)))
 })
 
 test_that("clinical_breakpoints: no EUCAST breakpoints in brackets (#327)", {
