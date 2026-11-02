@@ -622,6 +622,7 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
   # pattern does not recognise stops the script, so that it is not missed.
   sheet_text <- unique(parsed$full_text[!is.na(parsed$full_text) & parsed$col == 1])
   scope_pattern <- "In the absence of specific breakpoints, the ([A-Z])\\. ([a-z]+) MIC ?breakpoints can be applied to ([A-Z])\\. ([a-z]+)\\."
+  bacteroides_pattern <- "Breakpoints for Bacteroides spp\\. are also valid for Parabacteroides spp\\. and for Phocaeicola dorei/vulgatus"
   for (txt in sheet_text) {
     txt_squished <- gsub("\\s+", " ", txt)
     m <- regmatches(txt_squished, regexec(scope_pattern, txt_squished))[[1]]
@@ -629,7 +630,7 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
       sheet_title <- trimws(get_cell(parsed, 1, 1)$base)
       genus <- sub("\\s.*$", "", sheet_title)
       if (substr(genus, 1, 1) != m[2] || m[2] != m[4]) {
-        stop("parse_sheet(): MIC scope statement on sheet '", sheet_name, "' does not match the sheet's genus '", genus, "': ", m[1])
+        stop("parse_sheet(): scope statement on sheet '", sheet_name, "' does not match the sheet's genus '", genus, "': ", m[1])
       }
       parse_log$scope_extensions <- rbind(
         parse_log$scope_extensions,
@@ -638,7 +639,7 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
           from_text = paste(genus, m[3]), to_text = paste(genus, m[5]), statement = m[1], method = "MIC"
         )
       )
-    } else if (grepl("breakpoints can (also )?be applied to [A-Z]\\.", txt_squished)) {
+    } else if (grepl("breakpoints can (also )?be applied to [A-Z]\\.|breakpoints for .* are also valid for", txt_squished, ignore.case = TRUE) && !grepl(bacteroides_pattern, txt_squished)) {
       stop(
         "parse_sheet(): unrecognised statement about applying breakpoints to another species on sheet '",
         sheet_name, "': ", substr(txt_squished, 1, 300)
@@ -646,20 +647,22 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
     }
   }
 
-  # EUCAST extends Bacteroides breakpoints to these taxa for both methods.
-  statement <- paste0(
-    "Breakpoints for Bacteroides spp. are also valid for Parabacteroides spp. ",
-    "and for Phocaeicola dorei/vulgatus (previously named Bacteroides dorei/vulgatus)."
-  )
-  if (any(grepl(statement, gsub("\\s+", " ", sheet_text), fixed = TRUE))) {
+  # EUCAST extends the Bacteroides breakpoints to these taxa, for both methods. Any other wording of such a statement stops the script, see above.
+  statement <- sheet_text[grepl(bacteroides_pattern, gsub("\\s+", " ", sheet_text))]
+  if (length(statement) > 0) {
     extension <- expand.grid(
       to_text = c("Parabacteroides", "Phocaeicola dorei", "Phocaeicola vulgatus"),
       method = c("MIC", "DISK"), stringsAsFactors = FALSE
     )
     parse_log$scope_extensions <- bind_rows(
       parse_log$scope_extensions,
-      extension |> mutate(guideline = ver$guideline, sheet = sheet_name,
-        from_text = "Bacteroides", statement = statement)
+      extension |>
+        mutate(
+          guideline = ver$guideline,
+          sheet = sheet_name,
+          from_text = "Bacteroides",
+          statement = regmatches(gsub("\\s+", " ", statement[1]), regexpr(paste0(bacteroides_pattern, "[^.]*\\."), gsub("\\s+", " ", statement[1])))
+        )
     )
   }
 
@@ -2467,6 +2470,11 @@ for (i in seq_len(nrow(eucast_note_rules))) {
 #     staphylococci except S. epidermidis and S. lugdunensis" then applies to
 #     the identified CoNS species (one row per species), while the CoNS group
 #     itself (an isolate only identified as CoNS) gets 25 mm.
+#  4. The oxacillin disk for staphylococci in which cefoxitin is less predictive, e.g. S. pseudintermedius: "Use the oxacillin 1 ug disk with zone diameter breakpoints S>=20, R<20 mm". Stored under OXA-S.
+#  5. The oxacillin MIC for coagulase-negative staphylococci: "For coagulase-negative staphylococci other than S. saprophyticus and S. lugdunensis, the oxacillin MIC in methicillin resistant isolates is >0.25 mg/L". Stored under OXA-S, with blocking rows for these two species. The oxacillin statements for S. aureus, S. lugdunensis and S. saprophyticus read "mostly methicillin resistant", and are hedged, unlike the cefoxitin statements.
+#  6. Mupirocin for nasal decolonisation of S. aureus: "Breakpoints for nasal decontamination S <=1, R >256 mg/L (S >=30, R <18 mm for the mupirocin 200 ug disk)". Stored under MUP, not as a screening test, with site "Topical".
+#  7. Meropenem for N. meningitidis in other infections: "The meningitis breakpoint can be used to categorise meropenem for other serious infections".
+# Not taken over: statements about a surrogate agent without an agent of its own in this package (kanamycin for amikacin), provisional values (pretomanid), statements about wild-type populations, about countries that prefer another approach, and about inferring other agents.
 # Statements that are not breakpoints, such as ECOFFs ("There are no clinical
 # breakpoints but acquired resistance (indicated by MIC >1 mg/L) should be
 # excluded") or hedged ones ("... with oxacillin MIC values >2 mg/L are mostly
@@ -2531,10 +2539,60 @@ for (r in seq_len(nrow(fox_mic))) {
       )
   }
 }
+strip_blocking_note <- function(x) sub("^\\[No breakpoint\\][^|]*(\\| )?", "", x)
+squish <- function(x) gsub("\\s+", " ", x)
+# 4. the oxacillin disk, for the organisms of the row with this note
+oxa_disk_rule <- "Use the oxacillin 1 .?g disk with zone diameter breakpoints S\u2265([0-9]+), R<([0-9]+) mm"
+oxa_disk <- breakpoints_eucast |>
+  filter(ab == "FOX-S", method == "DISK", grepl(oxa_disk_rule, squish(note))) |>
+  distinct(guideline, mo, .keep_all = TRUE)
+for (r in seq_len(nrow(oxa_disk))) {
+  m <- regmatches(squish(oxa_disk$note[r]), regexec(oxa_disk_rule, squish(oxa_disk$note[r])))[[1]]
+  derived_rows[[length(derived_rows) + 1]] <- oxa_disk[r, ] |>
+    mutate(ab = as.ab("OXA-S"), site = "Screen", disk_dose = "1 mcg", is_blocker = FALSE, breakpoint_S = m[2], breakpoint_R = m[3], note = strip_blocking_note(note))
+}
+# 5. the oxacillin MIC for coagulase-negative staphylococci, except two species
+oxa_mic_rule <- "For coagulase-negative staphylococci other than S\\. saprophyticus and S\\. lugdunensis, the oxacillin MIC in methicillin resistant (isolates|strains) is >([0-9.]+) mg/L"
+oxa_mic <- breakpoints_eucast |>
+  filter(ab == "OXA", method == "MIC", grepl(oxa_mic_rule, squish(note))) |>
+  distinct(guideline, .keep_all = TRUE)
+for (r in seq_len(nrow(oxa_mic))) {
+  m <- regmatches(squish(oxa_mic$note[r]), regexec(oxa_mic_rule, squish(oxa_mic$note[r])))[[1]]
+  row <- oxa_mic[r, ] |>
+    mutate(ab = as.ab("OXA-S"), site = "Screen", mo = as.mo("B_STPHY_CONS"), is_blocker = FALSE, breakpoint_S = m[3], breakpoint_R = m[3], note = strip_blocking_note(note))
+  derived_rows[[length(derived_rows) + 1]] <- row
+  for (sp in c("B_STPHY_SPRP", "B_STPHY_LGDN")) {
+    derived_rows[[length(derived_rows) + 1]] <- row |>
+      mutate(mo = as.mo(sp), is_blocker = TRUE, breakpoint_S = NA_character_, breakpoint_R = NA_character_, note = blocking_note(paste0("EUCAST: '", m[1], "'"), NA_character_))
+  }
+}
+# 6. mupirocin for nasal decolonisation; both notations of the zone diameters occur
+mupirocin_rule <- "Breakpoints for nasal de[a-z]+[^(]*S \u2264([0-9]+), R >([0-9]+) mg/L \\((?:disk diffusion with mupirocin 200 .?g disk )?S \u2265([0-9]+), R <([0-9]+) mm"
+mupirocin_rows <- breakpoints_eucast |>
+  filter(ab == "MUP-S", site %in% "Topical", grepl("Breakpoints for nasal de", squish(note), fixed = TRUE))
+for (r in seq_len(nrow(mupirocin_rows))) {
+  m <- regmatches(squish(mupirocin_rows$note[r]), regexec(mupirocin_rule, squish(mupirocin_rows$note[r])))[[1]]
+  if (length(m) != 5) stop("unexpected wording of the mupirocin breakpoints in the note of ", mupirocin_rows$guideline[r], ": ", substr(mupirocin_rows$note[r], 1, 300))
+  values <- if (mupirocin_rows$method[r] == "MIC") m[2:3] else m[4:5]
+  derived_rows[[length(derived_rows) + 1]] <- mupirocin_rows[r, ] |>
+    mutate(ab = as.ab("MUP"), breakpoint_S = values[1], breakpoint_R = values[2])
+}
+# 7. meropenem for N. meningitidis
+meropenem_rule <- "The meningitis breakpoint can be used to categorise meropenem for other serious infections"
+meropenem_rows <- breakpoints_eucast |>
+  filter(ab == "MEM", is_blocker, !site %in% "Meningitis", grepl(meropenem_rule, squish(note), fixed = TRUE))
+for (r in seq_len(nrow(meropenem_rows))) {
+  row <- meropenem_rows[r, ]
+  source_row <- breakpoints_eucast |>
+    filter(guideline == row$guideline, ab == "MEM", mo == row$mo, method == row$method, site %in% "Meningitis", !is_blocker)
+  if (nrow(source_row) != 1) stop("expected one breakpoint for meningitis in ", row$guideline, " for ", row$mo)
+  derived_rows[[length(derived_rows) + 1]] <- row |>
+    mutate(is_blocker = FALSE, breakpoint_S = source_row$breakpoint_S, breakpoint_R = source_row$breakpoint_R, note = strip_blocking_note(note))
+}
 if (length(derived_rows) > 0) {
   derived <- bind_rows(derived_rows)
   message(
-    "NOTE: ", nrow(derived), " screening breakpoint row(s) taken from the notes (",
+    "NOTE: ", nrow(derived), " breakpoint row(s) taken from the notes (",
     paste(unique(paste(derived$guideline, derived$ab, derived$method)), collapse = ", "), ")"
   )
   breakpoints_eucast <- bind_rows(breakpoints_eucast, derived)
