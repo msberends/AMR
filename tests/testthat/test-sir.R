@@ -638,6 +638,29 @@ test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
   expect_equal(as.character(result), "R")
 })
 
+test_that("MIC breakpoints are compared as dilutions, not as their notation (#331)", {
+  skip_on_cran()
+  sir <- function(x, mo, ab, guideline = "EUCAST 2026") {
+    as.character(suppressMessages(suppressWarnings(as.sir(as.mic(x), mo = mo, ab = ab, guideline = guideline, info = FALSE))))
+  }
+  # the published value is the stored value
+  pen <- subset(clinical_breakpoints, guideline == "EUCAST 2026" & type == "human" & method == "MIC" & ab == "PEN" & mo == "B_STRPT_GRPA")
+  expect_identical(unique(pen$breakpoint_S), 0.03)
+  # all notations of this dilution are S, the next dilution is not
+  expect_identical(sir(c(0.03, 0.031, 0.03125, 0.032), "Streptococcus pyogenes", "PEN"), rep("S", 4))
+  expect_identical(sir(0.064, "Streptococcus pyogenes", "PEN"), "R")
+  # the same for an R breakpoint, in the notation of the guideline and of the laboratory
+  expect_identical(mic_dilution_level(c(0.03, 0.032, 0.06, 0.064, 0.12, 0.125, 0.19, 3)), c(0.032, 0.032, 0.064, 0.064, 0.125, 0.125, 0.19, 3))
+  # the off-scale S breakpoint is stored as published, and never leads to S
+  cip <- subset(clinical_breakpoints, guideline == "EUCAST 2026" & type == "human" & method == "MIC" & ab == "CIP" & mo == "B_PSDMN" & is.na(site))
+  expect_identical(unique(cip$breakpoint_S), 0.001)
+  expect_identical(sir(c(0.0005, 0.001, 0.25), "Pseudomonas aeruginosa", "CIP"), c("I", "I", "I"))
+  # the log shows the published breakpoint
+  sir_interpretation_history(clean = TRUE)
+  sir(0.032, "Streptococcus pyogenes", "PEN")
+  expect_identical(sir_interpretation_history(clean = TRUE)$breakpoint_S_R, "0.03-0.03")
+})
+
 test_that("Morganella is interpreted as reported, not as M. morganii (#330)", {
   skip_on_cran()
   cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)

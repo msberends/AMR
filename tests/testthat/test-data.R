@@ -582,6 +582,23 @@ test_that("microorganisms.codes: unique codes for existing names", {
   expect_true(all(is.na(microorganisms.codes$source) | grepl("^WHONET \\(.+\\)$", microorganisms.codes$source)))
 })
 
+test_that("clinical_breakpoints: EUCAST MIC breakpoints are stored as published (#331)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb <- cb[cb$type == "human" & cb$method == "MIC" & cb$guideline %like% "EUCAST" & cb$ref_tbl %like% "file: ", , drop = FALSE]
+  expect_true(nrow(cb) > 0)
+  # these notations do not occur in the EUCAST Clinical Breakpoint Tables
+  published_as <- c("0.032" = 0.032, "0.064" = 0.064, "0.0001" = 0.0001)
+  for (value in names(published_as)) {
+    wrong <- which(cb$breakpoint_S == published_as[value] | cb$breakpoint_R == published_as[value])
+    expect_true(length(wrong) == 0, info = paste("EUCAST MIC breakpoint", value, "in", paste(unique(cb$guideline[wrong]), collapse = ", ")))
+  }
+  # but those as published do, e.g., benzylpenicillin for group A streptococci in v16.1
+  expect_true(any(cb$breakpoint_S == 0.03, na.rm = TRUE))
+  expect_true(any(cb$breakpoint_S == 0.06, na.rm = TRUE))
+  expect_true(any(cb$breakpoint_S == 0.001, na.rm = TRUE))
+})
+
 test_that("clinical_breakpoints: consistent and unambiguous", {
   skip_on_cran()
   cb <- clinical_breakpoints
