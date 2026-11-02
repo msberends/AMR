@@ -270,6 +270,7 @@ Use the `wisca()` function, or equivalently `antibiogram(..., wisca = TRUE)`. WI
 
 ```{r wisca}
 wisca_result <- example_isolates %>%
+  top_n_microorganisms(n = 10) %>%
   wisca(
     antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
     minimum = 10

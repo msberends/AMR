@@ -59,8 +59,8 @@ times](https://scholar.google.com/citations?view_op=view_citation&hl=en&citation
 in scientific research.
 
 After installing this package, R knows [**~103 000 distinct microbial
-species**](./reference/microorganisms.html) (updated April 2026) and all
-[**~630 antimicrobial and antiviral
+species**](./reference/microorganisms.html) (updated October 2026) and
+all [**~630 antimicrobial and antiviral
 drugs**](./reference/antimicrobials.html) by name and code (including
 ATC, EARS-Net, ASIARS-Net, PubChem, LOINC and SNOMED CT), and knows all
 about valid SIR and MIC values. The integral clinical breakpoint
@@ -154,15 +154,15 @@ selectors](https://amr-for-r.org/reference/antimicrobial_selectors.html),
 which work in base R, `dplyr` and `data.table`.
 
 ``` r
-# AMR works great with dplyr, but it's not required or neccesary
+# AMR works great with dplyr, but it's not required or necessary
 library(AMR)
 library(dplyr, warn.conflicts = FALSE)
 
-example_isolates %>%
-  mutate(bacteria = mo_fullname()) %>%
+example_isolates |>
+  mutate(bacteria = mo_fullname()) |>
   # filtering functions for microorganisms:
   filter(mo_is_gram_negative(),
-         mo_is_intrinsic_resistant(ab = "cefotax")) %>%
+         mo_is_intrinsic_resistant(ab = "cefotax")) |>
   # antimicrobial selectors:
   select(bacteria,
          aminoglycosides(),
@@ -217,38 +217,46 @@ credible intervals via Bayesian simulation. See `vignette("WISCA")` for
 the full explanation.
 
 ``` r
-wisca(example_isolates,
-      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-      minimum = 10) # Recommended threshold: >=30
+example_isolates |>
+  top_n_microorganisms(n = 10) |> # 10 most common species
+  wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+        minimum = 10) # Recommended threshold: >=30
 ```
 
 | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:------------------------|:-------------------------------------|:-------------------------------------|
-| 70.2% (65-75.4%)        | 93.6% (92-95.1%)                     | 89.9% (87-92.5%)                     |
+| 73% (67.7-79%)          | 98.7% (98-99.2%)                     | 93.8% (90.5-96.6%)                   |
 
 WISCA supports stratification by any clinical variable, so you can
 generate syndrome-specific or ward-specific coverage estimates:
 
 ``` r
-wisca(example_isolates,
-      antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
-      syndromic_group = "ward",
-      minimum = 10) # Recommended threshold: >=30
+example_isolates |>
+  top_n_microorganisms(n = 10) |>
+  wisca(antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"),
+        syndromic_group = "ward",
+        minimum = 10) # Recommended threshold: >=30
+#> Warning: In 3 of 9 WISCA regimen(s) or group(s), the prior weight of 1 per pathogen accounts for more than
+#> 5% of the pathogen incidence (up to 6.4%), since there are few isolates relative to the number of
+#> pathogens, i.e., rare pathogens or a small group. Because WISCA gives every pathogen a prior weight
+#> of 1 (Bielicki et al., 2016), this can strongly lower the estimated coverage without reflecting the
+#> clinical expectation. Consider limiting the analysis to the most common pathogens with
+#> `top_n_microorganisms()`, or using fewer and larger groups.
 ```
 
 | Syndromic Group | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
 |:----------------|:------------------------|:-------------------------------------|:-------------------------------------|
-| Clinical        | 74.8% (69-80.3%)        | 93.7% (92.1-95.1%)                   | 90.4% (86.8-93.3%)                   |
-| ICU             | 56.7% (48.2-65.4%)      | 86.6% (83.3-89.6%)                   | 83.1% (78.2-87.5%)                   |
-| Outpatient      | 57.6% (46-69%)          | 76.4% (69.8-81.7%)                   | 68% (57.7-77.5%)                     |
+| Clinical        | 78.9% (72.8-85.6%)      | 98.7% (97.8-99.3%)                   | 94.5% (90.3-97.6%)                   |
+| ICU             | 57.3% (48.9-69.5%)      | 97.5% (95.7-98.8%)                   | 91.7% (85.8-96.3%)                   |
+| Outpatient      | 68% (49.4-88.5%)        | 95.7% (90.7-98.7%)                   | 79.3% (62.7-93.8%)                   |
 
 **For AMR surveillance**, traditional antibiograms remain the right tool
 for tracking resistance per species over time:
 
 ``` r
-antibiogram(example_isolates,
-            mo_transform = "gramstain",
-            antimicrobials = c("AMC", carbapenems(), "TZP"))
+example_isolates |>
+  antibiogram(mo_transform = "gramstain",
+              antimicrobials = c("AMC", carbapenems(), "TZP"))
 #> ℹ For `carbapenems()` using columns IPM (imipenem) and MEM (meropenem)
 ```
 
@@ -261,9 +269,9 @@ Combination antibiograms show the additional coverage gained by adding a
 second agent, stratified by species:
 
 ``` r
-antibiogram(example_isolates,
-            mo_transform = "gramstain",
-            antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
+example_isolates |>
+  antibiogram(mo_transform = "gramstain",
+              antimicrobials = c("TZP", "TZP+TOB", "TZP+GEN"))
 ```
 
 | Pathogen      | Piperacillin/tazobactam | Piperacillin/tazobactam + Gentamicin | Piperacillin/tazobactam + Tobramycin |
@@ -276,11 +284,11 @@ come with support for 28 languages that are often detected automatically
 based on system language:
 
 ``` r
-antibiogram(example_isolates,
-            antimicrobials = c("cipro", "tobra", "genta"), # any arbitrary name or code will work
-            mo_transform = "gramstain",
-            ab_transform = "name",
-            language = "uk") # Ukrainian
+example_isolates |>
+  antibiogram(antimicrobials = c("cipro", "tobra", "genta"), # any arbitrary name or code will work
+              mo_transform = "gramstain",
+              ab_transform = "name",
+              language = "uk") # Ukrainian
 ```
 
 | Збудник       | Гентаміцин          | Тобраміцин         | Ципрофлоксацин     |
@@ -334,9 +342,9 @@ For a manual approach, you can use the `resistance` or
 `susceptibility()` function:
 
 ``` r
-example_isolates %>%
+example_isolates |>
   # group by ward:
-  group_by(ward) %>%
+  group_by(ward) |>
   # calculate AMR using resistance() for gentamicin and tobramycin
   # and get their 95% confidence intervals using sir_confidence_interval():
   summarise(across(c(GEN, TOB),
@@ -358,9 +366,9 @@ to select a series of antibiotic columns:
 library(AMR)
 library(dplyr)
 
-out <- example_isolates %>%
+out <- example_isolates |>
   # group by ward:
-  group_by(ward) %>%
+  group_by(ward) |>
   # calculate AMR using resistance(), over all aminoglycosides and polymyxins:
   summarise(across(c(aminoglycosides(), polymyxins()),
             resistance))
@@ -384,7 +392,7 @@ out
 
 ``` r
 # transform the antibiotic columns to names:
-out %>% set_ab_names()
+out |> set_ab_names()
 #> # A tibble: 3 × 6
 #>   ward       gentamicin tobramycin amikacin kanamycin colistin
 #>   <chr>           <dbl>      <dbl>    <dbl>     <dbl>    <dbl>
@@ -395,7 +403,7 @@ out %>% set_ab_names()
 
 ``` r
 # transform the antibiotic column to ATC codes:
-out %>% set_ab_names(property = "atc")
+out |> set_ab_names(property = "atc")
 #> # A tibble: 3 × 6
 #>   ward       J01GB03 J01GB01 J01GB06 J01GB04 J01XB01
 #>   <chr>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
@@ -427,7 +435,7 @@ data analysis. This package can be used for:
   organisms (MDRO) ([tutorial](./reference/mdro.html))
 - Calculating (empirical) susceptibility of both mono therapy and
   combination therapies ([tutorial](./articles/AMR.html))
-- Apply AMR functions in predictive modelling
+- Applying AMR functions in predictive modelling
   ([tutorial](./articles/AMR_with_tidymodels.html))
 - Getting properties for any microorganism (like Gram stain, species,
   genus or family) ([manual](./reference/mo_property.html))
@@ -435,7 +443,8 @@ data analysis. This package can be used for:
   EARS-Net/ATC/LOINC/PubChem, defined daily dose or trade name)
   ([manual](./reference/ab_property.html))
 - Plotting antimicrobial resistance ([tutorial](./articles/AMR.html))
-- Applying EUCAST expert rules ([manual](./reference/eucast_rules.html))
+- Applying EUCAST and CLSI interpretive rules
+  ([manual](./reference/interpretive_rules.html))
 - Getting SNOMED codes of a microorganism, or getting properties of a
   microorganism based on a SNOMED code
   ([manual](./reference/mo_property.html))

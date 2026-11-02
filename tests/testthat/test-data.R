@@ -547,6 +547,25 @@ test_that("intrinsic_resistant: synonyms have exactly the resistances of their c
   expect_true(length(absent) == 0, info = paste("Current names missing while their synonym is listed:", describe_mo(absent)))
 })
 
+test_that("intrinsic_resistant: species groups have the resistances shared by all their species", {
+  skip_on_cran()
+  ir_keys <- paste(intrinsic_resistant$mo, intrinsic_resistant$ab)
+  groups <- microorganisms.groups[which(microorganisms$rank[match(microorganisms.groups$mo, microorganisms$mo)] == "species"), , drop = FALSE]
+  groups_species <- split(as.character(groups$mo), as.character(groups$mo_group))
+  missing <- unlist(Map(function(group, species) {
+    abx <- unique(as.character(intrinsic_resistant$ab[intrinsic_resistant$mo %in% species]))
+    abx <- abx[vapply(abx, function(ab) all(paste(species, ab) %in% ir_keys), logical(1))]
+    if (length(abx) == 0) {
+      return(NULL)
+    }
+    abx <- abx[!paste(group, abx) %in% ir_keys]
+    if (length(abx) > 0) paste0(group, " (", paste(abx, collapse = ", "), ")")
+  }, names(groups_species), groups_species), use.names = FALSE)
+  expect_true(length(missing) == 0, info = paste("Species groups missing resistances shared by all their species:", paste(missing, collapse = "; ")))
+  # Enterobacter cloacae complex (#338)
+  expect_true(all(mo_is_intrinsic_resistant(rep("B_ENTRBC_CLOC-C", 2), ab = c("AMX", "AMC"))))
+})
+
 test_that("interpretive rules name organisms that exist", {
   skip_on_cran()
   r <- AMR:::INTERPRETIVE_RULES_DF
