@@ -55,6 +55,7 @@ is_sir_eligible(x, threshold = 0.05)
   verbose = FALSE,
   info = interactive(),
   conserve_capped_values = NULL,
+  site = NULL,
   ...
 )
 
@@ -76,6 +77,7 @@ is_sir_eligible(x, threshold = 0.05)
   language = get_AMR_locale(),
   verbose = FALSE,
   info = interactive(),
+  site = NULL,
   ...
 )
 
@@ -99,7 +101,8 @@ is_sir_eligible(x, threshold = 0.05)
   verbose = FALSE,
   info = interactive(),
   parallel = FALSE,
-  conserve_capped_values = NULL
+  conserve_capped_values = NULL,
+  site = NULL
 )
 
 sir_interpretation_history(clean = FALSE)
@@ -178,6 +181,8 @@ The default \code{"standard"} setting ensures cautious handling of uncertain val
 \item{verbose}{A \link{logical} to indicate that all notes should be printed during interpretation of MIC values or disk diffusion values.}
 
 \item{conserve_capped_values}{Deprecated, use \code{capped_mic_handling} instead.}
+
+\item{site}{The site or route that the isolate is interpreted for: a \link{character} vector or a column name, in the fixed codes \code{"meningitis"}, \code{"non-meningitis"}, \code{"endocarditis"}, \code{"non-endocarditis"}, \code{"pneumonia"}, \code{"non-pneumonia"}, \code{"systemic"}, \code{"extraintestinal"}, \code{"other"}, \code{"intestinal"}, \code{"skin"}, \code{"inhaled"}, \code{"oral"}, \code{"prophylaxis"}, \code{"uti"}, \code{"iv"} and \code{"topical"}, which can be combined with a comma, e.g. \code{"iv, meningitis"}. If \code{site} is \code{NA} (default), any breakpoint matching all other criteria can apply, taken from most to least systemic site in the order just given, with \code{"iv"} directly after \code{"endocarditis"}; a breakpoint without a site is taken after \code{"other"}. If \code{site} is set, a breakpoint for a contradicting site is left out, e.g. \code{"meningitis"} leaves out \code{Non-meningitis}, while a breakpoint without a site still applies. The result is \code{NA} if only contradicting sites are available, also when PK/PD breakpoints exist. All choices are noted in \code{\link[=sir_interpretation_history]{sir_interpretation_history()}}.}
 
 \item{col_mo}{Column name of the names or codes of the microorganisms (see \code{\link[=as.mo]{as.mo()}}) - the default is the first column of class \code{\link{mo}}. Values will be coerced using \code{\link[=as.mo]{as.mo()}}.}
 
