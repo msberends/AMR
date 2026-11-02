@@ -1962,7 +1962,9 @@ as_sir_method <- function(method_short,
       taxonomic_level <- round(breakpoints_current$rank_index * 2) / 2
       is_blocking <- is.na(breakpoints_current$breakpoint_S) & is.na(breakpoints_current$breakpoint_R)
       is_uti <- breakpoints_current$uti %in% TRUE
-      too_broad <- !is_uti & is_blocking & taxonomic_level >= min(taxonomic_level[is_uti])
+      # a UTI row without breakpoints is no breakpoint either, so it does not take precedence over anything
+      is_uti_breakpoint <- is_uti & !is_blocking
+      too_broad <- !is_uti & is_blocking & any(is_uti_breakpoint) & taxonomic_level >= suppressWarnings(min(taxonomic_level[is_uti_breakpoint]))
       breakpoints_current <- breakpoints_current[!too_broad, , drop = FALSE]
       if (any(!breakpoints_current$uti %in% TRUE)) {
         if (length(unique(breakpoints_current$site)) > 1) {
