@@ -499,10 +499,7 @@ parse_bp <- function(txt) {
   t <- trimws(txt)
   # placeholders such as "-" (susceptibility testing not recommended), "IE"
   # or "Note" are kept as they are: the cleanup turns them into blocking rows
-  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets"
-  # (see is_bracketed_bp()). The raw data retain these values and their
-  # EUCAST definition. They are excluded before clinical breakpoint cleanup,
-  # so they do not generate blocking rows or prevent PK-PD fallback.
+  # Parenthesised values like "(2)" are EUCAST's "breakpoints in brackets" (see is_bracketed_bp()). The raw data retain these values and their EUCAST definition. They are excluded before clinical breakpoint cleanup, so they do not generate blocking rows or prevent PK-PD fallback.
   t
 }
 
@@ -2389,10 +2386,10 @@ taxon_contains <- function(broad, narrow) {
     broad == as.character(as.mo(mo_order(narrow, keep_synonyms = TRUE), info = FALSE)) |
     broad %in% AMR::microorganisms.groups$mo_group[AMR::microorganisms.groups$mo == as.character(narrow)]
 }
-to_blocker <- function(df, reason) {
+to_blocker <- function(df, reason, site = NA_character_) {
   df |> mutate(
     is_blocker = TRUE, breakpoint_S = NA_character_, breakpoint_R = NA_character_,
-    site = NA_character_, note = blocking_note(reason, note)
+    site = site, note = blocking_note(reason, note)
   )
 }
 for (i in seq_len(nrow(eucast_note_rules))) {
@@ -2640,16 +2637,8 @@ scope_blockers <- breakpoints_eucast |>
   distinct(guideline, sheet, table_organism, ab, method, site, .keep_all = TRUE) |>
   inner_join(table_scope, by = c("guideline", "sheet", "table_organism"), relationship = "many-to-many") |>
   mutate(mo = table_mo, note = NA_character_) |>
-  select(-table_mo) |>
-  mutate(
-    is_blocker = TRUE,
-    breakpoint_S = NA_character_,
-    breakpoint_R = NA_character_,
-    note = blocking_note(
-      "EUCAST lists this agent in this table for other organisms only",
-      note
-    )
-  )
+  select(-table_mo)
+scope_blockers <- to_blocker(scope_blockers, "EUCAST lists this agent in this table for other organisms only", site = scope_blockers$site)
 
 breakpoints_eucast <- bind_rows(breakpoints_eucast, scope_blockers)
 
@@ -2775,12 +2764,7 @@ if (nrow(unresolved_mo) > 0 || nrow(unresolved_ab) > 0) {
 }
 
 # Pruning blocking rows ----
-# A blocking row is only needed where its organism has no breakpoint of
-# its own for the same agent, method and UTI status. Blocking rows for the
-# PK-PD table ("UNKNOWN") have no function. UTI status is compared separately,
-# so a UTI-only breakpoint does not remove a blocker for other infections.
-# For duplicate blockers with these keys, the first is kept. UTI blockers
-# retain their site to distinguish them from blockers for other infections.
+# A blocking row is not needed where its organism has a breakpoint of its own for the same agent, method and UTI status, and blocking rows for the PK-PD table ("UNKNOWN") have no function. UTI status is part of the comparison, so that a breakpoint for UTI only does not remove the blocking row for other infections. Of several blocking rows for the same organism, agent, method, UTI status and site, the first is kept. All other blocking rows without any effect are removed in reproduction_of_clinical_breakpoints.R, by comparing the results of as.sir() with and without them (#326).
 has_own_bp <- breakpoints_eucast |>
   filter(!is_blocker) |>
   distinct(guideline, type, host, mo, ab, method, uti)
@@ -2789,67 +2773,8 @@ breakpoints_eucast <- bind_rows(
   breakpoints_eucast |>
     filter(is_blocker, mo != "UNKNOWN") |>
     anti_join(has_own_bp, by = c("guideline", "type", "host", "mo", "ab", "method", "uti")) |>
-    distinct(guideline, type, host, mo, ab, method, uti, .keep_all = TRUE) |>
+    distinct(guideline, type, host, mo, ab, method, uti, site, .keep_all = TRUE) |>
     mutate(disk_dose = NA_character_)
-)
-
-# Keep only blockers that prevent inheritance of a broader breakpoint.
-real_bp <- breakpoints_eucast |>
-  filter(
-    !is_blocker,
-    !is.na(breakpoint_S) | !is.na(breakpoint_R)
-  ) |>
-  distinct(guideline, type, host, ab, method, uti, mo)
-
-blockers <- breakpoints_eucast |>
-  filter(is_blocker) |>
-  mutate(block_id = row_number())
-
-# Find potentially applicable broader breakpoints.
-candidates <- blockers |>
-  select(block_id, guideline, type, host, ab, method, uti,
-         block_mo = mo) |>
-  inner_join(
-    real_bp |>
-      rename(parent_mo = mo),
-    by = c(
-      "guideline", "type", "host",
-      "ab", "method", "uti"
-    ),
-    relationship = "many-to-many",
-    na_matches = "na"
-  ) |>
-  filter(block_mo != parent_mo)
-
-# Calculate each taxonomic relationship only once.
-taxon_pairs <- candidates |>
-  distinct(parent_mo, block_mo)
-
-taxon_pairs$is_broader <- mapply(
-  function(parent, child) {
-    if (is.na(parent) || is.na(child)) return(FALSE)
-    
-    parent == "UNKNOWN" ||
-      isTRUE(taxon_contains(parent, child))
-  },
-  as.character(taxon_pairs$parent_mo),
-  as.character(taxon_pairs$block_mo)
-)
-
-# Identify blockers with at least one applicable broader breakpoint.
-needed_blockers <- candidates |>
-  inner_join(
-    taxon_pairs |> filter(is_broader),
-    by = c("parent_mo", "block_mo"),
-    relationship = "many-to-many"
-  ) |>
-  distinct(block_id)
-
-breakpoints_eucast <- bind_rows(
-  breakpoints_eucast |> filter(!is_blocker),
-  blockers |>
-    semi_join(needed_blockers, by = "block_id") |>
-    select(-block_id)
 )
 
 breakpoints_eucast <- breakpoints_eucast |>

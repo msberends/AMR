@@ -753,6 +753,37 @@ if (any(!clinical_breakpoints$ab %in% AMR::antimicrobials$ab)) {
   stop("agent(s) missing from the antimicrobials data set: ", toString(unique(clinical_breakpoints$ab[!clinical_breakpoints$ab %in% AMR::antimicrobials$ab])))
 }
 clinical_breakpoints$ab <- as.ab(clinical_breakpoints$ab)
+
+# Blocking rows ----
+# A blocking row of EUCAST only stays if it has an effect: as.sir() must give another result without it (#326). This uses as.sir() itself, so that it follows the same fallback path. The most specific rows are compared first, so that of two blocking rows on one path, the row that is needed stays. The build stops if this leaves any row without an effect.
+is_pruned_group <- clinical_breakpoints$type == "human" & grepl("EUCAST 20(19|2[0-9])", clinical_breakpoints$guideline)
+blocking_key <- paste(clinical_breakpoints$guideline, clinical_breakpoints$ab, clinical_breakpoints$method)
+keys_with_blocking <- unique(blocking_key[is_pruned_group & is.na(clinical_breakpoints$breakpoint_S) & is.na(clinical_breakpoints$breakpoint_R)])
+keep_per_key <- parallel::mclapply(keys_with_blocking, function(key) {
+  rows <- which(is_pruned_group & blocking_key == key)
+  group <- clinical_breakpoints[rows, , drop = FALSE]
+  kept <- rep(TRUE, nrow(group))
+  for (i in order(group$rank_index)) {
+    if (is.na(group$breakpoint_S[i]) && is.na(group$breakpoint_R[i])) {
+      position <- sum(kept[seq_len(i)])
+      if (!AMR:::blocking_row_is_needed(position, group[kept, , drop = FALSE])) {
+        kept[i] <- FALSE
+      }
+    }
+  }
+  rows[!kept]
+}, mc.cores = 8L, mc.preschedule = FALSE)
+if (any(vapply(keep_per_key, inherits, logical(1), what = "try-error"))) {
+  print(keep_per_key[vapply(keep_per_key, inherits, logical(1), what = "try-error")][[1]])
+  stop("pruning blocking rows failed, see above")
+}
+rows_without_effect <- unlist(keep_per_key)
+message("NOTE: ", length(rows_without_effect), " blocking row(s) of EUCAST removed, since as.sir() gives the same results without them")
+if (length(rows_without_effect) > 0) {
+  clinical_breakpoints <- clinical_breakpoints[-rows_without_effect, , drop = FALSE]
+}
+rm(is_pruned_group, blocking_key, keys_with_blocking, keep_per_key, rows_without_effect)
+
 usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = "xz", version = 2)
 rm(clinical_breakpoints)
 devtools::load_all(".")
