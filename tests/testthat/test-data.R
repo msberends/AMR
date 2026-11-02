@@ -617,6 +617,36 @@ test_that("clinical_breakpoints: screening tests are under screening agents (#32
   expect_identical(unname(as.list(ery("ERY-S"))), unname(as.list(ery("ERY"))))
 })
 
+test_that("clinical_breakpoints: every blocking row of EUCAST has an effect (#326)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb <- cb[cb$type == "human" & grepl("EUCAST 20(19|2[0-9])", cb$guideline), , drop = FALSE]
+  is_blocking <- is.na(cb$breakpoint_S) & is.na(cb$breakpoint_R)
+  key <- paste(cb$guideline, cb$ab, cb$method)
+  # a blocking row needs a breakpoint to block, for all years
+  has_breakpoint <- key %in% key[!is_blocking]
+  wrong <- unique(key[is_blocking & !has_breakpoint])
+  expect_true(length(wrong) == 0, info = paste("no breakpoints to block:", toString(utils::head(wrong, 20))))
+  # and as.sir() must give another result without it, for the latest guideline; all years are checked during the build
+  latest <- paste0("EUCAST ", max(as.integer(gsub("[^0-9]", "", cb$guideline))))
+  for (k in unique(key[is_blocking & cb$guideline == latest])) {
+    group <- cb[key == k, , drop = FALSE]
+    for (i in which(is.na(group$breakpoint_S) & is.na(group$breakpoint_R))) {
+      expect_true(blocking_row_is_needed(i, group), info = paste(k, group$mo[i], group$site[i]))
+    }
+  }
+  # the definition itself, on a constructed set of rows
+  rows <- cb[cb$guideline == latest & as.character(cb$ab) == "CTX" & cb$method == "MIC" & as.character(cb$mo) == "B_VIBRI", , drop = FALSE][1, ]
+  blocker <- rows
+  blocker$mo <- as.mo("Vibrio fluvialis", info = FALSE)
+  blocker$rank_index <- 2.1
+  blocker$breakpoint_S <- NA_real_
+  blocker$breakpoint_R <- NA_real_
+  group <- rbind(rows, blocker)
+  expect_true(blocking_row_is_needed(2, group))
+  expect_false(blocking_row_is_needed(1, blocker))
+})
+
 test_that("clinical_breakpoints: EUCAST breakpoints stated in the Notes (#329)", {
   skip_on_cran()
   cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)

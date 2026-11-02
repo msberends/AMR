@@ -1348,6 +1348,44 @@ sir_site_rank <- function(x) {
   min(match(tokens, SIR_SITE_ORDER))
 }
 
+# Whether a blocking row has any effect, which is the definition used for clinical_breakpoints (#326): as.sir() must give another result without it. This takes one row number and the rows of one guideline, agent and method.
+blocking_row_is_needed <- function(i, breakpoints) {
+  row <- breakpoints[i, , drop = FALSE]
+  others <- breakpoints[-i, , drop = FALSE]
+  values <- c(others$breakpoint_S, others$breakpoint_R)
+  values <- values[!is.na(values)]
+  if (length(values) == 0) {
+    return(FALSE)
+  }
+  if (row$method == "MIC") {
+    input <- as.mic(sort(unique(pmax(0.001, c(0.001, 512, values / 2, values, values * 2)))))
+  } else {
+    input <- as.disk(sort(unique(pmin(50, c(6, 50, values - 1, values, values + 1)))))
+  }
+  sir <- function(reference_data, uti, site) {
+    as.character(suppressMessages(suppressWarnings(as.sir(input,
+      mo = as.character(row$mo), ab = as.character(row$ab), guideline = row$guideline, uti = uti, site = site,
+      reference_data = reference_data, info = FALSE
+    ))))
+  }
+  row_site <- if (is.na(row$site) || length(sir_site_tokens(row$site)) == 0) NA_character_ else c(NA_character_, paste(setdiff(sir_site_tokens(row$site), "screen"), collapse = ","))
+  row_site <- unique(row_site[is.na(row_site) | nzchar(row_site)])
+  for (uti in list(NA, FALSE, TRUE)) {
+    for (site in row_site) {
+      if (isTRUE(uti) && !is.na(site) && !grepl("uti", site, fixed = TRUE) && !isTRUE(row$uti)) {
+        next
+      }
+      if (isFALSE(uti) && !is.na(site) && grepl("uti", site, fixed = TRUE)) {
+        next
+      }
+      if (!identical(sir(breakpoints, uti, site), sir(others, uti, site))) {
+        return(TRUE)
+      }
+    }
+  }
+  FALSE
+}
+
 as_sir_method <- function(method_short,
                           method_long,
                           x,
