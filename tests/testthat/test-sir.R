@@ -638,6 +638,81 @@ test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
   expect_equal(as.character(result), "R")
 })
 
+test_that("as.sir() takes the site of a breakpoint into account", {
+  skip_on_cran()
+  sir <- function(x, mo, ab, ..., guideline = "EUCAST 2026") {
+    as.character(suppressMessages(suppressWarnings(as.sir(x, mo = mo, ab = ab, guideline = guideline, info = FALSE, ...))))
+  }
+  # every site for humans in the data set must be known, so that none can be overlooked
+  sites <- unique(clinical_breakpoints$site[!is.na(clinical_breakpoints$site) & clinical_breakpoints$type == "human"])
+  for (s in sites) {
+    expect_true(length(setdiff(sir_site_parts(s), SIR_SITE_NOT_A_SITE)) == length(sir_site_tokens(s)), info = s)
+  }
+  expect_identical(sort(c(names(SIR_SITE_PATTERNS), NA), na.last = TRUE), sort(SIR_SITE_ORDER, na.last = TRUE))
+
+  # the fixed codes, all other values give an error
+  expect_identical(sir_site_normalise(c("Meningitis", "iv, meningitis", NA)), c("meningitis", "meningitis,iv", NA))
+  expect_error(as.sir(as.mic(1), mo = "E. coli", ab = "AMC", site = "brain", info = FALSE))
+  expect_error(as.sir(as.mic(1), mo = "E. coli", ab = "AMC", site = "uti", uti = FALSE, info = FALSE))
+
+  # contradictions: only with a site in the same group, or a negation
+  expect_false(sir_site_fits("non-meningitis", "meningitis"))
+  expect_false(sir_site_fits("meningitis", "non-meningitis"))
+  expect_false(sir_site_fits("pneumonia", "meningitis"))
+  expect_false(sir_site_fits("oral", "iv"))
+  expect_true(sir_site_fits(character(0), "meningitis"))
+  expect_true(sir_site_fits("iv", "meningitis"))
+  expect_true(sir_site_fits(c("iv", "meningitis"), "meningitis"))
+  expect_true(sir_site_fits("non-endocarditis", "meningitis"))
+  expect_true(sir_site_fits("systemic", "meningitis"))
+  expect_false(sir_site_fits("systemic", "uti"))
+
+  # site = NA takes the most systemic site, also compared to a breakpoint without a site
+  expect_true(sir_site_rank("Meningitis") < sir_site_rank("Non-meningitis"))
+  expect_true(sir_site_rank("Intravenous") < sir_site_rank(NA))
+  expect_true(sir_site_rank(NA) < sir_site_rank("Oral"))
+  expect_true(sir_site_rank("Oral") < sir_site_rank("Uncomplicated urinary tract infection"))
+  expect_identical(sir_site_rank("Intravenous, Meningitis"), sir_site_rank("Meningitis"))
+
+  # S. pneumoniae and benzylpenicillin, with breakpoints for meningitis and for other infections
+  pen <- as.mic(0.25)
+  expect_identical(sir(pen, "Streptococcus pneumoniae", "PEN", site = "meningitis"), "R")
+  expect_identical(sir(pen, "Streptococcus pneumoniae", "PEN", site = "non-meningitis"), "I")
+  expect_identical(sir(pen, "Streptococcus pneumoniae", "PEN"), "R")
+  sir_interpretation_history(clean = TRUE)
+  sir(pen, "Streptococcus pneumoniae", "PEN")
+  history <- sir_interpretation_history(clean = TRUE)
+  expect_match(history$site, "Meningitis", fixed = TRUE)
+  expect_match(history$notes, "Multiple breakpoints available", fixed = TRUE)
+
+  # amoxicillin in Enterobacterales: per route
+  amx <- as.mic(4)
+  expect_identical(sir(amx, "Escherichia coli", "AMX", site = "iv"), "S")
+  expect_identical(sir(amx, "Escherichia coli", "AMX"), "S")
+  # only breakpoints for other sites: no result, and no fallback to PK/PD
+  expect_identical(sir(as.mic(1), "Escherichia coli", "NTR", site = "meningitis"), NA_character_)
+  expect_identical(sir(as.mic(1), "Escherichia coli", "NTR", site = "uti"), "S")
+  expect_identical(sir(as.mic(1), "Escherichia coli", "NTR", uti = TRUE), "S")
+
+  # vectorised, also in combination with uti, of which NA, TRUE and FALSE can be mixed
+  expect_identical(
+    sir(as.mic(c(0.25, 0.25)), "Streptococcus pneumoniae", "PEN", site = c("meningitis", "non-meningitis")),
+    c("R", "I")
+  )
+  expect_identical(
+    sir(as.mic(c(16, 16, 16)), "Escherichia coli", "NTR", uti = c(NA, TRUE, FALSE)),
+    c("S", "S", NA)
+  )
+
+  # on a data.frame, with a column name and with fixed values, without treating the column as an antimicrobial
+  df <- data.frame(mo = "Streptococcus pneumoniae", PEN = as.mic(c(0.25, 0.25)), where = c("meningitis", "non-meningitis"), stringsAsFactors = FALSE)
+  out <- suppressMessages(suppressWarnings(as.sir(df, col_mo = "mo", guideline = "EUCAST 2026", site = "where", info = FALSE)))
+  expect_identical(as.character(out$PEN), c("R", "I"))
+  expect_identical(out$where, df$where)
+  out <- suppressMessages(suppressWarnings(as.sir(df, col_mo = "mo", guideline = "EUCAST 2026", site = "non-meningitis", info = FALSE)))
+  expect_identical(as.character(out$PEN), c("I", "I"))
+})
+
 test_that("MIC breakpoints are compared as dilutions, not as their notation (#331)", {
   skip_on_cran()
   sir <- function(x, mo, ab, guideline = "EUCAST 2026") {
