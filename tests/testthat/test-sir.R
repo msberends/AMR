@@ -638,6 +638,56 @@ test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
   expect_equal(as.character(result), "R")
 })
 
+test_that("Morganella is interpreted as reported, not as M. morganii (#330)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb <- cb[cb$type == "human" & cb$guideline %like% "EUCAST", , drop = FALSE]
+  cb[] <- lapply(cb, function(x) if (is.numeric(x) || is.logical(x)) x else as.character(x))
+  order_code <- "B_[ORD]_ENTRBCTR"
+  family_code <- "B_[FAM]_MORGNLLC"
+  genus_code <- "B_MRGNL"
+  species_code <- "B_MRGNL_MRGN"
+  key <- function(df) paste(df$guideline, df$ab, df$method)
+  sir <- function(mo, k) {
+    x <- cb[key(cb) == k & cb$mo %in% c(order_code, family_code, genus_code, species_code), , drop = FALSE]
+    bp <- unique(c(x$breakpoint_S, x$breakpoint_R))
+    bp <- bp[!is.na(bp)]
+    if (x$method[1] == "MIC") {
+      input <- as.mic(sort(unique(pmax(0.001, c(0.001, 512, bp / 2, bp, bp * 2)))))
+    } else {
+      input <- as.disk(sort(unique(pmin(50, c(6, 50, bp - 1, bp, bp + 1)))))
+    }
+    as.character(suppressMessages(suppressWarnings(
+      as.sir(input, mo = mo, ab = x$ab[1], guideline = x$guideline[1], uti = FALSE, info = FALSE)
+    )))
+  }
+
+  # EUCAST's exceptions for the genus are only for agents that it excludes for Morganella as a whole
+  genus_rows <- cb[cb$mo == genus_code, , drop = FALSE]
+  expect_true(all(genus_rows$ab == "IMR"))
+  expect_true(all(is.na(genus_rows$breakpoint_S) & is.na(genus_rows$breakpoint_R)))
+
+  # the exceptions for M. morganii itself do not apply to the genus, which follows Enterobacterales
+  species_only <- setdiff(key(cb[cb$mo == species_code, ]), key(cb[cb$mo %in% c(family_code, genus_code), ]))
+  expect_true(length(species_only) > 0)
+  for (k in species_only) {
+    expect_identical(sir(genus_code, k), sir(order_code, k), info = k)
+    expect_false(identical(sir(species_code, k), sir(order_code, k)), info = k)
+  }
+
+  # the exceptions for the family do apply to the genus, as to any other member of the family
+  family_only <- setdiff(key(cb[cb$mo == family_code, ]), key(cb[cb$mo %in% c(species_code, genus_code), ]))
+  expect_true(length(family_only) > 0)
+  for (k in family_only) {
+    expect_identical(sir(genus_code, k), sir(family_code, k), info = k)
+    expect_identical(sir("Providencia stuartii", k), sir(family_code, k), info = k)
+  }
+
+  # a current example: imipenem has its own breakpoints for Morganellaceae, including Morganella
+  expect_identical(as.character(suppressMessages(as.sir(as.mic(2), mo = "Morganella", ab = "IPM", guideline = "EUCAST 2026", info = FALSE))), "I")
+  expect_identical(as.character(suppressMessages(as.sir(as.mic(2), mo = "Klebsiella oxytoca", ab = "IPM", guideline = "EUCAST 2026", info = FALSE))), "S")
+})
+
 test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   skip_on_cran()
   sir <- function(x, mo, ab, guideline, include_screening = FALSE, uti = NA) {
