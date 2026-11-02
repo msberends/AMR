@@ -582,6 +582,40 @@ test_that("microorganisms.codes: unique codes for existing names", {
   expect_true(all(is.na(microorganisms.codes$source) | grepl("^WHONET \\(.+\\)$", microorganisms.codes$source)))
 })
 
+test_that("clinical_breakpoints: screening tests are under screening agents (#328)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  ab <- as.character(cb$ab)
+  year <- as.integer(gsub("[^0-9]", "", cb$guideline))
+  is_regular <- !grepl("-S$", ab)
+  # no regular agent has a screening site
+  expect_false(any(is_regular & grepl("screen", cb$site, ignore.case = TRUE)))
+  expect_true(all(c("FOX-S", "OXA-S", "NAL-S", "NOR-S", "PEF-S", "PEN-S", "TCY-S", "ERY-S", "GEN-S", "STR1-S", "CIP-S", "MUP-S") %in% ab))
+  # all codes of screening agents are valid, without an ATC code
+  screening_agents <- subset(AMR::antimicrobials, grepl("-S$", ab))
+  expect_true(all(unique(ab[!is_regular]) %in% screening_agents$ab))
+  expect_true(all(grepl("screening test$", screening_agents$name)))
+  # the two high-level codes hold no rows themselves, and are still valid
+  expect_false(any(ab %in% c("GEH", "STH")))
+  expect_true(all(c("GEH", "STH") %in% AMR::antimicrobials$ab))
+  # topical cut-off values
+  topical <- cb[cb$site %in% "Topical", , drop = FALSE]
+  expect_true(all(grepl("-S$", as.character(topical$ab))))
+  expect_false(any(cb$site %in% "Topical, Screen"))
+  # explicit lists: moved
+  human <- cb$type == "human"
+  expect_false(any(human & cb$guideline %like% "EUCAST" & year %in% 2012:2018 & ab == "FOX" & cb$method == "MIC" & as.character(cb$mo) %in% c("B_STPHY_AURS", "B_STPHY_LGDN")))
+  expect_false(any(human & cb$guideline %like% "CLSI" & ab == "FOX" & mo_genus(cb$mo, keep_synonyms = TRUE, language = NULL) %in% "Staphylococcus"))
+  expect_false(any(human & cb$guideline %like% "CLSI" & year >= 2015 & ab == "PEF" & mo_genus(cb$mo, keep_synonyms = TRUE, language = NULL) %in% "Salmonella"))
+  # explicit list: stays under the regular agent, also as decided in the issue
+  expect_true(any(human & cb$guideline == "EUCAST 2013" & ab == "NAL" & cb$method == "DISK"))
+  expect_true(any(human & cb$guideline == "CLSI 2026" & ab == "OXA" & as.character(cb$mo) == "B_STRPT_PNMN" & cb$method == "DISK"))
+  # rows that are a clinical breakpoint and a screen are under both (from EUCAST 2023)
+  ery <- function(agent) cb[human & cb$guideline == "EUCAST 2026" & ab == agent & as.character(cb$mo) == "B_MRXLL_CTRR" & cb$method == "DISK", c("breakpoint_S", "breakpoint_R"), drop = FALSE]
+  expect_true(nrow(ery("ERY")) > 0)
+  expect_identical(unname(as.list(ery("ERY-S"))), unname(as.list(ery("ERY"))))
+})
+
 test_that("clinical_breakpoints: no EUCAST breakpoints in brackets (#327)", {
   skip_on_cran()
   expect_false(any(grepl("brackets", clinical_breakpoints$note, fixed = TRUE)))

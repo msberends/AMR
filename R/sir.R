@@ -66,7 +66,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @param as_wt_nwt A [logical] to return `"WT"`/`"NWT"` instead of `"S"`/`"R"`. Defaults to `TRUE` when using ECOFFs, i.e., when `breakpoint_type` is set to `"ECOFF"`.
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param substitute_missing_r_breakpoint A [logical] to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is `FALSE`. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s in these cases to `"R"`. Can also be set with the package option [`AMR_substitute_missing_r_breakpoint`][AMR-options].
-#' @param include_screening A [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the package option [`AMR_include_screening`][AMR-options].
+#' @param include_screening A [logical] to indicate that clinical breakpoints for screening are allowed. At default (`NULL`, can be set with the package option [`AMR_include_screening`][AMR-options]), these are only used for screening agents, e.g. `FOX-S`, but not for regular agents, e.g. `FOX`. Use `TRUE` to also use them for regular agents (with `FOX` then taking the breakpoints of `FOX-S`), and `FALSE` to never use them, which gives `NA` with a note for a screening agent.
 #' @param include_PKPD A [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the package option [`AMR_include_PKPD`][AMR-options].
 #' @param breakpoint_type The type of breakpoints to use, either `r vector_or(clinical_breakpoints$type, documentation = TRUE)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. If `host` is set to values of veterinary species, this will automatically be set to `"animal"`.
 #' @param host A vector (or column name) with [character]s to indicate the host. Only useful for veterinary breakpoints, as it requires `breakpoint_type = "animal"`. The values can be any text resembling the animal species, even in any of the `r length(LANGUAGES_SUPPORTED)` supported languages of this package. For foreign languages, be sure to set the language with [set_AMR_locale()] (though it will be automatically guessed based on the system language).
@@ -664,7 +664,7 @@ as.sir.mic <- function(x,
                        add_intrinsic_resistance = FALSE,
                        reference_data = AMR::clinical_breakpoints,
                        substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
-                       include_screening = getOption("AMR_include_screening", FALSE),
+                       include_screening = getOption("AMR_include_screening", NULL),
                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                        host = NULL,
@@ -711,7 +711,7 @@ as.sir.disk <- function(x,
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::clinical_breakpoints,
                         substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
-                        include_screening = getOption("AMR_include_screening", FALSE),
+                        include_screening = getOption("AMR_include_screening", NULL),
                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                         host = NULL,
@@ -758,7 +758,7 @@ as.sir.data.frame <- function(x,
                               add_intrinsic_resistance = FALSE,
                               reference_data = AMR::clinical_breakpoints,
                               substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
-                              include_screening = getOption("AMR_include_screening", FALSE),
+                              include_screening = getOption("AMR_include_screening", NULL),
                               include_PKPD = getOption("AMR_include_PKPD", TRUE),
                               breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                               host = NULL,
@@ -777,7 +777,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1)
-  meet_criteria(include_screening, allow_class = "logical", has_length = 1)
+  meet_criteria(include_screening, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1)
   meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE)
@@ -1385,7 +1385,7 @@ as_sir_method <- function(method_short,
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1, .call_depth = -2)
-  meet_criteria(include_screening, allow_class = "logical", has_length = 1, .call_depth = -2)
+  meet_criteria(include_screening, allow_class = "logical", has_length = 1, allow_NULL = TRUE, .call_depth = -2)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
   reference_data <- check_reference_data(reference_data, .call_depth = -2)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
@@ -1638,17 +1638,29 @@ as_sir_method <- function(method_short,
   method_coerced <- toupper(method)
   ab_coerced <- as.ab(ab, info = FALSE)
 
+  # which agents hold the breakpoints of the requested agents: the high-level aminoglycoside tests have two codes, and screening breakpoints are also for the regular agent if the user allows this
+  ab_lookup <- function(ab_requested) {
+    ab_requested <- as.character(ab_requested)
+    ab_stored <- ab_requested
+    ab_stored[ab_stored == "GEH"] <- "GEN-S"
+    ab_stored[ab_stored == "STH"] <- "STR1-S"
+    from <- c(ab_requested, ab_requested)
+    to <- c(ab_stored, if (isTRUE(include_screening)) ifelse(endsWith(ab_stored, "-S"), ab_stored, paste0(ab_stored, "-S")) else ab_stored)
+    unique(data.frame(from = from, to = to, stringsAsFactors = FALSE))
+  }
+  ab_coerced_lookup <- ab_lookup(ab_coerced)
   if (!custom_breakpoints_set) {
     breakpoints <- reference_data %pm>%
-      subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced)
+      subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced_lookup$to)
     if (any(ab_coerced == "AMX") && nrow(breakpoints[breakpoints$ab == "AMX", , drop = FALSE]) == 0) {
       ab_coerced[ab_coerced == "AMX"] <- "AMP"
+      ab_coerced_lookup <- ab_lookup(ab_coerced)
       breakpoints <- reference_data %pm>%
-        subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced)
+        subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced_lookup$to)
     }
   } else {
     breakpoints <- reference_data %pm>%
-      subset(method == method_coerced & ab %in% ab_coerced)
+      subset(method == method_coerced & ab %in% ab_coerced_lookup$to)
   }
 
 
@@ -1712,10 +1724,23 @@ as_sir_method <- function(method_short,
   breakpoints <- breakpoints %pm>%
     subset(type %in% breakpoint_type_lookup)
 
+  is_screening_row <- function(df) {
+    df$site %like% "screen" | df$ref_tbl %like% "screen" | as.character(df$ab) %like% "-S$"
+  }
+  screening_left_out <- FALSE
   if (isFALSE(include_screening)) {
-    # remove screening rules from the breakpoints table
-    breakpoints <- breakpoints %pm>%
-      subset(site %unlike% "screen" & ref_tbl %unlike% "screen")
+    # remove screening rules from the breakpoints table, on explicit request also for a screening agent
+    screening_left_out <- any(is_screening_row(breakpoints) & as.character(breakpoints$ab) %like% "-S$")
+    breakpoints <- breakpoints[!is_screening_row(breakpoints), , drop = FALSE]
+  } else if (is.null(include_screening)) {
+    # at default, screening breakpoints are only for an agent that indicates screening itself
+    breakpoints <- breakpoints[!is_screening_row(breakpoints) | as.character(breakpoints$ab) %like% "-S$", , drop = FALSE]
+  }
+  # the breakpoints are from here on known by the requested agent
+  if (nrow(breakpoints) > 0) {
+    for (j in rev(seq_len(nrow(ab_coerced_lookup)))) {
+      breakpoints$ab[as.character(breakpoints$ab) == ab_coerced_lookup$to[j]] <- ab_coerced_lookup$from[j]
+    }
   }
   if (isFALSE(include_PKPD)) {
     # remove PKPD rules from the breakpoints table
@@ -1737,6 +1762,35 @@ as_sir_method <- function(method_short,
   p <- progress_ticker(n = nrow(df_unique), n_min = 10, print = isTRUE(info), title = intro_txt, only_bar_percent = TRUE)
   has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
+
+  if (isTRUE(screening_left_out) && nrow(breakpoints) == 0) {
+    # a note, as this may be by accident
+    message_("Returning NAs for ", vector_and(unique(as.character(ab_coerced)), quotes = TRUE), ": this is a screening agent, while `include_screening = FALSE` leaves out screening breakpoints.")
+    out <- data.frame(
+      datetime = rep(Sys.time(), nrow(df)),
+      index = seq_len(nrow(df)),
+      method = rep(method_coerced, nrow(df)),
+      ab_given = ab.bak,
+      mo_given = as.character(mo.bak),
+      host_given = as.character(host),
+      input_given = as.character(df$input_original),
+      ab = as.character(df$ab),
+      mo = as.character(df$mo),
+      host = as.character(df$host),
+      input = as.character(df$input_clean),
+      outcome = rep(NA_sir_, nrow(df)),
+      notes = rep("Screening breakpoints were left out, since `include_screening = FALSE`.", nrow(df)),
+      guideline = df$guideline,
+      ref_table = rep(NA_character_, nrow(df)),
+      uti = df$uti,
+      breakpoint_S_R = rep(NA_character_, nrow(df)),
+      site = rep(NA_character_, nrow(df)),
+      stringsAsFactors = FALSE
+    )
+    AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out[!is.na(out$input_given), , drop = FALSE])
+    load_mo_uncertainties(metadata_mo)
+    return(rep(NA_sir_, nrow(df)))
+  }
 
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
