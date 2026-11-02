@@ -41,7 +41,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @param uti (Urinary Tract Infection) a vector (or column name) with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. If `uti` is `NA` (unknown), non-UTI breakpoints are preferred, and UTI breakpoints are only used if no non-UTI breakpoints exist for the drug-bug combination, which is noted in [sir_interpretation_history()]. With `uti = FALSE`, UTI breakpoints are never used. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline A guideline name (or column name) to use for SIR interpretation. Defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*. Using a column name allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.
-#' @param site The site or route that the isolate is interpreted for: a [character] vector or a column name, in the fixed codes `"meningitis"`, `"non-meningitis"`, `"endocarditis"`, `"non-endocarditis"`, `"pneumonia"`, `"non-pneumonia"`, `"systemic"`, `"extraintestinal"`, `"other"`, `"intestinal"`, `"skin"`, `"inhaled"`, `"oral"`, `"prophylaxis"`, `"uti"`, `"iv"` and `"topical"`, which can be combined with a comma, e.g. `"iv, meningitis"`. If `site` is `NA` (default), any breakpoint matching all other criteria can apply, taken from most to least systemic site in the order just given, with `"iv"` directly after `"endocarditis"`; a breakpoint without a site is taken after `"other"`. If `site` is set, a breakpoint for a contradicting site is left out, e.g. `"meningitis"` leaves out `Non-meningitis`, while a breakpoint without a site still applies. The result is `NA` if only contradicting sites are available, also when PK/PD breakpoints exist. All choices are noted in [sir_interpretation_history()].
+#' @param site The site or route that the isolate is interpreted for: a [character] vector or a column name, in the fixed codes `"systemic"`, `"iv"`, `"meningitis"`, `"endocarditis"`, `"pneumonia"`, `"mastitis"`, `"respiratory"`, `"metritis"`, `"genital"`, `"intestinal"`, `"other"`, `"non-meningitis"`, `"non-endocarditis"`, `"non-pneumonia"`, `"extraintestinal"`, `"soft tissue"`, `"skin"`, `"wounds"`, `"inhaled"`, `"oral"`, `"prophylaxis"`, `"uti"` and `"topical"`, which can be combined with a comma, e.g. `"iv, meningitis"`. If `site` is `NA` (default), any breakpoint matching all other criteria can apply, taken from most to least systemic site in the order just given; a breakpoint without a site takes the position of `"other"`, as both mean any site that is not listed next to it. If `site` is set, a breakpoint for a contradicting site is left out, e.g. `"meningitis"` leaves out `Non-meningitis`, while a breakpoint without a site still applies. `"other"` leaves out every breakpoint limited to an indication, and prefers a breakpoint without a site. Related sites do not contradict each other: `"pneumonia"` and `"respiratory"`, `"metritis"` and `"genital"`, and `"soft tissue"`, `"skin"` and `"wounds"`. The code `"mastitis"` includes `Mammary gland`, and `"wounds"` includes `Abscesses`. The result is `NA` if only contradicting sites are available, also when PK/PD breakpoints exist. All choices are noted in [sir_interpretation_history()].
 #' @param capped_mic_handling A [character] string that controls how MIC values with a cap (i.e., starting with `<`, `<=`, `>`, or `>=`) are interpreted. Supports the following options:
 #'
 #' `"none"`
@@ -1257,23 +1257,29 @@ convert_host <- function(x, lang = NULL) {
   x_out
 }
 
-# Sites in clinical_breakpoints and in the `site` argument, from most to least systemic. Every value in the `site` column consists of one or more of these, see sir_site_tokens(). A breakpoint without a site is taken right after "other".
-SIR_SITE_ORDER <- c("meningitis", "endocarditis", "iv", "pneumonia", "systemic", "non-meningitis", "non-endocarditis", "non-pneumonia", "extraintestinal", "other", NA, "intestinal", "skin", "inhaled", "oral", "prophylaxis", "uti", "topical", "screen")
+# Sites in clinical_breakpoints and in the `site` argument, from most to least systemic. Every value in the `site` column consists of one or more of these, see sir_site_tokens(). A breakpoint without a site takes the same position as "other": both mean any site that is not listed next to it. That single position gives both meanings: below "meningitis", as "other" then means non-meningitis, and above "uti", as "other" then means non-UTI.
+SIR_SITE_ORDER <- c("systemic", "iv", "meningitis", "endocarditis", "pneumonia", "mastitis", "respiratory", "metritis", "genital", "intestinal", "other", "non-meningitis", "non-endocarditis", "non-pneumonia", "extraintestinal", "soft tissue", "skin", "wounds", "inhaled", "oral", "prophylaxis", "uti", "topical", "screen")
 
 # all notations in the `site` column of clinical_breakpoints and of the `site` argument
 SIR_SITE_PATTERNS <- c(
+  systemic = "systemic( infections)?",
+  iv = "(iv|intravenous|parenteral)",
   meningitis = "meningitis",
   endocarditis = "endocarditis",
-  iv = "(iv|intravenous|parenteral)",
   pneumonia = "((community-acquired )?pneumonia)",
-  systemic = "systemic( infections)?",
+  mastitis = "(mastitis|mammary gland)",
+  respiratory = "respiratory",
+  metritis = "metritis",
+  genital = "genital",
+  intestinal = "intestinal",
+  other = "other( infections)?",
   `non-meningitis` = "non-meningitis",
   `non-endocarditis` = "non-endocarditis",
   `non-pneumonia` = "non-pneumonia",
   extraintestinal = "extraintestinal",
-  other = "other( infections)?",
-  intestinal = "intestinal",
+  `soft tissue` = "soft tissue",
   skin = "skin",
+  wounds = "(wounds?|abscess(es)?)",
   inhaled = "inhaled",
   oral = "oral",
   prophylaxis = "prophylaxis",
@@ -1281,6 +1287,8 @@ SIR_SITE_PATTERNS <- c(
   topical = "topical",
   screen = "screen"
 )
+# sites of which one is part of the other, or which are hard to tell apart, and so do not contradict each other
+SIR_SITE_RELATED <- list(c("pneumonia", "respiratory"), c("metritis", "genital"), c("soft tissue", "skin", "wounds"))
 # parts of the `site` column that do not say anything about where a breakpoint applies
 SIR_SITE_NOT_A_SITE <- c("liposomal", "investigational agent")
 
@@ -1315,6 +1323,11 @@ sir_site_normalise <- function(x) {
   normalised[match(x, unique_x)]
 }
 
+# the sites of the user, with the sites that are related to them
+sir_site_expand <- function(tokens) {
+  unique(c(tokens, unlist(SIR_SITE_RELATED[vapply(SIR_SITE_RELATED, function(related) any(tokens %in% related), logical(1))])))
+}
+
 # whether a breakpoint with these sites does not contradict the sites set by the user
 sir_site_fits <- function(breakpoint_tokens, user_tokens) {
   negated <- function(tokens) sub("^non-", "", tokens[startsWith(tokens, "non-")])
@@ -1325,10 +1338,13 @@ sir_site_fits <- function(breakpoint_tokens, user_tokens) {
   if (("systemic" %in% breakpoint_tokens && "uti" %in% user_tokens) || ("uti" %in% breakpoint_tokens && "systemic" %in% user_tokens)) {
     return(FALSE)
   }
-  groups <- list(
-    route = c("iv", "oral", "topical", "inhaled"),
-    indication = c("meningitis", "endocarditis", "pneumonia", "uti", "intestinal", "extraintestinal", "skin", "prophylaxis")
-  )
+  indications <- c("meningitis", "endocarditis", "pneumonia", "mastitis", "respiratory", "metritis", "genital", "uti", "intestinal", "extraintestinal", "soft tissue", "skin", "wounds", "prophylaxis")
+  # "other" is any site that is not listed, so it contradicts every breakpoint that is limited to an indication
+  if ("other" %in% user_tokens && !any(user_tokens %in% indications) && any(breakpoint_tokens %in% indications)) {
+    return(FALSE)
+  }
+  groups <- list(route = c("iv", "oral", "topical", "inhaled"), indication = indications)
+  user_tokens <- sir_site_expand(user_tokens)
   for (group in groups) {
     from_user <- intersect(user_tokens, group)
     from_breakpoint <- intersect(breakpoint_tokens, group)
@@ -1339,13 +1355,19 @@ sir_site_fits <- function(breakpoint_tokens, user_tokens) {
   TRUE
 }
 
-# the position in SIR_SITE_ORDER, of the most systemic site if there are more
+# whether a breakpoint holds one of the sites that the user set, where "other" is also a breakpoint without a site
+sir_site_given <- function(breakpoint_tokens, user_tokens) {
+  any(breakpoint_tokens %in% sir_site_expand(user_tokens)) || ("other" %in% user_tokens && length(breakpoint_tokens) == 0)
+}
+
+# The position in SIR_SITE_ORDER, of the most systemic site if there are more. The other sites are the decimals, so that "Intravenous, Meningitis" comes before "Intravenous, Non-meningitis".
 sir_site_rank <- function(x) {
   tokens <- sir_site_tokens(x)
   if (length(tokens) == 0) {
-    return(match(NA_character_, SIR_SITE_ORDER))
+    return(as.double(match("other", SIR_SITE_ORDER)))
   }
-  min(match(tokens, SIR_SITE_ORDER))
+  ranks <- sort(match(tokens, SIR_SITE_ORDER))
+  sum(ranks / 100^(seq_along(ranks) - 1))
 }
 
 # Whether a blocking row has any effect, which is the definition used for clinical_breakpoints (#326): as.sir() must give another result without it. This takes one row number and the rows of one guideline, agent and method.
@@ -2081,7 +2103,7 @@ as_sir_method <- function(method_short,
 
     # sort on taxonomic rank first (this will e.g. prefer 'species' breakpoints over 'order' breakpoints), within a rank on the site that the user set, then on whether it is a blocking row, on most to least systemic site, and finally on UTI
     site_tokens_current <- if (is.na(site_current)) character(0) else strsplit(site_current, ",", fixed = TRUE)[[1]]
-    site_not_given <- vapply(breakpoints_current$site, function(s) !any(sir_site_tokens(s) %in% site_tokens_current), logical(1), USE.NAMES = FALSE)
+    site_not_given <- vapply(breakpoints_current$site, function(s) !sir_site_given(sir_site_tokens(s), site_tokens_current), logical(1), USE.NAMES = FALSE)
     if (length(site_tokens_current) == 0) {
       site_not_given[] <- FALSE
     }

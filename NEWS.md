@@ -9,11 +9,11 @@ It also adds a `site` argument to `as.sir()`, stores EUCAST MIC breakpoints exac
 * `include_screening` in `as.sir()` now defaults to `NULL`, using screening breakpoints for screening agents only. `include_screening = FALSE` now also returns `NA`, with a note, for a screening agent (#328)
 * EUCAST's breakpoints in brackets are no longer in `clinical_breakpoints`. They were blocking rows, so `as.sir()` can now use PK/PD breakpoints or the breakpoints of a broader taxon instead, e.g., for aminoglycosides in EUCAST 2020-2023. They stay available in [`data-raw/breakpoints_eucast_raw.csv`](https://github.com/msberends/AMR/blob/main/data-raw/breakpoints_eucast_raw.csv) (#327)
 * With unknown `uti`, a blocking row without UTI status no longer overrides a UTI breakpoint at the same taxonomic level, e.g., amikacin in *Acinetobacter* now gives S or R instead of `NA`, which is noted in `sir_interpretation_history()`. Use `uti = FALSE` to prevent this
-* If several breakpoints fit and no `site` is set, `as.sir()` now takes the one for the most systemic site, instead of the first one in the data set. Use `site` to choose another one
+* If several breakpoints fit and no `site` is set, `as.sir()` now takes the one for the most systemic site, instead of the first one in the data set. This means, e.g., that a meningitis breakpoint now precedes a non-meningitis breakpoint, such as for benzylpenicillin in *S. pneumoniae*. Use `site` to choose another one
 
 ### New
 * **Site of infection**
-  * `as.sir()` gained the argument `site`, in fixed codes such as `"meningitis"`, `"iv"` and `"uti"`, which can also be a column name. A breakpoint for a contradicting site is left out, a breakpoint without a site still applies, and the result is `NA` if only contradicting sites are available, without using PK/PD breakpoints. `uti = TRUE` stays available and equals `site = "uti"`
+  * `as.sir()` gained the argument `site`, in fixed codes such as `"meningitis"`, `"iv"`, `"uti"` and, for animals, `"mastitis"` and `"respiratory"`, which can also be a column name. A breakpoint for a contradicting site is left out, a breakpoint without a site still applies, and the result is `NA` if only contradicting sites are available, without using PK/PD breakpoints. `"other"` takes a breakpoint for other infections or without a site, and leaves out those limited to an indication. `uti = TRUE` stays available and equals `site = "uti"`
   * `sir_interpretation_history()` now holds the site of the breakpoint used, and notes every assumption about sites
 * **Screening agents**
   * 13 screening agents in the `antimicrobials` data set: `CHL-S`, `CIP-S`, `COL-S`, `ERY-S`, `FUS-S`, `GEN-S`, `LVX-S`, `MUP-S`, `NEO-S`, `OFX-S`, `RTP-S`, `STR1-S` and `TOB-S` (#328)
