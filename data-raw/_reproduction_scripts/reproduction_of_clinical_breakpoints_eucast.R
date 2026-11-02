@@ -469,6 +469,11 @@ resolve_notes <- function(notes_list, mic_super, disk_super, abbreviations = lis
 # ==============================================================================
 # 4. Cell helpers
 # ==============================================================================
+# The address of a cell in a workbook, e.g. "B12", kept with every parsed breakpoint so that it can be verified against its source
+cell_address <- function(r, c) {
+  paste0(LETTERS[c], r)
+}
+
 get_cell <- function(df, r, c) {
   hit <- df[df$row == r & df$col == c, ]
   if (nrow(hit) == 0) {
@@ -1002,6 +1007,8 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
           disk_dose = NA_character_,
           breakpoint_S = s_val,
           breakpoint_R = r_val,
+          source_S = cell_address(r, 2),
+          source_R = cell_address(r, 3),
           is_bracketed = is_bracketed_bp(mic_s$base) || is_bracketed_bp(mic_r$base),
           note = mic_note
         )
@@ -1027,6 +1034,8 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
           disk_dose = disk_dose,
           breakpoint_S = s_val,
           breakpoint_R = r_val,
+          source_S = cell_address(r, 6),
+          source_R = cell_address(r, 7),
           is_bracketed = is_bracketed_bp(disk_s$base) || is_bracketed_bp(disk_r$base),
           note = disk_note
         )
@@ -1166,6 +1175,7 @@ parse_topical_sheet <- function(xlsx_path, abbreviations = list()) {
           ab = ab_name,
           disk_dose = NA_character_,
           breakpoint_S = mic_val, breakpoint_R = mic_val,
+          source_S = cell_address(od$mic_row, col_idx), source_R = cell_address(od$mic_row, col_idx),
           is_bracketed = is_bracketed_bp(mic_cell$base),
           note = mic_note
         )
@@ -1187,6 +1197,7 @@ parse_topical_sheet <- function(xlsx_path, abbreviations = list()) {
           ab = ab_name,
           disk_dose = ab_dose,
           breakpoint_S = disk_val, breakpoint_R = disk_val,
+          source_S = cell_address(od$disk_row, col_idx), source_R = cell_address(od$disk_row, col_idx),
           is_bracketed = is_bracketed_bp(disk_cell$base),
           note = disk_note
         )
@@ -1344,6 +1355,8 @@ parse_yeast_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
         disk_dose = NA_character_,
         breakpoint_S = s_val,
         breakpoint_R = r_val,
+        source_S = cell_address(r, sb$s_col),
+        source_R = cell_address(r, sb$r_col),
         is_bracketed = is_bracketed_bp(s_cell$base) || is_bracketed_bp(r_cell$base),
         note = note_text
       )
@@ -1553,6 +1566,44 @@ if (!is.null(parse_log$disk_dose_inherited)) {
   )
   print(parse_log$disk_dose_inherited)
 }
+
+# Every parsed value must be in the workbook cell that it is said to come from. This reads the workbooks a second time with another package than the parser, so that it does not share the parser's assumptions. Note references are superscript text in the same cell, hence the comparison with the start of the cell.
+verify_raw_against_workbooks <- function(raw) {
+  files <- list.files("data-raw", pattern = "^v_[0-9.]+_.*Breakpoint_Tables[.]xlsx$", full.names = TRUE)
+  file_of_version <- function(version, file_desc) {
+    hit <- files[grepl(paste0("v_0?", version, "_"), basename(files), fixed = FALSE) & grepl("Antifungal", basename(files), fixed = TRUE) == grepl("Antifungal", file_desc, fixed = TRUE)]
+    if (length(hit) != 1) stop("no single workbook found for version ", version, " (", file_desc, ")")
+    hit
+  }
+  keys <- distinct(raw, version, file_desc, sheet)
+  for (i in seq_len(nrow(keys))) {
+    rows <- raw[raw$version == keys$version[i] & raw$file_desc == keys$file_desc[i] & raw$sheet == keys$sheet[i], , drop = FALSE]
+    sheet <- suppressMessages(as.data.frame(readxl::read_excel(
+      file_of_version(keys$version[i], keys$file_desc[i]),
+      sheet = keys$sheet[i], col_names = FALSE, col_types = "text", .name_repair = "minimal", range = readxl::cell_limits(c(1, 1), c(NA, NA))
+    )))
+    cell_text <- function(address) {
+      r <- as.integer(sub("^[A-Z]+", "", address))
+      c <- match(sub("[0-9]+$", "", address), LETTERS)
+      vapply(seq_along(address), function(j) {
+        if (r[j] > nrow(sheet) || c[j] > ncol(sheet)) NA_character_ else trimws(gsub("\\s+", " ", sheet[r[j], c[j]]))
+      }, character(1))
+    }
+    for (side in c("S", "R")) {
+      value <- trimws(rows[[paste0("breakpoint_", side)]])
+      has_value <- !is.na(value) & nzchar(value)
+      text <- cell_text(rows[[paste0("source_", side)]])
+      # numbers can be stored as numeric cells, read as text with a different notation
+      matches <- startsWith(coalesce(text, ""), coalesce(value, "")) | (suppressWarnings(as.numeric(text)) %in% suppressWarnings(as.numeric(value)))
+      if (any(has_value & !matches)) {
+        print(cbind(rows[has_value & !matches, c("guideline", "sheet", "mo", "ab", "method", paste0("breakpoint_", side), paste0("source_", side))], in_cell = text[has_value & !matches]))
+        stop("parsed breakpoint(s) not found in the workbook cell that they come from, see above")
+      }
+    }
+  }
+  invisible(TRUE)
+}
+verify_raw_against_workbooks(breakpoints_eucast_raw)
 
 saveRDS(breakpoints_eucast_raw, "data-raw/breakpoints_eucast_raw.rds")
 write.csv(breakpoints_eucast_raw, "data-raw/breakpoints_eucast_raw.csv", row.names = FALSE, eol = "\n")
@@ -2608,32 +2659,18 @@ breakpoints_eucast <- breakpoints_eucast |>
     # cannot introduce NAs (blocking rows are NA by design)
     breakpoint_S = as.numeric(breakpoint_S),
     breakpoint_R = as.numeric(breakpoint_R),
-    # EUCAST's "arbitrary, off scale" MIC breakpoint S <= 0.001 mg/L (from
-    # v10.0 on) is meant to categorise wild-type isolates as "I", not "S".
-    # MICs of 0.0005 mg/L and below do occur in vitro, so, as before, it is
-    # stored as 0.0001 mg/L to keep such isolates out of "S".
-    breakpoint_S = if_else(method == "MIC" & !is.na(breakpoint_S) & breakpoint_S == 0.001, 0.0001, breakpoint_S),
     # same definition as used for the WHONET-based rows
     uti = !is.na(site) & site %like% "(UTI|urinary|urine)",
     is_SDD = FALSE # EUCAST has no "susceptible, dose dependent" category (CLSI-only concept)
   ) |>
-  # EUCAST prints the twofold dilutions below 0.125 mg/L rounded, e.g. 0.03 and
-  # 0.06 for 0.03125 and 0.0625, while this package (as.mic(), and the WHONET-
-  # based breakpoints of all other guidelines) uses 0.032 and 0.064. Since
-  # as.sir() compares values literally, an MIC of 0.064 would otherwise fall
-  # above an S breakpoint of 0.06. MIC breakpoints are therefore set to the
-  # package's dilution level they denote; a value that is not close to any
-  # dilution level stops the script. The raw data keep EUCAST's notation.
+  # MIC breakpoints are stored exactly as EUCAST publishes them, e.g. 0.03 and not 0.032, including the off-scale S <= 0.001 mg/L (#331). as.sir() takes care of different notations of the same dilution, see AMR:::mic_dilution_level(). A value that is not close to any dilution level stops the script.
   mutate(across(c(breakpoint_S, breakpoint_R), function(x) {
     if (!all(method %in% c("MIC", "DISK"))) stop("unexpected method")
     is_mic <- method == "MIC" & !is.na(x)
-    levels <- AMR:::COMMON_MIC_VALUES
-    nearest <- vapply(x[is_mic], function(z) levels[which.min(abs(log2(z) - log2(levels)))], numeric(1))
-    off_level <- abs(log2(x[is_mic]) - log2(nearest)) > 0.15
+    off_level <- !AMR:::mic_dilution_level(x[is_mic]) %in% AMR:::COMMON_MIC_VALUES
     if (any(off_level)) {
       stop("MIC breakpoint(s) not on a dilution level: ", paste(unique(x[is_mic][off_level]), collapse = ", "))
     }
-    x[is_mic] <- nearest
     x
   })) |>
   # Greek symbols and EM dash symbols are not allowed by CRAN, so replace them with ASCII:

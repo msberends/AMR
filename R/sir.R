@@ -1906,9 +1906,18 @@ as_sir_method <- function(method_short,
         )
       }
 
-      # EUCAST indicates that there is no S category with an off-scale S breakpoint of 0.001 mg/L (stored as 0.0001 in
-      # clinical_breakpoints), so that wild-type isolates are I; capped MICs such as "<=0.5" must then not be S or NI (#295)
+      # clinical_breakpoints holds breakpoints as published, so keep these for sir_interpretation_history() (#331)
+      breakpoint_S_R_published <- paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE])
+      # EUCAST indicates that there is no S category with an off-scale S breakpoint of 0.001 mg/L, so that wild-type isolates are I, also below that value; capped MICs such as "<=0.5" must then not be S or NI (#295)
       no_S_category <- method == "mic" & isTRUE(breakpoints_current$breakpoint_S <= 0.001)
+      if (method == "mic") {
+        # compare dilutions, not their notation, e.g. an MIC of 0.032 and a breakpoint of 0.03 are the same dilution (#331)
+        breakpoints_current$breakpoint_S <- mic_dilution_level(breakpoints_current$breakpoint_S)
+        breakpoints_current$breakpoint_R <- mic_dilution_level(breakpoints_current$breakpoint_R)
+        if (guideline_current %like% "EUCAST" && !custom_breakpoints_set && isTRUE(breakpoints_current$breakpoint_S == 0.001)) {
+          breakpoints_current$breakpoint_S <- 0.0001
+        }
+      }
       middle_sir <- if (isTRUE(breakpoints_current$is_SDD)) as.sir("SDD") else as.sir("I")
       clsi_closed_R <- !custom_breakpoints_set & guideline_current %like% "CLSI"
       capped_low_not_R <- (as.character(input_original) %like% "^<[0-9]" & as.double(input_clean) <= breakpoints_current$breakpoint_R) |
@@ -2097,7 +2106,7 @@ as_sir_method <- function(method_short,
         guideline = vectorise_log_entry(guideline_current, length(rows)),
         ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
         uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
-        breakpoint_S_R = vectorise_log_entry(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
+        breakpoint_S_R = vectorise_log_entry(breakpoint_S_R_published, length(rows)),
         stringsAsFactors = FALSE
       )
       out <- subset(out, !is.na(input_given))

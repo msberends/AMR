@@ -56,6 +56,20 @@ COMMON_MIC_VALUES <- c(
   1024, 2048, 4096
 )
 
+# Guidelines publish the twofold dilutions below 0.125 mg/L in rounded notations, e.g., EUCAST prints 0.03 for the dilution that this package holds as 0.032, while laboratories may report 0.03, 0.031, 0.03125 or 0.032. These all denote one dilution. This returns the value of that dilution in COMMON_MIC_VALUES, and leaves all other values as they are.
+mic_dilution_level <- function(x) {
+  notation <- c(
+    0.0039, 0.0078, 0.015, 0.0156, 0.03, 0.031, 0.0313, 0.03125, 0.06, 0.063, 0.0625, 0.12
+  )
+  level <- c(
+    0.004, 0.008, 0.016, 0.016, 0.032, 0.032, 0.032, 0.032, 0.064, 0.064, 0.064, 0.125
+  )
+  x <- as.double(x)
+  hit <- match(x, notation)
+  x[!is.na(hit)] <- level[hit[!is.na(hit)]]
+  x
+}
+
 #' Transform Input to Minimum Inhibitory Concentrations (MIC)
 #'
 #' This transforms vectors to a new class [`mic`], which treats the input as decimal numbers, while maintaining operators (such as ">=") and only allowing valid MIC values known to the field of (medical) microbiology.
