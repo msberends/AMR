@@ -720,7 +720,8 @@ breakpoints_new <- breakpoints_new |>
     mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
     mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
     mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
-    mo != "UNKNOWN" ~ 6, # for B_ANAER, etc.
+    grepl("^B_ANAER", as.character(mo)) ~ 5.5, # anaerobes are more specific than a Gram stain
+    mo != "UNKNOWN" ~ 6, # for B_GRAMN, etc.
     TRUE ~ 7
   ) +
     # a breakpoint of the same organism always precedes its blocking row

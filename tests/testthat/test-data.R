@@ -756,6 +756,9 @@ test_that("clinical_breakpoints: consistent and unambiguous", {
   expected <- c("subspecies" = 1, "species" = 2, "species group" = 2.5, "genus" = 3, "family" = 4, "order" = 5)[rank]
   wrong <- which(!is.na(expected) & floor(cb$rank_index * 2) / 2 != expected & cb$rank_index != expected)
   expect_true(length(wrong) == 0, info = paste("rank_index does not match the rank:", describe_mo(unique(cb$mo[wrong]))))
+  # anaerobes are more specific than a Gram stain, with or without the 0.1 of a blocking row
+  expect_true(all(cb$rank_index[grepl("^B_ANAER", cb$mo)] %in% c(5.5, 5.6)))
+  expect_true(all(cb$rank_index[cb$mo %in% c("B_GRAMN", "B_GRAMP")] %in% c(6, 6.1)))
 })
 
 test_that("antimicrobials: unique and well-formed", {

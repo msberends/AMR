@@ -2782,7 +2782,8 @@ breakpoints_eucast <- breakpoints_eucast |>
   mutate(
     rank_index = case_when(
       mo == "UNKNOWN" ~ 7, # the PK-PD table, as for the WHONET-based rows
-      is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for B_GRAMN, B_ANAER, B_ANAER-NEG, etc.
+      grepl("^B_ANAER", as.character(mo)) ~ 5.5, # anaerobes are more specific than a Gram stain
+      is.na(mo_rank(mo, keep_synonyms = TRUE)) ~ 6, # for B_GRAMN, etc.
       mo_rank(mo, keep_synonyms = TRUE) %like% "(infra|sub)" ~ 1,
       mo_rank(mo, keep_synonyms = TRUE) == "species" ~ 2,
       mo_rank(mo, keep_synonyms = TRUE) == "species group" ~ 2.5,

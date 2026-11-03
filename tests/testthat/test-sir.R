@@ -730,6 +730,11 @@ test_that("as.sir() takes the site of a breakpoint into account", {
   expect_true(sir_site_rank("Intravenous, Meningitis") < sir_site_rank("Intravenous, Non-meningitis"))
   expect_true(sir_site_rank("Intravenous, Non-meningitis") < sir_site_rank("Meningitis"))
 
+  # the order of sites does not make a Gram stain precede the more specific anaerobes: CLSI Table 2J, not Table 2B-5
+  expect_identical(sir(as.mic(16), "Bacteroides fragilis", "CRO", guideline = "CLSI 2022"), "S")
+  # and it does make a meningitis breakpoint precede a non-meningitis breakpoint of another taxon of the same rank
+  expect_identical(sir(as.mic(0.25), "Streptococcus agalactiae", "PEN", guideline = "EUCAST 2024"), "R")
+
   # "other" in as.sir(): takes the breakpoint for other infections, or without a site
   expect_identical(sir(as.mic(0.25), "Streptococcus pneumoniae", "PEN", site = "other", guideline = "EUCAST 2012"), "I")
   expect_identical(sir(as.mic(0.25), "Streptococcus pneumoniae", "PEN", site = "meningitis", guideline = "EUCAST 2012"), "R")
