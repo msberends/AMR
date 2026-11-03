@@ -870,6 +870,11 @@ test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   # IE for V. fluvialis, while Vibrio spp. has breakpoints
   expect_identical(sir(as.mic(0.125), "Vibrio fluvialis", "CTX", "EUCAST 2026"), NA_character_)
   expect_identical(sir(as.mic(0.125), "Vibrio cholerae", "CTX", "EUCAST 2026"), "S")
+  # breakpoints of Vibrio are for 5 species only, so not for other species or for the genus, which can only have PK/PD
+  expect_identical(sir(as.mic(0.125), "Vibrio parahaemolyticus", "CIP", "EUCAST 2026"), "S")
+  expect_identical(sir(as.mic(0.125), "Vibrio harveyi", "CIP", "EUCAST 2026"), NA_character_)
+  expect_identical(sir(as.mic(0.125), "Vibrio", "CIP", "EUCAST 2026"), NA_character_)
+  expect_identical(sir(as.mic(0.125), "Vibrio harveyi", "CIP", "EUCAST 2023"), "S")
   # fosfomycin zone diameter breakpoints apply to E. coli only
   expect_identical(sir(as.disk(25), "Klebsiella pneumoniae", "FOS", "EUCAST 2019"), NA_character_)
   expect_identical(sir(as.disk(25), "Escherichia coli", "FOS", "EUCAST 2019"), "S")

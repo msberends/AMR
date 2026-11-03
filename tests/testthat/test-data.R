@@ -655,7 +655,9 @@ test_that("clinical_breakpoints: every blocking row of EUCAST has an effect (#32
     }
   }
   # the definition itself, on a constructed set of rows
-  rows <- cb[cb$guideline == latest & as.character(cb$ab) == "CTX" & cb$method == "MIC" & as.character(cb$mo) == "B_VIBRI", , drop = FALSE][1, ]
+  rows <- cb[cb$guideline == latest & as.character(cb$ab) == "CTX" & cb$method == "MIC" & as.character(cb$mo) == "B_VIBRI_CHLR" & cb$type == "human", , drop = FALSE][1, ]
+  rows$mo <- as.mo("Vibrio", info = FALSE)
+  rows$rank_index <- 3
   blocker <- rows
   blocker$mo <- as.mo("Vibrio fluvialis", info = FALSE)
   blocker$rank_index <- 2.1
@@ -664,6 +666,22 @@ test_that("clinical_breakpoints: every blocking row of EUCAST has an effect (#32
   group <- rbind(rows, blocker)
   expect_true(blocking_row_is_needed(2, group))
   expect_false(blocking_row_is_needed(1, blocker))
+})
+
+test_that("clinical_breakpoints: EUCAST breakpoints of Vibrio are for the species that EUCAST states", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb$mo <- as.character(cb$mo)
+  cb <- cb[cb$type == "human" & cb$guideline %in% paste("EUCAST", 2022:2026), , drop = FALSE]
+  species <- as.character(as.mo(c("Vibrio alginolyticus", "Vibrio cholerae", "Vibrio fluvialis", "Vibrio parahaemolyticus", "Vibrio vulnificus"), info = FALSE))
+  vibrio <- cb[grepl("^B_VIBRI", cb$mo), , drop = FALSE]
+  expect_identical(sort(unique(vibrio$mo)), sort(species))
+  has_values <- !is.na(vibrio$breakpoint_S) | !is.na(vibrio$breakpoint_R)
+  expect_true(all(grepl("Breakpoints are valid for V. alginolyticus", vibrio$note[has_values], fixed = TRUE)))
+  # all species have the same breakpoints per year, apart from the IE of cefotaxime for V. fluvialis
+  key <- paste(vibrio$guideline, vibrio$ab, vibrio$method, vibrio$breakpoint_S, vibrio$breakpoint_R)[has_values & !(vibrio$ab == "CTX")]
+  expect_true(all(table(key) == 5))
+  expect_false(any(has_values & vibrio$ab == "CTX" & vibrio$mo == as.character(as.mo("Vibrio fluvialis", info = FALSE))))
 })
 
 test_that("clinical_breakpoints: EUCAST breakpoints stated in the Notes (#329)", {

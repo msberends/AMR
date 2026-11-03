@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 48 382 observations and 15 variables:
+A \link[tibble:tibble]{tibble} with 48 764 observations and 15 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either \code{"ECOFF"}, \code{"animal"}, or \code{"human"}
@@ -49,7 +49,7 @@ The default is \code{"human"}, which can also be set with the package option \co
 
 \subsection{Blocking Rows}{
 
-Where EUCAST lists an organism but gives no breakpoint for it (e.g. "IE", "-", "Note", an organism excluded with "except", or no S category for a zone diameter), \code{\link[=as.sir]{as.sir()}} must not fall back to the breakpoint of a broader taxon, such as the breakpoint for \emph{Vibrio} spp. where EUCAST gives "IE" for \emph{V. fluvialis}. Such cases are included as "blocking rows": rows in which \code{breakpoint_S} and \code{breakpoint_R} are both \code{NA} and the \code{note} starts with \code{"[No breakpoint]"} followed by the reason. \code{\link[=as.sir]{as.sir()}} returns \code{NA} for these. This currently applies to 2 406 rows. Remove them with \code{subset(clinical_breakpoints, !is.na(breakpoint_S))} if only actual breakpoints are needed.
+Where EUCAST lists an organism but gives no breakpoint for it (e.g. "IE", "-", "Note", an organism excluded with "except", or no S category for a zone diameter), \code{\link[=as.sir]{as.sir()}} must not fall back to the breakpoint of a broader taxon, such as the breakpoint for \emph{Vibrio} spp. where EUCAST gives "IE" for \emph{V. fluvialis}. Such cases are included as "blocking rows": rows in which \code{breakpoint_S} and \code{breakpoint_R} are both \code{NA} and the \code{note} starts with \code{"[No breakpoint]"} followed by the reason. \code{\link[=as.sir]{as.sir()}} returns \code{NA} for these. This currently applies to 2 398 rows. Remove them with \code{subset(clinical_breakpoints, !is.na(breakpoint_S))} if only actual breakpoints are needed.
 
 \strong{EUCAST's breakpoints in brackets} are not in this data set. EUCAST bases these on ECOFFs, and states that reporting S or I should be avoided. \code{\link[=as.sir]{as.sir()}} therefore treats them as absent, and can use PK/PD breakpoints or, for unknown UTI status, UTI breakpoints instead. All bracketed values are kept in the \href{https://github.com/msberends/AMR/blob/main/data-raw/breakpoints_eucast_raw.csv}{raw import of the EUCAST tables} (column \code{is_bracketed}).
 
