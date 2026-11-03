@@ -54,6 +54,7 @@ devtools::load_all()
 parse_log <- new.env()
 parse_log$disk_dose_inherited <- NULL
 parse_log$scope_extensions <- NULL
+parse_log$scope_restrictions <- NULL
 parse_log$no_breakpoints_determined <- NULL
 
 # ==============================================================================
@@ -620,6 +621,7 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
   sheet_text <- unique(parsed$full_text[!is.na(parsed$full_text) & parsed$col == 1])
   scope_pattern <- "In the absence of specific breakpoints, the ([A-Z])\\. ([a-z]+) MIC ?breakpoints can be applied to ([A-Z])\\. ([a-z]+)\\."
   bacteroides_pattern <- "Breakpoints for Bacteroides spp\\. are also valid for Parabacteroides spp\\. and for Phocaeicola dorei/vulgatus"
+  vibrio_pattern <- "Breakpoints are valid for V\\. alginolyticus, V\\. cholerae, V\\. fluvialis, V\\. parahaemolyticus and V\\. vulnificus\\."
   for (txt in sheet_text) {
     txt_squished <- gsub("\\s+", " ", txt)
     m <- regmatches(txt_squished, regexec(scope_pattern, txt_squished))[[1]]
@@ -636,7 +638,7 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
           from_text = paste(genus, m[3]), to_text = paste(genus, m[5]), statement = m[1], method = "MIC"
         )
       )
-    } else if (grepl("breakpoints can (also )?be applied to [A-Z]\\.|breakpoints for .* are also valid for", txt_squished, ignore.case = TRUE) && !grepl(bacteroides_pattern, txt_squished)) {
+    } else if (grepl("breakpoints can (also )?be applied to [A-Z]\\.|breakpoints for .* are also valid for|breakpoints are (only )?valid for [A-Z]\\.", txt_squished, ignore.case = TRUE) && !grepl(paste0(bacteroides_pattern, "|", vibrio_pattern), txt_squished)) {
       stop(
         "parse_sheet(): unrecognised statement about applying breakpoints to another species on sheet '",
         sheet_name, "': ", substr(txt_squished, 1, 300)
@@ -660,6 +662,24 @@ parse_sheet <- function(xlsx_path, sheet_name, abbreviations = list()) {
           from_text = "Bacteroides",
           statement = regmatches(gsub("\\s+", " ", statement[1]), regexpr(paste0(bacteroides_pattern, "[^.]*\\."), gsub("\\s+", " ", statement[1])))
         )
+    )
+  }
+
+  # EUCAST limits the Vibrio breakpoints to these species, for both methods, so the rows of the genus are replaced by rows of these species in the cleanup section. Any other wording of such a statement stops the script, see above.
+  statement <- sheet_text[grepl(vibrio_pattern, gsub("\\s+", " ", sheet_text))]
+  if (length(statement) > 0) {
+    extension <- expand.grid(
+      to_text = c("Vibrio alginolyticus", "Vibrio cholerae", "Vibrio fluvialis", "Vibrio parahaemolyticus", "Vibrio vulnificus"),
+      method = c("MIC", "DISK"), stringsAsFactors = FALSE
+    )
+    statement <- regmatches(gsub("\\s+", " ", statement[1]), regexpr(vibrio_pattern, gsub("\\s+", " ", statement[1])))
+    parse_log$scope_extensions <- bind_rows(
+      parse_log$scope_extensions,
+      extension |> mutate(guideline = ver$guideline, sheet = sheet_name, from_text = "Vibrio", statement = statement)
+    )
+    parse_log$scope_restrictions <- bind_rows(
+      parse_log$scope_restrictions,
+      data.frame(guideline = ver$guideline, sheet = sheet_name, from_text = "Vibrio")
     )
   }
 
@@ -2681,6 +2701,17 @@ if (!is.null(parse_log$scope_extensions)) {
     paste(unique(paste0(scope_ext$guideline, " ", scope_ext$from_text, " -> ", scope_ext$to_text)), collapse = ", ")
   )
   breakpoints_eucast <- bind_rows(breakpoints_eucast, scope_rows)
+}
+
+# A statement that limits breakpoints to certain species means that the rows of the genus do not apply to its other species, so these rows go, now that the species have their own
+if (!is.null(parse_log$scope_restrictions)) {
+  restricted <- paste(parse_log$scope_restrictions$guideline, parse_log$scope_restrictions$sheet, as.character(as.mo(parse_log$scope_restrictions$from_text, info = FALSE)))
+  rows <- paste(breakpoints_eucast$guideline, breakpoints_eucast$sheet, as.character(breakpoints_eucast$mo)) %in% restricted
+  message("NOTE: ", sum(rows), " breakpoint row(s) of a genus removed following EUCAST's statement(s), in ", paste(unique(parse_log$scope_restrictions$guideline), collapse = ", "))
+  if (sum(rows) == 0 || !setequal(parse_log$scope_restrictions$guideline, paste("EUCAST", 2022:2026))) {
+    stop("unexpected result for the statement limiting the breakpoints of Vibrio to certain species")
+  }
+  breakpoints_eucast <- breakpoints_eucast[!rows, , drop = FALSE]
 }
 
 # Organisms for which EUCAST has not determined breakpoints at all ("EUCAST
