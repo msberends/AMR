@@ -44,7 +44,7 @@
 #'
 #' [mo_ref()] returns the abbreviated authority of the nomenclatural act that created the queried name combination. When `keep_synonyms = FALSE` (default), this is the authority of the currently accepted name. When `keep_synonyms = TRUE`, this is the authority under which the queried (possibly outdated) name was published. Emendations (changes to the species description without a name change) are not reflected; only the combination or original description authority is returned.
 #'
-#' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (domain of Bacteria) as well as *Entamoeba coli* (domain of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will always be considered *Escherichia coli*. As a result, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
+#' The short name ([mo_shortname()]) returns the first character of the genus and the full species, such as `"E. coli"`, for species and subspecies. Exceptions are *Salmonella* serovars, which return the serovar (such as `"S. Typhi"`), and abbreviations of staphylococci (such as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic streptococci (such as *"GBS"*, Group B Streptococci). Please bear in mind that e.g. *E. coli* could mean *Escherichia coli* (domain of Bacteria) as well as *Entamoeba coli* (domain of Protozoa). Returning to the full name will be done using [as.mo()] internally, giving priority to bacteria and human pathogens, i.e. `"E. coli"` will always be considered *Escherichia coli*. As a result, `mo_fullname(mo_shortname("Entamoeba coli"))` returns `"Escherichia coli"`.
 #'
 #' Following the formal introduction of the new kingdom rank into prokaryotic nomenclature in 2024 (\doi{10.1099/ijsem.0.006242}), [mo_kingdom()] and [mo_domain()] return different results for bacteria and archaea: [mo_kingdom()] returns the new formal kingdom (e.g. "Pseudomonadati", "Bacillati"), while [mo_domain()] returns the new domain (e.g. "Bacteria", "Archaea"). For non-prokaryotic organisms, both functions return identical results.
 #'
@@ -262,13 +262,19 @@ mo_shortname <- function(x, language = get_AMR_locale(), keep_synonyms = getOpti
   genera <- mo_genus(x.mo, language = NULL, keep_synonyms = keep_synonyms, ...)
   shortnames <- paste0(substr(genera, 1, 1), ". ", replace_empty(mo_species(x.mo, language = NULL, keep_synonyms = keep_synonyms, ...)))
 
+  # exceptions for Salmonella serovars, that are stored as subspecies of S. enterica: return e.g. "S. Typhi"
+  subspecies <- mo_subspecies(x.mo, language = NULL, keep_synonyms = keep_synonyms, ...)
+  serovars <- which(genera == "Salmonella" & subspecies %like_case% "^[A-Z]")
+  shortnames[serovars] <- paste0("S. ", subspecies[serovars])
+
   # exceptions for where no species is known
   shortnames[shortnames %like% ".[.] spp[.]"] <- genera[shortnames %like% ".[.] spp[.]"]
   # exceptions for staphylococci
   shortnames[shortnames == "S. coagulase-negative"] <- "CoNS"
   shortnames[shortnames == "S. coagulase-positive"] <- "CoPS"
   # exceptions for streptococci: Group A Streptococcus -> GAS
-  shortnames[shortnames %like_case% "S. Group [ABCDFGHK]"] <- paste0("G", gsub("S. Group ([ABCDFGHK])", "\\1", shortnames[shortnames %like_case% "S. Group [ABCDFGHK]"], perl = TRUE), "S")
+  streptococci_groups <- which(genera == "Streptococcus" & shortnames %like_case% "^S[.] Group [A-L]$")
+  shortnames[streptococci_groups] <- paste0("G", gsub("S. Group ([A-L])", "\\1", shortnames[streptococci_groups], perl = TRUE), "S")
   # unknown species etc.
   shortnames[shortnames %like% "unknown"] <- paste0("(", trimws2(gsub("[^a-zA-Z -]", "", shortnames[shortnames %like% "unknown"], perl = TRUE)), ")")
 
