@@ -298,7 +298,7 @@
 #' - `method`\cr Testing method, either `r vector_or(clinical_breakpoints$method, documentation = TRUE)`
 #' - `site`\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 #' - `mo`\cr Microbial ID, see [as.mo()]
-#' - `rank_index`\cr Taxonomic rank index of `mo`, used to choose the most specific breakpoint (the lowest index): 1 for subspecies and infraspecies, 2 for species, 2.5 for species groups (e.g., *Streptococcus* group A), 3 for genus, 4 for family, 5 for order, 6 for other groups (e.g., Gram-negative or anaerobic bacteria), and 7 for non-species related (PK-PD) breakpoints. Blocking rows (see *Details*) have the rank index of their organism + 0.1, e.g., 2.6 for a species group, so that a breakpoint for the same organism always takes precedence.
+#' - `rank_index`\cr Taxonomic rank index of `mo`, used to choose the most specific breakpoint (the lowest index): 1 for subspecies and infraspecies, 2 for species, 2.5 for species groups (e.g., *Streptococcus* group A), 3 for genus, 4 for family, 5 for order, 5.5 for anaerobic bacteria, 6 for other groups (e.g., Gram-negative bacteria), and 7 for non-species related (PK-PD) breakpoints. Blocking rows (see *Details*) have the rank index of their organism + 0.1, e.g., 2.6 for a species group, so that a breakpoint for the same organism always takes precedence.
 #' - `ab`\cr Antimicrobial code as used by this package, EARS-Net and WHONET, see [as.ab()]
 #' - `ref_tbl`\cr Info about where the guideline rule can be found
 #' - `disk_dose`\cr Dose of the used disk diffusion method
