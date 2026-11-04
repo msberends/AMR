@@ -1156,7 +1156,7 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      which(x$genus == "Salmonella" & x$species == "Typhi"),
+      which(x$genus == "Salmonella" & x$subspecies == "Typhi"),
       c(carbapenems, fluoroquinolones),
       "any"
     )
@@ -1251,7 +1251,7 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      which(x$genus == "Salmonella" & x$species == "Typhi"),
+      which(x$genus == "Salmonella" & x$subspecies == "Typhi"),
       c(carbapenems),
       "any"
     )
@@ -1353,7 +1353,7 @@ mdro <- function(x = NULL,
     )
     trans_tbl(
       3,
-      which(x$genus == "Salmonella" & x$species == "Typhi"),
+      which(x$genus == "Salmonella" & x$subspecies == "Typhi"),
       c(carbapenems),
       "any"
     )
