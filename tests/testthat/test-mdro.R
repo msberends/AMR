@@ -56,6 +56,27 @@ test_that("test-mdro.R", {
     mdro(example_isolates, guideline = "BRMO", info = FALSE)
   )
 
+  # test EUCAST rule for Salmonella Typhi, which is stored as subspecies of S. enterica
+  typhi <- data.frame(
+    mo = as.mo(rep("Salmonella Typhi", 2)),
+    CIP = as.sir(c("R", "S")),
+    IPM = as.sir(c("S", "S")),
+    MEM = as.sir(c("S", "S")),
+    AMX = as.sir(c("S", "S"))
+  )
+  expect_equal(
+    as.character(suppressWarnings(mdro(typhi, guideline = "EUCAST3.1", col_mo = "mo", info = FALSE))),
+    c("Positive", "Negative")
+  )
+  typhi$CIP <- as.sir(c("S", "S"))
+  typhi$MEM <- as.sir(c("R", "S"))
+  for (gl in c("EUCAST3.2", "EUCAST3.3")) {
+    expect_equal(
+      as.character(suppressWarnings(mdro(typhi, guideline = gl, col_mo = "mo", info = FALSE))),
+      c("Positive", "Negative")
+    )
+  }
+
   # test Dutch P. aeruginosa MDRO
   expect_equal(
     as.character(mdro(

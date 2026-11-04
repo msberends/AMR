@@ -45,6 +45,25 @@ test_that("test-mo_property.R", {
   expect_equal(mo_shortname("Staphylococcus aureus", Becker = "all", language = "en"), "CoPS")
   expect_equal(mo_shortname("Streptococcus agalactiae"), "S. agalactiae")
   expect_equal(mo_shortname("Streptococcus agalactiae", Lancefield = TRUE), "GBS")
+  # Salmonella serovars return the serovar, and all stay distinct
+  expect_equal(
+    mo_shortname(c("Salmonella Typhi", "Salmonella Goldcoast", "Salmonella Paratyphi A", "Salmonella enterica", "Salmonella enterica enterica", NA), language = NULL),
+    c("S. Typhi", "S. Goldcoast", "S. Paratyphi A", "S. enterica", "S. enterica", NA)
+  )
+  # Salmonella groups must not be abbreviated as streptococci
+  expect_equal(
+    mo_shortname(c("Salmonella group B", "Streptococcus group B"), language = NULL),
+    c("S. Group B", "GBS")
+  )
+  # all Lancefield groups are abbreviated, also when they share a letter with a Salmonella group
+  expect_equal(
+    mo_shortname(paste0("B_STRPT_GRP", LETTERS[1:12]), language = NULL),
+    paste0("G", LETTERS[1:12], "S")
+  )
+  expect_equal(mo_shortname("B_SLMNL_GRPE", language = NULL), "S. Group E")
+  expect_equal(mo_shortname("B_STRPT_ABCG", language = NULL), "S. Group A, B, C, G")
+  serovars <- microorganisms$mo[microorganisms$genus == "Salmonella" & microorganisms$subspecies %like_case% "^[A-Z]" & microorganisms$status == "accepted"]
+  expect_false(anyDuplicated(mo_shortname(serovars, language = NULL)) > 0)
 
   # check gram stain determination, to prevent we lag after a taxonomic renaming
   current_grampos_phyla <- c(

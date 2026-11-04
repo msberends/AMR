@@ -1,4 +1,4 @@
-# AMR 3.1.0.9015
+# AMR 3.1.0.9016
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -11,6 +11,9 @@ It also adds a `site` argument to `as.sir()`, stores EUCAST MIC breakpoints exac
 * EUCAST breakpoints of *Vibrio* now apply only to the species that EUCAST states: *V. alginolyticus*, *V. cholerae*, *V. fluvialis*, *V. parahaemolyticus* and *V. vulnificus*. Other species and isolates identified at genus level now give `NA`, or use PK/PD breakpoints in EUCAST 2022-2023
 * With unknown `uti`, a blocking row without UTI status no longer overrides a UTI breakpoint at the same taxonomic level, e.g., amikacin in *Acinetobacter* now gives S or R instead of `NA`, which is noted in `sir_interpretation_history()`. Use `uti = FALSE` to prevent this
 * If several breakpoints fit and no `site` is set, `as.sir()` now takes the one for the most systemic site, instead of the first one in the data set. This means, e.g., that a meningitis breakpoint now precedes a non-meningitis breakpoint, such as for benzylpenicillin in *S. pneumoniae*. Use `site` to choose another one
+* `mo_shortname()` now returns the serovar for *Salmonella* serovars, e.g., `"S. Typhi"` and `"S. Goldcoast"` instead of `"S. enterica"`. As this is the default for `bug_drug_combinations()` and short names in `antibiogram()`, serovars are no longer merged in their results. Use `FUN = function(x) paste(mo_genus(x), mo_species(x))` in `bug_drug_combinations()` to group them by species (#341)
+* `mo_shortname()` now returns e.g. `"S. Group B"` for *Salmonella* groups instead of the abbreviations of streptococci, such as `"GBS"`, so that they are no longer merged with streptococci in `bug_drug_combinations()` and `antibiogram()`. *Streptococcus* groups E, I, J and L are now also abbreviated, e.g., `"GES"`, and `"B_STRPT_ABCG"` now returns `"S. Group A, B, C, G"` instead of the malformed `"GA, B, C, GS"` (#341)
+* `mdro()` now applies the rule for *Salmonella* Typhi in the EUCAST guidelines, i.e., resistance to carbapenems (and fluoroquinolones in `"EUCAST3.1"`). This rule never applied before, so these isolates were wrongly classified as negative (#341)
 
 ### New
 * **Site of infection**
