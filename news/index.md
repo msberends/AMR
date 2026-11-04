@@ -1,11 +1,41 @@
 # Changelog
 
-## AMR 3.1.0.9014
+## AMR 3.1.0.9015
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
 and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users
 are strongly advised to re-run their WISCA analyses.
+
+#### Breaking
+
+- [`mo_shortname()`](https://amr-for-r.org/reference/mo_property.md) now
+  returns the serovar for *Salmonella* serovars, e.g., `"S. Typhi"` and
+  `"S. Goldcoast"` instead of `"S. enterica"`. As this is the default
+  for
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md)
+  and short names in
+  [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md),
+  serovars are no longer merged in their results. Use
+  `FUN = function(x) paste(mo_genus(x), mo_species(x))` in
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md)
+  to group them by species
+  ([\#341](https://github.com/msberends/AMR/issues/341))
+- [`mo_shortname()`](https://amr-for-r.org/reference/mo_property.md) now
+  returns e.g. `"S. Group B"` for *Salmonella* groups instead of the
+  abbreviations of streptococci, such as `"GBS"`, so that they are no
+  longer merged with streptococci in
+  [`bug_drug_combinations()`](https://amr-for-r.org/reference/bug_drug_combinations.md)
+  and [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md).
+  *Streptococcus* groups E, I, J and L are now also abbreviated, e.g.,
+  `"GES"`, and `"B_STRPT_ABCG"` now returns `"S. Group A, B, C, G"`
+  instead of the malformed `"GA, B, C, GS"`
+  ([\#341](https://github.com/msberends/AMR/issues/341))
+- [`mdro()`](https://amr-for-r.org/reference/mdro.md) now applies the
+  rule for *Salmonella* Typhi in the EUCAST guidelines, i.e., resistance
+  to carbapenems (and fluoroquinolones in `"EUCAST3.1"`). This rule
+  never applied before, so these isolates were wrongly classified as
+  negative ([\#341](https://github.com/msberends/AMR/issues/341))
 
 #### Changed
 

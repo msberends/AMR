@@ -397,8 +397,9 @@ combination or original description authority is returned.
 
 The short name (`mo_shortname()`) returns the first character of the
 genus and the full species, such as `"E. coli"`, for species and
-subspecies. Exceptions are abbreviations of staphylococci (such as
-*"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic
+subspecies. Exceptions are *Salmonella* serovars, which return the
+serovar (such as `"S. Typhi"`), and abbreviations of staphylococci (such
+as *"CoNS"*, Coagulase-Negative Staphylococci) and beta-haemolytic
 streptococci (such as *"GBS"*, Group B Streptococci). Please bear in
 mind that e.g. *E. coli* could mean *Escherichia coli* (domain of
 Bacteria) as well as *Entamoeba coli* (domain of Protozoa). Returning to
