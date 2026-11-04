@@ -433,7 +433,7 @@ test_that("test-sir.R", {
   )
   # an S category remains unaffected, e.g. EUCAST CIP in E. coli (S <= 0.25, R > 0.5)
   expect_equal(
-    suppressMessages(as.sir(as.mic(c("<=0.5", "<0.5", "<=0.25")), mo = "Escherichia coli", ab = "CIP", guideline = "EUCAST 2026", capped_mic_handling = "standard")),
+    suppressMessages(as.sir(as.mic(c("<=0.5", "<0.5", "<=0.25")), mo = "Escherichia coli", ab = "CIP", guideline = "EUCAST 2026", capped_mic_handling = "standard", site = "non-meningitis")),
     as.sir(c("NI", "S", "S"))
   )
   # capped values must not be forced to S or R if there is no breakpoint (blocking row, here: EUCAST CIP in S. aureus in brackets only)
@@ -638,9 +638,231 @@ test_that("custom reference_data: host = NA acts as host-agnostic fallback", {
   expect_equal(as.character(result), "R")
 })
 
+test_that("as.sir() uses screening breakpoints as specified (#328)", {
+  skip_on_cran()
+  sir <- function(ab, ...) {
+    as.character(suppressMessages(suppressWarnings(as.sir(as.disk(20), mo = "S. aureus", ab = ab, guideline = "EUCAST 2026", info = FALSE, ...))))
+  }
+  expect_identical(sir("FOX"), NA_character_)
+  expect_false(is.na(sir("FOX-S")))
+  expect_false(is.na(sir("FOX-S", include_screening = TRUE)))
+  expect_false(is.na(sir("FOX", include_screening = TRUE)))
+  expect_identical(sir("FOX", include_screening = TRUE), sir("FOX-S"))
+  expect_identical(sir("FOX", include_screening = FALSE), NA_character_)
+  expect_identical(sir("FOX-S", include_screening = FALSE), NA_character_)
+  # with a note, as this may be by accident
+  expect_message(as.sir(as.disk(20), mo = "S. aureus", ab = "FOX-S", guideline = "EUCAST 2026", include_screening = FALSE, info = FALSE), "include_screening")
+  sir_interpretation_history(clean = TRUE)
+  sir("FOX-S", include_screening = FALSE)
+  sir_history <- sir_interpretation_history(clean = TRUE)
+  expect_match(sir_history$notes, "include_screening = FALSE", fixed = TRUE)
+})
+
+test_that("as.sir() takes the site of a breakpoint into account", {
+  skip_on_cran()
+  sir <- function(x, mo, ab, ..., guideline = "EUCAST 2026") {
+    as.character(suppressMessages(suppressWarnings(as.sir(x, mo = mo, ab = ab, guideline = guideline, info = FALSE, ...))))
+  }
+  # every site in the data set, for humans and for animals, must be known, so that none can be overlooked
+  sites <- unique(clinical_breakpoints$site[!is.na(clinical_breakpoints$site)])
+  for (s in sites) {
+    known <- vapply(setdiff(sir_site_parts(s), SIR_SITE_NOT_A_SITE), function(part) length(sir_site_tokens(part)) == 1, logical(1))
+    expect_true(all(known), info = s)
+  }
+  expect_identical(sort(names(SIR_SITE_PATTERNS)), sort(SIR_SITE_ORDER))
+  expect_identical(
+    SIR_SITE_ORDER,
+    c("systemic", "iv", "meningitis", "endocarditis", "pneumonia", "mastitis", "respiratory", "metritis", "genital", "intestinal", "other", "non-meningitis", "non-endocarditis", "non-pneumonia", "extraintestinal", "soft tissue", "skin", "wounds", "inhaled", "oral", "prophylaxis", "uti", "topical", "screen")
+  )
+
+  # the fixed codes, all other values give an error
+  expect_identical(sir_site_normalise(c("Meningitis", "iv, meningitis", NA)), c("meningitis", "iv,meningitis", NA))
+  expect_error(as.sir(as.mic(1), mo = "E. coli", ab = "AMC", site = "brain", info = FALSE))
+  expect_error(as.sir(as.mic(1), mo = "E. coli", ab = "AMC", site = "uti", uti = FALSE, info = FALSE))
+
+  # contradictions: only with a site in the same group, or a negation
+  expect_false(sir_site_fits("non-meningitis", "meningitis"))
+  expect_false(sir_site_fits("meningitis", "non-meningitis"))
+  expect_false(sir_site_fits("pneumonia", "meningitis"))
+  expect_false(sir_site_fits("oral", "iv"))
+  expect_true(sir_site_fits(character(0), "meningitis"))
+  expect_true(sir_site_fits("iv", "meningitis"))
+  expect_true(sir_site_fits(c("iv", "meningitis"), "meningitis"))
+  expect_true(sir_site_fits("non-endocarditis", "meningitis"))
+  expect_true(sir_site_fits("systemic", "meningitis"))
+  expect_false(sir_site_fits("systemic", "uti"))
+
+  # veterinary sites: the same rules, where sites that are part of each other do not contradict
+  expect_identical(sir_site_tokens("Mammary gland"), "mastitis")
+  expect_identical(sir_site_tokens("Wounds, abscesses"), "wounds")
+  expect_false(sir_site_fits("mastitis", "respiratory"))
+  expect_false(sir_site_fits("respiratory", "uti"))
+  expect_true(sir_site_fits("respiratory", "pneumonia"))
+  expect_true(sir_site_fits("pneumonia", "respiratory"))
+  expect_true(sir_site_fits("metritis", "genital"))
+  expect_true(sir_site_fits(c("skin", "soft tissue"), "wounds"))
+
+  # "other" means any site not listed: it fits no breakpoint limited to an indication, but it does fit the rest
+  expect_false(sir_site_fits("meningitis", "other"))
+  expect_false(sir_site_fits("uti", "other"))
+  expect_false(sir_site_fits("mastitis", "other"))
+  expect_true(sir_site_fits(character(0), "other"))
+  expect_true(sir_site_fits("other", "other"))
+  expect_true(sir_site_fits("non-meningitis", "other"))
+  expect_true(sir_site_fits("iv", "other"))
+  expect_true(sir_site_given(character(0), "other"))
+  expect_false(sir_site_given(character(0), "uti"))
+
+  # site = NA takes the most systemic site, also compared to a breakpoint without a site
+  expect_true(sir_site_rank("Systemic infections") < sir_site_rank("Intravenous"))
+  expect_true(sir_site_rank("Intravenous") < sir_site_rank("Meningitis"))
+  expect_true(sir_site_rank("Pneumonia") < sir_site_rank("Mastitis"))
+  expect_identical(sir_site_rank("Mastitis"), sir_site_rank("Mammary gland"))
+  expect_true(sir_site_rank("Mastitis") < sir_site_rank("Intestinal"))
+  # "other" and no site are one position: below meningitis, and above UTI
+  expect_identical(sir_site_rank(NA), sir_site_rank("Other infections"))
+  expect_true(sir_site_rank("Meningitis") < sir_site_rank("Other infections"))
+  expect_true(sir_site_rank("Other infections") < sir_site_rank("Uncomplicated urinary tract infection"))
+  expect_true(sir_site_rank("Intestinal") < sir_site_rank(NA))
+  expect_true(sir_site_rank(NA) < sir_site_rank("Non-meningitis"))
+  expect_true(sir_site_rank("Oral") < sir_site_rank("Uncomplicated urinary tract infection"))
+  # a second site breaks a tie on the first one
+  expect_true(sir_site_rank("Intravenous, Meningitis") < sir_site_rank("Intravenous, Non-meningitis"))
+  expect_true(sir_site_rank("Intravenous, Non-meningitis") < sir_site_rank("Meningitis"))
+
+  # the order of sites does not make a Gram stain precede the more specific anaerobes: CLSI Table 2J, not Table 2B-5
+  expect_identical(sir(as.mic(16), "Bacteroides fragilis", "CRO", guideline = "CLSI 2022"), "S")
+  # and it does make a meningitis breakpoint precede a non-meningitis breakpoint of another taxon of the same rank
+  expect_identical(sir(as.mic(0.25), "Streptococcus agalactiae", "PEN", guideline = "EUCAST 2024"), "R")
+
+  # "other" in as.sir(): takes the breakpoint for other infections, or without a site
+  expect_identical(sir(as.mic(0.25), "Streptococcus pneumoniae", "PEN", site = "other", guideline = "EUCAST 2012"), "I")
+  expect_identical(sir(as.mic(0.25), "Streptococcus pneumoniae", "PEN", site = "meningitis", guideline = "EUCAST 2012"), "R")
+  # only breakpoints limited to an indication: no result
+  expect_identical(sir(as.mic(1), "Escherichia coli", "NTR", site = "other"), NA_character_)
+  # veterinary: per site for the host, and no result for another site
+  vet <- function(x, mo, ab, ...) {
+    sir(x, mo, ab, guideline = "CLSI 2026", breakpoint_type = "animal", host = "cattle", ...)
+  }
+  expect_identical(vet(as.mic(2), "Staphylococcus aureus", "KAC", site = "mastitis"), "S")
+  expect_identical(vet(as.mic(32), "Staphylococcus aureus", "KAC", site = "mastitis"), "R")
+  expect_identical(vet(as.mic(2), "Staphylococcus aureus", "KAC", site = "meningitis"), NA_character_)
+
+  # S. pneumoniae and benzylpenicillin, with breakpoints for meningitis and for other infections
+  pen <- as.mic(0.25)
+  expect_identical(sir(pen, "Streptococcus pneumoniae", "PEN", site = "meningitis"), "R")
+  expect_identical(sir(pen, "Streptococcus pneumoniae", "PEN", site = "non-meningitis"), "I")
+  expect_identical(sir(pen, "Streptococcus pneumoniae", "PEN"), "R")
+  sir_interpretation_history(clean = TRUE)
+  sir(pen, "Streptococcus pneumoniae", "PEN")
+  history <- sir_interpretation_history(clean = TRUE)
+  expect_match(history$site, "Meningitis", fixed = TRUE)
+  expect_match(history$notes, "Multiple breakpoints available", fixed = TRUE)
+
+  # amoxicillin in Enterobacterales: per route
+  amx <- as.mic(4)
+  expect_identical(sir(amx, "Escherichia coli", "AMX", site = "iv"), "S")
+  expect_identical(sir(amx, "Escherichia coli", "AMX"), "S")
+  # only breakpoints for other sites: no result, and no fallback to PK/PD
+  expect_identical(sir(as.mic(1), "Escherichia coli", "NTR", site = "meningitis"), NA_character_)
+  expect_identical(sir(as.mic(1), "Escherichia coli", "NTR", site = "uti"), "S")
+  expect_identical(sir(as.mic(1), "Escherichia coli", "NTR", uti = TRUE), "S")
+
+  # vectorised, also in combination with uti, of which NA, TRUE and FALSE can be mixed
+  expect_identical(
+    sir(as.mic(c(0.25, 0.25)), "Streptococcus pneumoniae", "PEN", site = c("meningitis", "non-meningitis")),
+    c("R", "I")
+  )
+  expect_identical(
+    sir(as.mic(c(16, 16, 16)), "Escherichia coli", "NTR", uti = c(NA, TRUE, FALSE)),
+    c("S", "S", NA)
+  )
+
+  # on a data.frame, with a column name and with fixed values, without treating the column as an antimicrobial
+  df <- data.frame(mo = "Streptococcus pneumoniae", PEN = as.mic(c(0.25, 0.25)), where = c("meningitis", "non-meningitis"), stringsAsFactors = FALSE)
+  out <- suppressMessages(suppressWarnings(as.sir(df, col_mo = "mo", guideline = "EUCAST 2026", site = "where", info = FALSE)))
+  expect_identical(as.character(out$PEN), c("R", "I"))
+  expect_identical(out$where, df$where)
+  out <- suppressMessages(suppressWarnings(as.sir(df, col_mo = "mo", guideline = "EUCAST 2026", site = "non-meningitis", info = FALSE)))
+  expect_identical(as.character(out$PEN), c("I", "I"))
+})
+
+test_that("MIC breakpoints are compared as dilutions, not as their notation (#331)", {
+  skip_on_cran()
+  sir <- function(x, mo, ab, guideline = "EUCAST 2026") {
+    as.character(suppressMessages(suppressWarnings(as.sir(as.mic(x), mo = mo, ab = ab, guideline = guideline, info = FALSE))))
+  }
+  # the published value is the stored value
+  pen <- subset(clinical_breakpoints, guideline == "EUCAST 2026" & type == "human" & method == "MIC" & ab == "PEN" & mo == "B_STRPT_GRPA")
+  expect_identical(unique(pen$breakpoint_S), 0.03)
+  # all notations of this dilution are S, the next dilution is not
+  expect_identical(sir(c(0.03, 0.031, 0.03125, 0.032), "Streptococcus pyogenes", "PEN"), rep("S", 4))
+  expect_identical(sir(0.064, "Streptococcus pyogenes", "PEN"), "R")
+  # the same for an R breakpoint, in the notation of the guideline and of the laboratory
+  expect_identical(mic_dilution_level(c(0.03, 0.032, 0.06, 0.064, 0.12, 0.125, 0.19, 3)), c(0.032, 0.032, 0.064, 0.064, 0.125, 0.125, 0.19, 3))
+  # the off-scale S breakpoint is stored as published, and never leads to S
+  cip <- subset(clinical_breakpoints, guideline == "EUCAST 2026" & type == "human" & method == "MIC" & ab == "CIP" & mo == "B_PSDMN" & is.na(site))
+  expect_identical(unique(cip$breakpoint_S), 0.001)
+  expect_identical(sir(c(0.0005, 0.001, 0.25), "Pseudomonas aeruginosa", "CIP"), c("I", "I", "I"))
+  # the log shows the published breakpoint
+  sir_interpretation_history(clean = TRUE)
+  sir(0.032, "Streptococcus pyogenes", "PEN")
+  expect_identical(sir_interpretation_history(clean = TRUE)$breakpoint_S_R, "0.03-0.03")
+})
+
+test_that("Morganella is interpreted as reported, not as M. morganii (#330)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb <- cb[cb$type == "human" & cb$guideline %like% "EUCAST", , drop = FALSE]
+  cb[] <- lapply(cb, function(x) if (is.numeric(x) || is.logical(x)) x else as.character(x))
+  order_code <- "B_[ORD]_ENTRBCTR"
+  family_code <- "B_[FAM]_MORGNLLC"
+  genus_code <- "B_MRGNL"
+  species_code <- "B_MRGNL_MRGN"
+  key <- function(df) paste(df$guideline, df$ab, df$method)
+  sir <- function(mo, k) {
+    x <- cb[key(cb) == k & cb$mo %in% c(order_code, family_code, genus_code, species_code), , drop = FALSE]
+    bp <- unique(c(x$breakpoint_S, x$breakpoint_R))
+    bp <- bp[!is.na(bp)]
+    if (x$method[1] == "MIC") {
+      input <- as.mic(sort(unique(pmax(0.001, c(0.001, 512, bp / 2, bp, bp * 2)))))
+    } else {
+      input <- as.disk(sort(unique(pmin(50, c(6, 50, bp - 1, bp, bp + 1)))))
+    }
+    as.character(suppressMessages(suppressWarnings(
+      as.sir(input, mo = mo, ab = x$ab[1], guideline = x$guideline[1], uti = FALSE, info = FALSE)
+    )))
+  }
+
+  # EUCAST's exceptions for the genus are only for agents that it excludes for Morganella as a whole
+  genus_rows <- cb[cb$mo == genus_code, , drop = FALSE]
+  expect_true(all(genus_rows$ab == "IMR"))
+  expect_true(all(is.na(genus_rows$breakpoint_S) & is.na(genus_rows$breakpoint_R)))
+
+  # the exceptions for M. morganii itself do not apply to the genus, which follows Enterobacterales
+  species_only <- setdiff(key(cb[cb$mo == species_code, ]), key(cb[cb$mo %in% c(family_code, genus_code), ]))
+  expect_true(length(species_only) > 0)
+  for (k in species_only) {
+    expect_identical(sir(genus_code, k), sir(order_code, k), info = k)
+    expect_false(identical(sir(species_code, k), sir(order_code, k)), info = k)
+  }
+
+  # the exceptions for the family do apply to the genus, as to any other member of the family
+  family_only <- setdiff(key(cb[cb$mo == family_code, ]), key(cb[cb$mo %in% c(species_code, genus_code), ]))
+  expect_true(length(family_only) > 0)
+  for (k in family_only) {
+    expect_identical(sir(genus_code, k), sir(family_code, k), info = k)
+    expect_identical(sir("Providencia stuartii", k), sir(family_code, k), info = k)
+  }
+
+  # a current example: imipenem has its own breakpoints for Morganellaceae, including Morganella
+  expect_identical(as.character(suppressMessages(as.sir(as.mic(2), mo = "Morganella", ab = "IPM", guideline = "EUCAST 2026", info = FALSE))), "I")
+  expect_identical(as.character(suppressMessages(as.sir(as.mic(2), mo = "Klebsiella oxytoca", ab = "IPM", guideline = "EUCAST 2026", info = FALSE))), "S")
+})
+
 test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   skip_on_cran()
-  sir <- function(x, mo, ab, guideline, include_screening = FALSE, uti = NA) {
+  sir <- function(x, mo, ab, guideline, include_screening = NULL, uti = NA) {
     as.character(suppressMessages(suppressWarnings(
       as.sir(x, mo = mo, ab = ab, guideline = guideline, include_screening = include_screening, uti = uti)
     )))
@@ -648,6 +870,11 @@ test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   # IE for V. fluvialis, while Vibrio spp. has breakpoints
   expect_identical(sir(as.mic(0.125), "Vibrio fluvialis", "CTX", "EUCAST 2026"), NA_character_)
   expect_identical(sir(as.mic(0.125), "Vibrio cholerae", "CTX", "EUCAST 2026"), "S")
+  # breakpoints of Vibrio are for 5 species only, so not for other species or for the genus, which can only have PK/PD
+  expect_identical(sir(as.mic(0.125), "Vibrio parahaemolyticus", "CIP", "EUCAST 2026"), "S")
+  expect_identical(sir(as.mic(0.125), "Vibrio harveyi", "CIP", "EUCAST 2026"), NA_character_)
+  expect_identical(sir(as.mic(0.125), "Vibrio", "CIP", "EUCAST 2026"), NA_character_)
+  expect_identical(sir(as.mic(0.125), "Vibrio harveyi", "CIP", "EUCAST 2023"), "S")
   # fosfomycin zone diameter breakpoints apply to E. coli only
   expect_identical(sir(as.disk(25), "Klebsiella pneumoniae", "FOS", "EUCAST 2019"), NA_character_)
   expect_identical(sir(as.disk(25), "Escherichia coli", "FOS", "EUCAST 2019"), "S")
@@ -665,7 +892,7 @@ test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   # H. influenzae MIC breakpoints apply to H. parainfluenzae, zone diameters do not
   expect_identical(sir(as.mic(0.5), "Haemophilus parainfluenzae", "CIP", "EUCAST 2026"), "R")
   expect_identical(sir(as.disk(30), "Haemophilus parainfluenzae", "CIP", "EUCAST 2026"), NA_character_)
-  # cefoxitin screen: CoNS not identified to species level use S >= 25 mm
+  # cefoxitin screen: CoNS not identified to species level use S >= 25 mm, also with the regular agent if allowed (#328)
   expect_identical(sir(as.disk(23), "B_STPHY_CONS", "FOX", "EUCAST 2026", include_screening = TRUE), "R")
   expect_identical(sir(as.disk(23), "Staphylococcus hominis", "FOX", "EUCAST 2026", include_screening = TRUE), "S")
   expect_identical(sir(as.disk(26), "Staphylococcus epidermidis", "FOX", "EUCAST 2026", include_screening = TRUE), "R")
@@ -676,12 +903,27 @@ test_that("EUCAST blocking rows prevent falling back to broader breakpoints", {
   expect_identical(sir(as.mic(0.0005), "Pseudomonas aeruginosa", "CIP", "EUCAST 2026"), "I")
   # EUCAST's 0.06 mg/L is the dilution 0.0625, i.e. 0.064 in this package
   expect_identical(sir(as.mic(0.064), "Haemophilus influenzae", "LVX", "EUCAST 2026"), "S")
-  # high-level gentamicin resistance (screening test given in the notes)
+  # high-level gentamicin resistance (screening test given in the notes), under both codes (#328)
   expect_identical(sir(as.mic(256), "Enterococcus faecium", "GEH", "EUCAST 2026"), "R")
-  # breakpoints in brackets for systemic infections are not replaced by the UTI breakpoint if uti is unknown
-  expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026"), NA_character_)
+  expect_identical(sir(as.mic(256), "Enterococcus faecium", "GEN-S", "EUCAST 2026"), "R")
+  # breakpoints in brackets are not in the data set (#327), so a UTI breakpoint is used if uti is unknown and nothing else is available, which is noted every time
+  sir_interpretation_history(clean = TRUE)
+  expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026"), "S")
+  sir_history <- sir_interpretation_history(clean = TRUE)
+  expect_match(sir_history$notes, "only available for (uncomplicated) urinary tract infections", fixed = TRUE)
   expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026", uti = FALSE), NA_character_)
   expect_identical(sir(as.mic(4), "Acinetobacter baumannii", "AMK", "EUCAST 2026", uti = TRUE), "S")
+  # without a breakpoint in brackets, PK-PD breakpoints apply if EUCAST has these, as in EUCAST 2023 for aminoglycosides
+  sir_interpretation_history(clean = TRUE)
+  expect_identical(sir(as.mic(0.5), "Escherichia coli", "AMK", "EUCAST 2023", uti = FALSE), "S")
+  sir_history <- sir_interpretation_history(clean = TRUE)
+  expect_match(sir_history$ref_table, "PK PD", fixed = TRUE)
+  # and the breakpoints of a broader taxon for another route, of which the site is noted
+  sir_interpretation_history(clean = TRUE)
+  expect_identical(sir(as.mic(4), "Enterococcus faecalis", "AMX", "EUCAST 2026", uti = FALSE), "S")
+  expect_identical(sir_interpretation_history(clean = TRUE)$site, "Intravenous")
+  # an organism that a table excludes stays excluded, also if EUCAST has breakpoints in brackets for it
+  expect_identical(sir(as.mic(1), "Bacillus anthracis", "VAN", "EUCAST 2026"), NA_character_)
   # UTI breakpoints are only used for unknown uti if there are no non-UTI breakpoints, which is noted every time
   for (i in 1:2) {
     sir_interpretation_history(clean = TRUE)

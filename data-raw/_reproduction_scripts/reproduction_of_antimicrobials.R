@@ -931,6 +931,32 @@ antimicrobials <- antimicrobials |>
   )
 
 
+# add the screening agents of #328, for all explicit screening tests in clinical_breakpoints; agreed by the maintainer in that issue
+for (agent in c("CHL", "CIP", "COL", "ERY", "FUS", "GEN", "LVX", "MUP", "NEO", "OFX", "RTP", "STR1", "TOB")) {
+  antimicrobials <- antimicrobials |>
+    mutate(ab = as.character(ab)) |>
+    bind_rows(
+      antimicrobials |>
+        mutate(ab = as.character(ab)) |>
+        filter(ab == agent) |>
+        mutate(
+          abbreviations = list(paste(tolower(ab), "screen")),
+          ab = paste0(ab, "-S"),
+          name = paste(name, "screening test"),
+          cid = NA,
+          atc = list(character(0)),
+          atc_group1 = NA_character_,
+          atc_group2 = NA_character_,
+          synonyms = list(character(0)),
+          oral_ddd = NA_real_,
+          oral_units = NA_character_,
+          iv_ddd = NA_real_,
+          iv_units = NA_character_,
+          loinc = list(character(0))
+        )
+    )
+}
+
 # add pretomanid
 antimicrobials <- antimicrobials %>%
   mutate(ab = as.character(ab)) %>%

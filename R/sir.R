@@ -41,6 +41,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @param uti (Urinary Tract Infection) a vector (or column name) with [logical]s (`TRUE` or `FALSE`) to specify whether a UTI specific interpretation from the guideline should be chosen. For using [as.sir()] on a [data.frame], this can also be a column containing [logical]s or when left blank, the data set will be searched for a column 'specimen', and rows within this column containing 'urin' (such as 'urine', 'urina') will be regarded isolates from a UTI. If `uti` is `NA` (unknown), non-UTI breakpoints are preferred, and UTI breakpoints are only used if no non-UTI breakpoints exist for the drug-bug combination, which is noted in [sir_interpretation_history()]. With `uti = FALSE`, UTI breakpoints are never used. See *Examples*.
 #' @inheritParams first_isolate
 #' @param guideline A guideline name (or column name) to use for SIR interpretation. Defaults to `r AMR::clinical_breakpoints$guideline[1]` (the latest implemented EUCAST guideline in the [AMR::clinical_breakpoints] data set), but can be set with the package option [`AMR_guideline`][AMR-options]. Currently supports EUCAST (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "EUCAST")$guideline)))`) and CLSI (`r min(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`-`r max(as.integer(gsub("[^0-9]", "", subset(AMR::clinical_breakpoints, guideline %like% "CLSI")$guideline)))`), see *Details*. Using a column name allows for straightforward interpretation of historical data, which must be analysed in the context of, for example, different years.
+#' @param site The site or route that the isolate is interpreted for: a [character] vector or a column name, in the fixed codes `"systemic"`, `"iv"`, `"meningitis"`, `"endocarditis"`, `"pneumonia"`, `"mastitis"`, `"respiratory"`, `"metritis"`, `"genital"`, `"intestinal"`, `"other"`, `"non-meningitis"`, `"non-endocarditis"`, `"non-pneumonia"`, `"extraintestinal"`, `"soft tissue"`, `"skin"`, `"wounds"`, `"inhaled"`, `"oral"`, `"prophylaxis"`, `"uti"` and `"topical"`, which can be combined with a comma, e.g. `"iv, meningitis"`. If `site` is `NA` (default), any breakpoint matching all other criteria can apply, taken from most to least systemic site in the order just given; a breakpoint without a site takes the position of `"other"`, as both mean any site that is not listed next to it. If `site` is set, a breakpoint for a contradicting site is left out, e.g. `"meningitis"` leaves out `Non-meningitis`, while a breakpoint without a site still applies. `"other"` leaves out every breakpoint limited to an indication, and prefers a breakpoint without a site. Related sites do not contradict each other: `"pneumonia"` and `"respiratory"`, `"metritis"` and `"genital"`, and `"soft tissue"`, `"skin"` and `"wounds"`. The code `"mastitis"` includes `Mammary gland`, and `"wounds"` includes `Abscesses`. The result is `NA` if only contradicting sites are available, also when PK/PD breakpoints exist. All choices are noted in [sir_interpretation_history()].
 #' @param capped_mic_handling A [character] string that controls how MIC values with a cap (i.e., starting with `<`, `<=`, `>`, or `>=`) are interpreted. Supports the following options:
 #'
 #' `"none"`
@@ -65,7 +66,7 @@ VALID_SIR_LEVELS <- c("S", "SDD", "I", "R", "NI", "WT", "NWT", "NS")
 #' @param as_wt_nwt A [logical] to return `"WT"`/`"NWT"` instead of `"S"`/`"R"`. Defaults to `TRUE` when using ECOFFs, i.e., when `breakpoint_type` is set to `"ECOFF"`.
 #' @param add_intrinsic_resistance *(only useful when using a EUCAST guideline)* a [logical] to indicate whether intrinsic antibiotic resistance must also be considered for applicable bug-drug combinations, meaning that e.g. ampicillin will always return "R" in *Klebsiella* species. Determination is based on the [intrinsic_resistant] data set, that itself is based on `r format_eucast_version_nr(3.3)`.
 #' @param substitute_missing_r_breakpoint A [logical] to indicate that a missing clinical breakpoints for R (resistant) must be substituted with R - the default is `FALSE`. Some (especially CLSI) breakpoints only have a breakpoint for S, meaning that the outcome can only be `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s in these cases to `"R"`. Can also be set with the package option [`AMR_substitute_missing_r_breakpoint`][AMR-options].
-#' @param include_screening A [logical] to indicate that clinical breakpoints for screening are allowed - the default is `FALSE`. Can also be set with the package option [`AMR_include_screening`][AMR-options].
+#' @param include_screening A [logical] to indicate that clinical breakpoints for screening are allowed. At default (`NULL`, can be set with the package option [`AMR_include_screening`][AMR-options]), these are only used for screening agents, e.g. `FOX-S`, but not for regular agents, e.g. `FOX`. Use `TRUE` to also use them for regular agents (with `FOX` then taking the breakpoints of `FOX-S`), and `FALSE` to never use them, which gives `NA` with a note for a screening agent.
 #' @param include_PKPD A [logical] to indicate that PK/PD clinical breakpoints must be applied as a last resort - the default is `TRUE`. Can also be set with the package option [`AMR_include_PKPD`][AMR-options].
 #' @param breakpoint_type The type of breakpoints to use, either `r vector_or(clinical_breakpoints$type, documentation = TRUE)`. ECOFF stands for Epidemiological Cut-Off values. The default is `"human"`, which can also be set with the package option [`AMR_breakpoint_type`][AMR-options]. If `host` is set to values of veterinary species, this will automatically be set to `"animal"`.
 #' @param host A vector (or column name) with [character]s to indicate the host. Only useful for veterinary breakpoints, as it requires `breakpoint_type = "animal"`. The values can be any text resembling the animal species, even in any of the `r length(LANGUAGES_SUPPORTED)` supported languages of this package. For foreign languages, be sure to set the language with [set_AMR_locale()] (though it will be automatically guessed based on the system language).
@@ -663,7 +664,7 @@ as.sir.mic <- function(x,
                        add_intrinsic_resistance = FALSE,
                        reference_data = AMR::clinical_breakpoints,
                        substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
-                       include_screening = getOption("AMR_include_screening", FALSE),
+                       include_screening = getOption("AMR_include_screening", NULL),
                        include_PKPD = getOption("AMR_include_PKPD", TRUE),
                        breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                        host = NULL,
@@ -671,6 +672,7 @@ as.sir.mic <- function(x,
                        verbose = FALSE,
                        info = interactive(),
                        conserve_capped_values = NULL,
+                       site = NULL,
                        ...) {
   as_sir_method(
     method_short = "mic",
@@ -693,6 +695,7 @@ as.sir.mic <- function(x,
     verbose = verbose,
     info = info,
     conserve_capped_values = conserve_capped_values,
+    site = site,
     ...
   )
 }
@@ -708,13 +711,14 @@ as.sir.disk <- function(x,
                         add_intrinsic_resistance = FALSE,
                         reference_data = AMR::clinical_breakpoints,
                         substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
-                        include_screening = getOption("AMR_include_screening", FALSE),
+                        include_screening = getOption("AMR_include_screening", NULL),
                         include_PKPD = getOption("AMR_include_PKPD", TRUE),
                         breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                         host = NULL,
                         language = get_AMR_locale(),
                         verbose = FALSE,
                         info = interactive(),
+                        site = NULL,
                         ...) {
   as_sir_method(
     method_short = "disk",
@@ -736,6 +740,7 @@ as.sir.disk <- function(x,
     language = language,
     verbose = verbose,
     info = info,
+    site = site,
     ...
   )
 }
@@ -753,7 +758,7 @@ as.sir.data.frame <- function(x,
                               add_intrinsic_resistance = FALSE,
                               reference_data = AMR::clinical_breakpoints,
                               substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint", FALSE),
-                              include_screening = getOption("AMR_include_screening", FALSE),
+                              include_screening = getOption("AMR_include_screening", NULL),
                               include_PKPD = getOption("AMR_include_PKPD", TRUE),
                               breakpoint_type = getOption("AMR_breakpoint_type", "human"),
                               host = NULL,
@@ -761,7 +766,8 @@ as.sir.data.frame <- function(x,
                               verbose = FALSE,
                               info = interactive(),
                               parallel = FALSE,
-                              conserve_capped_values = NULL) {
+                              conserve_capped_values = NULL,
+                              site = NULL) {
   meet_criteria(x, allow_class = "data.frame") # will also check for dimensions > 0
   meet_criteria(col_mo, allow_class = "character", is_in = colnames(x), allow_NULL = TRUE)
   meet_criteria(guideline, allow_class = "character")
@@ -771,7 +777,7 @@ as.sir.data.frame <- function(x,
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1)
   meet_criteria(reference_data, allow_class = "data.frame")
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1)
-  meet_criteria(include_screening, allow_class = "logical", has_length = 1)
+  meet_criteria(include_screening, allow_class = "logical", has_length = 1, allow_NULL = TRUE)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1)
   meet_criteria(host, allow_class = c("character", "factor"), allow_NULL = TRUE, allow_NA = TRUE)
@@ -871,6 +877,15 @@ as.sir.data.frame <- function(x,
     }
   }
 
+  # -- sites
+  col_site <- NULL
+  if (is.character(site) && length(site) == 1 && site %in% colnames(x)) {
+    col_site <- site
+    site <- as.character(x[, col_site, drop = TRUE])
+  } else if (!is.null(site) && !length(site) %in% c(1, nrow(x))) {
+    stop_("argument {.arg site} must be of length 1, of length `nrow(x)`, or a single column name of {.arg x}")
+  }
+
   i <- 0
   ab_cols <- colnames(x)[vapply(FUN.VALUE = logical(1), x, function(y) {
     i <<- i + 1
@@ -879,6 +894,9 @@ as.sir.data.frame <- function(x,
       return(FALSE)
     }
     if (!is.null(col_uti) && ab == col_uti) {
+      return(FALSE)
+    }
+    if (!is.null(col_site) && ab == col_site) {
       return(FALSE)
     }
     if (length(sel) == 0 || (length(sel) > 0 && ab %in% sel)) {
@@ -1001,6 +1019,7 @@ as.sir.data.frame <- function(x,
         ab = ab_col,
         guideline = guideline,
         uti = if (length(uti) > 1L) uti[row_idx] else uti,
+        site = if (length(site) > 1L) site[row_idx] else site,
         capped_mic_handling = capped_mic_handling,
         as_wt_nwt = as_wt_nwt,
         add_intrinsic_resistance = add_intrinsic_resistance,
@@ -1036,6 +1055,7 @@ as.sir.data.frame <- function(x,
         ab = ab_col,
         guideline = guideline,
         uti = if (length(uti) > 1L) uti[row_idx] else uti,
+        site = if (length(site) > 1L) site[row_idx] else site,
         as_wt_nwt = as_wt_nwt,
         add_intrinsic_resistance = add_intrinsic_resistance,
         reference_data = reference_data,
@@ -1237,6 +1257,157 @@ convert_host <- function(x, lang = NULL) {
   x_out
 }
 
+# Sites in clinical_breakpoints and in the `site` argument, from most to least systemic. Every value in the `site` column consists of one or more of these, see sir_site_tokens(). A breakpoint without a site takes the same position as "other": both mean any site that is not listed next to it. That single position gives both meanings: below "meningitis", as "other" then means non-meningitis, and above "uti", as "other" then means non-UTI.
+SIR_SITE_ORDER <- c("systemic", "iv", "meningitis", "endocarditis", "pneumonia", "mastitis", "respiratory", "metritis", "genital", "intestinal", "other", "non-meningitis", "non-endocarditis", "non-pneumonia", "extraintestinal", "soft tissue", "skin", "wounds", "inhaled", "oral", "prophylaxis", "uti", "topical", "screen")
+
+# all notations in the `site` column of clinical_breakpoints and of the `site` argument
+SIR_SITE_PATTERNS <- c(
+  systemic = "systemic( infections)?",
+  iv = "(iv|intravenous|parenteral)",
+  meningitis = "meningitis",
+  endocarditis = "endocarditis",
+  pneumonia = "((community-acquired )?pneumonia)",
+  mastitis = "(mastitis|mammary gland)",
+  respiratory = "respiratory",
+  metritis = "metritis",
+  genital = "genital",
+  intestinal = "intestinal",
+  other = "other( infections)?",
+  `non-meningitis` = "non-meningitis",
+  `non-endocarditis` = "non-endocarditis",
+  `non-pneumonia` = "non-pneumonia",
+  extraintestinal = "extraintestinal",
+  `soft tissue` = "soft tissue",
+  skin = "skin",
+  wounds = "(wounds?|abscess(es)?)",
+  inhaled = "inhaled",
+  oral = "oral",
+  prophylaxis = "prophylaxis",
+  uti = "(uti|urine|(uncomplicated )?urinary tract infection|infections originating from the urinary tract)",
+  topical = "topical",
+  screen = "screen"
+)
+# sites of which one is part of the other, or which are hard to tell apart, and so do not contradict each other
+SIR_SITE_RELATED <- list(c("pneumonia", "respiratory"), c("metritis", "genital"), c("soft tissue", "skin", "wounds"))
+# parts of the `site` column that do not say anything about where a breakpoint applies
+SIR_SITE_NOT_A_SITE <- c("liposomal", "investigational agent")
+
+sir_site_parts <- function(x) {
+  if (is.na(x)) {
+    return(character(0))
+  }
+  trimws(strsplit(tolower(as.character(x)), ",", fixed = TRUE)[[1]])
+}
+
+sir_site_tokens <- function(x) {
+  parts <- sir_site_parts(x)
+  names(SIR_SITE_PATTERNS)[vapply(SIR_SITE_PATTERNS, function(p) any(grepl(paste0("^", p, "$"), parts)), logical(1))]
+}
+
+# for the `site` argument: returns the codes per element, as one string, and does not accept anything unknown
+sir_site_normalise <- function(x) {
+  x <- as.character(x)
+  unique_x <- unique(x)
+  normalised <- vapply(unique_x, function(value) {
+    if (is.na(value)) {
+      return(NA_character_)
+    }
+    tokens <- sir_site_tokens(value)
+    unknown <- setdiff(sir_site_parts(value), c(tokens, SIR_SITE_NOT_A_SITE))
+    unknown <- unknown[!vapply(unknown, function(u) any(vapply(SIR_SITE_PATTERNS, function(p) grepl(paste0("^", p, "$"), u), logical(1))), logical(1))]
+    if (length(unknown) > 0 || length(tokens) == 0) {
+      stop_("Unknown value in {.arg site}: ", vector_and(value, quotes = TRUE), ". It must be one or more of ", vector_or(setdiff(names(SIR_SITE_PATTERNS), "screen"), quotes = TRUE, sort = FALSE), ", combined with a comma.", call = FALSE)
+    }
+    paste(tokens, collapse = ",")
+  }, character(1), USE.NAMES = FALSE)
+  normalised[match(x, unique_x)]
+}
+
+# the sites of the user, with the sites that are related to them
+sir_site_expand <- function(tokens) {
+  unique(c(tokens, unlist(SIR_SITE_RELATED[vapply(SIR_SITE_RELATED, function(related) any(tokens %in% related), logical(1))])))
+}
+
+# whether a breakpoint with these sites does not contradict the sites set by the user
+sir_site_fits <- function(breakpoint_tokens, user_tokens) {
+  negated <- function(tokens) sub("^non-", "", tokens[startsWith(tokens, "non-")])
+  if (any(negated(breakpoint_tokens) %in% user_tokens) || any(negated(user_tokens) %in% breakpoint_tokens)) {
+    return(FALSE)
+  }
+  # a systemic infection can be any indication, but not one limited to the urinary tract
+  if (("systemic" %in% breakpoint_tokens && "uti" %in% user_tokens) || ("uti" %in% breakpoint_tokens && "systemic" %in% user_tokens)) {
+    return(FALSE)
+  }
+  indications <- c("meningitis", "endocarditis", "pneumonia", "mastitis", "respiratory", "metritis", "genital", "uti", "intestinal", "extraintestinal", "soft tissue", "skin", "wounds", "prophylaxis")
+  # "other" is any site that is not listed, so it contradicts every breakpoint that is limited to an indication
+  if ("other" %in% user_tokens && !any(user_tokens %in% indications) && any(breakpoint_tokens %in% indications)) {
+    return(FALSE)
+  }
+  groups <- list(route = c("iv", "oral", "topical", "inhaled"), indication = indications)
+  user_tokens <- sir_site_expand(user_tokens)
+  for (group in groups) {
+    from_user <- intersect(user_tokens, group)
+    from_breakpoint <- intersect(breakpoint_tokens, group)
+    if (length(from_user) > 0 && length(from_breakpoint) > 0 && !any(from_user %in% from_breakpoint)) {
+      return(FALSE)
+    }
+  }
+  TRUE
+}
+
+# whether a breakpoint holds one of the sites that the user set, where "other" is also a breakpoint without a site
+sir_site_given <- function(breakpoint_tokens, user_tokens) {
+  any(breakpoint_tokens %in% sir_site_expand(user_tokens)) || ("other" %in% user_tokens && length(breakpoint_tokens) == 0)
+}
+
+# The position in SIR_SITE_ORDER, of the most systemic site if there are more. The other sites are the decimals, so that "Intravenous, Meningitis" comes before "Intravenous, Non-meningitis".
+sir_site_rank <- function(x) {
+  tokens <- sir_site_tokens(x)
+  if (length(tokens) == 0) {
+    return(as.double(match("other", SIR_SITE_ORDER)))
+  }
+  ranks <- sort(match(tokens, SIR_SITE_ORDER))
+  sum(ranks / 100^(seq_along(ranks) - 1))
+}
+
+# Whether a blocking row has any effect, which is the definition used for clinical_breakpoints (#326): as.sir() must give another result without it. This takes one row number and the rows of one guideline, agent and method.
+blocking_row_is_needed <- function(i, breakpoints) {
+  row <- breakpoints[i, , drop = FALSE]
+  others <- breakpoints[-i, , drop = FALSE]
+  values <- c(others$breakpoint_S, others$breakpoint_R)
+  values <- values[!is.na(values)]
+  if (length(values) == 0) {
+    return(FALSE)
+  }
+  if (row$method == "MIC") {
+    input <- as.mic(sort(unique(pmax(0.001, c(0.001, 512, values / 2, values, values * 2)))))
+  } else {
+    input <- as.disk(sort(unique(pmin(50, c(6, 50, values - 1, values, values + 1)))))
+  }
+  sir <- function(reference_data, uti, site) {
+    as.character(suppressMessages(suppressWarnings(as.sir(input,
+      mo = as.character(row$mo), ab = as.character(row$ab), guideline = row$guideline, uti = uti, site = site,
+      reference_data = reference_data, info = FALSE
+    ))))
+  }
+  row_site <- if (is.na(row$site) || length(sir_site_tokens(row$site)) == 0) NA_character_ else c(NA_character_, paste(setdiff(sir_site_tokens(row$site), "screen"), collapse = ","))
+  row_site <- unique(row_site[is.na(row_site) | nzchar(row_site)])
+  for (uti in list(NA, FALSE, TRUE)) {
+    for (site in row_site) {
+      if (isTRUE(uti) && !is.na(site) && !grepl("uti", site, fixed = TRUE) && !isTRUE(row$uti)) {
+        next
+      }
+      if (isFALSE(uti) && !is.na(site) && grepl("uti", site, fixed = TRUE)) {
+        next
+      }
+      if (!identical(sir(breakpoints, uti, site), sir(others, uti, site))) {
+        return(TRUE)
+      }
+    }
+  }
+  FALSE
+}
+
 as_sir_method <- function(method_short,
                           method_long,
                           x,
@@ -1257,6 +1428,7 @@ as_sir_method <- function(method_short,
                           verbose,
                           info,
                           conserve_capped_values = NULL,
+                          site = NULL,
                           ...) {
   if (isTRUE(conserve_capped_values)) {
     deprecation_warning(old = "conserve_capped_values", new = "capped_mic_handling", fn = "as.sir", is_argument = TRUE)
@@ -1267,12 +1439,13 @@ as_sir_method <- function(method_short,
   meet_criteria(ab, allow_class = c("ab", "character"), has_length = c(1, length(x)), .call_depth = -2)
   meet_criteria(guideline, allow_class = "character", has_length = c(1, length(x)), .call_depth = -2)
   meet_criteria(uti, allow_class = c("logical", "character"), has_length = c(1, length(x)), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
+  meet_criteria(site, allow_class = c("logical", "character", "factor"), has_length = c(1, length(x)), allow_NULL = TRUE, allow_NA = TRUE, .call_depth = -2)
   meet_criteria(capped_mic_handling, allow_class = "character", has_length = 1, is_in = c("none", "conservative", "standard", "lenient"), .call_depth = -2)
   meet_criteria(as_wt_nwt, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(add_intrinsic_resistance, allow_class = "logical", has_length = 1, .call_depth = -2)
   meet_criteria(reference_data, allow_class = "data.frame", .call_depth = -2)
   meet_criteria(substitute_missing_r_breakpoint, allow_class = "logical", has_length = 1, .call_depth = -2)
-  meet_criteria(include_screening, allow_class = "logical", has_length = 1, .call_depth = -2)
+  meet_criteria(include_screening, allow_class = "logical", has_length = 1, allow_NULL = TRUE, .call_depth = -2)
   meet_criteria(include_PKPD, allow_class = "logical", has_length = 1, .call_depth = -2)
   reference_data <- check_reference_data(reference_data, .call_depth = -2)
   meet_criteria(breakpoint_type, allow_class = "character", is_in = reference_data$type, has_length = 1, .call_depth = -2)
@@ -1468,6 +1641,20 @@ as_sir_method <- function(method_short,
   if (length(uti) == 1) {
     uti <- rep(uti, length(x))
   }
+  # get site, from a column or as given, in the fixed codes of sir_site_tokens()
+  if (!is.null(current_df) && length(site) == 1 && !is.na(site) && as.character(site) %in% colnames(current_df)) {
+    site <- current_df[[as.character(site)]]
+  }
+  site <- sir_site_normalise(if (is.null(site)) NA_character_ else site)
+  if (length(site) == 1) {
+    site <- rep(site, length(x))
+  }
+  # a UTI as site is the same as `uti = TRUE`, which stays available for backward compatibility
+  site_is_uti <- !is.na(site) & grepl("(^|,)uti(,|$)", site)
+  if (any(site_is_uti & uti %in% FALSE)) {
+    stop_("Arguments {.arg site} and {.arg uti} contradict each other: `site` indicates a urinary tract infection, while `uti = FALSE`.", call = FALSE)
+  }
+  uti[site_is_uti] <- TRUE
   if (isTRUE(add_intrinsic_resistance) && guideline_coerced %unlike% "EUCAST") {
     if (isTRUE(info) && message_not_thrown_before("as.sir", "intrinsic")) {
       message_("{.help [{.fun as.sir}](AMR::as.sir)}: using {.arg add_intrinsic_resistance} is only useful when using EUCAST guidelines, since the rules for intrinsic resistance are based on EUCAST.")
@@ -1511,17 +1698,29 @@ as_sir_method <- function(method_short,
   method_coerced <- toupper(method)
   ab_coerced <- as.ab(ab, info = FALSE)
 
+  # which agents hold the breakpoints of the requested agents: the high-level aminoglycoside tests have two codes, and screening breakpoints are also for the regular agent if the user allows this
+  ab_lookup <- function(ab_requested) {
+    ab_requested <- as.character(ab_requested)
+    ab_stored <- ab_requested
+    ab_stored[ab_stored == "GEH"] <- "GEN-S"
+    ab_stored[ab_stored == "STH"] <- "STR1-S"
+    from <- c(ab_requested, ab_requested)
+    to <- c(ab_stored, if (isTRUE(include_screening)) ifelse(endsWith(ab_stored, "-S"), ab_stored, paste0(ab_stored, "-S")) else ab_stored)
+    unique(data.frame(from = from, to = to, stringsAsFactors = FALSE))
+  }
+  ab_coerced_lookup <- ab_lookup(ab_coerced)
   if (!custom_breakpoints_set) {
     breakpoints <- reference_data %pm>%
-      subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced)
+      subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced_lookup$to)
     if (any(ab_coerced == "AMX") && nrow(breakpoints[breakpoints$ab == "AMX", , drop = FALSE]) == 0) {
       ab_coerced[ab_coerced == "AMX"] <- "AMP"
+      ab_coerced_lookup <- ab_lookup(ab_coerced)
       breakpoints <- reference_data %pm>%
-        subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced)
+        subset(guideline %in% guideline_coerced & method == method_coerced & ab %in% ab_coerced_lookup$to)
     }
   } else {
     breakpoints <- reference_data %pm>%
-      subset(method == method_coerced & ab %in% ab_coerced)
+      subset(method == method_coerced & ab %in% ab_coerced_lookup$to)
   }
 
 
@@ -1534,6 +1733,7 @@ as_sir_method <- function(method_short,
     ab = ab,
     result = NA_sir_,
     uti = uti,
+    site = site,
     host = host,
     stringsAsFactors = FALSE
   )
@@ -1573,7 +1773,7 @@ as_sir_method <- function(method_short,
     df$input_clean <- as.disk(df$input_clean)
   }
 
-  df_unique <- unique(df[, c("guideline", "mo", "ab", "uti", "host"), drop = FALSE])
+  df_unique <- unique(df[, c("guideline", "mo", "ab", "uti", "site", "host"), drop = FALSE])
   mo_grams <- suppressWarnings(suppressMessages(mo_gramstain(df_unique$mo, language = NULL, keep_synonyms = FALSE)))
 
   # get all breakpoints, use humans as backup for animals
@@ -1584,10 +1784,23 @@ as_sir_method <- function(method_short,
   breakpoints <- breakpoints %pm>%
     subset(type %in% breakpoint_type_lookup)
 
+  is_screening_row <- function(df) {
+    df$site %like% "screen" | df$ref_tbl %like% "screen" | as.character(df$ab) %like% "-S$"
+  }
+  screening_left_out <- FALSE
   if (isFALSE(include_screening)) {
-    # remove screening rules from the breakpoints table
-    breakpoints <- breakpoints %pm>%
-      subset(site %unlike% "screen" & ref_tbl %unlike% "screen")
+    # remove screening rules from the breakpoints table, on explicit request also for a screening agent
+    screening_left_out <- any(is_screening_row(breakpoints) & as.character(breakpoints$ab) %like% "-S$")
+    breakpoints <- breakpoints[!is_screening_row(breakpoints), , drop = FALSE]
+  } else if (is.null(include_screening)) {
+    # at default, screening breakpoints are only for an agent that indicates screening itself
+    breakpoints <- breakpoints[!is_screening_row(breakpoints) | as.character(breakpoints$ab) %like% "-S$", , drop = FALSE]
+  }
+  # the breakpoints are from here on known by the requested agent
+  if (nrow(breakpoints) > 0) {
+    for (j in rev(seq_len(nrow(ab_coerced_lookup)))) {
+      breakpoints$ab[as.character(breakpoints$ab) == ab_coerced_lookup$to[j]] <- ab_coerced_lookup$from[j]
+    }
   }
   if (isFALSE(include_PKPD)) {
     # remove PKPD rules from the breakpoints table
@@ -1609,6 +1822,35 @@ as_sir_method <- function(method_short,
   p <- progress_ticker(n = nrow(df_unique), n_min = 10, print = isTRUE(info), title = intro_txt, only_bar_percent = TRUE)
   has_progress_bar <- !is.null(import_fn("progress_bar", "progress", error_on_fail = FALSE)) && nrow(df_unique) >= 10
   on.exit(close(p))
+
+  if (isTRUE(screening_left_out) && nrow(breakpoints) == 0) {
+    # a note, as this may be by accident
+    message_("Returning NAs for ", vector_and(unique(as.character(ab_coerced)), quotes = TRUE), ": this is a screening agent, while `include_screening = FALSE` leaves out screening breakpoints.")
+    out <- data.frame(
+      datetime = rep(Sys.time(), nrow(df)),
+      index = seq_len(nrow(df)),
+      method = rep(method_coerced, nrow(df)),
+      ab_given = ab.bak,
+      mo_given = as.character(mo.bak),
+      host_given = as.character(host),
+      input_given = as.character(df$input_original),
+      ab = as.character(df$ab),
+      mo = as.character(df$mo),
+      host = as.character(df$host),
+      input = as.character(df$input_clean),
+      outcome = rep(NA_sir_, nrow(df)),
+      notes = rep("Screening breakpoints were left out, since `include_screening = FALSE`.", nrow(df)),
+      guideline = df$guideline,
+      ref_table = rep(NA_character_, nrow(df)),
+      uti = df$uti,
+      breakpoint_S_R = rep(NA_character_, nrow(df)),
+      site = rep(NA_character_, nrow(df)),
+      stringsAsFactors = FALSE
+    )
+    AMR_env$sir_interpretation_history <- rbind_AMR(AMR_env$sir_interpretation_history, out[!is.na(out$input_given), , drop = FALSE])
+    load_mo_uncertainties(metadata_mo)
+    return(rep(NA_sir_, nrow(df)))
+  }
 
   if (nrow(breakpoints) == 0) {
     # apparently no breakpoints found
@@ -1637,12 +1879,11 @@ as_sir_method <- function(method_short,
     ab_current <- df_unique[i, "ab", drop = TRUE]
     host_current <- df_unique[i, "host", drop = TRUE]
     uti_current <- df_unique[i, "uti", drop = TRUE]
+    site_current <- df_unique[i, "site", drop = TRUE]
     notes_current <- character(0)
     rows <- which(as.character(df$mo) == mo_current & df$ab == ab_current & df$host == host_current & df$guideline == guideline_current)
-    if (!is.na(uti_current)) {
-      # also filter on UTIs
-      rows <- rows[df$uti[rows] == uti_current]
-    }
+    # also filter on UTIs and sites, of which NA is a value on its own
+    rows <- rows[df$uti[rows] %in% uti_current & df$site[rows] %in% site_current]
 
     if (length(rows) == 0) {
       # this can happen if a host is unavailable, just continue with the next one, since a note about hosts having NA are already given at this point
@@ -1807,6 +2048,7 @@ as_sir_method <- function(method_short,
         ref_table = vectorise_log_entry(NA_character_, length(rows)),
         uti = vectorise_log_entry(uti_current, length(rows)),
         breakpoint_S_R = vectorise_log_entry(NA_character_, length(rows)),
+        site = vectorise_log_entry(NA_character_, length(rows)),
         stringsAsFactors = FALSE
       )
       out <- subset(out, !is.na(input_given))
@@ -1815,17 +2057,28 @@ as_sir_method <- function(method_short,
       next
     }
 
+    # if the user set a site, keep only the breakpoints that do not contradict it (a breakpoint without a site always fits); PK/PD breakpoints are no fallback for a breakpoint that exists for other sites only
+    if (!is.na(site_current)) {
+      site_tokens_current <- strsplit(site_current, ",", fixed = TRUE)[[1]]
+      site_fits <- vapply(breakpoints_current$site, function(s) sir_site_fits(sir_site_tokens(s), site_tokens_current), logical(1), USE.NAMES = FALSE)
+      if (any(!site_fits)) {
+        breakpoints_current <- breakpoints_current[site_fits & as.character(breakpoints_current$mo) != "UNKNOWN", , drop = FALSE]
+      }
+    }
+
     # if the user explicitly set uti, keep only those rows
     uti_assumed <- FALSE
     if (!is.na(uti_current)) {
       breakpoints_current <- breakpoints_current[breakpoints_current$uti == uti_current, , drop = FALSE]
     } else if (any(breakpoints_current$uti %in% TRUE)) {
-      # uti is unknown: non-UTI rows take precedence over UTI rows, and UTI rows are only used if there are no non-UTI rows. A non-UTI breakpoint applies at any taxonomic level, but a non-UTI row without breakpoints (a 'blocking row', e.g. for EUCAST's breakpoints in brackets) only applies if it is at least as specific as the UTI rows: the blocking row of e.g. Enterobacterales must not override the UTI breakpoint given for E. coli itself.
+      # uti is unknown: non-UTI rows take precedence over UTI rows, and UTI rows are only used if there are no non-UTI rows. A non-UTI breakpoint applies at any taxonomic level, but a non-UTI row without breakpoints (a 'blocking row') is no breakpoint, so it only applies if it is more specific than the UTI rows: at the same level or above, it does not override a UTI breakpoint.
       # taxonomic level without the 0.1 that a blocking row adds to its rank_index, e.g. 3.1 -> 3 and 2.6 -> 2.5
       taxonomic_level <- round(breakpoints_current$rank_index * 2) / 2
       is_blocking <- is.na(breakpoints_current$breakpoint_S) & is.na(breakpoints_current$breakpoint_R)
       is_uti <- breakpoints_current$uti %in% TRUE
-      too_broad <- !is_uti & is_blocking & taxonomic_level > min(taxonomic_level[is_uti])
+      # a UTI row without breakpoints is no breakpoint either, so it does not take precedence over anything
+      is_uti_breakpoint <- is_uti & !is_blocking
+      too_broad <- !is_uti & is_blocking & any(is_uti_breakpoint) & taxonomic_level >= suppressWarnings(min(taxonomic_level[is_uti_breakpoint]))
       breakpoints_current <- breakpoints_current[!too_broad, , drop = FALSE]
       if (any(!breakpoints_current$uti %in% TRUE)) {
         if (length(unique(breakpoints_current$site)) > 1) {
@@ -1848,9 +2101,14 @@ as_sir_method <- function(method_short,
       levels = c("FALSE", "NA", "TRUE")
     )
 
-    # sort on host and taxonomic rank first, then by UTI
-    # (this will e.g. prefer 'species' breakpoints over 'order' breakpoints)
-    breakpoints_current <- breakpoints_current[order(breakpoints_current$rank_index, uti_index), , drop = FALSE]
+    # sort on taxonomic rank first (this will e.g. prefer 'species' breakpoints over 'order' breakpoints), within a rank on the site that the user set, then on whether it is a blocking row, on most to least systemic site, and finally on UTI
+    site_tokens_current <- if (is.na(site_current)) character(0) else strsplit(site_current, ",", fixed = TRUE)[[1]]
+    site_not_given <- vapply(breakpoints_current$site, function(s) !sir_site_given(sir_site_tokens(s), site_tokens_current), logical(1), USE.NAMES = FALSE)
+    if (length(site_tokens_current) == 0) {
+      site_not_given[] <- FALSE
+    }
+    site_rank <- vapply(breakpoints_current$site, sir_site_rank, double(1), USE.NAMES = FALSE)
+    breakpoints_current <- breakpoints_current[order(round(breakpoints_current$rank_index * 2) / 2, site_not_given, breakpoints_current$rank_index, site_rank, uti_index), , drop = FALSE]
 
     # throw messages for different body sites
     site <- breakpoints_current[1L, "site", drop = FALSE] # this is the one we'll take
@@ -1865,8 +2123,8 @@ as_sir_method <- function(method_short,
         notes_current, "\n",
         paste0("Breakpoints for ", font_bold(ab_formatted), " in ", mo_formatted, " are only available for (uncomplicated) urinary tract infections (UTI) - assuming `uti = TRUE`. Use `uti = FALSE` to prevent this.")
       )
-    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE) && message_not_thrown_before("as.sir", "siteOther", mo_current, ab_current)) {
-      # breakpoints for multiple body sites available
+    } else if (nrow(breakpoints_current) > 1 && length(unique(breakpoints_current$site)) > 1 && all(breakpoints_current$uti == FALSE, na.rm = TRUE)) {
+      # breakpoints for multiple body sites available, noted for every interpretation so that sir_interpretation_history() shows it
       notes_current <- paste0(
         notes_current, "\n",
         paste0("Multiple breakpoints available for ", font_bold(ab_formatted), " in ", mo_formatted, " - assuming ", site, ".")
@@ -1906,9 +2164,18 @@ as_sir_method <- function(method_short,
         )
       }
 
-      # EUCAST indicates that there is no S category with an off-scale S breakpoint of 0.001 mg/L (stored as 0.0001 in
-      # clinical_breakpoints), so that wild-type isolates are I; capped MICs such as "<=0.5" must then not be S or NI (#295)
+      # clinical_breakpoints holds breakpoints as published, so keep these for sir_interpretation_history() (#331)
+      breakpoint_S_R_published <- paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE])
+      # EUCAST indicates that there is no S category with an off-scale S breakpoint of 0.001 mg/L, so that wild-type isolates are I, also below that value; capped MICs such as "<=0.5" must then not be S or NI (#295)
       no_S_category <- method == "mic" & isTRUE(breakpoints_current$breakpoint_S <= 0.001)
+      if (method == "mic") {
+        # compare dilutions, not their notation, e.g. an MIC of 0.032 and a breakpoint of 0.03 are the same dilution (#331)
+        breakpoints_current$breakpoint_S <- mic_dilution_level(breakpoints_current$breakpoint_S)
+        breakpoints_current$breakpoint_R <- mic_dilution_level(breakpoints_current$breakpoint_R)
+        if (guideline_current %like% "EUCAST" && !custom_breakpoints_set && isTRUE(breakpoints_current$breakpoint_S == 0.001)) {
+          breakpoints_current$breakpoint_S <- 0.0001
+        }
+      }
       middle_sir <- if (isTRUE(breakpoints_current$is_SDD)) as.sir("SDD") else as.sir("I")
       clsi_closed_R <- !custom_breakpoints_set & guideline_current %like% "CLSI"
       capped_low_not_R <- (as.character(input_original) %like% "^<[0-9]" & as.double(input_clean) <= breakpoints_current$breakpoint_R) |
@@ -2097,7 +2364,8 @@ as_sir_method <- function(method_short,
         guideline = vectorise_log_entry(guideline_current, length(rows)),
         ref_table = vectorise_log_entry(breakpoints_current[, "ref_tbl", drop = TRUE], length(rows)),
         uti = vectorise_log_entry(breakpoints_current[, "uti", drop = TRUE], length(rows)),
-        breakpoint_S_R = vectorise_log_entry(paste0(breakpoints_current[, "breakpoint_S", drop = TRUE], "-", breakpoints_current[, "breakpoint_R", drop = TRUE]), length(rows)),
+        breakpoint_S_R = vectorise_log_entry(breakpoint_S_R_published, length(rows)),
+        site = vectorise_log_entry(breakpoints_current[, "site", drop = TRUE], length(rows)),
         stringsAsFactors = FALSE
       )
       out <- subset(out, !is.na(input_given))

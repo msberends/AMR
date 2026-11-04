@@ -720,7 +720,8 @@ breakpoints_new <- breakpoints_new |>
     mo_rank(mo, keep_synonyms = TRUE) == "genus" ~ 3,
     mo_rank(mo, keep_synonyms = TRUE) == "family" ~ 4,
     mo_rank(mo, keep_synonyms = TRUE) == "order" ~ 5,
-    mo != "UNKNOWN" ~ 6, # for B_ANAER, etc.
+    grepl("^B_ANAER", as.character(mo)) ~ 5.5, # anaerobes are more specific than a Gram stain
+    mo != "UNKNOWN" ~ 6, # for B_GRAMN, etc.
     TRUE ~ 7
   ) +
     # a breakpoint of the same organism always precedes its blocking row
@@ -729,6 +730,61 @@ breakpoints_new <- breakpoints_new |>
   arrange(desc(guideline), mo, ab, type, host, method)
 
 clinical_breakpoints <- merge_eucast_breakpoints(breakpoints_new, breakpoints_eucast, eucast_coverage)
+
+# Screening tests ----
+# Every explicit screening test is stored under its screening agent, so that it can never be taken for a breakpoint of the regular agent (#328). The EUCAST rows from its own tables already are, see reproduction_of_clinical_breakpoints_eucast.R. This takes care of the WHONET-based rows, as decided in #328:
+# - all rows with a site that states screening
+# - high-level aminoglycoside tests: GEH and STH to GEN-S and STR1-S (as.sir() keeps accepting GEH and STH)
+# - cefoxitin MIC for S. aureus and S. lugdunensis in EUCAST 2012-2018, which from 2019 on is labelled as screening
+# - CLSI surrogate tests: cefoxitin for staphylococci, and pefloxacin for Salmonella
+# EUCAST 2011-2013 rows without a label stay under the regular agent, also as decided in #328.
+screening_year <- as.integer(gsub("[^0-9]", "", clinical_breakpoints$guideline))
+screening_genus <- mo_genus(clinical_breakpoints$mo, keep_synonyms = TRUE, language = NULL)
+is_human <- clinical_breakpoints$type == "human"
+is_screening <- (!is.na(clinical_breakpoints$site) & grepl("screen", clinical_breakpoints$site, ignore.case = TRUE) & !grepl("-S$", as.character(clinical_breakpoints$ab))) |
+  (is_human & clinical_breakpoints$guideline %like% "EUCAST" & screening_year %in% 2012:2018 & clinical_breakpoints$ab == "FOX" & clinical_breakpoints$method == "MIC" & as.character(clinical_breakpoints$mo) %in% c("B_STPHY_AURS", "B_STPHY_LGDN")) |
+  (is_human & clinical_breakpoints$guideline %like% "CLSI" & clinical_breakpoints$ab == "FOX" & screening_genus %in% "Staphylococcus") |
+  (is_human & clinical_breakpoints$guideline %like% "CLSI" & screening_year >= 2015 & clinical_breakpoints$ab == "PEF" & screening_genus %in% "Salmonella")
+message("NOTE: ", sum(is_screening), " WHONET-based row(s) moved to their screening agent")
+clinical_breakpoints$ab <- as.character(clinical_breakpoints$ab)
+clinical_breakpoints$ab[is_screening] <- paste0(clinical_breakpoints$ab[is_screening], "-S")
+clinical_breakpoints$ab[clinical_breakpoints$ab == "GEH"] <- "GEN-S"
+clinical_breakpoints$ab[clinical_breakpoints$ab == "STH"] <- "STR1-S"
+if (any(!clinical_breakpoints$ab %in% AMR::antimicrobials$ab)) {
+  stop("agent(s) missing from the antimicrobials data set: ", toString(unique(clinical_breakpoints$ab[!clinical_breakpoints$ab %in% AMR::antimicrobials$ab])))
+}
+clinical_breakpoints$ab <- as.ab(clinical_breakpoints$ab)
+
+# Blocking rows ----
+# A blocking row of EUCAST only stays if it has an effect: as.sir() must give another result without it (#326). This uses as.sir() itself, so that it follows the same fallback path. The most specific rows are compared first, so that of two blocking rows on one path, the row that is needed stays. The build stops if this leaves any row without an effect.
+is_pruned_group <- clinical_breakpoints$type == "human" & grepl("EUCAST 20(19|2[0-9])", clinical_breakpoints$guideline)
+blocking_key <- paste(clinical_breakpoints$guideline, clinical_breakpoints$ab, clinical_breakpoints$method)
+keys_with_blocking <- unique(blocking_key[is_pruned_group & is.na(clinical_breakpoints$breakpoint_S) & is.na(clinical_breakpoints$breakpoint_R)])
+keep_per_key <- parallel::mclapply(keys_with_blocking, function(key) {
+  rows <- which(is_pruned_group & blocking_key == key)
+  group <- clinical_breakpoints[rows, , drop = FALSE]
+  kept <- rep(TRUE, nrow(group))
+  for (i in order(group$rank_index)) {
+    if (is.na(group$breakpoint_S[i]) && is.na(group$breakpoint_R[i])) {
+      position <- sum(kept[seq_len(i)])
+      if (!AMR:::blocking_row_is_needed(position, group[kept, , drop = FALSE])) {
+        kept[i] <- FALSE
+      }
+    }
+  }
+  rows[!kept]
+}, mc.cores = 8L, mc.preschedule = FALSE)
+if (any(vapply(keep_per_key, inherits, logical(1), what = "try-error"))) {
+  print(keep_per_key[vapply(keep_per_key, inherits, logical(1), what = "try-error")][[1]])
+  stop("pruning blocking rows failed, see above")
+}
+rows_without_effect <- unlist(keep_per_key)
+message("NOTE: ", length(rows_without_effect), " blocking row(s) of EUCAST removed, since as.sir() gives the same results without them")
+if (length(rows_without_effect) > 0) {
+  clinical_breakpoints <- clinical_breakpoints[-rows_without_effect, , drop = FALSE]
+}
+rm(is_pruned_group, blocking_key, keys_with_blocking, keep_per_key, rows_without_effect)
+
 usethis::use_data(clinical_breakpoints, overwrite = TRUE, compress = "xz", version = 2)
 rm(clinical_breakpoints)
 devtools::load_all(".")
