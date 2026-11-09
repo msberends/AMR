@@ -363,6 +363,17 @@ with `type = "plotmath"`, which also works for titles. It returns an
 [expression](https://rdrr.io/r/base/expression.html) vector of the same
 length as `x`; other arguments in `...` are ignored.
 
+The plotting functions of this package apply this automatically wherever
+they show taxonomic names, e.g., in the facets and titles of
+[`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md) plots,
+in the legend of
+[`wisca_plot()`](https://amr-for-r.org/reference/antibiogram.md), on the
+axes, legends and facets of
+[`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md) and
+`facet_sir()`, in
+[`ggplot_pca()`](https://amr-for-r.org/reference/ggplot_pca.md), and in
+the subtitles of MIC and disk diffusion plots.
+
 The interpretation of "I" will be named "Susceptible, incr. exp."
 (susceptible, increased exposure) for all EUCAST guidelines since 2019,
 and will be named "Intermediate" in all other cases.

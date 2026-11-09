@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.1.0.9017
+## AMR 3.1.0.9018
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -48,6 +48,24 @@ are strongly advised to re-run their WISCA analyses.
   - [`italicise_taxonomy()`](https://amr-for-r.org/reference/italicise_taxonomy.md)
     gained `type = "plotmath"`, which returns an expression vector for
     titles, axes and legends in plots
+  - All plotting functions now print taxonomic names in italics using
+    [`labels_taxonomy()`](https://amr-for-r.org/reference/plot.md): the
+    facets and titles of
+    [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+    and [`plot()`](https://amr-for-r.org/reference/plot.md) for
+    antibiograms, the legend of
+    [`wisca_plot()`](https://amr-for-r.org/reference/antibiogram.md)
+    (which previously italicised all its entries, including
+    e.g. “CoNS”), the axes, legends and facets of
+    [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md) and
+    [`facet_sir()`](https://amr-for-r.org/reference/plot.md), the labels
+    and legend of
+    [`ggplot_pca()`](https://amr-for-r.org/reference/ggplot_pca.md), and
+    the subtitles of [`plot()`](https://amr-for-r.org/reference/plot.md)
+    and
+    [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+    for MIC and disk diffusion values (which previously italicised the
+    whole name, e.g. “Coagulase-negative Staphylococcus (CoNS)”)
 
 #### Changed
 
@@ -64,6 +82,10 @@ are strongly advised to re-run their WISCA analyses.
   - `NA` values now return `NA` instead of `"NA"`
   - Taxonomic names are now looked up once per session, making the
     function considerably faster for long vectors
+- [`ggplot_pca()`](https://amr-for-r.org/reference/ggplot_pca.md)
+  - Fixed an error when setting `groups` together with `labels`, and
+    setting `groups` without `labels` now colours the points by these
+    groups instead of using them as labels, as documented
 - WISCA ([`wisca()`](https://amr-for-r.org/reference/antibiogram.md) and
   `antibiogram(..., wisca = TRUE)`)
   - Fixed a critical bug that systematically underestimated the coverage
