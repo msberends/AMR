@@ -160,5 +160,20 @@ test_that("test-ggplot_sir.R", {
         scale_sir_colours(aesthetics = "fill", Value4 = "S", Value5 = "I", Value6 = "R"))$data),
       "data.frame"
     )
+
+    # datalabels are placed on their own bar, also when dodged or stacked
+    for (pos in c("fill", "stack", "dodge")) {
+      built <- ggplot_build(ggplot_sir(example_isolates[, c("AMX", "CIP")], position = pos, guideline = NULL))
+      bars <- built$data[[1]]
+      labels <- built$data[[2]]
+      bars <- bars[order(bars$x, bars$group), , drop = FALSE]
+      labels <- labels[order(labels$x, labels$group), , drop = FALSE]
+      expect_equal(labels$x, bars$x)
+      if (pos == "dodge") {
+        expect_equal(labels$y, bars$ymax)
+      } else {
+        expect_equal(labels$y, (bars$ymin + bars$ymax) / 2)
+      }
+    }
   }
 })
