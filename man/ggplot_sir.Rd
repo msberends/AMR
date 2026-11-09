@@ -48,6 +48,7 @@ geom_sir(
 labels_sir_count(
   position = NULL,
   x = "antibiotic",
+  fill = "interpretation",
   translate_ab = "name",
   minimum = 30,
   language = get_AMR_locale(),
@@ -64,7 +65,7 @@ labels_sir_count(
 
 \item{x}{Variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable.}
 
-\item{fill}{Variable to categorise using the plots legend, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable.}
+\item{fill}{Variable to categorise using the plots legend, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable. For \code{\link[=labels_sir_count]{labels_sir_count()}}, this must be the same as the \code{fill} of \code{\link[=geom_sir]{geom_sir()}}, so that the labels are placed on the right bars.}
 
 \item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable.}
 

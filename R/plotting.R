@@ -1454,6 +1454,7 @@ labeller_taxonomy <- structure(
 #' @export
 labels_sir_count <- function(position = NULL,
                              x = "antibiotic",
+                             fill = "interpretation",
                              translate_ab = "name",
                              minimum = 30,
                              language = get_AMR_locale(),
@@ -1464,6 +1465,7 @@ labels_sir_count <- function(position = NULL,
   stop_ifnot_installed("ggplot2")
   meet_criteria(position, allow_class = "character", has_length = 1, is_in = c("fill", "stack", "dodge"), allow_NULL = TRUE)
   meet_criteria(x, allow_class = "character", has_length = 1)
+  meet_criteria(fill, allow_class = "character", has_length = 1)
   meet_criteria(translate_ab, allow_class = c("character", "logical"), has_length = 1, allow_NA = TRUE)
   meet_criteria(minimum, allow_class = c("numeric", "integer"), has_length = 1, is_positive_or_zero = TRUE, is_finite = TRUE)
   language <- validate_language(language)
@@ -1474,18 +1476,29 @@ labels_sir_count <- function(position = NULL,
   if (is.null(position)) {
     position <- "fill"
   }
+  # labels are grouped like the bars of geom_sir(), so that they are placed on the right bar
+  vjust <- 0.5
   if (identical(position, "fill")) {
+    # centred in the bar segments
     position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
+  } else if (identical(position, "stack")) {
+    # centred in the bar segments
+    position <- ggplot2::position_stack(vjust = 0.5)
+  } else if (identical(position, "dodge")) {
+    # on top of the bars, with the default width of geom_col()
+    position <- ggplot2::position_dodge(width = 0.9)
+    vjust <- -0.5
   }
 
   x_name <- x
   ggplot2::geom_text(
-    mapping = utils::modifyList(ggplot2::aes(), list(label = str2lang("lbl"), x = str2lang(x), y = str2lang("value"))),
+    mapping = utils::modifyList(ggplot2::aes(), list(label = str2lang("lbl"), x = str2lang(x), y = str2lang("value"), group = str2lang(fill))),
     position = position,
     inherit.aes = FALSE,
     size = datalabels.size,
     colour = datalabels.colour,
     lineheight = 0.75,
+    vjust = vjust,
     data = function(x) {
       transformed <- sir_df(
         data = x,

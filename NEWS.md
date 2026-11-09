@@ -1,4 +1,4 @@
-# AMR 3.1.0.9019
+# AMR 3.1.0.9020
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -44,6 +44,8 @@ It also adds a `site` argument to `as.sir()`, stores EUCAST MIC breakpoints exac
   * Fixed punctuation being italicised along with taxonomic names, e.g., `"(S. aureus)"` now gives `"(*S. aureus*)"` instead of `"(S. *aureus)*"`
   * `NA` values now return `NA` instead of `"NA"`
   * Taxonomic names are now looked up once per session, making the function considerably faster for long vectors
+* `labels_sir_count()` and `ggplot_sir()`
+  * Fixed the data labels being placed on the wrong bars with `position = "dodge"` or `position = "stack"`. They are now grouped like the bars, using the new `fill` argument of `labels_sir_count()`, which `ggplot_sir()` sets automatically
 * `ggplot_pca()`
   * Fixed an error when setting `groups` together with `labels`, and setting `groups` without `labels` now colours the points by these groups instead of using them as labels, as documented
 * *Morganella* is interpreted as reported, with the breakpoints of Enterobacterales or Morganellaceae and not of *M. morganii*, which is now tested (#330)

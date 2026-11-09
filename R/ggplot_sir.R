@@ -33,7 +33,7 @@
 #' @param data A [data.frame] with column(s) of class [`sir`] (see [as.sir()]).
 #' @param position Position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`.
 #' @param x Variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable.
-#' @param fill Variable to categorise using the plots legend, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable.
+#' @param fill Variable to categorise using the plots legend, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable. For [labels_sir_count()], this must be the same as the `fill` of [geom_sir()], so that the labels are placed on the right bars.
 #' @param breaks A [numeric] vector of positions.
 #' @param limits A [numeric] vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum.
 #' @param facet Variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable.
@@ -261,6 +261,7 @@ ggplot_sir <- function(data,
     p <- p + labels_sir_count(
       position = position,
       x = x,
+      fill = fill,
       translate_ab = translate_ab,
       minimum = minimum,
       language = language,
