@@ -1,19 +1,44 @@
-# AMR 3.1.0.9021
+# AMR 3.1.0.9022
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
+It also adds a `site` argument to `as.sir()`, stores EUCAST MIC breakpoints exactly as published, stores all screening breakpoints under screening agents, removes EUCAST's breakpoints in brackets, and only keeps blocking rows that have an effect.
+
 ### Breaking
+* All explicit screening breakpoints in `clinical_breakpoints` moved to screening agents, e.g., from `FOX` to `FOX-S`, including the high-level aminoglycoside tests (`GEH` and `STH` to `GEN-S` and `STR1-S`), the topical cut-off values of EUCAST, and the CLSI surrogate tests of cefoxitin for staphylococci and pefloxacin for *Salmonella*. Use `as.sir(..., include_screening = TRUE)` to interpret a regular agent with these breakpoints; `GEH` and `STH` stay valid input (#328)
+* `include_screening` in `as.sir()` now defaults to `NULL`, using screening breakpoints for screening agents only. `include_screening = FALSE` now also returns `NA`, with a note, for a screening agent (#328)
+* EUCAST's breakpoints in brackets are no longer in `clinical_breakpoints`. They were blocking rows, so `as.sir()` can now use PK/PD breakpoints or the breakpoints of a broader taxon instead, e.g., for aminoglycosides in EUCAST 2020-2023. They stay available in [`data-raw/breakpoints_eucast_raw.csv`](https://github.com/msberends/AMR/blob/main/data-raw/breakpoints_eucast_raw.csv) (#327)
+* EUCAST breakpoints of *Vibrio* now apply only to the species that EUCAST states: *V. alginolyticus*, *V. cholerae*, *V. fluvialis*, *V. parahaemolyticus* and *V. vulnificus*. Other species and isolates identified at genus level now give `NA`, or use PK/PD breakpoints in EUCAST 2022-2023
+* With unknown `uti`, a blocking row without UTI status no longer overrides a UTI breakpoint at the same taxonomic level, e.g., amikacin in *Acinetobacter* now gives S or R instead of `NA`, which is noted in `sir_interpretation_history()`. Use `uti = FALSE` to prevent this
+* If several breakpoints fit and no `site` is set, `as.sir()` now takes the one for the most systemic site, instead of the first one in the data set. This means, e.g., that a meningitis breakpoint now precedes a non-meningitis breakpoint, such as for benzylpenicillin in *S. pneumoniae*. Use `site` to choose another one
 * `mo_shortname()` now returns the serovar for *Salmonella* serovars, e.g., `"S. Typhi"` and `"S. Goldcoast"` instead of `"S. enterica"`. As this is the default for `bug_drug_combinations()` and short names in `antibiogram()`, serovars are no longer merged in their results. Use `FUN = function(x) paste(mo_genus(x), mo_species(x))` in `bug_drug_combinations()` to group them by species (#341)
 * `mo_shortname()` now returns e.g. `"S. Group B"` for *Salmonella* groups instead of the abbreviations of streptococci, such as `"GBS"`, so that they are no longer merged with streptococci in `bug_drug_combinations()` and `antibiogram()`. *Streptococcus* groups E, I, J and L are now also abbreviated, e.g., `"GES"`, and `"B_STRPT_ABCG"` now returns `"S. Group A, B, C, G"` instead of the malformed `"GA, B, C, GS"` (#341)
 * `mdro()` now applies the rule for *Salmonella* Typhi in the EUCAST guidelines, i.e., resistance to carbapenems (and fluoroquinolones in `"EUCAST3.1"`). This rule never applied before, so these isolates were wrongly classified as negative (#341)
 
 ### New
+* **Site of infection**
+  * `as.sir()` gained the argument `site`, in fixed codes such as `"meningitis"`, `"iv"`, `"uti"` and, for animals, `"mastitis"` and `"respiratory"`, which can also be a column name. A breakpoint for a contradicting site is left out, a breakpoint without a site still applies, and the result is `NA` if only contradicting sites are available, without using PK/PD breakpoints. `"other"` takes a breakpoint for other infections or without a site, and leaves out those limited to an indication. `uti = TRUE` stays available and equals `site = "uti"`
+  * `sir_interpretation_history()` now holds the site of the breakpoint used, and notes every assumption about sites
+* **Screening agents**
+  * 13 screening agents in the `antimicrobials` data set: `CHL-S`, `CIP-S`, `COL-S`, `ERY-S`, `FUS-S`, `GEN-S`, `LVX-S`, `MUP-S`, `NEO-S`, `OFX-S`, `RTP-S`, `STR1-S` and `TOB-S` (#328)
+  * EUCAST clinical breakpoints that can also be used as a screening test, e.g., erythromycin for staphylococci, have a copy under the screening agent (#328)
+* **EUCAST breakpoints stated in the Notes** (#329)
+  * Oxacillin disk for *S. pseudintermedius* and related species, and oxacillin MIC for coagulase-negative staphylococci, under `OXA-S`
+  * Mupirocin for nasal decolonisation of *S. aureus*
+  * Meropenem in other infections than meningitis for *N. meningitidis* in EUCAST 2021
 * **Taxonomic names in plots**
   * New function `labels_taxonomy()` to print taxonomic names in axis and legend labels in italics, which can directly be used as labeller in `ggplot2` (e.g., `scale_x_discrete(labels = labels_taxonomy)`) and in base R plots
   * `italicise_taxonomy()` gained `type = "plotmath"`, which returns an expression vector for titles, axes and legends in plots
   * All plotting functions now print taxonomic names in italics using `labels_taxonomy()`: the facets and titles of `autoplot()` and `plot()` for antibiograms, the legend of `wisca_plot()` (which previously italicised all its entries, including e.g. "CoNS"), the axes, legends and facets of `ggplot_sir()` and `facet_sir()`, the labels and legend of `ggplot_pca()`, and the subtitles of `plot()` and `autoplot()` for MIC and disk diffusion values (which previously italicised the whole name, e.g. "Coagulase-negative Staphylococcus (CoNS)")
 
 ### Changed
+* SIR interpretation (`as.sir()`)
+  * MIC breakpoints are compared as dilutions, so that e.g. an MIC of 0.032 and a breakpoint of 0.03 mg/L are the same (#331)
+  * A `uti` vector mixing `NA` with `TRUE` or `FALSE` no longer gives an error
+* `clinical_breakpoints` data set
+  * EUCAST MIC breakpoints are stored exactly as published, e.g., 0.03 instead of 0.032, and 0.001 instead of 0.0001 (#331)
+  * Blocking rows of EUCAST 2019-2026 that have no effect on `as.sir()` were removed, 12 243 in total (#326)
+  * The breakpoints of *Bacteroides* now also apply to zone diameters of *Parabacteroides*, *Phocaeicola dorei* and *Phocaeicola vulgatus* (#329)
 * `italicise_taxonomy()`
   * Species and subspecies names are now only italicised after a genus, an abbreviated genus, or another species or subspecies name, so that ordinary words such as "coli" or "major" stay upright. *Salmonella* serovars (such as Typhimurium) and groups are no longer italicised, and "subsp.", "ssp." and "var." stay upright between italicised names
   * Fixed punctuation being italicised along with taxonomic names, e.g., `"(S. aureus)"` now gives `"(*S. aureus*)"` instead of `"(S. *aureus)*"`
@@ -25,6 +50,7 @@ This version fixes a critical bug in WISCA that biased all coverage estimates of
   * `ggplot_sir()` now splits the plot by antimicrobial if there is more than one and the antimicrobial is not shown in the plot, e.g., with `x = "species"`, as their bars were previously stacked on top of each other. This uses `facet = "antibiotic"` if `facet` is not set, and otherwise a grid of `facet` by antimicrobial
 * `ggplot_pca()`
   * Fixed an error when setting `groups` together with `labels`, and setting `groups` without `labels` now colours the points by these groups instead of using them as labels, as documented
+* *Morganella* is interpreted as reported, with the breakpoints of Enterobacterales or Morganellaceae and not of *M. morganii*, which is now tested (#330)
 * WISCA (`wisca()` and `antibiogram(..., wisca = TRUE)`)
   * Fixed a critical bug that systematically underestimated the coverage of every WISCA since AMR 3.0.0. Pathogens absent from a syndromic group, and pathogens without any test result for a regimen, were still included in the model with only prior information: each added a prior weight of 1 to the pathogen incidence, and untested pathogens kept their full incidence weight while counting as about 50% susceptible. The bias was largest for stratified analyses (e.g., up to 14 percentage points for meropenem in random strata of `example_isolates`). Now, only pathogens that occur in a group and have at least one test result for the regimen are included. Please re-run all WISCA analyses (#337)
   * `retrieve_wisca_parameters()` now returns only the parameters actually used in the model, and `n_total` in the `long_numeric` attribute now counts only isolates of the pathogens included for that regimen

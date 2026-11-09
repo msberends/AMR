@@ -601,6 +601,157 @@ test_that("microorganisms.codes: unique codes for existing names", {
   expect_true(all(is.na(microorganisms.codes$source) | grepl("^WHONET \\(.+\\)$", microorganisms.codes$source)))
 })
 
+test_that("clinical_breakpoints: screening tests are under screening agents (#328)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  ab <- as.character(cb$ab)
+  year <- as.integer(gsub("[^0-9]", "", cb$guideline))
+  is_regular <- !grepl("-S$", ab)
+  # no regular agent has a screening site
+  expect_false(any(is_regular & grepl("screen", cb$site, ignore.case = TRUE)))
+  expect_true(all(c("FOX-S", "OXA-S", "NAL-S", "NOR-S", "PEF-S", "PEN-S", "TCY-S", "ERY-S", "GEN-S", "STR1-S", "CIP-S", "MUP-S") %in% ab))
+  # all codes of screening agents are valid, without an ATC code
+  screening_agents <- subset(AMR::antimicrobials, grepl("-S$", ab))
+  expect_true(all(unique(ab[!is_regular]) %in% screening_agents$ab))
+  expect_true(all(grepl("screening test$", screening_agents$name)))
+  # the two high-level codes hold no rows themselves, and are still valid
+  expect_false(any(ab %in% c("GEH", "STH")))
+  expect_true(all(c("GEH", "STH") %in% AMR::antimicrobials$ab))
+  # topical cut-off values
+  # (mupirocin also has actual breakpoints for nasal decolonisation, #329)
+  topical <- cb[cb$site %in% "Topical" & !as.character(cb$ab) %in% "MUP", , drop = FALSE]
+  expect_true(all(grepl("-S$", as.character(topical$ab))))
+  expect_false(any(cb$site %in% "Topical, Screen"))
+  # explicit lists: moved
+  human <- cb$type == "human"
+  expect_false(any(human & cb$guideline %like% "EUCAST" & year %in% 2012:2018 & ab == "FOX" & cb$method == "MIC" & as.character(cb$mo) %in% c("B_STPHY_AURS", "B_STPHY_LGDN")))
+  expect_false(any(human & cb$guideline %like% "CLSI" & ab == "FOX" & mo_genus(cb$mo, keep_synonyms = TRUE, language = NULL) %in% "Staphylococcus"))
+  expect_false(any(human & cb$guideline %like% "CLSI" & year >= 2015 & ab == "PEF" & mo_genus(cb$mo, keep_synonyms = TRUE, language = NULL) %in% "Salmonella"))
+  # explicit list: stays under the regular agent, also as decided in the issue
+  expect_true(any(human & cb$guideline == "EUCAST 2013" & ab == "NAL" & cb$method == "DISK"))
+  expect_true(any(human & cb$guideline == "CLSI 2026" & ab == "OXA" & as.character(cb$mo) == "B_STRPT_PNMN" & cb$method == "DISK"))
+  # rows that are a clinical breakpoint and a screen are under both (from EUCAST 2023)
+  ery <- function(agent) cb[human & cb$guideline == "EUCAST 2026" & ab == agent & as.character(cb$mo) == "B_MRXLL_CTRR" & cb$method == "DISK", c("breakpoint_S", "breakpoint_R"), drop = FALSE]
+  expect_true(nrow(ery("ERY")) > 0)
+  expect_identical(unname(as.list(ery("ERY-S"))), unname(as.list(ery("ERY"))))
+})
+
+test_that("clinical_breakpoints: every blocking row of EUCAST has an effect (#326)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb <- cb[cb$type == "human" & grepl("EUCAST 20(19|2[0-9])", cb$guideline), , drop = FALSE]
+  is_blocking <- is.na(cb$breakpoint_S) & is.na(cb$breakpoint_R)
+  key <- paste(cb$guideline, cb$ab, cb$method)
+  # a blocking row needs a breakpoint to block, for all years
+  has_breakpoint <- key %in% key[!is_blocking]
+  wrong <- unique(key[is_blocking & !has_breakpoint])
+  expect_true(length(wrong) == 0, info = paste("no breakpoints to block:", toString(utils::head(wrong, 20))))
+  # and as.sir() must give another result without it, for the latest guideline; all years are checked during the build
+  latest <- paste0("EUCAST ", max(as.integer(gsub("[^0-9]", "", cb$guideline))))
+  for (k in unique(key[is_blocking & cb$guideline == latest])) {
+    group <- cb[key == k, , drop = FALSE]
+    for (i in which(is.na(group$breakpoint_S) & is.na(group$breakpoint_R))) {
+      expect_true(blocking_row_is_needed(i, group), info = paste(k, group$mo[i], group$site[i]))
+    }
+  }
+  # the definition itself, on a constructed set of rows
+  rows <- cb[cb$guideline == latest & as.character(cb$ab) == "CTX" & cb$method == "MIC" & as.character(cb$mo) == "B_VIBRI_CHLR" & cb$type == "human", , drop = FALSE][1, ]
+  rows$mo <- as.mo("Vibrio", info = FALSE)
+  rows$rank_index <- 3
+  blocker <- rows
+  blocker$mo <- as.mo("Vibrio fluvialis", info = FALSE)
+  blocker$rank_index <- 2.1
+  blocker$breakpoint_S <- NA_real_
+  blocker$breakpoint_R <- NA_real_
+  group <- rbind(rows, blocker)
+  expect_true(blocking_row_is_needed(2, group))
+  expect_false(blocking_row_is_needed(1, blocker))
+})
+
+test_that("clinical_breakpoints: EUCAST breakpoints of Vibrio are for the species that EUCAST states", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb$mo <- as.character(cb$mo)
+  cb <- cb[cb$type == "human" & cb$guideline %in% paste("EUCAST", 2022:2026), , drop = FALSE]
+  species <- as.character(as.mo(c("Vibrio alginolyticus", "Vibrio cholerae", "Vibrio fluvialis", "Vibrio parahaemolyticus", "Vibrio vulnificus"), info = FALSE))
+  vibrio <- cb[grepl("^B_VIBRI", cb$mo), , drop = FALSE]
+  expect_identical(sort(unique(vibrio$mo)), sort(species))
+  has_values <- !is.na(vibrio$breakpoint_S) | !is.na(vibrio$breakpoint_R)
+  expect_true(all(grepl("Breakpoints are valid for V. alginolyticus", vibrio$note[has_values], fixed = TRUE)))
+  # all species have the same breakpoints per year, apart from the IE of cefotaxime for V. fluvialis
+  key <- paste(vibrio$guideline, vibrio$ab, vibrio$method, vibrio$breakpoint_S, vibrio$breakpoint_R)[has_values & !(vibrio$ab == "CTX")]
+  expect_true(all(table(key) == 5))
+  expect_false(any(has_values & vibrio$ab == "CTX" & vibrio$mo == as.character(as.mo("Vibrio fluvialis", info = FALSE))))
+})
+
+test_that("clinical_breakpoints: EUCAST breakpoints stated in the Notes (#329)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb <- cb[cb$type == "human", , drop = FALSE]
+  bp <- function(guideline, ab, mo, method, site = NULL) {
+    x <- cb[cb$guideline == guideline & as.character(cb$ab) == ab & as.character(cb$mo) == as.character(as.mo(mo, info = FALSE)) & cb$method == method, , drop = FALSE]
+    if (!is.null(site)) {
+      x <- x[x$site %in% site, , drop = FALSE]
+    }
+    c(x$breakpoint_S, x$breakpoint_R)
+  }
+  # oxacillin disk for S. pseudintermedius and related species
+  expect_identical(bp("EUCAST 2019", "OXA-S", "S. pseudintermedius", "DISK"), c(20, 20))
+  expect_identical(bp("EUCAST 2026", "OXA-S", "S. pseudintermedius", "DISK"), c(20, 20))
+  # oxacillin MIC for coagulase-negative staphylococci, not for the species excluded by EUCAST
+  expect_identical(bp("EUCAST 2026", "OXA-S", "B_STPHY_CONS", "MIC"), c(0.25, 0.25))
+  expect_identical(bp("EUCAST 2026", "OXA-S", "S. lugdunensis", "MIC"), c(NA_real_, NA_real_))
+  expect_identical(bp("EUCAST 2026", "OXA-S", "S. saprophyticus", "MIC"), c(NA_real_, NA_real_))
+  # hedged statements are not taken over
+  expect_false(any(as.character(cb$ab) == "OXA-S" & as.character(cb$mo) == "B_STPHY_AURS" & cb$method == "MIC" & !is.na(cb$breakpoint_R)))
+  # mupirocin for nasal decolonisation, which changed over the years
+  expect_identical(bp("EUCAST 2023", "MUP", "S. aureus", "MIC", "Topical"), c(1, 256))
+  expect_identical(bp("EUCAST 2023", "MUP", "S. aureus", "DISK", "Topical"), c(30, 18))
+  expect_identical(bp("EUCAST 2026", "MUP", "S. aureus", "MIC", "Topical"), c(1, 1))
+  expect_identical(bp("EUCAST 2026", "MUP", "S. aureus", "DISK", "Topical"), c(30, 30))
+  # meropenem in other infections than meningitis for N. meningitidis, stated in EUCAST 2021
+  expect_identical(bp("EUCAST 2021", "MEM", "N. meningitidis", "MIC", "Non-meningitis"), c(0.25, 0.25))
+  # Bacteroides extends to these taxa for both methods, unlike H. influenzae, which extends for MIC only
+  for (g in paste("EUCAST", 2023:2026)) {
+    for (to in c("Parabacteroides", "Phocaeicola dorei", "Phocaeicola vulgatus")) {
+      for (m in c("MIC", "DISK")) {
+        from_rows <- cb[cb$guideline == g & as.character(cb$mo) == "B_BCTRD" & cb$method == m & !is.na(cb$breakpoint_S), , drop = FALSE]
+        to_rows <- cb[cb$guideline == g & as.character(cb$mo) == as.character(as.mo(to, info = FALSE)) & cb$method == m & !is.na(cb$breakpoint_S), , drop = FALSE]
+        expect_true(nrow(from_rows) > 0, info = paste(g, m))
+        expect_true(all(as.character(from_rows$ab) %in% as.character(to_rows$ab)), info = paste(g, to, m))
+      }
+    }
+  }
+  expect_false(any(as.character(cb$mo) == "B_HMPHL_PRNF" & cb$method == "DISK" & cb$guideline %like% "EUCAST 202" & !is.na(cb$breakpoint_S)))
+})
+
+test_that("clinical_breakpoints: no EUCAST breakpoints in brackets (#327)", {
+  skip_on_cran()
+  expect_false(any(grepl("brackets", clinical_breakpoints$note, fixed = TRUE)))
+  expect_false(any(grepl("[( )]", clinical_breakpoints$note, fixed = TRUE)))
+  # e.g., systemic amikacin for Enterobacterales in EUCAST 2026, with only the breakpoint for infections originating from the urinary tract left
+  amk <- subset(clinical_breakpoints, guideline == "EUCAST 2026" & type == "human" & ab == "AMK" & method == "MIC" & mo == "B_[ORD]_ENTRBCTR")
+  expect_identical(nrow(amk), 1L)
+  expect_true(amk$uti)
+})
+
+test_that("clinical_breakpoints: EUCAST MIC breakpoints are stored as published (#331)", {
+  skip_on_cran()
+  cb <- as.data.frame(clinical_breakpoints, stringsAsFactors = FALSE)
+  cb <- cb[cb$type == "human" & cb$method == "MIC" & cb$guideline %like% "EUCAST" & cb$ref_tbl %like% "file: ", , drop = FALSE]
+  expect_true(nrow(cb) > 0)
+  # these notations do not occur in the EUCAST Clinical Breakpoint Tables
+  published_as <- c("0.032" = 0.032, "0.064" = 0.064, "0.0001" = 0.0001)
+  for (value in names(published_as)) {
+    wrong <- which(cb$breakpoint_S == published_as[value] | cb$breakpoint_R == published_as[value])
+    expect_true(length(wrong) == 0, info = paste("EUCAST MIC breakpoint", value, "in", paste(unique(cb$guideline[wrong]), collapse = ", ")))
+  }
+  # but those as published do, e.g., benzylpenicillin for group A streptococci in v16.1
+  expect_true(any(cb$breakpoint_S == 0.03, na.rm = TRUE))
+  expect_true(any(cb$breakpoint_S == 0.06, na.rm = TRUE))
+  expect_true(any(cb$breakpoint_S == 0.001, na.rm = TRUE))
+})
+
 test_that("clinical_breakpoints: consistent and unambiguous", {
   skip_on_cran()
   cb <- clinical_breakpoints
@@ -623,6 +774,9 @@ test_that("clinical_breakpoints: consistent and unambiguous", {
   expected <- c("subspecies" = 1, "species" = 2, "species group" = 2.5, "genus" = 3, "family" = 4, "order" = 5)[rank]
   wrong <- which(!is.na(expected) & floor(cb$rank_index * 2) / 2 != expected & cb$rank_index != expected)
   expect_true(length(wrong) == 0, info = paste("rank_index does not match the rank:", describe_mo(unique(cb$mo[wrong]))))
+  # anaerobes are more specific than a Gram stain, with or without the 0.1 of a blocking row
+  expect_true(all(cb$rank_index[grepl("^B_ANAER", cb$mo)] %in% c(5.5, 5.6)))
+  expect_true(all(cb$rank_index[cb$mo %in% c("B_GRAMN", "B_GRAMP")] %in% c(6, 6.1)))
 })
 
 test_that("antimicrobials: unique and well-formed", {
