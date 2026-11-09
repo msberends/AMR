@@ -270,6 +270,14 @@ ggplot_sir <- function(data,
     )
   }
 
+  # italicise taxonomic names on the x axis and in the legend, e.g. with x = "mo" or fill = "mo"
+  if (x %in% colnames(data) && contains_taxonomy(data[[x]])) {
+    p <- p + ggplot2::scale_x_discrete(labels = labels_taxonomy)
+  }
+  if (fill != "interpretation" && fill %in% colnames(data) && contains_taxonomy(data[[fill]])) {
+    p <- p + ggplot2::scale_fill_discrete(labels = labels_taxonomy)
+  }
+
   if (!is.null(facet)) {
     # pass the value, as facet_sir() takes an unquoted name as column name
     p <- p + do.call(facet_sir, list(facet = facet, nrow = nrow))

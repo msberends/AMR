@@ -1,4 +1,4 @@
-# AMR 3.1.0.9017
+# AMR 3.1.0.9018
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -11,6 +11,7 @@ This version fixes a critical bug in WISCA that biased all coverage estimates of
 * **Taxonomic names in plots**
   * New function `labels_taxonomy()` to print taxonomic names in axis and legend labels in italics, which can directly be used as labeller in `ggplot2` (e.g., `scale_x_discrete(labels = labels_taxonomy)`) and in base R plots
   * `italicise_taxonomy()` gained `type = "plotmath"`, which returns an expression vector for titles, axes and legends in plots
+  * All plotting functions now print taxonomic names in italics using `labels_taxonomy()`: the facets and titles of `autoplot()` and `plot()` for antibiograms, the legend of `wisca_plot()` (which previously italicised all its entries, including e.g. "CoNS"), the axes, legends and facets of `ggplot_sir()` and `facet_sir()`, the labels and legend of `ggplot_pca()`, and the subtitles of `plot()` and `autoplot()` for MIC and disk diffusion values (which previously italicised the whole name, e.g. "Coagulase-negative Staphylococcus (CoNS)")
 
 ### Changed
 * `italicise_taxonomy()`
@@ -18,6 +19,8 @@ This version fixes a critical bug in WISCA that biased all coverage estimates of
   * Fixed punctuation being italicised along with taxonomic names, e.g., `"(S. aureus)"` now gives `"(*S. aureus*)"` instead of `"(S. *aureus)*"`
   * `NA` values now return `NA` instead of `"NA"`
   * Taxonomic names are now looked up once per session, making the function considerably faster for long vectors
+* `ggplot_pca()`
+  * Fixed an error when setting `groups` together with `labels`, and setting `groups` without `labels` now colours the points by these groups instead of using them as labels, as documented
 * WISCA (`wisca()` and `antibiogram(..., wisca = TRUE)`)
   * Fixed a critical bug that systematically underestimated the coverage of every WISCA since AMR 3.0.0. Pathogens absent from a syndromic group, and pathogens without any test result for a regimen, were still included in the model with only prior information: each added a prior weight of 1 to the pathogen incidence, and untested pathogens kept their full incidence weight while counting as about 50% susceptible. The bias was largest for stratified analyses (e.g., up to 14 percentage points for meropenem in random strata of `example_isolates`). Now, only pathogens that occur in a group and have at least one test result for the regimen are included. Please re-run all WISCA analyses (#337)
   * `retrieve_wisca_parameters()` now returns only the parameters actually used in the model, and `n_total` in the `long_numeric` attribute now counts only isolates of the pathogens included for that regimen

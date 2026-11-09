@@ -73,4 +73,12 @@ test_that("test-italicise_taxonomy.R", {
     expression(italic("E. coli"), "Other")
   )
   expect_identical(labels_taxonomy(character(0)), expression())
+
+  # used internally by the plotting functions
+  expect_true(AMR:::contains_taxonomy(c("E. coli", "Other", NA)))
+  expect_false(AMR:::contains_taxonomy(c("Other", "CoNS", NA)))
+  expect_identical(
+    AMR:::labeller_taxonomy(list(mo = c("E. coli", "CoNS"))),
+    list(mo = list(expression(italic("E. coli")), expression("CoNS")))
+  )
 })

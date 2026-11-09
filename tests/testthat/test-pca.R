@@ -60,6 +60,13 @@ test_that("test-pca.R", {
   if (AMR:::pkg_is_available("ggplot2")) {
     ggplot_pca(pca_model, ellipse = TRUE)
     ggplot_pca(pca_model, arrows_textangled = FALSE)
+    # explicit groups, with and without labels
+    my_groups <- c("Gram-positive", "Gram-negative", "Gram-negative")
+    p <- ggplot_pca(pca_model, groups = my_groups)
+    expect_identical(p$data$groups, my_groups)
+    expect_identical(p$labels$colour, "my_groups")
+    p <- ggplot_pca(pca_model, labels = resistance_data$genus, groups = my_groups)
+    expect_identical(p$data$groups, my_groups)
   }
 
   if (AMR:::pkg_is_available("dplyr", min_version = "1.0.0", also_load = TRUE)) {

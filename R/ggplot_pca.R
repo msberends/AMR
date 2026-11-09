@@ -151,6 +151,7 @@ ggplot_pca <- function(x,
     pca_model = x,
     groups = groups,
     groups_missing = missing(groups),
+    group_name = if (missing(groups)) NULL else paste(deparse(substitute(groups)), collapse = ""),
     labels = labels,
     labels_missing = missing(labels),
     choices = choices,
@@ -183,8 +184,19 @@ ggplot_pca <- function(x,
   )
 
   # Score Labels
+  labels_parse <- FALSE
   if (!is.null(labels)) {
     df.u$labels <- labels
+    if (contains_taxonomy(labels)) {
+      # italicise taxonomic names, as plotmath text to be parsed by geom_text()
+      labels_parse <- TRUE
+      df.u$labels <- vapply(
+        FUN.VALUE = character(1),
+        as.list(labels_taxonomy(labels)),
+        function(e) if (is.character(e) && is.na(e)) NA_character_ else paste(deparse(e, width.cutoff = 500L), collapse = ""),
+        USE.NAMES = FALSE
+      )
+    }
   }
 
   # Grouping variable
@@ -213,7 +225,8 @@ ggplot_pca <- function(x,
       ) +
         ggplot2::geom_text(ggplot2::aes(label = labels, colour = groups),
           nudge_y = -0.05,
-          size = labels_textsize
+          size = labels_textsize,
+          parse = labels_parse
         ) +
         ggplot2::labs(colour = group_name)
     } else {
@@ -223,7 +236,8 @@ ggplot_pca <- function(x,
       ) +
         ggplot2::geom_text(ggplot2::aes(label = labels),
           nudge_y = -0.05,
-          size = labels_textsize
+          size = labels_textsize,
+          parse = labels_parse
         )
     }
   } else {
@@ -239,6 +253,11 @@ ggplot_pca <- function(x,
         size = points_size
       )
     }
+  }
+
+  # italicise taxonomic names in the legend
+  if (!is.null(df.u$groups) && contains_taxonomy(df.u$groups)) {
+    g <- g + ggplot2::scale_colour_discrete(labels = labels_taxonomy)
   }
 
   # Overlay a concentration ellipse if there are groups
@@ -308,6 +327,7 @@ ggplot_pca <- function(x,
 pca_calculations <- function(pca_model,
                              groups = NULL,
                              groups_missing = TRUE,
+                             group_name = NULL,
                              labels = NULL,
                              labels_missing = TRUE,
                              choices = 1:2,
@@ -329,8 +349,8 @@ pca_calculations <- function(pca_model,
       error = function(e) NULL
     )
   }
-  if (!is.null(groups) && is.null(labels)) {
-    # turn them around
+  if (groups_missing && !is.null(groups) && is.null(labels)) {
+    # only one non-numeric column: use it for labels instead of groups
     labels <- groups
     groups <- NULL
     group_name <- NULL

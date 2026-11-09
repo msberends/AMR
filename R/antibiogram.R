@@ -1404,7 +1404,7 @@ plot.antibiogram <- function(x, ...) {
       names.arg = df_sub$ab,
       col = "#aaaaaa",
       beside = TRUE,
-      main = mo,
+      main = labels_taxonomy(mo),
       legend = NULL
     )
 
@@ -1568,7 +1568,7 @@ autoplot.antibiogram <- function(object,
   }
 
   if (has_facet) {
-    out <- out + ggplot2::facet_wrap("mo")
+    out <- out + ggplot2::facet_wrap("mo", labeller = labeller_taxonomy)
   }
 
   out
@@ -1733,6 +1733,7 @@ plot_wisca_susceptibility_incidence <- function(wisca_model, sep) {
       colour = translate_AMR("Pathogen", language = get_AMR_locale()),
       caption = paste(attributes(wisca_model)$simulations, "Monte Carlo simulations")
     ) +
+    ggplot2::scale_colour_discrete(labels = labels_taxonomy) +
     ggplot2::guides(
       colour = ggplot2::guide_legend(
         override.aes = list(alpha = 1, size = 3)
@@ -1741,7 +1742,6 @@ plot_wisca_susceptibility_incidence <- function(wisca_model, sep) {
     ggplot2::theme(
       legend.position = "right",
       legend.key.spacing.y = ggplot2::unit(0.25, "lines"),
-      legend.text = ggplot2::element_text(face = "italic"),
       plot.title = ggplot2::element_text(size = 12, face = "bold")
     )
 }
