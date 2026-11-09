@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.1.0.9020" id="amr-3109020">AMR 3.1.0.9020<a class="anchor" aria-label="anchor" href="#amr-3109020"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.1.0.9019" id="amr-3109019">AMR 3.1.0.9019<a class="anchor" aria-label="anchor" href="#amr-3109019"></a></h2>
 <p>This version fixes a critical bug in WISCA that biased all coverage estimates of <code><a href="../reference/antibiogram.html">wisca()</a></code> and <code>antibiogram(..., wisca = TRUE)</code> downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.</p>
 <div class="section level4">
-<h4 id="breaking-3-1-0-9020">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-1-0-9020"></a></h4>
+<h4 id="breaking-3-1-0-9019">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-1-0-9019"></a></h4>
 <ul><li>
 <code><a href="../reference/mo_property.html">mo_shortname()</a></code> now returns the serovar for <em>Salmonella</em> serovars, e.g., <code>"S. Typhi"</code> and <code>"S. Goldcoast"</code> instead of <code>"S. enterica"</code>. As this is the default for <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> and short names in <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, serovars are no longer merged in their results. Use <code>FUN = function(x) paste(mo_genus(x), mo_species(x))</code> in <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to group them by species (<a href="https://github.com/msberends/AMR/issues/341" class="external-link">#341</a>)</li>
 <li>
@@ -61,7 +61,7 @@
 <code><a href="../reference/mdro.html">mdro()</a></code> now applies the rule for <em>Salmonella</em> Typhi in the EUCAST guidelines, i.e., resistance to carbapenems (and fluoroquinolones in <code>"EUCAST3.1"</code>). This rule never applied before, so these isolates were wrongly classified as negative (<a href="https://github.com/msberends/AMR/issues/341" class="external-link">#341</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="new-3-1-0-9020">New<a class="anchor" aria-label="anchor" href="#new-3-1-0-9020"></a></h4>
+<h4 id="new-3-1-0-9019">New<a class="anchor" aria-label="anchor" href="#new-3-1-0-9019"></a></h4>
 <ul><li>
 <strong>Taxonomic names in plots</strong>
 <ul><li>New function <code><a href="../reference/plot.html">labels_taxonomy()</a></code> to print taxonomic names in axis and legend labels in italics, which can directly be used as labeller in <code>ggplot2</code> (e.g., <code>scale_x_discrete(labels = labels_taxonomy)</code>) and in base R plots</li>
@@ -71,7 +71,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-1-0-9020">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0-9020"></a></h4>
+<h4 id="changed-3-1-0-9019">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0-9019"></a></h4>
 <ul><li>
 <code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code>
 <ul><li>Species and subspecies names are now only italicised after a genus, an abbreviated genus, or another species or subspecies name, so that ordinary words such as “coli” or “major” stay upright. <em>Salmonella</em> serovars (such as Typhimurium) and groups are no longer italicised, and “subsp.”, “ssp.” and “var.” stay upright between italicised names</li>
@@ -83,9 +83,8 @@
 <li>Taxonomic names are now looked up once per session, making the function considerably faster for long vectors</li>
 </ul></li>
 <li>
-<code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code>, <code><a href="../reference/ggplot_sir.html">geom_sir()</a></code> and <code><a href="../reference/ggplot_sir.html">labels_sir_count()</a></code>
+<code><a href="../reference/ggplot_sir.html">labels_sir_count()</a></code> and <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code>
 <ul><li>Fixed the data labels being placed on the wrong bars with <code>position = "dodge"</code> or <code>position = "stack"</code>. They are now grouped like the bars, using the new <code>fill</code> argument of <code><a href="../reference/ggplot_sir.html">labels_sir_count()</a></code>, which <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code> sets automatically</li>
-<li>If the interpretation is not shown in the plot, e.g., with <code>fill = "species"</code>, only the susceptible proportion is now plotted, following the guideline: S+SDD+I for EUCAST, S+SDD for CLSI, and S with <code>guideline = NULL</code>. Previously, the bars of all interpretations were drawn on top of each other. The y axis title of <code><a href="../reference/ggplot_sir.html">ggplot_sir()</a></code> then states the category, e.g., “Proportion SI”</li>
 </ul></li>
 <li>
 <code><a href="../reference/ggplot_pca.html">ggplot_pca()</a></code>
@@ -106,7 +105,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-1-0-9020">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0-9020"></a></h4>
+<h4 id="other-3-1-0-9019">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0-9019"></a></h4>
 <ul><li>The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field</li>
 <li>Fixed the link to the copyright section and added MycoBank as a taxonomy source in the <em>Welcome to AMR</em> vignette (<a href="https://github.com/msberends/AMR/issues/325" class="external-link">#325</a>)</li>
 </ul></div>

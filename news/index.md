@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.1.0.9020
+## AMR 3.1.0.9019
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -82,9 +82,8 @@ are strongly advised to re-run their WISCA analyses.
   - `NA` values now return `NA` instead of `"NA"`
   - Taxonomic names are now looked up once per session, making the
     function considerably faster for long vectors
-- [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md),
-  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md) and
-  [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md)
+- [`labels_sir_count()`](https://amr-for-r.org/reference/ggplot_sir.md)
+  and [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md)
   - Fixed the data labels being placed on the wrong bars with
     `position = "dodge"` or `position = "stack"`. They are now grouped
     like the bars, using the new `fill` argument of
@@ -92,13 +91,6 @@ are strongly advised to re-run their WISCA analyses.
     which
     [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md) sets
     automatically
-  - If the interpretation is not shown in the plot, e.g., with
-    `fill = "species"`, only the susceptible proportion is now plotted,
-    following the guideline: S+SDD+I for EUCAST, S+SDD for CLSI, and S
-    with `guideline = NULL`. Previously, the bars of all interpretations
-    were drawn on top of each other. The y axis title of
-    [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md) then
-    states the category, e.g., “Proportion SI”
 - [`ggplot_pca()`](https://amr-for-r.org/reference/ggplot_pca.md)
   - Fixed an error when setting `groups` together with `labels`, and
     setting `groups` without `labels` now colours the points by these
