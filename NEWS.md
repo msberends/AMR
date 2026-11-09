@@ -1,4 +1,4 @@
-# AMR 3.1.0.9021
+# AMR 3.1.0.9022
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -46,7 +46,8 @@ It also adds a `site` argument to `as.sir()`, stores EUCAST MIC breakpoints exac
   * Taxonomic names are now looked up once per session, making the function considerably faster for long vectors
 * `ggplot_sir()`, `geom_sir()` and `labels_sir_count()`
   * Fixed the data labels being placed on the wrong bars with `position = "dodge"` or `position = "stack"`. They are now grouped like the bars, using the new `fill` argument of `labels_sir_count()`, which `ggplot_sir()` sets automatically
-  * If the interpretation is not shown in the plot, e.g., with `fill = "species"`, only the susceptible proportion is now plotted, following the guideline: S+SDD+I for EUCAST, S+SDD for CLSI, and S with `guideline = NULL`. Previously, the bars of all interpretations were drawn on top of each other. The y axis title of `ggplot_sir()` then states the category, e.g., "Proportion SI"
+  * If the interpretation is not shown in the plot, e.g., with `fill = "species"`, only the susceptible proportion is now plotted, following the guideline: S+SDD+I for EUCAST, S+SDD for CLSI, and S with `guideline = NULL`. Previously, the bars of all interpretations were drawn on top of each other. The y axis title of `ggplot_sir()` then states the category, e.g., "Proportion SI", and the data labels show the number of tested isolates
+  * `ggplot_sir()` now splits the plot by antimicrobial if there is more than one and the antimicrobial is not shown in the plot, e.g., with `x = "species"`, as their bars were previously stacked on top of each other. This uses `facet = "antibiotic"` if `facet` is not set, and otherwise a grid of `facet` by antimicrobial
 * `ggplot_pca()`
   * Fixed an error when setting `groups` together with `labels`, and setting `groups` without `labels` now colours the points by these groups instead of using them as labels, as documented
 * *Morganella* is interpreted as reported, with the breakpoints of Enterobacterales or Morganellaceae and not of *M. morganii*, which is now tested (#330)
