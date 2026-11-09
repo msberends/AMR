@@ -83,12 +83,23 @@ labels_sir_count(
   Variable to categorise using the plots legend, either
   `"interpretation"` (default) or `"antibiotic"` or a grouping variable.
   For `labels_sir_count()`, this must be the same as the `fill` of
-  `geom_sir()`, so that the labels are placed on the right bars.
+  `geom_sir()`, so that the labels are placed on the right bars. If the
+  interpretation is not shown in the plot (i.e., neither in `x`, `fill`,
+  nor `facet`), only the susceptible proportion is plotted, which
+  follows the guideline (see `guideline`): S+SDD+I for EUCAST, S+SDD for
+  CLSI, and S if `guideline = NULL`.
 
 - facet:
 
-  Variable to split plots by, either `"interpretation"` (default) or
-  `"antibiotic"` or a grouping variable.
+  Variable to split plots by, either `"interpretation"` or
+  `"antibiotic"` or a grouping variable. If there is more than one
+  antimicrobial and the antimicrobial is not shown in the plot (i.e.,
+  neither in `x`, `fill`, nor `facet`), `ggplot_sir()` splits the plot
+  by antimicrobial, as their bars would otherwise be stacked: using
+  `facet = "antibiotic"` if `facet` is not set, and otherwise using a
+  grid of `facet` by antimicrobial. Note that `geom_sir()` cannot do
+  this, so add [`facet_sir()`](https://amr-for-r.org/reference/plot.md)
+  in that case.
 
 - breaks:
 

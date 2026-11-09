@@ -9,7 +9,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9021</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -259,7 +259,7 @@ Especially the scale_*_mic() functions are relevant wrappers to plot MIC values 
 
 
 <dt id="arg-facet">facet<a class="anchor" aria-label="anchor" href="#arg-facet"></a></dt>
-<dd><p>Variable to split plots by, either <code>"interpretation"</code> (default) or <code>"antibiotic"</code> or a grouping variable.</p></dd>
+<dd><p>Variable to split plots by, either <code>"interpretation"</code> or <code>"antibiotic"</code> or a grouping variable. If there is more than one antimicrobial and the antimicrobial is not shown in the plot (i.e., neither in <code>x</code>, <code>fill</code>, nor <code>facet</code>), <code><a href="ggplot_sir.html">ggplot_sir()</a></code> splits the plot by antimicrobial, as their bars would otherwise be stacked: using <code>facet = "antibiotic"</code> if <code>facet</code> is not set, and otherwise using a grid of <code>facet</code> by antimicrobial. Note that <code><a href="ggplot_sir.html">geom_sir()</a></code> cannot do this, so add <code>facet_sir()</code> in that case.</p></dd>
 
 
 <dt id="arg-nrow">nrow<a class="anchor" aria-label="anchor" href="#arg-nrow"></a></dt>

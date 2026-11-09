@@ -258,8 +258,16 @@ labels_taxonomy(x, ...)
 
 - facet:
 
-  Variable to split plots by, either `"interpretation"` (default) or
-  `"antibiotic"` or a grouping variable.
+  Variable to split plots by, either `"interpretation"` or
+  `"antibiotic"` or a grouping variable. If there is more than one
+  antimicrobial and the antimicrobial is not shown in the plot (i.e.,
+  neither in `x`, `fill`, nor `facet`),
+  [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md) splits
+  the plot by antimicrobial, as their bars would otherwise be stacked:
+  using `facet = "antibiotic"` if `facet` is not set, and otherwise
+  using a grid of `facet` by antimicrobial. Note that
+  [`geom_sir()`](https://amr-for-r.org/reference/ggplot_sir.md) cannot
+  do this, so add `facet_sir()` in that case.
 
 - nrow:
 
