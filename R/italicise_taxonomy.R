@@ -107,6 +107,12 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi", "html", "plo
   )
 }
 
+contains_taxonomy <- function(x) {
+  # whether any value holds a taxonomic name that would be italicised
+  x <- unique(as.character(x))
+  any(vapply(taxonomy_pieces(x[!is.na(x)]), function(p) any(p$italic), logical(1)))
+}
+
 get_taxonomy_names <- function() {
   # cached for the session, reset by reset_mo_cache() when the lookup table changes
   if (is.null(AMR_env$taxonomy_names)) {

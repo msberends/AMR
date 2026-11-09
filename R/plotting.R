@@ -80,6 +80,8 @@
 #'
 #' The function [labels_taxonomy()] prints taxonomic names in axis and legend labels in italics, as is the convention in microbiology, e.g., *E. coli* and *Klebsiella pneumoniae*. It can directly be used as labeller in `ggplot2`, e.g., `scale_x_discrete(labels = labels_taxonomy)`, and in base \R, e.g., `axis(1, at = 1:3, labels = labels_taxonomy(names))`. Other words, such as "Other" or "CoNS", stay upright. It uses [italicise_taxonomy()] with `type = "plotmath"`, which also works for titles. It returns an [expression] vector of the same length as `x`; other arguments in `...` are ignored.
 #'
+#' The plotting functions of this package apply this automatically wherever they show taxonomic names, e.g., in the facets and titles of [antibiogram()] plots, in the legend of [wisca_plot()], on the axes, legends and facets of [ggplot_sir()] and [facet_sir()], in [ggplot_pca()], and in the subtitles of MIC and disk diffusion plots.
+#'
 #' The interpretation of "I" will be named "Susceptible, incr. exp." (susceptible, increased exposure) for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 #'
 #' For interpreting MIC values as well as disk diffusion diameters, the default guideline is `r AMR::clinical_breakpoints$guideline[1]`, unless the package option [`AMR_guideline`][AMR-options] is set. See [as.sir()] for more information.
@@ -1288,7 +1290,7 @@ plot_colours_subtitle_guideline <- function(x, mo, ab, guideline, colours_SIR, f
     sir <- as.character(sir)
     cols <- unname(plot_sir_colour_values(colours_SIR)[sir])
     cols[is.na(cols)] <- "#BEBEBE"
-    sub <- bquote(.(abname) ~ "-" ~ italic(.(moname)) ~ .(guideline_txt))
+    sub <- bquote(.(abname) ~ "-" ~ .(italicise_taxonomy(moname, type = "plotmath")[[1]]) ~ .(guideline_txt))
   } else {
     sir <- rep(NA_character_, length(x))
     cols <- "#BEBEBE"
@@ -1319,7 +1321,7 @@ facet_sir <- function(facet = c("interpretation", "antibiotic"), nrow = NULL) {
     facet <- "antibiotic"
   }
 
-  ggplot2::facet_wrap(facets = facet, scales = "free_x", nrow = nrow)
+  ggplot2::facet_wrap(facets = facet, scales = "free_x", nrow = nrow, labeller = labeller_taxonomy)
 }
 
 #' @rdname plot
@@ -1436,6 +1438,17 @@ labels_taxonomy <- function(x, ...) {
   }
   italicise_taxonomy(as.character(x), type = "plotmath")
 }
+
+# ggplot2 facet labeller that italicises taxonomic names in the strips
+labeller_taxonomy <- structure(
+  function(labels) {
+    lapply(labels, function(values) {
+      expr <- labels_taxonomy(values)
+      lapply(seq_along(expr), function(i) expr[i])
+    })
+  },
+  class = c("function", "labeller")
+)
 
 #' @rdname ggplot_sir
 #' @export

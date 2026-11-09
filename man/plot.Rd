@@ -238,6 +238,8 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 
 The function \code{\link[=labels_taxonomy]{labels_taxonomy()}} prints taxonomic names in axis and legend labels in italics, as is the convention in microbiology, e.g., \emph{E. coli} and \emph{Klebsiella pneumoniae}. It can directly be used as labeller in \code{ggplot2}, e.g., \code{scale_x_discrete(labels = labels_taxonomy)}, and in base \R, e.g., \code{axis(1, at = 1:3, labels = labels_taxonomy(names))}. Other words, such as "Other" or "CoNS", stay upright. It uses \code{\link[=italicise_taxonomy]{italicise_taxonomy()}} with \code{type = "plotmath"}, which also works for titles. It returns an \link{expression} vector of the same length as \code{x}; other arguments in \code{...} are ignored.
 
+The plotting functions of this package apply this automatically wherever they show taxonomic names, e.g., in the facets and titles of \code{\link[=antibiogram]{antibiogram()}} plots, in the legend of \code{\link[=wisca_plot]{wisca_plot()}}, on the axes, legends and facets of \code{\link[=ggplot_sir]{ggplot_sir()}} and \code{\link[=facet_sir]{facet_sir()}}, in \code{\link[=ggplot_pca]{ggplot_pca()}}, and in the subtitles of MIC and disk diffusion plots.
+
 The interpretation of "I" will be named "Susceptible, incr. exp." (susceptible, increased exposure) for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
 For interpreting MIC values as well as disk diffusion diameters, the default guideline is EUCAST 2026, unless the package option \code{\link[=AMR-options]{AMR_guideline}} is set. See \code{\link[=as.sir]{as.sir()}} for more information.
