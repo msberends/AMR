@@ -33,7 +33,7 @@
 #' Functions to plot classes `sir`, `mic` and `disk`, with support for base \R and `ggplot2`.
 #'
 #' Especially the `scale_*_mic()` functions are relevant wrappers to plot MIC values for `ggplot2`. They allow custom MIC ranges and to plot intermediate log2 levels for missing MIC values.
-#' @param x,object Values created with [as.mic()], [as.disk()] or [as.sir()] (or their `random_*` variants, such as [random_mic()]).
+#' @param x,object Values created with [as.mic()], [as.disk()] or [as.sir()] (or their `random_*` variants, such as [random_mic()]). For [labels_taxonomy()], any values to use as labels, such as the breaks of an axis.
 #' @param mo Any (vector of) text that can be coerced to a valid microorganism code with [as.mo()].
 #' @param ab Any (vector of) text that can be coerced to a valid antimicrobial drug code with [as.ab()].
 #' @param guideline Interpretation guideline to use - the default is the latest included EUCAST guideline, see *Details*.
@@ -75,6 +75,10 @@
 #' * [scale_sir_colours()] allows to set colours to any aesthetic, even for `shape` or `linetype`.
 #' * [theme_sir()] is a [ggplot2 theme][ggplot2::theme()] with minimal distraction.
 #' * [labels_sir_count()] prints data labels on the bars with percentage and number of isolates, using [ggplot2::geom_text()].
+#'
+#' ### Taxonomic Names in Labels
+#'
+#' The function [labels_taxonomy()] prints taxonomic names in axis and legend labels in italics, as is the convention in microbiology, e.g., *E. coli* and *Klebsiella pneumoniae*. It can directly be used as labeller in `ggplot2`, e.g., `scale_x_discrete(labels = labels_taxonomy)`, and in base \R, e.g., `axis(1, at = 1:3, labels = labels_taxonomy(names))`. Other words, such as "Other" or "CoNS", stay upright. It uses [italicise_taxonomy()] with `type = "plotmath"`, which also works for titles. It returns an [expression] vector of the same length as `x`; other arguments in `...` are ignored.
 #'
 #' The interpretation of "I" will be named "Susceptible, incr. exp." (susceptible, increased exposure) for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 #'
@@ -225,6 +229,18 @@
 #' plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 #'
 #' plot(some_sir_values)
+#'
+#' # Taxonomic names in italics using labels_taxonomy() ------------------
+#' bacteria <- data.frame(
+#'   name = c("E. coli", "Klebsiella pneumoniae", "CoNS", "Other"),
+#'   n = c(25, 18, 9, 6)
+#' )
+#' barplot(bacteria$n, names.arg = labels_taxonomy(bacteria$name))
+#' if (require("ggplot2")) {
+#'   ggplot(bacteria, aes(name, n)) +
+#'     geom_col() +
+#'     scale_x_discrete(labels = labels_taxonomy)
+#' }
 NULL
 
 #' @rawNamespace if(getRversion() >= "3.0.0") S3method(ggplot2::scale_type, mic)
@@ -1410,6 +1426,15 @@ theme_sir <- function() {
       plot.title = ggplot2::element_text(hjust = 0.5),
       plot.subtitle = ggplot2::element_text(hjust = 0.5)
     )
+}
+
+#' @rdname plot
+#' @export
+labels_taxonomy <- function(x, ...) {
+  if (length(x) == 0) {
+    return(expression())
+  }
+  italicise_taxonomy(as.character(x), type = "plotmath")
 }
 
 #' @rdname ggplot_sir

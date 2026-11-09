@@ -22,6 +22,7 @@
 \alias{scale_sir_colours}
 \alias{scale_sir_colors}
 \alias{theme_sir}
+\alias{labels_taxonomy}
 \title{Plotting Helpers for AMR Data Analysis}
 \usage{
 scale_x_mic(keep_operators = "edges", mic_range = NULL, ...)
@@ -150,6 +151,8 @@ scale_sir_colours(
 )
 
 theme_sir()
+
+labels_taxonomy(x, ...)
 }
 \arguments{
 \item{keep_operators}{A \link{character} specifying how to handle operators (such as \code{>} and \code{<=}) in the input. Accepts one of three values: \code{"all"} (or \code{TRUE}) to keep all operators, \code{"none"} (or \code{FALSE}) to remove all operators, or \code{"edges"} to keep operators only at both ends of the range.}
@@ -164,7 +167,7 @@ theme_sir()
 
 \item{eucast_I}{A \link{logical} to indicate whether the 'I' must be interpreted as "Susceptible, under increased exposure". Will be \code{TRUE} if the default \link[=as.sir]{AMR interpretation guideline} is set to EUCAST 2019 or later (which is the default). With \code{FALSE}, it will be interpreted as "Intermediate".}
 
-\item{x, object}{Values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}}).}
+\item{x, object}{Values created with \code{\link[=as.mic]{as.mic()}}, \code{\link[=as.disk]{as.disk()}} or \code{\link[=as.sir]{as.sir()}} (or their \verb{random_*} variants, such as \code{\link[=random_mic]{random_mic()}}). For \code{\link[=labels_taxonomy]{labels_taxonomy()}}, any values to use as labels, such as the breaks of an axis.}
 
 \item{mo}{Any (vector of) text that can be coerced to a valid microorganism code with \code{\link[=as.mo]{as.mo()}}.}
 
@@ -229,6 +232,11 @@ This package contains more functions that extend the \code{ggplot2} package, to 
 \item \code{\link[=theme_sir]{theme_sir()}} is a \link[ggplot2:theme]{ggplot2 theme} with minimal distraction.
 \item \code{\link[=labels_sir_count]{labels_sir_count()}} prints data labels on the bars with percentage and number of isolates, using \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}}.
 }
+}
+
+\subsection{Taxonomic Names in Labels}{
+
+The function \code{\link[=labels_taxonomy]{labels_taxonomy()}} prints taxonomic names in axis and legend labels in italics, as is the convention in microbiology, e.g., \emph{E. coli} and \emph{Klebsiella pneumoniae}. It can directly be used as labeller in \code{ggplot2}, e.g., \code{scale_x_discrete(labels = labels_taxonomy)}, and in base \R, e.g., \code{axis(1, at = 1:3, labels = labels_taxonomy(names))}. Other words, such as "Other" or "CoNS", stay upright. It uses \code{\link[=italicise_taxonomy]{italicise_taxonomy()}} with \code{type = "plotmath"}, which also works for titles. It returns an \link{expression} vector of the same length as \code{x}; other arguments in \code{...} are ignored.
 
 The interpretation of "I" will be named "Susceptible, incr. exp." (susceptible, increased exposure) for all EUCAST guidelines since 2019, and will be named "Intermediate" in all other cases.
 
@@ -377,4 +385,16 @@ plot(some_disk_values, mo = "Escherichia coli", ab = "cipro")
 plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 
 plot(some_sir_values)
+
+# Taxonomic names in italics using labels_taxonomy() ------------------
+bacteria <- data.frame(
+  name = c("E. coli", "Klebsiella pneumoniae", "CoNS", "Other"),
+  n = c(25, 18, 9, 6)
+)
+barplot(bacteria$n, names.arg = labels_taxonomy(bacteria$name))
+if (require("ggplot2")) {
+  ggplot(bacteria, aes(name, n)) +
+    geom_col() +
+    scale_x_discrete(labels = labels_taxonomy)
+}
 }

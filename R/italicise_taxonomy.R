@@ -31,27 +31,53 @@
 #'
 #' According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italics. This function finds taxonomic names within strings and makes them italic.
 #' @param string A [character] (vector).
-#' @param type Type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see *Details*.
+#' @param type Type of conversion of the taxonomic names, either "markdown", "html", "ansi" or "plotmath", see *Details*.
 #' @details
-#' This function finds the taxonomic names and makes them italic based on the [microorganisms] data set.
+#' This function finds the taxonomic names and makes them italic based on the [microorganisms] data set. Family and genus names are italicised anywhere in the text. Species and subspecies names are only italicised when they follow a genus, an abbreviated genus (such as "E." in "E. coli"), or another species or subspecies name, so that ordinary words that are also species names (such as "coli" or "major") stay upright. Subspecies may also follow "subsp.", "ssp." or "var.", which stay upright themselves, e.g., "*K. pneumoniae* subsp. *ozaenae*". *Salmonella* serovars (such as Typhimurium) and groups are not italicised, as is the convention. Punctuation around the names, such as brackets and commas, stays outside the italics.
 #'
 #' The taxonomic names can be italicised using markdown (the default) by adding `*` before and after the taxonomic names, or `<i>` and `</i>` when using html. When using 'ansi', ANSI colours will be added using `\033[3m` before and `\033[23m` after the taxonomic names. If multiple ANSI colours are not available, no conversion will occur.
 #'
-#' This function also supports abbreviation of the genus if it is followed by a species, such as "E. coli" and "K. pneumoniae ozaenae".
+#' Use `type = "plotmath"` to get an [expression] vector for plots (see [plotmath][grDevices::plotmath]), which works for titles, axes and legends in both base \R and `ggplot2`. For axis and legend labels, the function [labels_taxonomy()] does exactly this and can directly be used as labeller, e.g., `ggplot2::scale_x_discrete(labels = labels_taxonomy)`.
+#' @return For "markdown", "html" and "ansi", a [character] vector. For "plotmath", an [expression] vector. Both have the same length as `string` and keep `NA` values.
+#' @seealso [labels_taxonomy()] to italicise taxonomic names in plot labels.
 #' @export
 #' @examples
 #' italicise_taxonomy("An overview of Staphylococcus aureus isolates")
 #' italicise_taxonomy("An overview of S. aureus isolates")
+#' italicise_taxonomy("Infections with E. coli (and coli bacteria in general)")
 #'
 #' cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
-italicise_taxonomy <- function(string, type = c("markdown", "ansi", "html")) {
+#'
+#' # for plots:
+#' italicise_taxonomy("An overview of S. aureus isolates", type = "plotmath")
+#' plot(1:10, main = italicise_taxonomy("Growth of S. aureus", type = "plotmath"))
+italicise_taxonomy <- function(string, type = c("markdown", "ansi", "html", "plotmath")) {
   if (missing(type)) {
     type <- "markdown"
   }
   meet_criteria(string, allow_class = "character")
-  meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("markdown", "ansi", "html"))
+  meet_criteria(type, allow_class = "character", has_length = 1, is_in = c("markdown", "ansi", "html", "plotmath"))
 
-  add_MO_lookup_to_AMR_env()
+  pieces <- taxonomy_pieces(string)
+
+  if (type == "plotmath") {
+    return(as.expression(lapply(pieces, function(p) {
+      if (is.null(p)) {
+        return(NA_character_)
+      }
+      if (!any(p$italic)) {
+        return(paste0(p$text, collapse = ""))
+      }
+      parts <- lapply(seq_along(p$text), function(i) {
+        if (p$italic[i]) call("italic", p$text[i]) else p$text[i]
+      })
+      if (length(parts) == 1) {
+        parts[[1]]
+      } else {
+        as.call(c(as.name("paste"), parts))
+      }
+    })))
+  }
 
   if (type == "markdown") {
     before <- "*"
@@ -69,75 +95,138 @@ italicise_taxonomy <- function(string, type = c("markdown", "ansi", "html")) {
 
   vapply(
     FUN.VALUE = character(1),
-    string,
-    function(s) {
-      s_split <- unlist(strsplit(s, " ", fixed = TRUE))
-
-      search_strings <- gsub("[^a-zA-Z-]", "", s_split)
-
-      ind_species <- search_strings != "" &
-        search_strings %in% AMR_env$MO_lookup[
-          which(AMR_env$MO_lookup$rank %in% c(
-            "family",
-            "genus",
-            "species",
-            "subspecies",
-            "infraspecies",
-            "subsp."
-          )),
-          "species",
-          drop = TRUE
-        ]
-
-      ind_fullname <- search_strings != "" &
-        search_strings %in% c(
-          AMR_env$MO_lookup[
-            which(AMR_env$MO_lookup$rank %in% c(
-              "family",
-              "genus",
-              "species",
-              "subspecies",
-              "infraspecies",
-              "subsp."
-            )),
-            "fullname",
-            drop = TRUE
-          ],
-          AMR_env$MO_lookup[
-            which(AMR_env$MO_lookup$rank %in% c(
-              "family",
-              "genus",
-              "species",
-              "subspecies",
-              "infraspecies",
-              "subsp."
-            )),
-            "subspecies",
-            drop = TRUE
-          ]
-        )
-
-      # also support E. coli, add "E." to indices
-      has_previous_genera_abbr <- s_split[which(ind_species) - 1] %like_case% "^[A-Z][.]?$"
-      ind_species <- c(which(ind_species), which(ind_species)[has_previous_genera_abbr] - 1)
-
-      ind <- c(ind_species, which(ind_fullname))
-
-      s_split[ind] <- paste0(before, s_split[ind], after)
-      s_paste <- paste(s_split, collapse = " ")
-
-      # clean up a bit
-      s_paste <- gsub(paste0(after, " ", before), " ", s_paste, fixed = TRUE)
-
-      s_paste
+    pieces,
+    function(p) {
+      if (is.null(p)) {
+        return(NA_character_)
+      }
+      p$text[p$italic] <- paste0(before, p$text[p$italic], after)
+      paste0(p$text, collapse = "")
     },
     USE.NAMES = FALSE
   )
 }
 
+get_taxonomy_names <- function() {
+  # cached for the session, reset by reset_mo_cache() when the lookup table changes
+  if (is.null(AMR_env$taxonomy_names)) {
+    add_MO_lookup_to_AMR_env()
+    lookup <- AMR_env$MO_lookup
+    families <- unique(lookup$family)
+    genera <- unique(lookup$genus)
+    epithets <- unique(c(
+      lookup$species[lookup$rank %in% c("species", "subspecies", "species group")],
+      lookup$subspecies[lookup$rank == "subspecies"]
+    ))
+    AMR_env$taxonomy_names <- list(
+      # only real names, so no "(unknown genus)" or similar
+      families = families[families %like_case% "^[A-Z][a-z-]+$"],
+      genera = genera[genera %like_case% "^[A-Z][a-z-]+$"],
+      # only lowercase epithets, so no Salmonella serovars ("Typhimurium") or groups ("Group A")
+      epithets = epithets[epithets %like_case% "^[a-z][a-z-]*$"]
+    )
+  }
+  AMR_env$taxonomy_names
+}
+
+taxonomy_pieces <- function(string) {
+  # returns a list with for every string NULL (if NA) or a list with `text` and `italic`
+  nms <- get_taxonomy_names()
+  out <- vector("list", length(string))
+  if (length(string) == 0) {
+    return(out)
+  }
+  # split all strings at once, so the lookups below run only once
+  words <- strsplit(string, " ", fixed = TRUE)
+  # strsplit() drops a trailing empty string
+  trailing <- which(!is.na(string) & string %like_case% " $")
+  words[trailing] <- lapply(words[trailing], c, "")
+  n_words <- lengths(words)
+  all_words <- unlist(words, use.names = FALSE)
+  all_words[is.na(all_words)] <- ""
+
+  # leading punctuation, the word itself, trailing punctuation
+  prefix <- gsub("^([^A-Za-z]*).*$", "\\1", all_words, perl = TRUE)
+  rest <- substr(all_words, nchar(prefix) + 1, nchar(all_words))
+  core <- gsub("^([A-Za-z]([A-Za-z-]*[A-Za-z])?).*$", "\\1", rest, perl = TRUE)
+  core[rest %unlike_case% "^[A-Za-z]"] <- ""
+  suffix <- substr(rest, nchar(core) + 1, nchar(rest))
+  # abbreviated genus, e.g. "E." in "E. coli"
+  is_abbr <- core %like_case% "^[A-Z]$" & suffix %like_case% "^[.]"
+  core[is_abbr] <- paste0(core[is_abbr], ".")
+  suffix[is_abbr] <- substr(suffix[is_abbr], 2, nchar(suffix[is_abbr]))
+
+  is_genus <- core != "" & core %in% nms$genera
+  is_higher <- is_genus | (core != "" & core %in% nms$families)
+  is_epithet <- core != "" & core %in% nms$epithets
+  is_connector <- all_words %in% c("subsp.", "ssp.", "var.")
+  ends <- cumsum(n_words)
+  starts <- ends - n_words + 1
+
+  for (s in which(!is.na(string))) {
+    ind <- seq.int(starts[s], length.out = n_words[s])
+    pre <- prefix[ind]
+    cr <- core[ind]
+    suf <- suffix[ind]
+    higher <- is_higher[ind]
+    genus <- is_genus[ind]
+    abbr <- is_abbr[ind]
+    epithet <- is_epithet[ind]
+    connector <- is_connector[ind]
+    n <- length(ind)
+    italic <- higher
+    # whether the next word can be a species or subspecies name
+    can_follow <- logical(n)
+    for (i in seq_len(n)) {
+      if (i > 1 && epithet[i] && pre[i] == "" && can_follow[i - 1]) {
+        italic[i] <- TRUE
+        if (abbr[i - 1]) {
+          italic[i - 1] <- TRUE
+        }
+      }
+      if (suf[i] == "" || connector[i]) {
+        can_follow[i] <- genus[i] ||
+          abbr[i] ||
+          (italic[i] && epithet[i]) ||
+          (connector[i] && i > 1 && italic[i - 1] && epithet[i - 1])
+      }
+    }
+    # connectors such as "subsp." are not part of the core, so keep them upright
+    cr[connector] <- all_words[ind][connector]
+    suf[connector] <- ""
+    italic[connector] <- FALSE
+
+    text <- character(0)
+    ital <- logical(0)
+    for (i in seq_len(n)) {
+      text <- c(text, pre[i], cr[i], suf[i])
+      ital <- c(ital, FALSE, italic[i], FALSE)
+      if (i < n) {
+        # the space between two italic words belongs to the italics
+        text <- c(text, " ")
+        ital <- c(ital, italic[i] && italic[i + 1] && suf[i] == "" && pre[i + 1] == "")
+      }
+    }
+    keep <- text != ""
+    text <- text[keep]
+    ital <- ital[keep]
+    if (length(text) == 0) {
+      out[[s]] <- list(text = "", italic = FALSE)
+      next
+    }
+    # merge adjacent pieces of the same style
+    grp <- cumsum(c(TRUE, ital[-1] != ital[-length(ital)]))
+    out[s] <- list(list(
+      text = vapply(split(text, grp), paste0, character(1), collapse = "", USE.NAMES = FALSE),
+      italic = vapply(split(ital, grp), function(x) x[1], logical(1), USE.NAMES = FALSE)
+    ))
+  }
+  out
+}
+
 #' @rdname italicise_taxonomy
 #' @export
-italicize_taxonomy <- function(string, type = c("markdown", "ansi", "html")) {
+italicize_taxonomy <- function(string, type = c("markdown", "ansi", "html", "plotmath")) {
   if (missing(type)) {
     type <- "markdown"
   }
