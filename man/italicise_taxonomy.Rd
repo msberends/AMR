@@ -5,28 +5,39 @@
 \alias{italicize_taxonomy}
 \title{Italicise Taxonomic Families, Genera, Species, and Subspecies}
 \usage{
-italicise_taxonomy(string, type = c("markdown", "ansi", "html"))
+italicise_taxonomy(string, type = c("markdown", "ansi", "html", "plotmath"))
 
-italicize_taxonomy(string, type = c("markdown", "ansi", "html"))
+italicize_taxonomy(string, type = c("markdown", "ansi", "html", "plotmath"))
 }
 \arguments{
 \item{string}{A \link{character} (vector).}
 
-\item{type}{Type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see \emph{Details}.}
+\item{type}{Type of conversion of the taxonomic names, either "markdown", "html", "ansi" or "plotmath", see \emph{Details}.}
+}
+\value{
+For "markdown", "html" and "ansi", a \link{character} vector. For "plotmath", an \link{expression} vector. Both have the same length as \code{string} and keep \code{NA} values.
 }
 \description{
 According to the binomial nomenclature, the lowest four taxonomic levels (family, genus, species, subspecies) should be printed in italics. This function finds taxonomic names within strings and makes them italic.
 }
 \details{
-This function finds the taxonomic names and makes them italic based on the \link{microorganisms} data set.
+This function finds the taxonomic names and makes them italic based on the \link{microorganisms} data set. Family and genus names are italicised anywhere in the text. Species and subspecies names are only italicised when they follow a genus, an abbreviated genus (such as "E." in "E. coli"), or another species or subspecies name, so that ordinary words that are also species names (such as "coli" or "major") stay upright. Subspecies may also follow "subsp.", "ssp." or "var.", which stay upright themselves, e.g., "\emph{K. pneumoniae} subsp. \emph{ozaenae}". \emph{Salmonella} serovars (such as Typhimurium) and groups are not italicised, as is the convention. Punctuation around the names, such as brackets and commas, stays outside the italics.
 
 The taxonomic names can be italicised using markdown (the default) by adding \code{*} before and after the taxonomic names, or \verb{<i>} and \verb{</i>} when using html. When using 'ansi', ANSI colours will be added using \verb{\\033[3m} before and \verb{\\033[23m} after the taxonomic names. If multiple ANSI colours are not available, no conversion will occur.
 
-This function also supports abbreviation of the genus if it is followed by a species, such as "E. coli" and "K. pneumoniae ozaenae".
+Use \code{type = "plotmath"} to get an \link{expression} vector for plots (see \link[grDevices:plotmath]{plotmath}), which works for titles, axes and legends in both base \R and \code{ggplot2}. For axis and legend labels, the function \code{\link[=labels_taxonomy]{labels_taxonomy()}} does exactly this and can directly be used as labeller, e.g., \code{ggplot2::scale_x_discrete(labels = labels_taxonomy)}.
 }
 \examples{
 italicise_taxonomy("An overview of Staphylococcus aureus isolates")
 italicise_taxonomy("An overview of S. aureus isolates")
+italicise_taxonomy("Infections with E. coli (and coli bacteria in general)")
 
 cat(italicise_taxonomy("An overview of S. aureus isolates", type = "ansi"))
+
+# for plots:
+italicise_taxonomy("An overview of S. aureus isolates", type = "plotmath")
+plot(1:10, main = italicise_taxonomy("Growth of S. aureus", type = "plotmath"))
+}
+\seealso{
+\code{\link[=labels_taxonomy]{labels_taxonomy()}} to italicise taxonomic names in plot labels.
 }

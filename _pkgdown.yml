@@ -201,7 +201,7 @@ reference:
 
   - title: "Visualising data"
     desc: >
-      Plot MIC values, disk zones, and SIR results in base R or `ggplot2`, with scales and colours tailored to AMR data.
+      Plot MIC values, disk zones, and SIR results in base R or `ggplot2`, with scales and colours tailored to AMR data, and taxonomic names in italics.
     contents:
     - "`plot`"
     - "`ggplot_sir`"

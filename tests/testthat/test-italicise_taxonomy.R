@@ -48,4 +48,29 @@ test_that("test-italicise_taxonomy.R", {
     italicise_taxonomy("test for E. coli", "html"),
     "test for <i>E. coli</i>"
   )
+
+  # species only after a genus or abbreviated genus, punctuation outside the italics
+  expect_identical(
+    italicise_taxonomy(c(
+      "Escherichia coli", "coli bacteria", "(S. aureus)", "E. coli,", "Other",
+      "Salmonella Typhimurium", "Streptococcus group A", "Staphylococcus spp.",
+      "Klebsiella pneumoniae subsp. ozaenae", "K. pneumoniae ozaenae", "Enterobacteriaceae", "", NA
+    )),
+    c(
+      "*Escherichia coli*", "coli bacteria", "(*S. aureus*)", "*E. coli*,", "Other",
+      "*Salmonella* Typhimurium", "*Streptococcus* group A", "*Staphylococcus* spp.",
+      "*Klebsiella pneumoniae* subsp. *ozaenae*", "*K. pneumoniae ozaenae*", "*Enterobacteriaceae*", "", NA
+    )
+  )
+
+  # plotmath, also used by labels_taxonomy()
+  expect_identical(
+    italicise_taxonomy(c("E. coli", "Other", "test for E. coli", NA), type = "plotmath"),
+    expression(italic("E. coli"), "Other", paste("test for ", italic("E. coli")), NA_character_)
+  )
+  expect_identical(
+    labels_taxonomy(factor(c("E. coli", "Other"))),
+    expression(italic("E. coli"), "Other")
+  )
+  expect_identical(labels_taxonomy(character(0)), expression())
 })

@@ -433,6 +433,17 @@ autoplot(mic_values)
 autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST")
 ```
 
+Taxonomic names are printed in italics by convention. Use `labels_taxonomy()` for this in axis and legend labels, and `italicise_taxonomy(..., type = "plotmath")` for titles:
+
+```{r labels_taxonomy}
+our_data_1st %>%
+  count(species = mo_name(bacteria)) %>%
+  ggplot(aes(x = species, y = n)) +
+  geom_col() +
+  scale_x_discrete(labels = labels_taxonomy) +
+  labs(title = italicise_taxonomy("First isolates of E. coli and other species", type = "plotmath"))
+```
+
 ----
 
 *Author: Dr. Matthijs Berends, 23rd June 2026*

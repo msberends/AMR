@@ -1,4 +1,4 @@
-# AMR 3.1.0.9016
+# AMR 3.1.0.9018
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -26,6 +26,9 @@ It also adds a `site` argument to `as.sir()`, stores EUCAST MIC breakpoints exac
   * Oxacillin disk for *S. pseudintermedius* and related species, and oxacillin MIC for coagulase-negative staphylococci, under `OXA-S`
   * Mupirocin for nasal decolonisation of *S. aureus*
   * Meropenem in other infections than meningitis for *N. meningitidis* in EUCAST 2021
+* **Taxonomic names in plots**
+  * New function `labels_taxonomy()` to print taxonomic names in axis and legend labels in italics, which can directly be used as labeller in `ggplot2` (e.g., `scale_x_discrete(labels = labels_taxonomy)`) and in base R plots
+  * `italicise_taxonomy()` gained `type = "plotmath"`, which returns an expression vector for titles, axes and legends in plots
 
 ### Changed
 * SIR interpretation (`as.sir()`)
@@ -35,6 +38,11 @@ It also adds a `site` argument to `as.sir()`, stores EUCAST MIC breakpoints exac
   * EUCAST MIC breakpoints are stored exactly as published, e.g., 0.03 instead of 0.032, and 0.001 instead of 0.0001 (#331)
   * Blocking rows of EUCAST 2019-2026 that have no effect on `as.sir()` were removed, 12 243 in total (#326)
   * The breakpoints of *Bacteroides* now also apply to zone diameters of *Parabacteroides*, *Phocaeicola dorei* and *Phocaeicola vulgatus* (#329)
+* `italicise_taxonomy()`
+  * Species and subspecies names are now only italicised after a genus, an abbreviated genus, or another species or subspecies name, so that ordinary words such as "coli" or "major" stay upright. *Salmonella* serovars (such as Typhimurium) and groups are no longer italicised, and "subsp.", "ssp." and "var." stay upright between italicised names
+  * Fixed punctuation being italicised along with taxonomic names, e.g., `"(S. aureus)"` now gives `"(*S. aureus*)"` instead of `"(S. *aureus)*"`
+  * `NA` values now return `NA` instead of `"NA"`
+  * Taxonomic names are now looked up once per session, making the function considerably faster for long vectors
 * *Morganella* is interpreted as reported, with the breakpoints of Enterobacterales or Morganellaceae and not of *M. morganii*, which is now tested (#330)
 * WISCA (`wisca()` and `antibiogram(..., wisca = TRUE)`)
   * Fixed a critical bug that systematically underestimated the coverage of every WISCA since AMR 3.0.0. Pathogens absent from a syndromic group, and pathogens without any test result for a regimen, were still included in the model with only prior information: each added a prior weight of 1 to the pathogen incidence, and untested pathogens kept their full incidence weight while counting as about 50% susceptible. The bias was largest for stratified analyses (e.g., up to 14 percentage points for meropenem in random strata of `example_isolates`). Now, only pathogens that occur in a group and have at least one test result for the regimen are included. Please re-run all WISCA analyses (#337)

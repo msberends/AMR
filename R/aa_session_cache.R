@@ -131,6 +131,7 @@ reset_mo_cache <- function() {
   AMR_env$mo_accepted <- NULL
   AMR_env$mo_previously_coerced <- new_coercion_cache()
   AMR_env$mo_previously_uncertain <- NULL
+  AMR_env$taxonomy_names <- NULL
 }
 
 get_ab_index <- function() {
