@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,9 +55,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">italicise_taxonomy</span><span class="op">(</span><span class="va">string</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"markdown"</span>, <span class="st">"ansi"</span>, <span class="st">"html"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">italicise_taxonomy</span><span class="op">(</span><span class="va">string</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"markdown"</span>, <span class="st">"ansi"</span>, <span class="st">"html"</span>, <span class="st">"plotmath"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">italicize_taxonomy</span><span class="op">(</span><span class="va">string</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"markdown"</span>, <span class="st">"ansi"</span>, <span class="st">"html"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">italicize_taxonomy</span><span class="op">(</span><span class="va">string</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"markdown"</span>, <span class="st">"ansi"</span>, <span class="st">"html"</span>, <span class="st">"plotmath"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,14 +69,22 @@
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>Type of conversion of the taxonomic names, either "markdown", "html" or "ansi", see <em>Details</em>.</p></dd>
+<dd><p>Type of conversion of the taxonomic names, either "markdown", "html", "ansi" or "plotmath", see <em>Details</em>.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>For "markdown", "html" and "ansi", a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector. For "plotmath", an <a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a> vector. Both have the same length as <code>string</code> and keep <code>NA</code> values.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function finds the taxonomic names and makes them italic based on the <a href="microorganisms.html">microorganisms</a> data set.</p>
+    <p>This function finds the taxonomic names and makes them italic based on the <a href="microorganisms.html">microorganisms</a> data set. Family and genus names are italicised anywhere in the text. Species and subspecies names are only italicised when they follow a genus, an abbreviated genus (such as "E." in "E. coli"), or another species or subspecies name, so that ordinary words that are also species names (such as "coli" or "major") stay upright. Subspecies may also follow "subsp.", "ssp." or "var.", which stay upright themselves, e.g., "<em>K. pneumoniae</em> subsp. <em>ozaenae</em>". <em>Salmonella</em> serovars (such as Typhimurium) and groups are not italicised, as is the convention. Punctuation around the names, such as brackets and commas, stays outside the italics.</p>
 <p>The taxonomic names can be italicised using markdown (the default) by adding <code>*</code> before and after the taxonomic names, or <code>&lt;i&gt;</code> and <code>&lt;/i&gt;</code> when using html. When using 'ansi', ANSI colours will be added using <code>\033[3m</code> before and <code>\033[23m</code> after the taxonomic names. If multiple ANSI colours are not available, no conversion will occur.</p>
-<p>This function also supports abbreviation of the genus if it is followed by a species, such as "E. coli" and "K. pneumoniae ozaenae".</p>
+<p>Use <code>type = "plotmath"</code> to get an <a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a> vector for plots (see <a href="https://rdrr.io/r/grDevices/plotmath.html" class="external-link">plotmath</a>), which works for titles, axes and legends in both base <span style="R">R</span> and <code>ggplot2</code>. For axis and legend labels, the function <code><a href="plot.html">labels_taxonomy()</a></code> does exactly this and can directly be used as labeller, e.g., <code>ggplot2::scale_x_discrete(labels = labels_taxonomy)</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="plot.html">labels_taxonomy()</a></code> to italicise taxonomic names in plot labels.</p></div>
     </div>
 
     <div class="section level2">
@@ -85,9 +93,17 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "An overview of *Staphylococcus aureus* isolates"</span>
 <span class="r-in"><span><span class="fu">italicise_taxonomy</span><span class="op">(</span><span class="st">"An overview of S. aureus isolates"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "An overview of *S. aureus* isolates"</span>
+<span class="r-in"><span><span class="fu">italicise_taxonomy</span><span class="op">(</span><span class="st">"Infections with E. coli (and coli bacteria in general)"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Infections with *E. coli* (and coli bacteria in general)"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">italicise_taxonomy</span><span class="op">(</span><span class="st">"An overview of S. aureus isolates"</span>, type <span class="op">=</span> <span class="st">"ansi"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> An overview of <span style="font-style: italic;">S. aureus</span> isolates</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># for plots:</span></span></span>
+<span class="r-in"><span><span class="fu">italicise_taxonomy</span><span class="op">(</span><span class="st">"An overview of S. aureus isolates"</span>, type <span class="op">=</span> <span class="st">"plotmath"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> expression(paste("An overview of ", italic("S. aureus"), " isolates"))</span>
+<span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, main <span class="op">=</span> <span class="fu">italicise_taxonomy</span><span class="op">(</span><span class="st">"Growth of S. aureus"</span>, type <span class="op">=</span> <span class="st">"plotmath"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="italicise_taxonomy-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

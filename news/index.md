@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.1.0.9015
+## AMR 3.1.0.9017
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -37,8 +37,33 @@ are strongly advised to re-run their WISCA analyses.
   never applied before, so these isolates were wrongly classified as
   negative ([\#341](https://github.com/msberends/AMR/issues/341))
 
+#### New
+
+- **Taxonomic names in plots**
+  - New function
+    [`labels_taxonomy()`](https://amr-for-r.org/reference/plot.md) to
+    print taxonomic names in axis and legend labels in italics, which
+    can directly be used as labeller in `ggplot2` (e.g.,
+    `scale_x_discrete(labels = labels_taxonomy)`) and in base R plots
+  - [`italicise_taxonomy()`](https://amr-for-r.org/reference/italicise_taxonomy.md)
+    gained `type = "plotmath"`, which returns an expression vector for
+    titles, axes and legends in plots
+
 #### Changed
 
+- [`italicise_taxonomy()`](https://amr-for-r.org/reference/italicise_taxonomy.md)
+  - Species and subspecies names are now only italicised after a genus,
+    an abbreviated genus, or another species or subspecies name, so that
+    ordinary words such as “coli” or “major” stay upright. *Salmonella*
+    serovars (such as Typhimurium) and groups are no longer italicised,
+    and “subsp.”, “ssp.” and “var.” stay upright between italicised
+    names
+  - Fixed punctuation being italicised along with taxonomic names, e.g.,
+    `"(S. aureus)"` now gives `"(*S. aureus*)"` instead of
+    `"(S. *aureus)*"`
+  - `NA` values now return `NA` instead of `"NA"`
+  - Taxonomic names are now looked up once per session, making the
+    function considerably faster for long vectors
 - WISCA ([`wisca()`](https://amr-for-r.org/reference/antibiogram.md) and
   `antibiogram(..., wisca = TRUE)`)
   - Fixed a critical bug that systematically underestimated the coverage

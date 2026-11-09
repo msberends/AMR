@@ -334,7 +334,8 @@ calculate resistance, and determine multidrug-resistant organisms.
 ## Visualising data
 
 Plot MIC values, disk zones, and SIR results in base R or `ggplot2`,
-with scales and colours tailored to AMR data.
+with scales and colours tailored to AMR data, and taxonomic names in
+italics.
 
 [Plotting Helpers for AMR Data Analysis](https://amr-for-r.org/reference/plot.md)
 :   [`scale_x_mic()`](https://amr-for-r.org/reference/plot.md)
@@ -354,6 +355,7 @@ with scales and colours tailored to AMR data.
     [`scale_y_percent()`](https://amr-for-r.org/reference/plot.md)
     [`scale_sir_colours()`](https://amr-for-r.org/reference/plot.md)
     [`theme_sir()`](https://amr-for-r.org/reference/plot.md)
+    [`labels_taxonomy()`](https://amr-for-r.org/reference/plot.md)
 
 [AMR Plots with `ggplot2`](https://amr-for-r.org/reference/ggplot_sir.md)
 :   [`ggplot_sir()`](https://amr-for-r.org/reference/ggplot_sir.md)

@@ -142,6 +142,8 @@ scale_sir_colours(
 )
 
 theme_sir()
+
+labels_taxonomy(x, ...)
 ```
 
 ## Arguments
@@ -203,7 +205,9 @@ theme_sir()
   [`as.disk()`](https://amr-for-r.org/reference/as.disk.md) or
   [`as.sir()`](https://amr-for-r.org/reference/as.sir.md) (or their
   `random_*` variants, such as
-  [`random_mic()`](https://amr-for-r.org/reference/random.md)).
+  [`random_mic()`](https://amr-for-r.org/reference/random.md)). For
+  `labels_taxonomy()`, any values to use as labels, such as the breaks
+  of an axis.
 
 - mo:
 
@@ -344,6 +348,20 @@ internally used by
   prints data labels on the bars with percentage and number of isolates,
   using
   [`ggplot2::geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
+
+### Taxonomic Names in Labels
+
+The function `labels_taxonomy()` prints taxonomic names in axis and
+legend labels in italics, as is the convention in microbiology, e.g.,
+*E. coli* and *Klebsiella pneumoniae*. It can directly be used as
+labeller in `ggplot2`, e.g.,
+`scale_x_discrete(labels = labels_taxonomy)`, and in base R, e.g.,
+`axis(1, at = 1:3, labels = labels_taxonomy(names))`. Other words, such
+as "Other" or "CoNS", stay upright. It uses
+[`italicise_taxonomy()`](https://amr-for-r.org/reference/italicise_taxonomy.md)
+with `type = "plotmath"`, which also works for titles. It returns an
+[expression](https://rdrr.io/r/base/expression.html) vector of the same
+length as `x`; other arguments in `...` are ignored.
 
 The interpretation of "I" will be named "Susceptible, incr. exp."
 (susceptible, increased exposure) for all EUCAST guidelines since 2019,
@@ -519,4 +537,18 @@ plot(some_disk_values, mo = "Escherichia coli", ab = "cipro", language = "nl")
 
 
 plot(some_sir_values)
+
+
+# Taxonomic names in italics using labels_taxonomy() ------------------
+bacteria <- data.frame(
+  name = c("E. coli", "Klebsiella pneumoniae", "CoNS", "Other"),
+  n = c(25, 18, 9, 6)
+)
+barplot(bacteria$n, names.arg = labels_taxonomy(bacteria$name))
+
+if (require("ggplot2")) {
+  ggplot(bacteria, aes(name, n)) +
+    geom_col() +
+    scale_x_discrete(labels = labels_taxonomy)
+}
 ```

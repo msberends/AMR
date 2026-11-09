@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,10 +49,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="3.1.0.9015" id="amr-3109015">AMR 3.1.0.9015<a class="anchor" aria-label="anchor" href="#amr-3109015"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.1.0.9017" id="amr-3109017">AMR 3.1.0.9017<a class="anchor" aria-label="anchor" href="#amr-3109017"></a></h2>
 <p>This version fixes a critical bug in WISCA that biased all coverage estimates of <code><a href="../reference/antibiogram.html">wisca()</a></code> and <code>antibiogram(..., wisca = TRUE)</code> downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.</p>
 <div class="section level4">
-<h4 id="breaking-3-1-0-9015">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-1-0-9015"></a></h4>
+<h4 id="breaking-3-1-0-9017">Breaking<a class="anchor" aria-label="anchor" href="#breaking-3-1-0-9017"></a></h4>
 <ul><li>
 <code><a href="../reference/mo_property.html">mo_shortname()</a></code> now returns the serovar for <em>Salmonella</em> serovars, e.g., <code>"S. Typhi"</code> and <code>"S. Goldcoast"</code> instead of <code>"S. enterica"</code>. As this is the default for <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> and short names in <code><a href="../reference/antibiogram.html">antibiogram()</a></code>, serovars are no longer merged in their results. Use <code>FUN = function(x) paste(mo_genus(x), mo_species(x))</code> in <code><a href="../reference/bug_drug_combinations.html">bug_drug_combinations()</a></code> to group them by species (<a href="https://github.com/msberends/AMR/issues/341" class="external-link">#341</a>)</li>
 <li>
@@ -61,8 +61,27 @@
 <code><a href="../reference/mdro.html">mdro()</a></code> now applies the rule for <em>Salmonella</em> Typhi in the EUCAST guidelines, i.e., resistance to carbapenems (and fluoroquinolones in <code>"EUCAST3.1"</code>). This rule never applied before, so these isolates were wrongly classified as negative (<a href="https://github.com/msberends/AMR/issues/341" class="external-link">#341</a>)</li>
 </ul></div>
 <div class="section level4">
-<h4 id="changed-3-1-0-9015">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0-9015"></a></h4>
-<ul><li>WISCA (<code><a href="../reference/antibiogram.html">wisca()</a></code> and <code>antibiogram(..., wisca = TRUE)</code>)
+<h4 id="new-3-1-0-9017">New<a class="anchor" aria-label="anchor" href="#new-3-1-0-9017"></a></h4>
+<ul><li>
+<strong>Taxonomic names in plots</strong>
+<ul><li>New function <code><a href="../reference/plot.html">labels_taxonomy()</a></code> to print taxonomic names in axis and legend labels in italics, which can directly be used as labeller in <code>ggplot2</code> (e.g., <code>scale_x_discrete(labels = labels_taxonomy)</code>) and in base R plots</li>
+<li>
+<code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code> gained <code>type = "plotmath"</code>, which returns an expression vector for titles, axes and legends in plots</li>
+</ul></li>
+</ul></div>
+<div class="section level4">
+<h4 id="changed-3-1-0-9017">Changed<a class="anchor" aria-label="anchor" href="#changed-3-1-0-9017"></a></h4>
+<ul><li>
+<code><a href="../reference/italicise_taxonomy.html">italicise_taxonomy()</a></code>
+<ul><li>Species and subspecies names are now only italicised after a genus, an abbreviated genus, or another species or subspecies name, so that ordinary words such as “coli” or “major” stay upright. <em>Salmonella</em> serovars (such as Typhimurium) and groups are no longer italicised, and “subsp.”, “ssp.” and “var.” stay upright between italicised names</li>
+<li>Fixed punctuation being italicised along with taxonomic names, e.g., <code>"(S. aureus)"</code> now gives <code>"(*S. aureus*)"</code> instead of <code>"(S. *aureus)*"</code>
+</li>
+<li>
+<code>NA</code> values now return <code>NA</code> instead of <code>"NA"</code>
+</li>
+<li>Taxonomic names are now looked up once per session, making the function considerably faster for long vectors</li>
+</ul></li>
+<li>WISCA (<code><a href="../reference/antibiogram.html">wisca()</a></code> and <code>antibiogram(..., wisca = TRUE)</code>)
 <ul><li>Fixed a critical bug that systematically underestimated the coverage of every WISCA since AMR 3.0.0. Pathogens absent from a syndromic group, and pathogens without any test result for a regimen, were still included in the model with only prior information: each added a prior weight of 1 to the pathogen incidence, and untested pathogens kept their full incidence weight while counting as about 50% susceptible. The bias was largest for stratified analyses (e.g., up to 14 percentage points for meropenem in random strata of <code>example_isolates</code>). Now, only pathogens that occur in a group and have at least one test result for the regimen are included. Please re-run all WISCA analyses (<a href="https://github.com/msberends/AMR/issues/337" class="external-link">#337</a>)</li>
 <li>
 <code><a href="../reference/antibiogram.html">retrieve_wisca_parameters()</a></code> now returns only the parameters actually used in the model, and <code>n_total</code> in the <code>long_numeric</code> attribute now counts only isolates of the pathogens included for that regimen</li>
@@ -77,7 +96,7 @@
 </ul></li>
 </ul></div>
 <div class="section level4">
-<h4 id="other-3-1-0-9015">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0-9015"></a></h4>
+<h4 id="other-3-1-0-9017">Other<a class="anchor" aria-label="anchor" href="#other-3-1-0-9017"></a></h4>
 <ul><li>The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field</li>
 <li>Fixed the link to the copyright section and added MycoBank as a taxonomy source in the <em>Welcome to AMR</em> vignette (<a href="https://github.com/msberends/AMR/issues/325" class="external-link">#325</a>)</li>
 </ul></div>

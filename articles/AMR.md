@@ -3,7 +3,7 @@
 **Note:** values on this page will change with every website update
 since they are based on randomly created values and the page was written
 in [R Markdown](https://rmarkdown.rstudio.com/). However, the
-methodology remains unchanged. This page was generated on 04 November
+methodology remains unchanged. This page was generated on 09 November
 2026.
 
 ## Introduction
@@ -52,9 +52,9 @@ structure of your data generally look like this:
 
 |    date    | patient_id |        mo        | AMX | CIP |
 |:----------:|:----------:|:----------------:|:---:|:---:|
-| 2026-11-04 |    abcd    | Escherichia coli |  S  |  S  |
-| 2026-11-04 |    abcd    | Escherichia coli |  S  |  R  |
-| 2026-11-04 |    efgh    | Escherichia coli |  R  |  S  |
+| 2026-11-09 |    abcd    | Escherichia coli |  S  |  S  |
+| 2026-11-09 |    abcd    | Escherichia coli |  S  |  R  |
+| 2026-11-09 |    efgh    | Escherichia coli |  R  |  S  |
 
 ### Needed R packages
 
@@ -747,15 +747,15 @@ antibiogram(example_isolates,
 | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
 |:---|:---|:---|:---|:---|:---|:---|
 | CoNS | 0% (0-8%,N=43) | 86% (82-90%,N=309) | 52% (37-67%,N=48) | 0% (0-8%,N=43) | 52% (37-67%,N=48) | 22% (12-35%,N=55) |
-| *E. coli* | 100% (98-100%,N=171) | 98% (96-99%,N=460) | 100% (99-100%,N=422) | NA | 100% (99-100%,N=418) | 97% (96-99%,N=462) |
-| *E. faecalis* | 0% (0-9%,N=39) | 0% (0-9%,N=39) | 100% (91-100%,N=38) | 0% (0-9%,N=39) | NA | 0% (0-9%,N=39) |
-| *K. pneumoniae* | NA | 90% (79-96%,N=58) | 100% (93-100%,N=51) | NA | 100% (93-100%,N=53) | 90% (79-96%,N=58) |
-| *P. aeruginosa* | NA | 100% (88-100%,N=30) | NA | 0% (0-12%,N=30) | NA | 100% (88-100%,N=30) |
-| *P. mirabilis* | NA | 94% (80-99%,N=34) | 94% (79-99%,N=32) | NA | NA | 94% (80-99%,N=34) |
-| *S. aureus* | NA | 99% (97-100%,N=233) | NA | NA | NA | 98% (92-100%,N=86) |
-| *S. epidermidis* | 0% (0-8%,N=44) | 79% (71-85%,N=163) | NA | 0% (0-8%,N=44) | NA | 51% (40-61%,N=89) |
-| *S. hominis* | NA | 92% (84-97%,N=80) | NA | NA | NA | 85% (74-93%,N=62) |
-| *S. pneumoniae* | 0% (0-3%,N=117) | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) | NA | 0% (0-3%,N=117) |
+| *E. coli* | 100% (98-100%,N=171) | 98% (96-99%,N=460) | 100% (99-100%,N=422) |  | 100% (99-100%,N=418) | 97% (96-99%,N=462) |
+| *E. faecalis* | 0% (0-9%,N=39) | 0% (0-9%,N=39) | 100% (91-100%,N=38) | 0% (0-9%,N=39) |  | 0% (0-9%,N=39) |
+| *K. pneumoniae* |  | 90% (79-96%,N=58) | 100% (93-100%,N=51) |  | 100% (93-100%,N=53) | 90% (79-96%,N=58) |
+| *P. aeruginosa* |  | 100% (88-100%,N=30) |  | 0% (0-12%,N=30) |  | 100% (88-100%,N=30) |
+| *P. mirabilis* |  | 94% (80-99%,N=34) | 94% (79-99%,N=32) |  |  | 94% (80-99%,N=34) |
+| *S. aureus* |  | 99% (97-100%,N=233) |  |  |  | 98% (92-100%,N=86) |
+| *S. epidermidis* | 0% (0-8%,N=44) | 79% (71-85%,N=163) |  | 0% (0-8%,N=44) |  | 51% (40-61%,N=89) |
+| *S. hominis* |  | 92% (84-97%,N=80) |  |  |  | 85% (74-93%,N=62) |
+| *S. pneumoniae* | 0% (0-3%,N=117) | 0% (0-3%,N=117) |  | 0% (0-3%,N=117) |  | 0% (0-3%,N=117) |
 
 Notice that the
 [`antibiogram()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -807,14 +807,14 @@ combined_ab
 
 | Pathogen | TZP | TZP + GEN | TZP + TOB |
 |:---|:---|:---|:---|
-| CoNS | 30% (16-49%,N=33) | 97% (95-99%,N=274) | NA |
+| CoNS | 30% (16-49%,N=33) | 97% (95-99%,N=274) |  |
 | *E. coli* | 94% (92-96%,N=416) | 100% (98-100%,N=459) | 99% (97-100%,N=461) |
 | *K. pneumoniae* | 89% (77-96%,N=53) | 93% (83-98%,N=58) | 93% (83-98%,N=58) |
-| *P. aeruginosa* | NA | 100% (88-100%,N=30) | 100% (88-100%,N=30) |
-| *P. mirabilis* | NA | 100% (90-100%,N=34) | 100% (90-100%,N=34) |
-| *S. aureus* | NA | 100% (98-100%,N=231) | 100% (96-100%,N=91) |
-| *S. epidermidis* | NA | 100% (97-100%,N=128) | 100% (92-100%,N=46) |
-| *S. hominis* | NA | 100% (95-100%,N=74) | 100% (93-100%,N=53) |
+| *P. aeruginosa* |  | 100% (88-100%,N=30) | 100% (88-100%,N=30) |
+| *P. mirabilis* |  | 100% (90-100%,N=34) | 100% (90-100%,N=34) |
+| *S. aureus* |  | 100% (98-100%,N=231) | 100% (96-100%,N=91) |
+| *S. epidermidis* |  | 100% (97-100%,N=128) | 100% (92-100%,N=46) |
+| *S. hominis* |  | 100% (95-100%,N=74) | 100% (93-100%,N=53) |
 | *S. pneumoniae* | 100% (97-100%,N=112) | 100% (97-100%,N=112) | 100% (97-100%,N=112) |
 
 #### Syndromic Antibiogram
@@ -839,20 +839,20 @@ antibiogram(example_isolates,
 
 | Syndromic Group | Pathogen | Amikacin | Gentamicin | Imipenem | Kanamycin | Meropenem | Tobramycin |
 |:---|:---|:---|:---|:---|:---|:---|:---|
-| Clinical | CoNS | NA | 89% (84-93%,N=205) | 57% (39-74%,N=35) | NA | 57% (39-74%,N=35) | 26% (12-45%,N=31) |
-| ICU | CoNS | NA | 79% (68-88%,N=73) | NA | NA | NA | NA |
-| Outpatient | CoNS | NA | 84% (66-95%,N=31) | NA | NA | NA | NA |
-| Clinical | *E. coli* | 100% (97-100%,N=104) | 98% (96-99%,N=297) | 100% (99-100%,N=266) | NA | 100% (99-100%,N=276) | 98% (96-99%,N=299) |
-| ICU | *E. coli* | 100% (93-100%,N=52) | 99% (95-100%,N=137) | 100% (97-100%,N=133) | NA | 100% (97-100%,N=118) | 96% (92-99%,N=137) |
-| Clinical | *K. pneumoniae* | NA | 92% (81-98%,N=51) | 100% (92-100%,N=44) | NA | 100% (92-100%,N=46) | 92% (81-98%,N=51) |
-| Clinical | *P. mirabilis* | NA | 100% (88-100%,N=30) | NA | NA | NA | 100% (88-100%,N=30) |
-| Clinical | *S. aureus* | NA | 99% (95-100%,N=150) | NA | NA | NA | 97% (89-100%,N=63) |
-| ICU | *S. aureus* | NA | 100% (95-100%,N=66) | NA | NA | NA | NA |
-| Clinical | *S. epidermidis* | NA | 82% (72-90%,N=79) | NA | NA | NA | 55% (39-70%,N=44) |
-| ICU | *S. epidermidis* | NA | 72% (60-82%,N=75) | NA | NA | NA | 41% (26-58%,N=41) |
-| Clinical | *S. hominis* | NA | 96% (85-99%,N=45) | NA | NA | NA | 94% (79-99%,N=31) |
-| Clinical | *S. pneumoniae* | 0% (0-5%,N=78) | 0% (0-5%,N=78) | NA | 0% (0-5%,N=78) | NA | 0% (0-5%,N=78) |
-| ICU | *S. pneumoniae* | 0% (0-12%,N=30) | 0% (0-12%,N=30) | NA | 0% (0-12%,N=30) | NA | 0% (0-12%,N=30) |
+| Clinical | CoNS |  | 89% (84-93%,N=205) | 57% (39-74%,N=35) |  | 57% (39-74%,N=35) | 26% (12-45%,N=31) |
+| ICU | CoNS |  | 79% (68-88%,N=73) |  |  |  |  |
+| Outpatient | CoNS |  | 84% (66-95%,N=31) |  |  |  |  |
+| Clinical | *E. coli* | 100% (97-100%,N=104) | 98% (96-99%,N=297) | 100% (99-100%,N=266) |  | 100% (99-100%,N=276) | 98% (96-99%,N=299) |
+| ICU | *E. coli* | 100% (93-100%,N=52) | 99% (95-100%,N=137) | 100% (97-100%,N=133) |  | 100% (97-100%,N=118) | 96% (92-99%,N=137) |
+| Clinical | *K. pneumoniae* |  | 92% (81-98%,N=51) | 100% (92-100%,N=44) |  | 100% (92-100%,N=46) | 92% (81-98%,N=51) |
+| Clinical | *P. mirabilis* |  | 100% (88-100%,N=30) |  |  |  | 100% (88-100%,N=30) |
+| Clinical | *S. aureus* |  | 99% (95-100%,N=150) |  |  |  | 97% (89-100%,N=63) |
+| ICU | *S. aureus* |  | 100% (95-100%,N=66) |  |  |  |  |
+| Clinical | *S. epidermidis* |  | 82% (72-90%,N=79) |  |  |  | 55% (39-70%,N=44) |
+| ICU | *S. epidermidis* |  | 72% (60-82%,N=75) |  |  |  | 41% (26-58%,N=41) |
+| Clinical | *S. hominis* |  | 96% (85-99%,N=45) |  |  |  | 94% (79-99%,N=31) |
+| Clinical | *S. pneumoniae* | 0% (0-5%,N=78) | 0% (0-5%,N=78) |  | 0% (0-5%,N=78) |  | 0% (0-5%,N=78) |
+| ICU | *S. pneumoniae* | 0% (0-12%,N=30) | 0% (0-12%,N=30) |  | 0% (0-12%,N=30) |  | 0% (0-12%,N=30) |
 
 #### Plotting antibiograms
 
@@ -1020,6 +1020,23 @@ autoplot(mic_values, mo = "K. pneumoniae", ab = "cipro", guideline = "EUCAST")
 ```
 
 ![](AMR_files/figure-html/autoplot-2.png)
+
+Taxonomic names are printed in italics by convention. Use
+[`labels_taxonomy()`](https://amr-for-r.org/reference/plot.md) for this
+in axis and legend labels, and
+`italicise_taxonomy(..., type = "plotmath")` for titles:
+
+``` r
+
+our_data_1st %>%
+  count(species = mo_name(bacteria)) %>%
+  ggplot(aes(x = species, y = n)) +
+  geom_col() +
+  scale_x_discrete(labels = labels_taxonomy) +
+  labs(title = italicise_taxonomy("First isolates of E. coli and other species", type = "plotmath"))
+```
+
+![](AMR_files/figure-html/labels_taxonomy-1.png)
 
 ------------------------------------------------------------------------
 
