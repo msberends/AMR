@@ -36,7 +36,7 @@
 #' @param fill Variable to categorise using the plots legend, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable. For [labels_sir_count()], this must be the same as the `fill` of [geom_sir()], so that the labels are placed on the right bars. If the interpretation is not shown in the plot (i.e., neither in `x`, `fill`, nor `facet`), only the susceptible proportion is plotted, which follows the guideline (see `guideline`): S+SDD+I for EUCAST, S+SDD for CLSI, and S if `guideline = NULL`.
 #' @param breaks A [numeric] vector of positions.
 #' @param limits A [numeric] vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum.
-#' @param facet Variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable.
+#' @param facet Variable to split plots by, either `"interpretation"` or `"antibiotic"` or a grouping variable. If there is more than one antimicrobial and the antimicrobial is not shown in the plot (i.e., neither in `x`, `fill`, nor `facet`), [ggplot_sir()] splits the plot by antimicrobial, as their bars would otherwise be stacked: using `facet = "antibiotic"` if `facet` is not set, and otherwise using a grid of `facet` by antimicrobial. Note that [geom_sir()] cannot do this, so add [facet_sir()] in that case.
 #' @inheritParams proportion
 #' @param nrow (when using `facet`) number of rows.
 #' @param colours A named vactor with colour to be used for filling. The default colours are colour-blind friendly.
@@ -240,6 +240,21 @@ ggplot_sir <- function(data,
     position <- "fill"
   }
 
+  plot_df <- tryCatch(
+    sir_df(data = data, translate_ab = translate_ab, language = language, minimum = minimum, guideline = guideline),
+    error = function(e) NULL
+  )
+  shown <- c(normalise_sir_plot_var(x), normalise_sir_plot_var(fill), normalise_sir_plot_var(facet))
+  facet_grid_ab <- FALSE
+  if (!is.null(plot_df) && length(unique(plot_df$antibiotic)) > 1 && !"antibiotic" %in% shown) {
+    # the antibiotic is not shown, so the bars of all antibiotics would be stacked; split the plot by antibiotic
+    if (is.null(facet)) {
+      facet <- "antibiotic"
+    } else {
+      facet_grid_ab <- TRUE
+    }
+  }
+
   p <- ggplot2::ggplot(data = data) +
     create_geom_sir(
       position = position, x = x, fill = fill, facet = facet, translate_ab = translate_ab,
@@ -280,17 +295,21 @@ ggplot_sir <- function(data,
     p <- p + ggplot2::scale_fill_discrete(labels = labels_taxonomy)
   }
 
-  if (!is.null(facet)) {
+  if (isTRUE(facet_grid_ab)) {
+    # a grid of the set facet by antibiotic
+    p <- p + ggplot2::facet_grid(
+      stats::as.formula(paste0("`", normalise_sir_plot_var(facet), "` ~ antibiotic")),
+      scales = "free_x",
+      labeller = labeller_taxonomy
+    )
+  } else if (!is.null(facet)) {
     # pass the value, as facet_sir() takes an unquoted name as column name
     p <- p + do.call(facet_sir, list(facet = facet, nrow = nrow))
   }
 
   if (missing(y.title) && !"interpretation" %in% c(normalise_sir_plot_var(x), normalise_sir_plot_var(fill), normalise_sir_plot_var(facet))) {
     # only the susceptible proportion is shown, e.g. "Proportion SI" for EUCAST
-    susceptible <- tryCatch(
-      levels(sir_df(data = data, translate_ab = translate_ab, language = language, minimum = minimum, guideline = guideline)$interpretation)[1],
-      error = function(e) NULL
-    )
+    susceptible <- if (is.null(plot_df)) NULL else levels(plot_df$interpretation)[1]
     if (!is.null(susceptible)) {
       y.title <- paste(y.title, susceptible)
     }
@@ -389,6 +408,10 @@ sir_plot_data <- function(data, x, fill, facet, translate_ab, minimum, language,
     # the interpretation is not shown, so the bars of all interpretations would overlap;
     # keep only the susceptible proportion, which is the first level and follows the guideline:
     # S+SDD+I ("SI") for EUCAST, S+SDD ("S") for CLSI, and S for guideline = NULL
+    # the number of isolates of the data labels then becomes the number of tested isolates
+    keys <- do.call(paste, c(out[, setdiff(colnames(out), c("interpretation", "value", "ci_min", "ci_max", "isolates")), drop = FALSE], sep = "\r"))
+    totals <- tapply(out$isolates, keys, sum)
+    out$isolates <- as.integer(totals[keys])
     out <- out[which(as.character(out$interpretation) == levels(out$interpretation)[1]), , drop = FALSE]
   }
   out

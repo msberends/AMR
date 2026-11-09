@@ -185,7 +185,7 @@ labels_taxonomy(x, ...)
 
 \item{breakpoint_type}{The type of breakpoints to use, either \code{"ECOFF"}, \code{"animal"}, or \code{"human"}. ECOFF stands for Epidemiological Cut-Off values. The default is \code{"human"}, which can also be set with the package option \code{\link[=AMR-options]{AMR_breakpoint_type}}. If \code{host} is set to values of veterinary species, this will automatically be set to \code{"animal"}.}
 
-\item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable.}
+\item{facet}{Variable to split plots by, either \code{"interpretation"} or \code{"antibiotic"} or a grouping variable. If there is more than one antimicrobial and the antimicrobial is not shown in the plot (i.e., neither in \code{x}, \code{fill}, nor \code{facet}), \code{\link[=ggplot_sir]{ggplot_sir()}} splits the plot by antimicrobial, as their bars would otherwise be stacked: using \code{facet = "antibiotic"} if \code{facet} is not set, and otherwise using a grid of \code{facet} by antimicrobial. Note that \code{\link[=geom_sir]{geom_sir()}} cannot do this, so add \code{\link[=facet_sir]{facet_sir()}} in that case.}
 
 \item{nrow}{(when using \code{facet}) number of rows.}
 

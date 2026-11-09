@@ -186,10 +186,27 @@ test_that("test-ggplot_sir.R", {
       built <- ggplot_build(p)
       expect_equal(sort(built$data[[1]]$y), sort(expected$value))
       expect_equal(nrow(built$data[[2]]), nrow(expected))
+      # data labels show the number of tested isolates
+      expected_n <- tapply(sir_df(grouped, guideline = gl)$isolates, sir_df(grouped, guideline = gl)$gender, sum)
+      expect_identical(sort(built$data[[2]]$label), sort(paste0("n=", expected_n)))
       expect_identical(p$labels$y, paste("Proportion", levels(expected$interpretation)[1]))
     }
     # all interpretations when they are shown in the facets
     built <- ggplot_build(ggplot_sir(grouped, x = "antibiotic", fill = "gender", facet = "interpretation", position = "dodge", guideline = "EUCAST"))
     expect_equal(nrow(built$data[[1]]), nrow(sir_df(grouped, guideline = "EUCAST")))
+
+    # split by antibiotic if it is not shown in the plot and there are several
+    grouped2 <- example_isolates[, c("gender", "AMX", "CIP")]
+    grouped2 <- structure(grouped2, class = c("grouped_df", "tbl_df", "tbl", "data.frame"), groups = data.frame(gender = c("F", "M"), .rows = I(list(which(grouped2$gender == "F"), which(grouped2$gender == "M")))))
+    p <- ggplot_sir(grouped2, x = "gender", guideline = "EUCAST")
+    expect_true(inherits(p$facet, "FacetWrap"))
+    expect_identical(names(p$facet$params$facets), "antibiotic")
+    p <- ggplot_sir(grouped2, x = "interpretation", fill = "interpretation", facet = "gender", guideline = "EUCAST")
+    expect_true(inherits(p$facet, "FacetGrid"))
+    expect_identical(names(p$facet$params$cols), "antibiotic")
+    expect_identical(names(p$facet$params$rows), "gender")
+    # not if the antibiotic is shown, or if there is only one
+    expect_false(inherits(ggplot_sir(grouped2, x = "antibiotic", guideline = "EUCAST")$facet, "FacetWrap"))
+    expect_false(inherits(ggplot_sir(grouped, x = "gender", guideline = "EUCAST")$facet, "FacetWrap"))
   }
 })
