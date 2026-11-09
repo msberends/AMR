@@ -1473,9 +1473,18 @@ labels_sir_count <- function(position = NULL,
   meet_criteria(datalabels.size, allow_class = c("numeric", "integer"), has_length = 1, is_positive = TRUE, is_finite = TRUE)
   meet_criteria(datalabels.colour, allow_class = "character", has_length = 1)
 
+  create_labels_sir_count(
+    position = position, x = x, fill = fill, facet = NULL, translate_ab = translate_ab,
+    minimum = minimum, language = language, guideline = guideline,
+    datalabels.size = datalabels.size, datalabels.colour = datalabels.colour
+  )
+}
+
+create_labels_sir_count <- function(position, x, fill, facet, translate_ab, minimum, language, guideline, datalabels.size, datalabels.colour) {
   if (is.null(position)) {
     position <- "fill"
   }
+  x <- normalise_sir_plot_var(x)
   # labels are grouped like the bars of geom_sir(), so that they are placed on the right bar
   vjust <- 0.5
   if (identical(position, "fill")) {
@@ -1499,20 +1508,14 @@ labels_sir_count <- function(position = NULL,
     colour = datalabels.colour,
     lineheight = 0.75,
     vjust = vjust,
-    data = function(x) {
-      transformed <- sir_df(
-        data = x,
-        translate_ab = translate_ab,
-        minimum = minimum,
-        language = language,
-        guideline = guideline
+    data = function(data) {
+      # the same rows as the bars of geom_sir()
+      transformed <- sir_plot_data(
+        data = data, x = x_name, fill = fill, facet = facet, translate_ab = translate_ab,
+        minimum = minimum, language = language, guideline = guideline
       )
-      transformed$gr <- transformed[, x_name, drop = TRUE]
-      transformed %pm>%
-        pm_group_by(gr) %pm>%
-        pm_mutate(lbl = paste0("n=", isolates)) %pm>%
-        pm_ungroup() %pm>%
-        pm_select(-gr)
+      transformed$lbl <- paste0("n=", transformed$isolates)
+      transformed
     }
   )
 }

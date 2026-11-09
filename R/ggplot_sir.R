@@ -33,7 +33,7 @@
 #' @param data A [data.frame] with column(s) of class [`sir`] (see [as.sir()]).
 #' @param position Position adjustment of bars, either `"fill"`, `"stack"` or `"dodge"`.
 #' @param x Variable to show on x axis, either `"antibiotic"` (default) or `"interpretation"` or a grouping variable.
-#' @param fill Variable to categorise using the plots legend, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable. For [labels_sir_count()], this must be the same as the `fill` of [geom_sir()], so that the labels are placed on the right bars.
+#' @param fill Variable to categorise using the plots legend, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable. For [labels_sir_count()], this must be the same as the `fill` of [geom_sir()], so that the labels are placed on the right bars. If the interpretation is not shown in the plot (i.e., neither in `x`, `fill`, nor `facet`), only the susceptible proportion is plotted, which follows the guideline (see `guideline`): S+SDD+I for EUCAST, S+SDD for CLSI, and S if `guideline = NULL`.
 #' @param breaks A [numeric] vector of positions.
 #' @param limits A [numeric] vector of length two providing limits of the scale, use `NA` to refer to the existing minimum or maximum.
 #' @param facet Variable to split plots by, either `"interpretation"` (default) or `"antibiotic"` or a grouping variable.
@@ -241,8 +241,8 @@ ggplot_sir <- function(data,
   }
 
   p <- ggplot2::ggplot(data = data) +
-    geom_sir(
-      position = position, x = x, fill = fill, translate_ab = translate_ab,
+    create_geom_sir(
+      position = position, x = x, fill = fill, facet = facet, translate_ab = translate_ab,
       minimum = minimum, language = language,
       guideline = guideline, ...
     ) +
@@ -258,10 +258,11 @@ ggplot_sir <- function(data,
   }
 
   if (datalabels == TRUE) {
-    p <- p + labels_sir_count(
+    p <- p + create_labels_sir_count(
       position = position,
       x = x,
       fill = fill,
+      facet = facet,
       translate_ab = translate_ab,
       minimum = minimum,
       language = language,
@@ -282,6 +283,17 @@ ggplot_sir <- function(data,
   if (!is.null(facet)) {
     # pass the value, as facet_sir() takes an unquoted name as column name
     p <- p + do.call(facet_sir, list(facet = facet, nrow = nrow))
+  }
+
+  if (missing(y.title) && !"interpretation" %in% c(normalise_sir_plot_var(x), normalise_sir_plot_var(fill), normalise_sir_plot_var(facet))) {
+    # only the susceptible proportion is shown, e.g. "Proportion SI" for EUCAST
+    susceptible <- tryCatch(
+      levels(sir_df(data = data, translate_ab = translate_ab, language = language, minimum = minimum, guideline = guideline)$interpretation)[1],
+      error = function(e) NULL
+    )
+    if (!is.null(susceptible)) {
+      y.title <- paste(y.title, susceptible)
+    }
   }
 
   p <- p + ggplot2::labs(
@@ -317,15 +329,6 @@ geom_sir <- function(position = NULL,
   language <- validate_language(language)
   guideline <- get_aggregation_guideline(guideline, missing(guideline), combine_SI, missing(combine_SI), fn = "geom_sir")
 
-  y <- "value"
-  if (missing(position) || is.null(position)) {
-    position <- "fill"
-  }
-
-  if (identical(position, "fill")) {
-    position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
-  }
-
   x_deparse <- deparse(substitute(x))
   if (x_deparse != "x") {
     x <- x_deparse
@@ -334,24 +337,59 @@ geom_sir <- function(position = NULL,
     x <- substr(x, 2, nchar(x) - 1)
   }
 
-  if (tolower(x) %in% tolower(c("ab", "abx", "antimicrobials"))) {
-    x <- "antibiotic"
-  } else if (tolower(x) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
-    x <- "interpretation"
-  }
+  create_geom_sir(
+    position = position, x = x, fill = fill, facet = NULL, translate_ab = translate_ab,
+    minimum = minimum, language = language, guideline = guideline, ...
+  )
+}
 
+normalise_sir_plot_var <- function(v) {
+  # aliases for the columns of sir_df(), as also used by facet_sir()
+  if (is.null(v)) {
+    return(NULL)
+  }
+  if (tolower(v) %in% tolower(c("ab", "abx", "antimicrobials"))) {
+    v <- "antibiotic"
+  } else if (tolower(v) %in% tolower(c("SIR", "sir", "interpretations", "result"))) {
+    v <- "interpretation"
+  }
+  v
+}
+
+create_geom_sir <- function(position, x, fill, facet, translate_ab, minimum, language, guideline, ...) {
+  if (is.null(position)) {
+    position <- "fill"
+  }
+  if (identical(position, "fill")) {
+    position <- ggplot2::position_fill(vjust = 0.5, reverse = TRUE)
+  }
+  x <- normalise_sir_plot_var(x)
   ggplot2::geom_col(
-    data = function(x) {
-      sir_df(
-        data = x,
-        translate_ab = translate_ab,
-        language = language,
-        minimum = minimum,
-        guideline = guideline
+    data = function(data) {
+      sir_plot_data(
+        data = data, x = x, fill = fill, facet = facet, translate_ab = translate_ab,
+        minimum = minimum, language = language, guideline = guideline
       )
     },
-    mapping = utils::modifyList(ggplot2::aes(), list(x = str2lang(x), y = str2lang(y), fill = str2lang(fill))),
+    mapping = utils::modifyList(ggplot2::aes(), list(x = str2lang(x), y = str2lang("value"), fill = str2lang(fill))),
     position = position,
     ...
   )
+}
+
+sir_plot_data <- function(data, x, fill, facet, translate_ab, minimum, language, guideline) {
+  out <- sir_df(
+    data = data,
+    translate_ab = translate_ab,
+    language = language,
+    minimum = minimum,
+    guideline = guideline
+  )
+  if (!"interpretation" %in% c(normalise_sir_plot_var(x), normalise_sir_plot_var(fill), normalise_sir_plot_var(facet))) {
+    # the interpretation is not shown, so the bars of all interpretations would overlap;
+    # keep only the susceptible proportion, which is the first level and follows the guideline:
+    # S+SDD+I ("SI") for EUCAST, S+SDD ("S") for CLSI, and S for guideline = NULL
+    out <- out[which(as.character(out$interpretation) == levels(out$interpretation)[1]), , drop = FALSE]
+  }
+  out
 }

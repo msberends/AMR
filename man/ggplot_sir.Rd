@@ -65,7 +65,7 @@ labels_sir_count(
 
 \item{x}{Variable to show on x axis, either \code{"antibiotic"} (default) or \code{"interpretation"} or a grouping variable.}
 
-\item{fill}{Variable to categorise using the plots legend, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable. For \code{\link[=labels_sir_count]{labels_sir_count()}}, this must be the same as the \code{fill} of \code{\link[=geom_sir]{geom_sir()}}, so that the labels are placed on the right bars.}
+\item{fill}{Variable to categorise using the plots legend, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable. For \code{\link[=labels_sir_count]{labels_sir_count()}}, this must be the same as the \code{fill} of \code{\link[=geom_sir]{geom_sir()}}, so that the labels are placed on the right bars. If the interpretation is not shown in the plot (i.e., neither in \code{x}, \code{fill}, nor \code{facet}), only the susceptible proportion is plotted, which follows the guideline (see \code{guideline}): S+SDD+I for EUCAST, S+SDD for CLSI, and S if \code{guideline = NULL}.}
 
 \item{facet}{Variable to split plots by, either \code{"interpretation"} (default) or \code{"antibiotic"} or a grouping variable.}
 

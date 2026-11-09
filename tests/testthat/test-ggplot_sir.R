@@ -175,5 +175,21 @@ test_that("test-ggplot_sir.R", {
         expect_equal(labels$y, (bars$ymin + bars$ymax) / 2)
       }
     }
+
+    # without the interpretation in the plot, only the susceptible proportion is shown, following the guideline
+    grouped <- example_isolates[, c("gender", "AMX")]
+    grouped <- structure(grouped, class = c("grouped_df", "tbl_df", "tbl", "data.frame"), groups = data.frame(gender = c("F", "M"), .rows = I(list(which(grouped$gender == "F"), which(grouped$gender == "M")))))
+    for (gl in list("EUCAST", "CLSI", NULL)) {
+      expected <- sir_df(grouped, guideline = gl)
+      expected <- expected[which(as.character(expected$interpretation) == levels(expected$interpretation)[1]), , drop = FALSE]
+      p <- ggplot_sir(grouped, x = "antibiotic", fill = "gender", position = "dodge", guideline = gl)
+      built <- ggplot_build(p)
+      expect_equal(sort(built$data[[1]]$y), sort(expected$value))
+      expect_equal(nrow(built$data[[2]]), nrow(expected))
+      expect_identical(p$labels$y, paste("Proportion", levels(expected$interpretation)[1]))
+    }
+    # all interpretations when they are shown in the facets
+    built <- ggplot_build(ggplot_sir(grouped, x = "antibiotic", fill = "gender", facet = "interpretation", position = "dodge", guideline = "EUCAST"))
+    expect_equal(nrow(built$data[[1]]), nrow(sir_df(grouped, guideline = "EUCAST")))
   }
 })
