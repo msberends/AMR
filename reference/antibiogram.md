@@ -538,7 +538,8 @@ italics at default (see argument `italicise`).
 
 You can also use functions from specific 'table reporting' packages to
 transform the output of `antibiogram()` to your needs, e.g. with
-`flextable::as_flextable()` or `gt::gt()`.
+[`flextable::as_flextable()`](https://davidgohel.github.io/flextable/reference/as_flextable.html)
+or `gt::gt()`.
 
 ## Explaining WISCA
 

@@ -50,6 +50,7 @@ geom_sir(
 labels_sir_count(
   position = NULL,
   x = "antibiotic",
+  fill = "interpretation",
   translate_ab = "name",
   minimum = 30,
   language = get_AMR_locale(),
@@ -79,8 +80,14 @@ labels_sir_count(
 
 - fill:
 
-  Variable to categorise using the plots legend, either `"antibiotic"`
-  (default) or `"interpretation"` or a grouping variable.
+  Variable to categorise using the plots legend, either
+  `"interpretation"` (default) or `"antibiotic"` or a grouping variable.
+  For `labels_sir_count()`, this must be the same as the `fill` of
+  `geom_sir()`, so that the labels are placed on the right bars. If the
+  interpretation is not shown in the plot (i.e., neither in `x`, `fill`,
+  nor `facet`), only the susceptible proportion is plotted, which
+  follows the guideline (see `guideline`): S+SDD+I for EUCAST, S+SDD for
+  CLSI, and S if `guideline = NULL`.
 
 - facet:
 
