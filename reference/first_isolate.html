@@ -9,7 +9,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -211,6 +211,17 @@
 <p>This method only weighs specific antimicrobial drugs, called <em>key antimicrobials</em>. Any difference from S to R (or vice versa) in these key antimicrobials will select an isolate as a first weighted isolate. With <code>ignore_I = FALSE</code>, also differences from I to S or R (or vice versa) will lead to this.</p>
 <p>Key antimicrobials are internally selected using the <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> function, but can also be added manually as a variable to the data and set in the <code>col_keyantimicrobials</code> argument. Another option is to pass the output of the <code><a href="key_antimicrobials.html">key_antimicrobials()</a></code> function directly to the <code>col_keyantimicrobials</code> argument.</p></li>
 </ol><p>The default method is phenotype-based (using <code>type = "points"</code>) and episode-based (using <code>episode_days = 365</code>). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.</p>
+</div>
+
+<div class="section">
+<h3 id="first-isolates-per-additional-variable">First isolates per additional variable<a class="anchor" aria-label="anchor" href="#first-isolates-per-additional-variable"></a></h3>
+
+
+<p>To determine first isolates separately for the values of any additional variable, such as a ward, a specimen group, a molecular marker or a locally defined classification, group the data with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> before calling <code>first_isolate()</code>. Every group is then handled as a separate data set, so the selection, including the start of every episode, is determined per patient, genus-species combination and group value. This works with all methods described above:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">your_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ward</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>first <span class="op">=</span> <span class="fu"><a href="../reference/first_isolate.html">first_isolate</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>Be aware that grouping on a variable that is related to antimicrobial resistance, such as a resistance mechanism or the output of <code><a href="mdro.html">mdro()</a></code>, retains more isolates of patients whose isolates change category. This deviates from CLSI M39 and generally leads to an overestimation of resistance, as the selection then depends on the outcome that is being estimated.</p>
 </div>
 
     </div>

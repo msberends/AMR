@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.1.0.9021
+## AMR 3.1.0.9022
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -156,6 +156,13 @@ are strongly advised to re-run their WISCA analyses.
 
 #### Other
 
+- The documentation of
+  [`first_isolate()`](https://amr-for-r.org/reference/first_isolate.md)
+  now explains how to determine first isolates per any additional
+  variable using
+  [`dplyr::group_by()`](https://dplyr.tidyverse.org/reference/group_by.html),
+  and the bias this introduces when that variable is related to
+  resistance ([\#345](https://github.com/msberends/AMR/issues/345))
 - The manual index on the website was rewritten to improve findability,
   with sections ordered by task and a filter field
 - Fixed the link to the copyright section and added MycoBank as a
