@@ -8,6 +8,7 @@ This version fixes a critical bug in WISCA that biased all coverage estimates of
 * `mdro()` now applies the rule for *Salmonella* Typhi in the EUCAST guidelines, i.e., resistance to carbapenems (and fluoroquinolones in `"EUCAST3.1"`). This rule never applied before, so these isolates were wrongly classified as negative (#341)
 
 ### New
+* `first_isolate()` now supports `method = "clinical-phenotype-based"` together with `col_clinical_phenotype`. This retains the earliest isolate of every supplied clinical category per patient, genus-species combination, and episode. Unlike the existing `"phenotype-based"` method, which derives phenotypes from AST profiles using points or key antimicrobials, the new method can use classifications such as MDR, XDR, ESBL, AmpC, molecular markers, or locally defined categories.
 * **Taxonomic names in plots**
   * New function `labels_taxonomy()` to print taxonomic names in axis and legend labels in italics, which can directly be used as labeller in `ggplot2` (e.g., `scale_x_discrete(labels = labels_taxonomy)`) and in base R plots
   * `italicise_taxonomy()` gained `type = "plotmath"`, which returns an expression vector for titles, axes and legends in plots

@@ -14,12 +14,14 @@ first_isolate(
   col_specimen = NULL,
   col_icu = NULL,
   col_keyantimicrobials = NULL,
+  col_clinical_phenotype = NULL,
   episode_days = 365,
   testcodes_exclude = NULL,
   icu_exclude = FALSE,
   specimen_group = NULL,
   type = "points",
-  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
+  method = c("phenotype-based", "clinical-phenotype-based", "episode-based",
+    "patient-based", "isolate-based"),
   ignore_I = TRUE,
   points_threshold = 2,
   info = interactive(),
@@ -34,7 +36,8 @@ filter_first_isolate(
   col_patient_id = NULL,
   col_mo = NULL,
   episode_days = 365,
-  method = c("phenotype-based", "episode-based", "patient-based", "isolate-based"),
+  method = c("phenotype-based", "clinical-phenotype-based", "episode-based",
+    "patient-based", "isolate-based"),
   ...
 )
 }
@@ -55,6 +58,8 @@ filter_first_isolate(
 
 \item{col_keyantimicrobials}{(only useful when \code{method = "phenotype-based"}) column name of the key antimicrobials to determine first isolates, see \code{\link[=key_antimicrobials]{key_antimicrobials()}}. The default is the first column that starts with 'key' followed by 'ab' or 'antibiotics' or 'antimicrobials' (case insensitive). Use \code{col_keyantimicrobials = FALSE} to prevent this. Can also be the output of \code{\link[=key_antimicrobials]{key_antimicrobials()}}.}
 
+\item{col_clinical_phenotype}{(only useful when \code{method = "clinical-phenotype-based"}) column name containing a clinical phenotype category for each isolate, such as \code{"ESBL"}, \code{"AmpC"}, or the output of \code{\link[=mdro]{mdro()}}. Missing values do not define a category and cannot by themselves cause an isolate to be selected.}
+
 \item{episode_days}{Episode in days after which a genus/species combination will be determined as 'first isolate' again. The default of 365 days is based on the guideline by CLSI, see \emph{Source}.}
 
 \item{testcodes_exclude}{A \link{character} vector with test codes that should be excluded (case-insensitive).}
@@ -65,7 +70,7 @@ filter_first_isolate(
 
 \item{type}{Type to determine weighed isolates; can be \code{"keyantimicrobials"} or \code{"points"}, see \emph{Details}.}
 
-\item{method}{The method to apply, either \code{"phenotype-based"}, \code{"episode-based"}, \code{"patient-based"} or \code{"isolate-based"} (can be abbreviated), see \emph{Details}. The default is \code{"phenotype-based"} if antimicrobial test results are present in the data, and \code{"episode-based"} otherwise.}
+\item{method}{The method to apply, either \code{"phenotype-based"}, \code{"clinical-phenotype-based"}, \code{"episode-based"}, \code{"patient-based"} or \code{"isolate-based"} (can be abbreviated), see \emph{Details}. The default is \code{"phenotype-based"} if antimicrobial test results are present in the data, and \code{"episode-based"} otherwise.}
 
 \item{ignore_I}{\link{logical} to indicate whether antibiotic interpretations with \code{"I"} will be ignored when \code{type = "keyantimicrobials"}, see \emph{Details}.}
 
@@ -83,10 +88,10 @@ filter_first_isolate(
 A \link{logical} vector
 }
 \description{
-Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods as summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}). To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
+Determine first isolates of all microorganisms of every patient per episode and (if needed) per specimen type. These functions support all four methods summarised by Hindler \emph{et al.} in 2007 (\doi{10.1086/511864}), as well as selection using supplied clinical phenotype categories. To determine patient episodes not necessarily based on microorganisms, use \code{\link[=is_new_episode]{is_new_episode()}} that also supports grouping with the \code{dplyr} package.
 }
 \details{
-The methodology implemented in these functions is strictly based on the recommendations outlined in \href{https://clsi.org/standards/products/microbiology/documents/m39}{CLSI Guideline M39} and the research overview by Hindler \emph{et al.} (2007, \doi{10.1086/511864}).
+The isolate-, patient-, episode-, and phenotype-based methods are strictly based on the recommendations outlined in \href{https://clsi.org/standards/products/microbiology/documents/m39}{CLSI Guideline M39} and the research overview by Hindler \emph{et al.} (2007, \doi{10.1086/511864}). The clinical phenotype-based method extends these methods with categories supplied by the user.
 
 To conduct epidemiological analyses on antimicrobial resistance data, only so-called first isolates should be included to prevent overestimation and underestimation of antimicrobial resistance. Different methods can be used to do so, see below.
 
@@ -97,7 +102,7 @@ The \code{\link[=first_isolate]{first_isolate()}} function is a wrapper around t
 All isolates with a microbial ID of \code{NA} will be excluded as first isolate.
 \subsection{Different methods}{
 
-According to previously-mentioned sources, there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. All methods select on a combination of the taxonomic genus and species (not subspecies).
+According to previously-mentioned sources, there are different methods (algorithms) to select first isolates with increasing reliability: isolate-based, patient-based, episode-based and phenotype-based. The additional clinical phenotype-based method selects on categories supplied by the user. All methods select on a combination of the taxonomic genus and species (not subspecies).
 
 All mentioned methods are covered in the \code{\link[=first_isolate]{first_isolate()}} function:\tabular{ll}{
    \strong{Method} \tab \strong{Function to apply} \cr
@@ -119,6 +124,10 @@ All mentioned methods are covered in the \code{\link[=first_isolate]{first_isola
    \emph{(= first isolate per phenotype)} \tab  \cr
    - Major difference in any antimicrobial result \tab - \code{first_isolate(x, type = "points")} \cr
    - Any difference in key antimicrobial results \tab - \code{first_isolate(x, type = "keyantimicrobials")} \cr
+    \tab  \cr
+    \tab  \cr
+   \strong{Clinical phenotype-based} \tab \code{first_isolate(x, method = "clinical-phenotype-based", col_clinical_phenotype = "phenotype")} \cr
+   \emph{(= first isolate per supplied category)} \tab  \cr
 }
 
 
@@ -161,6 +170,14 @@ Key antimicrobials are internally selected using the \code{\link[=key_antimicrob
 }
 
 The default method is phenotype-based (using \code{type = "points"}) and episode-based (using \code{episode_days = 365}). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.
+
+\strong{Clinical phenotype-based}
+
+\emph{Minimum variables required: Microorganism identifier, Patient identifier, Date, Clinical phenotype category}
+
+This method retains the earliest isolate of every distinct value in the column set with \code{col_clinical_phenotype}, separately for each patient, genus-species combination, and episode. For example, a later \code{"ESBL+AmpC"} isolate can be retained after an \code{"ESBL"} isolate because the complete category values are different. Values are compared exactly: categories are not inferred from antimicrobial results, split into components, or otherwise normalised. Missing category values do not define a clinical phenotype, although such an isolate can still be selected as the first isolate of a new episode. With \code{episode_days = Inf}, each category is retained once per patient and genus-species combination in the supplied data.
+
+This differs from \code{method = "phenotype-based"}, where the AMR package derives phenotypes from differences in the antibiogram using \code{type = "points"} or \code{type = "keyantimicrobials"}. Clinical phenotype categories can instead represent classifications such as MDR, XDR, ESBL, AmpC, carbapenemase production, molecular markers, or locally defined categories. Callers are responsible for applying consistent classification rules and for canonicalising overlapping or combined labels before calling this function.
 }
 }
 \examples{
@@ -192,7 +209,7 @@ if (require("dplyr")) {
 }
 }
 \references{
-Methodology of these functions is strictly based on:
+The established isolate selection methods are based on:
 \itemize{
 \item \strong{M39 Analysis and Presentation of Cumulative Antimicrobial Susceptibility Test Data, 5th Edition}, 2022, \emph{Clinical and Laboratory Standards Institute (CLSI)}. \url{https://clsi.org/standards/products/microbiology/documents/m39/}.
 \item Hindler JF and Stelling J (2007). \strong{Analysis and Presentation of Cumulative Antibiograms: A New Consensus Guideline from the Clinical and Laboratory Standards Institute.} Clinical Infectious Diseases, 44(6), 867-873. \doi{10.1086/511864}

@@ -30,7 +30,7 @@
 test_that("test-first_isolate.R", {
   skip_on_cran()
 
-  # all four methods
+  # all established methods
   expect_equal(
     sum(first_isolate(x = example_isolates, method = "isolate-based", info = TRUE), na.rm = TRUE),
     1984
@@ -46,6 +46,98 @@ test_that("test-first_isolate.R", {
   expect_equal(
     sum(first_isolate(x = example_isolates, method = "phenotype-based", info = TRUE), na.rm = TRUE),
     1387
+  )
+
+  # Clinical phenotype-based selection uses supplied categories, not AST profiles.
+  clinical <- data.frame(
+    date = as.Date("2026-01-01") + c(0, 5, 10, 15, 40, 45, 50, 55),
+    patient = "A",
+    mo = "Escherichia coli",
+    clinical_phenotype = c(NA, "ESBL", "ESBL", "AmpC", NA, "ESBL", "ESBL", "ESBL+AmpC")
+  )
+  clinical_selected <- first_isolate(
+    clinical,
+    col_date = "date",
+    col_patient_id = "patient",
+    col_mo = "mo",
+    method = "clinical-phenotype-based",
+    col_clinical_phenotype = "clinical_phenotype",
+    episode_days = 30,
+    info = TRUE
+  )
+  expect_identical(clinical_selected, c(TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE))
+
+  # Infinite episodes retain each supplied category only once. Missing values do
+  # not define a category, but the first isolate is still selected.
+  expect_identical(
+    first_isolate(
+      clinical,
+      col_date = "date",
+      col_patient_id = "patient",
+      col_mo = "mo",
+      method = "clinical",
+      col_clinical_phenotype = "clinical_phenotype",
+      episode_days = Inf
+    ),
+    c(TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE)
+  )
+
+  # Factor categories and input order do not change the result.
+  clinical_factor <- clinical[c(4, 1, 8, 3, 6, 2, 7, 5), ]
+  clinical_factor$clinical_phenotype <- factor(clinical_factor$clinical_phenotype)
+  expect_identical(
+    first_isolate(
+      clinical_factor,
+      col_date = "date",
+      col_patient_id = "patient",
+      col_mo = "mo",
+      method = "clinical-phenotype-based",
+      col_clinical_phenotype = "clinical_phenotype",
+      episode_days = 30
+    ),
+    clinical_selected[c(4, 1, 8, 3, 6, 2, 7, 5)]
+  )
+
+  # Categories are evaluated independently for each patient and organism.
+  independent <- data.frame(
+    date = as.Date("2026-01-01") + 0:3,
+    patient = c("A", "A", "B", "A"),
+    mo = c("Escherichia coli", "Escherichia coli", "Escherichia coli", "Klebsiella pneumoniae"),
+    clinical_phenotype = "ESBL"
+  )
+  expect_identical(
+    first_isolate(
+      independent,
+      col_date = "date",
+      col_patient_id = "patient",
+      col_mo = "mo",
+      method = "clinical-phenotype-based",
+      col_clinical_phenotype = "clinical_phenotype",
+      episode_days = Inf
+    ),
+    c(TRUE, FALSE, TRUE, TRUE)
+  )
+
+  expect_error(
+    first_isolate(clinical,
+      col_date = "date", col_patient_id = "patient", col_mo = "mo",
+      method = "clinical-phenotype-based"
+    ),
+    "col_clinical_phenotype"
+  )
+  expect_error(
+    first_isolate(clinical,
+      col_date = "date", col_patient_id = "patient", col_mo = "mo",
+      method = "clinical-phenotype-based", col_clinical_phenotype = "missing_column"
+    )
+  )
+  expect_identical(
+    filter_first_isolate(clinical,
+      col_date = "date", col_patient_id = "patient", col_mo = "mo",
+      method = "clinical-phenotype-based", col_clinical_phenotype = "clinical_phenotype",
+      episode_days = 30
+    ),
+    clinical[clinical_selected, ]
   )
 
   # for phenotype determination
