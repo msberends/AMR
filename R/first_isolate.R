@@ -130,6 +130,18 @@
 #'
 #'
 #' The default method is phenotype-based (using `type = "points"`) and episode-based (using `episode_days = 365`). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.
+#'
+#' ## First isolates per additional variable
+#'
+#' To determine first isolates separately for the values of any additional variable, such as a ward, a specimen group, a molecular marker or a locally defined classification, group the data with [dplyr::group_by()] before calling [first_isolate()]. Every group is then handled as a separate data set, so the selection, including the start of every episode, is determined per patient, genus-species combination and group value. This works with all methods described above:
+#'
+#' ```r
+#' your_data %>%
+#'   group_by(ward) %>%
+#'   mutate(first = first_isolate())
+#' ```
+#'
+#' Be aware that grouping on a variable that is related to antimicrobial resistance, such as a resistance mechanism or the output of [mdro()], retains more isolates of patients whose isolates change category. This deviates from CLSI M39 and generally leads to an overestimation of resistance, as the selection then depends on the outcome that is being estimated.
 #' @rdname first_isolate
 #' @seealso [key_antimicrobials()]
 #' @export

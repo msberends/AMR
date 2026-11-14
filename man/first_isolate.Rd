@@ -162,6 +162,18 @@ Key antimicrobials are internally selected using the \code{\link[=key_antimicrob
 
 The default method is phenotype-based (using \code{type = "points"}) and episode-based (using \code{episode_days = 365}). This makes sure that every genus-species combination is selected per patient once per year, while taking into account all antimicrobial test results. If no antimicrobial test results are available in the data set, only the episode-based method is applied at default.
 }
+
+\subsection{First isolates per additional variable}{
+
+To determine first isolates separately for the values of any additional variable, such as a ward, a specimen group, a molecular marker or a locally defined classification, group the data with \code{\link[dplyr:group_by]{dplyr::group_by()}} before calling \code{\link[=first_isolate]{first_isolate()}}. Every group is then handled as a separate data set, so the selection, including the start of every episode, is determined per patient, genus-species combination and group value. This works with all methods described above:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{your_data \%>\%
+  group_by(ward) \%>\%
+  mutate(first = first_isolate())
+}\if{html}{\out{</div>}}
+
+Be aware that grouping on a variable that is related to antimicrobial resistance, such as a resistance mechanism or the output of \code{\link[=mdro]{mdro()}}, retains more isolates of patients whose isolates change category. This deviates from CLSI M39 and generally leads to an overestimation of resistance, as the selection then depends on the outcome that is being estimated.
+}
 }
 \examples{
 # `example_isolates` is a data set available in the AMR package.

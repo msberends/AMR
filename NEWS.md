@@ -1,4 +1,4 @@
-# AMR 3.1.0.9021
+# AMR 3.1.0.9022
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -35,6 +35,7 @@ This version fixes a critical bug in WISCA that biased all coverage estimates of
   * Species groups and complexes are now listed for every antimicrobial to which all their species are intrinsically resistant. This adds 62 bug-drug combinations for the *Burkholderia cepacia* complex, coryneform bacteria, the *Enterobacter cloacae* complex (e.g., amoxicillin and amoxicillin/clavulanic acid), the *Klebsiella pneumoniae* complex, and coagulase-negative staphylococci, which affects `mo_is_intrinsic_resistant()`, `not_intrinsic_resistant()`, and the priors of `wisca()` (#338)
 
 ### Other
+* The documentation of `first_isolate()` now explains how to determine first isolates per any additional variable using `dplyr::group_by()`, and the bias this introduces when that variable is related to resistance (#345)
 * The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field
 * Fixed the link to the copyright section and added MycoBank as a taxonomy source in the *Welcome to AMR* vignette (#325)
 
