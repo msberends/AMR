@@ -13,3 +13,4 @@ How to find the right documentation:
 
 - [AMR 3.1.0](https://amr-for-r.org/release/3.1.0/llms.txt): reference of all functions and data sets, released on 2026-10-16
 - [AMR 3.0.1](https://amr-for-r.org/release/3.0.1/llms.txt): reference of all functions and data sets, released on 2025-09-20
+- [AMR 3.0.0](https://amr-for-r.org/release/3.0.0/llms.txt): reference of all functions and data sets, released on 2025-06-01
