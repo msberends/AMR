@@ -1,9 +1,5 @@
 # AMR with tidymodels
 
-> This page was almost entirely written by our [AMR for R
-> Assistant](https://chat.amr-for-r.org), a ChatGPT manually-trained
-> model able to answer any question about the `AMR` package.
-
 Antimicrobial resistance (AMR) is a global health crisis, and
 understanding resistance patterns is crucial for managing effective
 treatments. The `AMR` R package provides robust tools for analysing AMR

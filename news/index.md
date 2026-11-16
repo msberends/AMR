@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.1.0.9023
+## AMR 3.1.0.9024
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -168,6 +168,12 @@ are strongly advised to re-run their WISCA analyses.
 - Fixed the link to the copyright section and added MycoBank as a
   taxonomy source in the *Welcome to AMR* vignette
   ([\#325](https://github.com/msberends/AMR/issues/325))
+- The AMR for R Assistant is now available at
+  <https://amr-for-r.org/articles/chat.html> and in the sidebar of the
+  website. It opens Claude or ChatGPT with instructions to answer from
+  the documentation of the installed package version, published for
+  every release at `https://amr-for-r.org/release/<version>/`, and
+  replaces the former custom GPT in ChatGPT.
 
 ## AMR 3.1.0
 

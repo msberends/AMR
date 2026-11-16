@@ -5,12 +5,13 @@ articles:
   AMR_for_Python: AMR_for_Python.html
   AMR_with_tidymodels: AMR_with_tidymodels.html
   AMR: AMR.html
+  chat: chat.html
   datasets: datasets.html
   EUCAST: EUCAST.html
   PCA: PCA.html
   WHONET: WHONET.html
   WISCA: WISCA.html
-last_built: 2026-11-16T09:17Z
+last_built: 2026-11-16T10:29Z
 urls:
   reference: https://amr-for-r.org/reference
   article: https://amr-for-r.org/articles

@@ -6,6 +6,7 @@
 - [AMR with
   tidymodels](https://amr-for-r.org/articles/AMR_with_tidymodels.md):
 - [Conduct AMR data analysis](https://amr-for-r.org/articles/AMR.md):
+- [AMR for R Assistant](https://amr-for-r.org/articles/chat.md):
 - [Download data sets for download / own
   use](https://amr-for-r.org/articles/datasets.md):
 - [Apply EUCAST rules](https://amr-for-r.org/articles/EUCAST.md):
