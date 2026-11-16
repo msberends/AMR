@@ -1,4 +1,4 @@
-# AMR 3.1.0.9023
+# AMR 3.1.0.9024
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -38,6 +38,7 @@ This version fixes a critical bug in WISCA that biased all coverage estimates of
 * The documentation of `first_isolate()` now explains how to determine first isolates per any additional variable using `dplyr::group_by()`, and the bias this introduces when that variable is related to resistance (#345)
 * The manual index on the website was rewritten to improve findability, with sections ordered by task and a filter field
 * Fixed the link to the copyright section and added MycoBank as a taxonomy source in the *Welcome to AMR* vignette (#325)
+* The AMR for R Assistant is now available at <https://amr-for-r.org/articles/chat.html> and in the sidebar of the website. It opens Claude or ChatGPT with instructions to answer from the documentation of the installed package version, published for every release at `https://amr-for-r.org/release/<version>/`, and replaces the former custom GPT in ChatGPT.
 
 # AMR 3.1.0
 

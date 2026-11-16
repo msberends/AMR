@@ -204,16 +204,42 @@ p {
 this shows on top of every sidebar to the right
 (e.g., on top of Table of Contents)
 */
-.amr-gpt-assistant {
+/* AMR for R Assistant in the sidebar, see pkgdown/extra.js */
+.amr-assistant-sidebar {
   margin-top: 10px;
+  padding: 12px;
   border: 2px dashed var(--amr-green-dark);
   text-align: center;
   background: var(--bs-body-bg);
 }
-.amr-gpt-assistant * {
-  width: 90%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+.amr-assistant-sidebar-title {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.amr-assistant-sidebar-title i {
+  color: var(--amr-green-dark);
+}
+.amr-assistant-sidebar p {
+  text-align: center;
+  hyphens: none;
+  margin-bottom: 10px;
+}
+.amr-assistant-sidebar .amr-assistant-buttons {
+  justify-content: center;
+  margin: 0;
+}
+
+/* AMR for R Assistant page, see vignettes/chat.Rmd */
+.amr-assistant-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  margin: 20px 0;
+}
+.amr-assistant-prompt {
+  white-space: pre-wrap;
 }
 
 /* REFERENCE INDEX ('Manual'), see pkgdown/templates/content-reference-index.html */

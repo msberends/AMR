@@ -41,6 +41,7 @@ README\.html
 ^vignettes/resistance_predict\.Rmd$
 ^vignettes/WHONET\.Rmd$
 ^vignettes/WISCA\.Rmd$
+^vignettes/chat\.Rmd$
 ^logo.svg$
 ^CRAN-SUBMISSION$
 ^PythonPackage$

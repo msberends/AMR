@@ -29,9 +29,57 @@
 # ==================================================================== #
 */
 
+// AMR for R Assistant: the instructions that the chat buttons put in Claude or ChatGPT, followed by the user's question
+// see articles/chat.html; keep this the only copy of the instructions
+const AMR_ASSISTANT_PROMPT = [
+  "You are the AMR for R Assistant. You help users of the AMR package for R, which is used to analyse antimicrobial resistance (AMR) data. Follow these rules throughout this conversation.",
+  "",
+  "WHERE TO LOOK",
+  "1. Base every statement about the AMR package on its official documentation, which you must fetch from amr-for-r.org. Do not rely on prior knowledge of the package, and do not use other websites, forums or search results about it.",
+  "2. The documentation differs per package version. Start at https://amr-for-r.org/release/llms.txt, which explains which documentation belongs to which installed version:",
+  "   - a released version, such as 3.1.0: https://amr-for-r.org/release/3.1.0/llms.txt",
+  "   - a development version, such as 3.1.0.9023: https://amr-for-r.org/llms.txt",
+  "3. That llms.txt lists every function and data set, with a link to its reference page (.md). Before you use a function, argument or data set in an answer, fetch its reference page and check the name, the arguments and their defaults there.",
+  "4. For workflows and worked examples, use the articles listed in https://amr-for-r.org/llms.txt. These are written for the latest version, so check the functions they use against the reference of the user's version.",
+  "",
+  "VERSION",
+  "5. If the user has not stated their AMR version, ask them to run packageVersion(\"AMR\") in R. Until they answer, use the latest released version listed at https://amr-for-r.org/release/llms.txt, and say that you did.",
+  "",
+  "ANSWERS",
+  "6. If something cannot be found in the documentation of that version, say so explicitly. Never invent functions, arguments or values.",
+  "7. Give complete, runnable R code, using the functions of the AMR package where they exist.",
+  "8. End every answer with 'Sources:', followed by the documentation URLs you used.",
+  "9. Answer in the language of the question.",
+  "10. Do not give treatment advice for individual patients. If the user shares data that may identify patients, warn them not to.",
+  "",
+  "My question:",
+  "",
+  ""
+].join("\n");
+
+// URL that opens a new chat with the instructions filled in, but not yet sent
+function amrAssistantUrl(service) {
+  const prompt = encodeURIComponent(AMR_ASSISTANT_PROMPT);
+  if (service === "claude") {
+    return "https://claude.ai/new?q=" + prompt;
+  } else if (service === "chatgpt") {
+    // '?prompt=' fills in the text, '?q=' would send it at once, before the user could add a question
+    return "https://chatgpt.com/?prompt=" + prompt;
+  }
+}
+
 $(function () {
-  // add GPT assistant info
-  $('aside').prepend('<div class="amr-gpt-assistant"><a target="_blank" href="https://chat.amr-for-r.org"><img src="https://amr-for-r.org/AMRforRGPT.svg"></a></div>');
+  // add AMR for R Assistant to the sidebar, with the same buttons as on articles/chat.html
+  $('aside').prepend(
+    '<div class="amr-assistant-sidebar">' +
+      '<div class="amr-assistant-sidebar-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Need assistance?</div>' +
+      '<p>Ask the <a href="https://amr-for-r.org/articles/chat.html">AMR for R Assistant</a>, which answers from the documentation of your package version.</p>' +
+      '<div class="amr-assistant-buttons">' +
+        '<a class="btn btn-sm btn-primary" target="_blank" rel="noopener" href="' + amrAssistantUrl("claude") + '">Ask Claude</a>' +
+        '<a class="btn btn-sm btn-primary" target="_blank" rel="noopener" href="' + amrAssistantUrl("chatgpt") + '">Ask ChatGPT</a>' +
+      '</div>' +
+    '</div>'
+  );
 
   // split version number in navbar into main version and build number
   $('.nav-text').each(function () {
@@ -245,7 +293,6 @@ $(function () {
   if (window.location.href.includes('AMR_for_Python')) {
     $('body').addClass('amr-for-python'); /* to set colours in CSS */
     $('img[src="../logo.svg"]').attr('src', '../logo_python.svg'); /* replace base logo */
-    $('img[src="https://amr-for-r.org/AMRforRGPT.svg"]').attr('src', 'https://amr-for-r.org/AMRforRGPT_python.svg'); /* replace GPT logo */
   }
   
   // add country flags
