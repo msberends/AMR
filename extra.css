@@ -168,6 +168,15 @@ body.amr-for-python * {
 .navbar input[type="search"]::placeholder {
   color: var(--amr-search-placeholder) !important;
 }
+/* between the 'lg' breakpoint, where the navbar expands, and 1200px, the menu items would wrap onto two lines and the navbar would cover the top of the page */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .navbar .nav-link {
+    font-size: 0.8rem;
+  }
+  .navbar input[type="search"] {
+    max-width: 160px;
+  }
+}
 .dropdown-item:hover,
 .dropdown-item:focus {
   background-color: var(--bs-tertiary-bg) !important;
