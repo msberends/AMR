@@ -1,0 +1,207 @@
+# Data Set with Clinical Breakpoints for SIR Interpretation
+
+Data set containing clinical breakpoints to interpret MIC and disk
+diffusion to SIR values, according to international guidelines. This
+data set contains breakpoints for humans, 7 different animal groups, and
+ECOFFs.
+
+These breakpoints are currently implemented:
+
+- For **clinical microbiology**: EUCAST 2011-2026 and CLSI 2011-2026;
+
+- For **veterinary microbiology**: EUCAST 2021-2026 and CLSI 2019-2026;
+
+- For **ECOFFs** (Epidemiological Cut-off Values): EUCAST 2020-2026 and
+  CLSI 2022-2026.
+
+Use
+[`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md) to
+transform MICs or disks measurements to SIR values.
+
+## Usage
+
+``` r
+clinical_breakpoints
+```
+
+## Format
+
+A [tibble](https://tibble.tidyverse.org/reference/tibble.html) with 61
+389 observations and 15 variables:
+
+- `guideline`  
+  Name of the guideline
+
+- `type`  
+  Breakpoint type, either `"ECOFF"`, `"animal"`, or `"human"`
+
+- `host`  
+  Host of infectious agent. This is mostly useful for veterinary
+  breakpoints and is either `"ECOFF"`, `"aquatic"`, `"cats"`,
+  `"cattle"`, `"dogs"`, `"horse"`, `"human"`, `"poultry"`, or `"swine"`
+
+- `method`  
+  Testing method, either `"DISK"` or `"MIC"`
+
+- `site`  
+  Body site for which the breakpoint must be applied, e.g. "Oral" or
+  "Respiratory"
+
+- `mo`  
+  Microbial ID, see
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md)
+
+- `rank_index`  
+  Taxonomic rank index of `mo`, used to choose the most specific
+  breakpoint (the lowest index): 1 for subspecies and infraspecies, 2
+  for species, 2.5 for species groups (e.g., *Streptococcus* group A), 3
+  for genus, 4 for family, 5 for order, 6 for other groups (e.g.,
+  Gram-negative or anaerobic bacteria), and 7 for non-species related
+  (PK-PD) breakpoints. Blocking rows (see *Details*) have the rank index
+  of their organism + 0.1, e.g., 2.6 for a species group, so that a
+  breakpoint for the same organism always takes precedence.
+
+- `ab`  
+  Antimicrobial code as used by this package, EARS-Net and WHONET, see
+  [`as.ab()`](https://amr-for-r.org/release/3.1.0/reference/as.ab.md)
+
+- `ref_tbl`  
+  Info about where the guideline rule can be found
+
+- `disk_dose`  
+  Dose of the used disk diffusion method
+
+- `breakpoint_S`  
+  Lowest MIC value or highest number of millimetres that leads to "S",
+  is `NA` for blocking rows (see *Details*). EUCAST's off-scale MIC
+  breakpoint of 0.001 mg/L, which indicates that there is no S category,
+  is stored as 0.0001 to keep all isolates out of "S".
+
+- `breakpoint_R`  
+  Highest MIC value or lowest number of millimetres that leads to "R",
+  can be `NA`
+
+- `uti`  
+  A [logical](https://rdrr.io/r/base/logical.html) value
+  (`TRUE`/`FALSE`) to indicate whether the rule applies to a urinary
+  tract infection (UTI)
+
+- `is_SDD`  
+  A [logical](https://rdrr.io/r/base/logical.html) value
+  (`TRUE`/`FALSE`) to indicate whether the intermediate range between
+  "S" and "R" should be interpreted as "SDD", instead of "I". This
+  currently applies to 72 breakpoints.
+
+- `note`  
+  Notes from the guideline that apply to the breakpoint, if available
+
+## Details
+
+### Different Types of Breakpoints
+
+Supported types of breakpoints are ECOFF, animal, and human. ECOFF
+(Epidemiological cut-off) values are used in antimicrobial
+susceptibility testing to differentiate between wild-type and
+non-wild-type strains of bacteria or fungi.
+
+The default is `"human"`, which can also be set with the package option
+[`AMR_breakpoint_type`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md).
+Use
+[`as.sir(..., breakpoint_type = ...)`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md)
+to interpret raw data using a specific breakpoint type, e.g.
+`as.sir(..., breakpoint_type = "ECOFF")` to use ECOFFs.
+
+### Blocking Rows
+
+Where EUCAST lists an organism but gives no breakpoint for it (e.g.
+"IE", "-", "Note", breakpoints in brackets, an organism excluded with
+"except", or no S category for a zone diameter),
+[`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md)
+must not fall back to the breakpoint of a broader taxon, such as the
+breakpoint for *Vibrio* spp. where EUCAST gives "IE" for *V. fluvialis*.
+Such cases are included as "blocking rows": rows in which `breakpoint_S`
+and `breakpoint_R` are both `NA` and the `note` starts with
+`"[No breakpoint]"` followed by the reason.
+[`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md)
+returns `NA` for these. This currently applies to 15 660 rows. Remove
+them with `subset(clinical_breakpoints, !is.na(breakpoint_S))` if only
+actual breakpoints are needed.
+
+Where another guideline has no S category for a zone diameter, such as
+CLSI for fluconazole in *C. glabrata* (SDD and R only), only
+`breakpoint_R` is given, and the `note` starts with `"[No S category]"`.
+[`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md)
+then returns R where applicable, and `NA` otherwise.
+
+### Imported From WHONET
+
+Some breakpoints in this package were validated through and imported
+from [WHONET](https://whonet.org), a free desktop Windows application
+developed and supported by the WHO Collaborating Centre for Surveillance
+of Antimicrobial Resistance. More can be read on [their
+website](https://whonet.org). The developers of WHONET and this `AMR`
+package have been in contact about sharing their work. We highly
+appreciate their great development on the WHONET software.
+
+From WHONET, imported were:
+
+- All CLSI breakpoints, including ECOFF
+
+- All non-human EUCAST breakpoints, including ECOFF
+
+- Human EUCAST breakpoints between 2011 and 2018
+
+- Human EUCAST antifungal breakpoints between 2019 and 2025
+
+Human EUCAST breakpoints from 2019 onwards (antifungal breakpoints from
+2026 onwards) were retrieved directly from the EUCAST Clinical
+Breakpoint Tables published on <https://www.eucast.org>, using [this
+script](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints_eucast.R).
+
+Our WHONET import script can be [found
+here](https://github.com/msberends/AMR/blob/main/data-raw/_reproduction_scripts/reproduction_of_clinical_breakpoints.R).
+
+### Response From CLSI and EUCAST
+
+The CEO of CLSI and the chairman of EUCAST have endorsed the work and
+public use of this `AMR` package (and consequently the use of their
+breakpoints) in June 2023, when future development of distributing
+clinical breakpoints was discussed in a meeting between CLSI, EUCAST,
+WHO, developers of WHONET software, and developers of this `AMR`
+package.
+
+### Download Note
+
+This `AMR` package (and the WHONET software as well) contains rather
+complex internal methods to apply the guidelines. For example, some
+breakpoints must be applied on certain species groups (which are in case
+of this package available through the
+[microorganisms.groups](https://amr-for-r.org/release/3.1.0/reference/microorganisms.groups.md)
+data set). It is important that this is considered when implementing the
+breakpoints for own use.
+
+## Download Our Reference Data
+
+All reference data sets in the AMR package - including information on
+microorganisms, antimicrobials, and clinical breakpoints - are freely
+available for download in multiple formats: R, MS Excel, Apache Feather,
+Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable,
+tab-separated plain text files suitable for use in any software,
+including laboratory information systems.
+
+Visit [our website for direct download
+links](https://amr-for-r.org/articles/datasets.html), or explore the
+actual files in [our GitHub
+repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
+
+## See also
+
+[intrinsic_resistant](https://amr-for-r.org/release/3.1.0/reference/intrinsic_resistant.md)
+
+## Examples
+
+``` r
+clinical_breakpoints
+```

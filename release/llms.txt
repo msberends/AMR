@@ -1,0 +1,14 @@
+# AMR for R: reference documentation per package version
+
+> The AMR package for R changes between versions: functions, arguments, defaults, data sets and clinical breakpoints are added or changed. Answers about AMR must therefore be based on the documentation of the version that the user has installed.
+
+How to find the right documentation:
+
+1. Determine the installed version, which is the output of `packageVersion("AMR")` in R.
+2. If the version has three numbers (e.g., `3.1.0`), it is a release from CRAN. Use the reference of exactly that version from the list below.
+3. If the version has four numbers (e.g., `3.1.0.9022`), it is a development version from GitHub. Use the reference of the latest development version at <https://amr-for-r.org/llms.txt>.
+4. If the installed version is not listed below, use the closest older version and state this.
+
+## Released versions
+
+- [AMR 3.1.0](https://amr-for-r.org/release/3.1.0/llms.txt): reference of all functions and data sets, released on 2026-10-16

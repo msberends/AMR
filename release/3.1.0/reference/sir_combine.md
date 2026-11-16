@@ -1,0 +1,313 @@
+# Combine SIR Results of Multiple Antimicrobials
+
+Combine the SIR results of two or more antimicrobials into one SIR
+result per isolate. This can answer two different questions, set with
+the `method` argument:
+
+- `"most_susceptible"` (default): *Is at least one of these
+  antimicrobials expected to work?* This is the result of a combination
+  therapy, e.g. piperacillin/tazobactam with gentamicin, which covers
+  the isolate if any of its antimicrobials is active.
+
+- `"most_resistant"`: *Is resistance demonstrated to any of these
+  antimicrobials?* This is the result for a group of antimicrobials,
+  e.g. resistance to third-generation cephalosporins if an isolate is
+  resistant to ceftazidime or ceftriaxone, as used in surveillance
+  reports.
+
+See *Combination Therapy* below for the exact rules. The same rules are
+used by
+[`antibiogram()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md)
+and
+[`wisca()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md)
+for combination antibiograms, and by the
+[`count_*()`](https://amr-for-r.org/release/3.1.0/reference/count.md)
+and
+[`proportion_*()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+functions when more than one variable is used.
+
+## Usage
+
+``` r
+sir_combine(
+  ...,
+  method = c("most_susceptible", "most_resistant"),
+  only_all_tested = FALSE,
+  guideline = getOption("AMR_guideline", "EUCAST")
+)
+```
+
+## Arguments
+
+- ...:
+
+  Two or more vectors (or columns) with antimicrobial interpretations,
+  or a data frame with such columns. They will be transformed internally
+  with
+  [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md)
+  if needed. All vectors must be of the same length.
+
+- method:
+
+  Either `"most_susceptible"` (default) to return the most susceptible
+  result, as for combination therapy, or `"most_resistant"` to return
+  the most resistant result, as for resistance within a group of
+  antimicrobials. See *Combination Therapy* below.
+
+- only_all_tested:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate that
+  isolates must be tested for all antimicrobials. If `TRUE`, the result
+  is `NA` for isolates with a missing result for any of the
+  antimicrobials. If `FALSE` (default), a missing result only leads to
+  `NA` if a result for the missing antimicrobial could have changed the
+  result, see *Combination Therapy* below.
+
+- guideline:
+
+  A guideline name, `"EUCAST"` or `"CLSI"` (or any version thereof, e.g.
+  `"CLSI 2025"`), to determine whether the 'I' category is considered
+  susceptible (EUCAST) or resistant (CLSI). This only affects isolates
+  with a missing result for any of the antimicrobials when
+  `only_all_tested = FALSE`, see *Combination Therapy* below. The
+  default is the package option
+  [`AMR_guideline`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md),
+  or `"EUCAST"` if it is not set. See section *Interpretation of SIR*
+  below.
+
+## Value
+
+A [`sir`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md)
+vector with the same length as the input.
+
+## Combination Therapy
+
+Results are ordered from susceptible to resistant: S (and WT), SDD, I, R
+(and NWT, NS). With `method = "most_susceptible"` (in `sir_combine()`),
+the most susceptible result of the antimicrobials is returned, and with
+`method = "most_resistant"`, the most resistant result. The value `"NI"`
+(non-interpretable) is considered a missing result.
+
+A missing result can only be ignored if it cannot change the conclusion:
+a susceptible result for `"most_susceptible"`, and a non-susceptible
+result for `"most_resistant"`. Under EUCAST, the 'I' category is
+considered susceptible (*susceptible, increased exposure*), and under
+CLSI, it is not. With `only_all_tested = TRUE`, any missing result leads
+to `NA`.
+
+This is an example for two antimicrobials, Drug A and Drug B, under
+EUCAST (the order of the antimicrobials does not matter):
+
+    -------------------------------------------------------------------------
+                          Result of method =            Result of method =
+                         "most_susceptible"              "most_resistant"
+                       -----------------------  -----------------------------
+                        only_all_tested =        only_all_tested =
+     Drug A    Drug B     FALSE      TRUE          FALSE         TRUE
+    --------  --------  ---------  ---------    -----------  -------------
+        S        S          S          S             S             S
+        S        I          S          S             I             I
+        S        R          S          S             R             R
+        I        R          I          I             R             R
+        R        R          R          R             R             R
+        S      <NA>         S        <NA>          <NA>          <NA>
+        I      <NA>         I        <NA>          <NA>          <NA>
+        R      <NA>       <NA>       <NA>            R           <NA>
+      <NA>     <NA>       <NA>       <NA>          <NA>          <NA>
+    -------------------------------------------------------------------------
+
+Under CLSI, the combination of I with a missing result is `<NA>` for
+`"most_susceptible"` and I for `"most_resistant"`.
+
+The
+[`count_*()`](https://amr-for-r.org/release/3.1.0/reference/count.md)
+and
+[`proportion_*()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+functions apply these rules when more than one variable is used. With
+`only_all_tested = FALSE` (default), the functions for susceptibility,
+such as
+[`susceptibility()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+and
+[`count_susceptible()`](https://amr-for-r.org/release/3.1.0/reference/count.md),
+count an isolate as susceptible if any of the antimicrobials is
+susceptible (`"most_susceptible"`), and the functions for resistance,
+such as
+[`resistance()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+and
+[`count_resistant()`](https://amr-for-r.org/release/3.1.0/reference/count.md),
+count an isolate as resistant if any of the antimicrobials is resistant
+(`"most_resistant"`). An isolate is considered tested if it has such a
+result, or if it was tested for all antimicrobials. Therefore, for
+combinations with `only_all_tested = FALSE`:
+
+        count_S()    +   count_I()    +   count_R()    >= count_all()
+      proportion_S() + proportion_I() + proportion_R() >= 1
+
+With `only_all_tested = TRUE`, all these functions count the result of
+the combination therapy (`"most_susceptible"`) of isolates tested for
+all antimicrobials, so that:
+
+        count_S()    +   count_I()    +   count_R()    = count_all()
+      proportion_S() + proportion_I() + proportion_R() = 1
+
+In
+[`antibiogram()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md)
+and
+[`wisca()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md),
+the result of the combination therapy (`"most_susceptible"`) is used,
+the 'I' category is considered susceptible or not following the
+`guideline` argument ('SDD' is always considered susceptible), and the
+result is then reduced to S or R.
+
+## Interpretation of SIR
+
+In 2019, the European Committee on Antimicrobial Susceptibility Testing
+(EUCAST) has decided to change the definitions of susceptibility testing
+categories S, I, and R
+(<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
+
+In aggregated analyses, such as proportions, counts, antibiograms, and
+plots, the 'I' category must be considered either susceptible or
+resistant. In epidemiological AMR data analysis, this follows the
+guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I'
+resistant. The dose-dependent susceptibility of CLSI ('SDD') is always
+considered susceptible, as it equals what EUCAST defines as 'I'. All
+functions with a `guideline` argument for this purpose use these
+categories:
+
+|             |               |               |
+|-------------|---------------|---------------|
+| `guideline` | Susceptible   | Resistant     |
+| `"EUCAST"`  | S, SDD, I, WT | R, NWT, NS    |
+| `"CLSI"`    | S, SDD, WT    | I, R, NWT, NS |
+
+The values 'WT' (wild type) and 'NWT' (non-wild type) result from
+epidemiological cut-off values (ECOFFs) instead of clinical breakpoints.
+Since they are no clinical categories, 'WT' is always considered
+susceptible and 'NWT' always resistant, regardless of the guideline. The
+value 'NS' (non-susceptible) is always considered resistant, and 'NI'
+(non-interpretable) is always considered a missing result.
+
+The `guideline` argument can be:
+
+- **Left unset**, to use the package option
+  [`AMR_guideline`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md),
+  or `"EUCAST"` if this option is not set. In the latter case, a message
+  is shown once per session (but not in R Markdown or Quarto documents);
+  set the option to silence it.
+
+- **`"EUCAST"`**, or any EUCAST version such as `"EUCAST 2025"`, to
+  consider 'I' susceptible, e.g., to return `"SI"` vs. `"R"` in
+  [`proportion_df()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md).
+
+- **`"CLSI"`**, or any CLSI version such as `"CLSI 2025"`, to consider
+  'I' resistant, e.g., to return `"S"` vs. `"IR"` in
+  [`proportion_df()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md).
+
+- **`NULL` or `FALSE`**, to keep S, I, and R separate. This is only
+  possible in functions that return results per category:
+  [`count_df()`](https://amr-for-r.org/release/3.1.0/reference/count.md),
+  [`proportion_df()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+  [`sir_df()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+  [`ggplot_sir()`](https://amr-for-r.org/release/3.1.0/reference/ggplot_sir.md),
+  [`geom_sir()`](https://amr-for-r.org/release/3.1.0/reference/ggplot_sir.md),
+  [`labels_sir_count()`](https://amr-for-r.org/release/3.1.0/reference/ggplot_sir.md),
+  and
+  [`bug_drug_combinations()`](https://amr-for-r.org/release/3.1.0/reference/bug_drug_combinations.md).
+  Functions that return a single proportion or count, such as
+  [`susceptibility()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+  [`count_resistant()`](https://amr-for-r.org/release/3.1.0/reference/count.md),
+  [`antibiogram()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md),
+  [`wisca()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md),
+  and [`format()`](https://rdrr.io/r/base/format.html) on the result of
+  [`bug_drug_combinations()`](https://amr-for-r.org/release/3.1.0/reference/bug_drug_combinations.md),
+  require 'I' to be considered either susceptible or resistant, and
+  return an error.
+
+Use
+[`susceptibility()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+and
+[`resistance()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+(or
+[`count_susceptible()`](https://amr-for-r.org/release/3.1.0/reference/count.md)
+and
+[`count_resistant()`](https://amr-for-r.org/release/3.1.0/reference/count.md))
+to follow the guideline, or e.g.
+[`proportion_SI()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+and
+[`proportion_R()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+to be explicit regardless of the guideline.
+
+The `combine_SI` argument of the functions that return results per
+category,
+[`antibiogram()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md),
+and
+[`wisca()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md)
+is deprecated in favour of `guideline`. If set, it is followed literally
+and takes precedence over `guideline`.
+
+## See also
+
+[`count()`](https://amr-for-r.org/release/3.1.0/reference/count.md) and
+[`proportion()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+for counting and calculating susceptibility of (combinations of)
+antimicrobials, and
+[`antibiogram()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md)
+for combination antibiograms.
+
+## Examples
+
+``` r
+drug_a <- as.sir(c("S", "R", "R", "I", "I", NA, "R", "SDD"))
+drug_b <- as.sir(c("R", "S", "R", "R", NA, NA, NA, "I"))
+
+# combination therapy: is at least one of them expected to work?
+sir_combine(drug_a, drug_b)
+sir_combine(drug_a, drug_b, guideline = "CLSI")
+sir_combine(drug_a, drug_b, only_all_tested = TRUE)
+
+# resistance within a group: is resistance demonstrated to any of them?
+sir_combine(drug_a, drug_b, method = "most_resistant")
+
+# the count and proportion functions use the same rules
+susceptibility(drug_a, drug_b, minimum = 0)
+susceptibility(sir_combine(drug_a, drug_b), minimum = 0)
+resistance(drug_a, drug_b, minimum = 0)
+resistance(sir_combine(drug_a, drug_b, method = "most_resistant"), minimum = 0)
+
+# \donttest{
+if (require("dplyr")) {
+  # create a new variable for piperacillin/tazobactam + gentamicin
+  example_isolates %>%
+    filter(!is.na(TZP)) %>%
+    mutate(TZP_GEN = sir_combine(TZP, GEN)) %>%
+    select(mo, TZP, GEN, TZP_GEN)
+}
+if (require("dplyr")) {
+  # resistance to third-generation cephalosporins
+  example_isolates %>%
+    mutate(cephalosporins_3rd = sir_combine(CAZ, CRO, method = "most_resistant")) %>%
+    count(cephalosporins_3rd)
+}
+if (require("dplyr")) {
+  # combine any number of antimicrobials
+  example_isolates %>%
+    mutate(any_aminoglycoside = sir_combine(GEN, TOB, AMK, KAN)) %>%
+    count(any_aminoglycoside)
+}
+if (require("dplyr")) {
+  # use the new variable in further analyses
+  # THOUGH CONSIDER wisca() FOR RELIABLE ESTIMATES
+  example_isolates %>%
+    mutate(TZP_GEN = sir_combine(TZP, GEN)) %>%
+    group_by(ward) %>%
+    summarise(
+      TZP_mono = susceptibility(TZP),
+      GEN_mono = susceptibility(GEN),
+      TZP_GEN = susceptibility(TZP_GEN),
+      # or directly, without combining first:
+      TZP_GEN2 = susceptibility(TZP, GEN)
+    )
+}
+# }
+```

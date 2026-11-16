@@ -1,0 +1,202 @@
+# Options for the AMR package
+
+This is an overview of all the package-specific options you can set in
+the `AMR` package. Set them using the
+[`options()`](https://rdrr.io/r/base/options.html) function, e.g.:
+
+`options(AMR_guideline = "CLSI")`
+
+## Options (alphabetical order)
+
+- `AMR_antibiogram_formatting_type`  
+  A [numeric](https://rdrr.io/r/base/numeric.html) (1-22) to use in
+  [`antibiogram()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md),
+  to indicate which formatting type to use.
+
+- `AMR_breakpoint_type`  
+  A [character](https://rdrr.io/r/base/character.html) to use in
+  [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md),
+  to indicate which breakpoint type to use. This must be either
+  `"ECOFF"`, `"animal"`, or `"human"`.
+
+- `AMR_capped_mic_handling`  
+  A [character](https://rdrr.io/r/base/character.html) to use in
+  [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md),
+  to indicate how capped MIC values (`<`, `<=`, `>`, `>=`) should be
+  interpreted. Must be one of `"none"`, `"conservative"`, `"standard"`,
+  or `"lenient"` - the default is `"standard"`.
+
+- `AMR_cleaning_regex`  
+  A [regular expression](https://rdrr.io/r/base/regex.html)
+  (case-insensitive) to use in
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md)
+  and all
+  [`mo_*`](https://amr-for-r.org/release/3.1.0/reference/mo_property.md)
+  functions, to clean the user input. The default is the outcome of
+  [`mo_cleaning_regex()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md),
+  which removes texts between brackets and texts such as "species" and
+  "serovar".
+
+- `AMR_custom_ab`  
+  A file location to an RDS file, to use custom antimicrobial drugs with
+  this package. This is explained in
+  [`add_custom_antimicrobials()`](https://amr-for-r.org/release/3.1.0/reference/add_custom_antimicrobials.md).
+
+- `AMR_custom_mo`  
+  A file location to an RDS file, to use custom microorganisms with this
+  package. This is explained in
+  [`add_custom_microorganisms()`](https://amr-for-r.org/release/3.1.0/reference/add_custom_microorganisms.md).
+
+- `AMR_guideline`  
+  A [character](https://rdrr.io/r/base/character.html) to set the
+  default guideline used throughout the `AMR` package wherever a
+  `guideline` argument is available. This option is used as the default
+  in e.g.
+  [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md),
+  [`resistance()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+  [`susceptibility()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+  [`interpretive_rules()`](https://amr-for-r.org/release/3.1.0/reference/interpretive_rules.md)
+  and many plotting functions. **While unset**, the AMR package uses the
+  latest implemented EUCAST guideline (currently EUCAST 2026). In
+  aggregated analyses, this option determines whether the 'I' category
+  is considered susceptible (EUCAST) or resistant (CLSI), see section
+  *Interpretation of SIR* in
+  [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md);
+  setting it also silences the message that EUCAST is assumed.
+
+  - For
+    [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md),
+    this determines which clinical breakpoint guideline is used to
+    interpret MIC values and disk diffusion diameters. It can be either
+    the guideline name (e.g., `"CLSI"` or `"EUCAST"`) or the name
+    including a year (e.g., `"CLSI 2019"`). Supported guidelines are
+    EUCAST 2011 to 2026, and CLSI 2011 to 2026.
+
+  - For
+    [`resistance()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+    and
+    [`susceptibility()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+    this setting determines how the `"I"` (Intermediate / Increased
+    exposure) category is handled in calculations. Under CLSI, `"I"` is
+    considered *resistant* in susceptibility calculations; under EUCAST,
+    `"I"` is considered *susceptible* in susceptibility calculations.
+    Explicitly setting this option ensures reproducible AMR proportion
+    estimates.
+
+  - For
+    [`interpretive_rules()`](https://amr-for-r.org/release/3.1.0/reference/interpretive_rules.md),
+    this determines which guideline-specific interpretive (expert) rules
+    are applied to antimicrobial test results, either EUCAST or CLSI.
+
+  - For many plotting functions (e.g., for MIC or disk diffusion
+    values), supplying `mo` and `ab` enables automatic SIR-based
+    interpretative colouring. These colours are derived from
+    [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md)
+    in the background and therefore depend on the active `guideline`
+    setting, which again uses EUCAST 2026 if not set explicitly.
+
+- `AMR_ignore_pattern`  
+  A [regular expression](https://rdrr.io/r/base/regex.html) to ignore
+  (i.e., make `NA`) any match given in
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md)
+  and all
+  [`mo_*`](https://amr-for-r.org/release/3.1.0/reference/mo_property.md)
+  functions.
+
+- `AMR_include_PKPD`  
+  A [logical](https://rdrr.io/r/base/logical.html) to use in
+  [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md),
+  to indicate that PK/PD clinical breakpoints must be applied as a last
+  resort - the default is `TRUE`.
+
+- `AMR_include_screening`  
+  A [logical](https://rdrr.io/r/base/logical.html) to use in
+  [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md),
+  to indicate that clinical breakpoints for screening are allowed - the
+  default is `FALSE`.
+
+- `AMR_interpretive_rules`  
+  A [character](https://rdrr.io/r/base/character.html) to set the
+  default types of rules for
+  [`interpretive_rules()`](https://amr-for-r.org/release/3.1.0/reference/interpretive_rules.md),
+  [`eucast_rules()`](https://amr-for-r.org/release/3.1.0/reference/interpretive_rules.md)
+  and
+  [`clsi_rules()`](https://amr-for-r.org/release/3.1.0/reference/interpretive_rules.md),
+  must be one or more of: `"breakpoints"`, `"expected_phenotypes"`,
+  `"expert"`, `"other"`, `"custom"`, `"all"`, and defaults to
+  `c("breakpoints", "expected_phenotypes")`. This option replaces the
+  old option `AMR_eucastrules`.
+
+- `AMR_keep_synonyms`  
+  A [logical](https://rdrr.io/r/base/logical.html) to use in
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md)
+  and all
+  [`mo_*`](https://amr-for-r.org/release/3.1.0/reference/mo_property.md)
+  functions, to indicate if old, previously valid taxonomic names must
+  be preserved and not be corrected to currently accepted names. The
+  default is `FALSE`.
+
+- `AMR_locale`  
+  A [character](https://rdrr.io/r/base/character.html) to set the
+  language for the `AMR` package, can be one of these supported language
+  names or [ISO 639-1 codes](https://en.wikipedia.org/wiki/ISO_639-1):
+  English (en), Arabic (ar), Bengali (bn), Chinese (zh), Czech (cs),
+  Danish (da), Dutch (nl), Finnish (fi), French (fr), German (de), Greek
+  (el), Hindi (hi), Indonesian (id), Italian (it), Japanese (ja), Korean
+  (ko), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro),
+  Russian (ru), Spanish (es), Swahili (sw), Swedish (sv), Turkish (tr),
+  Ukrainian (uk), Urdu (ur), or Vietnamese (vi). The default is the
+  current system language (if supported, English otherwise).
+
+- `AMR_mo_source`  
+  A file location for a manual code list to be used in
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md)
+  and all
+  [`mo_*`](https://amr-for-r.org/release/3.1.0/reference/mo_property.md)
+  functions. This is explained in
+  [`set_mo_source()`](https://amr-for-r.org/release/3.1.0/reference/mo_source.md).
+
+- `AMR_substitute_missing_r_breakpoint`  
+  A [logical](https://rdrr.io/r/base/logical.html) to use in
+  [`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md),
+  to indicate that missing R breakpoints must be substituted with
+  `"R"` - the default is `FALSE`.
+
+## Saving Settings Between Sessions
+
+Settings in R are not saved globally and are thus lost when R is exited.
+You can save your options to your own `.Rprofile` file, which is a
+user-specific file. You can edit it using:
+
+      utils::file.edit("~/.Rprofile")
+
+In this file, you can set options such as...
+
+     options(AMR_locale = "pt")
+     options(AMR_include_PKPD = TRUE)
+
+...to add Portuguese language support of antimicrobials, and allow PK/PD
+rules when interpreting MIC values with
+[`as.sir()`](https://amr-for-r.org/release/3.1.0/reference/as.sir.md).
+
+### Share Options Within Team
+
+For a more collaborative approach, e.g. within a (data) team, save an
+options file to a remote file location, such as a shared network drive,
+and have each user read in this file automatically at start-up. This
+would work in this way:
+
+1.  Save a plain text file to e.g. "X:/team_folder/R_options.R" and fill
+    it with preferred settings.
+
+2.  For each user, open the `.Rprofile` file using
+    `utils::file.edit("~/.Rprofile")` and put in there:
+
+          source("X:/team_folder/R_options.R")
+
+3.  Reload R/RStudio and check the settings with
+    [`getOption()`](https://rdrr.io/r/base/options.html), e.g.
+    `getOption("AMR_locale")` if you have set that value.
+
+Now the team settings are configured in only one place, and can be
+maintained there.

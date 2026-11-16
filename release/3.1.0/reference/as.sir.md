@@ -1,0 +1,927 @@
+# Interpret MIC and Disk Diffusion as SIR, or Clean Existing SIR Data
+
+Clean up existing SIR values, or interpret minimum inhibitory
+concentration (MIC) values and disk diffusion diameters according to
+EUCAST or CLSI. `as.sir()` transforms the input to a new class `sir`,
+which is an ordered
+[factor](https://rdrr.io/pkg/data.table/man/fctr.html) containing the
+levels `S`, `SDD`, `I`, `R`, `NI`.
+
+Breakpoints are currently implemented from EUCAST 2011-2026 and CLSI
+2011-2026, see *Details*. All breakpoints used for interpretation are
+available in our
+[clinical_breakpoints](https://amr-for-r.org/release/3.1.0/reference/clinical_breakpoints.md)
+data set.
+
+## Usage
+
+``` r
+as.sir(x, ..., enforce_method = "auto")
+
+NA_sir_
+
+is.sir(x)
+
+is_sir_eligible(x, threshold = 0.05)
+
+# Default S3 method
+as.sir(
+  x,
+  S = "^(S|U|1)+$",
+  I = "^(I|2)+$",
+  R = "^(R|3)+$",
+  NI = "^(N|NI|V|4)+$",
+  SDD = "^(SDD|D|H|5)+$",
+  WT = "^(WT|6)+$",
+  NWT = "^(NWT|7)+$",
+  NS = "^(NS|8)+$",
+  info = interactive(),
+  ...
+)
+
+# S3 method for class 'mic'
+as.sir(
+  x,
+  mo = NULL,
+  ab = deparse(substitute(x)),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
+  capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
+  add_intrinsic_resistance = FALSE,
+  reference_data = AMR::clinical_breakpoints,
+  substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  conserve_capped_values = NULL,
+  ...
+)
+
+# S3 method for class 'disk'
+as.sir(
+  x,
+  mo = NULL,
+  ab = deparse(substitute(x)),
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
+  add_intrinsic_resistance = FALSE,
+  reference_data = AMR::clinical_breakpoints,
+  substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  ...
+)
+
+# S3 method for class 'data.frame'
+as.sir(
+  x,
+  ...,
+  col_mo = NULL,
+  guideline = getOption("AMR_guideline", "EUCAST"),
+  uti = NULL,
+  capped_mic_handling = getOption("AMR_capped_mic_handling", "standard"),
+  as_wt_nwt = identical(breakpoint_type, "ECOFF"),
+  add_intrinsic_resistance = FALSE,
+  reference_data = AMR::clinical_breakpoints,
+  substitute_missing_r_breakpoint = getOption("AMR_substitute_missing_r_breakpoint",
+    FALSE),
+  include_screening = getOption("AMR_include_screening", FALSE),
+  include_PKPD = getOption("AMR_include_PKPD", TRUE),
+  breakpoint_type = getOption("AMR_breakpoint_type", "human"),
+  host = NULL,
+  language = get_AMR_locale(),
+  verbose = FALSE,
+  info = interactive(),
+  parallel = FALSE,
+  conserve_capped_values = NULL
+)
+
+sir_interpretation_history(clean = FALSE)
+```
+
+## Arguments
+
+- x:
+
+  Vector of values (for class
+  [`mic`](https://amr-for-r.org/release/3.1.0/reference/as.mic.md): MIC
+  values in mg/L, for class
+  [`disk`](https://amr-for-r.org/release/3.1.0/reference/as.disk.md): a
+  disk diffusion radius in millimetres).
+
+- ...:
+
+  For using on a [data.frame](https://rdrr.io/r/base/data.frame.html):
+  selection of columns to apply `as.sir()` to. Supports [tidyselect
+  language](https://tidyselect.r-lib.org/reference/starts_with.html)
+  such as `where(is.mic)`, `starts_with(...)`, or `column1:column4`, and
+  can thus also be [antimicrobial
+  selectors](https://amr-for-r.org/release/3.1.0/reference/antimicrobial_selectors.md),
+  e.g. `as.sir(df, penicillins())`.
+
+- enforce_method:
+
+  A [character](https://rdrr.io/r/base/character.html) string to force
+  interpretation as a specific method, useful when the S3 class of `x`
+  is lost (e.g., when called from Python via rpy2). Must be one of
+  `"auto"` (default), `"mic"`, or `"disk"`.
+
+  Otherwise: arguments passed on to methods.
+
+- threshold:
+
+  Maximum fraction of invalid antimicrobial interpretations of `x`, see
+  *Examples*.
+
+- S, I, R, NI, SDD, WT, NWT, NS:
+
+  A case-independent [regular
+  expression](https://rdrr.io/r/base/regex.html) to translate input to
+  this result. This regular expression will be run *after* all
+  non-letters and whitespaces are removed from the input.
+
+- info:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to print information
+  about the process, defaults to `TRUE` only in [interactive
+  sessions](https://rdrr.io/r/base/interactive.html).
+
+- mo:
+
+  A vector (or column name) with
+  [character](https://rdrr.io/r/base/character.html)s that can be
+  coerced to valid microorganism codes with
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md),
+  can be left empty to determine it automatically.
+
+- ab:
+
+  A vector (or column name) with
+  [character](https://rdrr.io/r/base/character.html)s that can be
+  coerced to a valid antimicrobial drug code with
+  [`as.ab()`](https://amr-for-r.org/release/3.1.0/reference/as.ab.md).
+
+- guideline:
+
+  A guideline name (or column name) to use for SIR interpretation.
+  Defaults to EUCAST 2026 (the latest implemented EUCAST guideline in
+  the
+  [clinical_breakpoints](https://amr-for-r.org/release/3.1.0/reference/clinical_breakpoints.md)
+  data set), but can be set with the package option
+  [`AMR_guideline`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md).
+  Currently supports EUCAST (2011-2026) and CLSI (2011-2026), see
+  *Details*. Using a column name allows for straightforward
+  interpretation of historical data, which must be analysed in the
+  context of, for example, different years.
+
+- uti:
+
+  (Urinary Tract Infection) a vector (or column name) with
+  [logical](https://rdrr.io/r/base/logical.html)s (`TRUE` or `FALSE`) to
+  specify whether a UTI specific interpretation from the guideline
+  should be chosen. For using `as.sir()` on a
+  [data.frame](https://rdrr.io/r/base/data.frame.html), this can also be
+  a column containing [logical](https://rdrr.io/r/base/logical.html)s or
+  when left blank, the data set will be searched for a column
+  'specimen', and rows within this column containing 'urin' (such as
+  'urine', 'urina') will be regarded isolates from a UTI. If `uti` is
+  `NA` (unknown), non-UTI breakpoints are preferred, and UTI breakpoints
+  are only used if no non-UTI breakpoints exist for the drug-bug
+  combination, which is noted in `sir_interpretation_history()`. With
+  `uti = FALSE`, UTI breakpoints are never used. See *Examples*.
+
+- capped_mic_handling:
+
+  A [character](https://rdrr.io/r/base/character.html) string that
+  controls how MIC values with a cap (i.e., starting with `<`, `<=`,
+  `>`, or `>=`) are interpreted. Supports the following options:
+
+  `"none"`
+
+  - `<=`, `<`, `>` and `>=` are ignored.
+
+  `"conservative"`
+
+  - `<=`, `<`, `>` and `>=` return `"NI"` (non-interpretable) if the
+    *true* MIC could be at either side of the breakpoint.
+
+  - This is the only mode that preserves uncertainty for ECOFFs.
+
+  `"standard"` (default)
+
+  - `<=` and `>=` return `"NI"` (non-interpretable) if the *true* MIC
+    could be at either side of the breakpoint.
+
+  - `<` always returns `"S"`, regardless of the breakpoint.
+
+  - `>` always returns `"R"`, regardless of the breakpoint.
+
+  `"lenient"`
+
+  - `<=` and `<` always return `"S"`, regardless of the breakpoint.
+
+  - `>=` and `>` always return `"R"`, regardless of the breakpoint.
+
+  In all modes except `"none"`, a capped value is never forced to a
+  category that the guideline does not provide for the drug-bug
+  combination: if a breakpoint is missing, the result is `NA` as for
+  uncapped values. EUCAST uses an off-scale S breakpoint of 0.001 mg/L
+  to indicate that there is no S category (stored as 0.0001 in
+  [clinical_breakpoints](https://amr-for-r.org/release/3.1.0/reference/clinical_breakpoints.md);
+  any S breakpoint of 0.001 or lower is treated as such). In that case,
+  `<` and `<=` values that cannot be `"R"` return `"I"` (or `"SDD"`),
+  and `"standard"` and `"lenient"` return `"I"` (or `"SDD"`) instead of
+  `"S"`.
+
+  The default `"standard"` setting ensures cautious handling of
+  uncertain values while preserving interpretability. This option can
+  also be set with the package option
+  [`AMR_capped_mic_handling`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md).
+
+- as_wt_nwt:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to return
+  `"WT"`/`"NWT"` instead of `"S"`/`"R"`. Defaults to `TRUE` when using
+  ECOFFs, i.e., when `breakpoint_type` is set to `"ECOFF"`.
+
+- add_intrinsic_resistance:
+
+  *(only useful when using a EUCAST guideline)* a
+  [logical](https://rdrr.io/r/base/logical.html) to indicate whether
+  intrinsic antibiotic resistance must also be considered for applicable
+  bug-drug combinations, meaning that e.g. ampicillin will always return
+  "R" in *Klebsiella* species. Determination is based on the
+  [intrinsic_resistant](https://amr-for-r.org/release/3.1.0/reference/intrinsic_resistant.md)
+  data set, that itself is based on ['EUCAST Expert Rules' and 'EUCAST
+  Intrinsic Resistance and Unusual Phenotypes'
+  v3.3](https://www.eucast.org/bacteria/important-additional-information/expert-rules/)
+  (2021).
+
+- reference_data:
+
+  A [data.frame](https://rdrr.io/r/base/data.frame.html) to be used for
+  interpretation, which defaults to the
+  [clinical_breakpoints](https://amr-for-r.org/release/3.1.0/reference/clinical_breakpoints.md)
+  data set. Changing this argument allows for using own interpretation
+  guidelines. This argument must have the same column names as the
+  [clinical_breakpoints](https://amr-for-r.org/release/3.1.0/reference/clinical_breakpoints.md)
+  data set. Column types are coerced automatically where possible: the
+  `mo` column is passed through
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md),
+  the `ab` column through
+  [`as.ab()`](https://amr-for-r.org/release/3.1.0/reference/as.ab.md),
+  and plain character, numeric, or logical columns are cast to the
+  expected type. When `reference_data` is manually set, the `guideline`
+  argument is optional: if omitted (or if its value does not match any
+  row in the custom data), all rows in `reference_data` are considered.
+  If `guideline` is set to a value that exists in the `guideline` column
+  of the custom data, only matching rows are used — useful when a single
+  custom table contains multiple guidelines. For the R classification,
+  the EUCAST convention is used by default: MIC values `> breakpoint_R`
+  and disk diffusion values `< breakpoint_R` are classified as R, with
+  values between `breakpoint_S` and `breakpoint_R` classified as I (or
+  SDD). Only when using the standard
+  [clinical_breakpoints](https://amr-for-r.org/release/3.1.0/reference/clinical_breakpoints.md)
+  with a CLSI guideline are the closed-interval rules (`>= breakpoint_R`
+  for MIC, `<= breakpoint_R` for disk) applied; custom `reference_data`
+  always uses the open-interval (EUCAST) convention regardless of the
+  guideline name.
+
+- substitute_missing_r_breakpoint:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate that a
+  missing clinical breakpoints for R (resistant) must be substituted
+  with R - the default is `FALSE`. Some (especially CLSI) breakpoints
+  only have a breakpoint for S, meaning that the outcome can only be
+  `"S"` or `NA`. Setting this to `TRUE` will convert the `NA`s in these
+  cases to `"R"`. Can also be set with the package option
+  [`AMR_substitute_missing_r_breakpoint`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md).
+
+- include_screening:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate that
+  clinical breakpoints for screening are allowed - the default is
+  `FALSE`. Can also be set with the package option
+  [`AMR_include_screening`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md).
+
+- include_PKPD:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate that
+  PK/PD clinical breakpoints must be applied as a last resort - the
+  default is `TRUE`. Can also be set with the package option
+  [`AMR_include_PKPD`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md).
+
+- breakpoint_type:
+
+  The type of breakpoints to use, either `"ECOFF"`, `"animal"`, or
+  `"human"`. ECOFF stands for Epidemiological Cut-Off values. The
+  default is `"human"`, which can also be set with the package option
+  [`AMR_breakpoint_type`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md).
+  If `host` is set to values of veterinary species, this will
+  automatically be set to `"animal"`.
+
+- host:
+
+  A vector (or column name) with
+  [character](https://rdrr.io/r/base/character.html)s to indicate the
+  host. Only useful for veterinary breakpoints, as it requires
+  `breakpoint_type = "animal"`. The values can be any text resembling
+  the animal species, even in any of the 28 supported languages of this
+  package. For foreign languages, be sure to set the language with
+  [`set_AMR_locale()`](https://amr-for-r.org/release/3.1.0/reference/translate.md)
+  (though it will be automatically guessed based on the system
+  language).
+
+- language:
+
+  Language to convert values set in `host` when using animal
+  breakpoints. Use one of these supported language names or [ISO 639-1
+  codes](https://en.wikipedia.org/wiki/ISO_639-1): English (en), Arabic
+  (ar), Bengali (bn), Chinese (zh), Czech (cs), Danish (da), Dutch (nl),
+  Finnish (fi), French (fr), German (de), Greek (el), Hindi (hi),
+  Indonesian (id), Italian (it), Japanese (ja), Korean (ko), Norwegian
+  (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru),
+  Spanish (es), Swahili (sw), Swedish (sv), Turkish (tr), Ukrainian
+  (uk), Urdu (ur), or Vietnamese (vi).
+
+- verbose:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate that all
+  notes should be printed during interpretation of MIC values or disk
+  diffusion values.
+
+- conserve_capped_values:
+
+  Deprecated, use `capped_mic_handling` instead.
+
+- col_mo:
+
+  Column name of the names or codes of the microorganisms (see
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md)) -
+  the default is the first column of class
+  [`mo`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md). Values
+  will be coerced using
+  [`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md).
+
+- parallel:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate if
+  parallel computing must be used, defaults to `FALSE`. Requires the
+  [`future.apply`](https://future.apply.futureverse.org/reference/future_lapply.html)
+  package. **A non-sequential
+  [`future::plan()`](https://future.futureverse.org/reference/plan.html)
+  must already be active before setting `parallel = TRUE`** — for
+  example, `future::plan(future::multisession)`. An error is thrown if
+  `parallel = TRUE` is used without a plan set by the user. Parallelism
+  distributes columns (and optionally row batches) across workers; it is
+  most beneficial when there are many antibiotic columns and a large
+  number of rows.
+
+- clean:
+
+  A [logical](https://rdrr.io/r/base/logical.html) to indicate whether
+  previously stored results should be forgotten after returning the
+  'logbook' with results.
+
+## Value
+
+Ordered [factor](https://rdrr.io/pkg/data.table/man/fctr.html) with new
+class `sir`
+
+## Details
+
+*Note: The clinical breakpoints in this package were validated through,
+and imported from, [WHONET](https://whonet.org). The public use of this
+`AMR` package has been endorsed by both CLSI and EUCAST. See
+[clinical_breakpoints](https://amr-for-r.org/release/3.1.0/reference/clinical_breakpoints.md)
+for more information.*
+
+### How it Works
+
+The `as.sir()` function can work in four ways:
+
+1.  For **cleaning raw / untransformed data**. The data will be cleaned
+    to only contain valid values, namely: **S** for susceptible, **I**
+    for intermediate or 'susceptible, increased exposure', **R** for
+    resistant, **NI** for non-interpretable, and **SDD** for susceptible
+    dose-dependent. Each of these can be set using a [regular
+    expression](https://rdrr.io/r/base/regex.html). Furthermore,
+    `as.sir()` will try its best to clean with some intelligence. For
+    example, mixed values with SIR interpretations and MIC values such
+    as `"<0.25; S"` will be coerced to `"S"`. Combined interpretations
+    for multiple test methods (as seen in laboratory records) such as
+    `"S; S"` will be coerced to `"S"`, but a value like `"S; I"` will
+    return `NA` with a warning that the input is invalid.
+
+2.  For **interpreting minimum inhibitory concentration (MIC) values**
+    according to EUCAST or CLSI. You must clean your MIC values first
+    using
+    [`as.mic()`](https://amr-for-r.org/release/3.1.0/reference/as.mic.md),
+    that also gives your columns the new data class
+    [`mic`](https://amr-for-r.org/release/3.1.0/reference/as.mic.md).
+    Also, be sure to have a column with microorganism names or codes. It
+    will be found automatically, but can be set manually using the `mo`
+    argument.
+
+    - Example to apply using `dplyr`:
+
+          your_data %>% mutate_if(is.mic, as.sir)
+          your_data %>% mutate(across(where(is.mic), as.sir))
+          your_data %>% mutate_if(is.mic, as.sir, ab = "column_with_antibiotics", mo = "column_with_microorganisms")
+          your_data %>% mutate_if(is.mic, as.sir, ab = c("cipro", "ampicillin", ...), mo = c("E. coli", "K. pneumoniae", ...))
+
+          # for veterinary breakpoints, also set `host`:
+          your_data %>% mutate_if(is.mic, as.sir, host = "column_with_animal_species", guideline = "CLSI")
+
+          # fast processing with parallel computing (requires future.apply):
+          as.sir(your_data, ..., parallel = TRUE)
+
+    - Operators like "\<=" will be considered according to the
+      `capped_mic_handling` setting. At default, an MIC value of e.g.
+      "\>=2" will return "NI" (non-interpretable) if the breakpoint is
+      4-8; the *true* MIC could be at either side of the breakpoint.
+      This is to prevent that capped values from raw laboratory data
+      would not be treated conservatively.
+
+    - **Note:** When using CLSI as the guideline, MIC values must be
+      log2-based doubling dilutions. Values not in this format, will be
+      automatically rounded up to the nearest log2 level as CLSI
+      instructs, and a warning will be thrown.
+
+3.  For **interpreting disk diffusion diameters** according to EUCAST or
+    CLSI. You must clean your disk zones first using
+    [`as.disk()`](https://amr-for-r.org/release/3.1.0/reference/as.disk.md),
+    that also gives your columns the new data class
+    [`disk`](https://amr-for-r.org/release/3.1.0/reference/as.disk.md).
+    Also, be sure to have a column with microorganism names or codes. It
+    will be found automatically, but can be set manually using the `mo`
+    argument.
+
+    - Example to apply using `dplyr`:
+
+          your_data %>% mutate_if(is.disk, as.sir)
+          your_data %>% mutate(across(where(is.disk), as.sir))
+          your_data %>% mutate_if(is.disk, as.sir, ab = "column_with_antibiotics", mo = "column_with_microorganisms")
+          your_data %>% mutate_if(is.disk, as.sir, ab = c("cipro", "ampicillin", ...), mo = c("E. coli", "K. pneumoniae", ...))
+
+          # for veterinary breakpoints, also set `host`:
+          your_data %>% mutate_if(is.disk, as.sir, host = "column_with_animal_species", guideline = "CLSI")
+
+          # fast processing with parallel computing (requires future.apply):
+          as.sir(your_data, ..., parallel = TRUE)
+
+4.  For **interpreting a complete data set**, with automatic
+    determination of MIC values, disk diffusion diameters, microorganism
+    names or codes, and antimicrobial test results. This is done very
+    simply by running `as.sir(your_data)`.
+
+**For points 2, 3 and 4: Use `sir_interpretation_history()`** to
+retrieve a [data.frame](https://rdrr.io/r/base/data.frame.html) with all
+results of all previous `as.sir()` calls. It also contains notes about
+interpretation, and the exact input and output values.
+
+### Supported Guidelines
+
+For interpreting MIC values as well as disk diffusion diameters,
+currently implemented guidelines are:
+
+- For **clinical microbiology**: EUCAST 2011-2026 and CLSI 2011-2026;
+
+- For **veterinary microbiology**: EUCAST 2021-2026 and CLSI 2019-2026;
+
+- For **ECOFFs** (Epidemiological Cut-off Values): EUCAST 2020-2026 and
+  CLSI 2022-2026.
+
+The `guideline` argument must be set to e.g., `"EUCAST 2026"` or
+`"CLSI 2026"`. By simply using `"EUCAST"` (the default) or `"CLSI"` as
+input, the latest included version of that guideline will automatically
+be selected. Importantly, using a column name of your data instead,
+allows for straightforward interpretation of historical data that must
+be analysed in the context of, for example, different years.
+
+You can set your own data set using the `reference_data` argument. The
+`guideline` argument will then be ignored.
+
+It is also possible to set the default guideline with the package option
+[`AMR_guideline`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md)
+(e.g. in your `.Rprofile` file), such as:
+
+      options(AMR_guideline = "CLSI")
+      options(AMR_guideline = "CLSI 2018")
+      options(AMR_guideline = "EUCAST 2020")
+      # or to reset:
+      options(AMR_guideline = NULL)
+
+### Working with Veterinary Breakpoints
+
+When using veterinary breakpoints (i.e., setting
+`breakpoint_type = "animal"`), a column with animal species must be
+available or set manually using the `host` argument. The column must
+contain names like "dogs", "cats", "cattle", "swine", "horses",
+"poultry", or "aquatic". Other animal names like "goats", "rabbits", or
+"monkeys" are also recognised but may not be available in all
+guidelines. Matching is case-insensitive and accepts Latin-based
+synonyms (e.g., "bovine" for cattle and "canine" for dogs).
+
+Regarding choice of veterinary guidelines, these might be the best
+options to set before analysis:
+
+      options(AMR_guideline = "CLSI")
+      options(AMR_breakpoint_type = "animal")
+
+### After Interpretation
+
+After using `as.sir()`, you can use the
+[`interpretive_rules()`](https://amr-for-r.org/release/3.1.0/reference/interpretive_rules.md)
+to (1) apply inferred susceptibility and resistance based on results of
+other antimicrobials and (2) apply intrinsic resistance based on
+taxonomic properties of a microorganism.
+
+To determine which isolates are multi-drug resistant, be sure to run
+[`mdro()`](https://amr-for-r.org/release/3.1.0/reference/mdro.md) (which
+applies the MDR/PDR/XDR guideline from 2012 at default) on a data set
+that contains S/I/R values. Read more about [detecting
+multidrug-resistant organisms
+here](https://amr-for-r.org/release/3.1.0/reference/mdro.md).
+
+### Other
+
+The function `is.sir()` detects if the input contains class `sir`. If
+the input is a [data.frame](https://rdrr.io/r/base/data.frame.html) or
+[list](https://rdrr.io/r/base/list.html), it iterates over all
+columns/items and returns a
+[logical](https://rdrr.io/r/base/logical.html) vector.
+
+The base R function [`as.double()`](https://rdrr.io/r/base/double.html)
+can be used to retrieve quantitative values from a `sir` object: `"S"` =
+1, `"I"`/`"SDD"` = 2, `"R"` = 3. All other values are rendered `NA`.
+**Note:** Do not use
+[`as.integer()`](https://rdrr.io/r/base/integer.html), since that
+(because of how R works internally) will return the factor level
+indices, and not these aforementioned quantitative values.
+
+The function `is_sir_eligible()` returns `TRUE` when a column contains
+at most 5% potentially invalid antimicrobial interpretations, and
+`FALSE` otherwise. The threshold of 5% can be set with the `threshold`
+argument. If the input is a
+[data.frame](https://rdrr.io/r/base/data.frame.html), it iterates over
+all columns and returns a [logical](https://rdrr.io/r/base/logical.html)
+vector.
+
+`NA_sir_` is a missing value of the new `sir` class, analogous to e.g.
+base R's [`NA_character_`](https://rdrr.io/r/base/NA.html).
+
+## Interpretation of SIR
+
+In 2019, the European Committee on Antimicrobial Susceptibility Testing
+(EUCAST) has decided to change the definitions of susceptibility testing
+categories S, I, and R
+(<https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/definition-of-s-i-and-r/>).
+
+In aggregated analyses, such as proportions, counts, antibiograms, and
+plots, the 'I' category must be considered either susceptible or
+resistant. In epidemiological AMR data analysis, this follows the
+guideline: EUCAST considers 'I' susceptible, while CLSI considers 'I'
+resistant. The dose-dependent susceptibility of CLSI ('SDD') is always
+considered susceptible, as it equals what EUCAST defines as 'I'. All
+functions with a `guideline` argument for this purpose use these
+categories:
+
+|             |               |               |
+|-------------|---------------|---------------|
+| `guideline` | Susceptible   | Resistant     |
+| `"EUCAST"`  | S, SDD, I, WT | R, NWT, NS    |
+| `"CLSI"`    | S, SDD, WT    | I, R, NWT, NS |
+
+The values 'WT' (wild type) and 'NWT' (non-wild type) result from
+epidemiological cut-off values (ECOFFs) instead of clinical breakpoints.
+Since they are no clinical categories, 'WT' is always considered
+susceptible and 'NWT' always resistant, regardless of the guideline. The
+value 'NS' (non-susceptible) is always considered resistant, and 'NI'
+(non-interpretable) is always considered a missing result.
+
+The `guideline` argument can be:
+
+- **Left unset**, to use the package option
+  [`AMR_guideline`](https://amr-for-r.org/release/3.1.0/reference/AMR-options.md),
+  or `"EUCAST"` if this option is not set. In the latter case, a message
+  is shown once per session (but not in R Markdown or Quarto documents);
+  set the option to silence it.
+
+- **`"EUCAST"`**, or any EUCAST version such as `"EUCAST 2025"`, to
+  consider 'I' susceptible, e.g., to return `"SI"` vs. `"R"` in
+  [`proportion_df()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md).
+
+- **`"CLSI"`**, or any CLSI version such as `"CLSI 2025"`, to consider
+  'I' resistant, e.g., to return `"S"` vs. `"IR"` in
+  [`proportion_df()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md).
+
+- **`NULL` or `FALSE`**, to keep S, I, and R separate. This is only
+  possible in functions that return results per category:
+  [`count_df()`](https://amr-for-r.org/release/3.1.0/reference/count.md),
+  [`proportion_df()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+  [`sir_df()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+  [`ggplot_sir()`](https://amr-for-r.org/release/3.1.0/reference/ggplot_sir.md),
+  [`geom_sir()`](https://amr-for-r.org/release/3.1.0/reference/ggplot_sir.md),
+  [`labels_sir_count()`](https://amr-for-r.org/release/3.1.0/reference/ggplot_sir.md),
+  and
+  [`bug_drug_combinations()`](https://amr-for-r.org/release/3.1.0/reference/bug_drug_combinations.md).
+  Functions that return a single proportion or count, such as
+  [`susceptibility()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md),
+  [`count_resistant()`](https://amr-for-r.org/release/3.1.0/reference/count.md),
+  [`antibiogram()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md),
+  [`wisca()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md),
+  and [`format()`](https://rdrr.io/r/base/format.html) on the result of
+  [`bug_drug_combinations()`](https://amr-for-r.org/release/3.1.0/reference/bug_drug_combinations.md),
+  require 'I' to be considered either susceptible or resistant, and
+  return an error.
+
+Use
+[`susceptibility()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+and
+[`resistance()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+(or
+[`count_susceptible()`](https://amr-for-r.org/release/3.1.0/reference/count.md)
+and
+[`count_resistant()`](https://amr-for-r.org/release/3.1.0/reference/count.md))
+to follow the guideline, or e.g.
+[`proportion_SI()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+and
+[`proportion_R()`](https://amr-for-r.org/release/3.1.0/reference/proportion.md)
+to be explicit regardless of the guideline.
+
+The `combine_SI` argument of the functions that return results per
+category,
+[`antibiogram()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md),
+and
+[`wisca()`](https://amr-for-r.org/release/3.1.0/reference/antibiogram.md)
+is deprecated in favour of `guideline`. If set, it is followed literally
+and takes precedence over `guideline`.
+
+## Download Our Reference Data
+
+All reference data sets in the AMR package - including information on
+microorganisms, antimicrobials, and clinical breakpoints - are freely
+available for download in multiple formats: R, MS Excel, Apache Feather,
+Apache Parquet, SPSS, and Stata.
+
+For maximum compatibility, we also provide machine-readable,
+tab-separated plain text files suitable for use in any software,
+including laboratory information systems.
+
+Visit [our website for direct download
+links](https://amr-for-r.org/articles/datasets.html), or explore the
+actual files in [our GitHub
+repository](https://github.com/msberends/AMR/tree/main/data-raw/datasets).
+
+## References
+
+For interpretations of minimum inhibitory concentration (MIC) values and
+disk diffusion diameters:
+
+- **CLSI M39: Analysis and Presentation of Cumulative Antimicrobial
+  Susceptibility Test Data**, 2011-2026, *Clinical and Laboratory
+  Standards Institute* (CLSI).
+  <https://clsi.org/standards/products/microbiology/documents/m39/>.
+
+- **CLSI M100: Performance Standard for Antimicrobial Susceptibility
+  Testing**, 2011-2026, *Clinical and Laboratory Standards Institute*
+  (CLSI). <https://clsi.org/shop/standards/m100/>.
+
+- **CLSI VET01: Performance Standards for Antimicrobial Disk and
+  Dilution Susceptibility Tests for Bacteria Isolated From Animals**,
+  2019-2026, *Clinical and Laboratory Standards Institute* (CLSI).
+  <https://clsi.org/standards/products/veterinary-medicine/documents/vet01/>.
+
+- **EUCAST Breakpoint tables for interpretation of MICs and zone
+  diameters**, 2011-2026, *European Committee on Antimicrobial
+  Susceptibility Testing* (EUCAST).
+  <https://www.eucast.org/bacteria/clinical-breakpoints-and-interpretation/clinical-breakpoint-tables/>.
+
+- **WHONET** as a source for machine-reading the clinical breakpoints
+  ([read more
+  here](https://amr-for-r.org/reference/clinical_breakpoints.html#imported-from-whonet)),
+  1989-2026, *WHO Collaborating Centre for Surveillance of Antimicrobial
+  Resistance*. <https://whonet.org/>.
+
+## See also
+
+[`as.mic()`](https://amr-for-r.org/release/3.1.0/reference/as.mic.md),
+[`as.disk()`](https://amr-for-r.org/release/3.1.0/reference/as.disk.md),
+[`as.mo()`](https://amr-for-r.org/release/3.1.0/reference/as.mo.md)
+
+## Examples
+
+``` r
+example_isolates
+
+summary(example_isolates[, 1:10]) # see all SIR results at a glance
+
+# create some example data sets, with combined MIC values and disk zones
+df_wide <- data.frame(
+  microorganism = "Escherichia coli",
+  amoxicillin = as.mic(8),
+  cipro = as.mic(0.256),
+  tobra = as.disk(16),
+  genta = as.disk(18),
+  ERY = "R"
+)
+df_long <- data.frame(
+  bacteria = rep("Escherichia coli", 4),
+  antibiotic = c("amoxicillin", "cipro", "tobra", "genta"),
+  mics = as.mic(c(0.01, 1, 4, 8)),
+  disks = as.disk(c(6, 10, 14, 18)),
+  guideline = c("EUCAST 2021", "EUCAST 2022", "EUCAST 2023", "EUCAST 2024")
+)
+# and clean previous SIR interpretation logs
+x <- sir_interpretation_history(clean = TRUE)
+
+
+# For INTERPRETING disk diffusion and MIC values -----------------------
+
+# most basic application:
+as.sir(df_wide)
+
+# return a 'logbook' about the results:
+sir_interpretation_history()
+
+# \donttest{
+
+## Using dplyr -------------------------------------------------
+if (require("dplyr")) {
+  # approaches that all work without additional arguments:
+  df_wide %>% mutate_if(is.mic, as.sir)
+  df_wide %>% mutate_if(function(x) is.mic(x) | is.disk(x), as.sir)
+  df_wide %>% mutate(across(where(is.mic), as.sir))
+
+  df_wide %>% mutate_at(vars(amoxicillin:tobra), as.sir)
+  df_wide %>% mutate(across(amoxicillin:tobra, as.sir))
+
+  df_wide %>% mutate(across(aminopenicillins(), as.sir))
+
+  # approaches that all work with additional arguments:
+  df_long %>%
+    # given a certain data type, e.g. MIC values
+    mutate_if(is.mic, as.sir,
+      mo = "bacteria",
+      ab = "antibiotic",
+      guideline = "guideline"
+    )
+  df_long %>%
+    mutate(across(
+      where(is.mic),
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          ab = "antibiotic",
+          guideline = "CLSI"
+        )
+      }
+    ))
+  df_wide %>%
+    # given certain columns, e.g. from 'cipro' to 'genta'
+    mutate_at(vars(cipro:genta), as.sir,
+      mo = "bacteria",
+      guideline = "CLSI"
+    )
+  df_wide %>%
+    mutate(across(
+      cipro:genta,
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          guideline = "CLSI"
+        )
+      }
+    ))
+
+  # for veterinary breakpoints, add 'host':
+  df_long$animal_species <- c("cats", "dogs", "horses", "cattle")
+  df_long %>%
+    # given a certain data type, e.g. MIC values
+    mutate_if(is.mic, as.sir,
+      mo = "bacteria",
+      ab = "antibiotic",
+      host = "animal_species",
+      guideline = "CLSI"
+    )
+  df_long %>%
+    mutate(across(
+      where(is.mic),
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          ab = "antibiotic",
+          host = "animal_species",
+          guideline = "CLSI"
+        )
+      }
+    ))
+  df_wide %>%
+    mutate_at(vars(cipro:genta), as.sir,
+      mo = "bacteria",
+      ab = "antibiotic",
+      host = "animal_species",
+      guideline = "CLSI"
+    )
+  df_wide %>%
+    mutate(across(
+      cipro:genta,
+      function(x) {
+        as.sir(x,
+          mo = "bacteria",
+          host = "animal_species",
+          guideline = "CLSI"
+        )
+      }
+    ))
+
+  # to include information about urinary tract infections (UTI)
+  data.frame(
+    mo = "E. coli",
+    nitrofuratoin = c("<= 2", 32),
+    from_the_bladder = c(TRUE, FALSE)
+  ) %>%
+    as.sir(uti = "from_the_bladder")
+
+  data.frame(
+    mo = "E. coli",
+    nitrofuratoin = c("<= 2", 32),
+    specimen = c("urine", "blood")
+  ) %>%
+    as.sir() # automatically determines urine isolates
+
+  df_wide %>%
+    mutate_at(vars(cipro:genta), as.sir, mo = "E. coli", uti = TRUE)
+}
+
+
+## Using base R ------------------------------------------------
+
+
+# for single values
+as.sir(
+  x = as.mic(2),
+  mo = as.mo("S. pneumoniae"),
+  ab = "AMP",
+  guideline = "EUCAST"
+)
+
+as.sir(
+  x = as.disk(18),
+  mo = "Strep pneu", # `mo` will be coerced with as.mo()
+  ab = "ampicillin", # and `ab` with as.ab()
+  guideline = "EUCAST"
+)
+
+
+# For CLEANING existing SIR values -------------------------------------
+
+as.sir(c("S", "SDD", "I", "R", "NI", "A", "B", "C"))
+as.sir("<= 0.002; S") # will return "S"
+
+as.sir(c(1, 2, 3))
+as.sir(c(1, 2, 3), S = 3, I = 2, R = 1)
+
+sir_data <- as.sir(c(rep("S", 474), rep("I", 36), rep("R", 370)))
+is.sir(sir_data)
+plot(sir_data) # for percentages
+barplot(sir_data) # for frequencies
+
+# as common in R, you can use as.integer() to return factor indices:
+as.integer(as.sir(c("S", "SDD", "I", "R", "NI", NA)))
+
+# but for computational use, as.double() will return 1 for S, 2 for I/SDD, and 3 for R:
+as.double(as.sir(c("S", "SDD", "I", "R", "NI", NA)))
+
+# the dplyr way
+if (require("dplyr")) {
+  example_isolates %>%
+    mutate_at(vars(PEN:RIF), as.sir)
+  # same:
+  example_isolates %>%
+    as.sir(PEN:RIF)
+
+  # fastest way to transform all columns with already valid AMR results to class `sir`:
+  example_isolates %>%
+    mutate_if(is_sir_eligible, as.sir)
+
+  # since dplyr 1.0.0, this can also be the more impractical:
+  # example_isolates %>%
+  #   mutate(across(where(is_sir_eligible), as.sir))
+}
+# }
+```
