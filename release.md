@@ -48,6 +48,7 @@ The pre-commit hook in `.github/prehooks/` sets the version to `X.Y.Z.9NNN` and 
   ```
 
 - [ ] `git fetch --tags` and check that `vX.Y.Z` points at the release commit
+- [ ] Check that the workflow *Publish release reference* (`.github/workflows/website-release.yaml`), which publishing the GitHub release starts, succeeded. It publishes the reference of this version as Markdown at `https://amr-for-r.org/release/X.Y.Z/` for the AMR for R Assistant (https://amr-for-r.org/articles/chat.html), and adds the version to `https://amr-for-r.org/release/llms.txt`. To publish a version manually, start the workflow from the Actions tab with the tag as input, one version at a time: it shares the concurrency group `gh-pages` with the website workflow, and GitHub keeps only one waiting run per group, so a second waiting run cancels the first
 - [ ] Run `source("data-raw/microorganisms_files/build_mo_code_registry.R")` from the root of the repository (takes a few minutes; the tag must exist), then review the diff of `mo_code_registry.csv`: only new codes may be added, existing codes may only get a later `last_release`, and renamed codes must have their old name in `previous_names` (see `data-raw/microorganisms_files/README.md`)
 - [ ] `.github/ISSUE_TEMPLATE/1-bug-report.yml`: set the versions to `Latest CRAN version (X.Y.Z)` and `One of the latest GitHub versions (X.Y.Z.9xxx)`
 - [ ] `NEWS.md`: put a new line 1 `# AMR X.Y.Z.9001`, followed by an empty line, above `# AMR X.Y.Z`; without this, the hook overwrites the heading of the released section
