@@ -1,0 +1,109 @@
+# ==================================================================== #
+# TITLE:                                                               #
+# AMR: An R Package for Working with Antimicrobial Resistance Data     #
+#                                                                      #
+# SOURCE CODE:                                                         #
+# https://github.com/msberends/AMR                                     #
+#                                                                      #
+# PLEASE CITE THIS SOFTWARE AS:                                        #
+# Berends MS, Luz CF, Friedrich AW, et al. (2022).                     #
+# AMR: An R Package for Working with Antimicrobial Resistance Data.    #
+# Journal of Statistical Software, 104(3), 1-31.                       #
+# https://doi.org/10.18637/jss.v104.i03                                #
+#                                                                      #
+# Developed at the University of Groningen and the University Medical  #
+# Center Groningen in the Netherlands, in collaboration with many      #
+# colleagues from around the world, see our website.                   #
+#                                                                      #
+# This R package is free software; you can freely use and distribute   #
+# it for both personal and commercial purposes under the terms of the  #
+# GNU General Public License version 2.0 (GNU GPL-2), as published by  #
+# the Free Software Foundation.                                        #
+# We created this package for both routine data analysis and academic  #
+# research and it was publicly released in the hope that it will be    #
+# useful, but it comes WITHOUT ANY WARRANTY OR LIABILITY.              #
+#                                                                      #
+# Visit our website for the full manual and a complete tutorial about  #
+# how to conduct AMR data analysis: https://amr-for-r.org              #
+# ==================================================================== #
+
+# Publish the reference of a released version as Markdown at https://amr-for-r.org/release/<version>/, for use by LLMs
+# Runs when a GitHub release is published, or manually for an existing tag (e.g., to add older versions)
+# The build script always comes from 'main', the documentation from the release tag
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish the reference of, e.g. v3.1.0"
+        required: true
+        type: string
+
+name: Publish release reference
+
+# website.yaml and website-release.yaml both push to the 'gh-pages' branch, so they must never run at the same time
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+jobs:
+  publish-release-reference:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+
+      - name: Checkout build script from main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Checkout package source of the release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+          path: pkg
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+          # use RStudio Package Manager (RSPM) to quickly install packages
+          use-public-rspm: true
+
+      - name: Install pkgdown and the package from the release tag
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          working-directory: pkg
+          dependencies: '"hard"'
+          extra-packages: |
+            any::pkgdown
+            local::.
+
+      - name: Build reference
+        run: |
+          Rscript main/.github/scripts/build_release_reference.R pkg site "${TAG#v}"
+
+      - name: Push to gh-pages
+        run: |
+          cd site
+          git config user.name "github-actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all release
+          if git diff --cached --quiet; then
+            echo "No changes to the reference of $TAG"
+          else
+            git commit -m "Built release reference for AMR@${TAG#v}"
+            git push origin HEAD:gh-pages
+          fi

@@ -28,7 +28,7 @@
 # ==================================================================== #
 
 # Create a website from the R documentation using pkgdown
-# Git commit and push to the 'gh-pages' branch
+# Git commit and push to the 'gh-pages' branch, keeping the folder 'release' that website-release.yaml maintains
 
 on:
   push:
@@ -36,6 +36,11 @@ on:
     branches: 'main'
 
 name: Update website
+
+# website.yaml and website-release.yaml both push to the 'gh-pages' branch, so they must never run at the same time
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
 
 jobs:
   update-website:
@@ -73,9 +78,25 @@ jobs:
         run: |
           rm vignettes/welcome_to_AMR.Rmd
 
+      - name: Build website
+        run: |
+          Rscript -e 'pkgdown::build_site_github_pages(dest_dir = "docs", clean = TRUE, install = TRUE, new_process = FALSE)'
+
       # Send updates to repo using GH Actions bot
-      - name: Create website in separate branch
+      # pkgdown::deploy_to_branch() would delete everything on 'gh-pages' that this build did not create, including the
+      # folder 'release' with the reference per released version, so the build is copied over 'gh-pages' without that folder
+      - name: Deploy website to gh-pages branch, keeping the folder 'release'
         run: |
           git config user.name "github-actions"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE, clean = TRUE, install = TRUE, branch = "gh-pages")'
+          git fetch origin gh-pages
+          git worktree add --detach "$RUNNER_TEMP/gh-pages" origin/gh-pages
+          rsync -a --delete --exclude '/.git' --exclude '/release/' docs/ "$RUNNER_TEMP/gh-pages/"
+          cd "$RUNNER_TEMP/gh-pages"
+          git add --all
+          if git diff --cached --quiet; then
+            echo "No changes to the website"
+          else
+            git commit -m "Built site for AMR@$(grep '^Version:' "$GITHUB_WORKSPACE/DESCRIPTION" | cut -d ' ' -f 2): ${GITHUB_SHA::7}"
+            git push origin HEAD:gh-pages
+          fi
