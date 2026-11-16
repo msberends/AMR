@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">AMR (for R)</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9025</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.1.0.9026</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,6 +94,7 @@
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">rm</span> notes.md</span></code></pre></div>
 </li>
 <li><p><label><input type="checkbox"><code>git fetch --tags</code> and check that <code>vX.Y.Z</code> points at the release commit</label></p></li>
+<li><p><label><input type="checkbox">Check that the workflow <em>Publish release reference</em> (<code>.github/workflows/website-release.yaml</code>), which publishing the GitHub release starts, succeeded. It publishes the reference of this version as Markdown at <code>https://amr-for-r.org/release/X.Y.Z/</code> for the AMR for R Assistant (<a href="https://amr-for-r.org/articles/chat.html" class="uri">https://amr-for-r.org/articles/chat.html</a>), and adds the version to <code>https://amr-for-r.org/release/llms.txt</code>. To publish a version manually, start the workflow from the Actions tab with the tag as input, one version at a time: it shares the concurrency group <code>gh-pages</code> with the website workflow, and GitHub keeps only one waiting run per group, so a second waiting run cancels the first</label></p></li>
 <li><p><label><input type="checkbox">Run <code>source("data-raw/microorganisms_files/build_mo_code_registry.R")</code> from the root of the repository (takes a few minutes; the tag must exist), then review the diff of <code>mo_code_registry.csv</code>: only new codes may be added, existing codes may only get a later <code>last_release</code>, and renamed codes must have their old name in <code>previous_names</code> (see <code>data-raw/microorganisms_files/README.md</code>)</label></p></li>
 <li><p><label><input type="checkbox"><code>.github/ISSUE_TEMPLATE/1-bug-report.yml</code>: set the versions to <code>Latest CRAN version (X.Y.Z)</code> and <code>One of the latest GitHub versions (X.Y.Z.9xxx)</code></label></p></li>
 <li><p><label><input type="checkbox"><code>NEWS.md</code>: put a new line 1 <code># AMR X.Y.Z.9001</code>, followed by an empty line, above <code># AMR X.Y.Z</code>; without this, the hook overwrites the heading of the released section</label></p></li>
