@@ -191,7 +191,7 @@ if (require("tidymodels")) {
 #> ✔ modeldata    1.6.0      ✔ tune         2.1.0 
 #> ✔ parsnip      1.6.1      ✔ workflows    1.3.0 
 #> ✔ purrr        1.2.2      ✔ workflowsets 1.1.1 
-#> ✔ recipes      1.4.0      ✔ yardstick    1.4.0 
+#> ✔ recipes      1.4.0      ✔ yardstick    1.5.0 
 #> ── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
 #> ✖ purrr::discard() masks scales::discard()
 #> ✖ dplyr::filter()  masks stats::filter()
