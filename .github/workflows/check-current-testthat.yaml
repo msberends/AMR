@@ -58,11 +58,12 @@ jobs:
         # - "interactive": true, in a real interactive R session, so that code behind interactive() is also tested
         # - "scenario", the user environment set up with .github/scripts/setup_test_scenario.R
         # - "lang", the LANG environment variable
+        # - "no_vignettes": true, to build and check the package without its vignettes (see the comment at check-r-package below)
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo 'matrix={"config":[{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"interactive","interactive":true}]}' >> "$GITHUB_OUTPUT"
           else
-            echo 'matrix={"config":[{"os":"windows-latest","r":"devel","allowfail":false},{"os":"ubuntu-latest","r":"devel","allowfail":false,"http-user-agent":"release"},{"os":"macOS-latest","r":"release","allowfail":true},{"os":"windows-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-1","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-2","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-3","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-4","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-5","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"interactive","interactive":true},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"interactive, user setup","interactive":true,"scenario":"user"},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"Dutch locale","lang":"nl_NL.UTF-8"},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"CLSI as default guideline","scenario":"clsi"}]}' >> "$GITHUB_OUTPUT"
+            echo 'matrix={"config":[{"os":"windows-latest","r":"devel","allowfail":false},{"os":"ubuntu-latest","r":"devel","allowfail":false,"http-user-agent":"release"},{"os":"macOS-latest","r":"release","allowfail":true},{"os":"windows-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"release","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-1","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-2","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-3","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-4","allowfail":false},{"os":"ubuntu-latest","r":"oldrel-5","allowfail":false,"no_vignettes":true},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"interactive","interactive":true},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"interactive, user setup","interactive":true,"scenario":"user"},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"Dutch locale","lang":"nl_NL.UTF-8"},{"os":"ubuntu-latest","r":"release","allowfail":false,"tests":true,"label":"CLSI as default guideline","scenario":"clsi"}]}' >> "$GITHUB_OUTPUT"
           fi
 
   R-code-check:
@@ -97,8 +98,13 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          # pak solves all suggested packages as one set and fails as a whole if one of them requires a newer R, so such packages are ignored on older R versions (with `pkg=?ignore-before-r=x.y.z`) and the checks run without them
-          extra-packages: ${{ matrix.config.tests && 'any::pkgload' || 'any::rcmdcheck' }} readxl=?ignore-before-r=4.2.0
+          # pak solves all suggested packages as one set and fails as a whole if one of them requires a newer R, so such packages are ignored on older R versions (with `pkg=?ignore-before-r=x.y.z`) and the checks run without them.
+          # ggplot2 (>= 4.0.0) imports S7, which requires R >= 4.2.0, and tidymodels requires that ggplot2 version, so both are ignored on R 4.1 (oldrel-5). The unit tests that need them are skipped by AMR:::pkg_is_available(), their examples by require("ggplot2"), and their vignettes are not built (see check-r-package below).
+          extra-packages: >-
+            ${{ matrix.config.tests && 'any::pkgload' || 'any::rcmdcheck' }}
+            readxl=?ignore-before-r=4.2.0
+            ggplot2=?ignore-before-r=4.2.0
+            tidymodels=?ignore-before-r=4.2.0
           needs: check
           upgrade: 'TRUE'
 
@@ -126,4 +132,6 @@ jobs:
           _R_CHECK_FORCE_SUGGESTS_: false
         with:
           upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          # the vignettes load ggplot2 and tidymodels unconditionally, so they are not built nor checked on R versions where those packages are ignored (see above)
+          build_args: ${{ matrix.config.no_vignettes && 'c("--no-manual","--no-build-vignettes")' || 'c("--no-manual","--compact-vignettes=gs+qpdf")' }}
+          args: ${{ matrix.config.no_vignettes && 'c("--no-manual","--as-cran","--ignore-vignettes")' || 'c("--no-manual","--as-cran")' }}
