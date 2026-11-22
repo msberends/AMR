@@ -99,12 +99,13 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           # pak solves all suggested packages as one set and fails as a whole if one of them requires a newer R, so such packages are ignored on older R versions (with `pkg=?ignore-before-r=x.y.z`) and the checks run without them.
-          # ggplot2 (>= 4.0.0) imports S7, which requires R >= 4.2.0, and tidymodels requires that ggplot2 version, so both are ignored on R 4.1 (oldrel-5). The unit tests that need them are skipped by AMR:::pkg_is_available(), their examples by require("ggplot2"), and their vignettes are not built (see check-r-package below).
+          # ggplot2 (>= 4.0.0) imports S7, which requires R >= 4.2.0, so ggplot2 is ignored on R 4.1 (oldrel-5), and with it the only two suggested packages that need it to install: tidymodels (which imports ggplot2 directly) and recipes (via ipred and prodlim). The unit tests that need them are skipped by AMR:::pkg_is_available(), their examples by require("ggplot2") and require("tidymodels"), and their vignettes are not built (see check-r-package below).
           extra-packages: >-
             ${{ matrix.config.tests && 'any::pkgload' || 'any::rcmdcheck' }}
             readxl=?ignore-before-r=4.2.0
             ggplot2=?ignore-before-r=4.2.0
             tidymodels=?ignore-before-r=4.2.0
+            recipes=?ignore-before-r=4.2.0
           needs: check
           upgrade: 'TRUE'
 
