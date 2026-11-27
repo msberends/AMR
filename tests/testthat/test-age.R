@@ -61,6 +61,20 @@ test_that("test-age.R", {
     1
   )
 
+  # born on 29 February: the birthday is on 1 March in non-leap years
+  expect_equal(
+    age(
+      x = "2000-02-29",
+      reference = c("2023-02-28", "2023-03-01", "2023-06-01", "2024-02-29"),
+      exact = TRUE
+    ),
+    c(22 + 364 / 365, 23, 23 + 92 / 365, 24)
+  )
+  expect_identical(
+    age(x = "2000-02-29", reference = c("2023-02-28", "2023-03-01")),
+    c(22L, 23L)
+  )
+
 
   ages <- c(3, 8, 16, 54, 31, 76, 101, 43, 21)
 
