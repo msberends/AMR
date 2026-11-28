@@ -1,4 +1,4 @@
-# AMR 3.1.0.9031
+# AMR 3.1.0.9032
 
 This version fixes a critical bug in WISCA that biased all coverage estimates of `wisca()` and `antibiogram(..., wisca = TRUE)` downwards since AMR 3.0.0. Users are strongly advised to re-run their WISCA analyses.
 
@@ -33,6 +33,8 @@ This version fixes a critical bug in WISCA that biased all coverage estimates of
   * Fixed the misaligned arrows in the message on taxonomically renamed microorganisms in colour-supporting consoles, for old names whose author reference lacks "*et al.*" (#336)
 * `intrinsic_resistant` data set
   * Species groups and complexes are now listed for every antimicrobial to which all their species are intrinsically resistant. This adds 62 bug-drug combinations for the *Burkholderia cepacia* complex, coryneform bacteria, the *Enterobacter cloacae* complex (e.g., amoxicillin and amoxicillin/clavulanic acid), the *Klebsiella pneumoniae* complex, and coagulase-negative staphylococci, which affects `mo_is_intrinsic_resistant()`, `not_intrinsic_resistant()`, and the priors of `wisca()` (#338)
+* `age()`
+  * Fixed `exact = TRUE` returning `NA` for dates of birth on 29 February when the reference date is in a non-leap year. The birthday now falls on 1 March in those years, as it already did for ages in whole years.
 
 ### Other
 * The documentation of `first_isolate()` now explains how to determine first isolates per any additional variable using `dplyr::group_by()`, and the bias this introduces when that variable is related to resistance (#345)

@@ -83,11 +83,13 @@ age <- function(x, reference = Sys.Date(), exact = FALSE, na.rm = FALSE, ...) {
   # add decimals
   if (exact == TRUE) {
     # get dates of `x` when `x` would have the year of `reference`
+    reference_year <- format(as.Date(reference), "%Y")
+    x_month_day <- format(as.Date(x), "-%m-%d")
+    # 29 February does not exist in non-leap years, so use 1 March like the integer ages above
+    reference_is_leap <- !is.na(as.Date(paste0(reference_year, "-02-29"), format = "%Y-%m-%d"))
+    x_month_day[x_month_day %in% "-02-29" & !reference_is_leap] <- "-03-01"
     x_in_reference_year <- as.POSIXlt(
-      paste0(
-        format(as.Date(reference), "%Y"),
-        format(as.Date(x), "-%m-%d")
-      ),
+      paste0(reference_year, x_month_day),
       format = "%Y-%m-%d"
     )
     # get differences in days
