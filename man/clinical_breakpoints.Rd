@@ -5,7 +5,7 @@
 \alias{clinical_breakpoints}
 \title{Data Set with Clinical Breakpoints for SIR Interpretation}
 \format{
-A \link[tibble:tibble]{tibble} with 61 389 observations and 15 variables:
+A \link[tibble:tibble]{tibble} with 48 764 observations and 15 variables:
 \itemize{
 \item \code{guideline}\cr Name of the guideline
 \item \code{type}\cr Breakpoint type, either \code{"ECOFF"}, \code{"animal"}, or \code{"human"}
@@ -13,7 +13,7 @@ A \link[tibble:tibble]{tibble} with 61 389 observations and 15 variables:
 \item \code{method}\cr Testing method, either \code{"DISK"} or \code{"MIC"}
 \item \code{site}\cr Body site for which the breakpoint must be applied, e.g. "Oral" or "Respiratory"
 \item \code{mo}\cr Microbial ID, see \code{\link[=as.mo]{as.mo()}}
-\item \code{rank_index}\cr Taxonomic rank index of \code{mo}, used to choose the most specific breakpoint (the lowest index): 1 for subspecies and infraspecies, 2 for species, 2.5 for species groups (e.g., \emph{Streptococcus} group A), 3 for genus, 4 for family, 5 for order, 6 for other groups (e.g., Gram-negative or anaerobic bacteria), and 7 for non-species related (PK-PD) breakpoints. Blocking rows (see \emph{Details}) have the rank index of their organism + 0.1, e.g., 2.6 for a species group, so that a breakpoint for the same organism always takes precedence.
+\item \code{rank_index}\cr Taxonomic rank index of \code{mo}, used to choose the most specific breakpoint (the lowest index): 1 for subspecies and infraspecies, 2 for species, 2.5 for species groups (e.g., \emph{Streptococcus} group A), 3 for genus, 4 for family, 5 for order, 5.5 for anaerobic bacteria, 6 for other groups (e.g., Gram-negative bacteria), and 7 for non-species related (PK-PD) breakpoints. Blocking rows (see \emph{Details}) have the rank index of their organism + 0.1, e.g., 2.6 for a species group, so that a breakpoint for the same organism always takes precedence.
 \item \code{ab}\cr Antimicrobial code as used by this package, EARS-Net and WHONET, see \code{\link[=as.ab]{as.ab()}}
 \item \code{ref_tbl}\cr Info about where the guideline rule can be found
 \item \code{disk_dose}\cr Dose of the used disk diffusion method
@@ -49,7 +49,9 @@ The default is \code{"human"}, which can also be set with the package option \co
 
 \subsection{Blocking Rows}{
 
-Where EUCAST lists an organism but gives no breakpoint for it (e.g. "IE", "-", "Note", breakpoints in brackets, an organism excluded with "except", or no S category for a zone diameter), \code{\link[=as.sir]{as.sir()}} must not fall back to the breakpoint of a broader taxon, such as the breakpoint for \emph{Vibrio} spp. where EUCAST gives "IE" for \emph{V. fluvialis}. Such cases are included as "blocking rows": rows in which \code{breakpoint_S} and \code{breakpoint_R} are both \code{NA} and the \code{note} starts with \code{"[No breakpoint]"} followed by the reason. \code{\link[=as.sir]{as.sir()}} returns \code{NA} for these. This currently applies to 15 660 rows. Remove them with \code{subset(clinical_breakpoints, !is.na(breakpoint_S))} if only actual breakpoints are needed.
+Where EUCAST lists an organism but gives no breakpoint for it (e.g. "IE", "-", "Note", an organism excluded with "except", or no S category for a zone diameter), \code{\link[=as.sir]{as.sir()}} must not fall back to the breakpoint of a broader taxon, such as the breakpoint for \emph{Vibrio} spp. where EUCAST gives "IE" for \emph{V. fluvialis}. Such cases are included as "blocking rows": rows in which \code{breakpoint_S} and \code{breakpoint_R} are both \code{NA} and the \code{note} starts with \code{"[No breakpoint]"} followed by the reason. \code{\link[=as.sir]{as.sir()}} returns \code{NA} for these. This currently applies to 2 398 rows. Remove them with \code{subset(clinical_breakpoints, !is.na(breakpoint_S))} if only actual breakpoints are needed.
+
+\strong{EUCAST's breakpoints in brackets} are not in this data set. EUCAST bases these on ECOFFs, and states that reporting S or I should be avoided. \code{\link[=as.sir]{as.sir()}} therefore treats them as absent, and can use PK/PD breakpoints or, for unknown UTI status, UTI breakpoints instead. All bracketed values are kept in the \href{https://github.com/msberends/AMR/blob/main/data-raw/breakpoints_eucast_raw.csv}{raw import of the EUCAST tables} (column \code{is_bracketed}).
 
 Where another guideline has no S category for a zone diameter, such as CLSI for fluconazole in \emph{C. glabrata} (SDD and R only), only \code{breakpoint_R} is given, and the \code{note} starts with \code{"[No S category]"}. \code{\link[=as.sir]{as.sir()}} then returns R where applicable, and \code{NA} otherwise.
 }
