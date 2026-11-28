@@ -1,6 +1,6 @@
 # Changelog
 
-## AMR 3.1.0.9031
+## AMR 3.1.0.9032
 
 This version fixes a critical bug in WISCA that biased all coverage
 estimates of [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
@@ -153,6 +153,11 @@ are strongly advised to re-run their WISCA analyses.
     and the priors of
     [`wisca()`](https://amr-for-r.org/reference/antibiogram.md)
     ([\#338](https://github.com/msberends/AMR/issues/338))
+- [`age()`](https://amr-for-r.org/reference/age.md)
+  - Fixed `exact = TRUE` returning `NA` for dates of birth on 29
+    February when the reference date is in a non-leap year. The birthday
+    now falls on 1 March in those years, as it already did for ages in
+    whole years.
 
 #### Other
 
